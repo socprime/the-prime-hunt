@@ -1,0 +1,17 @@
+@import "../../../scss/palette";
+
+.success-check-icon {
+  width: 16px;
+  height: 16px;
+  background-color: $success;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+
+  .icon {
+    width: 10px;
+    height: 8px;
+    fill: white;
+  }
+}

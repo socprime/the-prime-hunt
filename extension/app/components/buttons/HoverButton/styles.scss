@@ -1,0 +1,16 @@
+@import '../../../scss/palette';
+
+.button.hover-button {
+  background-color: transparent;
+
+  &:not(:disabled) {
+    &:hover,
+    &.hovered {
+      background-color: $lighter-background-color;
+
+      .icon {
+        fill: $success;
+      }
+    }
+  }
+}

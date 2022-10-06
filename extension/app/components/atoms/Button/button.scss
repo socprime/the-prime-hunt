@@ -1,0 +1,22 @@
+.button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: inline-flex;
+
+  > .icon {
+    display: inline-flex;
+    align-self: center;
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+  }
+
+  > .button-content {
+    display: inline-flex;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}

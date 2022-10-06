@@ -1,0 +1,24 @@
+@import '../../../scss/palette';
+
+.button.app-button {
+  color: $base-text-color;
+  font-family: 'Inter', sans-serif;
+  border-radius: 4px;
+  background-color: transparent;
+  height: 30px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+
+  &:not(:disabled):active {
+    animation: button-press-animation 0.2s ease-in-out;
+  }
+
+  > .icon {
+    fill: $base-text-color;
+  }
+
+  &.success-btn {
+    background-color: $success;
+  }
+}

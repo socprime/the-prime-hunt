@@ -1,0 +1,12 @@
+@import "../../../../scss/animations";
+
+.waste-basket-icon {
+  #clip0_575_522 rect {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:active {
+    animation: button-press-animation 0.2s ease-in-out;
+  }
+}

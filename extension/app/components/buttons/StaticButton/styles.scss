@@ -1,0 +1,7 @@
+@import "../../../scss/palette";
+
+.button.app-button.static-button {
+  background-color: $lighter-background-color;
+  padding: 5px 12px;
+  color: $base-text-color-strong;
+}

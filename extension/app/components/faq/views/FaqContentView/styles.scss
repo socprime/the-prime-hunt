@@ -1,0 +1,44 @@
+@import '../../../../scss/palette';
+
+.faq-content-view {
+  height: 100%;
+
+  .collapsible {
+    background: transparent;
+
+    &:after {
+      content: "";
+      display: block;
+      border-top: 1px solid $lighter-background-color;
+      margin: 0 10px;
+    }
+  }
+
+  .collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $base-text-color-strong;
+    font-size: 15px;
+
+    .icon-wrapper {
+      background-color: transparent;
+    }
+  }
+
+  .collapsible-content {
+    color: $base-text-color;
+    line-height: 1.5;
+    padding-right: 40px;
+    text-align: justify;
+  }
+
+  ul {
+    list-style: square;
+    margin: 4px 0 12px 20px;
+  }
+
+  li:not(:last-child) {
+    margin: 4px 0;
+  }
+}

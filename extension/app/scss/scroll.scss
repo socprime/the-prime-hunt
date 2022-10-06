@@ -1,0 +1,23 @@
+@import "./palette";
+
+.simplebar-track.simplebar-vertical {
+  right: -14px;
+  width: 9px;
+  opacity: 0.6;
+}
+
+.simplebar-track.simplebar-horizontal {
+  opacity: 0.6;
+
+  .simplebar-scrollbar {
+    height: 5px;
+  }
+}
+
+.simplebar-track {
+  .simplebar-scrollbar {
+    &:before {
+      background-color: $base-text-color-strong;
+    }
+  }
+}

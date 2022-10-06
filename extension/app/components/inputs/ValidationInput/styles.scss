@@ -1,0 +1,25 @@
+@import '../../../scss/palette';
+
+.validation-input-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+
+  .validation-message {
+    margin-top: 3px;
+    font-size: 12px;
+    color: $error;
+  }
+
+  .input {
+    border: 1px solid transparent;
+
+    &:focus,
+    &:active {
+      border: 1px solid transparent;
+    }
+  }
+
+  &.validation-error .input {
+    border: 1px solid $error;
+  }
+}

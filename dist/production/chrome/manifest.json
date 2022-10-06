@@ -1,0 +1,97 @@
+{
+   "version": "1.0.0",
+   "description": "The Prime Hunt is a browser extension for threat hunting. It introduces a single UI to simplify and speed up the investigation process regardless of the SIEMs or EDR in use. This is especially useful for threat hunters starting off their careers. They can focus on doing the task at hand and learning the right methodology rather than delving into the specifics of a particular security platform or query language. With The Prime Hunt, you can easily see what accounts and assets are affected by the suspicious activity your query detects. Filter for or filter out query results by specific accounts/assets with one click or look for all events related to them. Easily drill down to VirusTotal, Anomaly, OpenCTI, your custom CTI or any other sources that can help you in the investigation. If you have any questions, would like to give feedback, or need help, contact us at support@socprime.com.",
+   "name": "The Prime Hunt",
+   "manifest_version": 3,
+   "icons": {
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "64": "icons/64.png",
+      "96": "icons/96.png",
+      "128": "icons/128.png",
+      "256": "icons/256.png",
+      "512": "icons/512.png"
+   },
+   "content_scripts": [
+      {
+         "matches": [
+            "https://portal.azure.com/*",
+            "https://logsextension.hosting.portal.azure.net/*",
+            "https://*.reactblade.portal.azure.net/*"
+         ],
+         "all_frames": true,
+         "js": [
+            "content.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": [
+            "https://api-eu.securitycenter.windows.com/*",
+            "https://security.microsoft.com/*"
+         ],
+         "js": [
+            "content.js"
+         ],
+         "run_at": "document_end"
+      }
+   ],
+   "permissions": [
+      "webRequest"
+   ],
+   "host_permissions": [
+      "<all_urls>"
+   ],
+   "web_accessible_resources": [
+      {
+         "resources": [
+            "inline-microsoft-sentinel.js"
+         ],
+         "matches": [
+            "https://portal.azure.com/*",
+            "https://logsextension.hosting.portal.azure.net/*",
+            "https://*.reactblade.portal.azure.net/*"
+         ]
+      },
+      {
+         "resources": [
+            "inline-microsoft-defender-for-endpoint.js"
+         ],
+         "matches": [
+            "https://api-eu.securitycenter.windows.com/*",
+            "https://security.microsoft.com/*"
+         ]
+      },
+      {
+         "resources": [
+            "app-styles.css"
+         ],
+         "matches": [
+            "<all_urls>"
+         ]
+      }
+   ],
+   "action": {
+      "default_icon": {
+         "16": "icons/16.png",
+         "48": "icons/48.png",
+         "64": "icons/64.png",
+         "96": "icons/96.png",
+         "128": "icons/128.png",
+         "256": "icons/256.png",
+         "512": "icons/512.png"
+      }
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "externally_connectable": {
+      "matches": [
+         "https://portal.azure.com/*",
+         "https://logsextension.hosting.portal.azure.net/*",
+         "https://*.reactblade.portal.azure.net/*",
+         "https://api-eu.securitycenter.windows.com/*",
+         "https://security.microsoft.com/*"
+      ]
+   }
+}

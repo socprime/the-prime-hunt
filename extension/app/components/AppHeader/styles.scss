@@ -1,0 +1,82 @@
+@import "../../scss/palette";
+@import "../../scss/animations";
+
+.app-header {
+  .app-header-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    > .group {
+      display: flex;
+      align-items: center;
+
+      .spinner {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 3px solid;
+        border-color: $success #0000;
+        animation: spinner-animation 1s infinite;
+        margin-left: 5px;
+      }
+
+      .logo-icon {
+        width: 64px;
+        height: 28px;
+      }
+
+      > .name {
+        margin-left: 12px;
+        align-self: center;
+      }
+
+      .static-button {
+        .download-icon {
+          margin-right: 8px;
+        }
+      }
+
+      .close-app-button {
+        margin-left: 12px;
+      }
+
+      .faq-button {
+        margin-left: 12px;
+      }
+    }
+  }
+}
+
+.app-wrapper.sm,
+.app-wrapper.ssm {
+  .app-header {
+    .app-header-wrapper.no-button {
+      .close-app-button {
+        margin: 0;
+      }
+    }
+
+    .app-header-wrapper:not(.no-button) {
+      .group {
+        width: 100%;
+      }
+
+      .group:first-child {
+        justify-content: flex-start;
+      }
+
+      .group:last-child {
+        margin-top: 16px;
+        justify-content: space-between;
+      }
+
+      .buttons-wrapper {
+        position: relative;
+        top: -44px;
+      }
+    }
+  }
+}
+

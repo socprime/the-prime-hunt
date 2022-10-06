@@ -1,0 +1,19 @@
+.input {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  transition: none;
+  background-color: transparent;
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.input-label {
+  display: inline-flex;
+  flex-direction: column;
+}

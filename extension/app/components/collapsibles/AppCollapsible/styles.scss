@@ -1,0 +1,33 @@
+@import "../../../scss/palette";
+
+.collapsible {
+  border-radius: 4px;
+  background-color: $base-background-area-color;
+
+  .icon-wrapper {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $lighter-background-color;
+    border-radius: 4px;
+  }
+
+  .collapsible-header {
+    .small-arrow-icon {
+      height: 7px;
+      fill: $base-text-color-strong;
+      transition: ease-in-out transform 0.3s;
+    }
+
+    &.closed .small-arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    .app-collapsible-header-group {
+      display: flex;
+      align-content: center;
+    }
+  }
+}

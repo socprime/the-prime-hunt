@@ -1,0 +1,17 @@
+.animated-copy-icon {
+  position: relative;
+  display: inline-flex;
+
+  .animated {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  &:focus .animated {
+    animation: copy-animation 0.26s ease-in-out;
+  }
+
+  &:active .animated {
+    animation: none;
+  }
+}

@@ -1,0 +1,56 @@
+.draggable-resizable {
+  position: relative;
+
+  &.move {
+    cursor: move;
+  }
+
+  > .resizer {
+    z-index: 1;
+    position: absolute;
+    background-color: transparent;
+  }
+
+  > .resizer-top,
+  > .resizer-bottom {
+    height: 3px;
+    width: 100%;
+  }
+
+  > .resizer-top {
+    top: 0;
+  }
+
+  > .resizer-bottom {
+    bottom: 0;
+  }
+
+  > .resizer-left,
+  > .resizer-right {
+    width: 3px;
+    height: 100%;
+  }
+
+  > .resizer-left {
+    left: 0;
+  }
+
+  > .resizer-right {
+    right: 0;
+  }
+
+  &:not(.disallowResize) {
+    > .resizer-top {
+      cursor: n-resize;
+    }
+    > .resizer-left {
+      cursor: w-resize;
+    }
+    > .resizer-right {
+      cursor: e-resize;
+    }
+    > .resizer-bottom {
+      cursor: s-resize;
+    }
+  }
+}

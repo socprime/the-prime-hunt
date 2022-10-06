@@ -1,0 +1,31 @@
+@keyframes button-press-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: translate(0px, 2px) scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes copy-animation {
+  1% {
+    visibility: visible;
+    opacity: 50%;
+  }
+  50% {
+    transform: scale(0.9) translate(0px, -35px);
+  }
+  to {
+    transform: scale(0.6) translate(0px, -45px);
+    opacity: 0;
+  }
+}
+
+@keyframes spinner-animation {
+  to {
+    transform: rotate(.5turn)
+  }
+}

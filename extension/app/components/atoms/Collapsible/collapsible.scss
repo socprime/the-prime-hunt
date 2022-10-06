@@ -1,0 +1,15 @@
+@import "../../../scss/palette";
+
+.collapsible {
+  overflow: hidden;
+
+  > .collapsible-header {
+    cursor: pointer;
+    padding: 12px;
+  }
+
+  > .collapsible-content {
+    padding: 0 12px;
+    transition: height ease 0.2s;
+  }
+}

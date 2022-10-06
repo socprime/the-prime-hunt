@@ -1,0 +1,29 @@
+.dropdown {
+  position: relative;
+  display: inline-flex;
+  z-index: 1;
+
+  .dropdown-opener {
+    cursor: pointer;
+  }
+
+  &.down .dropdown-menu {
+    top: 100%;
+    margin-top: 4px;
+  }
+
+  &.up .dropdown-menu {
+    bottom: 100%;
+    margin-bottom: 4px;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  box-sizing: border-box;
+
+  &.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,27 @@
+@import "../../../scss/palette";
+
+.checkbox {
+  > .checker-wrapper {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    background-color: $lighter-background-color;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+      content: '';
+      border-radius: 3px;
+      display: block;
+      width: 14px;
+      height: 14px;
+      background-color: transparent;
+      border: 1px solid $base-text-color;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import "../../../scss/palette";
+
+.integration {
+  &:not(:last-child):after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: $lighter-background-color;
+    margin-bottom: 16px;
+  }
+}

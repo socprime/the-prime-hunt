@@ -1,0 +1,20 @@
+@import "../../../scss/palette";
+
+.app-dropdown.dropdown {
+  &.down .app-dropdown-menu {
+    margin-top: 13px;
+  }
+
+  &.up .app-dropdown-menu {
+    margin-bottom: 13px;
+  }
+}
+
+.app-dropdown-menu {
+  z-index: 9999999;
+  background-color: $base-background-area-color;
+  border-radius: 6px;
+  padding: 6px 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
+}

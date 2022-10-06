@@ -1,0 +1,18 @@
+@import "../../../scss/palette";
+
+.input.app-input {
+  background-color: $lighter-background-color;
+  color: $base-text-color-strong;
+  padding: 8px 12px;
+  border-radius: 4px;
+
+  &.disabled {
+    color: $base-disabled-text-color;
+  }
+}
+
+.input-label {
+  span {
+    margin-bottom: 3px;
+  }
+}

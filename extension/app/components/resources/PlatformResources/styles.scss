@@ -1,0 +1,8 @@
+.platform-resources {
+  overflow-y: auto;
+  height: 100%;
+
+  .collapsible:not(:first-child) {
+    margin-top: 4px;
+  }
+}
