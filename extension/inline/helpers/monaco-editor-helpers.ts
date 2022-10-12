@@ -1,9 +1,12 @@
+import { ModifyQueryType } from '../../common/types/types-common';
+import { clearExtraSpaces, parseJSONSafe } from '../../../common/helpers';
+
 export const getEditorByIndex = (index: number) => {
   return monaco.editor.getModels()[index];
 };
 
-export const checkEditorExists = (index: number): boolean => {
-  return !!monaco?.editor?.getModels?.()?.[index]?.setValue;
+export const checkEditorExists = (): boolean => {
+  return !!monaco?.editor?.getModels?.();
 };
 
 export const getContentFocusedLines = (editorIndex: number): number[] => {
@@ -35,4 +38,72 @@ export const getEditorIndexByFormattedUri = (uri: string): number | null => {
   return monaco.editor.getModels().findIndex(model => {
     return (model.uri as any)._formatted === uri;
   });
+};
+
+export const buildNewJsonQuery = (
+  editorIndex: number,
+  suffix: string,
+  modifyType: ModifyQueryType,
+): string => {
+  const editor = getEditorByIndex(editorIndex);
+  const currentEditorValue = parseJSONSafe(
+    editor.getValue(),
+    null,
+  ) as {
+    Query: string;
+  } | null;
+  const currentQuery = (!currentEditorValue || !currentEditorValue.Query)
+    ? ''
+    : currentEditorValue.Query;
+
+  const newQuery = `${
+    modifyType === 'show all'
+      ? currentQuery.split('|').shift()?.trim()
+      || '<unknown>'
+      : currentQuery
+  } ${suffix}`;
+
+  return JSON.stringify({
+    Query: newQuery,
+  }, null, 3);
+};
+
+export const buildNewQuery = (
+  editorIndex: number,
+  suffix: string,
+  modifyType: ModifyQueryType,
+): string => {
+  let newQuery = '';
+  const editor = getEditorByIndex(editorIndex);
+  const editorLines: string[] = editor.getLinesContent();
+  const focusedLines = getContentFocusedLines(editorIndex);
+
+  if (modifyType === 'show all' && focusedLines.length < 1) {
+    const tableName = editorLines
+      .map((l: string) => l.split('|').shift())
+      .filter(Boolean).pop()
+      || '<unknown>';
+    newQuery = `${tableName} ${suffix}`;
+  }
+
+  if (modifyType === 'show all' && focusedLines.length >= 1) {
+    const tableName = editorLines[focusedLines[0] - 1].split('|').shift();
+    editorLines.splice(
+      focusedLines[0] - 1,
+      focusedLines.length,
+      `${tableName} ${suffix}`,
+    );
+    newQuery = editorLines.join('\n');
+  }
+
+  if (modifyType !== 'show all') {
+    const lastEditorLineIndex = focusedLines.length > 0
+      ? focusedLines[focusedLines.length - 1]
+      : getLastContentLine(editorIndex);
+    const lastEditorLine: string = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
+    editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
+    newQuery = editorLines.join('\n');
+  }
+
+  return clearExtraSpaces(newQuery);
 };

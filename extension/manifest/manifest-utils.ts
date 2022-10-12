@@ -25,7 +25,7 @@ const getAllowedMicrosoftSentinelUrls = (mode: Mode) => {
   ];
 };
 
-const getAllowedMicrosoftDefenderForEndpointUrls = (mode: Mode) => {
+const getAllowedMicrosoftDefenderUrls = (mode: Mode) => {
   return [
     'https://api-eu.securitycenter.windows.com/*',
     'https://security.microsoft.com/*',
@@ -33,13 +33,24 @@ const getAllowedMicrosoftDefenderForEndpointUrls = (mode: Mode) => {
   ];
 };
 
+const packageJsonPath = '../../package.json';
+
+export const getVersion = () => {
+  const { version } = require(packageJsonPath);
+  delete require.cache[require.resolve(packageJsonPath)];
+  return version;
+};
+
+export const getDescription = () => {
+  const { description } = require(packageJsonPath);
+  delete require.cache[require.resolve(packageJsonPath)];
+  return description;
+};
+
 const getCommonManifest = (mode: Mode): ManifestBase => {
-  const path = '../../package.json';
-  const { version, description } = require(path);
-  delete require.cache[require.resolve(path)];
   return {
-    version,
-    description,
+    version: getVersion(),
+    description: getDescription(),
     name: 'The Prime Hunt',
     manifest_version: 3,
     icons: generateIconSet(),
@@ -51,7 +62,7 @@ const getCommonManifest = (mode: Mode): ManifestBase => {
         run_at: 'document_end',
       },
       {
-        matches: getAllowedMicrosoftDefenderForEndpointUrls(mode),
+        matches: getAllowedMicrosoftDefenderUrls(mode),
         js: ['content.js'],
         run_at: 'document_end',
       },
@@ -98,16 +109,16 @@ const buildBackgroundV2 = () => {
 const buildAccessibleResourcesV3 = (mode: Mode) => {
   return {
     web_accessible_resources: Object.keys(accessibleResources).map(type => {
-      if (type === PlatformID.microsoftSentinel) {
+      if (type === PlatformID.MicrosoftSentinel) {
         return {
           resources: accessibleResources[type],
           matches: getAllowedMicrosoftSentinelUrls(mode),
         };
       }
-      if (type === PlatformID.microsoftDefenderForEndpoint) {
+      if (type === PlatformID.MicrosoftDefender) {
         return {
           resources: accessibleResources[type],
-          matches: getAllowedMicrosoftDefenderForEndpointUrls(mode),
+          matches: getAllowedMicrosoftDefenderUrls(mode),
         };
       }
       return {
@@ -172,7 +183,7 @@ export const buildManifest = (browser: Browser, mode: Mode) => {
     manifest.externally_connectable = {
       matches: deduplicateArray([
         ...getAllowedMicrosoftSentinelUrls(mode),
-        ...getAllowedMicrosoftDefenderForEndpointUrls(mode),
+        ...getAllowedMicrosoftDefenderUrls(mode),
       ]),
     };
     return manifest;

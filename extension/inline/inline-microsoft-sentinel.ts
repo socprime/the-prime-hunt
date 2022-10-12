@@ -4,28 +4,28 @@ import { ExtensionMessage, PlatformID } from '../common/types/types-common';
 import { isMessageMatched } from '../common/common-listeners';
 import { ModifyQueryPayload } from '../common/types/types-common-payloads';
 import { buildMicrosoftSentinelQueryParts } from '../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers';
-import { clearExtraSpaces } from '../../common/helpers';
 import {
+  buildNewQuery,
   checkEditorExists,
-  getContentFocusedLines,
-  getEditorByIndex, getEditorIndexByFormattedUri,
-  getLastContentLine,
+  getEditorByIndex,
+  getEditorIndexByFormattedUri,
 } from './helpers/monaco-editor-helpers';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix(getDebugPrefix('inline'))
-  .addPrefix(PlatformID.microsoftSentinel);
+  .addPrefix(PlatformID.MicrosoftSentinel);
 
 let editorIndex = 0;
 
-const setIndex = (index: number | null) => {
+const setIndex = (index: number | null): boolean => {
   if (index === null) {
-    return loggers.warn().log('Can not determine the editor index', index);
+    return false;
   }
   if (editorIndex !== index) {
     editorIndex = index;
     loggers.debug().log('The editor index is set to', index);
   }
+  return true;
 };
 
 const getCurrentEditorIndex = (): number | null => {
@@ -47,48 +47,18 @@ window.addEventListener('message', (event) => {
     message,
     event,
   )) {
-    if (!checkEditorExists(editorIndex)) {
+    if (!checkEditorExists()) {
       return loggers.error().log('editor not found', monaco);
     }
-    setIndex(getCurrentEditorIndex());
+    if (!setIndex(getCurrentEditorIndex())) {
+      return loggers.info().log('Can not determine the editor index');
+    }
     const editor = getEditorByIndex(editorIndex);
-    const editorLines: string[] = editor.getLinesContent();
-    
+
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
-    let newQuery = '';
-
     const suffix = `| where ${buildMicrosoftSentinelQueryParts(modifyType, resources)}`;
-    const focusedLines = getContentFocusedLines(editorIndex);
-
-    if (modifyType === 'show all' && focusedLines.length < 1) {
-      const tableName = editorLines
-        .map((l: string) => l.split('|').shift())
-        .filter(Boolean).pop()
-        || '<unknown>';
-      newQuery = `${tableName} ${suffix}`;
-    }
-
-    if (modifyType === 'show all' && focusedLines.length >= 1) {
-      const tableName = editorLines[focusedLines[0] - 1].split('|').shift();
-      editorLines.splice(
-        focusedLines[0] - 1,
-        focusedLines.length,
-        `${tableName} ${suffix}`,
-      );
-      newQuery = editorLines.join('\n');
-    }
-
-    if (modifyType !== 'show all') {
-      const lastEditorLineIndex = focusedLines.length > 0
-        ? focusedLines[focusedLines.length - 1]
-        : getLastContentLine(editorIndex);
-      const lastEditorLine: string = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
-      editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
-      newQuery = editorLines.join('\n');
-    }
-    
-    editor.setValue(clearExtraSpaces(newQuery));
+    editor.setValue(buildNewQuery(editorIndex, suffix, modifyType));
   }
 });
 

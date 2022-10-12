@@ -309,10 +309,10 @@ const getWebAccessibleUrl = (path) => {
 };
 exports.getWebAccessibleUrl = getWebAccessibleUrl;
 const getPlatformNameByID = (platformID) => {
-    if (platformID === types_common_1.PlatformID.microsoftSentinel) {
+    if (platformID === types_common_1.PlatformID.MicrosoftSentinel) {
         return 'Microsoft Sentinel';
     }
-    if (platformID === types_common_1.PlatformID.microsoftDefenderForEndpoint) {
+    if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
         return 'Microsoft Defender For Endpoint';
     }
     return 'Unknown Platform';
@@ -406,35 +406,40 @@ const downloadFile = (type, content) => {
     document.body.removeChild(link);
 };
 exports.downloadFile = downloadFile;
-const getElementsUnderCursor = (e, condition) => {
+const getElementsUnderCursor = (e, filter) => {
     const x = e.clientX;
     const y = e.clientY;
-    const stack = [];
+    const filtered = [];
+    const elements = [];
     let elementMouseIsOver = document.elementFromPoint(x, y);
-    stack.push({
-        element: elementMouseIsOver,
-        savedPointerEvents: elementMouseIsOver.style.pointerEvents,
-    });
-    while ((elementMouseIsOver === null || elementMouseIsOver === void 0 ? void 0 : elementMouseIsOver.tagName) !== 'HTML') {
-        let savedPointerEvents = elementMouseIsOver.style.pointerEvents;
-        if (elementMouseIsOver) {
-            if (condition === null || condition === void 0 ? void 0 : condition(elementMouseIsOver)) {
-                return [elementMouseIsOver];
-            }
-            elementMouseIsOver.style.pointerEvents = 'none';
-            elementMouseIsOver = document.elementFromPoint(x, y);
+    while (elementMouseIsOver.tagName !== 'HTML') {
+        const savedPointerEvents = elementMouseIsOver.style.pointerEvents;
+        if (!elementMouseIsOver) {
+            break;
         }
-        stack.push({
+        if (!filter
+            || (filter && filter(elementMouseIsOver))) {
+            filtered.push(elementMouseIsOver);
+        }
+        elements.push({
             savedPointerEvents,
             element: elementMouseIsOver,
         });
+        elementMouseIsOver.style.pointerEvents = 'none';
+        elementMouseIsOver = document.elementFromPoint(x, y);
     }
-    const result = [];
-    stack.forEach(({ element, savedPointerEvents }) => {
-        element.style.pointerEvents = savedPointerEvents;
-        result.push(element);
+    elements.forEach(({ element, savedPointerEvents }) => {
+        if (savedPointerEvents) {
+            element.style.pointerEvents = savedPointerEvents;
+        }
+        else {
+            element.style.removeProperty('pointer-events');
+        }
+        if (!element.getAttribute('style')) {
+            element.removeAttribute('style');
+        }
     });
-    return result;
+    return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, operator, separator, decorators) => {
@@ -632,8 +637,8 @@ var Browser;
 })(Browser = exports.Browser || (exports.Browser = {}));
 var PlatformID;
 (function (PlatformID) {
-    PlatformID["microsoftSentinel"] = "microsoftSentinel";
-    PlatformID["microsoftDefenderForEndpoint"] = "microsoftDefenderForEndpoint";
+    PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
+    PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 
 
@@ -680,18 +685,19 @@ exports.buildMicrosoftSentinelQueryParts = buildMicrosoftSentinelQueryParts;
 /*!***********************************************************!*\
   !*** ./extension/inline/helpers/monaco-editor-helpers.ts ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getEditorIndexByFormattedUri = exports.getLastContentLine = exports.getContentFocusedLines = exports.checkEditorExists = exports.getEditorByIndex = void 0;
+exports.buildNewQuery = exports.buildNewJsonQuery = exports.getEditorIndexByFormattedUri = exports.getLastContentLine = exports.getContentFocusedLines = exports.checkEditorExists = exports.getEditorByIndex = void 0;
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const getEditorByIndex = (index) => {
     return monaco.editor.getModels()[index];
 };
 exports.getEditorByIndex = getEditorByIndex;
-const checkEditorExists = (index) => {
-    var _a, _b, _c, _d;
-    return !!((_d = (_c = (_b = (_a = monaco === null || monaco === void 0 ? void 0 : monaco.editor) === null || _a === void 0 ? void 0 : _a.getModels) === null || _b === void 0 ? void 0 : _b.call(_a)) === null || _c === void 0 ? void 0 : _c[index]) === null || _d === void 0 ? void 0 : _d.setValue);
+const checkEditorExists = () => {
+    var _a, _b;
+    return !!((_b = (_a = monaco === null || monaco === void 0 ? void 0 : monaco.editor) === null || _a === void 0 ? void 0 : _a.getModels) === null || _b === void 0 ? void 0 : _b.call(_a));
 };
 exports.checkEditorExists = checkEditorExists;
 const getContentFocusedLines = (editorIndex) => {
@@ -723,6 +729,50 @@ const getEditorIndexByFormattedUri = (uri) => {
     });
 };
 exports.getEditorIndexByFormattedUri = getEditorIndexByFormattedUri;
+const buildNewJsonQuery = (editorIndex, suffix, modifyType) => {
+    var _a;
+    const editor = (0, exports.getEditorByIndex)(editorIndex);
+    const currentEditorValue = (0, helpers_1.parseJSONSafe)(editor.getValue(), null);
+    const currentQuery = (!currentEditorValue || !currentEditorValue.Query)
+        ? ''
+        : currentEditorValue.Query;
+    const newQuery = `${modifyType === 'show all'
+        ? ((_a = currentQuery.split('|').shift()) === null || _a === void 0 ? void 0 : _a.trim())
+            || '<unknown>'
+        : currentQuery} ${suffix}`;
+    return JSON.stringify({
+        Query: newQuery,
+    }, null, 3);
+};
+exports.buildNewJsonQuery = buildNewJsonQuery;
+const buildNewQuery = (editorIndex, suffix, modifyType) => {
+    let newQuery = '';
+    const editor = (0, exports.getEditorByIndex)(editorIndex);
+    const editorLines = editor.getLinesContent();
+    const focusedLines = (0, exports.getContentFocusedLines)(editorIndex);
+    if (modifyType === 'show all' && focusedLines.length < 1) {
+        const tableName = editorLines
+            .map((l) => l.split('|').shift())
+            .filter(Boolean).pop()
+            || '<unknown>';
+        newQuery = `${tableName} ${suffix}`;
+    }
+    if (modifyType === 'show all' && focusedLines.length >= 1) {
+        const tableName = editorLines[focusedLines[0] - 1].split('|').shift();
+        editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${tableName} ${suffix}`);
+        newQuery = editorLines.join('\n');
+    }
+    if (modifyType !== 'show all') {
+        const lastEditorLineIndex = focusedLines.length > 0
+            ? focusedLines[focusedLines.length - 1]
+            : (0, exports.getLastContentLine)(editorIndex);
+        const lastEditorLine = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
+        editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
+        newQuery = editorLines.join('\n');
+    }
+    return (0, helpers_1.clearExtraSpaces)(newQuery);
+};
+exports.buildNewQuery = buildNewQuery;
 
 
 /***/ }),
@@ -791,19 +841,19 @@ const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug 
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
 const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
-const helpers_1 = __webpack_require__(/*! ../../common/helpers */ "./common/helpers.ts");
 const monaco_editor_helpers_1 = __webpack_require__(/*! ./helpers/monaco-editor-helpers */ "./extension/inline/helpers/monaco-editor-helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('inline'))
-    .addPrefix(types_common_1.PlatformID.microsoftSentinel);
+    .addPrefix(types_common_1.PlatformID.MicrosoftSentinel);
 let editorIndex = 0;
 const setIndex = (index) => {
     if (index === null) {
-        return loggers.warn().log('Can not determine the editor index', index);
+        return false;
     }
     if (editorIndex !== index) {
         editorIndex = index;
         loggers.debug().log('The editor index is set to', index);
     }
+    return true;
 };
 const getCurrentEditorIndex = () => {
     const editorHtml = document
@@ -818,37 +868,16 @@ const getCurrentEditorIndex = () => {
 window.addEventListener('message', (event) => {
     const message = event.data;
     if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISModifyQuery === message.type, message, event)) {
-        if (!(0, monaco_editor_helpers_1.checkEditorExists)(editorIndex)) {
+        if (!(0, monaco_editor_helpers_1.checkEditorExists)()) {
             return loggers.error().log('editor not found', monaco);
         }
-        setIndex(getCurrentEditorIndex());
+        if (!setIndex(getCurrentEditorIndex())) {
+            return loggers.info().log('Can not determine the editor index');
+        }
         const editor = (0, monaco_editor_helpers_1.getEditorByIndex)(editorIndex);
-        const editorLines = editor.getLinesContent();
         const { resources, modifyType } = message.payload;
-        let newQuery = '';
         const suffix = `| where ${(0, microsoft_sentinel_helpers_1.buildMicrosoftSentinelQueryParts)(modifyType, resources)}`;
-        const focusedLines = (0, monaco_editor_helpers_1.getContentFocusedLines)(editorIndex);
-        if (modifyType === 'show all' && focusedLines.length < 1) {
-            const tableName = editorLines
-                .map((l) => l.split('|').shift())
-                .filter(Boolean).pop()
-                || '<unknown>';
-            newQuery = `${tableName} ${suffix}`;
-        }
-        if (modifyType === 'show all' && focusedLines.length >= 1) {
-            const tableName = editorLines[focusedLines[0] - 1].split('|').shift();
-            editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${tableName} ${suffix}`);
-            newQuery = editorLines.join('\n');
-        }
-        if (modifyType !== 'show all') {
-            const lastEditorLineIndex = focusedLines.length > 0
-                ? focusedLines[focusedLines.length - 1]
-                : (0, monaco_editor_helpers_1.getLastContentLine)(editorIndex);
-            const lastEditorLine = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
-            editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
-            newQuery = editorLines.join('\n');
-        }
-        editor.setValue((0, helpers_1.clearExtraSpaces)(newQuery));
+        editor.setValue((0, monaco_editor_helpers_1.buildNewQuery)(editorIndex, suffix, modifyType));
     }
 });
 loggers.debug().log('mounted');

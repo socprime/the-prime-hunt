@@ -3,27 +3,29 @@ import { getDebugPrefix } from '../common/loggers/loggers-debug';
 import { ExtensionMessage, PlatformID } from '../common/types/types-common';
 import { ModifyQueryPayload } from '../common/types/types-common-payloads';
 import { isMessageMatched } from '../common/common-listeners';
-import { parseJSONSafe } from '../../common/helpers';
-import { buildMicrosoftDefenderForEndpointQueryParts } from '../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-helpers';
+import { buildMicrosoftDefenderQueryParts } from '../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers';
 import {
+  buildNewJsonQuery,
+  buildNewQuery,
   checkEditorExists,
   getEditorByIndex, getEditorIndexByFormattedUri,
 } from './helpers/monaco-editor-helpers';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix(getDebugPrefix('inline'))
-  .addPrefix(PlatformID.microsoftDefenderForEndpoint);
+  .addPrefix(PlatformID.MicrosoftDefender);
 
 let editorIndex = 2;
 
-const setIndex = (index: number | null) => {
+const setIndex = (index: number | null): boolean => {
   if (index === null) {
-    return loggers.warn().log('Can not determine the editor index', index);
+    return false;
   }
   if (editorIndex !== index) {
     editorIndex = index;
     loggers.debug().log('The editor index is set to', index);
   }
+  return true;
 };
 
 const getCurrentEditorIndex = (): number | null => {
@@ -52,35 +54,24 @@ window.addEventListener('message', (event) => {
     message,
     event,
   )) {
-    if (!checkEditorExists(editorIndex)) {
+    if (!checkEditorExists()) {
       return loggers.error().log('editor not found', monaco);
     }
-    setIndex(getCurrentEditorIndex());
-    const editor = getEditorByIndex(editorIndex);
-
-    const currentEditorValue = parseJSONSafe(
-      editor.getValue(),
-      null,
-    ) as {
-      Query: string;
-    } | null;
-
-    const currentQuery = (!currentEditorValue || !currentEditorValue.Query)
-      ? ''
-      : currentEditorValue.Query;
+    if (!setIndex(getCurrentEditorIndex())) {
+      return loggers.info().log('Can not determine the editor index');
+    }
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
-    const newQuery = `${
-      modifyType === 'show all'
-        ? currentQuery.split('|').shift()?.trim()
-          || '<unknown>'
-        : currentQuery
-    } | where ${buildMicrosoftDefenderForEndpointQueryParts(modifyType, resources)}`;
+    const { href } = document.location;
+    const suffix = ` | where ${buildMicrosoftDefenderQueryParts(modifyType, resources)}`;
 
-    editor.setValue(JSON.stringify({
-      Query: newQuery,
-    }, null, 3));
+    const editor = getEditorByIndex(editorIndex);
+    const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1
+      ? buildNewQuery(editorIndex, suffix, modifyType)
+      : buildNewJsonQuery(editorIndex, suffix, modifyType);
+
+    editor.setValue(newQuery);
   }
 });
 

@@ -13,11 +13,11 @@ export const getWebAccessibleUrl = (path: string): string => {
 export const getPlatformNameByID = (
   platformID: PlatformID,
 ): string => {
-  if (platformID === PlatformID.microsoftSentinel) {
+  if (platformID === PlatformID.MicrosoftSentinel) {
     return 'Microsoft Sentinel';
   }
 
-  if (platformID === PlatformID.microsoftDefenderForEndpoint) {
+  if (platformID === PlatformID.MicrosoftDefender) {
     return 'Microsoft Defender For Endpoint';
   }
 
@@ -133,47 +133,53 @@ export const downloadFile = (
 
 export const getElementsUnderCursor = (
   e: MouseEvent,
-  condition?: (elem: HTMLElement) => boolean,
+  filter?: (elem: HTMLElement) => boolean,
 ): HTMLElement[] => {
   const x = e.clientX;
   const y = e.clientY;
-  const stack: {
+
+  const filtered: HTMLElement[] = [];
+  const elements: {
     element: HTMLElement;
     savedPointerEvents: string;
   }[] = [];
 
   let elementMouseIsOver = document.elementFromPoint(x, y) as HTMLElement;
 
-  stack.push({
-    element: elementMouseIsOver,
-    savedPointerEvents: elementMouseIsOver.style.pointerEvents,
-  });
+  while (elementMouseIsOver.tagName !== 'HTML') {
+    const savedPointerEvents = elementMouseIsOver.style.pointerEvents;
 
-  while (elementMouseIsOver?.tagName !== 'HTML') {
-    let savedPointerEvents = elementMouseIsOver.style.pointerEvents;
-
-    if (elementMouseIsOver) {
-      if (condition?.(elementMouseIsOver)) {
-        return [elementMouseIsOver];
-      }
-      elementMouseIsOver.style.pointerEvents = 'none';
-      elementMouseIsOver = document.elementFromPoint(x, y) as any;
+    if (!elementMouseIsOver) {
+      break;
     }
 
-    stack.push({
+    if (
+      !filter
+      || (filter && filter(elementMouseIsOver))
+    ) {
+      filtered.push(elementMouseIsOver);
+    }
+
+    elements.push({
       savedPointerEvents,
       element: elementMouseIsOver,
     });
+    elementMouseIsOver.style.pointerEvents = 'none';
+    elementMouseIsOver = document.elementFromPoint(x, y) as HTMLElement;
   }
 
-  const result: HTMLElement[] = [];
-
-  stack.forEach(({ element, savedPointerEvents }) => {
-    element.style.pointerEvents = savedPointerEvents;
-    result.push(element);
+  elements.forEach(({ element, savedPointerEvents }) => {
+    if (savedPointerEvents) {
+      element.style.pointerEvents = savedPointerEvents;
+    } else {
+      element.style.removeProperty('pointer-events');
+    }
+    if (!element.getAttribute('style')) {
+      element.removeAttribute('style');
+    }
   });
 
-  return result;
+  return filtered;
 };
 
 export const buildQueryParts = (

@@ -13,14 +13,14 @@ import { isMessageMatched } from '../../../common/common-listeners';
 import { MessageToContent } from '../../types/types-content-messages';
 import { MessageToInline } from '../../../inline/types/types-inline-messages';
 import { AddFieldToWatchPayload } from '../../../common/types/types-common-payloads';
-import { microsoftDefenderForEndpointInline } from '../../../manifest/public-resources';
+import { microsoftDefenderInline } from '../../../manifest/public-resources';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('content'))
-  .addPrefix(PlatformID.microsoftDefenderForEndpoint);
+  .addPrefix(PlatformID.MicrosoftDefender);
 
-export class MicrosoftDefenderForEndpointPlatform implements ContentPlatform {
-  static readonly id = PlatformID.microsoftDefenderForEndpoint;
+export class MicrosoftDefenderPlatform implements ContentPlatform {
+  static readonly id = PlatformID.MicrosoftDefender;
 
   static readonly extensionDefaultPosition = {
     top: 0,
@@ -29,10 +29,10 @@ export class MicrosoftDefenderForEndpointPlatform implements ContentPlatform {
     height: 480,
   };
 
-  extensionDefaultPosition = MicrosoftDefenderForEndpointPlatform.extensionDefaultPosition;
+  extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;
 
   getID(): PlatformID {
-    return MicrosoftDefenderForEndpointPlatform.id;
+    return MicrosoftDefenderPlatform.id;
   }
 
   private static setListeners() {
@@ -57,10 +57,17 @@ export class MicrosoftDefenderForEndpointPlatform implements ContentPlatform {
       if (!e.altKey) {
         return;
       }
-      let element = getElementsUnderCursor(e, elem => elem.classList.contains('mtk20'));
-      const text = element.length > 1
+      const elements = getElementsUnderCursor(e, elem => {
+        return elem.classList.contains('mtk20')
+        || (
+          elem.tagName === 'SPAN'
+          && Array.from(elem.classList).join(',').indexOf('cellName') > -1
+          && !!elem.closest('[role="columnheader"]')
+        );
+      });
+      const text = elements.length > 1
         ? null
-        : removeDoubleQuotesAround(element[0]?.innerText?.trim() || '');
+        : removeDoubleQuotesAround(elements[0]?.innerText?.trim() || '');
       if (!text) {
         return;
       }
@@ -78,7 +85,7 @@ export class MicrosoftDefenderForEndpointPlatform implements ContentPlatform {
   private static connectInlineListener() {
     mountHTMLElement('script', document.body, {
       attributes: {
-        src: getWebAccessibleUrl(microsoftDefenderForEndpointInline),
+        src: getWebAccessibleUrl(microsoftDefenderInline),
         type: 'text/javascript',
         'data-type': 'inline-listener',
       },
@@ -86,9 +93,9 @@ export class MicrosoftDefenderForEndpointPlatform implements ContentPlatform {
   }
 
   connect(): void {
-    MicrosoftDefenderForEndpointPlatform.setListeners();
-    MicrosoftDefenderForEndpointPlatform.connectMouseDown();
-    MicrosoftDefenderForEndpointPlatform.connectInlineListener();
+    MicrosoftDefenderPlatform.setListeners();
+    MicrosoftDefenderPlatform.connectMouseDown();
+    MicrosoftDefenderPlatform.connectInlineListener();
 
     loggers.debug().log('connected');
   }

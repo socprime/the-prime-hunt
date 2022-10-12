@@ -54690,7 +54690,7 @@ const types_common_1 = __webpack_require__(/*! ../../../../common/types/types-co
 const content_services_1 = __webpack_require__(/*! ../../../../content/content-services */ "./extension/content/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
-const microsoft_defender_for_endpoint_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-helpers */ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-helpers.ts");
+const microsoft_defender_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers */ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts");
 class PlatformStore {
     modifyQuery(modifyType, resources) {
         (0, content_services_1.sendMessageFromApp)({
@@ -54704,11 +54704,11 @@ class PlatformStore {
     buildQueryParts(modifyType, resources) {
         var _a, _b;
         const platformID = (_b = (_a = this.platform) === null || _a === void 0 ? void 0 : _a.getID) === null || _b === void 0 ? void 0 : _b.call(_a);
-        if (platformID === types_common_1.PlatformID.microsoftSentinel) {
+        if (platformID === types_common_1.PlatformID.MicrosoftSentinel) {
             return (0, microsoft_sentinel_helpers_1.buildMicrosoftSentinelQueryParts)(modifyType, resources);
         }
-        if (platformID === types_common_1.PlatformID.microsoftDefenderForEndpoint) {
-            return (0, microsoft_defender_for_endpoint_helpers_1.buildMicrosoftDefenderForEndpointQueryParts)(modifyType, resources);
+        if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
+            return (0, microsoft_defender_helpers_1.buildMicrosoftDefenderQueryParts)(modifyType, resources);
         }
         return 'undefined platform';
     }
@@ -55455,17 +55455,17 @@ exports.getNormalizedWatchers = getNormalizedWatchers;
 
 /***/ }),
 
-/***/ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-watchers.ts":
-/*!********************************************************************************************************************!*\
-  !*** ./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-watchers.ts ***!
-  \********************************************************************************************************************/
+/***/ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts":
+/*!*******************************************************************************************************!*\
+  !*** ./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts ***!
+  \*******************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.microsoftDefenderForEndpointWatchers = void 0;
-exports.microsoftDefenderForEndpointWatchers = {
+exports.microsoftDefenderPostsUrls = exports.microsoftDefenderWatchers = void 0;
+exports.microsoftDefenderWatchers = {
     'accounts': [
         'AccountName',
     ],
@@ -55474,6 +55474,10 @@ exports.microsoftDefenderForEndpointWatchers = {
     ],
     'services': [],
 };
+exports.microsoftDefenderPostsUrls = [
+    'https://api-eu.securitycenter.windows.com/api/',
+    'https://security.microsoft.com/apiproxy/mtp/huntingService/queryExecutor',
+];
 
 
 /***/ }),
@@ -55487,7 +55491,7 @@ exports.microsoftDefenderForEndpointWatchers = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.microsoftSentinelWatchers = void 0;
+exports.microsoftSentinelPostsUrls = exports.microsoftSentinelWatchers = void 0;
 exports.microsoftSentinelWatchers = {
     'accounts': [
         'UserName',
@@ -55500,6 +55504,9 @@ exports.microsoftSentinelWatchers = {
     ],
     'services': [],
 };
+exports.microsoftSentinelPostsUrls = [
+    'https://api.loganalytics.io',
+];
 
 
 /***/ }),
@@ -55719,10 +55726,10 @@ const getWebAccessibleUrl = (path) => {
 };
 exports.getWebAccessibleUrl = getWebAccessibleUrl;
 const getPlatformNameByID = (platformID) => {
-    if (platformID === types_common_1.PlatformID.microsoftSentinel) {
+    if (platformID === types_common_1.PlatformID.MicrosoftSentinel) {
         return 'Microsoft Sentinel';
     }
-    if (platformID === types_common_1.PlatformID.microsoftDefenderForEndpoint) {
+    if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
         return 'Microsoft Defender For Endpoint';
     }
     return 'Unknown Platform';
@@ -55816,35 +55823,40 @@ const downloadFile = (type, content) => {
     document.body.removeChild(link);
 };
 exports.downloadFile = downloadFile;
-const getElementsUnderCursor = (e, condition) => {
+const getElementsUnderCursor = (e, filter) => {
     const x = e.clientX;
     const y = e.clientY;
-    const stack = [];
+    const filtered = [];
+    const elements = [];
     let elementMouseIsOver = document.elementFromPoint(x, y);
-    stack.push({
-        element: elementMouseIsOver,
-        savedPointerEvents: elementMouseIsOver.style.pointerEvents,
-    });
-    while ((elementMouseIsOver === null || elementMouseIsOver === void 0 ? void 0 : elementMouseIsOver.tagName) !== 'HTML') {
-        let savedPointerEvents = elementMouseIsOver.style.pointerEvents;
-        if (elementMouseIsOver) {
-            if (condition === null || condition === void 0 ? void 0 : condition(elementMouseIsOver)) {
-                return [elementMouseIsOver];
-            }
-            elementMouseIsOver.style.pointerEvents = 'none';
-            elementMouseIsOver = document.elementFromPoint(x, y);
+    while (elementMouseIsOver.tagName !== 'HTML') {
+        const savedPointerEvents = elementMouseIsOver.style.pointerEvents;
+        if (!elementMouseIsOver) {
+            break;
         }
-        stack.push({
+        if (!filter
+            || (filter && filter(elementMouseIsOver))) {
+            filtered.push(elementMouseIsOver);
+        }
+        elements.push({
             savedPointerEvents,
             element: elementMouseIsOver,
         });
+        elementMouseIsOver.style.pointerEvents = 'none';
+        elementMouseIsOver = document.elementFromPoint(x, y);
     }
-    const result = [];
-    stack.forEach(({ element, savedPointerEvents }) => {
-        element.style.pointerEvents = savedPointerEvents;
-        result.push(element);
+    elements.forEach(({ element, savedPointerEvents }) => {
+        if (savedPointerEvents) {
+            element.style.pointerEvents = savedPointerEvents;
+        }
+        else {
+            element.style.removeProperty('pointer-events');
+        }
+        if (!element.getAttribute('style')) {
+            element.removeAttribute('style');
+        }
     });
-    return result;
+    return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, operator, separator, decorators) => {
@@ -55938,7 +55950,7 @@ exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
 const microsoft_sentinel_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-sentinel/microsoft-sentinel-watchers */ "./extension/background/platforms/microsoft-sentinel/microsoft-sentinel-watchers.ts");
-const microsoft_defender_for_endpoint_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-watchers */ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-watchers.ts");
+const microsoft_defender_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers */ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts");
 const integrations_1 = __webpack_require__(/*! ../app/components/integrations/integrations */ "./extension/app/components/integrations/integrations.ts");
 exports.watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 exports.positionStorageKey = 'the-prime-hunt--extension--position';
@@ -55953,10 +55965,10 @@ const getWatchers = (platformID) => {
         return JSON.parse(localStorage.getItem(exports.watchersLocalStorageKey) || '');
     }
     catch (e) {
-        const watchers = platformID === 'microsoftSentinel'
+        const watchers = platformID === 'MicrosoftSentinel'
             ? microsoft_sentinel_watchers_1.microsoftSentinelWatchers
-            : platformID === 'microsoftDefenderForEndpoint'
-                ? microsoft_defender_for_endpoint_watchers_1.microsoftDefenderForEndpointWatchers
+            : platformID === 'MicrosoftDefender'
+                ? microsoft_defender_watchers_1.microsoftDefenderWatchers
                 : {};
         return (0, exports.setWatchers)(watchers);
     }
@@ -56119,8 +56131,8 @@ var Browser;
 })(Browser = exports.Browser || (exports.Browser = {}));
 var PlatformID;
 (function (PlatformID) {
-    PlatformID["microsoftSentinel"] = "microsoftSentinel";
-    PlatformID["microsoftDefenderForEndpoint"] = "microsoftDefenderForEndpoint";
+    PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
+    PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 
 
@@ -56205,7 +56217,7 @@ const sendMessage = (loggers, message, runtime = true) => {
             return;
         }
         if (!runtime) {
-            window.postMessage(message, '*');
+            window.postMessage(message);
             return loggers.debug().log('postMessage', message);
         }
         if (!(0, api_support_1.isRuntimeSendMessageSupported)()) {
@@ -56244,15 +56256,15 @@ exports.PlatformResolver = void 0;
 const MicrosoftSentinelPlatform_1 = __webpack_require__(/*! ./microsoft-sentinel/MicrosoftSentinelPlatform */ "./extension/content/platforms/microsoft-sentinel/MicrosoftSentinelPlatform.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
 const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
-const MicrosoftDefenderForEndpointPlatform_1 = __webpack_require__(/*! ./microsoft-defender-for-endpoint/MicrosoftDefenderForEndpointPlatform */ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderForEndpointPlatform.ts");
+const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./microsoft-defender-for-endpoint/MicrosoftDefenderPlatform */ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts");
 class PlatformResolver {
     static getPlatform(platformID) {
         switch (platformID) {
-            case types_common_1.PlatformID.microsoftSentinel: {
+            case types_common_1.PlatformID.MicrosoftSentinel: {
                 return new MicrosoftSentinelPlatform_1.MicrosoftSentinelPlatform();
             }
-            case types_common_1.PlatformID.microsoftDefenderForEndpoint: {
-                return new MicrosoftDefenderForEndpointPlatform_1.MicrosoftDefenderForEndpointPlatform();
+            case types_common_1.PlatformID.MicrosoftDefender: {
+                return new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform();
             }
         }
     }
@@ -56262,9 +56274,9 @@ class PlatformResolver {
             return;
         }
         return /(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)
-            ? PlatformResolver.getPlatform(types_common_1.PlatformID.microsoftSentinel)
+            ? PlatformResolver.getPlatform(types_common_1.PlatformID.MicrosoftSentinel)
             : /(security.microsoft.com)/.test(href)
-                ? PlatformResolver.getPlatform(types_common_1.PlatformID.microsoftDefenderForEndpoint)
+                ? PlatformResolver.getPlatform(types_common_1.PlatformID.MicrosoftDefender)
                 : undefined;
     }
     resolve() {
@@ -56279,16 +56291,16 @@ exports.PlatformResolver = PlatformResolver;
 
 /***/ }),
 
-/***/ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderForEndpointPlatform.ts":
-/*!*************************************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderForEndpointPlatform.ts ***!
-  \*************************************************************************************************************/
+/***/ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts":
+/*!**************************************************************************************************!*\
+  !*** ./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts ***!
+  \**************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MicrosoftDefenderForEndpointPlatform = void 0;
+exports.MicrosoftDefenderPlatform = void 0;
 const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
 const loggers_debug_1 = __webpack_require__(/*! ../../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
 const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
@@ -56301,13 +56313,13 @@ const types_content_messages_1 = __webpack_require__(/*! ../../types/types-conte
 const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
-    .addPrefix(types_common_1.PlatformID.microsoftDefenderForEndpoint);
-class MicrosoftDefenderForEndpointPlatform {
+    .addPrefix(types_common_1.PlatformID.MicrosoftDefender);
+class MicrosoftDefenderPlatform {
     constructor() {
-        this.extensionDefaultPosition = MicrosoftDefenderForEndpointPlatform.extensionDefaultPosition;
+        this.extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;
     }
     getID() {
-        return MicrosoftDefenderForEndpointPlatform.id;
+        return MicrosoftDefenderPlatform.id;
     }
     static setListeners() {
         content_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
@@ -56322,10 +56334,15 @@ class MicrosoftDefenderForEndpointPlatform {
             if (!e.altKey) {
                 return;
             }
-            let element = (0, common_helpers_1.getElementsUnderCursor)(e, elem => elem.classList.contains('mtk20'));
-            const text = element.length > 1
+            const elements = (0, common_helpers_1.getElementsUnderCursor)(e, elem => {
+                return elem.classList.contains('mtk20')
+                    || (elem.tagName === 'SPAN'
+                        && Array.from(elem.classList).join(',').indexOf('cellName') > -1
+                        && !!elem.closest('[role="columnheader"]'));
+            });
+            const text = elements.length > 1
                 ? null
-                : (0, common_helpers_1.removeDoubleQuotesAround)(((_b = (_a = element[0]) === null || _a === void 0 ? void 0 : _a.innerText) === null || _b === void 0 ? void 0 : _b.trim()) || '');
+                : (0, common_helpers_1.removeDoubleQuotesAround)(((_b = (_a = elements[0]) === null || _a === void 0 ? void 0 : _a.innerText) === null || _b === void 0 ? void 0 : _b.trim()) || '');
             if (!text) {
                 return;
             }
@@ -56341,22 +56358,22 @@ class MicrosoftDefenderForEndpointPlatform {
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
             attributes: {
-                src: (0, common_helpers_1.getWebAccessibleUrl)(public_resources_1.microsoftDefenderForEndpointInline),
+                src: (0, common_helpers_1.getWebAccessibleUrl)(public_resources_1.microsoftDefenderInline),
                 type: 'text/javascript',
                 'data-type': 'inline-listener',
             },
         });
     }
     connect() {
-        MicrosoftDefenderForEndpointPlatform.setListeners();
-        MicrosoftDefenderForEndpointPlatform.connectMouseDown();
-        MicrosoftDefenderForEndpointPlatform.connectInlineListener();
+        MicrosoftDefenderPlatform.setListeners();
+        MicrosoftDefenderPlatform.connectMouseDown();
+        MicrosoftDefenderPlatform.connectInlineListener();
         loggers.debug().log('connected');
     }
 }
-exports.MicrosoftDefenderForEndpointPlatform = MicrosoftDefenderForEndpointPlatform;
-MicrosoftDefenderForEndpointPlatform.id = types_common_1.PlatformID.microsoftDefenderForEndpoint;
-MicrosoftDefenderForEndpointPlatform.extensionDefaultPosition = {
+exports.MicrosoftDefenderPlatform = MicrosoftDefenderPlatform;
+MicrosoftDefenderPlatform.id = types_common_1.PlatformID.MicrosoftDefender;
+MicrosoftDefenderPlatform.extensionDefaultPosition = {
     top: 0,
     left: 0,
     width: 480,
@@ -56366,16 +56383,16 @@ MicrosoftDefenderForEndpointPlatform.extensionDefaultPosition = {
 
 /***/ }),
 
-/***/ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-helpers.ts":
-/*!****************************************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-helpers.ts ***!
-  \****************************************************************************************************************/
+/***/ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts":
+/*!***************************************************************************************************!*\
+  !*** ./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildMicrosoftDefenderForEndpointQueryParts = exports.normalizedValue = void 0;
+exports.buildMicrosoftDefenderQueryParts = exports.normalizedValue = void 0;
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
 const normalizedValue = (value) => {
@@ -56387,13 +56404,13 @@ const normalizedValue = (value) => {
         : `\"${nValue.replace(/\\/g, '\\\\')}\"`;
 };
 exports.normalizedValue = normalizedValue;
-const buildMicrosoftDefenderForEndpointQueryParts = (type, resources) => {
+const buildMicrosoftDefenderQueryParts = (type, resources) => {
     return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
         leftOperand: (v) => v,
         rightOperand: (v) => (0, exports.normalizedValue)(v),
     });
 };
-exports.buildMicrosoftDefenderForEndpointQueryParts = buildMicrosoftDefenderForEndpointQueryParts;
+exports.buildMicrosoftDefenderQueryParts = buildMicrosoftDefenderQueryParts;
 
 
 /***/ }),
@@ -56431,7 +56448,7 @@ const envs_1 = __webpack_require__(/*! ../../../common/envs */ "./extension/comm
 const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ./microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
 const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
-    .addPrefix(types_common_1.PlatformID.microsoftSentinel);
+    .addPrefix(types_common_1.PlatformID.MicrosoftSentinel);
 class MicrosoftSentinelPlatform {
     constructor() {
         this.extensionDefaultPosition = MicrosoftSentinelPlatform.extensionDefaultPosition;
@@ -56445,8 +56462,11 @@ class MicrosoftSentinelPlatform {
             if (!e.altKey) {
                 return;
             }
-            let element = (0, common_helpers_1.getElementsUnderCursor)(e, elem => elem.classList.contains('ag-header-cell-text'));
-            const text = element.length > 1 ? null : (_b = (_a = element[0]) === null || _a === void 0 ? void 0 : _a.innerText) === null || _b === void 0 ? void 0 : _b.trim();
+            const elements = (0, common_helpers_1.getElementsUnderCursor)(e, elem => {
+                return elem.classList.contains('ag-header-cell-text')
+                    || elem.classList.contains('ag-group-value');
+            });
+            const text = elements.length > 1 ? null : (_b = (_a = elements[0]) === null || _a === void 0 ? void 0 : _a.innerText) === null || _b === void 0 ? void 0 : _b.trim();
             if (!text) {
                 return;
             }
@@ -56490,7 +56510,7 @@ class MicrosoftSentinelPlatform {
     }
 }
 exports.MicrosoftSentinelPlatform = MicrosoftSentinelPlatform;
-MicrosoftSentinelPlatform.id = types_common_1.PlatformID.microsoftSentinel;
+MicrosoftSentinelPlatform.id = types_common_1.PlatformID.MicrosoftSentinel;
 MicrosoftSentinelPlatform.extensionDefaultPosition = {
     top: 0,
     left: 0,
@@ -56614,14 +56634,14 @@ Object.values(MessageToInline).forEach(type => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.microsoftDefenderForEndpointInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
-exports.microsoftDefenderForEndpointInline = 'inline-microsoft-defender-for-endpoint.js';
+exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
 exports.accessibleResources = {
-    [types_common_1.PlatformID.microsoftSentinel]: [exports.microsoftSentinelInline],
-    [types_common_1.PlatformID.microsoftDefenderForEndpoint]: [exports.microsoftDefenderForEndpointInline],
+    [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
+    [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
     app: [exports.appStyles],
 };
 

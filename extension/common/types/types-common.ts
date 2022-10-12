@@ -42,8 +42,8 @@ export type ExtensionMessage<T = any> = {
 };
 
 export enum PlatformID {
-  microsoftSentinel = 'microsoftSentinel',
-  microsoftDefenderForEndpoint = 'microsoftDefenderForEndpoint',
+  MicrosoftSentinel = 'MicrosoftSentinel',
+  MicrosoftDefender = 'MicrosoftDefender',
 }
 
 export type IPlatform = {

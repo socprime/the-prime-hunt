@@ -1,6 +1,6 @@
 import { WatchingResources } from '../background/types/types-background-common';
 import { microsoftSentinelWatchers } from '../background/platforms/microsoft-sentinel/microsoft-sentinel-watchers';
-import { microsoftDefenderForEndpointWatchers } from '../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-watchers';
+import { microsoftDefenderWatchers } from '../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers';
 import { PlatformID } from './types/types-common';
 import { Position } from '../content/types/types-content-common';
 import { Integration } from '../app/components/integrations/integrations-types';
@@ -28,10 +28,10 @@ export const getWatchers = (
       localStorage.getItem(watchersLocalStorageKey) || '',
     );
   } catch (e) {
-    const watchers = platformID === 'microsoftSentinel'
+    const watchers = platformID === 'MicrosoftSentinel'
       ? microsoftSentinelWatchers
-      : platformID === 'microsoftDefenderForEndpoint'
-        ? microsoftDefenderForEndpointWatchers
+      : platformID === 'MicrosoftDefender'
+        ? microsoftDefenderWatchers
         : {} as WatchingResources;
 
     return setWatchers(watchers);

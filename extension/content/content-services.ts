@@ -22,7 +22,7 @@ export const sendMessage = <T = unknown>(
       return;
     }
     if (!runtime) {
-      window.postMessage(message, '*');
+      window.postMessage(message);
       return loggers.debug().log('postMessage', message);
     }
 

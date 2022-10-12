@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, parse } from 'path';
 import { existsSync } from 'fs';
 import minimist from 'minimist';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -9,7 +9,7 @@ import { AbsFilePath, HTMLTextContent, LogLevel, Mode } from '../common/types';
 import { buildManifest } from './manifest/manifest-utils';
 import { Browser, PlatformID } from './common/types/types-common';
 import { DefinePlugin } from 'webpack';
-import { appStyles } from './manifest/public-resources';
+import { appStyles, microsoftDefenderInline, microsoftSentinelInline } from './manifest/public-resources';
 
 const args = minimist<{
   mode: Mode;
@@ -68,8 +68,8 @@ module.exports = {
   entry: {
     content: join(__dirname, './content.ts'),
     background: join(__dirname, './background.ts'),
-    'inline-microsoft-sentinel': join(__dirname, './inline/inline-microsoft-sentinel.ts'),
-    'inline-microsoft-defender-for-endpoint': join(__dirname, './inline/inline-microsoft-defender-for-endpoint.ts'),
+    [parse(microsoftSentinelInline).name]: join(__dirname, `./inline/${parse(microsoftSentinelInline).name}.ts`),
+    [parse(microsoftDefenderInline).name]: join(__dirname, `./inline/${parse(microsoftDefenderInline).name}.ts`),
   },
   output: {
     path: join(output, browser),

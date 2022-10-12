@@ -11,7 +11,7 @@ export const normalizedValue = (value: string | number) => {
     : `\"${nValue.replace(/\\/g, '\\\\')}\"`;
 };
 
-export const buildMicrosoftDefenderForEndpointQueryParts = (
+export const buildMicrosoftDefenderQueryParts = (
   type: ModifyQueryType,
   resources: NormalizedParsedResources,
 ) => {

@@ -1,4 +1,5 @@
 import { WatchingResources } from '../../types/types-background-common';
+import { Url } from '../../../../common/types';
 
 export const microsoftSentinelWatchers: WatchingResources = {
   'accounts': [
@@ -12,3 +13,7 @@ export const microsoftSentinelWatchers: WatchingResources = {
   ],
   'services': [],
 };
+
+export const microsoftSentinelPostsUrls: Url[] = [
+  'https://api.loganalytics.io',
+];

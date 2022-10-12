@@ -6,7 +6,7 @@ import { getDebugPrefix } from '../../../common/loggers/loggers-debug';
 import { AbstractPlatform } from '../AbstractPlatform';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
-import { microsoftSentinelWatchers } from './microsoft-sentinel-watchers';
+import { microsoftSentinelPostsUrls, microsoftSentinelWatchers } from './microsoft-sentinel-watchers';
 import { getNormalizedWatchers } from '../background-platforms-helpers';
 import { sendMessageFromBackground } from '../../background-services';
 import { SetLoadingStatePayload } from '../../../common/types/types-common-payloads';
@@ -15,7 +15,7 @@ import { LoadingKey } from '../../../app/types/types-app-common';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('background'))
-  .addPrefix(PlatformID.microsoftSentinel);
+  .addPrefix(PlatformID.MicrosoftSentinel);
 
 export class MicrosoftSentinelPlatform extends AbstractPlatform {
   constructor() {
@@ -24,7 +24,7 @@ export class MicrosoftSentinelPlatform extends AbstractPlatform {
     this.emptyFieldValue = '-';
   }
 
-  static readonly id = PlatformID.microsoftSentinel;
+  static readonly id = PlatformID.MicrosoftSentinel;
 
   getID() {
     return MicrosoftSentinelPlatform.id;
@@ -39,12 +39,12 @@ export class MicrosoftSentinelPlatform extends AbstractPlatform {
         BGListenerType.OnBeforeRequest,
         (id, params, isMatched) => {
           const details = params.listenerParams[0] as WebRequestBodyDetails;
-          const { host } = new URL(details.url);
+          const { href } = new URL(details.url);
           if (!isMatched(
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !/(api.loganalytics.io)$/.test(host)
+              || !microsoftSentinelPostsUrls.some(p => href.indexOf(p) > -1)
               || !details.requestBody?.raw?.[0]?.bytes?.byteLength
               || details.requestBody?.raw[0].bytes.byteLength < 5
             ),
@@ -64,12 +64,12 @@ export class MicrosoftSentinelPlatform extends AbstractPlatform {
         BGListenerType.OnBeforeSendHeaders,
         (id, params, isMatched) => {
           const details = params.listenerParams[0] as WebRequestHeadersDetails;
-          const { host } = new URL(details.url);
+          const { href } = new URL(details.url);
           if (!isMatched(
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !/(api.loganalytics.io)$/.test(host)
+              || !microsoftSentinelPostsUrls.some(p => href.indexOf(p) > -1)
               || !bodyData.has(details.url)
               || !details.requestHeaders
             ),

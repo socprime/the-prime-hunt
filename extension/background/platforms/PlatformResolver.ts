@@ -3,7 +3,7 @@ import { PlatformID } from '../../common/types/types-common';
 import { MicrosoftSentinelPlatform } from './microsoft-sentinel/MicrosoftSentinelPlatform';
 import { BackgroundPlatform } from '../types/types-background-common';
 import { backgroundPlatformIDFromENV } from '../../common/envs';
-import { MicrosoftDefenderForEndpointPlatform } from './microsoft-defender-for-endpoint/MicrosoftDefenderForEndpointPlatform';
+import { MicrosoftDefenderPlatform } from './microsoft-defender-for-endpoint/MicrosoftDefenderPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -11,13 +11,13 @@ export class PlatformResolver {
   private getPlatform(platformID: PlatformID): BackgroundPlatform | undefined {
     if (!this.platforms.has(platformID)) {
       switch (platformID) {
-        case PlatformID.microsoftSentinel: {
+        case PlatformID.MicrosoftSentinel: {
           this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new MicrosoftSentinelPlatform());
           break;
         }
 
-        case PlatformID.microsoftDefenderForEndpoint: {
-          this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new MicrosoftDefenderForEndpointPlatform());
+        case PlatformID.MicrosoftDefender: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new MicrosoftDefenderPlatform());
         }
       }
     }

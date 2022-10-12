@@ -20,10 +20,10 @@ import { normalizeFieldValue } from './microsoft-sentinel-helpers';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('content'))
-  .addPrefix(PlatformID.microsoftSentinel);
+  .addPrefix(PlatformID.MicrosoftSentinel);
 
 export class MicrosoftSentinelPlatform implements ContentPlatform {
-  static readonly id = PlatformID.microsoftSentinel;
+  static readonly id = PlatformID.MicrosoftSentinel;
 
   static readonly extensionDefaultPosition = {
     top: 0,
@@ -43,8 +43,11 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
       if (!e.altKey) {
         return;
       }
-      let element = getElementsUnderCursor(e, elem => elem.classList.contains('ag-header-cell-text'));
-      const text = element.length > 1 ? null : element[0]?.innerText?.trim();
+      const elements = getElementsUnderCursor(e, elem => {
+        return elem.classList.contains('ag-header-cell-text')
+          || elem.classList.contains('ag-group-value');
+      });
+      const text = elements.length > 1 ? null : elements[0]?.innerText?.trim();
       if (!text) {
         return;
       }

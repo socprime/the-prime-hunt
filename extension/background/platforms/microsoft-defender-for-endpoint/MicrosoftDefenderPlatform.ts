@@ -6,7 +6,7 @@ import { setBGInterceptor } from '../../background-listeners';
 import { BGListenerType } from '../../types/types-background-common';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
-import { microsoftDefenderForEndpointWatchers } from './microsoft-defender-for-endpoint-watchers';
+import { microsoftDefenderPostsUrls, microsoftDefenderWatchers } from './microsoft-defender-watchers';
 import { getNormalizedWatchers } from '../background-platforms-helpers';
 import { sendMessageFromBackground } from '../../background-services';
 import { SetLoadingStatePayload } from '../../../common/types/types-common-payloads';
@@ -15,17 +15,17 @@ import { LoadingKey } from '../../../app/types/types-app-common';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('background'))
-  .addPrefix(PlatformID.microsoftDefenderForEndpoint);
+  .addPrefix(PlatformID.MicrosoftDefender);
 
-export class MicrosoftDefenderForEndpointPlatform extends AbstractPlatform {
+export class MicrosoftDefenderPlatform extends AbstractPlatform {
   constructor() {
     super();
-    this.watchingResources = microsoftDefenderForEndpointWatchers;
+    this.watchingResources = microsoftDefenderWatchers;
     this.emptyFieldValue = '';
   }
   
   getID() {
-    return PlatformID.microsoftDefenderForEndpoint;
+    return PlatformID.MicrosoftDefender;
   }
 
   parseContent() {
@@ -88,12 +88,12 @@ export class MicrosoftDefenderForEndpointPlatform extends AbstractPlatform {
         BGListenerType.OnBeforeRequest,
         (id, params, isMatched) => {
           const details = params.listenerParams[0] as WebRequestBodyDetails;
-          const { host } = new URL(details.url);
+          const { href } = new URL(details.url);
           if (!isMatched(
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !/(api-eu.securitycenter.windows.com)$/.test(host)
+              || !microsoftDefenderPostsUrls.some(p => href.indexOf(p) > -1)
               || !details.requestBody?.raw?.[0]?.bytes?.byteLength
               || details.requestBody.raw[0].bytes.byteLength < 5
             ),
@@ -112,12 +112,12 @@ export class MicrosoftDefenderForEndpointPlatform extends AbstractPlatform {
         BGListenerType.OnBeforeSendHeaders,
         (id, params, isMatched) => {
           const details = params.listenerParams[0] as WebRequestHeadersDetails;
-          const { host } = new URL(details.url);
+          const { href } = new URL(details.url);
           if (!isMatched(
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !/(api-eu.securitycenter.windows.com)$/.test(host)
+              || !microsoftDefenderPostsUrls.some(p => href.indexOf(p) > -1)
               || !bodyData.has(details.url)
               || !details.requestHeaders
             ),
@@ -126,7 +126,6 @@ export class MicrosoftDefenderForEndpointPlatform extends AbstractPlatform {
           )) {
             return;
           }
-
           const bodyBytes = bodyData.get(details.url)!;
           const bodyStr = new TextDecoder().decode(bodyBytes);
 

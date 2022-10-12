@@ -9,7 +9,7 @@ import { sendMessageFromApp } from '../../../../content/content-services';
 import { ModifyQueryPayload } from '../../../../common/types/types-common-payloads';
 import { MessageToBackground } from '../../../../background/types/types-background-messages';
 import { buildMicrosoftSentinelQueryParts } from '../../../../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers';
-import { buildMicrosoftDefenderForEndpointQueryParts } from '../../../../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-for-endpoint-helpers';
+import { buildMicrosoftDefenderQueryParts } from '../../../../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers';
 
 export class PlatformStore {
   @observable
@@ -34,12 +34,12 @@ export class PlatformStore {
   ): string {
     const platformID = this.platform?.getID?.();
 
-    if (platformID === PlatformID.microsoftSentinel) {
+    if (platformID === PlatformID.MicrosoftSentinel) {
       return buildMicrosoftSentinelQueryParts(modifyType, resources);
     }
 
-    if (platformID === PlatformID.microsoftDefenderForEndpoint) {
-      return buildMicrosoftDefenderForEndpointQueryParts(modifyType, resources);
+    if (platformID === PlatformID.MicrosoftDefender) {
+      return buildMicrosoftDefenderQueryParts(modifyType, resources);
     }
 
     return 'undefined platform';

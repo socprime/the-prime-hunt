@@ -3,16 +3,16 @@ import { MicrosoftSentinelPlatform } from './microsoft-sentinel/MicrosoftSentine
 import { PlatformID } from '../../common/types/types-common';
 import { Url } from '../../../common/types';
 import { contentPlatformIDFromENV } from '../../common/envs';
-import { MicrosoftDefenderForEndpointPlatform } from './microsoft-defender-for-endpoint/MicrosoftDefenderForEndpointPlatform';
+import { MicrosoftDefenderPlatform } from './microsoft-defender-for-endpoint/MicrosoftDefenderPlatform';
 
 export class PlatformResolver {
   private static getPlatform(platformID: PlatformID): ContentPlatform | undefined {
     switch (platformID) {
-      case PlatformID.microsoftSentinel: {
+      case PlatformID.MicrosoftSentinel: {
         return new MicrosoftSentinelPlatform();
       }
-      case PlatformID.microsoftDefenderForEndpoint: {
-        return new MicrosoftDefenderForEndpointPlatform();
+      case PlatformID.MicrosoftDefender: {
+        return new MicrosoftDefenderPlatform();
       }
     }
   }
@@ -23,9 +23,9 @@ export class PlatformResolver {
       return;
     }
     return /(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)
-      ? PlatformResolver.getPlatform(PlatformID.microsoftSentinel)
+      ? PlatformResolver.getPlatform(PlatformID.MicrosoftSentinel)
       : /(security.microsoft.com)/.test(href)
-        ? PlatformResolver.getPlatform(PlatformID.microsoftDefenderForEndpoint)
+        ? PlatformResolver.getPlatform(PlatformID.MicrosoftDefender)
         : undefined;
   }
 
