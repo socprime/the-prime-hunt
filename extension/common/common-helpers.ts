@@ -21,6 +21,10 @@ export const getPlatformNameByID = (
     return 'Microsoft Defender For Endpoint';
   }
 
+  if (platformID === PlatformID.Splunk) {
+    return 'Splunk';
+  }
+
   return 'Unknown Platform';
 };
 
@@ -211,3 +215,28 @@ export const removeDoubleQuotesAround = (str: string): string => {
   }
   return result;
 };
+
+export const getVersionFromString = (version: unknown): number => {
+  if (
+    typeof version !== 'string'
+    || !/^[.0-9]+$/.test(version)
+  ) {
+    return 0;
+  }
+  const result = parseInt(version.replace(/\./g, ''));
+  return isNaN(result) ? 0 : result;
+};
+
+export const compareVersions = (
+  version1: string,
+  version2: string,
+): 'equal' | 'less' | 'greater' => {
+  const nVersion1 = getVersionFromString(version1);
+  const nVersion2 = getVersionFromString(version2);
+  return nVersion1 === nVersion2
+    ? 'equal'
+    : nVersion1 > nVersion2
+      ? 'greater'
+      : 'less';
+};
+

@@ -1,4 +1,5 @@
 @import '../../../scss/palette';
+@import '../../../scss/animations';
 
 .button.app-button {
   color: $base-text-color;
@@ -14,11 +15,26 @@
     animation: button-press-animation 0.2s ease-in-out;
   }
 
-  > .icon {
-    fill: $base-text-color;
-  }
-
   &.success-btn {
     background-color: $success;
+  }
+
+  &:not(.disabled) {
+    >.button-icon {
+      .icon {
+        fill: $base-text-color;
+      }
+    }
+  }
+
+  &.disabled {
+    color: $base-disabled-text-color;
+
+    >.button-icon {
+      .icon {
+        fill: $base-disabled-text-color;
+        cursor: default;
+      }
+    }
   }
 }

@@ -1,8 +1,20 @@
 @import "../../../scss/palette";
 
 .bulk-resources-panel {
-  > .count-selected span {
-    margin-right: 4px;
+  .max-selected-tooltip {
+    color: $error;
+    margin-right: 2px;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+
+  > .count-selected {
+    display: inline-flex;
+    justify-content: center;
+
+    span {
+      margin-right: 4px;
+    }
   }
 
   > .buttons-area {
@@ -18,11 +30,25 @@
       margin-right: 8px;
     }
   }
+
+  &.empty {
+    .count-selected,
+    .count-selected span {
+      color: $base-disabled-text-color;
+    }
+  }
+}
+
+.app-tooltip.max-selected-tooltip.tooltip-content {
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 236px;
 }
 
 .dropdown-menu.app-dropdown-menu.dropdown-search-sites-menu {
   padding: 0;
   overflow: hidden;
+  max-width: 230px;
 
   .search-sites-list {
     .list-item {

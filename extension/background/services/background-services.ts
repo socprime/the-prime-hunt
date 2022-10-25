@@ -1,20 +1,20 @@
-import { BrowserTab, BGListenerType, TabID } from './types/types-background-common';
-import { getBrowserContext } from '../common/common-helpers';
+import { BrowserTab, BGListenerType, TabID } from '../types/types-background-common';
+import { getBrowserContext } from '../../common/common-helpers';
 import {
   ExtensionMessage,
   NormalizedParsedResources,
   ParsedResources,
   PlatformID,
-} from '../common/types/types-common';
-import { platformResolver } from './platforms/PlatformResolver';
-import { PlatformResolver as ContentPlatformResolver } from '../content/platforms/PlatformResolver';
-import { MessageToBackground } from './types/types-background-messages';
-import { removeBGInterceptor, setBGInterceptor } from './background-listeners';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
-import { uuid } from '../../common/helpers';
-import { isTabsQuerySupported, isTabsSendMessageSupported } from '../common/api-support';
+} from '../../common/types/types-common';
+import { platformResolver } from '../platforms/PlatformResolver';
+import { PlatformResolver as ContentPlatformResolver } from '../../content/platforms/PlatformResolver';
+import { MessageToBackground } from '../types/types-background-messages';
+import { removeBGInterceptor, setBGInterceptor } from './background-services-listeners';
+import { getDebugPrefix } from '../../common/loggers/loggers-debug';
+import { uuid } from '../../../common/helpers';
+import { isTabsQuerySupported, isTabsSendMessageSupported } from '../../common/api-support';
 
-const loggers = require('../common/loggers').loggers
+const loggers = require('../../common/loggers').loggers
   .addPrefix(getDebugPrefix('background'))
   .addPrefix('services');
 
@@ -115,6 +115,7 @@ export const registerPlatformsOnOpenedTabs = () => {
       if (!tab?.url) {
         return;
       }
+      // check diff versions
       const platform = ContentPlatformResolver.resolveByUrl(tab.url);
       if (platform) {
         registerPlatformTab(platform.getID(), tab.id);

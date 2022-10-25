@@ -1,10 +1,9 @@
 import { Mode } from '../../common/types';
-import { Browser, PlatformID } from '../common/types/types-common';
+import { Browser } from '../common/types/types-common';
+import { accessibleResources } from './public-resources';
 import ManifestBase = chrome.runtime.ManifestBase;
 import ManifestV3 = chrome.runtime.ManifestV3;
 import ManifestV2 = chrome.runtime.ManifestV2;
-import { accessibleResources } from './public-resources';
-import { deduplicateArray } from '../../common/helpers';
 
 const generateIconSet = () => ({
   '16': 'icons/16.png',
@@ -16,21 +15,8 @@ const generateIconSet = () => ({
   '512': 'icons/512.png',
 });
 
-const getAllowedMicrosoftSentinelUrls = (mode: Mode) => {
-  return [
-    'https://portal.azure.com/*',
-    'https://logsextension.hosting.portal.azure.net/*',
-    'https://*.reactblade.portal.azure.net/*',
-    ...(mode === Mode.development ? ['http://localhost/*'] : []),
-  ];
-};
-
-const getAllowedMicrosoftDefenderUrls = (mode: Mode) => {
-  return [
-    'https://api-eu.securitycenter.windows.com/*',
-    'https://security.microsoft.com/*',
-    ...(mode === Mode.development ? ['http://localhost/*'] : []),
-  ];
+const getDebugUrls = (mode: Mode) => {
+  return mode === Mode.development ? ['http://localhost/*'] : [];
 };
 
 const packageJsonPath = '../../package.json';
@@ -56,13 +42,11 @@ const getCommonManifest = (mode: Mode): ManifestBase => {
     icons: generateIconSet(),
     content_scripts: [
       {
-        matches: getAllowedMicrosoftSentinelUrls(mode),
+        matches: [
+          'https://*/*',
+          ...getDebugUrls(mode),
+        ],
         'all_frames': true,
-        js: ['content.js'],
-        run_at: 'document_end',
-      },
-      {
-        matches: getAllowedMicrosoftDefenderUrls(mode),
         js: ['content.js'],
         run_at: 'document_end',
       },
@@ -106,26 +90,22 @@ const buildBackgroundV2 = () => {
 };
 
 
-const buildAccessibleResourcesV3 = (mode: Mode) => {
+const buildAccessibleResourcesV3 = () => {
   return {
-    web_accessible_resources: Object.keys(accessibleResources).map(type => {
-      if (type === PlatformID.MicrosoftSentinel) {
-        return {
-          resources: accessibleResources[type],
-          matches: getAllowedMicrosoftSentinelUrls(mode),
-        };
-      }
-      if (type === PlatformID.MicrosoftDefender) {
-        return {
-          resources: accessibleResources[type],
-          matches: getAllowedMicrosoftDefenderUrls(mode),
-        };
-      }
-      return {
-        resources: accessibleResources[type],
-        matches: ['<all_urls>'],
-      };
-    }),
+    web_accessible_resources: [
+      {
+        resources: Object.values(accessibleResources)
+          .reduce((res, resources) => {
+            return [
+              ...res,
+              ...resources,
+            ];
+          }, []),
+        matches: [
+          '<all_urls>',
+        ],
+      },
+    ],
   };
 };
 
@@ -148,7 +128,7 @@ const getManifestV3 = (mode: Mode): ManifestV3 => {
     host_permissions: [
       '<all_urls>',
     ],
-    ...buildAccessibleResourcesV3(mode),
+    ...buildAccessibleResourcesV3(),
     ...buildActionV3(),
     ...buildBackgroundV3(),
   };
@@ -179,14 +159,7 @@ export const buildManifest = (browser: Browser, mode: Mode) => {
   }
 
   if (browser === Browser.chrome) {
-    const manifest = getManifestV3(mode);
-    manifest.externally_connectable = {
-      matches: deduplicateArray([
-        ...getAllowedMicrosoftSentinelUrls(mode),
-        ...getAllowedMicrosoftDefenderUrls(mode),
-      ]),
-    };
-    return manifest;
+    return getManifestV3(mode);
   }
 
   return getManifestV3(mode);

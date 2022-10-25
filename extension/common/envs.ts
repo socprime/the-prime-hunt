@@ -19,3 +19,5 @@ export const logLevel: LogLevel =
   Object.keys(LogLevel).includes(process.env.LOG_LEVEL as LogLevel)
     ? process.env.LOG_LEVEL as LogLevel
     : LogLevel.info;
+
+export const version: string = process.env.VERSION!;

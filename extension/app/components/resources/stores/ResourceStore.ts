@@ -1,7 +1,7 @@
 import { computed, makeObservable, observable } from 'mobx';
 import { NormalizedParsedResources, ParsedResources, ResourceType } from '../../../../common/types/types-common';
 import { RootStore } from '../../../stores/RootStore';
-import { sendMessageFromApp } from '../../../../content/content-services';
+import { sendMessageFromApp } from '../../../../content/services/content-services';
 import { MessageToBackground } from '../../../../background/types/types-background-messages';
 import { ResourceName } from '../../../../../common/types';
 import { SetWatchersPayload } from '../../../../common/types/types-common-payloads';
@@ -10,6 +10,7 @@ import {
   removeFieldFromWatching,
 } from '../../../../background/platforms/background-platforms-helpers';
 import { getWatchers, setWatchers } from '../../../../common/local-storage';
+import { uuid } from '../../../../../common/helpers';
 
 export class ResourceStore {
   private addResource(
@@ -100,6 +101,7 @@ export class ResourceStore {
     const platformID = this.rootStore.platformStore.platform?.getID();
 
     sendMessageFromApp<SetWatchersPayload>({
+      id: `add-field--${uuid()}`,
       type: MessageToBackground.BGSetWatchers,
       payload: {
         platformID,
@@ -141,6 +143,7 @@ export class ResourceStore {
     const platformID = this.rootStore.platformStore.platform.getID();
 
     sendMessageFromApp<SetWatchersPayload>({
+      id: `remove-field--${uuid()}`,
       type: MessageToBackground.BGSetWatchers,
       payload: {
         platformID,

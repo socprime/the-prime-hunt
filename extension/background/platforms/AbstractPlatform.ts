@@ -1,16 +1,13 @@
 import { BackgroundPlatform, WatchingResources } from '../types/types-background-common';
-import { HTMLTextContent, UniqueHash } from '../../../common/types';
+import { UniqueHash } from '../../../common/types';
 import { BrowserTabID, NormalizedParsedResult, ParsedResult, PlatformID } from '../../common/types/types-common';
-import { removeBGInterceptor } from '../background-listeners';
-import { normalizeParsedResource, sendMessageFromBackground } from '../background-services';
+import { removeBGInterceptor } from '../services/background-services-listeners';
+import { normalizeParsedResource, sendMessageFromBackground } from '../services/background-services';
 import { MessageToApp } from '../../app/types/types-app-messages';
-import { http } from '../../../common/Http';
-import HttpHeader = chrome.webRequest.HttpHeader;
+import { uuid } from '../../../common/helpers';
 
 export abstract class AbstractPlatform implements BackgroundPlatform {
   abstract getID(): PlatformID;
-
-  abstract parseContent(content: HTMLTextContent): ParsedResult;
 
   abstract parseResponse(response: object): ParsedResult;
 
@@ -21,48 +18,6 @@ export abstract class AbstractPlatform implements BackgroundPlatform {
   protected watchingResources = {} as WatchingResources;
 
   protected emptyFieldValue = '';
-
-  protected getResourceData(
-    tabID: BrowserTabID,
-    params: {
-      url: string;
-      bodyBytes: ArrayBuffer;
-      requestHeaders: HttpHeader[];
-    },
-    callbacks: {
-      onJSONSuccess: (response: any) => void;
-      onError: (e: Error) => void;
-    },
-  ) {
-    http.post(
-      {
-        url: params.url,
-        body: params.bodyBytes,
-        headers: params.requestHeaders.reduce((res: any, header: any) => {
-          res[header.name] = header.value;
-          return res;
-        }, {}),
-      },
-      {
-        onJSONSuccess: (response: any) => {
-          const parsedResponse = this.parseResponse(response);
-          sendMessageFromBackground<NormalizedParsedResult>(tabID, {
-            type: MessageToApp.AppTakeNewResourceData,
-            payload: {
-              services: normalizeParsedResource(parsedResponse.services),
-              assets: normalizeParsedResource(parsedResponse.assets),
-              accounts: normalizeParsedResource(parsedResponse.accounts),
-            },
-          });
-          this.lastResponse = response;
-          callbacks.onJSONSuccess(response);
-        },
-        onError: (e: Error) => {
-          callbacks.onError(e);
-        },
-      },
-    );
-  }
 
   protected interceptorsIDs = new Set<UniqueHash>();
 
@@ -99,6 +54,7 @@ export abstract class AbstractPlatform implements BackgroundPlatform {
     }
     const parsedResponse = this.parseResponse(this.lastResponse);
     sendMessageFromBackground<NormalizedParsedResult>(tabID, {
+      id: `re-parsed-last-response--${uuid()}`,
       type: MessageToApp.AppTakeResourceData,
       payload: {
         services: normalizeParsedResource(parsedResponse.services),

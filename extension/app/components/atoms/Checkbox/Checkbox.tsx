@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { usePrevious } from '../../../hooks';
+import { usePrevious } from '../../../app-hooks';
 import { createClassName } from '../../../../common/common-helpers';
 import './checkbox.scss';
 

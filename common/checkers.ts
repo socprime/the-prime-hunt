@@ -1,3 +1,5 @@
+import { Mode } from './types';
+
 export const isString = (value: unknown): boolean => {
   return typeof value === 'string';
 };
@@ -18,4 +20,12 @@ export const isNumberInString = (str: unknown): boolean => {
     return false;
   }
   return !Number.isNaN(parseFloat(sValue));
+};
+
+export const isAllowedProtocol = (protocol: string, mode?: Mode): boolean => {
+  if (mode === Mode.development) {
+    return true;
+  }
+  const nProtocol = protocol.trim().toLowerCase();
+  return nProtocol === 'https:' || nProtocol === 'https';
 };

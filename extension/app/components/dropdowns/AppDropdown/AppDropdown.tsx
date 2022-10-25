@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Dropdown, DropdownProps, DropdownForwardRef } from '../../atoms/Dropdown/Dropdown';
-import { useOnClickOutside } from '../../../hooks';
+import { useOnClickOutside } from '../../../app-hooks';
 import { useAppStore } from '../../../stores';
 import { observer } from 'mobx-react-lite';
 import { createClassName } from '../../../../common/common-helpers';
@@ -51,14 +51,21 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
 
   const calculatedMountElement = typeof mountElement === 'undefined' ? rootElement : mountElement;
 
+  const normalizedStyles = useMemo(() => {
+    const styles = getMenuStyles?.() || {};
+    if (styles.width && styles.width === 'unset') {
+      delete styles.width;
+    }
+    return styles;
+  }, [getMenuStyles]);
+
+
   const getMenuStylesCallback = useCallback(() => {
-    const width = ref?.current?.dropdown?.current
-      ? ref.current.dropdown.current.scrollWidth
-      : 'unset';
+    const width = undefined;
     if (!calculatedMountElement) {
       return {
         width,
-        ...(getMenuStyles?.() || {}),
+        ...normalizedStyles,
       };
     }
     const dropdownElem = ref?.current?.dropdown?.current;
@@ -79,9 +86,9 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
       top,
       width,
       left: (dropdownRect && rootElementRect) ? dropdownRect.left - rootElementRect.left : 'unset',
-      ...(getMenuStyles?.() || {}),
+      ...normalizedStyles,
     };
-  }, [calculatedDirection, calculatedMountElement, getMenuStyles, rootElement]);
+  }, [calculatedDirection, calculatedMountElement, normalizedStyles, rootElement]);
 
   return (
     <Dropdown

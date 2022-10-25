@@ -31,7 +31,13 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         onClick?.(e);
       }}
     >
-      {icon && icon}
+      {icon && <span className="button-icon" onClick={e => {
+        if (disabled) {
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+      }}>{icon}</span>}
       <div className="button-content">{children}</div>
     </button>
   );

@@ -1,8 +1,8 @@
 import { MessageToBackground } from '../../../background/types/types-background-messages';
-import { sendMessageFromContent } from '../../content-services';
+import { sendMessageFromContent } from '../../services/content-services';
 import { PlatformID } from '../../../common/types/types-common';
 import { ContentPlatform, ListenerType, MessageListener } from '../../types/types-content-common';
-import { addListener } from '../../content-listeners';
+import { addListener } from '../../services/content-services-listeners';
 import { MessageToContent } from '../../types/types-content-messages';
 import {
   getElementsUnderCursor,
@@ -17,6 +17,7 @@ import { contentPlatformIDFromENV } from '../../../common/envs';
 import { microsoftSentinelInline } from '../../../manifest/public-resources';
 import { AddFieldToWatchPayload } from '../../../common/types/types-common-payloads';
 import { normalizeFieldValue } from './microsoft-sentinel-helpers';
+import { uuid } from '../../../../common/helpers';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('content'))
@@ -52,6 +53,7 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
         return;
       }
       sendMessageFromContent<AddFieldToWatchPayload>({
+        id: `content-add-field--${uuid()}`,
         type: MessageToBackground.BGAddFieldToWatch,
         payload: {
           fieldName: normalizeFieldValue(text),
@@ -97,14 +99,19 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
         )) {
           sendMessageFromContent({
             ...message,
+            id: `${message.id}--content-modify-query`,
             type: MessageToInline.ISModifyQuery,
           }, false);
         }
       },
     );
+
+    loggers.debug().log('listeners were set');
   }
 
   connect() {
     MicrosoftSentinelPlatform.setListeners();
+
+    loggers.debug().log('connected');
   }
 }

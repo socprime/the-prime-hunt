@@ -4,7 +4,7 @@ import ExtensionMessageEvent = chrome.runtime.ExtensionMessageEvent;
 import PageActionClickedEvent = chrome.pageAction.PageActionClickedEvent;
 import WebRequestHeadersSynchronousEvent = chrome.webRequest.WebRequestHeadersSynchronousEvent;
 import TabRemovedEvent = chrome.tabs.TabRemovedEvent;
-import { HTMLTextContent } from '../../../common/types';
+import { HTMLTextContent, IdentifiedFunction } from '../../../common/types';
 
 export type TabID = number;
 
@@ -14,6 +14,10 @@ export type MessageInfo = {
   tab: BrowserTab;
   origin: string;
   url: string;
+};
+
+export type BGInterceptor = IdentifiedFunction & {
+  unregister?: () => void;
 };
 
 export enum BGListenerType {
@@ -31,9 +35,9 @@ export type WatchingResources = {
 export type BackgroundPlatform = IPlatform & {
   register(): void;
   unregister(): void;
-  parseContent(content: HTMLTextContent): ParsedResult;
-  parseResponse(response: object): ParsedResult;
   setWatchers(watchers: WatchingResources, tabID: BrowserTabID): void;
+  parseResponse(response: object): ParsedResult;
+  parseContent?(content: HTMLTextContent): ParsedResult;
 };
 
 export type BeforeRequestBodyListener = (

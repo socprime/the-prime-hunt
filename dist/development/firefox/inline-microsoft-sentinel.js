@@ -6,11 +6,12 @@
 /*!****************************!*\
   !*** ./common/checkers.ts ***!
   \****************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
@@ -33,6 +34,14 @@ const isNumberInString = (str) => {
     return !Number.isNaN(parseFloat(sValue));
 };
 exports.isNumberInString = isNumberInString;
+const isAllowedProtocol = (protocol, mode) => {
+    if (mode === types_1.Mode.development) {
+        return true;
+    }
+    const nProtocol = protocol.trim().toLowerCase();
+    return nProtocol === 'https:' || nProtocol === 'https';
+};
+exports.isAllowedProtocol = isAllowedProtocol;
 
 
 /***/ }),
@@ -297,7 +306,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getPlatformNameByID = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
+exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getPlatformNameByID = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
@@ -314,6 +323,9 @@ const getPlatformNameByID = (platformID) => {
     }
     if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
         return 'Microsoft Defender For Endpoint';
+    }
+    if (platformID === types_common_1.PlatformID.Splunk) {
+        return 'Splunk';
     }
     return 'Unknown Platform';
 };
@@ -462,6 +474,25 @@ const removeDoubleQuotesAround = (str) => {
     return result;
 };
 exports.removeDoubleQuotesAround = removeDoubleQuotesAround;
+const getVersionFromString = (version) => {
+    if (typeof version !== 'string'
+        || !/^[.0-9]+$/.test(version)) {
+        return 0;
+    }
+    const result = parseInt(version.replace(/\./g, ''));
+    return isNaN(result) ? 0 : result;
+};
+exports.getVersionFromString = getVersionFromString;
+const compareVersions = (version1, version2) => {
+    const nVersion1 = (0, exports.getVersionFromString)(version1);
+    const nVersion2 = (0, exports.getVersionFromString)(version2);
+    return nVersion1 === nVersion2
+        ? 'equal'
+        : nVersion1 > nVersion2
+            ? 'greater'
+            : 'less';
+};
+exports.compareVersions = compareVersions;
 
 
 /***/ }),
@@ -501,7 +532,7 @@ exports.isMessageMatched = isMessageMatched;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.logLevel = exports.mode = exports.backgroundPlatformIDFromENV = exports.contentPlatformIDFromENV = void 0;
+exports.version = exports.logLevel = exports.mode = exports.backgroundPlatformIDFromENV = exports.contentPlatformIDFromENV = void 0;
 const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
 const types_1 = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
 exports.contentPlatformIDFromENV = Object.values(types_common_1.PlatformID).includes(null)
@@ -516,6 +547,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
+exports.version = "1.0.2";
 
 
 /***/ }),
@@ -547,7 +579,6 @@ class Loggers {
         return new Loggers(prefix, level);
     }
     log(...params) {
-        var _a;
         if (!logging) {
             return;
         }
@@ -557,11 +588,11 @@ class Loggers {
             return;
         }
         if (envs_1.mode !== types_1.Mode.production) {
-            (_a = console === null || console === void 0 ? void 0 : console[this.level === types_1.LogLevel.error
+            console[this.level === types_1.LogLevel.error
                 ? 'error'
                 : this.level === types_1.LogLevel.warn
                     ? 'warn'
-                    : 'log']) === null || _a === void 0 ? void 0 : _a.call(console, this.prefix || '==>', ...params);
+                    : 'log'](this.prefix || '==>', ...params);
         }
     }
     error() {
@@ -639,6 +670,7 @@ var PlatformID;
 (function (PlatformID) {
     PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
     PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
+    PlatformID["Splunk"] = "Splunk";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 
 
@@ -751,15 +783,15 @@ const buildNewQuery = (editorIndex, suffix, modifyType) => {
     const editorLines = editor.getLinesContent();
     const focusedLines = (0, exports.getContentFocusedLines)(editorIndex);
     if (modifyType === 'show all' && focusedLines.length < 1) {
-        const tableName = editorLines
+        const prefix = editorLines
             .map((l) => l.split('|').shift())
             .filter(Boolean).pop()
             || '<unknown>';
-        newQuery = `${tableName} ${suffix}`;
+        newQuery = `${prefix} ${suffix}`;
     }
     if (modifyType === 'show all' && focusedLines.length >= 1) {
-        const tableName = editorLines[focusedLines[0] - 1].split('|').shift();
-        editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${tableName} ${suffix}`);
+        const prefix = editorLines[focusedLines[0] - 1].split('|').shift();
+        editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${prefix} ${suffix}`);
         newQuery = editorLines.join('\n');
     }
     if (modifyType !== 'show all') {

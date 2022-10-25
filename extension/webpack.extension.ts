@@ -6,10 +6,10 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { WebpackCompiler, WebpackConfiguration } from 'webpack-cli';
 import { copySync, emptyDirSync, outputFileSync } from 'fs-extra';
 import { AbsFilePath, HTMLTextContent, LogLevel, Mode } from '../common/types';
-import { buildManifest } from './manifest/manifest-utils';
+import { buildManifest, getVersion } from './manifest/manifest-utils';
 import { Browser, PlatformID } from './common/types/types-common';
 import { DefinePlugin } from 'webpack';
-import { appStyles, microsoftDefenderInline, microsoftSentinelInline } from './manifest/public-resources';
+import { appStyles, microsoftDefenderInline, microsoftSentinelInline, splunkInline } from './manifest/public-resources';
 
 const args = minimist<{
   mode: Mode;
@@ -70,6 +70,7 @@ module.exports = {
     background: join(__dirname, './background.ts'),
     [parse(microsoftSentinelInline).name]: join(__dirname, `./inline/${parse(microsoftSentinelInline).name}.ts`),
     [parse(microsoftDefenderInline).name]: join(__dirname, `./inline/${parse(microsoftDefenderInline).name}.ts`),
+    [parse(splunkInline).name]: join(__dirname, `./inline/${parse(splunkInline).name}.ts`),
   },
   output: {
     path: join(output, browser),
@@ -157,9 +158,10 @@ module.exports = {
       'process.env.BACKGROUND_PLATFORM': JSON.stringify(backgroundPlatform),
       'process.env.LOG_LEVEL': JSON.stringify(logLevel),
       'process.env.DEBUG_ID': JSON.stringify(args.debugID),
+      'process.env.VERSION': JSON.stringify(getVersion()),
     }),
     ...(args.analyze ? [new BundleAnalyzerPlugin()] : []),
   ],
 } as WebpackConfiguration;
 
-// yarn extension --watch --env=content-platform=microsoftSentinel
+// yarn extension --watch --env=content-platform=MicrosoftSentinel

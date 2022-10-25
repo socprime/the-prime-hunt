@@ -4,6 +4,7 @@ import { MicrosoftSentinelPlatform } from './microsoft-sentinel/MicrosoftSentine
 import { BackgroundPlatform } from '../types/types-background-common';
 import { backgroundPlatformIDFromENV } from '../../common/envs';
 import { MicrosoftDefenderPlatform } from './microsoft-defender-for-endpoint/MicrosoftDefenderPlatform';
+import { SplunkPlatform } from './splunk/SplunkPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -18,6 +19,11 @@ export class PlatformResolver {
 
         case PlatformID.MicrosoftDefender: {
           this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new MicrosoftDefenderPlatform());
+          break;
+        }
+
+        case PlatformID.Splunk: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new SplunkPlatform());
         }
       }
     }

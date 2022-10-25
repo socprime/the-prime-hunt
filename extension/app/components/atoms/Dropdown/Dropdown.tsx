@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useImperativeHandle, useMemo, useCallback,
 } from 'react';
-import { usePrevious } from '../../../hooks';
+import { usePrevious } from '../../../app-hooks';
 import { createPortal } from 'react-dom';
 import { createClassName } from '../../../../common/common-helpers';
 import './dropdown.scss';
@@ -22,6 +22,7 @@ export type MenuStyles = {
 
 export type DropdownProps = {
   opener: React.ReactNode;
+  disabled?: boolean;
   opened?: boolean;
   closed?: boolean;
   mountElement?: HTMLElement | null;
@@ -40,6 +41,7 @@ export type DropdownForwardRef = {
 
 export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<DropdownProps>>((
   {
+    disabled,
     opened,
     closed,
     opener,
@@ -140,13 +142,19 @@ export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<Dropdow
         direction,
         className,
         isOpen ? 'open' : '',
+        disabled ? 'disabled' : '',
       ])}
       ref={dropdownRef}
     >
       <div className="dropdown-header">{header}</div>
       <div
         className="dropdown-opener"
-         onClick={() => {
+         onClick={e => {
+           if (disabled) {
+             e.preventDefault();
+             e.stopPropagation();
+             return;
+           }
            setIsOpen(!isOpen);
          }}
       >

@@ -1,5 +1,5 @@
 {
-   "version": "1.0.1",
+   "version": "1.0.2",
    "description": "The Prime Hunt is a browser extension for threat hunting. It introduces a One UI idea to simplify and speed up the investigation process regardless of the SIEMs or EDR in use. This is useful both for threat hunters starting off their careers and for seasoned professionals. The former can master the different security platforms and query languages faster, learning the right methodology from the very beginning, while the latter benefit from a streamlined workflow. One UI for different technologies mirrors the concept of Sigma as a single language for cybersecurity. Sigma rules can be translated into multiple platform formats. This extension helps any threat hunter easily run and tune Sigma rule translations in those platforms, ensuring the community is Sigma-enabled. Meanwhile, sharing query hits (coming soon) helps the entire community measure and consolidate the MITRE ATT&CK® technique prevalence and rule quality. With The Prime Hunt, you can easily see what accounts and assets are affected by the suspicious activity your query detects. Filter for or filter out query results by any field values with one click or look for all events related to them. Easily drill down to any CTI or any other sources that can help you in the investigation. If you have any questions, would like to give feedback, or need help, contact us at support@socprime.com.",
    "name": "The Prime Hunt",
    "manifest_version": 3,
@@ -15,23 +15,10 @@
    "content_scripts": [
       {
          "matches": [
-            "https://portal.azure.com/*",
-            "https://logsextension.hosting.portal.azure.net/*",
-            "https://*.reactblade.portal.azure.net/*",
+            "https://*/*",
             "http://localhost/*"
          ],
          "all_frames": true,
-         "js": [
-            "content.js"
-         ],
-         "run_at": "document_end"
-      },
-      {
-         "matches": [
-            "https://api-eu.securitycenter.windows.com/*",
-            "https://security.microsoft.com/*",
-            "http://localhost/*"
-         ],
          "js": [
             "content.js"
          ],
@@ -47,27 +34,9 @@
    "web_accessible_resources": [
       {
          "resources": [
-            "inline-microsoft-sentinel.js"
-         ],
-         "matches": [
-            "https://portal.azure.com/*",
-            "https://logsextension.hosting.portal.azure.net/*",
-            "https://*.reactblade.portal.azure.net/*",
-            "http://localhost/*"
-         ]
-      },
-      {
-         "resources": [
-            "inline-microsoft-defender.js"
-         ],
-         "matches": [
-            "https://api-eu.securitycenter.windows.com/*",
-            "https://security.microsoft.com/*",
-            "http://localhost/*"
-         ]
-      },
-      {
-         "resources": [
+            "inline-microsoft-sentinel.js",
+            "inline-microsoft-defender.js",
+            "inline-splunk.js",
             "app-styles.css"
          ],
          "matches": [
@@ -88,15 +57,5 @@
    },
    "background": {
       "service_worker": "background.js"
-   },
-   "externally_connectable": {
-      "matches": [
-         "https://portal.azure.com/*",
-         "https://logsextension.hosting.portal.azure.net/*",
-         "https://*.reactblade.portal.azure.net/*",
-         "http://localhost/*",
-         "https://api-eu.securitycenter.windows.com/*",
-         "https://security.microsoft.com/*"
-      ]
    }
 }

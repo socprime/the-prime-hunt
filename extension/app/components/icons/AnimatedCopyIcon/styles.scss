@@ -7,7 +7,7 @@
     visibility: hidden;
   }
 
-  &:focus .animated {
+  &:not(.disabled):focus .animated {
     animation: copy-animation 0.26s ease-in-out;
   }
 

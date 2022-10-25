@@ -44,6 +44,7 @@ export type ExtensionMessage<T = any> = {
 export enum PlatformID {
   MicrosoftSentinel = 'MicrosoftSentinel',
   MicrosoftDefender = 'MicrosoftDefender',
+  Splunk = 'Splunk',
 }
 
 export type IPlatform = {

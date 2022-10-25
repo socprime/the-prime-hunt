@@ -1,164 +1,141 @@
-import { BGListenerType, MessageInfo } from './types/types-background-common';
-import { getBrowserContext } from '../common/common-helpers';
-import { IdentifiedFunction, mapType, UniqueHash } from '../../common/types';
-import { uuid } from '../../common/helpers';
-import { DebugID, DebugMessage, getDebugPrefix } from '../common/loggers/loggers-debug';
+import { addListener } from './services/background-services-listeners';
 import {
-  isActionOnClickedSupported,
-  isBrowserActionOnClickedSupported,
-  isOnBeforeRequestSupported,
-  isOnBeforeSendHeadersSupported,
-  isRuntimeOnMessageExternalSupported,
-  isRuntimeOnMessageSupported,
-  isTabsOnRemovedSupported,
-} from '../common/api-support';
+  BeforeRequestBodyListener,
+  BeforeSendHeadersListener,
+  BGListenerType,
+  BrowserTabRemovedListener,
+  IconClickedListener,
+  MessageListener,
+} from './types/types-background-common';
+import { registerPlatformTab, sendMessageFromBackground, unregisterPlatformTabs } from './services/background-services';
+import { MessageToApp } from '../app/types/types-app-messages';
+import { ExtensionMessage } from '../common/types/types-common';
+import { isMessageMatched } from '../common/common-listeners';
+import { MessageToBackground } from './types/types-background-messages';
+import { MessageToContent } from '../content/types/types-content-messages';
+import { PlatformIDPayload, SetLoadingStatePayload, SetWatchersPayload } from '../common/types/types-common-payloads';
+import { platformResolver } from './platforms/PlatformResolver';
+import { LoadingKey } from '../app/types/types-app-common';
+import { getDebugPrefix } from '../common/loggers/loggers-debug';
+import { uuid } from '../../common/helpers';
 
-const loggers = require('../common/loggers/').loggers
+const loggers = require('../common/loggers').loggers
   .addPrefix(getDebugPrefix('background'))
   .addPrefix('listeners');
 
-const listeners: {
-  [key in BGListenerType]?: Function;
-} = {};
-
-export const interceptors: {
-  [key in BGListenerType]?: IdentifiedFunction[];
-} = {};
-
-listeners[BGListenerType.OnMessage] = (listener: Function, ...otherProps: any[]) => {
-  if (isRuntimeOnMessageSupported()) {
-    getBrowserContext().runtime.onMessage.addListener(listener, ...otherProps);
-  }
-
-  if (!isRuntimeOnMessageExternalSupported()) {
-    return;
-  }
-
-  const boundedListener = (...params: any[]) => {
-    const message: DebugMessage = params[0];
-    const info: MessageInfo = params[1];
-    if (
-      new URL(info.url).origin !== info.origin
-      || message.externalType !== DebugID.debugIDExternal
-    ) {
-      return;
+(addListener as IconClickedListener)(
+  BGListenerType.OnExtensionIconClicked,
+  (tab) => {
+    if (!tab.id) {
+      return loggers
+        .error()
+        .log(`${BGListenerType.OnExtensionIconClicked}: there is no tab id`, tab);
     }
-    listener(...params);
-  };
+    sendMessageFromBackground(tab.id, {
+      type: MessageToApp.AppShowExtension,
+    });
+    sendMessageFromBackground(tab.id, {
+      type: MessageToContent.CSConnectPlatform,
+    });
+  },
+);
 
-  getBrowserContext().runtime.onMessageExternal.addListener(boundedListener);
-};
+(addListener as BrowserTabRemovedListener)(
+  BGListenerType.OnBrowserTabRemoved,
+  (tabId) => {
+    unregisterPlatformTabs([tabId]);
+  },
+);
 
-listeners[BGListenerType.OnBrowserTabRemoved] = (listener: Function, ...otherProps: any[]) => {
-  if (!isTabsOnRemovedSupported()) {
-    return;
-  }
-  getBrowserContext().tabs.onRemoved.addListener(listener, ...otherProps);
-};
+(addListener as BeforeRequestBodyListener)(
+  BGListenerType.OnBeforeRequest,
+  () => {},
+  {
+    urls: ['<all_urls>'],
+  },
+  ['requestBody'],
+);
 
-listeners[BGListenerType.OnExtensionIconClicked] = (listener: Function, ...otherProps: any[]) => {
-  const context = getBrowserContext();
-  const contextAction = typeof context.action !== 'undefined' ? 'action' : 'browserAction';
-  if (contextAction === 'action' && !isActionOnClickedSupported()) {
-    return;
-  }
-  if (contextAction === 'browserAction' && !isBrowserActionOnClickedSupported()) {
-    return;
-  }
+(addListener as BeforeSendHeadersListener)(
+  BGListenerType.OnBeforeSendHeaders,
+  () => {},
+  {
+    urls: ['<all_urls>'],
+  },
+  ['requestHeaders'],
+);
 
-  context[contextAction].onClicked.addListener(listener, ...otherProps);
-};
+(addListener as MessageListener)(
+  BGListenerType.OnMessage,
+  (message : ExtensionMessage, sender) => {
+    if (!sender.tab?.id) {
+      return loggers
+        .error()
+        .log(`${BGListenerType.OnMessage} ${message.type}: there is no tab id`, sender, message);
+    }
 
-listeners[BGListenerType.OnBeforeRequest] = (listener: Function, ...otherProps: any[]) => {
-  if (!isOnBeforeRequestSupported()) {
-    return;
-  }
-  getBrowserContext().webRequest.onBeforeRequest.addListener(listener, ...otherProps);
-};
-
-listeners[BGListenerType.OnBeforeSendHeaders] = (listener: Function, ...otherProps: any[]) => {
-  if (!isOnBeforeSendHeadersSupported()) {
-    return;
-  }
-  getBrowserContext().webRequest.onBeforeSendHeaders.addListener(listener, ...otherProps);
-};
-
-export const isBGInterceptorMatched = (
-  type: BGListenerType,
-  matchCondition: () => boolean,
-  ...otherInfo: any[]
-): boolean => {
-  if (matchCondition()) {
-    loggers
-      .debug()
-      .log(`intercepted ${type}`, ...otherInfo);
-    return true;
-  }
-  return false;
-};
-
-export const setBGInterceptor = (
-  type: BGListenerType,
-  interceptor: (
-    id: UniqueHash,
-    params: {
-      listenerParams: any[],
-      createListenerParams: any[],
-    },
-    isMatched: (
-      matchCondition: () => boolean,
-      ...otherInfo: any[]
-    ) => boolean,
-  ) => void,
-): UniqueHash => {
-  const identifiedInterceptor = mapType<IdentifiedFunction>(interceptor);
-  identifiedInterceptor.id = uuid();
-  interceptors[type] = [
-    ...(interceptors[type] || []),
-    identifiedInterceptor,
-  ];
-
-  return identifiedInterceptor.id;
-};
-
-export const removeBGInterceptor = (
-  id: UniqueHash,
-  type?: BGListenerType,
-) => {
-  (type ? [type] : Object.keys(interceptors)).forEach((t: BGListenerType) => {
-    interceptors[t] = interceptors[t]!.filter(interceptor => interceptor.id !== id);
-  });
-};
-
-export const addListener = (
-  type: BGListenerType,
-  listener: any,
-  ...otherProps: any[]
-) => {
-  listeners[type]?.(
-    (...params: any[]) => {
-      (interceptors[type] || []).forEach(interceptor => {
-        if (!interceptor || typeof interceptor !== 'function') {
-          return;
-        }
-        interceptor(
-          interceptor.id,
-          {
-            listenerParams: params,
-            createListenerParams: [listener, ...otherProps],
-          },
-          (
-            matchCondition: () => boolean,
-            ...otherInfo: any[]
-          ) => isBGInterceptorMatched(
-            type,
-            matchCondition,
-            ...otherInfo,
-          ),
-        );
+    if (isMessageMatched(
+      () => MessageToBackground.BGRunClearData === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        type: MessageToApp.AppClearResourceData,
       });
-      listener(...params);
-    },
-    ...otherProps,
-  );
-};
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGModifyQuery === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id}--background-modify-query`,
+        type: MessageToContent.CSModifyQuery,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGSetWatchers === message.type,
+      message,
+      sender,
+    )) {
+      const { platformID, watchers, action } = message.payload as SetWatchersPayload;
+      platformResolver.resolve(platformID)?.setWatchers(watchers, sender.tab.id);
+      sendMessageFromBackground<SetLoadingStatePayload>(sender.tab.id, {
+        id: `background-set-watchers--${uuid()}`,
+        type: MessageToApp.AppSetLoadingState,
+        payload: {
+          loading: false,
+          key: action === 'add'
+            ? LoadingKey.fieldAdding
+            : LoadingKey.fieldRemoving,
+        },
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGAddFieldToWatch === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id}--background-add-field`,
+        type: MessageToApp.AppAddFieldToWatch,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGRegisterPlatformTab === message.type,
+      message,
+      sender,
+    )) {
+      const { platformID } = message.payload as PlatformIDPayload;
+      registerPlatformTab(platformID, sender.tab.id);
+    }
+  },
+);
+
+loggers.debug().log('mounted');

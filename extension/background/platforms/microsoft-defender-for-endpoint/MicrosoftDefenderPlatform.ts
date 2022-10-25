@@ -1,23 +1,37 @@
 import { AbstractPlatform } from '../AbstractPlatform';
-import { ParsedResult, PlatformID, ResourceType } from '../../../common/types/types-common';
+import { NormalizedParsedResult, ParsedResult, PlatformID } from '../../../common/types/types-common';
 import { Url } from '../../../../common/types';
 import { getDebugPrefix } from '../../../common/loggers/loggers-debug';
-import { setBGInterceptor } from '../../background-listeners';
-import { BGListenerType } from '../../types/types-background-common';
+import { setBGInterceptor } from '../../services/background-services-listeners';
+import { BGListenerType, TabID } from '../../types/types-background-common';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { microsoftDefenderPostsUrls, microsoftDefenderWatchers } from './microsoft-defender-watchers';
 import { getNormalizedWatchers } from '../background-platforms-helpers';
-import { sendMessageFromBackground } from '../../background-services';
+import { normalizeParsedResource, sendMessageFromBackground } from '../../services/background-services';
 import { SetLoadingStatePayload } from '../../../common/types/types-common-payloads';
 import { MessageToApp } from '../../../app/types/types-app-messages';
 import { LoadingKey } from '../../../app/types/types-app-common';
+import { uuid } from '../../../../common/helpers';
+import { http } from '../../../../common/Http';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('background'))
   .addPrefix(PlatformID.MicrosoftDefender);
 
 export class MicrosoftDefenderPlatform extends AbstractPlatform {
+  private static sendLoading(tabID: TabID, loading: boolean) {
+    sendMessageFromBackground<SetLoadingStatePayload>(tabID, {
+      type: MessageToApp.AppSetLoadingState,
+      payload: {
+        loading,
+        key: LoadingKey.resourcesAdding,
+      },
+    });
+  }
+
+  static id = PlatformID.MicrosoftDefender;
+
   constructor() {
     super();
     this.watchingResources = microsoftDefenderWatchers;
@@ -25,31 +39,14 @@ export class MicrosoftDefenderPlatform extends AbstractPlatform {
   }
   
   getID() {
-    return PlatformID.MicrosoftDefender;
-  }
-
-  parseContent() {
-    const results: {
-      [key in ResourceType]: {
-        [fieldName: string]: Set<string>;
-      };
-    } = {
-      'assets': {},
-      'accounts': {},
-      'services': {},
-    };
-
-    return {
-      accounts: results.accounts,
-      assets: results.assets,
-      services: results.services,
-    };
+    return MicrosoftDefenderPlatform.id;
   }
 
   parseResponse(response: {
     Results: Record<string, string>[];
   }) {
-    loggers.debug().log('started parse response...');
+    const id = uuid();
+    loggers.debug().log('started parse response...', id, this.watchingResources);
 
     const results: ParsedResult = {
       'assets': {},
@@ -70,7 +67,7 @@ export class MicrosoftDefenderPlatform extends AbstractPlatform {
       });
     });
 
-    loggers.debug().log('finished parse response');
+    loggers.debug().log('finished parse response', id);
 
     return {
       services: results.services,
@@ -136,30 +133,38 @@ export class MicrosoftDefenderPlatform extends AbstractPlatform {
             bodyData.delete(details.url);
           };
 
-          sendMessageFromBackground<SetLoadingStatePayload>(details.tabId, {
-            type: MessageToApp.AppSetLoadingState,
-            payload: {
-              loading: true,
-              key: LoadingKey.resourcesAdding,
-            },
-          });
+          MicrosoftDefenderPlatform.sendLoading(details.tabId, true);
 
-          this.getResourceData(
-            details.tabId,
+          http.post(
             {
-              bodyBytes,
               url: details.url,
-              requestHeaders: details.requestHeaders!,
+              body: bodyBytes,
+              headers: details.requestHeaders!.reduce((res: any, header: any) => {
+                res[header.name] = header.value;
+                return res;
+              }, {}),
             },
             {
-              onJSONSuccess: () => {
+              onJSONSuccess: (response: any) => {
+                const parsedResponse = this.parseResponse(response);
+                sendMessageFromBackground<NormalizedParsedResult>(details.tabId, {
+                  id: `parsed-response--${uuid()}`,
+                  type: MessageToApp.AppTakeNewResourceData,
+                  payload: {
+                    services: normalizeParsedResource(parsedResponse.services),
+                    assets: normalizeParsedResource(parsedResponse.assets),
+                    accounts: normalizeParsedResource(parsedResponse.accounts),
+                  },
+                });
+                this.lastResponse = response;
                 removeAttached();
               },
-              onError: (e) => {
+              onError: (e: Error) => {
                 loggers
                   .error()
-                  .addPrefix('Failed webRequest post')
+                  .addPrefix('failed webRequest post')
                   .log(e, details.method, details.url, bodyStr);
+                MicrosoftDefenderPlatform.sendLoading(details.tabId, false);
                 removeAttached();
               },
             },

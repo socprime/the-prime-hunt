@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 
 export type ListProps = {
@@ -10,12 +10,21 @@ export type ListProps = {
   className?: string;
 };
 
-export const List: React.FC<ListProps> = ({ className = '', items }) => {
+export const List = forwardRef<HTMLUListElement, ListProps>((
+  {
+    className = '',
+    items,
+  },
+  ref,
+) => {
   return (
-    <ul className={createClassName([
-      'list',
-      className,
-    ])}>
+    <ul
+      className={createClassName([
+        'list',
+        className,
+      ])}
+      ref={ref}
+    >
       {items.map(({ id, content, onClick }) => {
         return (
           <li className="list-item" key={id} onClick={onClick}>
@@ -25,4 +34,4 @@ export const List: React.FC<ListProps> = ({ className = '', items }) => {
       })}
     </ul>
   );
-};
+});

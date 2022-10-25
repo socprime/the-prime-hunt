@@ -21,4 +21,14 @@ export const integrations: Integration[] = [
     name: 'OpenCTI',
     url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
   },
+  {
+    id: '$echo-trail',
+    name: 'EchoTrail',
+    url: 'https://www.echotrail.io/insights/search/$VALUE$',
+  },
+  {
+    id: '$ultimate-windows-security',
+    name: 'Ultimate Windows Security',
+    url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
+  },
 ];

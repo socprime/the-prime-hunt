@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk.
 
 ## Installation
 ### Chrome
@@ -80,11 +80,11 @@ The position and size of the extension's window are stored as the `the-prime-hun
 
 ![Action menu](.readme/action_menu.png)
 
-  - Click the copy icon to copy the result to the clipboard
-  - Click the plus icon to include the account/asset in the search
-  - Click the minus icon to exclude the account/asset from the search
-  - Click the eye-and-list icon to search for all events that involve the account/asset
-  - To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field.
+- Click the copy icon to copy the result to the clipboard
+- Click the plus icon to include the account/asset in the search
+- Click the minus icon to exclude the account/asset from the search
+- Click the eye-and-list icon to search for all events that involve the account/asset
+- To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field.
 
 ![Remove icon](.readme/remove_icon.png)
 
@@ -92,12 +92,11 @@ The position and size of the extension's window are stored as the `the-prime-hun
 The fields that have been added manually are stored as the `the-prime-hunt--extension--watchers` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), only the default fields are used again.
 
 5. You can also select multiple results by setting the checkboxes next to them. In this case, bulk action buttons appear at the extension’s footer:
-
 - Click the **Copy** button to copy the selected accounts/assets to the clipboard
 - Click the **Include** button to include the selected accounts/assets in the search
 - Click the **Exclude** button to exclude the selected accounts/assets from the search
 - Click the **Show All Events** button to search for all events that involve the selected accounts/assets
-- Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include VirusTotal, VirusTotal Enterprise, and Anomali. You can customize or remove any menu item, add your OpenCTI credentials, or add a new integration in **Search Settings**
+- Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, and Ultimate Windows Security. You can customize or remove any menu item, add your OpenCTI credentials, or add a new integration in **Search Settings**
 
 ![Bulk action buttons](.readme/bulk-action_buttons.png)
 
@@ -156,6 +155,6 @@ The Prime Hunt browser extension is licensed as [LGPL v3](LICENSE.md).
 - Sigma Rules Bot for Threat Bounty (Slackbot) API for Sigma rules quality check, easy code updates, spell check, collaboration, false-positives and filters sharing
 - socprime.com search engine for Sigma rule source, context, and timeline overview
 - Qualys, Tenable, NVD for CVE lookup
-- Shodan, CyberChef, GreyNoise, PolySwarm, EchoTrail
+- Shodan, CyberChef, GreyNoise, PolySwarm
 - Jira, SNOW
 3. Publishing of the browser extension via marketplace / add-on store

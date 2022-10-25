@@ -1,6 +1,6 @@
-import { BGListenerType } from '../../types/types-background-common';
-import { ParsedResult, PlatformID, ResourceType } from '../../../common/types/types-common';
-import { setBGInterceptor } from '../../background-listeners';
+import { BGListenerType, TabID } from '../../types/types-background-common';
+import { NormalizedParsedResult, ParsedResult, PlatformID } from '../../../common/types/types-common';
+import { setBGInterceptor } from '../../services/background-services-listeners';
 import { Url } from '../../../../common/types';
 import { getDebugPrefix } from '../../../common/loggers/loggers-debug';
 import { AbstractPlatform } from '../AbstractPlatform';
@@ -8,16 +8,28 @@ import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { microsoftSentinelPostsUrls, microsoftSentinelWatchers } from './microsoft-sentinel-watchers';
 import { getNormalizedWatchers } from '../background-platforms-helpers';
-import { sendMessageFromBackground } from '../../background-services';
+import { normalizeParsedResource, sendMessageFromBackground } from '../../services/background-services';
 import { SetLoadingStatePayload } from '../../../common/types/types-common-payloads';
 import { MessageToApp } from '../../../app/types/types-app-messages';
 import { LoadingKey } from '../../../app/types/types-app-common';
+import { http } from '../../../../common/Http';
+import { uuid } from '../../../../common/helpers';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('background'))
   .addPrefix(PlatformID.MicrosoftSentinel);
 
 export class MicrosoftSentinelPlatform extends AbstractPlatform {
+  private static sendLoading(tabID: TabID, loading: boolean) {
+    sendMessageFromBackground<SetLoadingStatePayload>(tabID, {
+      type: MessageToApp.AppSetLoadingState,
+      payload: {
+        loading,
+        key: LoadingKey.resourcesAdding,
+      },
+    });
+  }
+
   constructor() {
     super();
     this.watchingResources = microsoftSentinelWatchers;
@@ -89,31 +101,39 @@ export class MicrosoftSentinelPlatform extends AbstractPlatform {
           const bodyBytes = bodyData.get(details.url)!;
           const bodyStr = new TextDecoder().decode(bodyBytes);
 
-          sendMessageFromBackground<SetLoadingStatePayload>(details.tabId, {
-            type: MessageToApp.AppSetLoadingState,
-            payload: {
-              loading: true,
-              key: LoadingKey.resourcesAdding,
-            },
-          });
+          MicrosoftSentinelPlatform.sendLoading(details.tabId, true);
 
-          this.getResourceData(
-            details.tabId,
+          http.post(
             {
-              bodyBytes,
               url: details.url,
-              requestHeaders: details.requestHeaders!,
+              body: bodyBytes,
+              headers: details.requestHeaders!.reduce((res: any, header: any) => {
+                res[header.name] = header.value;
+                return res;
+              }, {}),
             },
             {
-              onJSONSuccess: () => {
+              onJSONSuccess: (response: any) => {
+                const parsedResponse = this.parseResponse(response);
+                sendMessageFromBackground<NormalizedParsedResult>(details.tabId, {
+                  id: `parsed-response--${uuid()}`,
+                  type: MessageToApp.AppTakeNewResourceData,
+                  payload: {
+                    services: normalizeParsedResource(parsedResponse.services),
+                    assets: normalizeParsedResource(parsedResponse.assets),
+                    accounts: normalizeParsedResource(parsedResponse.accounts),
+                  },
+                });
+                this.lastResponse = response;
                 removeAttached();
               },
-              onError: (e) => {
+              onError: (e: Error) => {
                 loggers
                   .error()
-                  .addPrefix('Failed webRequest post')
+                  .addPrefix('failed webRequest post')
                   .log(e, details.method, details.url, bodyStr);
                 removeAttached();
+                MicrosoftSentinelPlatform.sendLoading(details.tabId, false);
               },
             },
           );
@@ -138,7 +158,8 @@ export class MicrosoftSentinelPlatform extends AbstractPlatform {
       rows: [];
     }];
   }): ParsedResult {
-    loggers.debug().log('started parse response...');
+    const id = uuid();
+    loggers.debug().log('started parse response...', id, this.watchingResources);
 
     const results: ParsedResult = {
       'assets': {},
@@ -169,30 +190,12 @@ export class MicrosoftSentinelPlatform extends AbstractPlatform {
       });
     });
 
-    loggers.debug().log('finished parse response');
+    loggers.debug().log('finished parse response', id);
 
     return {
       services: results.services,
       accounts: results.accounts,
       assets: results.assets,
-    };
-  }
-
-  parseContent(): ParsedResult {
-    const results: {
-      [key in ResourceType]: {
-        [fieldName: string]: Set<string>;
-      };
-    } = {
-      'assets': {},
-      'accounts': {},
-      'services': {},
-    };
-
-    return {
-      accounts: results.accounts,
-      assets: results.assets,
-      services: results.services,
     };
   }
 }

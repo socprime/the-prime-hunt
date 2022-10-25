@@ -1,13 +1,16 @@
 import React from 'react';
 import { CopyIcon } from '../../atoms/icons/CopyIcon/CopyIcon';
+import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';
 
 type AnimatedCopyIconProps = {
+  disabled?: boolean;
   onClick?: (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => void;
 };
 
 export const AnimatedCopyIcon = React.forwardRef<HTMLSpanElement, AnimatedCopyIconProps>((
   {
+    disabled,
     onClick,
   },
   ref,
@@ -17,7 +20,7 @@ export const AnimatedCopyIcon = React.forwardRef<HTMLSpanElement, AnimatedCopyIc
     <span
       ref={ref}
       tabIndex={0}
-      className="animated-copy-icon icon"
+      className={createClassName(['animated-copy-icon', 'icon', disabled ? 'disabled' : ''])}
       onClick={(e) => {
         onClick?.(e);
       }}

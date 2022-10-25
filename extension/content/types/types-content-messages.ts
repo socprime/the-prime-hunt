@@ -2,6 +2,7 @@ import { getExecutingContextByMessageType } from '../../common/common-helpers';
 
 export enum MessageToContent {
   CSModifyQuery = 'CSModifyQuery',
+  CSConnectPlatform = 'CSConnectPlatform',
 }
 
 Object.values(MessageToContent).forEach(type => {

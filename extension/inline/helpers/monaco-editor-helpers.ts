@@ -79,19 +79,19 @@ export const buildNewQuery = (
   const focusedLines = getContentFocusedLines(editorIndex);
 
   if (modifyType === 'show all' && focusedLines.length < 1) {
-    const tableName = editorLines
+    const prefix = editorLines
       .map((l: string) => l.split('|').shift())
       .filter(Boolean).pop()
       || '<unknown>';
-    newQuery = `${tableName} ${suffix}`;
+    newQuery = `${prefix} ${suffix}`;
   }
 
   if (modifyType === 'show all' && focusedLines.length >= 1) {
-    const tableName = editorLines[focusedLines[0] - 1].split('|').shift();
+    const prefix = editorLines[focusedLines[0] - 1].split('|').shift();
     editorLines.splice(
       focusedLines[0] - 1,
       focusedLines.length,
-      `${tableName} ${suffix}`,
+      `${prefix} ${suffix}`,
     );
     newQuery = editorLines.join('\n');
   }

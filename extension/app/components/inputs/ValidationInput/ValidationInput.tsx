@@ -3,7 +3,7 @@ import { AppInput, AppInputProps } from '../AppInput/AppInput';
 import { createClassName } from '../../../../common/common-helpers';
 import { ValidationResult } from '../../../../../common/types';
 import { getValidResult } from '../../../../../common/validators';
-import { useForceUpdate } from '../../../hooks';
+import { useForceUpdate } from '../../../app-hooks';
 import { isNotEmpty } from '../../../../../common/checkers';
 import './styles.scss';
 

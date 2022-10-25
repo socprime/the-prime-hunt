@@ -10,6 +10,9 @@ export class AppStore {
   private static MIN_WIDTH = 320;
 
   @observable
+  public mounted = false;
+
+  @observable
   public loadingKeys: LoadingKey[] = [];
 
   @observable

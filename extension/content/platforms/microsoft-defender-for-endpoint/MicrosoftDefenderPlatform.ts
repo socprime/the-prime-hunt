@@ -1,19 +1,20 @@
 import { ContentPlatform, ListenerType, MessageListener } from '../../types/types-content-common';
 import { getDebugPrefix } from '../../../common/loggers/loggers-debug';
 import { PlatformID } from '../../../common/types/types-common';
-import { addListener } from '../../content-listeners';
+import { addListener } from '../../services/content-services-listeners';
 import {
   getElementsUnderCursor,
   getWebAccessibleUrl,
   mountHTMLElement, removeDoubleQuotesAround,
 } from '../../../common/common-helpers';
-import { sendMessageFromContent } from '../../content-services';
+import { sendMessageFromContent } from '../../services/content-services';
 import { MessageToBackground } from '../../../background/types/types-background-messages';
 import { isMessageMatched } from '../../../common/common-listeners';
 import { MessageToContent } from '../../types/types-content-messages';
 import { MessageToInline } from '../../../inline/types/types-inline-messages';
 import { AddFieldToWatchPayload } from '../../../common/types/types-common-payloads';
 import { microsoftDefenderInline } from '../../../manifest/public-resources';
+import { uuid } from '../../../../common/helpers';
 
 const loggers = require('../../../common/loggers').loggers
   .addPrefix(getDebugPrefix('content'))
@@ -45,11 +46,14 @@ export class MicrosoftDefenderPlatform implements ContentPlatform {
         )) {
           sendMessageFromContent({
             ...message,
+            id: `${message.id}--content-modify-query`,
             type: MessageToInline.ISModifyQuery,
           }, false);
         }
       },
     );
+
+    loggers.debug().log('listeners were set');
   }
 
   private static connectMouseDown() {
@@ -72,6 +76,7 @@ export class MicrosoftDefenderPlatform implements ContentPlatform {
         return;
       }
       sendMessageFromContent<AddFieldToWatchPayload>({
+        id: `content-add-field--${uuid()}`,
         type: MessageToBackground.BGAddFieldToWatch,
         payload: {
           fieldName: text,

@@ -8,6 +8,10 @@
   &.up .app-dropdown-menu {
     margin-bottom: 13px;
   }
+
+  &.disabled {
+    color: $base-disabled-text-color;
+  }
 }
 
 .app-dropdown-menu {

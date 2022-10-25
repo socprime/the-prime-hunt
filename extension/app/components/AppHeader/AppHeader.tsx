@@ -81,7 +81,10 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
           )}
           <div className="buttons-wrapper">
             {appStore.view === 'resources' && <FaqButton />}
-            {appStore.view === 'resources' && <CloseAppButton />}
+            {(
+              appStore.view === 'resources'
+              || appStore.view === 'not-found'
+            ) && <CloseAppButton />}
           </div>
         </span>
       </div>

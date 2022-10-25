@@ -1,49 +1,19 @@
-import { PlatformResolver } from './content/platforms/PlatformResolver';
-import { sendMessageFromApp } from './content/content-services';
-import { MessageToBackground } from './background/types/types-background-messages';
-import { PlatformIDPayload, SetWatchersPayload } from './common/types/types-common-payloads';
-import { mountHTMLElement, isInsideIframe } from './common/common-helpers';
-import { getWatchers } from './common/local-storage';
+import { platformResolver } from './content/platforms/PlatformResolver';
+import { isInsideIframe } from './common/common-helpers';
 
-const platformResolver = new PlatformResolver();
+require('./updates');
 
 document.body.onload = (): any => {
-  const platform = platformResolver.resolve();
-  platform?.connect();
-
   if (isInsideIframe()) {
-    return mountHTMLElement('div', document.body, {
-      attributes: {
-        'data-worker': 'mounted',
-      },
-    });
+    return require('./content/content-listeners');
   }
 
-  require('./app/scss/reset.scss');
-  require('./app/scss/scroll.scss');
-  require('./app');
-  
+  require('./app/app-listeners');
+
+  const platform = platformResolver.resolve();
+
   if (platform) {
-    const rootStore = require('./app/stores').rootStore;
-
-    rootStore.platformStore.platform = platform;
-    rootStore.appStore.view = 'resources';
-    rootStore.appStore.setPosition(platform.extensionDefaultPosition);
-
-    sendMessageFromApp<PlatformIDPayload>({
-      type: MessageToBackground.BGRegisterPlatformTab,
-      payload: {
-        platformID: platform.getID(),
-      },
-    });
-
-    sendMessageFromApp<SetWatchersPayload>({
-      type: MessageToBackground.BGSetWatchers,
-      payload: {
-        watchers: getWatchers(platform.getID()),
-        platformID: platform.getID(),
-        action: 'add',
-      },
-    });
+    require('./app');
+    require('./app/stores').rootStore.platformStore.setPlatform(platform);
   }
 };

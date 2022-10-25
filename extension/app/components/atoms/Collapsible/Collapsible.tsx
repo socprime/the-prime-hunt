@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
-import { useForceUpdate } from '../../../hooks';
+import { useForceUpdate } from '../../../app-hooks';
 import './collapsible.scss';
 
 export type CollapsibleProps = {
@@ -47,7 +47,7 @@ export const Collapsible: React.FC<React.PropsWithChildren<CollapsibleProps>> = 
 
   const getNewHeight = useCallback(() => {
     return Array.from(ref.current!.children)
-      .reduce((res, e) => res += e.scrollHeight, 0);
+      .reduce((res, e) => res += (e as HTMLElement).offsetHeight, 0);
   }, []);
 
   return (
@@ -68,7 +68,7 @@ export const Collapsible: React.FC<React.PropsWithChildren<CollapsibleProps>> = 
           height: isOpen ? getNewHeight() : 0,
         }}
       >
-        {children}
+        {isOpen && children}
       </div>
     </div>
   );

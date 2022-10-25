@@ -35,13 +35,13 @@ export class Loggers {
       return;
     }
     if (mode !== Mode.production) {
-      console?.[
+      console[
         this.level === LogLevel.error
           ? 'error'
           : this.level === LogLevel.warn
             ? 'warn'
             : 'log'
-      ]?.(this.prefix || '==>', ...params);
+      ](this.prefix || '==>', ...params);
     }
   }
 

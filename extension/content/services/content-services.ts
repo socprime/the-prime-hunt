@@ -1,13 +1,12 @@
-import { getBrowserContext } from '../common/common-helpers';
-import { ExtensionMessage } from '../common/types/types-common';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
-import { uuid } from '../../common/helpers';
-import { isPostMessageSupported, isRuntimeSendMessageSupported } from '../common/api-support';
-import { Loggers } from '../common/loggers';
+import { getBrowserContext } from '../../common/common-helpers';
+import { ExtensionMessage } from '../../common/types/types-common';
+import { getDebugPrefix } from '../../common/loggers/loggers-debug';
+import { uuid } from '../../../common/helpers';
+import { isPostMessageSupported, isRuntimeSendMessageSupported } from '../../common/api-support';
+import { Loggers } from '../../common/loggers';
 
-const serviceLoggers = require('../common/loggers').loggers
+const serviceLoggers = require('../../common/loggers').loggers
   .addPrefix('services');
-const context = getBrowserContext();
 
 export const sendMessage = <T = unknown>(
   loggers: Loggers,
@@ -30,7 +29,7 @@ export const sendMessage = <T = unknown>(
       return;
     }
 
-    context.runtime.sendMessage(message)
+    getBrowserContext().runtime.sendMessage(message)
       ?.catch((e: Error) => loggers.error().addPrefix(logPrefix).log(e, message));
     loggers.debug().addPrefix(logPrefix).log(message);
 

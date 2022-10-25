@@ -1,0 +1,15 @@
+.tooltip {
+  display: inline-flex;
+  cursor: default;
+}
+
+.tooltip-content {
+  display: inline-flex;
+  position: fixed;
+  cursor: default;
+  z-index: 99999;
+
+  &.transparent {
+    opacity: 0.001;
+  }
+}

@@ -111,6 +111,16 @@
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/Tooltip/tooltip.scss":
+/*!*************************************************************!*\
+  !*** ./extension/app/components/atoms/Tooltip/tooltip.scss ***!
+  \*************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/icons/ExportIcon/export-icon.scss":
 /*!**************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/ExportIcon/export-icon.scss ***!
@@ -415,6 +425,16 @@
 /*!***********************************************************************************!*\
   !*** ./extension/app/components/resources/views/ResourcesContentView/styles.scss ***!
   \***********************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/components/tooltips/AppTooltip/styles.scss":
+/*!******************************************************************!*\
+  !*** ./extension/app/components/tooltips/AppTooltip/styles.scss ***!
+  \******************************************************************/
 /***/ (() => {
 
 
@@ -50931,12 +50951,13 @@ SimpleBar.instances = new WeakMap();
 /*!****************************!*\
   !*** ./common/checkers.ts ***!
   \****************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
@@ -50959,6 +50980,14 @@ const isNumberInString = (str) => {
     return !Number.isNaN(parseFloat(sValue));
 };
 exports.isNumberInString = isNumberInString;
+const isAllowedProtocol = (protocol, mode) => {
+    if (mode === types_1.Mode.development) {
+        return true;
+    }
+    const nProtocol = protocol.trim().toLowerCase();
+    return nProtocol === 'https:' || nProtocol === 'https';
+};
+exports.isAllowedProtocol = isAllowedProtocol;
 
 
 /***/ }),
@@ -51084,6 +51113,124 @@ const getValidResult = () => {
     };
 };
 exports.getValidResult = getValidResult;
+
+
+/***/ }),
+
+/***/ "./extension/app/app-hooks.ts":
+/*!************************************!*\
+  !*** ./extension/app/app-hooks.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useForceUpdate = exports.useOnClickOutside = exports.usePrevious = void 0;
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const usePrevious = (value) => {
+    const ref = (0, react_1.useRef)();
+    (0, react_1.useEffect)(() => {
+        ref.current = value;
+    }, [value]);
+    return ref.current;
+};
+exports.usePrevious = usePrevious;
+const useOnClickOutside = (cb, ...refs) => {
+    (0, react_1.useEffect)(() => {
+        const listener = (event) => {
+            const isInside = refs.some(ref => {
+                const element = ref instanceof HTMLElement ? ref : ref === null || ref === void 0 ? void 0 : ref.current;
+                if (!(element === null || element === void 0 ? void 0 : element.getBoundingClientRect)) {
+                    return false;
+                }
+                const rect = element.getBoundingClientRect();
+                return (event.x > rect.left &&
+                    event.x < rect.right &&
+                    event.y > rect.top &&
+                    event.y < rect.bottom);
+            });
+            if (!isInside) {
+                cb(event);
+            }
+        };
+        document.addEventListener('mousedown', listener);
+        return () => document.removeEventListener('mousedown', listener);
+    }, [cb, refs]);
+};
+exports.useOnClickOutside = useOnClickOutside;
+const useForceUpdate = () => {
+    const [value, setValue] = (0, react_1.useState)(0);
+    return () => setValue(prev => prev > 9999 ? 0 : value + 1);
+};
+exports.useForceUpdate = useForceUpdate;
+
+
+/***/ }),
+
+/***/ "./extension/app/app-listeners.ts":
+/*!****************************************!*\
+  !*** ./extension/app/app-listeners.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const content_services_listeners_1 = __webpack_require__(/*! ../content/services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const types_content_common_1 = __webpack_require__(/*! ../content/types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_app_messages_1 = __webpack_require__(/*! ./types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
+const stores_1 = __webpack_require__(/*! ./stores */ "./extension/app/stores/index.ts");
+const types_app_common_1 = __webpack_require__(/*! ./types/types-app-common */ "./extension/app/types/types-app-common.ts");
+const PlatformResolver_1 = __webpack_require__(/*! ../content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
+const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('app'))
+    .addPrefix('listeners');
+content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppShowExtension === message.type, message)) {
+        if (!stores_1.rootStore.platformStore.platform) {
+            stores_1.rootStore.platformStore.setPlatform(PlatformResolver_1.platformResolver.resolve());
+        }
+        if (!stores_1.rootStore.appStore.mounted) {
+            __webpack_require__(/*! ./index */ "./extension/app/index.tsx");
+        }
+        if (!stores_1.rootStore.appStore.isExtensionOpen) {
+            stores_1.rootStore.appStore.isExtensionOpen = true;
+        }
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeNewResourceData === message.type, message)) {
+        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
+        stores_1.rootStore.resourceStore.clearAllData();
+        setTimeout(() => {
+            stores_1.rootStore.resourceStore.addAllData(message.payload);
+            stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
+        }, 0);
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeResourceData === message.type, message)) {
+        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
+        stores_1.rootStore.resourceStore.addAllData(message.payload);
+        stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppClearResourceData === message.type, message)) {
+        stores_1.rootStore.resourceStore.clearAllData();
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppAddFieldToWatch === message.type, message)) {
+        const { fieldName } = message.payload;
+        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.fieldAdding);
+        stores_1.rootStore.resourceStore.addField(fieldName);
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppSetLoadingState === message.type, message)) {
+        const { loading, key } = message.payload;
+        if (loading) {
+            stores_1.rootStore.appStore.startLoading(key);
+        }
+        else {
+            stores_1.rootStore.appStore.stopLoading(key);
+        }
+    }
+});
+loggers.debug().log('mounted');
 
 
 /***/ }),
@@ -51258,6 +51405,7 @@ const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.es
 const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
 class AppStore {
     constructor() {
+        this.mounted = false;
         this.loadingKeys = [];
         this.dragElementRef = {};
         this.isResizing = false;
@@ -51355,6 +51503,9 @@ class AppStore {
 }
 AppStore.MIN_HEIGHT = 400;
 AppStore.MIN_WIDTH = 320;
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "mounted", void 0);
 __decorate([
     mobx_1.observable
 ], AppStore.prototype, "loadingKeys", void 0);
@@ -51619,7 +51770,8 @@ exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, 
                     ")")),
                 react_1.default.createElement("div", { className: "buttons-wrapper" },
                     appStore.view === 'resources' && react_1.default.createElement(FaqButton_1.FaqButton, null),
-                    appStore.view === 'resources' && react_1.default.createElement(CloseAppButton_1.CloseAppButton, null)))),
+                    (appStore.view === 'resources'
+                        || appStore.view === 'not-found') && react_1.default.createElement(CloseAppButton_1.CloseAppButton, null)))),
         appStore.view === 'resources' && (react_1.default.createElement(ResourcesHeaderView_1.ResourcesHeaderView, null)),
         appStore.view === 'integrations' && (react_1.default.createElement(IntegrationHeaderView_1.IntegrationHeaderView, null)),
         appStore.view === 'faq' && (react_1.default.createElement(FaqHeaderView_1.FaqHeaderView, null))));
@@ -51715,7 +51867,13 @@ const Button = ({ onClick, icon, children, disabled, className = '', }) => {
             }
             onClick === null || onClick === void 0 ? void 0 : onClick(e);
         } },
-        icon && icon,
+        icon && react_1.default.createElement("span", { className: "button-icon", onClick: e => {
+                if (disabled) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                }
+            } }, icon),
         react_1.default.createElement("div", { className: "button-content" }, children)));
 };
 exports.Button = Button;
@@ -51757,12 +51915,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Checkbox = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const hooks_1 = __webpack_require__(/*! ../../../hooks */ "./extension/app/hooks.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./checkbox.scss */ "./extension/app/components/atoms/Checkbox/checkbox.scss");
 const Checkbox = ({ onStateChanged, content, checked, onClick, checkIcon, uncheckIcon, title = '', className = '', }) => {
     const [isChecked, setIsChecked] = (0, react_1.useState)(!!checked);
-    const prevState = (0, hooks_1.usePrevious)(isChecked);
+    const prevState = (0, app_hooks_1.usePrevious)(isChecked);
     (0, react_1.useEffect)(() => {
         if (typeof prevState !== 'undefined' &&
             prevState !== isChecked) {
@@ -51828,12 +51986,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Collapsible = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const hooks_1 = __webpack_require__(/*! ../../../hooks */ "./extension/app/hooks.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 __webpack_require__(/*! ./collapsible.scss */ "./extension/app/components/atoms/Collapsible/collapsible.scss");
 const Collapsible = ({ className = '', children, header, onClick, open, }) => {
     const [isOpen, setIsOpen] = (0, react_1.useState)(!!open);
     const ref = (0, react_1.useRef)(null);
-    const forceUpdate = (0, hooks_1.useForceUpdate)();
+    const forceUpdate = (0, app_hooks_1.useForceUpdate)();
     (0, react_1.useEffect)(() => {
         const oldWidth = 0;
         const contentObserver = new MutationObserver(() => {
@@ -51858,7 +52016,7 @@ const Collapsible = ({ className = '', children, header, onClick, open, }) => {
     }, [forceUpdate]);
     const getNewHeight = (0, react_1.useCallback)(() => {
         return Array.from(ref.current.children)
-            .reduce((res, e) => res += e.scrollHeight, 0);
+            .reduce((res, e) => res += e.offsetHeight, 0);
     }, []);
     return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible', className]) },
         react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible-header', isOpen ? 'open' : 'closed']), onClick: e => {
@@ -51867,7 +52025,7 @@ const Collapsible = ({ className = '', children, header, onClick, open, }) => {
             } }, header),
         react_1.default.createElement("div", { className: "collapsible-content", ref: ref, style: {
                 height: isOpen ? getNewHeight() : 0,
-            } }, children)));
+            } }, isOpen && children)));
 };
 exports.Collapsible = Collapsible;
 
@@ -52129,13 +52287,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Dropdown = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const hooks_1 = __webpack_require__(/*! ../../../hooks */ "./extension/app/hooks.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./dropdown.scss */ "./extension/app/components/atoms/Dropdown/dropdown.scss");
-exports.Dropdown = (0, react_1.forwardRef)(({ opened, closed, opener, mountElement, children, header, direction = 'down', onStateChange, className = '', classNameMenu = '', getMenuStyles, }, ref) => {
+exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, mountElement, children, header, direction = 'down', onStateChange, className = '', classNameMenu = '', getMenuStyles, }, ref) => {
     const [isOpen, setIsOpen] = (0, react_1.useState)(!!opened);
-    const prevValueOpen = (0, hooks_1.usePrevious)(isOpen);
+    const prevValueOpen = (0, app_hooks_1.usePrevious)(isOpen);
     const dropdownRef = (0, react_1.useRef)(null);
     const dropdownMenuRef = (0, react_1.useRef)(null);
     (0, react_1.useEffect)(() => {
@@ -52198,9 +52356,15 @@ exports.Dropdown = (0, react_1.forwardRef)(({ opened, closed, opener, mountEleme
             direction,
             className,
             isOpen ? 'open' : '',
+            disabled ? 'disabled' : '',
         ]), ref: dropdownRef },
         react_1.default.createElement("div", { className: "dropdown-header" }, header),
-        react_1.default.createElement("div", { className: "dropdown-opener", onClick: () => {
+        react_1.default.createElement("div", { className: "dropdown-opener", onClick: e => {
+                if (disabled) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
                 setIsOpen(!isOpen);
             } }, opener),
         menu));
@@ -52284,22 +52448,41 @@ exports.Input = Input;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.List = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const List = ({ className = '', items }) => {
+exports.List = (0, react_1.forwardRef)(({ className = '', items, }, ref) => {
     return (react_1.default.createElement("ul", { className: (0, common_helpers_1.createClassName)([
             'list',
             className,
-        ]) }, items.map(({ id, content, onClick }) => {
+        ]), ref: ref }, items.map(({ id, content, onClick }) => {
         return (react_1.default.createElement("li", { className: "list-item", key: id, onClick: onClick }, content));
     })));
-};
-exports.List = List;
+});
 
 
 /***/ }),
@@ -52380,6 +52563,124 @@ const TabsPanel = ({ defaultActiveTab, tabs, children, onActiveTabChanged, class
         children));
 };
 exports.TabsPanel = TabsPanel;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/Tooltip/Tooltip.tsx":
+/*!************************************************************!*\
+  !*** ./extension/app/components/atoms/Tooltip/Tooltip.tsx ***!
+  \************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Tooltip = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+__webpack_require__(/*! ./tooltip.scss */ "./extension/app/components/atoms/Tooltip/tooltip.scss");
+const Tooltip = ({ children, mountElem, content, getPosition, className = '', delayShowMs = 0, }) => {
+    const [isMounted, setIsMounted] = (0, react_1.useState)(false);
+    const [isShow, setIsShow] = (0, react_1.useState)(false);
+    const tooltipRef = (0, react_1.useRef)(null);
+    const hintRef = (0, react_1.useRef)(null);
+    const unmountTimeoutRef = (0, react_1.useRef)();
+    const hideTimeoutRef = (0, react_1.useRef)();
+    const delayShowTimeoutRef = (0, react_1.useRef)();
+    const onMouseOut = (0, react_1.useCallback)(() => {
+        clearTimeout(unmountTimeoutRef.current);
+        clearTimeout(hideTimeoutRef.current);
+        clearTimeout(delayShowTimeoutRef.current);
+        hideTimeoutRef.current = setTimeout(() => {
+            setIsShow(false);
+        }, 30);
+        unmountTimeoutRef.current = setTimeout(() => {
+            setIsMounted(false);
+        }, 400);
+    }, []);
+    const onMouseOver = (0, react_1.useCallback)(() => {
+        clearTimeout(hideTimeoutRef.current);
+        clearTimeout(unmountTimeoutRef.current);
+        clearTimeout(delayShowTimeoutRef.current);
+        setIsMounted(true);
+        delayShowTimeoutRef.current = setTimeout(() => {
+            setIsShow(true);
+        }, delayShowMs);
+    }, [delayShowMs]);
+    const calculateCoords = (0, react_1.useCallback)((tooltip, hint) => {
+        if (typeof getPosition === 'function') {
+            return getPosition(tooltip, hint);
+        }
+        const coords = tooltip.getBoundingClientRect();
+        const hintWidth = (hint === null || hint === void 0 ? void 0 : hint.offsetWidth) || 0;
+        const hintHeight = (hint === null || hint === void 0 ? void 0 : hint.offsetHeight) || 0;
+        const left = (coords.left + tooltip.offsetWidth / 2) - (hintWidth / 2);
+        let top = coords.top - hintHeight + 3;
+        if (top < 0) {
+            top = coords.top + tooltip.offsetHeight - 5;
+        }
+        return {
+            top,
+            left: left < 0 ? 0 : left,
+        };
+    }, [getPosition]);
+    (0, react_1.useEffect)(() => {
+        if (!isMounted || !hintRef.current) {
+            if (isShow) {
+                clearTimeout(delayShowTimeoutRef.current);
+                setIsShow(false);
+            }
+            return;
+        }
+        const tooltip = tooltipRef.current;
+        const hint = hintRef.current;
+        const { top, left } = calculateCoords(tooltip, hint);
+        hint.style.top = `${top}px`;
+        hint.style.left = `${left}px`;
+        clearTimeout(delayShowTimeoutRef.current);
+        delayShowTimeoutRef.current = setTimeout(() => {
+            setIsShow(true);
+        }, delayShowMs);
+    }, [calculateCoords, isMounted]);
+    const getHint = (0, react_1.useCallback)((show) => {
+        const { top, left } = calculateCoords(tooltipRef.current, hintRef.current);
+        return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+                'tooltip-content',
+                className,
+                show ? '' : 'transparent',
+            ]), style: { top, left }, onMouseOver: onMouseOver, onMouseOut: onMouseOut, ref: hintRef },
+            react_1.default.createElement("div", { className: "tooltip-content-wrapper" }, content)));
+    }, [calculateCoords, className, content, onMouseOut, onMouseOver]);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['tooltip', className]), onMouseOver: onMouseOver, onMouseOut: onMouseOut, ref: tooltipRef },
+        children,
+        isMounted && mountElem && (0, react_dom_1.createPortal)(getHint(isShow), mountElem)));
+};
+exports.Tooltip = Tooltip;
 
 
 /***/ }),
@@ -52840,6 +53141,8 @@ const AppButton = (_a) => {
         return icon && typeof icon === 'object'
             ? react_1.default.cloneElement(icon, { onClick: (e) => {
                     if (disabled) {
+                        e.stopPropagation();
+                        e.preventDefault();
                         return;
                     }
                     onClick === null || onClick === void 0 ? void 0 : onClick(e);
@@ -53237,7 +53540,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppDropdown = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const Dropdown_1 = __webpack_require__(/*! ../../atoms/Dropdown/Dropdown */ "./extension/app/components/atoms/Dropdown/Dropdown.tsx");
-const hooks_1 = __webpack_require__(/*! ../../../hooks */ "./extension/app/hooks.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
@@ -53264,23 +53567,28 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
             setForceClose(true);
         }
     }, [isResizing]);
-    (0, hooks_1.useOnClickOutside)(() => {
+    (0, app_hooks_1.useOnClickOutside)(() => {
         setForceClose(true);
     }, (_b = ref === null || ref === void 0 ? void 0 : ref.current) === null || _b === void 0 ? void 0 : _b.dropdown, (_c = ref === null || ref === void 0 ? void 0 : ref.current) === null || _c === void 0 ? void 0 : _c.dropdownMenu);
     const calculatedMountElement = typeof mountElement === 'undefined' ? rootElement : mountElement;
-    const getMenuStylesCallback = (0, react_1.useCallback)(() => {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-        const width = ((_b = (_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.dropdown) === null || _b === void 0 ? void 0 : _b.current)
-            ? ref.current.dropdown.current.scrollWidth
-            : 'unset';
-        if (!calculatedMountElement) {
-            return Object.assign({ width }, ((getMenuStyles === null || getMenuStyles === void 0 ? void 0 : getMenuStyles()) || {}));
+    const normalizedStyles = (0, react_1.useMemo)(() => {
+        const styles = (getMenuStyles === null || getMenuStyles === void 0 ? void 0 : getMenuStyles()) || {};
+        if (styles.width && styles.width === 'unset') {
+            delete styles.width;
         }
-        const dropdownElem = (_d = (_c = ref === null || ref === void 0 ? void 0 : ref.current) === null || _c === void 0 ? void 0 : _c.dropdown) === null || _d === void 0 ? void 0 : _d.current;
-        const dropdownMenuElem = (_f = (_e = ref === null || ref === void 0 ? void 0 : ref.current) === null || _e === void 0 ? void 0 : _e.dropdownMenu) === null || _f === void 0 ? void 0 : _f.current;
-        const dropdownRect = (_g = dropdownElem === null || dropdownElem === void 0 ? void 0 : dropdownElem.getBoundingClientRect) === null || _g === void 0 ? void 0 : _g.call(dropdownElem);
-        const dropdownMenuRect = (_h = dropdownMenuElem === null || dropdownMenuElem === void 0 ? void 0 : dropdownMenuElem.getBoundingClientRect) === null || _h === void 0 ? void 0 : _h.call(dropdownMenuElem);
-        const rootElementRect = (_j = rootElement === null || rootElement === void 0 ? void 0 : rootElement.getBoundingClientRect) === null || _j === void 0 ? void 0 : _j.call(rootElement);
+        return styles;
+    }, [getMenuStyles]);
+    const getMenuStylesCallback = (0, react_1.useCallback)(() => {
+        var _a, _b, _c, _d, _e, _f, _g;
+        const width = undefined;
+        if (!calculatedMountElement) {
+            return Object.assign({ width }, normalizedStyles);
+        }
+        const dropdownElem = (_b = (_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.dropdown) === null || _b === void 0 ? void 0 : _b.current;
+        const dropdownMenuElem = (_d = (_c = ref === null || ref === void 0 ? void 0 : ref.current) === null || _c === void 0 ? void 0 : _c.dropdownMenu) === null || _d === void 0 ? void 0 : _d.current;
+        const dropdownRect = (_e = dropdownElem === null || dropdownElem === void 0 ? void 0 : dropdownElem.getBoundingClientRect) === null || _e === void 0 ? void 0 : _e.call(dropdownElem);
+        const dropdownMenuRect = (_f = dropdownMenuElem === null || dropdownMenuElem === void 0 ? void 0 : dropdownMenuElem.getBoundingClientRect) === null || _f === void 0 ? void 0 : _f.call(dropdownMenuElem);
+        const rootElementRect = (_g = rootElement === null || rootElement === void 0 ? void 0 : rootElement.getBoundingClientRect) === null || _g === void 0 ? void 0 : _g.call(rootElement);
         let top = 'unset';
         if ((calculatedDirection === 'down' || !calculatedDirection) && dropdownRect && rootElementRect) {
             top = dropdownRect.top + dropdownRect.height - rootElementRect.top + 12;
@@ -53289,8 +53597,8 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
             top = dropdownRect.top - rootElementRect.top - 12 - dropdownMenuRect.height;
         }
         return Object.assign({ top,
-            width, left: (dropdownRect && rootElementRect) ? dropdownRect.left - rootElementRect.left : 'unset' }, ((getMenuStyles === null || getMenuStyles === void 0 ? void 0 : getMenuStyles()) || {}));
-    }, [calculatedDirection, calculatedMountElement, getMenuStyles, rootElement]);
+            width, left: (dropdownRect && rootElementRect) ? dropdownRect.left - rootElementRect.left : 'unset' }, normalizedStyles);
+    }, [calculatedDirection, calculatedMountElement, normalizedStyles, rootElement]);
     return (react_1.default.createElement(Dropdown_1.Dropdown, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
             'app-dropdown',
             className,
@@ -53362,7 +53670,7 @@ const FaqContentView = () => {
         return [
             {
                 title: 'What security platforms are supported?',
-                content: 'Currently, the extension works with Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
+                content: 'Currently, the extension works with Splunk, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
             },
             {
                 title: 'How can I give feedback or get help?',
@@ -53508,9 +53816,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AnimatedCopyIcon = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const CopyIcon_1 = __webpack_require__(/*! ../../atoms/icons/CopyIcon/CopyIcon */ "./extension/app/components/atoms/icons/CopyIcon/CopyIcon.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/icons/AnimatedCopyIcon/styles.scss");
-exports.AnimatedCopyIcon = react_1.default.forwardRef(({ onClick, }, ref) => {
-    return (react_1.default.createElement("span", { ref: ref, tabIndex: 0, className: "animated-copy-icon icon", onClick: (e) => {
+exports.AnimatedCopyIcon = react_1.default.forwardRef(({ disabled, onClick, }, ref) => {
+    return (react_1.default.createElement("span", { ref: ref, tabIndex: 0, className: (0, common_helpers_1.createClassName)(['animated-copy-icon', 'icon', disabled ? 'disabled' : '']), onClick: (e) => {
             onClick === null || onClick === void 0 ? void 0 : onClick(e);
         } },
         react_1.default.createElement(CopyIcon_1.CopyIcon, null),
@@ -53715,13 +54024,13 @@ const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/re
 const AppInput_1 = __webpack_require__(/*! ../AppInput/AppInput */ "./extension/app/components/inputs/AppInput/AppInput.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const validators_1 = __webpack_require__(/*! ../../../../../common/validators */ "./common/validators.ts");
-const hooks_1 = __webpack_require__(/*! ../../../hooks */ "./extension/app/hooks.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const checkers_1 = __webpack_require__(/*! ../../../../../common/checkers */ "./common/checkers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/ValidationInput/styles.scss");
 const ValidationInput = (_a) => {
     var { className = '', onValidationEnd, onChange, validators } = _a, otherProps = __rest(_a, ["className", "onValidationEnd", "onChange", "validators"]);
     const message = (0, react_1.useRef)('');
-    const forceUpdate = (0, hooks_1.useForceUpdate)();
+    const forceUpdate = (0, app_hooks_1.useForceUpdate)();
     const finishValidation = (0, react_1.useCallback)((validationResult) => {
         const value = Array.from(validationResult.reasons).pop() || '';
         if (message.current === value) {
@@ -53873,6 +54182,16 @@ exports.integrations = [
         id: 'open-cti',
         name: 'OpenCTI',
         url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
+    },
+    {
+        id: '$echo-trail',
+        name: 'EchoTrail',
+        url: 'https://www.echotrail.io/insights/search/$VALUE$',
+    },
+    {
+        id: '$ultimate-windows-security',
+        name: 'Ultimate Windows Security',
+        url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
     },
 ];
 
@@ -54087,7 +54406,7 @@ const NotFoundContentView = () => {
             react_1.default.createElement("br", null),
             "You can use this extension with",
             react_1.default.createElement("br", null),
-            "Microsoft Sentinel or",
+            "Splunk, Microsoft Sentinel",
             react_1.default.createElement("br", null),
             "Microsoft Defender for Endpoint.")));
 };
@@ -54143,8 +54462,12 @@ const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/sto
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const GearIcon_1 = __webpack_require__(/*! ../../atoms/icons/GearIcon/GearIcon */ "./extension/app/components/atoms/icons/GearIcon/GearIcon.tsx");
+const resources_hooks_1 = __webpack_require__(/*! ../resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
+const AppTooltip_1 = __webpack_require__(/*! ../../tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/BulkResourcesPanel/styles.scss");
-exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(({ selectionStore, }) => {
+const MAX_COUNT_SELECTED = 30;
+exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
+    const selectionStore = (0, resources_hooks_1.useResourceSelection)();
     const platformStore = (0, stores_1.usePlatformStore)();
     const appStore = (0, stores_1.useAppStore)();
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
@@ -54156,7 +54479,7 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(({ selectionStore, 
                 id,
                 content: name,
                 onClick: () => {
-                    integrationsStore.getReadyUrls(uniqueSelected, url).forEach(u => {
+                    integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
                         window.open(u, '_blank');
                     });
                 },
@@ -54182,22 +54505,36 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(({ selectionStore, 
     const onActionsClick = (0, react_1.useCallback)((type) => {
         platformStore.modifyQuery(type, normalisedSelected);
     }, [normalisedSelected, platformStore]);
-    return (react_1.default.createElement("div", { className: "bulk-resources-panel" },
+    const disabled = countSelected < 1;
+    const getCountSelected = (0, react_1.useCallback)((count) => {
+        if (count <= MAX_COUNT_SELECTED) {
+            return count;
+        }
+        return (react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "max-selected-tooltip", content: react_1.default.createElement(react_1.default.Fragment, null,
+                "The total number of selected items can\u2019t be more than",
+                react_1.default.createElement("span", { className: "strong" },
+                    " ",
+                    MAX_COUNT_SELECTED,
+                    " "),
+                "to avoid overloading your browser") }, count));
+    }, []);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'bulk-resources-panel',
+            disabled ? 'empty' : '',
+        ]) },
         react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
         react_1.default.createElement("div", { className: "count-selected" },
             react_1.default.createElement("span", { className: "strong" },
                 "\u2014 ",
-                countSelected,
+                getCountSelected(countSelected),
                 " item(s)"),
             "selected"),
         react_1.default.createElement("div", { className: "buttons-area" },
-            react_1.default.createElement(StaticButton_1.StaticButton, { animatedIcon: true, onClick: onCopyIconClick, icon: react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, null) }, "Copy"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => onActionsClick('include'), icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null) }, "Include"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => onActionsClick('exclude'), icon: react_1.default.createElement(MinusIcon_1.MinusIcon, null) }, "Exclude"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => onActionsClick('show all'), icon: react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, null) }, "Show All Events"),
-            react_1.default.createElement(AppDropdown_1.AppDropdown, { opener: react_1.default.createElement(StaticButton_1.StaticButton, { icon: react_1.default.createElement(MagnifyingIcon_1.MagnifyingIcon, null) }, "Search at"), classNameMenu: "dropdown-search-sites-menu", getMenuStyles: () => ({
-                    width: 150,
-                }) },
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, animatedIcon: true, onClick: onCopyIconClick, icon: react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) }, "Copy"),
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('include'), icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null) }, "Include"),
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('exclude'), icon: react_1.default.createElement(MinusIcon_1.MinusIcon, null) }, "Exclude"),
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('show all'), icon: react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, null) }, "Show All Events"),
+            react_1.default.createElement(AppDropdown_1.AppDropdown, { disabled: disabled, opener: react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, icon: react_1.default.createElement(MagnifyingIcon_1.MagnifyingIcon, null) }, "Search at"), classNameMenu: "dropdown-search-sites-menu" },
                 react_1.default.createElement(List_1.List, { className: "search-sites-list", items: items })))));
 });
 
@@ -54687,13 +55024,46 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PlatformStore = void 0;
 const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
 const types_common_1 = __webpack_require__(/*! ../../../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_services_1 = __webpack_require__(/*! ../../../../content/content-services */ "./extension/content/content-services.ts");
+const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
 const microsoft_defender_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers */ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts");
+const local_storage_1 = __webpack_require__(/*! ../../../../common/local-storage */ "./extension/common/local-storage.ts");
+const splunk_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/splunk/splunk-helpers */ "./extension/content/platforms/splunk/splunk-helpers.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
 class PlatformStore {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    setPlatform(platform) {
+        if (!platform) {
+            return;
+        }
+        platform.connect();
+        this.platform = platform;
+        this.rootStore.appStore.view = 'resources';
+        this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
+        (0, content_services_1.sendMessageFromApp)({
+            id: `platform-set--${(0, helpers_1.uuid)()}`,
+            type: types_background_messages_1.MessageToBackground.BGRegisterPlatformTab,
+            payload: {
+                platformID: platform.getID(),
+            },
+        });
+        (0, content_services_1.sendMessageFromApp)({
+            id: `platform-set--${(0, helpers_1.uuid)()}`,
+            type: types_background_messages_1.MessageToBackground.BGSetWatchers,
+            payload: {
+                watchers: (0, local_storage_1.getWatchers)(platform.getID()),
+                platformID: platform.getID(),
+                action: 'add',
+            },
+        });
+    }
     modifyQuery(modifyType, resources) {
         (0, content_services_1.sendMessageFromApp)({
+            id: `modify-query--${(0, helpers_1.uuid)()}`,
             type: types_background_messages_1.MessageToBackground.BGModifyQuery,
             payload: {
                 resources,
@@ -54709,6 +55079,9 @@ class PlatformStore {
         }
         if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
             return (0, microsoft_defender_helpers_1.buildMicrosoftDefenderQueryParts)(modifyType, resources);
+        }
+        if (platformID === types_common_1.PlatformID.Splunk) {
+            return (0, splunk_helpers_1.buildSplunkQueryParts)(modifyType, resources);
         }
         return 'undefined platform';
     }
@@ -54738,10 +55111,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourceStore = void 0;
 const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
-const content_services_1 = __webpack_require__(/*! ../../../../content/content-services */ "./extension/content/content-services.ts");
+const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const background_platforms_helpers_1 = __webpack_require__(/*! ../../../../background/platforms/background-platforms-helpers */ "./extension/background/platforms/background-platforms-helpers.ts");
 const local_storage_1 = __webpack_require__(/*! ../../../../common/local-storage */ "./extension/common/local-storage.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
 class ResourceStore {
     constructor(rootStore) {
         this.activeTab = 'accounts';
@@ -54808,6 +55182,7 @@ class ResourceStore {
         var _a;
         const platformID = (_a = this.rootStore.platformStore.platform) === null || _a === void 0 ? void 0 : _a.getID();
         (0, content_services_1.sendMessageFromApp)({
+            id: `add-field--${(0, helpers_1.uuid)()}`,
             type: types_background_messages_1.MessageToBackground.BGSetWatchers,
             payload: {
                 platformID,
@@ -54838,6 +55213,7 @@ class ResourceStore {
         }, {});
         const platformID = this.rootStore.platformStore.platform.getID();
         (0, content_services_1.sendMessageFromApp)({
+            id: `remove-field--${(0, helpers_1.uuid)()}`,
             type: types_background_messages_1.MessageToBackground.BGSetWatchers,
             payload: {
                 platformID,
@@ -55061,14 +55437,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourcesFooterView = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const BulkResourcesPanel_1 = __webpack_require__(/*! ../../../resources/BulkResourcesPanel/BulkResourcesPanel */ "./extension/app/components/resources/BulkResourcesPanel/BulkResourcesPanel.tsx");
-const resources_hooks_1 = __webpack_require__(/*! ../../resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-exports.ResourcesFooterView = (0, mobx_react_lite_1.observer)(() => {
-    const selectionStore = (0, resources_hooks_1.useResourceSelection)();
-    const { countSelected } = selectionStore;
-    return (countSelected > 0 ? (react_1.default.createElement(BulkResourcesPanel_1.BulkResourcesPanel, { selectionStore: selectionStore })) : null);
-});
+const BulkResourcesPanel_1 = __webpack_require__(/*! ../../BulkResourcesPanel/BulkResourcesPanel */ "./extension/app/components/resources/BulkResourcesPanel/BulkResourcesPanel.tsx");
+const ResourcesFooterView = () => {
+    return (react_1.default.createElement(BulkResourcesPanel_1.BulkResourcesPanel, null));
+};
+exports.ResourcesFooterView = ResourcesFooterView;
 
 
 /***/ }),
@@ -55102,53 +55475,44 @@ exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
 
 /***/ }),
 
-/***/ "./extension/app/hooks.ts":
-/*!********************************!*\
-  !*** ./extension/app/hooks.ts ***!
-  \********************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx":
+/*!*********************************************************************!*\
+  !*** ./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx ***!
+  \*********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.useForceUpdate = exports.useOnClickOutside = exports.usePrevious = void 0;
-const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const usePrevious = (value) => {
-    const ref = (0, react_1.useRef)();
-    (0, react_1.useEffect)(() => {
-        ref.current = value;
-    }, [value]);
-    return ref.current;
+exports.AppTooltip = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const Tooltip_1 = __webpack_require__(/*! ../../atoms/Tooltip/Tooltip */ "./extension/app/components/atoms/Tooltip/Tooltip.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/tooltips/AppTooltip/styles.scss");
+const AppTooltip = (_a) => {
+    var { className = '', children } = _a, restProps = __rest(_a, ["className", "children"]);
+    const appStore = (0, stores_1.useAppStore)();
+    return (react_1.default.createElement(Tooltip_1.Tooltip, Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'app-tooltip',
+            className,
+        ]), delayShowMs: 600, mountElem: appStore.rootElement }, restProps), children));
 };
-exports.usePrevious = usePrevious;
-const useOnClickOutside = (cb, ...refs) => {
-    (0, react_1.useEffect)(() => {
-        const listener = (event) => {
-            const isInside = refs.some(ref => {
-                const element = ref instanceof HTMLElement ? ref : ref === null || ref === void 0 ? void 0 : ref.current;
-                if (!(element === null || element === void 0 ? void 0 : element.getBoundingClientRect)) {
-                    return false;
-                }
-                const rect = element.getBoundingClientRect();
-                return (event.x > rect.left &&
-                    event.x < rect.right &&
-                    event.y > rect.top &&
-                    event.y < rect.bottom);
-            });
-            if (!isInside) {
-                cb(event);
-            }
-        };
-        document.addEventListener('mousedown', listener);
-        return () => document.removeEventListener('mousedown', listener);
-    }, [cb, refs]);
-};
-exports.useOnClickOutside = useOnClickOutside;
-const useForceUpdate = () => {
-    const [value, setValue] = (0, react_1.useState)(0);
-    return () => setValue(prev => prev > 9999 ? 0 : value + 1);
-};
-exports.useForceUpdate = useForceUpdate;
+exports.AppTooltip = AppTooltip;
 
 
 /***/ }),
@@ -55169,20 +55533,17 @@ const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules
 const client_1 = __importDefault(__webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js"));
 const App_1 = __webpack_require__(/*! ./components/App/App */ "./extension/app/components/App/App.tsx");
 const stores_1 = __webpack_require__(/*! ./stores */ "./extension/app/stores/index.ts");
-const content_listeners_1 = __webpack_require__(/*! ../content/content-listeners */ "./extension/content/content-listeners.ts");
-const types_content_common_1 = __webpack_require__(/*! ../content/types/types-content-common */ "./extension/content/types/types-content-common.ts");
 const types_1 = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
 const common_helpers_1 = __webpack_require__(/*! ../common/common-helpers */ "./extension/common/common-helpers.ts");
-const types_app_messages_1 = __webpack_require__(/*! ./types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
-const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
 const envs_1 = __webpack_require__(/*! ../common/envs */ "./extension/common/envs.ts");
 const public_resources_1 = __webpack_require__(/*! ../manifest/public-resources */ "./extension/manifest/public-resources.ts");
-const types_app_common_1 = __webpack_require__(/*! ./types/types-app-common */ "./extension/app/types/types-app-common.ts");
+__webpack_require__(/*! ../app/scss/reset.scss */ "./extension/app/scss/reset.scss");
+__webpack_require__(/*! ../app/scss/scroll.scss */ "./extension/app/scss/scroll.scss");
 const rootElement = (0, common_helpers_1.mountHTMLElement)('div', document.body, {
     attributes: {
         style: {
             all: 'initial',
-            'z-index': 9999999,
+            'z-index': 999999999,
         },
     },
 });
@@ -55219,6 +55580,7 @@ const overlay = (0, common_helpers_1.mountHTMLElement)('div', host, {
             width: '100%',
             height: '100%',
             'background-color': 'transparent',
+            'z-index': 999999999,
         },
     },
 });
@@ -55226,43 +55588,7 @@ stores_1.rootStore.appStore.overlay = overlay;
 client_1.default.createRoot(overlay)
     .render(react_1.default.createElement(stores_1.RootStoreContext.Provider, { value: stores_1.rootStore },
     react_1.default.createElement(App_1.App, null)));
-content_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppShowExtension === message.type, message)) {
-        if (!stores_1.rootStore.appStore.isExtensionOpen) {
-            stores_1.rootStore.appStore.isExtensionOpen = true;
-        }
-    }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeNewResourceData === message.type, message)) {
-        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        stores_1.rootStore.resourceStore.clearAllData();
-        setTimeout(() => {
-            stores_1.rootStore.resourceStore.addAllData(message.payload);
-            stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        }, 0);
-    }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeResourceData === message.type, message)) {
-        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        stores_1.rootStore.resourceStore.addAllData(message.payload);
-        stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
-    }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppClearResourceData === message.type, message)) {
-        stores_1.rootStore.resourceStore.clearAllData();
-    }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppAddFieldToWatch === message.type, message)) {
-        const { fieldName } = message.payload;
-        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.fieldAdding);
-        stores_1.rootStore.resourceStore.addField(fieldName);
-    }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppSetLoadingState === message.type, message)) {
-        const { loading, key } = message.payload;
-        if (loading) {
-            stores_1.rootStore.appStore.startLoading(key);
-        }
-        else {
-            stores_1.rootStore.appStore.stopLoading(key);
-        }
-    }
-});
+stores_1.rootStore.appStore.mounted = true;
 
 
 /***/ }),
@@ -55292,7 +55618,7 @@ class RootStore {
         this.servicesSelectionStore = new ServicesSelectionStore_1.ServicesSelectionStore();
         this.assetsSelectionStore = new AssetsSelectionStore_1.AssetsSelectionStore();
         this.accountsSelectionStore = new AccountsSelectionStore_1.AccountsSelectionStore();
-        this.platformStore = new PlatformStore_1.PlatformStore();
+        this.platformStore = new PlatformStore_1.PlatformStore(this);
     }
 }
 exports.RootStore = RootStore;
@@ -55511,6 +55837,71 @@ exports.microsoftSentinelPostsUrls = [
 
 /***/ }),
 
+/***/ "./extension/background/platforms/splunk/splunk-watchers.ts":
+/*!******************************************************************!*\
+  !*** ./extension/background/platforms/splunk/splunk-watchers.ts ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.matchSplunkResultsUrl = exports.matchSplunkSummaryUrl = exports.splunkWatchers = void 0;
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
+const envs_1 = __webpack_require__(/*! ../../../common/envs */ "./extension/common/envs.ts");
+exports.splunkWatchers = {
+    accounts: (0, helpers_1.deduplicateArray)([
+        'src_user',
+        'src_user_bunit',
+        'user',
+        'Account_Name',
+        'User',
+        'src_user_name',
+        'user_name',
+    ]),
+    assets: (0, helpers_1.deduplicateArray)([
+        'dest_host',
+        'dst',
+        'dest_nt_host',
+        'src_host',
+        'src_nt_host',
+        'src',
+        'dest',
+        'dest_name',
+        'dest_host',
+        'dvc',
+        'dvc_host',
+        'dest_dns',
+        'src_dns',
+        'ComputerName',
+        'DestinationHostname',
+        'SourceHostname',
+    ]),
+    services: [],
+};
+const matchSplunkSummaryUrl = (url) => {
+    var _a;
+    const { protocol, href } = new URL(url);
+    if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
+        return undefined;
+    }
+    return (_a = href.match(/\/search\/jobs\/([.0-9]+)\/summary/)) === null || _a === void 0 ? void 0 : _a[1];
+};
+exports.matchSplunkSummaryUrl = matchSplunkSummaryUrl;
+const matchSplunkResultsUrl = (url) => {
+    var _a;
+    const { protocol, href } = new URL(url);
+    if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
+        return undefined;
+    }
+    return (_a = href.match(/\/search\/jobs\/([.0-9]+)\/results/)) === null || _a === void 0 ? void 0 : _a[1];
+};
+exports.matchSplunkResultsUrl = matchSplunkResultsUrl;
+
+
+/***/ }),
+
 /***/ "./extension/background/types/types-background-messages.ts":
 /*!*****************************************************************!*\
   !*** ./extension/background/types/types-background-messages.ts ***!
@@ -55714,7 +56105,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getPlatformNameByID = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
+exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getPlatformNameByID = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
@@ -55731,6 +56122,9 @@ const getPlatformNameByID = (platformID) => {
     }
     if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
         return 'Microsoft Defender For Endpoint';
+    }
+    if (platformID === types_common_1.PlatformID.Splunk) {
+        return 'Splunk';
     }
     return 'Unknown Platform';
 };
@@ -55879,6 +56273,25 @@ const removeDoubleQuotesAround = (str) => {
     return result;
 };
 exports.removeDoubleQuotesAround = removeDoubleQuotesAround;
+const getVersionFromString = (version) => {
+    if (typeof version !== 'string'
+        || !/^[.0-9]+$/.test(version)) {
+        return 0;
+    }
+    const result = parseInt(version.replace(/\./g, ''));
+    return isNaN(result) ? 0 : result;
+};
+exports.getVersionFromString = getVersionFromString;
+const compareVersions = (version1, version2) => {
+    const nVersion1 = (0, exports.getVersionFromString)(version1);
+    const nVersion2 = (0, exports.getVersionFromString)(version2);
+    return nVersion1 === nVersion2
+        ? 'equal'
+        : nVersion1 > nVersion2
+            ? 'greater'
+            : 'less';
+};
+exports.compareVersions = compareVersions;
 
 
 /***/ }),
@@ -55920,7 +56333,7 @@ exports.isMessageMatched = isMessageMatched;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.logLevel = exports.mode = exports.backgroundPlatformIDFromENV = exports.contentPlatformIDFromENV = void 0;
+exports.version = exports.logLevel = exports.mode = exports.backgroundPlatformIDFromENV = exports.contentPlatformIDFromENV = void 0;
 const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
 const types_1 = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
 exports.contentPlatformIDFromENV = Object.values(types_common_1.PlatformID).includes(null)
@@ -55935,6 +56348,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
+exports.version = "1.0.2";
 
 
 /***/ }),
@@ -55948,29 +56362,42 @@ exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
+exports.setVersion = exports.getVersion = exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.versionStorageKey = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
 const microsoft_sentinel_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-sentinel/microsoft-sentinel-watchers */ "./extension/background/platforms/microsoft-sentinel/microsoft-sentinel-watchers.ts");
 const microsoft_defender_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers */ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts");
 const integrations_1 = __webpack_require__(/*! ../app/components/integrations/integrations */ "./extension/app/components/integrations/integrations.ts");
+const splunk_watchers_1 = __webpack_require__(/*! ../background/platforms/splunk/splunk-watchers */ "./extension/background/platforms/splunk/splunk-watchers.ts");
 exports.watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 exports.positionStorageKey = 'the-prime-hunt--extension--position';
 exports.integrationsStorageKey = 'the-prime-hunt--extension--integrations';
+exports.versionStorageKey = 'the-prime-hunt--extension--version';
 const setWatchers = (watchers) => {
     localStorage.setItem(exports.watchersLocalStorageKey, JSON.stringify(watchers));
     return watchers;
 };
 exports.setWatchers = setWatchers;
+const getDefaultWatchers = (platformID) => {
+    let watchers = {};
+    if (platformID === 'MicrosoftSentinel') {
+        watchers = microsoft_sentinel_watchers_1.microsoftSentinelWatchers;
+    }
+    if (platformID === 'MicrosoftDefender') {
+        watchers = microsoft_defender_watchers_1.microsoftDefenderWatchers;
+    }
+    if (platformID === 'Splunk') {
+        watchers = splunk_watchers_1.splunkWatchers;
+    }
+    return watchers;
+};
 const getWatchers = (platformID) => {
     try {
-        return JSON.parse(localStorage.getItem(exports.watchersLocalStorageKey) || '');
+        const watchers = JSON.parse(localStorage.getItem(exports.watchersLocalStorageKey) || '');
+        return (0, exports.setWatchers)(Object.keys(watchers).length > 0
+            ? watchers
+            : getDefaultWatchers(platformID));
     }
     catch (e) {
-        const watchers = platformID === 'MicrosoftSentinel'
-            ? microsoft_sentinel_watchers_1.microsoftSentinelWatchers
-            : platformID === 'MicrosoftDefender'
-                ? microsoft_defender_watchers_1.microsoftDefenderWatchers
-                : {};
-        return (0, exports.setWatchers)(watchers);
+        return (0, exports.setWatchers)(getDefaultWatchers(platformID));
     }
 };
 exports.getWatchers = getWatchers;
@@ -56007,6 +56434,14 @@ const restoreIntegrations = () => {
     return integrations_1.integrations;
 };
 exports.restoreIntegrations = restoreIntegrations;
+const getVersion = () => {
+    return localStorage.getItem(exports.versionStorageKey) || '0';
+};
+exports.getVersion = getVersion;
+const setVersion = (version) => {
+    localStorage.setItem(exports.versionStorageKey, version);
+};
+exports.setVersion = setVersion;
 
 
 /***/ }),
@@ -56039,7 +56474,6 @@ class Loggers {
         return new Loggers(prefix, level);
     }
     log(...params) {
-        var _a;
         if (!logging) {
             return;
         }
@@ -56049,11 +56483,11 @@ class Loggers {
             return;
         }
         if (envs_1.mode !== types_1.Mode.production) {
-            (_a = console === null || console === void 0 ? void 0 : console[this.level === types_1.LogLevel.error
+            console[this.level === types_1.LogLevel.error
                 ? 'error'
                 : this.level === types_1.LogLevel.warn
                     ? 'warn'
-                    : 'log']) === null || _a === void 0 ? void 0 : _a.call(console, this.prefix || '==>', ...params);
+                    : 'log'](this.prefix || '==>', ...params);
         }
     }
     error() {
@@ -56133,6 +56567,7 @@ var PlatformID;
 (function (PlatformID) {
     PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
     PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
+    PlatformID["Splunk"] = "Splunk";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 
 
@@ -56147,98 +56582,27 @@ var PlatformID;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.addListener = void 0;
+const content_services_listeners_1 = __webpack_require__(/*! ./services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
 const types_content_common_1 = __webpack_require__(/*! ./types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const common_helpers_1 = __webpack_require__(/*! ../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ./types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const PlatformResolver_1 = __webpack_require__(/*! ./platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
 const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const api_support_1 = __webpack_require__(/*! ../common/api-support */ "./extension/common/api-support.ts");
-const context = (0, common_helpers_1.getBrowserContext)();
-const listeners = {};
-const addListener = (type, listener, ...otherProps) => {
-    var _a;
-    (_a = listeners[type]) === null || _a === void 0 ? void 0 : _a.call(listeners, (...params) => {
-        listener(...params);
-    }, ...otherProps);
-};
-exports.addListener = addListener;
-const removeListenersCallbacks = [];
-listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherProps) => {
-    if ((0, api_support_1.isRuntimeOnMessageSupported)()) {
-        const action = context.runtime.onMessage;
-        removeListenersCallbacks.push(() => {
-            action.removeListener(listener);
-        });
-        action.addListener((...params) => {
-            listener(...params);
-        }, ...otherProps);
-    }
-    if (!(0, api_support_1.isAddEventListenerSupported)()) {
-        return;
-    }
-    const boundedListener = (event) => {
-        const message = event.data;
-        if (event.origin !== window.location.origin
-            || message.externalType !== loggers_debug_1.DebugID.debugIDExternal) {
-            return;
+const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
+    .addPrefix('listeners');
+let platform = PlatformResolver_1.platformResolver.resolve();
+if (platform) {
+    platform.connect();
+}
+content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
+    var _a, _b;
+    if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSConnectPlatform === message.type, message)) {
+        if (!platform) {
+            (_b = (_a = PlatformResolver_1.platformResolver.resolve()) === null || _a === void 0 ? void 0 : _a.connect) === null || _b === void 0 ? void 0 : _b.call(_a);
         }
-        listener(event.data, ...otherProps);
-    };
-    removeListenersCallbacks.push(() => {
-        window.removeEventListener('message', boundedListener);
-    });
-    window.addEventListener('message', boundedListener);
-};
-
-
-/***/ }),
-
-/***/ "./extension/content/content-services.ts":
-/*!***********************************************!*\
-  !*** ./extension/content/content-services.ts ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sendMessageFromApp = exports.sendMessageFromContent = exports.sendMessage = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../common/common-helpers */ "./extension/common/common-helpers.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const helpers_1 = __webpack_require__(/*! ../../common/helpers */ "./common/helpers.ts");
-const api_support_1 = __webpack_require__(/*! ../common/api-support */ "./extension/common/api-support.ts");
-const serviceLoggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
-const context = (0, common_helpers_1.getBrowserContext)();
-const sendMessage = (loggers, message, runtime = true) => {
-    var _a;
-    message.id = message.id || (0, helpers_1.uuid)();
-    const logPrefix = 'sendMessage';
-    try {
-        if (!runtime && !(0, api_support_1.isPostMessageSupported)(message)) {
-            return;
-        }
-        if (!runtime) {
-            window.postMessage(message);
-            return loggers.debug().log('postMessage', message);
-        }
-        if (!(0, api_support_1.isRuntimeSendMessageSupported)()) {
-            return;
-        }
-        (_a = context.runtime.sendMessage(message)) === null || _a === void 0 ? void 0 : _a.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
-        loggers.debug().addPrefix(logPrefix).log(message);
     }
-    catch (e) {
-        loggers.error().addPrefix(logPrefix).log(e, message);
-    }
-};
-exports.sendMessage = sendMessage;
-const sendMessageFromContent = (message, runtime = true) => {
-    return (0, exports.sendMessage)(serviceLoggers.addPrefix((0, loggers_debug_1.getDebugPrefix)('content')), message, runtime);
-};
-exports.sendMessageFromContent = sendMessageFromContent;
-const sendMessageFromApp = (message, runtime = true) => {
-    return (0, exports.sendMessage)(serviceLoggers.addPrefix((0, loggers_debug_1.getDebugPrefix)('app')), message, runtime);
-};
-exports.sendMessageFromApp = sendMessageFromApp;
+});
+loggers.debug().log('mounted');
 
 
 /***/ }),
@@ -56252,11 +56616,13 @@ exports.sendMessageFromApp = sendMessageFromApp;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlatformResolver = void 0;
+exports.platformResolver = exports.PlatformResolver = void 0;
 const MicrosoftSentinelPlatform_1 = __webpack_require__(/*! ./microsoft-sentinel/MicrosoftSentinelPlatform */ "./extension/content/platforms/microsoft-sentinel/MicrosoftSentinelPlatform.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
 const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
 const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./microsoft-defender-for-endpoint/MicrosoftDefenderPlatform */ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts");
+const SplunkPlatform_1 = __webpack_require__(/*! ./splunk/SplunkPlatform */ "./extension/content/platforms/splunk/SplunkPlatform.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
 class PlatformResolver {
     static getPlatform(platformID) {
         switch (platformID) {
@@ -56266,27 +56632,38 @@ class PlatformResolver {
             case types_common_1.PlatformID.MicrosoftDefender: {
                 return new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform();
             }
+            case types_common_1.PlatformID.Splunk: {
+                return new SplunkPlatform_1.SplunkPlatform();
+            }
         }
     }
     static resolveByUrl(url) {
         const { host, protocol, href } = new URL(url);
-        if (protocol !== 'https:') {
+        if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
             return;
         }
         return /(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)
             ? PlatformResolver.getPlatform(types_common_1.PlatformID.MicrosoftSentinel)
-            : /(security.microsoft.com)/.test(href)
+            : /(security.microsoft.com\/)/.test(href)
                 ? PlatformResolver.getPlatform(types_common_1.PlatformID.MicrosoftDefender)
                 : undefined;
+    }
+    static resolveByContent() {
+        if (document.querySelector('a[aria-label^="splunk"]')) {
+            return PlatformResolver.getPlatform(types_common_1.PlatformID.Splunk);
+        }
+        return undefined;
     }
     resolve() {
         if (envs_1.contentPlatformIDFromENV) {
             return PlatformResolver.getPlatform(envs_1.contentPlatformIDFromENV);
         }
-        return PlatformResolver.resolveByUrl(document.location.href);
+        return PlatformResolver.resolveByUrl(document.location.href)
+            || PlatformResolver.resolveByContent();
     }
 }
 exports.PlatformResolver = PlatformResolver;
+exports.platformResolver = new PlatformResolver();
 
 
 /***/ }),
@@ -56304,14 +56681,15 @@ exports.MicrosoftDefenderPlatform = void 0;
 const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
 const loggers_debug_1 = __webpack_require__(/*! ../../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
 const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_listeners_1 = __webpack_require__(/*! ../../content-listeners */ "./extension/content/content-listeners.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const content_services_1 = __webpack_require__(/*! ../../content-services */ "./extension/content/content-services.ts");
+const content_services_1 = __webpack_require__(/*! ../../services/content-services */ "./extension/content/services/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const common_listeners_1 = __webpack_require__(/*! ../../../common/common-listeners */ "./extension/common/common-listeners.ts");
 const types_content_messages_1 = __webpack_require__(/*! ../../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
 const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
 const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
     .addPrefix(types_common_1.PlatformID.MicrosoftDefender);
 class MicrosoftDefenderPlatform {
@@ -56322,11 +56700,12 @@ class MicrosoftDefenderPlatform {
         return MicrosoftDefenderPlatform.id;
     }
     static setListeners() {
-        content_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
             if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
-                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
             }
         });
+        loggers.debug().log('listeners were set');
     }
     static connectMouseDown() {
         document.addEventListener('mousedown', (e) => {
@@ -56347,6 +56726,7 @@ class MicrosoftDefenderPlatform {
                 return;
             }
             (0, content_services_1.sendMessageFromContent)({
+                id: `content-add-field--${(0, helpers_1.uuid)()}`,
                 type: types_background_messages_1.MessageToBackground.BGAddFieldToWatch,
                 payload: {
                     fieldName: text,
@@ -56435,10 +56815,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MicrosoftSentinelPlatform = void 0;
 const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
-const content_services_1 = __webpack_require__(/*! ../../content-services */ "./extension/content/content-services.ts");
+const content_services_1 = __webpack_require__(/*! ../../services/content-services */ "./extension/content/services/content-services.ts");
 const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
 const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const content_listeners_1 = __webpack_require__(/*! ../../content-listeners */ "./extension/content/content-listeners.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
 const types_content_messages_1 = __webpack_require__(/*! ../../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
@@ -56447,6 +56827,7 @@ const common_listeners_1 = __webpack_require__(/*! ../../../common/common-listen
 const envs_1 = __webpack_require__(/*! ../../../common/envs */ "./extension/common/envs.ts");
 const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ./microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
 const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
     .addPrefix(types_common_1.PlatformID.MicrosoftSentinel);
 class MicrosoftSentinelPlatform {
@@ -56471,6 +56852,7 @@ class MicrosoftSentinelPlatform {
                 return;
             }
             (0, content_services_1.sendMessageFromContent)({
+                id: `content-add-field--${(0, helpers_1.uuid)()}`,
                 type: types_background_messages_1.MessageToBackground.BGAddFieldToWatch,
                 payload: {
                     fieldName: (0, microsoft_sentinel_helpers_1.normalizeFieldValue)(text),
@@ -56489,7 +56871,7 @@ class MicrosoftSentinelPlatform {
         });
     }
     static setListeners() {
-        content_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
             if (!envs_1.contentPlatformIDFromENV
                 && !document.querySelector('la-main-view')) {
                 return;
@@ -56501,12 +56883,14 @@ class MicrosoftSentinelPlatform {
                 yield (0, common_helpers_1.waitHTMLElement)(query);
             }
             if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
-                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
             }
         }));
+        loggers.debug().log('listeners were set');
     }
     connect() {
         MicrosoftSentinelPlatform.setListeners();
+        loggers.debug().log('connected');
     }
 }
 exports.MicrosoftSentinelPlatform = MicrosoftSentinelPlatform;
@@ -56559,6 +56943,247 @@ exports.buildMicrosoftSentinelQueryParts = buildMicrosoftSentinelQueryParts;
 
 /***/ }),
 
+/***/ "./extension/content/platforms/splunk/SplunkPlatform.ts":
+/*!**************************************************************!*\
+  !*** ./extension/content/platforms/splunk/SplunkPlatform.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SplunkPlatform = void 0;
+const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const content_services_1 = __webpack_require__(/*! ../../services/content-services */ "./extension/content/services/content-services.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const loggers_debug_1 = __webpack_require__(/*! ../../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
+    .addPrefix(types_common_1.PlatformID.Splunk);
+class SplunkPlatform {
+    constructor() {
+        this.extensionDefaultPosition = SplunkPlatform.extensionDefaultPosition;
+    }
+    static normalizeValue(value) {
+        if (typeof value !== 'string') {
+            return '';
+        }
+        return (0, common_helpers_1.removeDoubleQuotesAround)(value
+            .replace('=', '')
+            .trim());
+    }
+    getID() {
+        return SplunkPlatform.id;
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
+            if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+            }
+        });
+    }
+    static connectMouseDown() {
+        document.addEventListener('mousedown', (e) => {
+            var _a, _b;
+            if (!e.altKey) {
+                return;
+            }
+            const elements = (0, common_helpers_1.getElementsUnderCursor)(e, elem => {
+                return (elem.tagName === 'SPAN'
+                    && elem.classList.contains('t')
+                    && elem.classList.contains('h')
+                    && !!elem.closest('.event')) || (elem.tagName === 'SPAN'
+                    && elem.classList.contains('field')
+                    && !!elem.closest('.event')) || (Array.from(elem.attributes)
+                    .map(el => el.name)
+                    .includes('data-sort-key'));
+            });
+            const text = elements.length > 1
+                ? null
+                : SplunkPlatform.normalizeValue(((_a = elements[0]) === null || _a === void 0 ? void 0 : _a.innerText) || ((_b = elements[0]) === null || _b === void 0 ? void 0 : _b.getAttribute('data-sort-key')));
+            if (!text) {
+                return;
+            }
+            (0, content_services_1.sendMessageFromContent)({
+                id: `content-add-field--${(0, helpers_1.uuid)()}`,
+                type: types_background_messages_1.MessageToBackground.BGAddFieldToWatch,
+                payload: {
+                    fieldName: text,
+                },
+            });
+        });
+        loggers.debug().log('mousedown event was set successfully');
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_helpers_1.getWebAccessibleUrl)(public_resources_1.splunkInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+    }
+    connect() {
+        SplunkPlatform.setListeners();
+        SplunkPlatform.connectMouseDown();
+        SplunkPlatform.connectInlineListener();
+        loggers.debug().log('connected');
+    }
+}
+exports.SplunkPlatform = SplunkPlatform;
+SplunkPlatform.id = types_common_1.PlatformID.Splunk;
+SplunkPlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 480,
+    height: 480,
+};
+
+
+/***/ }),
+
+/***/ "./extension/content/platforms/splunk/splunk-helpers.ts":
+/*!**************************************************************!*\
+  !*** ./extension/content/platforms/splunk/splunk-helpers.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.buildSplunkQueryParts = exports.normalizedValue = void 0;
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
+const normalizedValue = (value) => {
+    const nValue = (0, checkers_1.isNumberInString)(value)
+        ? parseFloat(value)
+        : value;
+    return typeof nValue === 'number'
+        ? nValue
+        : `"${nValue}"`;
+};
+exports.normalizedValue = normalizedValue;
+const buildSplunkQueryParts = (type, resources) => {
+    return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
+        leftOperand: (v) => v,
+        rightOperand: (v) => (0, exports.normalizedValue)(v),
+    });
+};
+exports.buildSplunkQueryParts = buildSplunkQueryParts;
+
+
+/***/ }),
+
+/***/ "./extension/content/services/content-services-listeners.ts":
+/*!******************************************************************!*\
+  !*** ./extension/content/services/content-services-listeners.ts ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.addListener = void 0;
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const listeners = {};
+const addListener = (type, listener, ...otherProps) => {
+    var _a;
+    (_a = listeners[type]) === null || _a === void 0 ? void 0 : _a.call(listeners, (...params) => {
+        listener(...params);
+    }, ...otherProps);
+};
+exports.addListener = addListener;
+const removeListenersCallbacks = [];
+listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherProps) => {
+    if ((0, api_support_1.isRuntimeOnMessageSupported)()) {
+        const action = (0, common_helpers_1.getBrowserContext)().runtime.onMessage;
+        removeListenersCallbacks.push(() => {
+            action.removeListener(listener);
+        });
+        action.addListener((...params) => {
+            listener(...params);
+        }, ...otherProps);
+    }
+    if (!(0, api_support_1.isAddEventListenerSupported)()) {
+        return;
+    }
+    const boundedListener = (event) => {
+        const message = event.data;
+        if (event.origin !== window.location.origin
+            || message.externalType !== loggers_debug_1.DebugID.debugIDExternal) {
+            return;
+        }
+        listener(event.data, ...otherProps);
+    };
+    removeListenersCallbacks.push(() => {
+        window.removeEventListener('message', boundedListener);
+    });
+    window.addEventListener('message', boundedListener);
+};
+
+
+/***/ }),
+
+/***/ "./extension/content/services/content-services.ts":
+/*!********************************************************!*\
+  !*** ./extension/content/services/content-services.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sendMessageFromApp = exports.sendMessageFromContent = exports.sendMessage = void 0;
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const serviceLoggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
+const sendMessage = (loggers, message, runtime = true) => {
+    var _a;
+    message.id = message.id || (0, helpers_1.uuid)();
+    const logPrefix = 'sendMessage';
+    try {
+        if (!runtime && !(0, api_support_1.isPostMessageSupported)(message)) {
+            return;
+        }
+        if (!runtime) {
+            window.postMessage(message);
+            return loggers.debug().log('postMessage', message);
+        }
+        if (!(0, api_support_1.isRuntimeSendMessageSupported)()) {
+            return;
+        }
+        (_a = (0, common_helpers_1.getBrowserContext)().runtime.sendMessage(message)) === null || _a === void 0 ? void 0 : _a.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
+        loggers.debug().addPrefix(logPrefix).log(message);
+    }
+    catch (e) {
+        loggers.error().addPrefix(logPrefix).log(e, message);
+    }
+};
+exports.sendMessage = sendMessage;
+const sendMessageFromContent = (message, runtime = true) => {
+    return (0, exports.sendMessage)(serviceLoggers.addPrefix((0, loggers_debug_1.getDebugPrefix)('content')), message, runtime);
+};
+exports.sendMessageFromContent = sendMessageFromContent;
+const sendMessageFromApp = (message, runtime = true) => {
+    return (0, exports.sendMessage)(serviceLoggers.addPrefix((0, loggers_debug_1.getDebugPrefix)('app')), message, runtime);
+};
+exports.sendMessageFromApp = sendMessageFromApp;
+
+
+/***/ }),
+
 /***/ "./extension/content/types/types-content-common.ts":
 /*!*********************************************************!*\
   !*** ./extension/content/types/types-content-common.ts ***!
@@ -56591,6 +57216,7 @@ const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ 
 var MessageToContent;
 (function (MessageToContent) {
     MessageToContent["CSModifyQuery"] = "CSModifyQuery";
+    MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
     if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
@@ -56634,16 +57260,47 @@ Object.values(MessageToInline).forEach(type => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
 exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
+exports.splunkInline = 'inline-splunk.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
+    [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
     app: [exports.appStyles],
 };
+
+
+/***/ }),
+
+/***/ "./extension/updates.ts":
+/*!******************************!*\
+  !*** ./extension/updates.ts ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const local_storage_1 = __webpack_require__(/*! ./common/local-storage */ "./extension/common/local-storage.ts");
+const common_helpers_1 = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
+const envs_1 = __webpack_require__(/*! ./common/envs */ "./extension/common/envs.ts");
+const integrations_1 = __webpack_require__(/*! ./app/components/integrations/integrations */ "./extension/app/components/integrations/integrations.ts");
+if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.0.2') === 'less') {
+    const storedIntegrations = (0, local_storage_1.getIntegrations)();
+    const ids = storedIntegrations.map(i => i.id);
+    if (!ids.includes('$echo-trail')) {
+        storedIntegrations.push(integrations_1.integrations.find(i => i.id === '$echo-trail'));
+    }
+    if (!ids.includes('$ultimate-windows-security')) {
+        storedIntegrations.push(integrations_1.integrations.find(i => i.id === '$ultimate-windows-security'));
+    }
+    (0, local_storage_1.setIntegrations)(storedIntegrations);
+    (0, local_storage_1.setVersion)(envs_1.version);
+}
 
 
 /***/ })
@@ -56751,43 +57408,17 @@ var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const PlatformResolver_1 = __webpack_require__(/*! ./content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
-const content_services_1 = __webpack_require__(/*! ./content/content-services */ "./extension/content/content-services.ts");
-const types_background_messages_1 = __webpack_require__(/*! ./background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const common_helpers_1 = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
-const local_storage_1 = __webpack_require__(/*! ./common/local-storage */ "./extension/common/local-storage.ts");
-const platformResolver = new PlatformResolver_1.PlatformResolver();
+__webpack_require__(/*! ./updates */ "./extension/updates.ts");
 document.body.onload = () => {
-    const platform = platformResolver.resolve();
-    platform === null || platform === void 0 ? void 0 : platform.connect();
     if ((0, common_helpers_1.isInsideIframe)()) {
-        return (0, common_helpers_1.mountHTMLElement)('div', document.body, {
-            attributes: {
-                'data-worker': 'mounted',
-            },
-        });
+        return __webpack_require__(/*! ./content/content-listeners */ "./extension/content/content-listeners.ts");
     }
-    __webpack_require__(/*! ./app/scss/reset.scss */ "./extension/app/scss/reset.scss");
-    __webpack_require__(/*! ./app/scss/scroll.scss */ "./extension/app/scss/scroll.scss");
-    __webpack_require__(/*! ./app */ "./extension/app/index.tsx");
+    __webpack_require__(/*! ./app/app-listeners */ "./extension/app/app-listeners.ts");
+    const platform = PlatformResolver_1.platformResolver.resolve();
     if (platform) {
-        const rootStore = (__webpack_require__(/*! ./app/stores */ "./extension/app/stores/index.ts").rootStore);
-        rootStore.platformStore.platform = platform;
-        rootStore.appStore.view = 'resources';
-        rootStore.appStore.setPosition(platform.extensionDefaultPosition);
-        (0, content_services_1.sendMessageFromApp)({
-            type: types_background_messages_1.MessageToBackground.BGRegisterPlatformTab,
-            payload: {
-                platformID: platform.getID(),
-            },
-        });
-        (0, content_services_1.sendMessageFromApp)({
-            type: types_background_messages_1.MessageToBackground.BGSetWatchers,
-            payload: {
-                watchers: (0, local_storage_1.getWatchers)(platform.getID()),
-                platformID: platform.getID(),
-                action: 'add',
-            },
-        });
+        __webpack_require__(/*! ./app */ "./extension/app/index.tsx");
+        (__webpack_require__(/*! ./app/stores */ "./extension/app/stores/index.ts").rootStore.platformStore.setPlatform)(platform);
     }
 };
 

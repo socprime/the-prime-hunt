@@ -28,6 +28,6 @@ export class RootStore {
     this.servicesSelectionStore = new ServicesSelectionStore();
     this.assetsSelectionStore = new AssetsSelectionStore();
     this.accountsSelectionStore = new AccountsSelectionStore();
-    this.platformStore = new PlatformStore();
+    this.platformStore = new PlatformStore(this);
   }
 }
