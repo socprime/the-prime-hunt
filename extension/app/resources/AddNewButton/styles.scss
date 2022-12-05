@@ -1,0 +1,22 @@
+@import "../../scss/palette";
+
+.add-new-button.static-button.app-button.button {
+  width: 28px;
+  height: 28px;
+  background-color: $lighter-background-color;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+
+  .icon {
+    width: 15px;
+    height: 15px;
+    fill: $base-text-color;
+  }
+
+  &:hover .icon {
+    fill: $success;
+  }
+}

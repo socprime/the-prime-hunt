@@ -1,12 +1,29 @@
 @import "../../../scss/palette";
 
-.app-tooltip.tooltip-content {
-  padding: 10px 0;
+.app-tooltip {
+  &.tooltip-content {
+    padding: 10px 0;
+    font-size: 13px;
 
-  .tooltip-content-wrapper {
-    padding: 12px 14px;
-    background-color: $base-background-area-color;
-    border-radius: 6px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    .tooltip-content-wrapper {
+      padding: 12px 14px;
+      background-color: $base-background-area-color;
+      border-radius: 6px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &.tooltip.error {
+    color: $error;
+    margin-right: 2px;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+
+  &.small {
+    .tooltip-content-wrapper {
+      font-size: 12px;
+      padding: 8px;
+    }
   }
 }

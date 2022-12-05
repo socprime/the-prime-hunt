@@ -5,8 +5,8 @@ export enum MessageToApp {
   AppTakeResourceData = 'AppTakeResourceData',
   AppTakeNewResourceData = 'AppTakeNewResourceData',
   AppClearResourceData = 'AppClearResourceData',
-  AppAddFieldToWatch = 'AppAddFieldToWatch',
   AppSetLoadingState = 'AppSetLoadingState',
+  AppToggleShowExtension = 'AppToggleShowExtension',
 }
 
 Object.values(MessageToApp).forEach(type => {

@@ -3,10 +3,8 @@ import { ListenerType, MessageListener } from './types/types-content-common';
 import { isMessageMatched } from '../common/common-listeners';
 import { MessageToContent } from './types/types-content-messages';
 import { platformResolver } from './platforms/PlatformResolver';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
 
 const loggers = require('../common/loggers').loggers
-  .addPrefix(getDebugPrefix('content'))
   .addPrefix('listeners');
 
 let platform = platformResolver.resolve();

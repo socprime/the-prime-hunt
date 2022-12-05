@@ -1,10 +1,19 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-export const usePrevious = (value: any) => {
+export const usePrevious = (
+  value: any,
+  updateCondition?: (value: any) => boolean,
+) => {
   const ref = useRef();
   useEffect(() => {
-    ref.current = value;
-  }, [value]);
+    if (typeof updateCondition !== 'function') {
+      ref.current = value;
+      return;
+    }
+    ref.current = updateCondition(value)
+      ? value
+      : ref.current;
+  }, [updateCondition, value]);
   return ref.current;
 };
 
@@ -21,10 +30,10 @@ export const useOnClickOutside = (
         }
         const rect = element.getBoundingClientRect();
         return (
-          event.x > rect.left &&
-          event.x < rect.right &&
-          event.y > rect.top &&
-          event.y < rect.bottom
+          event.x >= rect.left &&
+          event.x <= rect.right &&
+          event.y >= rect.top &&
+          event.y <= rect.bottom
         );
       });
 

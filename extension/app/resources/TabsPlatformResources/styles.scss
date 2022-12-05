@@ -1,0 +1,71 @@
+@import "../../scss/palette";
+
+$tabsFontSize: 14px;
+
+.tabs-platform-resources-wrapper {
+  .tabs-panel.tabs-platform-resources {
+    display: inline-flex;
+    height: 100%;
+    z-index: 2;
+
+    .tabs-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tab {
+      margin-bottom: 4px;
+
+      .button:not(.add-new-button) {
+        margin: 2px 10px 2px 0;
+        padding: 8px 12px;
+        height: 36px;
+
+        .resources-count {
+          margin-left: 4px;
+        }
+      }
+    }
+
+    .window-icon {
+      height: 16px;
+      width: 16px;
+    }
+
+    .button-content {
+      display: inline-flex;
+      align-items: baseline;
+
+      .input {
+        font-size: $tabsFontSize;
+        color: $base-text-color;
+      }
+
+      .virtual-input {
+        font-size: $tabsFontSize;
+      }
+
+      .resource-tab-input-wrapper {
+        display: flex;
+        align-items: center;
+      }
+
+      .resource-tab-input-wrapper.edit ~ span {
+        display: none;
+      }
+
+      .control-input-wrapper:not(.edit) {
+        .input {
+          cursor: pointer;
+        }
+      }
+
+      .control .icon {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+}
+

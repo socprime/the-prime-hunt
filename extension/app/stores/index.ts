@@ -27,19 +27,9 @@ export const usePlatformStore = () => {
   return rootStore.platformStore;
 };
 
-export const useServicesSelectionStore = () => {
+export const useResourcesSelectionStore = () => {
   const rootStore = useRootStore();
-  return rootStore.servicesSelectionStore;
-};
-
-export const useAssetsSelectionStore = () => {
-  const rootStore = useRootStore();
-  return rootStore.assetsSelectionStore;
-};
-
-export const useAccountsSelectionStore = () => {
-  const rootStore = useRootStore();
-  return rootStore.accountsSelectionStore;
+  return rootStore.resourcesSelectionStore;
 };
 
 export const useIntegrationsStore = () => {

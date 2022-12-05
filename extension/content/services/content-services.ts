@@ -1,6 +1,5 @@
 import { getBrowserContext } from '../../common/common-helpers';
 import { ExtensionMessage } from '../../common/types/types-common';
-import { getDebugPrefix } from '../../common/loggers/loggers-debug';
 import { uuid } from '../../../common/helpers';
 import { isPostMessageSupported, isRuntimeSendMessageSupported } from '../../common/api-support';
 import { Loggers } from '../../common/loggers';
@@ -13,7 +12,7 @@ export const sendMessage = <T = unknown>(
   message: ExtensionMessage<T>,
   runtime = true,
 ) => {
-  message.id = message.id || uuid();
+  message.id = `${message.id ? `${message.id}--` : ''}${uuid()}`;
   const logPrefix = 'sendMessage';
 
   try {
@@ -43,7 +42,7 @@ export const sendMessageFromContent = <T = unknown>(
   runtime = true,
 ) => {
   return sendMessage<T>(
-    serviceLoggers.addPrefix(getDebugPrefix('content')),
+    serviceLoggers.addPrefix('message-from-content'),
     message,
     runtime,
   );
@@ -54,7 +53,7 @@ export const sendMessageFromApp = <T = unknown>(
   runtime = true,
 ) => {
   return sendMessage<T>(
-    serviceLoggers.addPrefix(getDebugPrefix('app')),
+    serviceLoggers.addPrefix('message-from-app'),
     message,
     runtime,
   );

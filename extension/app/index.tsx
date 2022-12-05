@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './components/App/App';
+import { App } from './root/App/App';
 import { rootStore, RootStoreContext } from './stores';
 import { Mode } from '../../common/types';
 import { getWebAccessibleUrl, mountHTMLElement } from '../common/common-helpers';

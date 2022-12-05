@@ -1,0 +1,27 @@
+@import "../../../scss/palette";
+
+.app-control-input.control-input-wrapper {
+  display: inline-flex;
+  align-items: center;
+  background-color: $lighter-background-color;
+  color: $base-text-color;
+
+  .icon {
+    height: 14px;
+    width: 14px;
+    fill: $base-text-color;
+  }
+
+  .input {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    text-align: center;
+    color: $base-text-color;
+  }
+
+  &.disabled {
+    pointer-events: none;
+  }
+}

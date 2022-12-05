@@ -29,5 +29,11 @@
       display: flex;
       align-content: center;
     }
+
+    &.disabled {
+      .small-arrow-icon {
+        fill: $base-disabled-text-color;
+      }
+    }
   }
 }

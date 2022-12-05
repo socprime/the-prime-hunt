@@ -1,7 +1,7 @@
-import {
-  registerPlatformsOnOpenedTabs,
-} from './background/services/background-services';
+import { getDebugPrefix } from './common/loggers/loggers-debug';
+
+require('./common/loggers').loggers
+  .setPrefix(getDebugPrefix('background'));
 
 require('./background/background-listeners');
 
-registerPlatformsOnOpenedTabs();

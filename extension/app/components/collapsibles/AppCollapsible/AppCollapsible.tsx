@@ -1,6 +1,7 @@
 import React from 'react';
 import { Collapsible, CollapsibleProps } from '../../atoms/Collapsible/Collapsible';
 import { SmallArrowIcon } from '../../atoms/icons/SmallArrowIcon/SmallArrowIcon';
+import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';
 
 export type AppCollapsibleProps = CollapsibleProps & {
@@ -8,7 +9,7 @@ export type AppCollapsibleProps = CollapsibleProps & {
 };
 
 export const AppCollapsible: React.FC<React.PropsWithChildren<AppCollapsibleProps>> = ({
-  className,
+  className = '',
   header,
   children,
   group,
@@ -16,6 +17,10 @@ export const AppCollapsible: React.FC<React.PropsWithChildren<AppCollapsibleProp
 }) => {
   return (
     <Collapsible
+      className={createClassName([
+        'app-collapsible',
+        className,
+      ])}
       header={
         <>
           {header}
@@ -27,7 +32,6 @@ export const AppCollapsible: React.FC<React.PropsWithChildren<AppCollapsibleProp
           </div>
         </>
       }
-      className={className}
       {...restProps}
     >
       {children}

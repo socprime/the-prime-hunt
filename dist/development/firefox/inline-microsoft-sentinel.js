@@ -12,6 +12,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
+const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
@@ -28,7 +29,8 @@ const isNumberInString = (str) => {
         return false;
     }
     const sValue = str.trim();
-    if (!/^[.0-9]*$/.test(sValue)) {
+    if (!/^[.0-9]*$/.test(sValue)
+        || (0, helpers_1.indexOfAll)(sValue, '.').length > 1) {
         return false;
     }
     return !Number.isNaN(parseFloat(sValue));
@@ -54,7 +56,7 @@ exports.isAllowedProtocol = isAllowedProtocol;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -72,6 +74,10 @@ const uuid = () => {
 exports.uuid = uuid;
 const clearExtraSpaces = (str) => str.replace(/ +/g, ' ');
 exports.clearExtraSpaces = clearExtraSpaces;
+const clearLineBreaks = (str) => str
+    .trim()
+    .replace(/(\r\n|\n|\r)/gm, ' ');
+exports.clearLineBreaks = clearLineBreaks;
 const parseJSONSafe = (obj, fallback) => {
     try {
         return JSON.parse(obj);
@@ -102,6 +108,72 @@ const formatString = (pattern, parts, keyFormat) => {
 exports.formatString = formatString;
 const capitalizeFirstLetter = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 exports.capitalizeFirstLetter = capitalizeFirstLetter;
+const createNonDuplicateValue = (value, values) => {
+    if (!values.includes(value)) {
+        return value;
+    }
+    let increment = 1;
+    let wordRoot = value;
+    let searchedWordRoot = wordRoot.slice(0, wordRoot.length - 1);
+    while (values.includes(searchedWordRoot)) {
+        wordRoot = searchedWordRoot;
+        searchedWordRoot = searchedWordRoot.slice(0, searchedWordRoot.length - 1);
+    }
+    while (values.includes(`${wordRoot}${increment}`)) {
+        increment++;
+    }
+    return `${wordRoot}${increment}`;
+};
+exports.createNonDuplicateValue = createNonDuplicateValue;
+const formatBinaryDate = (value) => {
+    const sValue = typeof value === 'string'
+        ? value
+        : String(value);
+    return sValue.length > 1
+        ? sValue
+        : `0${sValue}`;
+};
+exports.formatBinaryDate = formatBinaryDate;
+const formatDate = (pattern, data) => {
+    return (0, exports.formatString)(pattern, {
+        'Y': String(data.getFullYear()),
+        'M': (0, exports.formatBinaryDate)(data.getMonth()),
+        'm': (0, exports.formatBinaryDate)(data.getMinutes()),
+        's': (0, exports.formatBinaryDate)(data.getSeconds()),
+        'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
+        'd': (0, exports.formatBinaryDate)(data.getDate()),
+        'h': (0, exports.formatBinaryDate)(data.getHours()),
+    });
+};
+exports.formatDate = formatDate;
+const debounce = (func, timeoutMs) => {
+    let timeoutID;
+    return function (...args) {
+        const context = this;
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(() => func.apply(context, args), timeoutMs);
+    };
+};
+exports.debounce = debounce;
+const sortNumbers = (a, b) => {
+    if (a > b) {
+        return 1;
+    }
+    if (a < b) {
+        return -1;
+    }
+    return 0;
+};
+exports.sortNumbers = sortNumbers;
+const indexOfAll = (str, search) => {
+    const indexes = [];
+    let i = -1;
+    while ((i = str.indexOf(search, i + 1)) >= 0) {
+        indexes.push(i);
+    }
+    return indexes;
+};
+exports.indexOfAll = indexOfAll;
 
 
 /***/ }),
@@ -129,6 +201,25 @@ var LogLevel;
 })(LogLevel = exports.LogLevel || (exports.LogLevel = {}));
 const mapType = (struct) => struct;
 exports.mapType = mapType;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/resources-types.ts":
+/*!****************************************************!*\
+  !*** ./extension/app/resources/resources-types.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.boundedResourcesTypeIDs = exports.BoundedResourceTypeID = void 0;
+var BoundedResourceTypeID;
+(function (BoundedResourceTypeID) {
+    BoundedResourceTypeID["Accounts"] = "Accounts";
+    BoundedResourceTypeID["Assets"] = "Assets";
+})(BoundedResourceTypeID = exports.BoundedResourceTypeID || (exports.BoundedResourceTypeID = {}));
+exports.boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
 
 
 /***/ }),
@@ -306,8 +397,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getPlatformNameByID = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
-const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
 exports.getBrowserContext = getBrowserContext;
@@ -317,19 +407,6 @@ const getWebAccessibleUrl = (path) => {
         : '';
 };
 exports.getWebAccessibleUrl = getWebAccessibleUrl;
-const getPlatformNameByID = (platformID) => {
-    if (platformID === types_common_1.PlatformID.MicrosoftSentinel) {
-        return 'Microsoft Sentinel';
-    }
-    if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
-        return 'Microsoft Defender For Endpoint';
-    }
-    if (platformID === types_common_1.PlatformID.Splunk) {
-        return 'Splunk';
-    }
-    return 'Unknown Platform';
-};
-exports.getPlatformNameByID = getPlatformNameByID;
 const getExecutingContextByMessageType = (message) => {
     let prefix = message.slice(0, 3).toLowerCase();
     if (prefix === 'app') {
@@ -406,13 +483,13 @@ const copyToClipboard = (str) => {
     document.body.removeChild(el);
 };
 exports.copyToClipboard = copyToClipboard;
-const downloadFile = (type, content) => {
+const downloadFile = (type, content, name) => {
     const prefix = type === 'csv'
         ? 'data:text/csv;charset=utf-8,'
         : 'data:text/csv;charset=utf-8,';
     const link = document.createElement('a');
     link.setAttribute('href', encodeURI(`${prefix}${content}`));
-    link.setAttribute('download', 'extension-resources.csv');
+    link.setAttribute('download', `${name}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -493,6 +570,16 @@ const compareVersions = (version1, version2) => {
             : 'less';
 };
 exports.compareVersions = compareVersions;
+const createFormDataString = (data) => {
+    const urlEncodedDataPairs = [];
+    for (const [name, value] of Object.entries(data)) {
+        urlEncodedDataPairs.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
+    }
+    return urlEncodedDataPairs
+        .join('&')
+        .replace(/%20/g, '+');
+};
+exports.createFormDataString = createFormDataString;
 
 
 /***/ }),
@@ -507,13 +594,10 @@ exports.compareVersions = compareVersions;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isMessageMatched = void 0;
 const loggers_1 = __webpack_require__(/*! ./loggers */ "./extension/common/loggers/index.ts");
-const loggers_debug_1 = __webpack_require__(/*! ./loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const common_helpers_1 = __webpack_require__(/*! ./common-helpers */ "./extension/common/common-helpers.ts");
 const isMessageMatched = (matchCondition, message, ...otherInfo) => {
     if (matchCondition()) {
         loggers_1.loggers
             .debug()
-            .addPrefix((0, loggers_debug_1.getDebugPrefix)((0, common_helpers_1.getExecutingContextByMessageType)(message.type)))
             .log(`got ${message.type} message`, message, ...otherInfo);
         return true;
     }
@@ -547,7 +631,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.0.2";
+exports.version = "1.1.0";
 
 
 /***/ }),
@@ -560,7 +644,7 @@ exports.version = "1.0.2";
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.loggers = exports.Loggers = exports.stopLogging = exports.startLogging = void 0;
+exports.Loggers = exports.stopLogging = exports.startLogging = exports.loggers = void 0;
 const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
 const envs_1 = __webpack_require__(/*! ../envs */ "./extension/common/envs.ts");
 let logging = true;
@@ -613,6 +697,10 @@ class Loggers {
     setLevel(level) {
         return this.createInstance(this.prefix, level);
     }
+    setPrefix(prefix) {
+        exports.loggers = this.addPrefix(prefix);
+        return exports.loggers;
+    }
 }
 exports.Loggers = Loggers;
 exports.loggers = new Loggers();
@@ -659,7 +747,7 @@ var DebugID;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlatformID = exports.Browser = void 0;
+exports.PlatformName = exports.PlatformID = exports.Browser = void 0;
 var Browser;
 (function (Browser) {
     Browser["chrome"] = "chrome";
@@ -671,44 +759,269 @@ var PlatformID;
     PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
     PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
     PlatformID["Splunk"] = "Splunk";
+    PlatformID["QRadar"] = "QRadar";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
+var PlatformName;
+(function (PlatformName) {
+    PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
+    PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
+    PlatformName["Splunk"] = "Splunk";
+    PlatformName["QRadar"] = "IBM QRadar";
+})(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
 /***/ }),
 
-/***/ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts":
-/*!**************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts ***!
-  \**************************************************************************************/
+/***/ "./extension/content/platforms/MicrosoftSentinelPlatform.ts":
+/*!******************************************************************!*\
+  !*** ./extension/content/platforms/MicrosoftSentinelPlatform.ts ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MicrosoftSentinelPlatform = void 0;
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+let loggers;
+class MicrosoftSentinelPlatform {
+    constructor() {
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'UserName',
+                'Account',
+                'SubjectUserName',
+                'TargetUserName',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'Computer',
+            ],
+        };
+        this.extensionDefaultPosition = MicrosoftSentinelPlatform.extensionDefaultPosition;
+    }
+    static normalizedValue(value) {
+        const nValue = (0, checkers_1.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `"${nValue.replace(/\\/g, '\\\\')}"`;
+    }
+    static buildQueryParts(type, resources) {
+        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => MicrosoftSentinelPlatform.normalizedValue(v),
+        });
+    }
+    buildQueryParts(type, resources) {
+        return MicrosoftSentinelPlatform.buildQueryParts(type, resources);
+    }
+    getID() {
+        return MicrosoftSentinelPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.MicrosoftSentinel;
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_helpers_1.getWebAccessibleUrl)(public_resources_1.microsoftSentinelInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            if (!envs_1.contentPlatformIDFromENV
+                && !document.querySelector('la-main-view')) {
+                return;
+            }
+            const query = `script[src$="${public_resources_1.microsoftSentinelInline}"]`;
+            if (!document.querySelector(query)) {
+                MicrosoftSentinelPlatform.connectInlineListener();
+                yield (0, common_helpers_1.waitHTMLElement)(query);
+            }
+            if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+            }
+        }));
+        loggers.debug().log('listeners were set');
+    }
+    connect() {
+        MicrosoftSentinelPlatform.setListeners();
+        loggers.debug().log('connected');
+    }
+}
+exports.MicrosoftSentinelPlatform = MicrosoftSentinelPlatform;
+MicrosoftSentinelPlatform.id = types_common_1.PlatformID.MicrosoftSentinel;
+MicrosoftSentinelPlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 500,
+    height: 400,
+};
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(MicrosoftSentinelPlatform.id);
+
+
+/***/ }),
+
+/***/ "./extension/content/services/content-services-listeners.ts":
+/*!******************************************************************!*\
+  !*** ./extension/content/services/content-services-listeners.ts ***!
+  \******************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildMicrosoftSentinelQueryParts = exports.normalizedValue = exports.normalizeFieldValue = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
-const normalizeFieldValue = (value) => {
-    return value.indexOf('[UTC]') > -1
-        ? value.split('[UTC]').shift().trim()
-        : value;
+exports.addListener = void 0;
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const listeners = {};
+const addListener = (type, listener, ...otherProps) => {
+    var _a;
+    (_a = listeners[type]) === null || _a === void 0 ? void 0 : _a.call(listeners, (...params) => {
+        listener(...params);
+    }, ...otherProps);
 };
-exports.normalizeFieldValue = normalizeFieldValue;
-const normalizedValue = (value) => {
-    const nValue = (0, checkers_1.isNumberInString)(value)
-        ? parseFloat(value)
-        : value;
-    return typeof nValue === 'number'
-        ? nValue
-        : `"${nValue.replace(/\\/g, '\\\\')}"`;
-};
-exports.normalizedValue = normalizedValue;
-const buildMicrosoftSentinelQueryParts = (type, resources) => {
-    return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
-        leftOperand: (v) => v,
-        rightOperand: (v) => (0, exports.normalizedValue)(v),
+exports.addListener = addListener;
+const removeListenersCallbacks = [];
+listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherProps) => {
+    if ((0, api_support_1.isRuntimeOnMessageSupported)()) {
+        const action = (0, common_helpers_1.getBrowserContext)().runtime.onMessage;
+        removeListenersCallbacks.push(() => {
+            action.removeListener(listener);
+        });
+        action.addListener((...params) => {
+            listener(...params);
+        }, ...otherProps);
+    }
+    if (!(0, api_support_1.isAddEventListenerSupported)()) {
+        return;
+    }
+    const boundedListener = (event) => {
+        const message = event.data;
+        if (event.origin !== window.location.origin
+            || message.externalType !== loggers_debug_1.DebugID.debugIDExternal) {
+            return;
+        }
+        listener(event.data, ...otherProps);
+    };
+    removeListenersCallbacks.push(() => {
+        window.removeEventListener('message', boundedListener);
     });
+    window.addEventListener('message', boundedListener);
 };
-exports.buildMicrosoftSentinelQueryParts = buildMicrosoftSentinelQueryParts;
+
+
+/***/ }),
+
+/***/ "./extension/content/services/content-services.ts":
+/*!********************************************************!*\
+  !*** ./extension/content/services/content-services.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sendMessageFromApp = exports.sendMessageFromContent = exports.sendMessage = void 0;
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const serviceLoggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
+const sendMessage = (loggers, message, runtime = true) => {
+    var _a;
+    message.id = `${message.id ? `${message.id}--` : ''}${(0, helpers_1.uuid)()}`;
+    const logPrefix = 'sendMessage';
+    try {
+        if (!runtime && !(0, api_support_1.isPostMessageSupported)(message)) {
+            return;
+        }
+        if (!runtime) {
+            window.postMessage(message);
+            return loggers.debug().log('postMessage', message);
+        }
+        if (!(0, api_support_1.isRuntimeSendMessageSupported)()) {
+            return;
+        }
+        (_a = (0, common_helpers_1.getBrowserContext)().runtime.sendMessage(message)) === null || _a === void 0 ? void 0 : _a.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
+        loggers.debug().addPrefix(logPrefix).log(message);
+    }
+    catch (e) {
+        loggers.error().addPrefix(logPrefix).log(e, message);
+    }
+};
+exports.sendMessage = sendMessage;
+const sendMessageFromContent = (message, runtime = true) => {
+    return (0, exports.sendMessage)(serviceLoggers.addPrefix('message-from-content'), message, runtime);
+};
+exports.sendMessageFromContent = sendMessageFromContent;
+const sendMessageFromApp = (message, runtime = true) => {
+    return (0, exports.sendMessage)(serviceLoggers.addPrefix('message-from-app'), message, runtime);
+};
+exports.sendMessageFromApp = sendMessageFromApp;
+
+
+/***/ }),
+
+/***/ "./extension/content/types/types-content-common.ts":
+/*!*********************************************************!*\
+  !*** ./extension/content/types/types-content-common.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ListenerType = void 0;
+var ListenerType;
+(function (ListenerType) {
+    ListenerType["OnMessage"] = "OnMessage";
+})(ListenerType = exports.ListenerType || (exports.ListenerType = {}));
+
+
+/***/ }),
+
+/***/ "./extension/content/types/types-content-messages.ts":
+/*!***********************************************************!*\
+  !*** ./extension/content/types/types-content-messages.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MessageToContent = void 0;
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+var MessageToContent;
+(function (MessageToContent) {
+    MessageToContent["CSModifyQuery"] = "CSModifyQuery";
+    MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
+})(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
+Object.values(MessageToContent).forEach(type => {
+    if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
+        throw new Error(`Wrong content message type "${type}"`);
+    }
+});
 
 
 /***/ }),
@@ -830,6 +1143,32 @@ Object.values(MessageToInline).forEach(type => {
 });
 
 
+/***/ }),
+
+/***/ "./extension/manifest/public-resources.ts":
+/*!************************************************!*\
+  !*** ./extension/manifest/public-resources.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.accessibleResources = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
+exports.appStyles = 'app-styles.css';
+exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
+exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
+exports.splunkInline = 'inline-splunk.js';
+exports.qRadarInline = 'inline-qradar.js';
+exports.accessibleResources = {
+    [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
+    [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
+    [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
+    [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
+    app: [exports.appStyles],
+};
+
+
 /***/ })
 
 /******/ 	});
@@ -860,7 +1199,20 @@ Object.values(MessageToInline).forEach(type => {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+var exports = {};
+/*!*****************************!*\
+  !*** ./extension/inline.ts ***!
+  \*****************************/
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const loggers_debug_1 = __webpack_require__(/*! ./common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0, loggers_debug_1.getDebugPrefix)('inline'));
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 var exports = __webpack_exports__;
 /*!*******************************************************!*\
@@ -869,13 +1221,11 @@ var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const types_inline_messages_1 = __webpack_require__(/*! ./types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
-const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
 const monaco_editor_helpers_1 = __webpack_require__(/*! ./helpers/monaco-editor-helpers */ "./extension/inline/helpers/monaco-editor-helpers.ts");
-const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('inline'))
-    .addPrefix(types_common_1.PlatformID.MicrosoftSentinel);
+const MicrosoftSentinelPlatform_1 = __webpack_require__(/*! ../content/platforms/MicrosoftSentinelPlatform */ "./extension/content/platforms/MicrosoftSentinelPlatform.ts");
+const platform = new MicrosoftSentinelPlatform_1.MicrosoftSentinelPlatform();
+const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(platform.getID());
 let editorIndex = 0;
 const setIndex = (index) => {
     if (index === null) {
@@ -908,7 +1258,7 @@ window.addEventListener('message', (event) => {
         }
         const editor = (0, monaco_editor_helpers_1.getEditorByIndex)(editorIndex);
         const { resources, modifyType } = message.payload;
-        const suffix = `| where ${(0, microsoft_sentinel_helpers_1.buildMicrosoftSentinelQueryParts)(modifyType, resources)}`;
+        const suffix = `| where ${platform.buildQueryParts(modifyType, resources)}`;
         editor.setValue((0, monaco_editor_helpers_1.buildNewQuery)(editorIndex, suffix, modifyType));
     }
 });

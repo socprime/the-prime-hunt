@@ -1,0 +1,18 @@
+.resource-list {
+  margin-left: 26px;
+
+  .list-item {
+    &:not(:last-child) {
+      height: 34px;
+    }
+  }
+}
+
+.resource-value-tooltip.tooltip-content.app-tooltip {
+  max-width: 350px;
+  line-height: 1.4;
+
+  .tooltip-content-wrapper {
+    word-break: break-all;
+  }
+}

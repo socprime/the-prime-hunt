@@ -1,11 +1,9 @@
 import { WatchingResources } from '../background/types/types-background-common';
-import { microsoftSentinelWatchers } from '../background/platforms/microsoft-sentinel/microsoft-sentinel-watchers';
-import { microsoftDefenderWatchers } from '../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers';
 import { PlatformID } from './types/types-common';
 import { Position } from '../content/types/types-content-common';
-import { Integration } from '../app/components/integrations/integrations-types';
-import { integrations } from '../app/components/integrations/integrations';
-import { splunkWatchers } from '../background/platforms/splunk/splunk-watchers';
+import { Integration } from '../app/integrations/integrations-types';
+import { integrations } from '../app/integrations/integrations';
+import { platformResolver } from '../content/platforms/PlatformResolver';
 
 export const watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 
@@ -24,30 +22,16 @@ export const setWatchers = (watchers: WatchingResources): WatchingResources => {
 };
 
 const getDefaultWatchers = (
-  platformID: PlatformID,
+  platformID?: PlatformID,
 ) => {
-  let watchers = {} as WatchingResources;
-
-  if (platformID === 'MicrosoftSentinel') {
-    watchers = microsoftSentinelWatchers;
-  }
-
-  if (platformID === 'MicrosoftDefender') {
-    watchers = microsoftDefenderWatchers;
-  }
-
-  if (platformID === 'Splunk') {
-    watchers = splunkWatchers;
-  }
-
-  return watchers;
+  return platformResolver.getPlatformByID(platformID)?.defaultWatchers || {};
 };
 
 export const getWatchers = (
-  platformID: PlatformID,
+  platformID?: PlatformID,
 ): WatchingResources => {
   try {
-    const watchers =  JSON.parse(
+    const watchers = JSON.parse(
       localStorage.getItem(watchersLocalStorageKey) || '',
     );
     return setWatchers(Object.keys(watchers).length > 0

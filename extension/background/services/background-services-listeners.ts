@@ -2,7 +2,7 @@ import { BGInterceptor, BGListenerType, MessageInfo } from '../types/types-backg
 import { getBrowserContext } from '../../common/common-helpers';
 import { mapType, UniqueHash } from '../../../common/types';
 import { uuid } from '../../../common/helpers';
-import { DebugID, DebugMessage, getDebugPrefix } from '../../common/loggers/loggers-debug';
+import { DebugID, DebugMessage } from '../../common/loggers/loggers-debug';
 import {
   isActionOnClickedSupported,
   isBrowserActionOnClickedSupported,
@@ -14,7 +14,6 @@ import {
 } from '../../common/api-support';
 
 const loggers = require('../../common/loggers').loggers
-  .addPrefix(getDebugPrefix('background'))
   .addPrefix('listeners');
 
 const listeners: {

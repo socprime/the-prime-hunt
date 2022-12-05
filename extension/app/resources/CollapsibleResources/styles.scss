@@ -1,0 +1,46 @@
+@import '../../scss/palette';
+
+.fields-separator {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > span {
+    color: $base-text-color-strong;
+    display: inline-flex;
+    align-items: end  ;
+    font-size: 12px;
+    background-color: $base-background-color;
+    padding: 0 8px;
+    z-index: 2;
+
+    span {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        fill: $base-text-color;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  hr {
+    z-index: 1;
+    display: block;
+    position: absolute;
+    height: 1.3px;
+    border: none;
+    margin: 0;
+    background-color: $lighter-background-color;
+    width: 99%;
+    top: 50%;
+  }
+}

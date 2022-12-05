@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
-import { useForceUpdate } from '../../../app-hooks';
 import './collapsible.scss';
 
 export type CollapsibleProps = {
   header: React.ReactNode;
+  disabled?: boolean;
   open?: boolean;
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -12,64 +12,82 @@ export type CollapsibleProps = {
 
 export const Collapsible: React.FC<React.PropsWithChildren<CollapsibleProps>> = ({
   className = '',
+  disabled,
   children,
   header,
   onClick,
   open,
 }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(!!open);
-  const ref = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(!children ? false : !!open);
+  const [height, setHeight] = useState<number>(0);
 
-  const forceUpdate = useForceUpdate();
+  const getNewHeight = useCallback(() => {
+    return Array.from(contentRef.current?.children || [])
+      .reduce((res, e) => res += (e as HTMLElement).offsetHeight, 0);
+  }, []);
 
   useEffect(() => {
-    const oldWidth = 0;
+    setHeight(getNewHeight());
+  }, [getNewHeight, isOpen]);
+
+  useEffect(() => {
+    if (!contentRef.current) {
+      return;
+    }
+    const oldWidth = contentRef.current!.offsetWidth;
     const contentObserver = new MutationObserver(() => {
-      forceUpdate();
+      setHeight(getNewHeight());
     });
-    const widthObserver = new ResizeObserver((entries) => {
-      const newWidth = entries[0].contentRect.width;
-      if (newWidth !== oldWidth) {
-        forceUpdate();
+    const widthObserver = new ResizeObserver(() => {
+      if (contentRef.current && contentRef.current.offsetWidth !== oldWidth) {
+        setHeight(getNewHeight());
       }
-      return newWidth;
     });
-    contentObserver.observe(ref.current!, {
+    contentObserver.observe(contentRef.current!, {
       childList: true,
       subtree: true,
     });
-    widthObserver.observe(ref.current!);
+    widthObserver.observe(contentRef.current!);
     return () => {
       contentObserver.disconnect();
       widthObserver.disconnect();
     };
-  }, [forceUpdate]);
-
-  const getNewHeight = useCallback(() => {
-    return Array.from(ref.current!.children)
-      .reduce((res, e) => res += (e as HTMLElement).offsetHeight, 0);
-  }, []);
+  }, [getNewHeight]);
 
   return (
-    <div className={createClassName(['collapsible', className])}>
+    <div className={createClassName([
+      'collapsible',
+      isOpen ? 'open' : 'closed',
+      disabled ? 'disabled' : '',
+      className,
+    ])}>
       <div
-        className={createClassName(['collapsible-header', isOpen ? 'open' : 'closed'])}
+        className={createClassName([
+          'collapsible-header',
+          isOpen ? 'open' : 'closed',
+          disabled ? 'disabled' : '',
+          className,
+        ])}
         onClick={e => {
+          if (!children || disabled) {
+            return;
+          }
           setIsOpen(!isOpen);
           onClick?.(e);
         }}
       >
         {header}
       </div>
-      <div
-        className="collapsible-content"
-        ref={ref}
-        style={{
-          height: isOpen ? getNewHeight() : 0,
-        }}
-      >
-        {isOpen && children}
-      </div>
+      {children && (
+        <div
+          className="collapsible-content"
+          ref={contentRef}
+          style={{ height: isOpen ? height : 0 }}
+        >
+          {isOpen && children}
+        </div>
+      )}
     </div>
   );
 };

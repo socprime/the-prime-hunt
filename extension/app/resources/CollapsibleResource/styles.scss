@@ -1,0 +1,39 @@
+@import '../../scss/palette';
+
+.collapsible-resource {
+  .collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .waste-basket-icon.icon {
+      fill: $base-text-color;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-self: center;
+      margin-right: 6px;
+      opacity: 0;
+
+      &:hover {
+        fill: $error;
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+
+    .icon:not(.waste-basket-icon) {
+      cursor: default;
+    }
+  }
+
+  &:hover {
+    .collapsible-header {
+      .waste-basket-icon.icon {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -7,8 +7,6 @@ export type Url = string;
 export type UniqueHash = string;
 export type HTMLTextContent = string;
 export type AbsFilePath = string;
-export type FieldName = string;
-export type ResourceName = string;
 
 export interface IdentifiedFunction extends Function {
   id: UniqueHash;

@@ -2,11 +2,12 @@ import React  from 'react';
 import { Tooltip, TooltipProps } from '../../atoms/Tooltip/Tooltip';
 import { createClassName } from '../../../../common/common-helpers';
 import { useAppStore } from '../../../stores';
+import { observer } from 'mobx-react-lite';
 import './styles.scss';
 
 export type AppTooltipProps = TooltipProps;
 
-export const AppTooltip: React.FC<React.PropsWithChildren<AppTooltipProps>> = ({
+export const AppTooltip: React.FC<React.PropsWithChildren<AppTooltipProps>> = observer(({
   className = '',
   children,
   ...restProps
@@ -26,4 +27,4 @@ export const AppTooltip: React.FC<React.PropsWithChildren<AppTooltipProps>> = ({
       {children}
     </Tooltip>
   );
-};
+});

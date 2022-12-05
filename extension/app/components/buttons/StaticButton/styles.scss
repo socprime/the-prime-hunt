@@ -4,4 +4,8 @@
   background-color: $lighter-background-color;
   padding: 5px 12px;
   color: $base-text-color-strong;
+
+  &:hover .icon {
+    fill: $base-text-color-strong;
+  }
 }

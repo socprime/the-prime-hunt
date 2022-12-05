@@ -1,21 +1,15 @@
-import { AppStore } from '../components/App/AppStore';
-import { ResourceStore } from '../components/resources/stores/ResourceStore';
-import { ServicesSelectionStore } from '../components/resources/stores/ServicesSelectionStore';
-import { AssetsSelectionStore } from '../components/resources/stores/AssetsSelectionStore';
-import { AccountsSelectionStore } from '../components/resources/stores/AccountsSelectionStore';
-import { PlatformStore } from '../components/resources/stores/PlatformStore';
-import { IntegrationsStore } from '../components/integrations/stores/IntegrationsStore';
+import { AppStore } from '../root/App/AppStore';
+import { ResourceStore } from '../resources/stores/ResourceStore';
+import { PlatformStore } from '../resources/stores/PlatformStore';
+import { IntegrationsStore } from '../integrations/stores/IntegrationsStore';
+import { ResourcesSelectionStore } from '../resources/stores/ResourcesSelectionStore';
 
 export class RootStore {
   public appStore: AppStore;
 
   public resourceStore: ResourceStore;
 
-  public servicesSelectionStore: ServicesSelectionStore;
-
-  public assetsSelectionStore: AssetsSelectionStore;
-
-  public accountsSelectionStore: AccountsSelectionStore;
+  public resourcesSelectionStore: ResourcesSelectionStore;
 
   public platformStore: PlatformStore;
 
@@ -23,11 +17,9 @@ export class RootStore {
 
   constructor() {
     this.appStore = new AppStore();
-    this.resourceStore = new ResourceStore(this);
     this.integrationsStore = new IntegrationsStore();
-    this.servicesSelectionStore = new ServicesSelectionStore();
-    this.assetsSelectionStore = new AssetsSelectionStore();
-    this.accountsSelectionStore = new AccountsSelectionStore();
+    this.resourceStore = new ResourceStore(this);
     this.platformStore = new PlatformStore(this);
+    this.resourcesSelectionStore = new ResourcesSelectionStore(this);
   }
 }

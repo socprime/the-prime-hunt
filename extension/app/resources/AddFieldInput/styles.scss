@@ -1,0 +1,68 @@
+@import "../../scss/palette";
+@import "../../scss/animations";
+
+.add-field-input-wrapper {
+  border-radius: 4px;
+  background-color: $base-background-area-color;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+
+  .control-input-wrapper.app-control-input.add-field-input {
+    flex: 1;
+    background-color: transparent;
+
+    label {
+      flex: 1;
+    }
+
+    .control {
+      .icon {
+        height: 15px;
+        width: 15px;
+
+        &:hover {
+          fill: $success;
+        }
+
+        &:active {
+          animation: button-press-animation 0.2s ease-in-out;
+        }
+
+        &.waste-basket-icon {
+          height: 22px;
+          width: 22px;
+          margin-left: 8px;
+          margin-right: 6px;
+
+          &:hover {
+            fill: $error;
+          }
+        }
+      }
+    }
+  }
+
+  .add-field-input.app-control-input.input {
+    flex: 1;
+    margin-left: 8px;
+    font-size: 14px;
+    background-color: transparent;
+    text-align: left;
+    margin-right: 10px;
+  }
+
+  .icon {
+    fill: $base-text-color;
+  }
+
+  > span {
+    width: 16px;
+    height: 16px;
+
+    .icon {
+      max-width: 16px;
+      max-height: 16px;
+    }
+  }
+}

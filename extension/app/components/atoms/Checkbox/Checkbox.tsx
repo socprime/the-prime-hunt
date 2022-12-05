@@ -7,6 +7,7 @@ export type CheckboxProps = {
   content: React.ReactNode;
   checkIcon: React.ReactNode;
   uncheckIcon: React.ReactNode;
+  disabled?: boolean;
   className?: string;
   title?: string;
   checked?: boolean;
@@ -17,6 +18,7 @@ export type CheckboxProps = {
 export const Checkbox: React.FC<CheckboxProps> = ({
   onStateChanged,
   content,
+  disabled,
   checked,
   onClick,
   checkIcon,
@@ -43,15 +45,27 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   }, [checked]);
 
   return (
-    <div className={createClassName(['checkbox', className])}>
+    <div className={
+      createClassName([
+        'checkbox',
+        isChecked ? 'checked' : 'not-checked',
+        disabled ? 'disabled' : '',
+        className,
+      ])}
+    >
       <span
         className={createClassName([
           'checker-wrapper',
           isChecked ? 'checked' : 'not-checked',
+          disabled ? 'disabled' : '',
+          className,
         ])}
         onClick={(e) => {
-          e.stopPropagation?.();
-          e.preventDefault?.();
+          e.stopPropagation();
+          e.preventDefault();
+          if (disabled) {
+            return;
+          }
           const newValue = !isChecked;
           setIsChecked(newValue);
           onClick?.(newValue);

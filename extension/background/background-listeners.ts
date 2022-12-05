@@ -16,11 +16,8 @@ import { MessageToContent } from '../content/types/types-content-messages';
 import { PlatformIDPayload, SetLoadingStatePayload, SetWatchersPayload } from '../common/types/types-common-payloads';
 import { platformResolver } from './platforms/PlatformResolver';
 import { LoadingKey } from '../app/types/types-app-common';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
-import { uuid } from '../../common/helpers';
 
 const loggers = require('../common/loggers').loggers
-  .addPrefix(getDebugPrefix('background'))
   .addPrefix('listeners');
 
 (addListener as IconClickedListener)(
@@ -101,29 +98,15 @@ const loggers = require('../common/loggers').loggers
       message,
       sender,
     )) {
-      const { platformID, watchers, action } = message.payload as SetWatchersPayload;
+      const { platformID, watchers } = message.payload as SetWatchersPayload;
       platformResolver.resolve(platformID)?.setWatchers(watchers, sender.tab.id);
       sendMessageFromBackground<SetLoadingStatePayload>(sender.tab.id, {
-        id: `background-set-watchers--${uuid()}`,
+        id: 'background-set-watchers',
         type: MessageToApp.AppSetLoadingState,
         payload: {
           loading: false,
-          key: action === 'add'
-            ? LoadingKey.fieldAdding
-            : LoadingKey.fieldRemoving,
+          key: LoadingKey.watchersChanging,
         },
-      });
-    }
-
-    if (isMessageMatched(
-      () => MessageToBackground.BGAddFieldToWatch === message.type,
-      message,
-      sender,
-    )) {
-      sendMessageFromBackground(sender.tab.id, {
-        ...message,
-        id: `${message.id}--background-add-field`,
-        type: MessageToApp.AppAddFieldToWatch,
       });
     }
 
@@ -134,6 +117,21 @@ const loggers = require('../common/loggers').loggers
     )) {
       const { platformID } = message.payload as PlatformIDPayload;
       registerPlatformTab(platformID, sender.tab.id);
+    }
+    
+    if (isMessageMatched(
+      () => MessageToBackground.BGToggleShowExtension === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id ? message.id : ''}--background-toggle-show-extension`,
+        type: MessageToApp.AppToggleShowExtension,
+      });
+      sendMessageFromBackground(sender.tab.id, {
+        type: MessageToContent.CSConnectPlatform,
+      });
     }
   },
 );

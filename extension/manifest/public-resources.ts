@@ -4,6 +4,7 @@ export const appStyles = 'app-styles.css';
 export const microsoftSentinelInline = 'inline-microsoft-sentinel.js';
 export const microsoftDefenderInline = 'inline-microsoft-defender.js';
 export const splunkInline = 'inline-splunk.js';
+export const qRadarInline = 'inline-qradar.js';
 
 export const accessibleResources: {
   [type: string]: string[];
@@ -11,5 +12,6 @@ export const accessibleResources: {
   [PlatformID.MicrosoftSentinel]: [microsoftSentinelInline],
   [PlatformID.MicrosoftDefender]: [microsoftDefenderInline],
   [PlatformID.Splunk]: [splunkInline],
+  [PlatformID.QRadar]: [qRadarInline],
   app: [appStyles],
 };

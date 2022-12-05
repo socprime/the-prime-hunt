@@ -1,19 +1,22 @@
 import { MessageToInline } from './types/types-inline-messages';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
-import { ExtensionMessage, PlatformID } from '../common/types/types-common';
+import { ExtensionMessage } from '../common/types/types-common';
 import { ModifyQueryPayload } from '../common/types/types-common-payloads';
 import { isMessageMatched } from '../common/common-listeners';
-import { buildMicrosoftDefenderQueryParts } from '../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers';
 import {
   buildNewJsonQuery,
   buildNewQuery,
   checkEditorExists,
   getEditorByIndex, getEditorIndexByFormattedUri,
 } from './helpers/monaco-editor-helpers';
+import {
+  MicrosoftDefenderPlatform,
+} from '../content/platforms/MicrosoftDefenderPlatform';
+import { ContentPlatform } from '../content/types/types-content-common';
+
+const platform: ContentPlatform = new MicrosoftDefenderPlatform();
 
 const loggers = require('../common/loggers').loggers
-  .addPrefix(getDebugPrefix('inline'))
-  .addPrefix(PlatformID.MicrosoftDefender);
+  .addPrefix(platform.getID());
 
 let editorIndex = 2;
 
@@ -64,7 +67,7 @@ window.addEventListener('message', (event) => {
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
     const { href } = document.location;
-    const suffix = ` | where ${buildMicrosoftDefenderQueryParts(modifyType, resources)}`;
+    const suffix = ` | where ${platform.buildQueryParts(modifyType, resources)}`;
 
     const editor = getEditorByIndex(editorIndex);
     const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1

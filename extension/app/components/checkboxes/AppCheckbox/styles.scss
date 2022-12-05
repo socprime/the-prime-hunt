@@ -24,4 +24,12 @@
       z-index: 0;
     }
   }
+
+  &.disabled {
+    color: $base-disabled-text-color;
+
+    > .checker-wrapper:after {
+      border: 1px solid $base-disabled-text-color;
+    }
+  }
 }

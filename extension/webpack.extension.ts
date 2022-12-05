@@ -8,18 +8,25 @@ import { copySync, emptyDirSync, outputFileSync } from 'fs-extra';
 import { AbsFilePath, HTMLTextContent, LogLevel, Mode } from '../common/types';
 import { buildManifest, getVersion } from './manifest/manifest-utils';
 import { Browser, PlatformID } from './common/types/types-common';
-import { DefinePlugin } from 'webpack';
-import { appStyles, microsoftDefenderInline, microsoftSentinelInline, splunkInline } from './manifest/public-resources';
+import { DefinePlugin, EntryObject } from 'webpack';
+import {
+  appStyles,
+  microsoftDefenderInline,
+  microsoftSentinelInline,
+  qRadarInline,
+  splunkInline,
+} from './manifest/public-resources';
 
 const args = minimist<{
-  mode: Mode;
-  browser: Browser;
-  env: string | string[];
-  analyze: boolean;
-  'content-platform': PlatformID;
-  'background-platform': PlatformID;
-  level: LogLevel;
-  debugID: string;
+  mode?: Mode;
+  browser?: Browser;
+  env?: string | string[];
+  analyze?: boolean;
+  'content-platform'?: PlatformID;
+  'background-platform'?: PlatformID;
+  level?: LogLevel;
+  debugID?: string;
+  output?: string;
 }>(process.argv.slice(2));
 [args.env]
   .flat(1)
@@ -37,20 +44,22 @@ let browsers = String(args?.browser)
 browsers = browsers.length ? browsers : allowedBrowsers;
 
 const mode = String(args?.mode).toLowerCase() === Mode.production ? Mode.production : Mode.development;
-const distDirPath = join(__dirname, '../dist');
+const absDistDirPath = join(__dirname, '../dist');
 
-emptyDirSync(join(distDirPath, mode));
+
+emptyDirSync(join(absDistDirPath, mode));
 
 const browser = browsers.splice(0, 1)[0];
-const output = join(distDirPath, mode);
+const relativePath = join(mode, args.output || '');
+const output = join(absDistDirPath, relativePath);
 const iconsFolder = join(__dirname, 'manifest', 'icons');
-const contentPlatform = Object.keys(PlatformID).includes(args['content-platform'])
+const contentPlatform = Object.keys(PlatformID).includes(args['content-platform']!)
   ? args['content-platform']
   : null;
-const backgroundPlatform = Object.keys(PlatformID).includes(args['background-platform'])
+const backgroundPlatform = Object.keys(PlatformID).includes(args['background-platform']!)
   ? args['background-platform']
   : null;
-const logLevel = Object.keys(LogLevel).includes(args.level)
+const logLevel = Object.keys(LogLevel).includes(args.level!)
   ? args.level
   : LogLevel.info;
 
@@ -63,14 +72,26 @@ const buildBrowserAssets = (b: Browser) => {
 
 const styles = new Map<AbsFilePath, HTMLTextContent>();
 
+const inlineEntries = [
+  microsoftSentinelInline,
+  microsoftDefenderInline,
+  splunkInline,
+  qRadarInline,
+].reduce((entry, inline) => {
+  const name = parse(inline).name;
+  entry[name] = [
+    join(__dirname, './inline.ts'),
+    join(__dirname, `./inline/${name}.ts`),
+  ];
+  return entry;
+}, {} as EntryObject);
+
 module.exports = {
   mode,
   entry: {
     content: join(__dirname, './content.ts'),
     background: join(__dirname, './background.ts'),
-    [parse(microsoftSentinelInline).name]: join(__dirname, `./inline/${parse(microsoftSentinelInline).name}.ts`),
-    [parse(microsoftDefenderInline).name]: join(__dirname, `./inline/${parse(microsoftDefenderInline).name}.ts`),
-    [parse(splunkInline).name]: join(__dirname, `./inline/${parse(splunkInline).name}.ts`),
+    ...inlineEntries,
   },
   output: {
     path: join(output, browser),
@@ -145,8 +166,9 @@ module.exports = {
             buildBrowserAssets(browser as Browser);
             console.log('~~~~~~~~~~~~~~~~~~~~');
             console.log('Compilation finished');
+            console.log('Version:', getVersion());
             console.log(`Mode: ${mode}`);
-            console.log(`check "dist/${mode}/" folder`);
+            console.log(`check "dist/${relativePath}/" folder`);
             console.log('~~~~~~~~~~~~~~~~~~~~');
           }, 0);
         });

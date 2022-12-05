@@ -1,46 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./extension/app/components/App/app.scss":
-/*!***********************************************!*\
-  !*** ./extension/app/components/App/app.scss ***!
-  \***********************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/AppHeader/styles.scss":
-/*!********************************************************!*\
-  !*** ./extension/app/components/AppHeader/styles.scss ***!
-  \********************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/Header/styles.scss":
-/*!*****************************************************!*\
-  !*** ./extension/app/components/Header/styles.scss ***!
-  \*****************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/Link/styles.scss":
-/*!***************************************************!*\
-  !*** ./extension/app/components/Link/styles.scss ***!
-  \***************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
 /***/ "./extension/app/components/atoms/Button/button.scss":
 /*!***********************************************************!*\
   !*** ./extension/app/components/atoms/Button/button.scss ***!
@@ -161,26 +121,6 @@
 
 /***/ }),
 
-/***/ "./extension/app/components/buttons/CloseAppButton/styles.scss":
-/*!*********************************************************************!*\
-  !*** ./extension/app/components/buttons/CloseAppButton/styles.scss ***!
-  \*********************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/buttons/FaqButton/styles.scss":
-/*!****************************************************************!*\
-  !*** ./extension/app/components/buttons/FaqButton/styles.scss ***!
-  \****************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
 /***/ "./extension/app/components/buttons/HoverButton/styles.scss":
 /*!******************************************************************!*\
   !*** ./extension/app/components/buttons/HoverButton/styles.scss ***!
@@ -231,10 +171,10 @@
 
 /***/ }),
 
-/***/ "./extension/app/components/faq/views/FaqContentView/styles.scss":
-/*!***********************************************************************!*\
-  !*** ./extension/app/components/faq/views/FaqContentView/styles.scss ***!
-  \***********************************************************************/
+/***/ "./extension/app/components/headers/AppHeader/styles.scss":
+/*!****************************************************************!*\
+  !*** ./extension/app/components/headers/AppHeader/styles.scss ***!
+  \****************************************************************/
 /***/ (() => {
 
 
@@ -271,6 +211,16 @@
 
 /***/ }),
 
+/***/ "./extension/app/components/inputs/AppControlInput/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/components/inputs/AppControlInput/styles.scss ***!
+  \*********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/inputs/AppInput/styles.scss":
 /*!**************************************************************!*\
   !*** ./extension/app/components/inputs/AppInput/styles.scss ***!
@@ -291,140 +241,10 @@
 
 /***/ }),
 
-/***/ "./extension/app/components/integrations/Integration/styles.scss":
-/*!***********************************************************************!*\
-  !*** ./extension/app/components/integrations/Integration/styles.scss ***!
-  \***********************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/IntegrationInput/styles.scss":
-/*!****************************************************************************!*\
-  !*** ./extension/app/components/integrations/IntegrationInput/styles.scss ***!
-  \****************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/views/IntegrationContentView/styles.scss":
-/*!****************************************************************************************!*\
-  !*** ./extension/app/components/integrations/views/IntegrationContentView/styles.scss ***!
-  \****************************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/views/IntegrationFooterView/styles.scss":
-/*!***************************************************************************************!*\
-  !*** ./extension/app/components/integrations/views/IntegrationFooterView/styles.scss ***!
-  \***************************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/views/IntegrationHeaderView/styles.scss":
-/*!***************************************************************************************!*\
-  !*** ./extension/app/components/integrations/views/IntegrationHeaderView/styles.scss ***!
-  \***************************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/not-found/views/NotFoundContentView/styles.scss":
-/*!**********************************************************************************!*\
-  !*** ./extension/app/components/not-found/views/NotFoundContentView/styles.scss ***!
-  \**********************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/BulkResourcesPanel/styles.scss":
-/*!***************************************************************************!*\
-  !*** ./extension/app/components/resources/BulkResourcesPanel/styles.scss ***!
-  \***************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/CollapsibleResource/styles.scss":
-/*!****************************************************************************!*\
-  !*** ./extension/app/components/resources/CollapsibleResource/styles.scss ***!
-  \****************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/PlatformResources/styles.scss":
-/*!**************************************************************************!*\
-  !*** ./extension/app/components/resources/PlatformResources/styles.scss ***!
-  \**************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/ResourceFieldName/styles.scss":
-/*!**************************************************************************!*\
-  !*** ./extension/app/components/resources/ResourceFieldName/styles.scss ***!
-  \**************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/ResourceList/styles.scss":
-/*!*********************************************************************!*\
-  !*** ./extension/app/components/resources/ResourceList/styles.scss ***!
-  \*********************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/ResourceListItem/styles.scss":
-/*!*************************************************************************!*\
-  !*** ./extension/app/components/resources/ResourceListItem/styles.scss ***!
-  \*************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/TabsPlatformResources/styles.scss":
-/*!******************************************************************************!*\
-  !*** ./extension/app/components/resources/TabsPlatformResources/styles.scss ***!
-  \******************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/views/ResourcesContentView/styles.scss":
-/*!***********************************************************************************!*\
-  !*** ./extension/app/components/resources/views/ResourcesContentView/styles.scss ***!
-  \***********************************************************************************/
+/***/ "./extension/app/components/links/AppLink/styles.scss":
+/*!************************************************************!*\
+  !*** ./extension/app/components/links/AppLink/styles.scss ***!
+  \************************************************************/
 /***/ (() => {
 
 
@@ -435,6 +255,266 @@
 /*!******************************************************************!*\
   !*** ./extension/app/components/tooltips/AppTooltip/styles.scss ***!
   \******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/faq/FaqButton/styles.scss":
+/*!*************************************************!*\
+  !*** ./extension/app/faq/FaqButton/styles.scss ***!
+  \*************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/faq/views/FaqContentView/styles.scss":
+/*!************************************************************!*\
+  !*** ./extension/app/faq/views/FaqContentView/styles.scss ***!
+  \************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/Integration/styles.scss":
+/*!************************************************************!*\
+  !*** ./extension/app/integrations/Integration/styles.scss ***!
+  \************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/IntegrationInput/styles.scss":
+/*!*****************************************************************!*\
+  !*** ./extension/app/integrations/IntegrationInput/styles.scss ***!
+  \*****************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/SettingsButton/styles.scss":
+/*!***************************************************************!*\
+  !*** ./extension/app/integrations/SettingsButton/styles.scss ***!
+  \***************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationContentView/styles.scss":
+/*!*****************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationContentView/styles.scss ***!
+  \*****************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationFooterView/styles.scss":
+/*!****************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationFooterView/styles.scss ***!
+  \****************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationHeaderView/styles.scss":
+/*!****************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationHeaderView/styles.scss ***!
+  \****************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/not-found/views/NotFoundContentView/styles.scss":
+/*!***********************************************************************!*\
+  !*** ./extension/app/not-found/views/NotFoundContentView/styles.scss ***!
+  \***********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/AddFieldInput/styles.scss":
+/*!***********************************************************!*\
+  !*** ./extension/app/resources/AddFieldInput/styles.scss ***!
+  \***********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/AddNewButton/styles.scss":
+/*!**********************************************************!*\
+  !*** ./extension/app/resources/AddNewButton/styles.scss ***!
+  \**********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/BulkResourcesPanel/styles.scss":
+/*!****************************************************************!*\
+  !*** ./extension/app/resources/BulkResourcesPanel/styles.scss ***!
+  \****************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/CollapsibleResource/styles.scss":
+/*!*****************************************************************!*\
+  !*** ./extension/app/resources/CollapsibleResource/styles.scss ***!
+  \*****************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/CollapsibleResources/styles.scss":
+/*!******************************************************************!*\
+  !*** ./extension/app/resources/CollapsibleResources/styles.scss ***!
+  \******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ExportButton/styles.scss":
+/*!**********************************************************!*\
+  !*** ./extension/app/resources/ExportButton/styles.scss ***!
+  \**********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/PlatformResources/styles.scss":
+/*!***************************************************************!*\
+  !*** ./extension/app/resources/PlatformResources/styles.scss ***!
+  \***************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceFieldName/styles.scss":
+/*!***************************************************************!*\
+  !*** ./extension/app/resources/ResourceFieldName/styles.scss ***!
+  \***************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceList/styles.scss":
+/*!**********************************************************!*\
+  !*** ./extension/app/resources/ResourceList/styles.scss ***!
+  \**********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceListItem/styles.scss":
+/*!**************************************************************!*\
+  !*** ./extension/app/resources/ResourceListItem/styles.scss ***!
+  \**************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceTabInput/styles.scss":
+/*!**************************************************************!*\
+  !*** ./extension/app/resources/ResourceTabInput/styles.scss ***!
+  \**************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/TabsPlatformResources/styles.scss":
+/*!*******************************************************************!*\
+  !*** ./extension/app/resources/TabsPlatformResources/styles.scss ***!
+  \*******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/views/ResourcesContentView/styles.scss":
+/*!************************************************************************!*\
+  !*** ./extension/app/resources/views/ResourcesContentView/styles.scss ***!
+  \************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/views/ResourcesHeaderView/styles.scss":
+/*!***********************************************************************!*\
+  !*** ./extension/app/resources/views/ResourcesHeaderView/styles.scss ***!
+  \***********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/root/App/app.scss":
+/*!*****************************************!*\
+  !*** ./extension/app/root/App/app.scss ***!
+  \*****************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/root/AppHeader/styles.scss":
+/*!**************************************************!*\
+  !*** ./extension/app/root/AppHeader/styles.scss ***!
+  \**************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/root/CloseAppButton/styles.scss":
+/*!*******************************************************!*\
+  !*** ./extension/app/root/CloseAppButton/styles.scss ***!
+  \*******************************************************/
 /***/ (() => {
 
 
@@ -50947,6 +51027,43 @@ SimpleBar.instances = new WeakMap();
 
 /***/ }),
 
+/***/ "./common/Register.ts":
+/*!****************************!*\
+  !*** ./common/Register.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Register = void 0;
+class Register {
+    constructor() {
+        this.storage = new Map();
+    }
+    set(key, value) {
+        this.storage.set(key, value);
+        return value;
+    }
+    get(key) {
+        return this.storage.get(key);
+    }
+    remove(key) {
+        if (this.storage.has(key)) {
+            this.storage.delete(key);
+            return true;
+        }
+        return false;
+    }
+    has(key) {
+        return this.storage.has(key);
+    }
+}
+exports.Register = Register;
+
+
+/***/ }),
+
 /***/ "./common/checkers.ts":
 /*!****************************!*\
   !*** ./common/checkers.ts ***!
@@ -50958,6 +51075,7 @@ SimpleBar.instances = new WeakMap();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
+const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
@@ -50974,7 +51092,8 @@ const isNumberInString = (str) => {
         return false;
     }
     const sValue = str.trim();
-    if (!/^[.0-9]*$/.test(sValue)) {
+    if (!/^[.0-9]*$/.test(sValue)
+        || (0, helpers_1.indexOfAll)(sValue, '.').length > 1) {
         return false;
     }
     return !Number.isNaN(parseFloat(sValue));
@@ -51001,7 +51120,7 @@ exports.isAllowedProtocol = isAllowedProtocol;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -51019,6 +51138,10 @@ const uuid = () => {
 exports.uuid = uuid;
 const clearExtraSpaces = (str) => str.replace(/ +/g, ' ');
 exports.clearExtraSpaces = clearExtraSpaces;
+const clearLineBreaks = (str) => str
+    .trim()
+    .replace(/(\r\n|\n|\r)/gm, ' ');
+exports.clearLineBreaks = clearLineBreaks;
 const parseJSONSafe = (obj, fallback) => {
     try {
         return JSON.parse(obj);
@@ -51049,6 +51172,72 @@ const formatString = (pattern, parts, keyFormat) => {
 exports.formatString = formatString;
 const capitalizeFirstLetter = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 exports.capitalizeFirstLetter = capitalizeFirstLetter;
+const createNonDuplicateValue = (value, values) => {
+    if (!values.includes(value)) {
+        return value;
+    }
+    let increment = 1;
+    let wordRoot = value;
+    let searchedWordRoot = wordRoot.slice(0, wordRoot.length - 1);
+    while (values.includes(searchedWordRoot)) {
+        wordRoot = searchedWordRoot;
+        searchedWordRoot = searchedWordRoot.slice(0, searchedWordRoot.length - 1);
+    }
+    while (values.includes(`${wordRoot}${increment}`)) {
+        increment++;
+    }
+    return `${wordRoot}${increment}`;
+};
+exports.createNonDuplicateValue = createNonDuplicateValue;
+const formatBinaryDate = (value) => {
+    const sValue = typeof value === 'string'
+        ? value
+        : String(value);
+    return sValue.length > 1
+        ? sValue
+        : `0${sValue}`;
+};
+exports.formatBinaryDate = formatBinaryDate;
+const formatDate = (pattern, data) => {
+    return (0, exports.formatString)(pattern, {
+        'Y': String(data.getFullYear()),
+        'M': (0, exports.formatBinaryDate)(data.getMonth()),
+        'm': (0, exports.formatBinaryDate)(data.getMinutes()),
+        's': (0, exports.formatBinaryDate)(data.getSeconds()),
+        'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
+        'd': (0, exports.formatBinaryDate)(data.getDate()),
+        'h': (0, exports.formatBinaryDate)(data.getHours()),
+    });
+};
+exports.formatDate = formatDate;
+const debounce = (func, timeoutMs) => {
+    let timeoutID;
+    return function (...args) {
+        const context = this;
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(() => func.apply(context, args), timeoutMs);
+    };
+};
+exports.debounce = debounce;
+const sortNumbers = (a, b) => {
+    if (a > b) {
+        return 1;
+    }
+    if (a < b) {
+        return -1;
+    }
+    return 0;
+};
+exports.sortNumbers = sortNumbers;
+const indexOfAll = (str, search) => {
+    const indexes = [];
+    let i = -1;
+    while ((i = str.indexOf(search, i + 1)) >= 0) {
+        indexes.push(i);
+    }
+    return indexes;
+};
+exports.indexOfAll = indexOfAll;
 
 
 /***/ }),
@@ -51128,11 +51317,17 @@ exports.getValidResult = getValidResult;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.useForceUpdate = exports.useOnClickOutside = exports.usePrevious = void 0;
 const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const usePrevious = (value) => {
+const usePrevious = (value, updateCondition) => {
     const ref = (0, react_1.useRef)();
     (0, react_1.useEffect)(() => {
-        ref.current = value;
-    }, [value]);
+        if (typeof updateCondition !== 'function') {
+            ref.current = value;
+            return;
+        }
+        ref.current = updateCondition(value)
+            ? value
+            : ref.current;
+    }, [updateCondition, value]);
     return ref.current;
 };
 exports.usePrevious = usePrevious;
@@ -51145,10 +51340,10 @@ const useOnClickOutside = (cb, ...refs) => {
                     return false;
                 }
                 const rect = element.getBoundingClientRect();
-                return (event.x > rect.left &&
-                    event.x < rect.right &&
-                    event.y > rect.top &&
-                    event.y < rect.bottom);
+                return (event.x >= rect.left &&
+                    event.x <= rect.right &&
+                    event.y >= rect.top &&
+                    event.y <= rect.bottom);
             });
             if (!isInside) {
                 cb(event);
@@ -51184,41 +51379,37 @@ const types_app_messages_1 = __webpack_require__(/*! ./types/types-app-messages 
 const stores_1 = __webpack_require__(/*! ./stores */ "./extension/app/stores/index.ts");
 const types_app_common_1 = __webpack_require__(/*! ./types/types-app-common */ "./extension/app/types/types-app-common.ts");
 const PlatformResolver_1 = __webpack_require__(/*! ../content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('app'))
-    .addPrefix('listeners');
+const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
+const setExtensionShowState = (isShow) => {
+    if (!stores_1.rootStore.platformStore.platform) {
+        stores_1.rootStore.platformStore.setPlatform(PlatformResolver_1.platformResolver.resolve());
+    }
+    if (!stores_1.rootStore.appStore.mounted) {
+        __webpack_require__(/*! ./index */ "./extension/app/index.tsx");
+    }
+    stores_1.rootStore.appStore.isExtensionOpen = isShow;
+};
 content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppShowExtension === message.type, message)) {
-        if (!stores_1.rootStore.platformStore.platform) {
-            stores_1.rootStore.platformStore.setPlatform(PlatformResolver_1.platformResolver.resolve());
-        }
-        if (!stores_1.rootStore.appStore.mounted) {
-            __webpack_require__(/*! ./index */ "./extension/app/index.tsx");
-        }
         if (!stores_1.rootStore.appStore.isExtensionOpen) {
-            stores_1.rootStore.appStore.isExtensionOpen = true;
+            setExtensionShowState(true);
         }
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeNewResourceData === message.type, message)) {
         stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        stores_1.rootStore.resourceStore.clearAllData();
+        stores_1.rootStore.resourceStore.clearResources();
         setTimeout(() => {
-            stores_1.rootStore.resourceStore.addAllData(message.payload);
+            stores_1.rootStore.resourceStore.addResources(message.payload);
             stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
         }, 0);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeResourceData === message.type, message)) {
         stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        stores_1.rootStore.resourceStore.addAllData(message.payload);
+        stores_1.rootStore.resourceStore.addResources(message.payload);
         stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppClearResourceData === message.type, message)) {
-        stores_1.rootStore.resourceStore.clearAllData();
-    }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppAddFieldToWatch === message.type, message)) {
-        const { fieldName } = message.payload;
-        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.fieldAdding);
-        stores_1.rootStore.resourceStore.addField(fieldName);
+        stores_1.rootStore.resourceStore.clearResources();
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppSetLoadingState === message.type, message)) {
         const { loading, key } = message.payload;
@@ -51229,613 +51420,11 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
             stores_1.rootStore.appStore.stopLoading(key);
         }
     }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppToggleShowExtension === message.type, message)) {
+        setExtensionShowState(!stores_1.rootStore.appStore.isExtensionOpen);
+    }
 });
 loggers.debug().log('mounted');
-
-
-/***/ }),
-
-/***/ "./extension/app/components/App/App.tsx":
-/*!**********************************************!*\
-  !*** ./extension/app/components/App/App.tsx ***!
-  \**********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.App = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const DraggableResizable_1 = __webpack_require__(/*! ../atoms/DragableResizable/DraggableResizable */ "./extension/app/components/atoms/DragableResizable/DraggableResizable.tsx");
-const AppHeader_1 = __webpack_require__(/*! ../AppHeader/AppHeader */ "./extension/app/components/AppHeader/AppHeader.tsx");
-const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
-const AppContent_1 = __webpack_require__(/*! ../AppContent/AppContent */ "./extension/app/components/AppContent/AppContent.tsx");
-const AppFooter_1 = __webpack_require__(/*! ../AppFooter/AppFooter */ "./extension/app/components/AppFooter/AppFooter.tsx");
-const app_media_1 = __webpack_require__(/*! ./app-media */ "./extension/app/components/App/app-media.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-__webpack_require__(/*! ./app.scss */ "./extension/app/components/App/app.scss");
-const APP_PADDING = 20;
-exports.App = (0, mobx_react_lite_1.observer)(() => {
-    const appStore = (0, stores_1.useAppStore)();
-    const wrapperRef = (0, react_1.useRef)(null);
-    const headerRef = (0, react_1.useRef)(null);
-    const contentRef = (0, react_1.useRef)(null);
-    const footerRef = (0, react_1.useRef)(null);
-    const calculateContentHeight = (0, react_1.useCallback)(() => {
-        if (!(footerRef === null || footerRef === void 0 ? void 0 : footerRef.current) || !(headerRef === null || headerRef === void 0 ? void 0 : headerRef.current) || !(wrapperRef === null || wrapperRef === void 0 ? void 0 : wrapperRef.current)) {
-            return 'unset';
-        }
-        return (wrapperRef.current.offsetHeight -
-            APP_PADDING * 2 -
-            headerRef.current.offsetHeight -
-            footerRef.current.offsetHeight);
-    }, []);
-    const setContentHeightToElement = (0, react_1.useCallback)((value) => {
-        if (!(contentRef === null || contentRef === void 0 ? void 0 : contentRef.current)) {
-            return;
-        }
-        contentRef.current.style.height = typeof value === 'number'
-            ? `${value}px`
-            : value;
-    }, []);
-    (0, react_1.useLayoutEffect)(() => {
-        appStore.rootElement = wrapperRef.current;
-        const prevValuesHeight = { header: 0, footer: 0, wrapper: 0 };
-        const onHeightChangeCallback = (entries, oldHeight) => {
-            const newHeight = entries[0].contentRect.height;
-            if (newHeight !== oldHeight) {
-                setContentHeightToElement(calculateContentHeight());
-            }
-            return newHeight;
-        };
-        let currentScreenType = (0, app_media_1.calculateScreen)(wrapperRef.current.offsetWidth);
-        const onWidthChangeCallback = (entries) => {
-            const screenType = (0, app_media_1.calculateScreen)(entries[0].contentRect.width);
-            if (currentScreenType !== screenType) {
-                wrapperRef.current.classList.add(screenType);
-                wrapperRef.current.classList.remove(currentScreenType);
-                currentScreenType = screenType;
-            }
-        };
-        const [observerHeader, observerFooter, observerWrapper] = ['header', 'footer', 'wrapper']
-            .map(elemName => new ResizeObserver((entries) => {
-            prevValuesHeight[elemName] = onHeightChangeCallback(entries, prevValuesHeight[elemName]);
-            if (elemName === 'wrapper') {
-                onWidthChangeCallback(entries);
-            }
-        }));
-        observerHeader.observe(headerRef.current);
-        observerFooter.observe(footerRef.current);
-        observerWrapper.observe(wrapperRef.current);
-        wrapperRef.current.classList.add(currentScreenType);
-        return () => {
-            observerHeader.disconnect();
-            observerFooter.disconnect();
-            observerWrapper.disconnect();
-        };
-    }, [appStore, calculateContentHeight, setContentHeightToElement]);
-    const content = (0, react_1.useMemo)(() => {
-        return (react_1.default.createElement("div", { className: "app-wrapper", ref: wrapperRef, style: {
-                padding: APP_PADDING,
-            } },
-            react_1.default.createElement(AppHeader_1.AppHeader, { ref: headerRef }),
-            react_1.default.createElement(AppContent_1.AppContent, { ref: contentRef }),
-            react_1.default.createElement(AppFooter_1.AppFooter, { ref: footerRef })));
-    }, []);
-    const position = {
-        top: appStore.topPosition,
-        left: appStore.leftPosition,
-        width: appStore.widthApp,
-        height: appStore.heightApp,
-    };
-    return (react_1.default.createElement(DraggableResizable_1.DraggableResizable, { className: (0, common_helpers_1.createClassName)([
-            'the-prime-hunt--extension--root',
-            appStore.isExtensionOpen ? '' : 'invisible',
-        ]), position: position, dragElementRef: appStore.dragElementRef, minHeight: appStore.getMinHeight(), minWidth: appStore.getMinWidth(), onStart: () => {
-            if (appStore.overlay) {
-                appStore.overlay.style.position = 'fixed';
-            }
-        }, onChange: (type) => {
-            if (type !== 'move' && !appStore.isResizing) {
-                appStore.isResizing = true;
-            }
-        }, onEnd: (newPosition) => {
-            if (appStore.overlay) {
-                appStore.overlay.style.position = 'unset';
-            }
-            if (appStore.isResizing) {
-                appStore.isResizing = false;
-            }
-            if ((0, helpers_1.isFlatObjectsEqual)(newPosition, position)) {
-                return;
-            }
-            appStore.topPosition = newPosition.top;
-            appStore.leftPosition = newPosition.left;
-            appStore.widthApp = newPosition.width;
-            appStore.heightApp = newPosition.height;
-            appStore.savePosition();
-        } }, content));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/App/AppStore.ts":
-/*!**************************************************!*\
-  !*** ./extension/app/components/App/AppStore.ts ***!
-  \**************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AppStore = void 0;
-const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
-const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
-class AppStore {
-    constructor() {
-        this.mounted = false;
-        this.loadingKeys = [];
-        this.dragElementRef = {};
-        this.isResizing = false;
-        this.isExtensionOpen = false;
-        this.view = 'not-found';
-        this.setPosition();
-        (0, mobx_1.makeObservable)(this);
-    }
-    getMinHeight() {
-        return AppStore.MIN_HEIGHT;
-    }
-    getMinWidth() {
-        return AppStore.MIN_WIDTH;
-    }
-    set widthApp(value) {
-        if (value > 0
-            && value !== this.width) {
-            this.width = value >= AppStore.MIN_WIDTH
-                ? value
-                : AppStore.MIN_WIDTH;
-        }
-    }
-    get widthApp() {
-        return this.width;
-    }
-    set heightApp(value) {
-        if (value > 0
-            && value !== this.height) {
-            this.height = value >= AppStore.MIN_HEIGHT
-                ? value
-                : AppStore.MIN_HEIGHT;
-        }
-    }
-    get heightApp() {
-        return this.height;
-    }
-    set topPosition(value) {
-        if (value !== this.top) {
-            this.top = value;
-        }
-    }
-    get topPosition() {
-        return this.top;
-    }
-    set leftPosition(value) {
-        if (value !== this.left) {
-            this.left = value;
-        }
-    }
-    get leftPosition() {
-        return this.left;
-    }
-    updatePositionValues(position) {
-        const { height, left, width, top } = position;
-        this.widthApp = width;
-        this.heightApp = height;
-        this.topPosition = top;
-        this.leftPosition = left;
-    }
-    startLoading(key) {
-        if (this.isLoading(key)) {
-            return;
-        }
-        this.loadingKeys.push(key);
-    }
-    stopLoading(key) {
-        this.loadingKeys = this.loadingKeys.filter(k => k !== key);
-    }
-    isLoading(key) {
-        return this.loadingKeys.includes(key);
-    }
-    setPosition(position) {
-        const cachedPosition = (0, local_storage_1.getPosition)();
-        if (cachedPosition) {
-            return this.updatePositionValues(cachedPosition);
-        }
-        if (!cachedPosition && position) {
-            return this.updatePositionValues(position);
-        }
-        this.updatePositionValues({
-            top: 100,
-            left: 100,
-            width: 100,
-            height: 100,
-        });
-    }
-    savePosition() {
-        (0, local_storage_1.setPosition)({
-            top: this.top,
-            left: this.left,
-            height: this.height,
-            width: this.width,
-        });
-    }
-}
-AppStore.MIN_HEIGHT = 400;
-AppStore.MIN_WIDTH = 320;
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "mounted", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "loadingKeys", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "dragElementRef", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "isResizing", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "width", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "height", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "top", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "left", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "isExtensionOpen", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "overlay", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "rootElement", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "view", void 0);
-exports.AppStore = AppStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/App/app-media.ts":
-/*!***************************************************!*\
-  !*** ./extension/app/components/App/app-media.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.calculateScreen = void 0;
-const calculateScreen = (newWidth) => {
-    if (newWidth < 390) {
-        return 'ssm';
-    }
-    if (newWidth >= 390 && newWidth < 480) {
-        return 'sm';
-    }
-    if (newWidth >= 480 && newWidth < 890) {
-        return 'md';
-    }
-    if (newWidth >= 890 && newWidth < 1200) {
-        return 'lg';
-    }
-    return 'hg';
-};
-exports.calculateScreen = calculateScreen;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/AppContent/AppContent.tsx":
-/*!************************************************************!*\
-  !*** ./extension/app/components/AppContent/AppContent.tsx ***!
-  \************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AppContent = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const NotFoundContentView_1 = __webpack_require__(/*! ../not-found/views/NotFoundContentView/NotFoundContentView */ "./extension/app/components/not-found/views/NotFoundContentView/NotFoundContentView.tsx");
-const IntegrationContentView_1 = __webpack_require__(/*! ../integrations/views/IntegrationContentView/IntegrationContentView */ "./extension/app/components/integrations/views/IntegrationContentView/IntegrationContentView.tsx");
-const ResourcesContentView_1 = __webpack_require__(/*! ../resources/views/ResourcesContentView/ResourcesContentView */ "./extension/app/components/resources/views/ResourcesContentView/ResourcesContentView.tsx");
-const FaqContentView_1 = __webpack_require__(/*! ../faq/views/FaqContentView/FaqContentView */ "./extension/app/components/faq/views/FaqContentView/FaqContentView.tsx");
-exports.AppContent = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const { view } = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement("div", { className: "app-content", ref: ref },
-        react_1.default.createElement(ResourcesContentView_1.ResourcesContentView, { className: view === 'resources' ? '' : 'invisible' }),
-        view === 'not-found' && react_1.default.createElement(NotFoundContentView_1.NotFoundContentView, null),
-        view === 'integrations' && react_1.default.createElement(IntegrationContentView_1.IntegrationContentView, null),
-        view === 'faq' && react_1.default.createElement(FaqContentView_1.FaqContentView, null)));
-}));
-
-
-/***/ }),
-
-/***/ "./extension/app/components/AppFooter/AppFooter.tsx":
-/*!**********************************************************!*\
-  !*** ./extension/app/components/AppFooter/AppFooter.tsx ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AppFooter = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const IntegrationFooterView_1 = __webpack_require__(/*! ../integrations/views/IntegrationFooterView/IntegrationFooterView */ "./extension/app/components/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx");
-const ResourcesFooterView_1 = __webpack_require__(/*! ../resources/views/ResourcesFooterView/ResourcesFooterView */ "./extension/app/components/resources/views/ResourcesFooterView/ResourcesFooterView.tsx");
-const FaqFooterView_1 = __webpack_require__(/*! ../faq/views/FaqFooterView/FaqFooterView */ "./extension/app/components/faq/views/FaqFooterView/FaqFooterView.tsx");
-exports.AppFooter = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const { view } = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement("div", { className: "app-footer", ref: ref },
-        view === 'resources' && react_1.default.createElement(ResourcesFooterView_1.ResourcesFooterView, null),
-        view === 'integrations' && react_1.default.createElement(IntegrationFooterView_1.IntegrationFooterView, null),
-        view === 'faq' && react_1.default.createElement(FaqFooterView_1.FaqFooterView, null)));
-}));
-
-
-/***/ }),
-
-/***/ "./extension/app/components/AppHeader/AppHeader.tsx":
-/*!**********************************************************!*\
-  !*** ./extension/app/components/AppHeader/AppHeader.tsx ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AppHeader = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const StaticButton_1 = __webpack_require__(/*! ../buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
-const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const CloseAppButton_1 = __webpack_require__(/*! ../buttons/CloseAppButton/CloseAppButton */ "./extension/app/components/buttons/CloseAppButton/CloseAppButton.tsx");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const resources_hooks_1 = __webpack_require__(/*! ../resources/resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
-const LogoIcon_1 = __webpack_require__(/*! ../icons/LogoIcon/LogoIcon */ "./extension/app/components/icons/LogoIcon/LogoIcon.tsx");
-const ExportIcon_1 = __webpack_require__(/*! ../atoms/icons/ExportIcon/ExportIcon */ "./extension/app/components/atoms/icons/ExportIcon/ExportIcon.tsx");
-const ResourcesHeaderView_1 = __webpack_require__(/*! ../resources/views/ResourcesHeaderView/ResourcesHeaderView */ "./extension/app/components/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx");
-const IntegrationHeaderView_1 = __webpack_require__(/*! ../integrations/views/IntegrationHeaderView/IntegrationHeaderView */ "./extension/app/components/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx");
-const FaqButton_1 = __webpack_require__(/*! ../buttons/FaqButton/FaqButton */ "./extension/app/components/buttons/FaqButton/FaqButton.tsx");
-const FaqHeaderView_1 = __webpack_require__(/*! ../faq/views/FaqHeaderView/FaqHeaderView */ "./extension/app/components/faq/views/FaqHeaderView/FaqHeaderView.tsx");
-const Link_1 = __webpack_require__(/*! ../Link/Link */ "./extension/app/components/Link/Link.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/AppHeader/styles.scss");
-exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const { platform } = (0, stores_1.usePlatformStore)();
-    const { activeTab } = (0, stores_1.useResourceStore)();
-    const appStore = (0, stores_1.useAppStore)();
-    const { selectedFields, selected, countSelected } = (0, resources_hooks_1.useResourceSelection)();
-    const dragElementRef = (0, react_1.useRef)(null);
-    (0, react_1.useEffect)(() => {
-        appStore.dragElementRef = dragElementRef;
-    }, [appStore]);
-    const onExportClick = (0, react_1.useCallback)(() => {
-        if (selectedFields.size < 1) {
-            return;
-        }
-        const rows = [
-            'Type,Field,Value',
-        ];
-        Array.from(selectedFields).forEach(fieldName => {
-            Array.from(selected.get(fieldName)).forEach(value => {
-                rows.push([activeTab, fieldName, value].join(','));
-            });
-        });
-        (0, common_helpers_1.downloadFile)('csv', rows.join('\n'));
-    }, [activeTab, selected, selectedFields]);
-    const withButton = platform
-        && appStore.view !== 'integrations'
-        && appStore.view !== 'faq';
-    return (react_1.default.createElement("div", { className: "app-header", ref: ref },
-        react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                'app-header-wrapper',
-                withButton ? '' : 'no-button',
-            ]) },
-            react_1.default.createElement("span", { className: "group" },
-                react_1.default.createElement(Link_1.Link, { href: "https://socprime.com/?utm_source=addon-logo", target: "_blank" },
-                    react_1.default.createElement(LogoIcon_1.LogoIcon, null)),
-                react_1.default.createElement("span", { className: "name strong drag-activator", ref: dragElementRef }, "The Prime Hunt"),
-                react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                        'spinner',
-                        appStore.loadingKeys.length > 0 ? '' : 'invisible',
-                    ]) })),
-            react_1.default.createElement("span", { className: "group" },
-                withButton && (react_1.default.createElement(StaticButton_1.StaticButton, { icon: react_1.default.createElement(ExportIcon_1.ExportIcon, null), onClick: onExportClick },
-                    "Export to CSV (",
-                    countSelected,
-                    ")")),
-                react_1.default.createElement("div", { className: "buttons-wrapper" },
-                    appStore.view === 'resources' && react_1.default.createElement(FaqButton_1.FaqButton, null),
-                    (appStore.view === 'resources'
-                        || appStore.view === 'not-found') && react_1.default.createElement(CloseAppButton_1.CloseAppButton, null)))),
-        appStore.view === 'resources' && (react_1.default.createElement(ResourcesHeaderView_1.ResourcesHeaderView, null)),
-        appStore.view === 'integrations' && (react_1.default.createElement(IntegrationHeaderView_1.IntegrationHeaderView, null)),
-        appStore.view === 'faq' && (react_1.default.createElement(FaqHeaderView_1.FaqHeaderView, null))));
-}));
-
-
-/***/ }),
-
-/***/ "./extension/app/components/Header/Header.tsx":
-/*!****************************************************!*\
-  !*** ./extension/app/components/Header/Header.tsx ***!
-  \****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Header = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/Header/styles.scss");
-const Header = ({ children, className = '', }) => {
-    return (react_1.default.createElement("header", { className: (0, common_helpers_1.createClassName)(['header', className]) }, children));
-};
-exports.Header = Header;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/Link/Link.tsx":
-/*!************************************************!*\
-  !*** ./extension/app/components/Link/Link.tsx ***!
-  \************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Link = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/Link/styles.scss");
-const Link = (_a) => {
-    var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
-    return (react_1.default.createElement("a", Object.assign({ className: (0, common_helpers_1.createClassName)(['link', className]) }, restProps), children));
-};
-exports.Link = Link;
 
 
 /***/ }),
@@ -51918,7 +51507,7 @@ const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/re
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./checkbox.scss */ "./extension/app/components/atoms/Checkbox/checkbox.scss");
-const Checkbox = ({ onStateChanged, content, checked, onClick, checkIcon, uncheckIcon, title = '', className = '', }) => {
+const Checkbox = ({ onStateChanged, content, disabled, checked, onClick, checkIcon, uncheckIcon, title = '', className = '', }) => {
     const [isChecked, setIsChecked] = (0, react_1.useState)(!!checked);
     const prevState = (0, app_hooks_1.usePrevious)(isChecked);
     (0, react_1.useEffect)(() => {
@@ -51932,14 +51521,23 @@ const Checkbox = ({ onStateChanged, content, checked, onClick, checkIcon, unchec
             setIsChecked(checked);
         }
     }, [checked]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['checkbox', className]) },
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'checkbox',
+            isChecked ? 'checked' : 'not-checked',
+            disabled ? 'disabled' : '',
+            className,
+        ]) },
         react_1.default.createElement("span", { className: (0, common_helpers_1.createClassName)([
                 'checker-wrapper',
                 isChecked ? 'checked' : 'not-checked',
+                disabled ? 'disabled' : '',
+                className,
             ]), onClick: (e) => {
-                var _a, _b;
-                (_a = e.stopPropagation) === null || _a === void 0 ? void 0 : _a.call(e);
-                (_b = e.preventDefault) === null || _b === void 0 ? void 0 : _b.call(e);
+                e.stopPropagation();
+                e.preventDefault();
+                if (disabled) {
+                    return;
+                }
                 const newValue = !isChecked;
                 setIsChecked(newValue);
                 onClick === null || onClick === void 0 ? void 0 : onClick(newValue);
@@ -51986,48 +51584,131 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Collapsible = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 __webpack_require__(/*! ./collapsible.scss */ "./extension/app/components/atoms/Collapsible/collapsible.scss");
-const Collapsible = ({ className = '', children, header, onClick, open, }) => {
-    const [isOpen, setIsOpen] = (0, react_1.useState)(!!open);
-    const ref = (0, react_1.useRef)(null);
-    const forceUpdate = (0, app_hooks_1.useForceUpdate)();
+const Collapsible = ({ className = '', disabled, children, header, onClick, open, }) => {
+    const contentRef = (0, react_1.useRef)(null);
+    const [isOpen, setIsOpen] = (0, react_1.useState)(!children ? false : !!open);
+    const [height, setHeight] = (0, react_1.useState)(0);
+    const getNewHeight = (0, react_1.useCallback)(() => {
+        var _a;
+        return Array.from(((_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.children) || [])
+            .reduce((res, e) => res += e.offsetHeight, 0);
+    }, []);
     (0, react_1.useEffect)(() => {
-        const oldWidth = 0;
+        setHeight(getNewHeight());
+    }, [getNewHeight, isOpen]);
+    (0, react_1.useEffect)(() => {
+        if (!contentRef.current) {
+            return;
+        }
+        const oldWidth = contentRef.current.offsetWidth;
         const contentObserver = new MutationObserver(() => {
-            forceUpdate();
+            setHeight(getNewHeight());
         });
-        const widthObserver = new ResizeObserver((entries) => {
-            const newWidth = entries[0].contentRect.width;
-            if (newWidth !== oldWidth) {
-                forceUpdate();
+        const widthObserver = new ResizeObserver(() => {
+            if (contentRef.current && contentRef.current.offsetWidth !== oldWidth) {
+                setHeight(getNewHeight());
             }
-            return newWidth;
         });
-        contentObserver.observe(ref.current, {
+        contentObserver.observe(contentRef.current, {
             childList: true,
             subtree: true,
         });
-        widthObserver.observe(ref.current);
+        widthObserver.observe(contentRef.current);
         return () => {
             contentObserver.disconnect();
             widthObserver.disconnect();
         };
-    }, [forceUpdate]);
-    const getNewHeight = (0, react_1.useCallback)(() => {
-        return Array.from(ref.current.children)
-            .reduce((res, e) => res += e.offsetHeight, 0);
-    }, []);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible', className]) },
-        react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible-header', isOpen ? 'open' : 'closed']), onClick: e => {
+    }, [getNewHeight]);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'collapsible',
+            isOpen ? 'open' : 'closed',
+            disabled ? 'disabled' : '',
+            className,
+        ]) },
+        react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+                'collapsible-header',
+                isOpen ? 'open' : 'closed',
+                disabled ? 'disabled' : '',
+                className,
+            ]), onClick: e => {
+                if (!children || disabled) {
+                    return;
+                }
                 setIsOpen(!isOpen);
                 onClick === null || onClick === void 0 ? void 0 : onClick(e);
             } }, header),
-        react_1.default.createElement("div", { className: "collapsible-content", ref: ref, style: {
-                height: isOpen ? getNewHeight() : 0,
-            } }, isOpen && children)));
+        children && (react_1.default.createElement("div", { className: "collapsible-content", ref: contentRef, style: { height: isOpen ? height : 0 } }, isOpen && children))));
 };
 exports.Collapsible = Collapsible;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/ControlInput/ControlInput.tsx":
+/*!**********************************************************************!*\
+  !*** ./extension/app/components/atoms/ControlInput/ControlInput.tsx ***!
+  \**********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ControlInput = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const Input_1 = __webpack_require__(/*! ../Input/Input */ "./extension/app/components/atoms/Input/Input.tsx");
+exports.ControlInput = (0, react_1.forwardRef)((_a, ref) => {
+    var { className = '', controls, edit, disabled } = _a, restProps = __rest(_a, ["className", "controls", "edit", "disabled"]);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'control-input-wrapper',
+            edit ? 'edit' : '',
+            disabled ? 'disabled' : '',
+            className,
+        ]) },
+        react_1.default.createElement(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
+                'control-input',
+                edit ? 'edit' : '',
+                className,
+            ]), disabled: typeof disabled !== 'undefined'
+                ? disabled
+                : !edit }, restProps)),
+        edit && controls));
+});
 
 
 /***/ }),
@@ -52109,12 +51790,11 @@ const DraggableResizable = ({ className = '', children, onEnd, position, onChang
         }, 0);
     }, [onEnd]);
     const onResizeHandler = (0, react_1.useCallback)((e, onMouseMove, onMouseUp) => {
-        var _a, _b;
         if (disallowResize) {
             return;
         }
-        (_a = e.preventDefault) === null || _a === void 0 ? void 0 : _a.call(e);
-        (_b = e.stopPropagation) === null || _b === void 0 ? void 0 : _b.call(e);
+        e.preventDefault();
+        e.stopPropagation();
         return onMouseDownHandler(e, onMouseMove, onMouseUp);
     }, [disallowResize, onMouseDownHandler]);
     const onMoveHandler = (0, react_1.useCallback)((e, onMouseMove, onMouseUp) => {
@@ -52373,6 +52053,29 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/Header/Header.tsx":
+/*!**********************************************************!*\
+  !*** ./extension/app/components/atoms/Header/Header.tsx ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Header = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const Header = ({ children, className = '', }) => {
+    return (react_1.default.createElement("header", { className: (0, common_helpers_1.createClassName)(['header', className]) }, children));
+};
+exports.Header = Header;
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/Input/Input.tsx":
 /*!********************************************************!*\
   !*** ./extension/app/components/atoms/Input/Input.tsx ***!
@@ -52409,7 +52112,7 @@ exports.Input = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./input.scss */ "./extension/app/components/atoms/Input/input.scss");
-const Input = ({ className = '', onChange, onBlur, label, placeholder = '', debounce, disabled, value = '', }) => {
+exports.Input = (0, react_1.forwardRef)(({ className = '', onChange, onClick, onType, onDoubleClick, onFocus, onBlur, label, placeholder = '', debounceMs, disabled, value = '', }, ref) => {
     const [inputValue, setInputValue] = (0, react_1.useState)(value);
     const timeoutID = (0, react_1.useRef)();
     (0, react_1.useEffect)(() => {
@@ -52417,25 +52120,63 @@ const Input = ({ className = '', onChange, onBlur, label, placeholder = '', debo
     }, [value]);
     const onChangeCallback = (0, react_1.useCallback)(({ target }) => {
         setInputValue(target.value);
+        onType === null || onType === void 0 ? void 0 : onType(target.value);
         if (timeoutID.current) {
             clearTimeout(timeoutID.current);
         }
         timeoutID.current = setTimeout(() => {
             onChange === null || onChange === void 0 ? void 0 : onChange(target.value);
-        }, debounce || 350);
-    }, [debounce, onChange]);
-    return (react_1.default.createElement("label", { className: "input-label" },
+        }, debounceMs || 350);
+    }, [debounceMs, onChange, onType]);
+    return (react_1.default.createElement("label", { className: (0, common_helpers_1.createClassName)([
+            'input-label',
+            className,
+        ]) },
         label && react_1.default.createElement("span", null, label),
-        react_1.default.createElement("input", { placeholder: placeholder, className: (0, common_helpers_1.createClassName)([
+        react_1.default.createElement("input", { ref: ref, placeholder: placeholder, className: (0, common_helpers_1.createClassName)([
                 'input',
                 disabled ? 'disabled' : '',
                 !inputValue ? 'empty' : '',
                 className,
-            ]), onBlur: () => {
+            ]), onClick: onClick, onMouseOut: onFocus, onBlur: () => {
                 onBlur === null || onBlur === void 0 ? void 0 : onBlur(inputValue);
-            }, disabled: disabled, type: "text", value: inputValue, onChange: onChangeCallback })));
+            }, disabled: disabled, type: "text", value: inputValue, onChange: onChangeCallback, onDoubleClick: onDoubleClick })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/Link/Link.tsx":
+/*!******************************************************!*\
+  !*** ./extension/app/components/atoms/Link/Link.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
 };
-exports.Input = Input;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Link = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const Link = (_a) => {
+    var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
+    return (react_1.default.createElement("a", Object.assign({ className: (0, common_helpers_1.createClassName)(['link', className]) }, restProps), children));
+};
+exports.Link = Link;
 
 
 /***/ }),
@@ -52544,20 +52285,29 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TabsPanel = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 __webpack_require__(/*! ./tabs-panel.scss */ "./extension/app/components/atoms/TabsPanel/tabs-panel.scss");
-const TabsPanel = ({ defaultActiveTab, tabs, children, onActiveTabChanged, className = '', }) => {
-    const [activeTab, setActiveTab] = (0, react_1.useState)(defaultActiveTab || '');
+const TabsPanel = ({ activeTab, tabs, children, onActiveTabChanged, className = '', }) => {
+    const [currentActiveTab, setCurrentActiveTab] = (0, react_1.useState)(activeTab || '');
+    const previousActiveTab = (0, app_hooks_1.usePrevious)(currentActiveTab);
     (0, react_1.useEffect)(() => {
-        onActiveTabChanged === null || onActiveTabChanged === void 0 ? void 0 : onActiveTabChanged(activeTab);
-    }, [activeTab, onActiveTabChanged]);
+        if (typeof onActiveTabChanged === 'function' && previousActiveTab !== currentActiveTab) {
+            onActiveTabChanged(currentActiveTab);
+        }
+    }, [currentActiveTab, onActiveTabChanged, previousActiveTab]);
+    (0, react_1.useEffect)(() => {
+        if (activeTab && activeTab !== currentActiveTab) {
+            setCurrentActiveTab(activeTab);
+        }
+    }, [activeTab]);
     return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['tabs-panel', className]) },
         react_1.default.createElement("div", { className: "tabs-wrapper" }, tabs.map(({ component, id, isDisabled }) => (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
                 'tab',
-                activeTab === id ? 'active' : '',
+                currentActiveTab === id ? 'active' : '',
                 isDisabled ? 'disabled' : '',
             ]), key: id, onClick: () => {
                 if (!isDisabled) {
-                    setActiveTab(id);
+                    setCurrentActiveTab(id);
                 }
             } }, component)))),
         children));
@@ -52612,7 +52362,7 @@ const Tooltip = ({ children, mountElem, content, getPosition, className = '', de
     const unmountTimeoutRef = (0, react_1.useRef)();
     const hideTimeoutRef = (0, react_1.useRef)();
     const delayShowTimeoutRef = (0, react_1.useRef)();
-    const onMouseOut = (0, react_1.useCallback)(() => {
+    const onMouseLeave = (0, react_1.useCallback)(() => {
         clearTimeout(unmountTimeoutRef.current);
         clearTimeout(hideTimeoutRef.current);
         clearTimeout(delayShowTimeoutRef.current);
@@ -52623,19 +52373,17 @@ const Tooltip = ({ children, mountElem, content, getPosition, className = '', de
             setIsMounted(false);
         }, 400);
     }, []);
-    const onMouseOver = (0, react_1.useCallback)(() => {
+    const onMouseEnter = (0, react_1.useCallback)(() => {
         clearTimeout(hideTimeoutRef.current);
         clearTimeout(unmountTimeoutRef.current);
         clearTimeout(delayShowTimeoutRef.current);
-        setIsMounted(true);
         delayShowTimeoutRef.current = setTimeout(() => {
+            setIsMounted(true);
             setIsShow(true);
         }, delayShowMs);
     }, [delayShowMs]);
     const calculateCoords = (0, react_1.useCallback)((tooltip, hint) => {
-        if (typeof getPosition === 'function') {
-            return getPosition(tooltip, hint);
-        }
+        const result = ((getPosition === null || getPosition === void 0 ? void 0 : getPosition(tooltip, hint)) || {});
         const coords = tooltip.getBoundingClientRect();
         const hintWidth = (hint === null || hint === void 0 ? void 0 : hint.offsetWidth) || 0;
         const hintHeight = (hint === null || hint === void 0 ? void 0 : hint.offsetHeight) || 0;
@@ -52644,17 +52392,21 @@ const Tooltip = ({ children, mountElem, content, getPosition, className = '', de
         if (top < 0) {
             top = coords.top + tooltip.offsetHeight - 5;
         }
-        return {
-            top,
-            left: left < 0 ? 0 : left,
-        };
+        if (typeof result.top === 'undefined') {
+            result.top = top;
+        }
+        if (typeof result.left === 'undefined') {
+            result.left = left < 0 ? 0 : left;
+        }
+        return result;
     }, [getPosition]);
     (0, react_1.useEffect)(() => {
-        if (!isMounted || !hintRef.current) {
-            if (isShow) {
-                clearTimeout(delayShowTimeoutRef.current);
-                setIsShow(false);
-            }
+        if (!hintRef.current) {
+            return;
+        }
+        if (!isMounted && isShow) {
+            clearTimeout(delayShowTimeoutRef.current);
+            setIsShow(false);
             return;
         }
         const tooltip = tooltipRef.current;
@@ -52668,15 +52420,18 @@ const Tooltip = ({ children, mountElem, content, getPosition, className = '', de
         }, delayShowMs);
     }, [calculateCoords, isMounted]);
     const getHint = (0, react_1.useCallback)((show) => {
+        if (!tooltipRef.current) {
+            return;
+        }
         const { top, left } = calculateCoords(tooltipRef.current, hintRef.current);
         return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
                 'tooltip-content',
                 className,
                 show ? '' : 'transparent',
-            ]), style: { top, left }, onMouseOver: onMouseOver, onMouseOut: onMouseOut, ref: hintRef },
+            ]), style: { top, left }, onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave, ref: hintRef },
             react_1.default.createElement("div", { className: "tooltip-content-wrapper" }, content)));
-    }, [calculateCoords, className, content, onMouseOut, onMouseOver]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['tooltip', className]), onMouseOver: onMouseOver, onMouseOut: onMouseOut, ref: tooltipRef },
+    }, [calculateCoords, className, content, onMouseLeave, onMouseEnter]);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['tooltip', className]), onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave, ref: tooltipRef },
         children,
         isMounted && mountElem && (0, react_dom_1.createPortal)(getHint(isShow), mountElem)));
 };
@@ -52780,6 +52535,29 @@ exports.CrossIcon = CrossIcon;
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/icons/CrossedEye/CrossedEye.tsx":
+/*!************************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/CrossedEye/CrossedEye.tsx ***!
+  \************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CrossedEye = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const CrossedEye = () => {
+    return (react_1.default.createElement("svg", { viewBox: "0 0 16 15", xmlns: "http://www.w3.org/2000/svg", className: "crossed-eye-icon icon" },
+        react_1.default.createElement("path", { d: "M15.5139 5.77923C14.9121 4.79372 14.1529 3.9134 13.2666 3.17323L15.1332 1.30657C15.2547 1.18083 15.3219 1.01243 15.3204 0.837632C15.3188 0.662834 15.2487 0.495625 15.1251 0.37202C15.0015 0.248415 14.8343 0.178302 14.6595 0.176783C14.4847 0.175264 14.3163 0.24246 14.1906 0.363899L12.1606 2.39657C10.9022 1.64911 9.46353 1.25954 7.99991 1.2699C3.87258 1.2699 1.52058 4.09523 0.485912 5.77923C0.166264 6.29624 -0.00305176 6.89206 -0.00305176 7.4999C-0.00305176 8.10774 0.166264 8.70356 0.485912 9.22057C1.08775 10.2061 1.8469 11.0864 2.73325 11.8266L0.866579 13.6932C0.802905 13.7547 0.752117 13.8283 0.717178 13.9096C0.682239 13.991 0.663848 14.0784 0.663078 14.167C0.662309 14.2555 0.679177 14.3433 0.712698 14.4252C0.746218 14.5071 0.79572 14.5816 0.858315 14.6442C0.920911 14.7068 0.995345 14.7563 1.07728 14.7898C1.15921 14.8233 1.24699 14.8402 1.33551 14.8394C1.42403 14.8386 1.51151 14.8202 1.59285 14.7853C1.67418 14.7504 1.74775 14.6996 1.80925 14.6359L3.84391 12.6012C5.10076 13.3486 6.53769 13.7388 7.99991 13.7299C12.1272 13.7299 14.4792 10.9046 15.5139 9.22057C15.8336 8.70356 16.0029 8.10774 16.0029 7.4999C16.0029 6.89206 15.8336 6.29624 15.5139 5.77923ZM1.62191 8.52257C1.432 8.21526 1.33141 7.86115 1.33141 7.4999C1.33141 7.13865 1.432 6.78454 1.62191 6.47723C2.51125 5.03323 4.52125 2.60323 7.99991 2.60323C9.10676 2.59703 10.1981 2.86379 11.1772 3.3799L9.83525 4.7219C9.1952 4.29697 8.42785 4.10656 7.6634 4.183C6.89895 4.25943 6.18449 4.59799 5.64125 5.14123C5.098 5.68448 4.75944 6.39894 4.68301 7.16339C4.60658 7.92784 4.79698 8.69519 5.22191 9.33523L3.68191 10.8752C2.86531 10.215 2.16847 9.4192 1.62191 8.52257ZM9.99991 7.4999C9.99991 8.03033 9.7892 8.53904 9.41413 8.91411C9.03905 9.28919 8.53035 9.4999 7.99991 9.4999C7.70292 9.49875 7.41004 9.43037 7.14325 9.2999L9.79991 6.64323C9.93039 6.91003 9.99876 7.20291 9.99991 7.4999ZM5.99991 7.4999C5.99991 6.96947 6.21063 6.46076 6.5857 6.08569C6.96077 5.71061 7.46948 5.4999 7.99991 5.4999C8.2969 5.50105 8.58978 5.56943 8.85658 5.6999L6.19991 8.35657C6.06944 8.08977 6.00106 7.79689 5.99991 7.4999ZM14.3779 8.52257C13.4886 9.96657 11.4786 12.3966 7.99991 12.3966C6.89306 12.4028 5.80175 12.136 4.82258 11.6199L6.16458 10.2779C6.80462 10.7028 7.57197 10.8932 8.33642 10.8168C9.10087 10.7404 9.81534 10.4018 10.3586 9.85856C10.9018 9.31532 11.2404 8.60086 11.3168 7.83641C11.3932 7.07196 11.2028 6.30461 10.7779 5.66457L12.3179 4.12457C13.1345 4.78475 13.8314 5.5806 14.3779 6.47723C14.5678 6.78454 14.6684 7.13865 14.6684 7.4999C14.6684 7.86115 14.5678 8.21526 14.3779 8.52257Z" })));
+};
+exports.CrossedEye = CrossedEye;
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/icons/ExportIcon/ExportIcon.tsx":
 /*!************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/ExportIcon/ExportIcon.tsx ***!
@@ -52809,10 +52587,10 @@ exports.ExportIcon = ExportIcon;
 
 /***/ }),
 
-/***/ "./extension/app/components/atoms/icons/GearIcon/GearIcon.tsx":
-/*!********************************************************************!*\
-  !*** ./extension/app/components/atoms/icons/GearIcon/GearIcon.tsx ***!
-  \********************************************************************/
+/***/ "./extension/app/components/atoms/icons/EyeIcon/EyeIcon.tsx":
+/*!******************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/EyeIcon/EyeIcon.tsx ***!
+  \******************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -52821,18 +52599,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GearIcon = void 0;
+exports.EyeIcon = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const GearIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg", className: "gear-icon icon" },
-        react_1.default.createElement("g", { clipPath: "url(#clip0_575_501)" },
-            react_1.default.createElement("path", { d: "M8.00016 5.33374C7.47275 5.33374 6.95717 5.49014 6.51864 5.78315C6.08011 6.07617 5.73832 6.49265 5.53649 6.97992C5.33465 7.46719 5.28184 8.00337 5.38474 8.52065C5.48763 9.03793 5.74161 9.51309 6.11455 9.88603C6.48749 10.259 6.96264 10.5129 7.47992 10.6158C7.99721 10.7187 8.53338 10.6659 9.02065 10.4641C9.50792 10.2623 9.9244 9.92046 10.2174 9.48193C10.5104 9.0434 10.6668 8.52782 10.6668 8.00041C10.6668 7.29316 10.3859 6.61489 9.88578 6.11479C9.38569 5.61469 8.70741 5.33374 8.00016 5.33374V5.33374ZM8.00016 9.33374C7.73646 9.33374 7.47867 9.25554 7.2594 9.10903C7.04014 8.96252 6.86924 8.75429 6.76832 8.51065C6.66741 8.26702 6.641 7.99893 6.69245 7.74029C6.7439 7.48165 6.87089 7.24407 7.05736 7.0576C7.24383 6.87113 7.4814 6.74414 7.74004 6.69269C7.99868 6.64125 8.26677 6.66765 8.51041 6.76857C8.75404 6.86948 8.96228 7.04038 9.10879 7.25965C9.2553 7.47891 9.3335 7.7367 9.3335 8.00041C9.3335 8.35403 9.19302 8.69317 8.94297 8.94322C8.69292 9.19326 8.35379 9.33374 8.00016 9.33374Z" }),
-            react_1.default.createElement("path", { d: "M14.196 9.26667L13.9 9.096C14.0333 8.37096 14.0333 7.62771 13.9 6.90267L14.196 6.732C14.4237 6.60068 14.6232 6.42581 14.7832 6.21737C14.9433 6.00894 15.0607 5.77103 15.1288 5.51721C15.1969 5.2634 15.2143 4.99866 15.1801 4.73811C15.1459 4.47755 15.0607 4.22629 14.9294 3.99867C14.798 3.77104 14.6232 3.57151 14.4147 3.41147C14.2063 3.25143 13.9684 3.134 13.7146 3.06591C13.4608 2.99781 13.196 2.98037 12.9355 3.01459C12.6749 3.04881 12.4237 3.13401 12.196 3.26533L11.8994 3.43667C11.3391 2.95795 10.6951 2.58683 10 2.342V2C10 1.46957 9.78932 0.960859 9.41424 0.585786C9.03917 0.210714 8.53046 0 8.00003 0C7.4696 0 6.96089 0.210714 6.58581 0.585786C6.21074 0.960859 6.00003 1.46957 6.00003 2V2.342C5.30495 2.58771 4.66126 2.95973 4.10136 3.43933L3.80336 3.26667C3.34365 3.00145 2.79742 2.92971 2.28482 3.06724C1.77222 3.20477 1.33525 3.54029 1.07003 4C0.804812 4.45971 0.733077 5.00595 0.870603 5.51855C1.00813 6.03114 1.34365 6.46812 1.80336 6.73333L2.09936 6.904C1.9661 7.62904 1.9661 8.37229 2.09936 9.09733L1.80336 9.268C1.34365 9.53322 1.00813 9.97019 0.870603 10.4828C0.733077 10.9954 0.804812 11.5416 1.07003 12.0013C1.33525 12.461 1.77222 12.7966 2.28482 12.9341C2.79742 13.0716 3.34365 12.9999 3.80336 12.7347L4.10003 12.5633C4.66054 13.0421 5.30468 13.4132 6.00003 13.658V14C6.00003 14.5304 6.21074 15.0391 6.58581 15.4142C6.96089 15.7893 7.4696 16 8.00003 16C8.53046 16 9.03917 15.7893 9.41424 15.4142C9.78932 15.0391 10 14.5304 10 14V13.658C10.6951 13.4123 11.3388 13.0403 11.8987 12.5607L12.1967 12.7327C12.6564 12.9979 13.2026 13.0696 13.7152 12.9321C14.2278 12.7946 14.6648 12.459 14.93 11.9993C15.1952 11.5396 15.267 10.9934 15.1295 10.4808C14.9919 9.96819 14.6564 9.53122 14.1967 9.266L14.196 9.26667ZM12.4974 6.74933C12.7231 7.56738 12.7231 8.43129 12.4974 9.24933C12.4579 9.39171 12.4669 9.54316 12.5229 9.67987C12.5789 9.81659 12.6787 9.93084 12.8067 10.0047L13.5294 10.422C13.6826 10.5104 13.7944 10.6561 13.8402 10.8269C13.886 10.9977 13.8621 11.1798 13.7737 11.333C13.6853 11.4862 13.5396 11.598 13.3688 11.6438C13.198 11.6897 13.0159 11.6657 12.8627 11.5773L12.1387 11.1587C12.0106 11.0845 11.8615 11.055 11.7149 11.075C11.5682 11.0949 11.4323 11.163 11.3287 11.2687C10.7353 11.8744 9.98775 12.3067 9.1667 12.5187C9.02338 12.5555 8.8964 12.639 8.80576 12.7559C8.71511 12.8729 8.66596 13.0167 8.66603 13.1647V14C8.66603 14.1768 8.59579 14.3464 8.47077 14.4714C8.34574 14.5964 8.17617 14.6667 7.99936 14.6667C7.82255 14.6667 7.65298 14.5964 7.52796 14.4714C7.40293 14.3464 7.3327 14.1768 7.3327 14V13.1653C7.33277 13.0174 7.28361 12.8736 7.19297 12.7566C7.10232 12.6397 6.97534 12.5562 6.83203 12.5193C6.01093 12.3065 5.26358 11.8733 4.6707 11.2667C4.56704 11.161 4.43119 11.0929 4.28453 11.073C4.13788 11.053 3.98877 11.0825 3.8607 11.1567L3.13803 11.5747C3.06218 11.6191 2.97829 11.6482 2.89118 11.6601C2.80407 11.672 2.71546 11.6665 2.63046 11.6441C2.54546 11.6216 2.46575 11.5825 2.39591 11.5291C2.32607 11.4757 2.26748 11.409 2.22352 11.3329C2.17956 11.2567 2.15109 11.1727 2.13976 11.0855C2.12843 10.9983 2.13445 10.9097 2.15749 10.8249C2.18052 10.74 2.22012 10.6606 2.27398 10.5911C2.32785 10.5216 2.39493 10.4635 2.47136 10.42L3.19403 10.0027C3.32199 9.92884 3.42181 9.81459 3.4778 9.67787C3.53379 9.54116 3.54278 9.38971 3.50336 9.24733C3.2776 8.42929 3.2776 7.56538 3.50336 6.74733C3.54207 6.60525 3.53265 6.45436 3.47657 6.31819C3.42049 6.18203 3.32091 6.06827 3.19336 5.99467L2.4707 5.57733C2.31749 5.48893 2.20568 5.34328 2.15985 5.17244C2.11403 5.00159 2.13796 4.81954 2.22636 4.66633C2.31477 4.51313 2.46041 4.40131 2.63126 4.35549C2.8021 4.30967 2.98416 4.33359 3.13736 4.422L3.86136 4.84067C3.98908 4.91501 4.13788 4.94481 4.28438 4.92538C4.43088 4.90595 4.56677 4.8384 4.6707 4.73333C5.26409 4.12756 6.01165 3.69535 6.8327 3.48333C6.97645 3.44638 7.10376 3.3625 7.19445 3.245C7.28514 3.1275 7.33403 2.98309 7.33336 2.83467V2C7.33336 1.82319 7.4036 1.65362 7.52862 1.5286C7.65365 1.40357 7.82322 1.33333 8.00003 1.33333C8.17684 1.33333 8.34641 1.40357 8.47143 1.5286C8.59646 1.65362 8.6667 1.82319 8.6667 2V2.83467C8.66662 2.98264 8.71578 3.12643 8.80643 3.24339C8.89707 3.36035 9.02405 3.44382 9.16736 3.48067C9.9887 3.69343 10.7363 4.12659 11.3294 4.73333C11.433 4.83898 11.5689 4.90713 11.7155 4.92704C11.8622 4.94696 12.0113 4.91751 12.1394 4.84333L12.862 4.42533C12.9379 4.38087 13.0218 4.35185 13.1089 4.33993C13.196 4.32802 13.2846 4.33346 13.3696 4.35593C13.4546 4.37841 13.5343 4.41747 13.6041 4.47088C13.674 4.52428 13.7326 4.59097 13.7765 4.66712C13.8205 4.74326 13.849 4.82734 13.8603 4.91453C13.8716 5.00171 13.8656 5.09028 13.8426 5.17513C13.8195 5.25998 13.7799 5.33943 13.7261 5.40892C13.6722 5.4784 13.6051 5.53655 13.5287 5.58L12.806 5.99733C12.6787 6.07114 12.5794 6.18498 12.5236 6.32113C12.4678 6.45727 12.4585 6.60807 12.4974 6.75V6.74933Z" })),
+const EyeIcon = () => {
+    return (react_1.default.createElement("svg", { viewBox: "0 0 17 16", xmlns: "http://www.w3.org/2000/svg", className: "eye-icon icon" },
+        react_1.default.createElement("g", { clipPath: "url(#clip0_860_1081)" },
+            react_1.default.createElement("path", { d: "M16.0139 6.27923C14.9799 4.59523 12.6279 1.7699 8.49991 1.7699C4.37191 1.7699 2.01991 4.59523 0.985912 6.27923C0.666264 6.79624 0.496948 7.39206 0.496948 7.9999C0.496948 8.60774 0.666264 9.20356 0.985912 9.72056C2.01991 11.4046 4.37191 14.2299 8.49991 14.2299C12.6279 14.2299 14.9799 11.4046 16.0139 9.72056C16.3336 9.20356 16.5029 8.60774 16.5029 7.9999C16.5029 7.39206 16.3336 6.79624 16.0139 6.27923ZM14.8772 9.02256C13.9892 10.4666 11.9792 12.8966 8.49991 12.8966C5.02058 12.8966 3.01058 10.4666 2.12258 9.02256C1.93267 8.71526 1.83208 8.36115 1.83208 7.9999C1.83208 7.63865 1.93267 7.28453 2.12258 6.97723C3.01058 5.53323 5.02058 3.10323 8.49991 3.10323C11.9792 3.10323 13.9892 5.53056 14.8772 6.97723C15.0672 7.28453 15.1677 7.63865 15.1677 7.9999C15.1677 8.36115 15.0672 8.71526 14.8772 9.02256Z" }),
+            react_1.default.createElement("path", { d: "M8.49984 4.6665C7.84057 4.6665 7.1961 4.862 6.64794 5.22827C6.09977 5.59454 5.67253 6.11514 5.42024 6.72423C5.16795 7.33331 5.10194 8.00354 5.23055 8.65014C5.35917 9.29674 5.67664 9.89069 6.14282 10.3569C6.60899 10.823 7.20293 11.1405 7.84954 11.2691C8.49614 11.3977 9.16636 11.3317 9.77545 11.0794C10.3845 10.8271 10.9051 10.3999 11.2714 9.85174C11.6377 9.30357 11.8332 8.65911 11.8332 7.99984C11.8321 7.11611 11.4806 6.26888 10.8557 5.64398C10.2308 5.01909 9.38357 4.66756 8.49984 4.6665ZM8.49984 9.99984C8.10428 9.99984 7.7176 9.88254 7.3887 9.66278C7.0598 9.44301 6.80345 9.13066 6.65208 8.7652C6.5007 8.39975 6.4611 7.99762 6.53827 7.60966C6.61544 7.22169 6.80592 6.86533 7.08562 6.58562C7.36533 6.30592 7.7217 6.11544 8.10966 6.03827C8.49762 5.9611 8.89975 6.0007 9.26521 6.15208C9.63066 6.30345 9.94302 6.5598 10.1628 6.8887C10.3825 7.2176 10.4998 7.60427 10.4998 7.99984C10.4998 8.53027 10.2891 9.03898 9.91405 9.41405C9.53898 9.78912 9.03027 9.99984 8.49984 9.99984Z" })),
         react_1.default.createElement("defs", null,
-            react_1.default.createElement("clipPath", { id: "clip0_575_501" },
-                react_1.default.createElement("rect", { width: "16", height: "16", fill: "white" })))));
+            react_1.default.createElement("clipPath", { id: "clip0_860_1081" },
+                react_1.default.createElement("rect", { width: "16", height: "16", transform: "translate(0.5)" })))));
 };
-exports.GearIcon = GearIcon;
+exports.EyeIcon = EyeIcon;
 
 
 /***/ }),
@@ -52958,6 +52736,29 @@ exports.RoundedQuestionMarkIcon = RoundedQuestionMarkIcon;
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx":
+/*!****************************************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx ***!
+  \****************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SearchDocumentIcon = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const SearchDocumentIcon = () => {
+    return (react_1.default.createElement("svg", { viewBox: "0 0 12 14", xmlns: "http://www.w3.org/2000/svg", className: "search-document-icon icon" },
+        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M2.30331 0.19681C1.88834 0.511773 1.75551 0.912832 1.78648 1.75762L1.81392 2.50467H2.37206H2.93019L2.9767 1.8897L3.02321 1.27472L6.90761 1.25003L10.7921 1.22533L10.768 6.45367L10.744 11.682L6.98742 11.7067C4.29175 11.7245 3.19502 11.7012 3.10376 11.6242C3.02274 11.5558 2.9767 11.3155 2.9767 10.9609V10.4048H2.37206H1.76741V11.2237C1.76741 11.9558 1.79253 12.0762 2.00481 12.3591C2.46508 12.9729 2.35299 12.9593 6.94296 12.9593C11.0807 12.9593 11.1063 12.958 11.4038 12.7507C12.0279 12.3158 11.9998 12.6116 11.9998 6.48272C11.9998 0.412998 12.0164 0.602884 11.452 0.194161C11.1862 0.00162617 11.0882 -0.00244218 6.86929 0.000490789C2.67503 0.00342375 2.55122 0.00872204 2.30331 0.19681ZM6.06697 3.32581C6.00363 3.39024 5.95339 3.6842 5.95339 3.99008V4.53883H7.86462H9.77575L9.74831 3.9002L9.72078 3.26157L7.95066 3.23593C6.65227 3.2172 6.15023 3.24113 6.06697 3.32581ZM2.39503 4.17959C1.90537 4.31185 1.16566 5.01605 0.970589 5.53547C0.814778 5.95034 0.819894 6.69616 0.98231 7.25532C1.03087 7.4224 0.937753 7.577 0.521573 8.02082C0.234694 8.3267 0 8.61763 0 8.6674C0 8.78264 0.676733 9.45864 0.79208 9.45864C0.839707 9.45864 1.13849 9.19675 1.45598 8.87668L2.03327 8.29482L2.3422 8.42557C2.73093 8.5901 3.64394 8.58338 3.97854 8.41356C4.11817 8.34269 4.42607 8.08506 4.66262 7.84115C6.25469 6.19983 4.62969 3.57606 2.39503 4.17959ZM3.52134 5.43054C4.09454 5.73198 4.15938 6.65794 3.63594 7.06666C3.42832 7.22873 2.68489 7.21568 2.44638 7.04575C1.86481 6.63145 2.05894 5.53547 2.74414 5.36422C3.08404 5.27916 3.26255 5.2944 3.52134 5.43054ZM6.06697 5.88033C5.94865 6.00067 5.91191 6.68415 6.00986 6.94367C6.05869 7.07319 6.31562 7.09334 7.92108 7.09334H9.77575L9.74831 6.45471L9.72078 5.81608L7.95066 5.79044C6.65227 5.77171 6.15023 5.79565 6.06697 5.88033ZM6.01544 8.57563C5.9813 8.61025 5.95339 8.86495 5.95339 9.1415C5.95339 9.58428 5.97832 9.65051 6.16269 9.69659C6.27776 9.72544 7.12547 9.73689 8.04638 9.72213L9.72078 9.69517L9.7485 9.10384L9.77612 8.51252H7.92676C6.90966 8.51252 6.04948 8.5409 6.01544 8.57563ZM10.0464 13.8181C10.0464 13.9645 10.1129 14 10.3875 14C10.7708 14 10.7695 13.993 10.3487 13.7853C10.0615 13.6435 10.0464 13.6452 10.0464 13.8181Z" })));
+};
+exports.SearchDocumentIcon = SearchDocumentIcon;
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx":
 /*!**********************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx ***!
@@ -52977,6 +52778,36 @@ const SeeDocumentIcon = ({ onClick }) => {
         react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M14.6338 0.0429838C15.2692 0.206713 15.7781 0.689358 15.9478 1.28913C16.0181 1.53782 16.017 12.3153 15.9466 12.5743C15.8145 13.0607 15.4369 13.4914 14.9588 13.701C14.8152 13.764 14.6143 13.8298 14.5124 13.8473C14.3885 13.8686 13.4321 13.8791 11.6279 13.8791H8.92871L9.02867 13.7544C9.23285 13.4996 9.48423 13.1244 9.58851 12.9187L9.69604 12.7067L11.9938 12.6986L14.2916 12.6906L14.4244 12.6239C14.4974 12.5873 14.5958 12.5024 14.6431 12.4353L14.729 12.3133L14.7371 7.31481L14.7451 2.31629H8.60638H2.46759L2.46687 5.39042L2.46615 8.46455L2.193 8.5746C2.04277 8.63512 1.76624 8.7705 1.57849 8.87541C1.39074 8.98033 1.23283 9.06617 1.22758 9.06617C1.22233 9.06617 1.21802 7.3782 1.21802 5.31511C1.21802 2.74702 1.2287 1.50912 1.25188 1.38991C1.37384 0.762874 1.93661 0.203279 2.60691 0.0425143C2.77051 0.0032769 3.50164 -0.00182953 8.63609 0.000459562C13.4565 0.00263126 14.5062 0.0100855 14.6338 0.0429838ZM12.9327 5.19232V5.77927H12.3079H11.6832V5.19232V4.60538H12.3079H12.9327V5.19232ZM10.4648 5.19232V5.77927H7.37215H4.27946V5.19232V4.60538H7.37215H10.4648V5.19232ZM12.9327 7.51076V8.09771H12.3079H11.6832V7.51076V6.92382H12.3079H12.9327V7.51076ZM10.4648 7.51076V8.09771H7.37215H4.27946V7.51076V6.92382H7.37215H10.4648V7.51076ZM12.9327 9.8292V10.4161H12.3079H11.6832V9.8292V9.24225H12.3079H12.9327V9.8292ZM10.4648 9.8292V10.4161H9.71184H8.95888L8.60013 10.0644C8.40279 9.87087 8.12661 9.62424 7.98637 9.51627C7.84614 9.4083 7.71081 9.30247 7.68567 9.28111C7.64762 9.2488 7.87807 9.24225 9.05238 9.24225H10.4648V9.8292ZM4.63871 9.27495C5.75111 9.35991 6.99615 10.029 7.95398 11.0565C8.35178 11.4832 8.62172 11.9205 8.62172 12.1381C8.62172 12.5789 7.62997 13.6759 6.71275 14.2495C5.88607 14.7665 5.12873 15.0016 4.29508 15C3.41054 14.9983 2.54594 14.6999 1.69389 14.1022C0.805973 13.4794 0.00103283 12.542 1.90735e-06 12.1296C-0.000904083 11.7739 0.71338 10.902 1.48215 10.3205C2.52079 9.53479 3.55518 9.19216 4.63871 9.27495ZM4.30449 11.1032L4.29508 11.7902L4.19955 11.9029C4.14701 11.9649 4.04211 12.0453 3.96645 12.0816C3.83618 12.1441 3.79257 12.1476 3.14632 12.1476H2.46375L2.48374 12.287C2.56646 12.8638 2.86005 13.2899 3.38424 13.5939C3.65765 13.7525 3.92574 13.8239 4.26384 13.8281C4.80319 13.8349 5.21355 13.6786 5.59173 13.3224C5.95685 12.9784 6.12258 12.6071 6.12258 12.133C6.12258 11.2839 5.44275 10.5572 4.545 10.4467C4.44191 10.434 4.34775 10.4219 4.33573 10.4199C4.32373 10.4178 4.30967 10.7253 4.30449 11.1032Z" })));
 };
 exports.SeeDocumentIcon = SeeDocumentIcon;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx":
+/*!****************************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx ***!
+  \****************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SettingsIcon = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const SettingsIcon = () => {
+    return (react_1.default.createElement("span", { className: "settings-icon icon" },
+        react_1.default.createElement("svg", { viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
+            react_1.default.createElement("g", { clipPath: "url(#clip0_13_322)" },
+                react_1.default.createElement("path", { d: "M0.666667 3.1669H2.49067C2.63376 3.69339 2.94612 4.15816 3.37955 4.48952C3.81299 4.82088 4.34341 5.00041 4.889 5.00041C5.43459 5.00041 5.96501 4.82088 6.39845 4.48952C6.83188 4.15816 7.14424 3.69339 7.28733 3.1669H15.3333C15.5101 3.1669 15.6797 3.09666 15.8047 2.97164C15.9298 2.84661 16 2.67704 16 2.50023C16 2.32342 15.9298 2.15385 15.8047 2.02883C15.6797 1.9038 15.5101 1.83357 15.3333 1.83357H7.28733C7.14424 1.30708 6.83188 0.842304 6.39845 0.510946C5.96501 0.179588 5.43459 6.10352e-05 4.889 6.10352e-05C4.34341 6.10352e-05 3.81299 0.179588 3.37955 0.510946C2.94612 0.842304 2.63376 1.30708 2.49067 1.83357H0.666667C0.489856 1.83357 0.320286 1.9038 0.195262 2.02883C0.0702379 2.15385 0 2.32342 0 2.50023C0 2.67704 0.0702379 2.84661 0.195262 2.97164C0.320286 3.09666 0.489856 3.1669 0.666667 3.1669ZM4.88867 1.33357C5.11941 1.33357 5.34497 1.40199 5.53683 1.53019C5.72869 1.65838 5.87822 1.84059 5.96653 2.05377C6.05483 2.26695 6.07793 2.50153 6.03292 2.72784C5.9879 2.95415 5.87679 3.16203 5.71362 3.32519C5.55046 3.48835 5.34258 3.59947 5.11627 3.64448C4.88996 3.6895 4.65538 3.6664 4.4422 3.57809C4.22902 3.48979 4.04681 3.34026 3.91862 3.1484C3.79042 2.95654 3.722 2.73098 3.722 2.50023C3.72235 2.19092 3.84538 1.89438 4.0641 1.67567C4.28281 1.45695 4.57936 1.33392 4.88867 1.33357Z" }),
+                react_1.default.createElement("path", { d: "M15.3333 7.33275H13.5093C13.3665 6.80614 13.0542 6.3412 12.6208 6.0097C12.1874 5.67821 11.657 5.4986 11.1113 5.4986C10.5657 5.4986 10.0352 5.67821 9.60182 6.0097C9.16842 6.3412 8.85619 6.80614 8.71333 7.33275H0.666667C0.489856 7.33275 0.320286 7.40299 0.195262 7.52801C0.0702379 7.65303 0 7.8226 0 7.99941C0 8.17622 0.0702379 8.34579 0.195262 8.47082C0.320286 8.59584 0.489856 8.66608 0.666667 8.66608H8.71333C8.85619 9.19269 9.16842 9.65763 9.60182 9.98913C10.0352 10.3206 10.5657 10.5002 11.1113 10.5002C11.657 10.5002 12.1874 10.3206 12.6208 9.98913C13.0542 9.65763 13.3665 9.19269 13.5093 8.66608H15.3333C15.5101 8.66608 15.6797 8.59584 15.8047 8.47082C15.9298 8.34579 16 8.17622 16 7.99941C16 7.8226 15.9298 7.65303 15.8047 7.52801C15.6797 7.40299 15.5101 7.33275 15.3333 7.33275ZM11.1113 9.16608C10.8806 9.16608 10.655 9.09765 10.4632 8.96946C10.2713 8.84127 10.1218 8.65906 10.0335 8.44588C9.94517 8.2327 9.92207 7.99812 9.96708 7.77181C10.0121 7.5455 10.1232 7.33762 10.2864 7.17446C10.4495 7.0113 10.6574 6.90018 10.8837 6.85517C11.11 6.81015 11.3446 6.83325 11.5578 6.92156C11.771 7.00986 11.9532 7.15939 12.0814 7.35125C12.2096 7.54311 12.278 7.76867 12.278 7.99941C12.2776 8.30872 12.1546 8.60527 11.9359 8.82398C11.7172 9.0427 11.4206 9.16573 11.1113 9.16608Z" }),
+                react_1.default.createElement("path", { d: "M15.3333 12.8335H7.28733C7.14424 12.307 6.83188 11.8423 6.39845 11.5109C5.96501 11.1796 5.43459 11 4.889 11C4.34341 11 3.81299 11.1796 3.37955 11.5109C2.94612 11.8423 2.63376 12.307 2.49067 12.8335H0.666667C0.489856 12.8335 0.320286 12.9038 0.195262 13.0288C0.0702379 13.1538 0 13.3234 0 13.5002C0 13.677 0.0702379 13.8466 0.195262 13.9716C0.320286 14.0966 0.489856 14.1669 0.666667 14.1669H2.49067C2.63376 14.6933 2.94612 15.1581 3.37955 15.4895C3.81299 15.8208 4.34341 16.0004 4.889 16.0004C5.43459 16.0004 5.96501 15.8208 6.39845 15.4895C6.83188 15.1581 7.14424 14.6933 7.28733 14.1669H15.3333C15.5101 14.1669 15.6797 14.0966 15.8047 13.9716C15.9298 13.8466 16 13.677 16 13.5002C16 13.3234 15.9298 13.1538 15.8047 13.0288C15.6797 12.9038 15.5101 12.8335 15.3333 12.8335ZM4.88867 14.6669C4.65792 14.6669 4.43236 14.5984 4.2405 14.4702C4.04864 14.342 3.89911 14.1598 3.81081 13.9467C3.72251 13.7335 3.6994 13.4989 3.74442 13.2726C3.78943 13.0463 3.90055 12.8384 4.06371 12.6752C4.22687 12.5121 4.43475 12.401 4.66106 12.3559C4.88737 12.3109 5.12195 12.334 5.33513 12.4223C5.54831 12.5106 5.73052 12.6602 5.85871 12.852C5.98691 13.0439 6.05533 13.2695 6.05533 13.5002C6.0548 13.8094 5.93172 14.1059 5.71304 14.3246C5.49436 14.5432 5.19792 14.6663 4.88867 14.6669Z" })),
+            react_1.default.createElement("defs", null,
+                react_1.default.createElement("clipPath", { id: "clip0_13_322" },
+                    react_1.default.createElement("rect", { width: "16", height: "16" }))))));
+};
+exports.SettingsIcon = SettingsIcon;
 
 
 /***/ }),
@@ -53055,30 +52886,6 @@ const WasteBasketIcon = ({ onClick, }) => {
                 react_1.default.createElement("rect", { transform: "translate(4 4)" })))));
 };
 exports.WasteBasketIcon = WasteBasketIcon;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/atoms/icons/WindowIcon/WindowIcon.tsx":
-/*!************************************************************************!*\
-  !*** ./extension/app/components/atoms/icons/WindowIcon/WindowIcon.tsx ***!
-  \************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.WindowIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const WindowIcon = () => {
-    return (react_1.default.createElement("svg", { className: "window-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M14.2318 2.66663H1.76804C1.52791 2.66663 1.33325 2.86131 1.33325 3.10142V5.266H14.6666V3.10142C14.6666 2.86131 14.4719 2.66663 14.2318 2.66663ZM9.72606 4.54603C9.4064 4.54603 9.14635 4.28597 9.14635 3.96631C9.14635 3.64665 9.4064 3.3866 9.72606 3.3866C10.0457 3.3866 10.3058 3.64665 10.3058 3.96631C10.3058 4.28597 10.0457 4.54603 9.72606 4.54603ZM11.3053 4.54603C10.9856 4.54603 10.7256 4.28597 10.7256 3.96631C10.7256 3.64665 10.9856 3.3866 11.3053 3.3866C11.6249 3.3866 11.885 3.64665 11.885 3.96631C11.885 4.28597 11.6249 4.54603 11.3053 4.54603ZM12.8845 4.54603C12.5648 4.54603 12.3048 4.28597 12.3048 3.96631C12.3048 3.64665 12.5648 3.3866 12.8845 3.3866C13.2042 3.3866 13.4642 3.64665 13.4642 3.96631C13.4642 4.28597 13.2042 4.54603 12.8845 4.54603Z" }),
-        react_1.default.createElement("path", { d: "M1.33325 6.1355V12.3767C1.33325 12.6168 1.52791 12.8115 1.76804 12.8115H14.2318C14.4719 12.8115 14.6666 12.6169 14.6666 12.3767V6.1355H1.33325Z" })));
-};
-exports.WindowIcon = WindowIcon;
 
 
 /***/ }),
@@ -53200,66 +53007,6 @@ const BigStaticButton = (_a) => {
     return (react_1.default.createElement(StaticButton_1.StaticButton, Object.assign({ className: (0, common_helpers_1.createClassName)(['big-static-button', className]) }, restProps), children));
 };
 exports.BigStaticButton = BigStaticButton;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/buttons/CloseAppButton/CloseAppButton.tsx":
-/*!****************************************************************************!*\
-  !*** ./extension/app/components/buttons/CloseAppButton/CloseAppButton.tsx ***!
-  \****************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CloseAppButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const StaticButton_1 = __webpack_require__(/*! ../StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
-const CrossIcon_1 = __webpack_require__(/*! ../../atoms/icons/CrossIcon/CrossIcon */ "./extension/app/components/atoms/icons/CrossIcon/CrossIcon.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/buttons/CloseAppButton/styles.scss");
-const CloseAppButton = () => {
-    const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "close-app-button", onClick: () => {
-            appStore.isExtensionOpen = false;
-        } },
-        react_1.default.createElement(CrossIcon_1.CrossIcon, null)));
-};
-exports.CloseAppButton = CloseAppButton;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/buttons/FaqButton/FaqButton.tsx":
-/*!******************************************************************!*\
-  !*** ./extension/app/components/buttons/FaqButton/FaqButton.tsx ***!
-  \******************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FaqButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const StaticButton_1 = __webpack_require__(/*! ../StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
-const RoundedQuestionMarkIcon_1 = __webpack_require__(/*! ../../atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon */ "./extension/app/components/atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/buttons/FaqButton/styles.scss");
-const FaqButton = () => {
-    const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "faq-button", onClick: () => {
-            appStore.view = 'faq';
-        } },
-        react_1.default.createElement(RoundedQuestionMarkIcon_1.RoundedQuestionMarkIcon, null)));
-};
-exports.FaqButton = FaqButton;
 
 
 /***/ }),
@@ -53479,15 +53226,19 @@ exports.AppCollapsible = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const Collapsible_1 = __webpack_require__(/*! ../../atoms/Collapsible/Collapsible */ "./extension/app/components/atoms/Collapsible/Collapsible.tsx");
 const SmallArrowIcon_1 = __webpack_require__(/*! ../../atoms/icons/SmallArrowIcon/SmallArrowIcon */ "./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/collapsibles/AppCollapsible/styles.scss");
 const AppCollapsible = (_a) => {
-    var { className, header, children, group } = _a, restProps = __rest(_a, ["className", "header", "children", "group"]);
-    return (react_1.default.createElement(Collapsible_1.Collapsible, Object.assign({ header: react_1.default.createElement(react_1.default.Fragment, null,
+    var { className = '', header, children, group } = _a, restProps = __rest(_a, ["className", "header", "children", "group"]);
+    return (react_1.default.createElement(Collapsible_1.Collapsible, Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'app-collapsible',
+            className,
+        ]), header: react_1.default.createElement(react_1.default.Fragment, null,
             header,
             react_1.default.createElement("div", { className: "app-collapsible-header-group" },
                 group,
                 react_1.default.createElement("span", { className: "icon-wrapper" },
-                    react_1.default.createElement(SmallArrowIcon_1.SmallArrowIcon, null)))), className: className }, restProps), children));
+                    react_1.default.createElement(SmallArrowIcon_1.SmallArrowIcon, null)))) }, restProps), children));
 };
 exports.AppCollapsible = AppCollapsible;
 
@@ -53622,181 +53373,39 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
 
 /***/ }),
 
-/***/ "./extension/app/components/faq/views/FaqContentView/FaqContentView.tsx":
-/*!******************************************************************************!*\
-  !*** ./extension/app/components/faq/views/FaqContentView/FaqContentView.tsx ***!
-  \******************************************************************************/
+/***/ "./extension/app/components/headers/AppHeader/AppHeader.tsx":
+/*!******************************************************************!*\
+  !*** ./extension/app/components/headers/AppHeader/AppHeader.tsx ***!
+  \******************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FaqContentView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const Spacer_1 = __webpack_require__(/*! ../../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const AppCollapsible_1 = __webpack_require__(/*! ../../../collapsibles/AppCollapsible/AppCollapsible */ "./extension/app/components/collapsibles/AppCollapsible/AppCollapsible.tsx");
-const Link_1 = __webpack_require__(/*! ../../../Link/Link */ "./extension/app/components/Link/Link.tsx");
-const List_1 = __webpack_require__(/*! ../../../atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
-const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/faq/views/FaqContentView/styles.scss");
-const FaqContentView = () => {
-    const items = (0, react_1.useMemo)(() => {
-        return [
-            {
-                title: 'What security platforms are supported?',
-                content: 'Currently, the extension works with Splunk, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
-            },
-            {
-                title: 'How can I give feedback or get help?',
-                content: [
-                    'If you have any questions, would like to give feedback, or need help, contact us at ',
-                    react_1.default.createElement(Link_1.Link, { key: "email", href: "mailto:support@socprime.com" }, "support@socprime.com"),
-                ],
-            },
-            {
-                title: 'How do you handle my data?',
-                content: 'The Prime Hunt browser extension does not send any data outside your laptop/browser. It works only with the data that is on the page of your browser.',
-            },
-            {
-                title: 'Can I add custom fields to the results?',
-                content: 'Yes, you can add any fields to the results in the extension. To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field',
-            },
-            {
-                title: 'Can I customize Search At integrations?',
-                content: (react_1.default.createElement("div", null,
-                    "Yes, you can. Set a checkmark next to a result to show the bulk actions menu and select Search At > Search Settings. In this menu you can:",
-                    react_1.default.createElement(List_1.List, { items: [
-                            {
-                                id: '1',
-                                content: 'Customize the name and URL for any existing integration',
-                            },
-                            {
-                                id: '2',
-                                content: (react_1.default.createElement("div", null,
-                                    "Define behavior for opening multiple results:",
-                                    react_1.default.createElement(List_1.List, { items: [
-                                            {
-                                                id: '1',
-                                                content: '$VALUE$: each result is opened in a separate new tab',
-                                            },
-                                            {
-                                                id: '2',
-                                                content: '$VALUES$: all results are opened in a single new tab',
-                                            },
-                                        ] }))),
-                            },
-                            {
-                                id: '3',
-                                content: 'Replace the HOSTNAME:PORT placeholder in the OpenCTI integration URL with the hostname and port of your account to use the OpenCTI integration',
-                            },
-                            {
-                                id: '4',
-                                content: 'Add a new integration or remove an existing one',
-                            },
-                        ] }))),
-            },
-            {
-                title: 'Can I reset the extension position to default?',
-                content: 'Yes, you should remove "the-prime-hunt--extension--position" key in your browser\'s local storage and restart the browser page',
-            },
-            {
-                title: 'Can I reset the watchers fields list to default?',
-                content: 'Yes, you should remove "the-prime-hunt--extension--watchers" key in your browser\'s local storage and restart the browser page',
-            },
-        ];
-    }, []);
-    return (react_1.default.createElement(simplebar_react_1.default, { className: "faq-content-view" }, items.map(({ content, title }) => {
-        return (react_1.default.createElement(AppCollapsible_1.AppCollapsible, { header: title, key: title },
-            react_1.default.createElement("div", null,
-                react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
-                content,
-                react_1.default.createElement(Spacer_1.Spacer, { height: 14 }))));
-    })));
-};
-exports.FaqContentView = FaqContentView;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/faq/views/FaqFooterView/FaqFooterView.tsx":
-/*!****************************************************************************!*\
-  !*** ./extension/app/components/faq/views/FaqFooterView/FaqFooterView.tsx ***!
-  \****************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FaqFooterView = void 0;
+exports.AppHeader = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const BigStaticButton_1 = __webpack_require__(/*! ../../../buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
-const stores_1 = __webpack_require__(/*! ../../../../stores */ "./extension/app/stores/index.ts");
-const Spacer_1 = __webpack_require__(/*! ../../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const FaqFooterView = () => {
-    const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 32 }),
-        react_1.default.createElement(BigStaticButton_1.BigStaticButton, { onClick: () => {
-                appStore.view = 'resources';
-            } }, "Close")));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const Header_1 = __webpack_require__(/*! ../../atoms/Header/Header */ "./extension/app/components/atoms/Header/Header.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/headers/AppHeader/styles.scss");
+const AppHeader = (_a) => {
+    var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
+    return (react_1.default.createElement(Header_1.Header, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-header', className]) }, restProps), children));
 };
-exports.FaqFooterView = FaqFooterView;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/faq/views/FaqHeaderView/FaqHeaderView.tsx":
-/*!****************************************************************************!*\
-  !*** ./extension/app/components/faq/views/FaqHeaderView/FaqHeaderView.tsx ***!
-  \****************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FaqHeaderView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const Header_1 = __webpack_require__(/*! ../../../Header/Header */ "./extension/app/components/Header/Header.tsx");
-const Spacer_1 = __webpack_require__(/*! ../../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const FaqHeaderView = () => {
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
-        react_1.default.createElement(Header_1.Header, null, "FAQ"),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 8 })));
-};
-exports.FaqHeaderView = FaqHeaderView;
+exports.AppHeader = AppHeader;
 
 
 /***/ }),
@@ -53939,14 +53548,37 @@ exports.SuccessMinusIcon = SuccessMinusIcon;
 
 /***/ }),
 
-/***/ "./extension/app/components/inputs/AppInput/AppInput.tsx":
-/*!***************************************************************!*\
-  !*** ./extension/app/components/inputs/AppInput/AppInput.tsx ***!
-  \***************************************************************/
+/***/ "./extension/app/components/inputs/AppControlInput/AppControlInput.tsx":
+/*!*****************************************************************************!*\
+  !*** ./extension/app/components/inputs/AppControlInput/AppControlInput.tsx ***!
+  \*****************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -53958,20 +53590,75 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppControlInput = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const ControlInput_1 = __webpack_require__(/*! ../../atoms/ControlInput/ControlInput */ "./extension/app/components/atoms/ControlInput/ControlInput.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/AppControlInput/styles.scss");
+exports.AppControlInput = (0, react_1.forwardRef)((_a, ref) => {
+    var { className = '' } = _a, restProps = __rest(_a, ["className"]);
+    return (react_1.default.createElement(ControlInput_1.ControlInput, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
+            'app-control-input',
+            className,
+        ]) }, restProps)));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/inputs/AppInput/AppInput.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/components/inputs/AppInput/AppInput.tsx ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppInput = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const Input_1 = __webpack_require__(/*! ../../atoms/Input/Input */ "./extension/app/components/atoms/Input/Input.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/AppInput/styles.scss");
-const AppInput = (_a) => {
+exports.AppInput = (0, react_1.forwardRef)((_a, ref) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement(Input_1.Input, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-input', className]) }, restProps)));
-};
-exports.AppInput = AppInput;
+    return (react_1.default.createElement(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['app-input', className]) }, restProps)));
+});
 
 
 /***/ }),
@@ -54070,52 +53757,10 @@ exports.ValidationInput = ValidationInput;
 
 /***/ }),
 
-/***/ "./extension/app/components/integrations/Integration/Integration.tsx":
-/*!***************************************************************************!*\
-  !*** ./extension/app/components/integrations/Integration/Integration.tsx ***!
-  \***************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Integration = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const IntegrationInput_1 = __webpack_require__(/*! ../IntegrationInput/IntegrationInput */ "./extension/app/components/integrations/IntegrationInput/IntegrationInput.tsx");
-const Spacer_1 = __webpack_require__(/*! ../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const WasteBasketIcon_1 = __webpack_require__(/*! ../../atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/integrations/Integration/styles.scss");
-const Integration = ({ id, name, url, }) => {
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement("div", { className: "integration" },
-        react_1.default.createElement(IntegrationInput_1.IntegrationInput, { label: [
-                'Display Name',
-                react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { key: id, onClick: () => {
-                        integrationsStore.integrations =
-                            integrationsStore.integrations.filter(i => i.id !== id);
-                    } }),
-            ], value: name, placeholder: "ex Open CTI", onChange: value => {
-                integrationsStore.integrations.find(i => i.id === id).name = value;
-            } }),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
-        react_1.default.createElement(IntegrationInput_1.IntegrationInput, { label: "Integration URL", value: url, placeholder: "ex https://my-host/search=$VALUE$", onChange: value => {
-                integrationsStore.integrations.find(i => i.id === id).url = value;
-            } }),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 16 })));
-};
-exports.Integration = Integration;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/IntegrationInput/IntegrationInput.tsx":
-/*!*************************************************************************************!*\
-  !*** ./extension/app/components/integrations/IntegrationInput/IntegrationInput.tsx ***!
-  \*************************************************************************************/
+/***/ "./extension/app/components/links/AppLink/AppLink.tsx":
+/*!************************************************************!*\
+  !*** ./extension/app/components/links/AppLink/AppLink.tsx ***!
+  \************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -54135,1342 +53780,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationInput = void 0;
+exports.AppLink = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const validators_1 = __webpack_require__(/*! ../../../../../common/validators */ "./common/validators.ts");
-const ValidationInput_1 = __webpack_require__(/*! ../../inputs/ValidationInput/ValidationInput */ "./extension/app/components/inputs/ValidationInput/ValidationInput.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/integrations/IntegrationInput/styles.scss");
-const validateMessage = 'This field is required';
-const IntegrationInput = (_a) => {
-    var { label, value, onChange } = _a, restProps = __rest(_a, ["label", "value", "onChange"]);
-    return (react_1.default.createElement(ValidationInput_1.ValidationInput, Object.assign({ label: label, className: "integration-input", validators: [
-            (v) => (0, validators_1.isNotEmptyString)(v, validateMessage),
-        ], value: value, onChange: onChange }, restProps)));
-};
-exports.IntegrationInput = IntegrationInput;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/integrations.ts":
-/*!***************************************************************!*\
-  !*** ./extension/app/components/integrations/integrations.ts ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.integrations = void 0;
-exports.integrations = [
-    {
-        id: 'virus-total',
-        name: 'VirusTotal',
-        url: 'https://www.virustotal.com/gui/search/$VALUE$',
-    },
-    {
-        id: 'virus-total-enterprise',
-        name: 'VirusTotal Enterprise',
-        url: 'https://www.virustotal.com/gui/search/$VALUES$',
-    },
-    {
-        id: 'anomali',
-        name: 'Anomali',
-        url: 'https://ui.threatstream.com/search?status=active&multiSearchResults=true&value__re=.*$VALUE$.*',
-    },
-    {
-        id: 'open-cti',
-        name: 'OpenCTI',
-        url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
-    },
-    {
-        id: '$echo-trail',
-        name: 'EchoTrail',
-        url: 'https://www.echotrail.io/insights/search/$VALUE$',
-    },
-    {
-        id: '$ultimate-windows-security',
-        name: 'Ultimate Windows Security',
-        url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
-    },
-];
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/stores/IntegrationsStore.ts":
-/*!***************************************************************************!*\
-  !*** ./extension/app/components/integrations/stores/IntegrationsStore.ts ***!
-  \***************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationsStore = void 0;
-const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
-const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
-const local_storage_1 = __webpack_require__(/*! ../../../../common/local-storage */ "./extension/common/local-storage.ts");
-class IntegrationsStore {
-    constructor() {
-        this.integrations = [];
-        this.set();
-        (0, mobx_1.makeObservable)(this);
-    }
-    get emptyIntegration() {
-        return this.integrations.some(i => !i.name || !i.url);
-    }
-    set() {
-        this.integrations = (0, local_storage_1.getIntegrations)();
-    }
-    save() {
-        (0, local_storage_1.setIntegrations)(this.integrations);
-    }
-    restoreIntegrations() {
-        this.integrations = (0, local_storage_1.restoreIntegrations)();
-    }
-    getReadyUrls(values, url) {
-        const formatValue = (v) => `\\$${v}\\$`;
-        if (url.indexOf('$VALUES$') > -1) {
-            return [
-                encodeURI((0, helpers_1.formatString)(url, { VALUES: values.join(',') }, formatValue)),
-            ];
-        }
-        return values.map(value => {
-            return encodeURI((0, helpers_1.formatString)(url, { VALUE: value }, formatValue));
-        });
-    }
-}
-__decorate([
-    mobx_1.observable
-], IntegrationsStore.prototype, "integrations", void 0);
-__decorate([
-    mobx_1.computed
-], IntegrationsStore.prototype, "emptyIntegration", null);
-exports.IntegrationsStore = IntegrationsStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/views/IntegrationContentView/IntegrationContentView.tsx":
-/*!*******************************************************************************************************!*\
-  !*** ./extension/app/components/integrations/views/IntegrationContentView/IntegrationContentView.tsx ***!
-  \*******************************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationContentView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const stores_1 = __webpack_require__(/*! ../../../../stores */ "./extension/app/stores/index.ts");
-const Integration_1 = __webpack_require__(/*! ../../Integration/Integration */ "./extension/app/components/integrations/Integration/Integration.tsx");
-const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/integrations/views/IntegrationContentView/styles.scss");
-exports.IntegrationContentView = (0, mobx_react_lite_1.observer)(() => {
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement(simplebar_react_1.default, { className: "integration-content-view" }, integrationsStore.integrations.map(({ url, name, id }) => {
-        return (react_1.default.createElement(Integration_1.Integration, { key: id, name: name, url: url, id: id }));
-    })));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx":
-/*!*****************************************************************************************************!*\
-  !*** ./extension/app/components/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx ***!
-  \*****************************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationFooterView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const PlusIcon_1 = __webpack_require__(/*! ../../../atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
-const CheckIcon_1 = __webpack_require__(/*! ../../../atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
-const Spacer_1 = __webpack_require__(/*! ../../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const stores_1 = __webpack_require__(/*! ../../../../stores */ "./extension/app/stores/index.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../../../common/helpers */ "./common/helpers.ts");
-const BigStaticButton_1 = __webpack_require__(/*! ../../../buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/integrations/views/IntegrationFooterView/styles.scss");
-exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
-    const appStore = (0, stores_1.useAppStore)();
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 20 }),
-        react_1.default.createElement("div", { className: "integration-footer-view" },
-            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null), onClick: () => {
-                    integrationsStore.integrations.push({ id: (0, helpers_1.uuid)(), url: '', name: '' });
-                    setTimeout(() => {
-                        appStore.rootElement
-                            .querySelector('.integration:last-child')
-                            .scrollIntoView({
-                            block: 'end',
-                            behavior: 'smooth',
-                        });
-                    }, 0);
-                } }, "Add New Integration"),
-            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(CheckIcon_1.CheckIcon, null), className: (0, common_helpers_1.createClassName)([
-                    integrationsStore.emptyIntegration ? 'error' : 'success-btn',
-                ]), onClick: () => {
-                    if (integrationsStore.emptyIntegration) {
-                        const input = appStore.rootElement
-                            .querySelector('.validation-input.empty');
-                        input.scrollIntoView({ behavior: 'smooth' });
-                        setTimeout(() => {
-                            input.focus();
-                            input.blur();
-                        }, 300);
-                        return;
-                    }
-                    integrationsStore.save();
-                    appStore.view = 'resources';
-                } }, "Save & Close"))));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx":
-/*!*****************************************************************************************************!*\
-  !*** ./extension/app/components/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx ***!
-  \*****************************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationHeaderView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const Spacer_1 = __webpack_require__(/*! ../../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const BigStaticButton_1 = __webpack_require__(/*! ../../../buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
-const RefreshIcon_1 = __webpack_require__(/*! ../../../atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
-const stores_1 = __webpack_require__(/*! ../../../../stores */ "./extension/app/stores/index.ts");
-const Header_1 = __webpack_require__(/*! ../../../Header/Header */ "./extension/app/components/Header/Header.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/integrations/views/IntegrationHeaderView/styles.scss");
-const IntegrationHeaderView = () => {
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement("div", { className: "integration-header-view" },
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
-        react_1.default.createElement("div", { className: "group" },
-            react_1.default.createElement(Header_1.Header, null, "Integration Settings"),
-            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(RefreshIcon_1.RefreshIcon, null), onClick: () => {
-                    integrationsStore.restoreIntegrations();
-                } }, "Restore Defaults")),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 })));
-};
-exports.IntegrationHeaderView = IntegrationHeaderView;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/not-found/views/NotFoundContentView/NotFoundContentView.tsx":
-/*!**********************************************************************************************!*\
-  !*** ./extension/app/components/not-found/views/NotFoundContentView/NotFoundContentView.tsx ***!
-  \**********************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.NotFoundContentView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/not-found/views/NotFoundContentView/styles.scss");
-const NotFoundContentView = () => {
-    return (react_1.default.createElement("div", { className: "not-found-content-view" },
-        react_1.default.createElement("div", null,
-            "No supported platform detected.",
-            react_1.default.createElement("br", null),
-            "You can use this extension with",
-            react_1.default.createElement("br", null),
-            "Splunk, Microsoft Sentinel",
-            react_1.default.createElement("br", null),
-            "Microsoft Defender for Endpoint.")));
-};
-exports.NotFoundContentView = NotFoundContentView;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/BulkResourcesPanel/BulkResourcesPanel.tsx":
-/*!**************************************************************************************!*\
-  !*** ./extension/app/components/resources/BulkResourcesPanel/BulkResourcesPanel.tsx ***!
-  \**************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.BulkResourcesPanel = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const StaticButton_1 = __webpack_require__(/*! ../../buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
-const PlusIcon_1 = __webpack_require__(/*! ../../atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
-const MinusIcon_1 = __webpack_require__(/*! ../../atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
-const SeeDocumentIcon_1 = __webpack_require__(/*! ../../atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
-const MagnifyingIcon_1 = __webpack_require__(/*! ../../atoms/icons/MagnifyingIcon/MagnifyingIcon */ "./extension/app/components/atoms/icons/MagnifyingIcon/MagnifyingIcon.tsx");
-const List_1 = __webpack_require__(/*! ../../atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
-const AppDropdown_1 = __webpack_require__(/*! ../../dropdowns/AppDropdown/AppDropdown */ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx");
-const Spacer_1 = __webpack_require__(/*! ../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const GearIcon_1 = __webpack_require__(/*! ../../atoms/icons/GearIcon/GearIcon */ "./extension/app/components/atoms/icons/GearIcon/GearIcon.tsx");
-const resources_hooks_1 = __webpack_require__(/*! ../resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
-const AppTooltip_1 = __webpack_require__(/*! ../../tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/BulkResourcesPanel/styles.scss");
-const MAX_COUNT_SELECTED = 30;
-exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
-    const selectionStore = (0, resources_hooks_1.useResourceSelection)();
-    const platformStore = (0, stores_1.usePlatformStore)();
-    const appStore = (0, stores_1.useAppStore)();
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    const { normalisedSelected, countSelected, uniqueSelected } = selectionStore;
-    const items = (0, react_1.useMemo)(() => {
-        const result = [];
-        integrationsStore.integrations.forEach(({ name, id, url }) => {
-            result.push({
-                id,
-                content: name,
-                onClick: () => {
-                    integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
-                        window.open(u, '_blank');
-                    });
-                },
-            });
-        });
-        result.push({
-            id: 'search-settings',
-            content: [
-                react_1.default.createElement(GearIcon_1.GearIcon, { key: 1 }),
-                'Search Settings',
-            ],
-            onClick: () => {
-                appStore.view = 'integrations';
-            },
-        });
-        return result;
-    }, [appStore, integrationsStore, uniqueSelected]);
-    const onCopyIconClick = (0, react_1.useCallback)(() => {
-        setTimeout(() => {
-            (0, common_helpers_1.copyToClipboard)(`where ${platformStore.buildQueryParts('include', normalisedSelected)}`);
-        }, 300);
-    }, [platformStore, normalisedSelected]);
-    const onActionsClick = (0, react_1.useCallback)((type) => {
-        platformStore.modifyQuery(type, normalisedSelected);
-    }, [normalisedSelected, platformStore]);
-    const disabled = countSelected < 1;
-    const getCountSelected = (0, react_1.useCallback)((count) => {
-        if (count <= MAX_COUNT_SELECTED) {
-            return count;
-        }
-        return (react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "max-selected-tooltip", content: react_1.default.createElement(react_1.default.Fragment, null,
-                "The total number of selected items can\u2019t be more than",
-                react_1.default.createElement("span", { className: "strong" },
-                    " ",
-                    MAX_COUNT_SELECTED,
-                    " "),
-                "to avoid overloading your browser") }, count));
-    }, []);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-            'bulk-resources-panel',
-            disabled ? 'empty' : '',
-        ]) },
-        react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
-        react_1.default.createElement("div", { className: "count-selected" },
-            react_1.default.createElement("span", { className: "strong" },
-                "\u2014 ",
-                getCountSelected(countSelected),
-                " item(s)"),
-            "selected"),
-        react_1.default.createElement("div", { className: "buttons-area" },
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, animatedIcon: true, onClick: onCopyIconClick, icon: react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) }, "Copy"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('include'), icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null) }, "Include"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('exclude'), icon: react_1.default.createElement(MinusIcon_1.MinusIcon, null) }, "Exclude"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('show all'), icon: react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, null) }, "Show All Events"),
-            react_1.default.createElement(AppDropdown_1.AppDropdown, { disabled: disabled, opener: react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, icon: react_1.default.createElement(MagnifyingIcon_1.MagnifyingIcon, null) }, "Search at"), classNameMenu: "dropdown-search-sites-menu" },
-                react_1.default.createElement(List_1.List, { className: "search-sites-list", items: items })))));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/CollapsibleResource/CollapsibleResource.tsx":
-/*!****************************************************************************************!*\
-  !*** ./extension/app/components/resources/CollapsibleResource/CollapsibleResource.tsx ***!
-  \****************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+const Link_1 = __webpack_require__(/*! ../../atoms/Link/Link */ "./extension/app/components/atoms/Link/Link.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/links/AppLink/styles.scss");
+const AppLink = (_a) => {
+    var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
+    return (react_1.default.createElement(Link_1.Link, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-link', className]) }, restProps), children));
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CollapsibleResource = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const ResourceList_1 = __webpack_require__(/*! ../ResourceList/ResourceList */ "./extension/app/components/resources/ResourceList/ResourceList.tsx");
-const AppCollapsible_1 = __webpack_require__(/*! ../../collapsibles/AppCollapsible/AppCollapsible */ "./extension/app/components/collapsibles/AppCollapsible/AppCollapsible.tsx");
-const ResourceFieldName_1 = __webpack_require__(/*! ../ResourceFieldName/ResourceFieldName */ "./extension/app/components/resources/ResourceFieldName/ResourceFieldName.tsx");
-const NestedItemsCheckbox_1 = __webpack_require__(/*! ../../checkboxes/NestedItemsCheckbox/NestedItemsCheckbox */ "./extension/app/components/checkboxes/NestedItemsCheckbox/NestedItemsCheckbox.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const resources_hooks_1 = __webpack_require__(/*! ../resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
-const WasteBasketIcon_1 = __webpack_require__(/*! ../../atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
-const types_app_common_1 = __webpack_require__(/*! ../../../types/types-app-common */ "./extension/app/types/types-app-common.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/CollapsibleResource/styles.scss");
-const CollapsibleResource = ({ icon, fieldName, values, selectedValues, }) => {
-    const appStore = (0, stores_1.useAppStore)();
-    const resourceStore = (0, stores_1.useResourceStore)();
-    const selectionStore = (0, resources_hooks_1.useResourceSelection)();
-    return (react_1.default.createElement(AppCollapsible_1.AppCollapsible, { className: "collapsible-resource", header: react_1.default.createElement(NestedItemsCheckbox_1.NestedItemsCheckbox, { content: react_1.default.createElement(ResourceFieldName_1.ResourceFieldName, { icon: icon, fieldName: fieldName, count: values.length }), state: selectedValues.length === values.length
-                ? 'all'
-                : selectedValues.length > 0
-                    ? 'some'
-                    : 'nothing', onClick: isChecked => {
-                if (!isChecked) {
-                    selectionStore.unselectAll();
-                }
-                else {
-                    resourceStore.getResources(fieldName).forEach(v => {
-                        selectionStore.select(v, fieldName);
-                    });
-                }
-            } }), group: react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: (e) => {
-                var _a, _b;
-                (_a = e === null || e === void 0 ? void 0 : e.preventDefault) === null || _a === void 0 ? void 0 : _a.call(e);
-                (_b = e === null || e === void 0 ? void 0 : e.stopPropagation) === null || _b === void 0 ? void 0 : _b.call(e);
-                appStore.startLoading(types_app_common_1.LoadingKey.fieldRemoving);
-                setTimeout(() => {
-                    resourceStore.removeField(fieldName);
-                    appStore.stopLoading(types_app_common_1.LoadingKey.fieldRemoving);
-                }, 0);
-            } }) },
-        react_1.default.createElement(ResourceList_1.ResourceList, { items: values, selectedItems: selectedValues, fieldName: fieldName })));
-};
-exports.CollapsibleResource = CollapsibleResource;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/CollapsibleResources/CollapsibleResources.tsx":
-/*!******************************************************************************************!*\
-  !*** ./extension/app/components/resources/CollapsibleResources/CollapsibleResources.tsx ***!
-  \******************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CollapsibleResources = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const CollapsibleResource_1 = __webpack_require__(/*! ../CollapsibleResource/CollapsibleResource */ "./extension/app/components/resources/CollapsibleResource/CollapsibleResource.tsx");
-const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const resources_hooks_1 = __webpack_require__(/*! ../resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
-exports.CollapsibleResources = (0, mobx_react_lite_1.observer)(({ className = '', resource, icon, }) => {
-    const [fieldNames, fieldValues] = (0, react_1.useMemo)(() => {
-        const fv = new Map();
-        const fn = Object.keys(resource || {});
-        fn.forEach(name => {
-            fv.set(name, Array.from(resource[name]));
-        });
-        return [fn, fv];
-    }, [resource]);
-    const selectionStore = (0, resources_hooks_1.useResourceSelection)();
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible-resources', className]) }, fieldNames.map(fieldName => {
-        return (react_1.default.createElement(CollapsibleResource_1.CollapsibleResource, { key: fieldName, fieldName: fieldName, icon: icon, values: fieldValues.get(fieldName), selectedValues: Array.from(selectionStore.selected.get(fieldName) || []) }));
-    })));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/PlatformResources/PlatformResources.tsx":
-/*!************************************************************************************!*\
-  !*** ./extension/app/components/resources/PlatformResources/PlatformResources.tsx ***!
-  \************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlatformResources = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const CollapsibleResources_1 = __webpack_require__(/*! ../CollapsibleResources/CollapsibleResources */ "./extension/app/components/resources/CollapsibleResources/CollapsibleResources.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const UserIcon_1 = __webpack_require__(/*! ../../atoms/icons/UserIcon/UserIcon */ "./extension/app/components/atoms/icons/UserIcon/UserIcon.tsx");
-const AssetIcon_1 = __webpack_require__(/*! ../../atoms/icons/AssetIcon/AssetIcon */ "./extension/app/components/atoms/icons/AssetIcon/AssetIcon.tsx");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/PlatformResources/styles.scss");
-exports.PlatformResources = (0, mobx_react_lite_1.observer)(() => {
-    const { accounts, assets, activeTab, countAllResources } = (0, stores_1.useResourceStore)();
-    return (react_1.default.createElement("div", { className: "platform-resources" }, countAllResources > 0 && (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(CollapsibleResources_1.CollapsibleResources, { resource: accounts, icon: react_1.default.createElement(UserIcon_1.UserIcon, null), className: activeTab === 'accounts' ? '' : 'invisible' }),
-        react_1.default.createElement(CollapsibleResources_1.CollapsibleResources, { resource: assets, icon: react_1.default.createElement(AssetIcon_1.AssetIcon, null), className: activeTab === 'assets' ? '' : 'invisible' })))));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/ResourceFieldName/ResourceFieldName.tsx":
-/*!************************************************************************************!*\
-  !*** ./extension/app/components/resources/ResourceFieldName/ResourceFieldName.tsx ***!
-  \************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourceFieldName = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/ResourceFieldName/styles.scss");
-const ResourceFieldName = ({ icon, fieldName, count }) => {
-    return (react_1.default.createElement("div", { className: "resource-field-name" },
-        icon,
-        react_1.default.createElement("span", { className: "field-name strong" }, fieldName),
-        "(",
-        count,
-        ")"));
-};
-exports.ResourceFieldName = ResourceFieldName;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/ResourceList/ResourceList.tsx":
-/*!**************************************************************************!*\
-  !*** ./extension/app/components/resources/ResourceList/ResourceList.tsx ***!
-  \**************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourceList = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const List_1 = __webpack_require__(/*! ../../atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
-const ResourceListItem_1 = __webpack_require__(/*! ../ResourceListItem/ResourceListItem */ "./extension/app/components/resources/ResourceListItem/ResourceListItem.tsx");
-const SuccessCheckbox_1 = __webpack_require__(/*! ../../checkboxes/SucessCheckbox/SuccessCheckbox */ "./extension/app/components/checkboxes/SucessCheckbox/SuccessCheckbox.tsx");
-const resources_hooks_1 = __webpack_require__(/*! ../resources-hooks */ "./extension/app/components/resources/resources-hooks.ts");
-const Spacer_1 = __webpack_require__(/*! ../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/ResourceList/styles.scss");
-exports.ResourceList = (0, react_1.memo)(({ fieldName, items, selectedItems, }) => {
-    const selectionStore = (0, resources_hooks_1.useResourceSelection)();
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(List_1.List, { className: "resource-list", items: items.map(item => {
-                return {
-                    id: item,
-                    content: (react_1.default.createElement(ResourceListItem_1.ResourceListItem, { resourceName: item, fieldName: fieldName },
-                        react_1.default.createElement(SuccessCheckbox_1.SuccessCheckbox, { content: item, title: item, checked: selectedItems.includes(item), onStateChanged: isChecked => {
-                                if (isChecked) {
-                                    selectionStore.select(item, fieldName);
-                                }
-                                else {
-                                    selectionStore.unselect(item, fieldName);
-                                }
-                            } }))),
-                };
-            }) }),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 12 })));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/ResourceListItem/ResourceListItem.tsx":
-/*!**********************************************************************************!*\
-  !*** ./extension/app/components/resources/ResourceListItem/ResourceListItem.tsx ***!
-  \**********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourceListItem = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const PlusIcon_1 = __webpack_require__(/*! ../../atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
-const MinusIcon_1 = __webpack_require__(/*! ../../atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
-const SeeDocumentIcon_1 = __webpack_require__(/*! ../../atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
-const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/ResourceListItem/styles.scss");
-exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceName, }) => {
-    const platformStore = (0, stores_1.usePlatformStore)();
-    const onActionClick = (0, react_1.useCallback)((actionType) => __awaiter(void 0, void 0, void 0, function* () {
-        if (actionType === 'copy') {
-            setTimeout(() => {
-                (0, common_helpers_1.copyToClipboard)(`where ${platformStore.buildQueryParts('include', { [fieldName]: [resourceName] })}`);
-            }, 300);
-            return;
-        }
-        platformStore.modifyQuery(actionType, { [fieldName]: [resourceName] });
-        return;
-    }), [platformStore, fieldName, resourceName]);
-    return (react_1.default.createElement("div", { className: "resource-list-item" },
-        react_1.default.createElement("div", { className: "resource-list-item-wrapper" },
-            children,
-            react_1.default.createElement("div", { className: "action-menu" },
-                react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }),
-                react_1.default.createElement(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }),
-                react_1.default.createElement(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }),
-                react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') })))));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/TabsPlatformResources/TabsPlatformResources.tsx":
-/*!********************************************************************************************!*\
-  !*** ./extension/app/components/resources/TabsPlatformResources/TabsPlatformResources.tsx ***!
-  \********************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TabsPlatformResources = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const TabsPanel_1 = __webpack_require__(/*! ../../atoms/TabsPanel/TabsPanel */ "./extension/app/components/atoms/TabsPanel/TabsPanel.tsx");
-const HoverButton_1 = __webpack_require__(/*! ../../buttons/HoverButton/HoverButton */ "./extension/app/components/buttons/HoverButton/HoverButton.tsx");
-const WindowIcon_1 = __webpack_require__(/*! ../../atoms/icons/WindowIcon/WindowIcon */ "./extension/app/components/atoms/icons/WindowIcon/WindowIcon.tsx");
-const UserIcon_1 = __webpack_require__(/*! ../../atoms/icons/UserIcon/UserIcon */ "./extension/app/components/atoms/icons/UserIcon/UserIcon.tsx");
-const AssetIcon_1 = __webpack_require__(/*! ../../atoms/icons/AssetIcon/AssetIcon */ "./extension/app/components/atoms/icons/AssetIcon/AssetIcon.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/TabsPlatformResources/styles.scss");
-exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) => {
-    const resourceStore = (0, stores_1.useResourceStore)();
-    const { assets, accounts, activeTab } = resourceStore;
-    const countAccounts = (0, react_1.useMemo)(() => {
-        return Object.keys(accounts).reduce((count, fieldName) => count += accounts[fieldName].size, 0);
-    }, [accounts]);
-    const countAssets = (0, react_1.useMemo)(() => {
-        return Object.keys(assets).reduce((count, fieldName) => count += assets[fieldName].size, 0);
-    }, [assets]);
-    const getTab = (0, react_1.useCallback)((id, size, isHovered = false) => {
-        let icon;
-        let name;
-        switch (id) {
-            case 'services': {
-                icon = react_1.default.createElement(WindowIcon_1.WindowIcon, null);
-                name = 'Services';
-                break;
-            }
-            case 'accounts': {
-                icon = react_1.default.createElement(UserIcon_1.UserIcon, null);
-                name = 'Accounts';
-                break;
-            }
-            case 'assets': {
-                icon = react_1.default.createElement(AssetIcon_1.AssetIcon, null);
-                name = 'Assets';
-                break;
-            }
-        }
-        return {
-            component: (react_1.default.createElement(HoverButton_1.HoverButton, { icon: icon, hovered: isHovered },
-                name,
-                " ",
-                react_1.default.createElement("span", { className: "resources-count strong" }, size))),
-            id: id,
-        };
-    }, []);
-    const accountsTab = (0, react_1.useMemo)(() => {
-        return getTab('accounts', countAccounts, activeTab === 'accounts');
-    }, [countAccounts, activeTab, getTab]);
-    const assetsTab = (0, react_1.useMemo)(() => {
-        return getTab('assets', countAssets, activeTab === 'assets');
-    }, [activeTab, countAssets, getTab]);
-    return (react_1.default.createElement(TabsPanel_1.TabsPanel, { className: "tabs-platform-resources", tabs: [accountsTab, assetsTab], onActiveTabChanged: id => {
-            resourceStore.activeTab = id;
-        }, defaultActiveTab: activeTab }, children));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/resources-hooks.ts":
-/*!***************************************************************!*\
-  !*** ./extension/app/components/resources/resources-hooks.ts ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.useResourceSelection = void 0;
-const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const useResourceSelection = () => {
-    const { activeTab } = (0, stores_1.useResourceStore)();
-    const servicesSelection = (0, stores_1.useServicesSelectionStore)();
-    const assetsSelection = (0, stores_1.useAssetsSelectionStore)();
-    const accountsSelection = (0, stores_1.useAccountsSelectionStore)();
-    return activeTab === 'services'
-        ? servicesSelection
-        : activeTab === 'accounts'
-            ? accountsSelection
-            : assetsSelection;
-};
-exports.useResourceSelection = useResourceSelection;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/stores/AccountsSelectionStore.ts":
-/*!*****************************************************************************!*\
-  !*** ./extension/app/components/resources/stores/AccountsSelectionStore.ts ***!
-  \*****************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AccountsSelectionStore = void 0;
-const SelectionStore_1 = __webpack_require__(/*! ./SelectionStore */ "./extension/app/components/resources/stores/SelectionStore.ts");
-class AccountsSelectionStore extends SelectionStore_1.SelectionStore {
-}
-exports.AccountsSelectionStore = AccountsSelectionStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/stores/AssetsSelectionStore.ts":
-/*!***************************************************************************!*\
-  !*** ./extension/app/components/resources/stores/AssetsSelectionStore.ts ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AssetsSelectionStore = void 0;
-const SelectionStore_1 = __webpack_require__(/*! ./SelectionStore */ "./extension/app/components/resources/stores/SelectionStore.ts");
-class AssetsSelectionStore extends SelectionStore_1.SelectionStore {
-}
-exports.AssetsSelectionStore = AssetsSelectionStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/stores/PlatformStore.ts":
-/*!********************************************************************!*\
-  !*** ./extension/app/components/resources/stores/PlatformStore.ts ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlatformStore = void 0;
-const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
-const types_common_1 = __webpack_require__(/*! ../../../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
-const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
-const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
-const microsoft_defender_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers */ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts");
-const local_storage_1 = __webpack_require__(/*! ../../../../common/local-storage */ "./extension/common/local-storage.ts");
-const splunk_helpers_1 = __webpack_require__(/*! ../../../../content/platforms/splunk/splunk-helpers */ "./extension/content/platforms/splunk/splunk-helpers.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
-class PlatformStore {
-    constructor(rootStore) {
-        this.rootStore = rootStore;
-        (0, mobx_1.makeObservable)(this);
-    }
-    setPlatform(platform) {
-        if (!platform) {
-            return;
-        }
-        platform.connect();
-        this.platform = platform;
-        this.rootStore.appStore.view = 'resources';
-        this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
-        (0, content_services_1.sendMessageFromApp)({
-            id: `platform-set--${(0, helpers_1.uuid)()}`,
-            type: types_background_messages_1.MessageToBackground.BGRegisterPlatformTab,
-            payload: {
-                platformID: platform.getID(),
-            },
-        });
-        (0, content_services_1.sendMessageFromApp)({
-            id: `platform-set--${(0, helpers_1.uuid)()}`,
-            type: types_background_messages_1.MessageToBackground.BGSetWatchers,
-            payload: {
-                watchers: (0, local_storage_1.getWatchers)(platform.getID()),
-                platformID: platform.getID(),
-                action: 'add',
-            },
-        });
-    }
-    modifyQuery(modifyType, resources) {
-        (0, content_services_1.sendMessageFromApp)({
-            id: `modify-query--${(0, helpers_1.uuid)()}`,
-            type: types_background_messages_1.MessageToBackground.BGModifyQuery,
-            payload: {
-                resources,
-                modifyType,
-            },
-        });
-    }
-    buildQueryParts(modifyType, resources) {
-        var _a, _b;
-        const platformID = (_b = (_a = this.platform) === null || _a === void 0 ? void 0 : _a.getID) === null || _b === void 0 ? void 0 : _b.call(_a);
-        if (platformID === types_common_1.PlatformID.MicrosoftSentinel) {
-            return (0, microsoft_sentinel_helpers_1.buildMicrosoftSentinelQueryParts)(modifyType, resources);
-        }
-        if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
-            return (0, microsoft_defender_helpers_1.buildMicrosoftDefenderQueryParts)(modifyType, resources);
-        }
-        if (platformID === types_common_1.PlatformID.Splunk) {
-            return (0, splunk_helpers_1.buildSplunkQueryParts)(modifyType, resources);
-        }
-        return 'undefined platform';
-    }
-}
-__decorate([
-    mobx_1.observable
-], PlatformStore.prototype, "platform", void 0);
-exports.PlatformStore = PlatformStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/stores/ResourceStore.ts":
-/*!********************************************************************!*\
-  !*** ./extension/app/components/resources/stores/ResourceStore.ts ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourceStore = void 0;
-const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
-const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
-const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
-const background_platforms_helpers_1 = __webpack_require__(/*! ../../../../background/platforms/background-platforms-helpers */ "./extension/background/platforms/background-platforms-helpers.ts");
-const local_storage_1 = __webpack_require__(/*! ../../../../common/local-storage */ "./extension/common/local-storage.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
-class ResourceStore {
-    constructor(rootStore) {
-        this.activeTab = 'accounts';
-        this.services = {};
-        this.assets = {};
-        this.accounts = {};
-        this.rootStore = rootStore;
-        (0, mobx_1.makeObservable)(this);
-    }
-    addResource(resource, appendResource) {
-        const fieldNames = Object.keys(appendResource);
-        fieldNames.forEach(fieldName => {
-            const set = resource[fieldName] || new Set();
-            appendResource[fieldName].forEach(resourceName => set.add(resourceName));
-            resource[fieldName] = set;
-        });
-        return fieldNames.length ? Object.assign({}, resource) : resource;
-    }
-    get countAllResources() {
-        let result = 0;
-        Object.keys(this.services).forEach(fieldName => {
-            var _a;
-            result += ((_a = this.services[fieldName]) === null || _a === void 0 ? void 0 : _a.size) || 0;
-        });
-        Object.keys(this.assets).forEach(fieldName => {
-            var _a;
-            result += ((_a = this.assets[fieldName]) === null || _a === void 0 ? void 0 : _a.size) || 0;
-        });
-        Object.keys(this.accounts).forEach(fieldName => {
-            var _a;
-            result += ((_a = this.accounts[fieldName]) === null || _a === void 0 ? void 0 : _a.size) || 0;
-        });
-        return result;
-    }
-    addServices(services = {}) {
-        this.services = this.addResource(this.services, services);
-    }
-    addAccounts(accounts = {}) {
-        this.accounts = this.addResource(this.accounts, accounts);
-    }
-    addAssets(assets = {}) {
-        this.assets = this.addResource(this.assets, assets);
-    }
-    clearAllSelections() {
-        this.rootStore.servicesSelectionStore.unselectAll();
-        this.rootStore.accountsSelectionStore.unselectAll();
-        this.rootStore.assetsSelectionStore.unselectAll();
-    }
-    addAllData(resources) {
-        this.addAssets(resources.assets);
-        this.addAccounts(resources.accounts);
-        this.addServices(resources.services);
-    }
-    clearAllData() {
-        this.services = {};
-        this.assets = {};
-        this.accounts = {};
-        this.clearAllSelections();
-    }
-    getResources(fieldName) {
-        return Array.from(this[this.activeTab][fieldName]);
-    }
-    addField(fieldName) {
-        var _a;
-        const platformID = (_a = this.rootStore.platformStore.platform) === null || _a === void 0 ? void 0 : _a.getID();
-        (0, content_services_1.sendMessageFromApp)({
-            id: `add-field--${(0, helpers_1.uuid)()}`,
-            type: types_background_messages_1.MessageToBackground.BGSetWatchers,
-            payload: {
-                platformID,
-                action: 'add',
-                watchers: (0, local_storage_1.setWatchers)((0, background_platforms_helpers_1.addFieldToWatch)((0, local_storage_1.getWatchers)(platformID), fieldName, this.activeTab)),
-            },
-        });
-    }
-    removeField(fieldName) {
-        const resourceType = this.activeTab;
-        const selectionStore = resourceType === 'assets'
-            ? this.rootStore.assetsSelectionStore
-            : resourceType === 'services'
-                ? this.rootStore.servicesSelectionStore
-                : this.rootStore.accountsSelectionStore;
-        selectionStore.selectedFields.delete(fieldName);
-        selectionStore.selected.delete(fieldName);
-        let resource = resourceType === 'assets'
-            ? this.assets
-            : resourceType === 'services'
-                ? this.services
-                : this.accounts;
-        this[resourceType] = Object.keys(resource).reduce((r, name) => {
-            if (name !== fieldName) {
-                r[name] = resource[name];
-            }
-            return r;
-        }, {});
-        const platformID = this.rootStore.platformStore.platform.getID();
-        (0, content_services_1.sendMessageFromApp)({
-            id: `remove-field--${(0, helpers_1.uuid)()}`,
-            type: types_background_messages_1.MessageToBackground.BGSetWatchers,
-            payload: {
-                platformID,
-                action: 'remove',
-                watchers: (0, local_storage_1.setWatchers)((0, background_platforms_helpers_1.removeFieldFromWatching)((0, local_storage_1.getWatchers)(platformID), fieldName, resourceType)),
-            },
-        });
-    }
-}
-__decorate([
-    mobx_1.observable
-], ResourceStore.prototype, "activeTab", void 0);
-__decorate([
-    mobx_1.observable
-], ResourceStore.prototype, "services", void 0);
-__decorate([
-    mobx_1.observable
-], ResourceStore.prototype, "assets", void 0);
-__decorate([
-    mobx_1.observable
-], ResourceStore.prototype, "accounts", void 0);
-__decorate([
-    mobx_1.computed
-], ResourceStore.prototype, "countAllResources", null);
-exports.ResourceStore = ResourceStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/stores/SelectionStore.ts":
-/*!*********************************************************************!*\
-  !*** ./extension/app/components/resources/stores/SelectionStore.ts ***!
-  \*********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SelectionStore = void 0;
-const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
-class SelectionStore {
-    constructor() {
-        this.selected = new Map();
-        this.selectedFields = new Set();
-        (0, mobx_1.makeObservable)(this);
-    }
-    get normalisedSelected() {
-        return Array.from(this.selectedFields)
-            .reduce((result, fieldName) => {
-            result[fieldName] = Array.from(this.selected.get(fieldName));
-            return result;
-        }, {});
-    }
-    get countSelected() {
-        return Array.from(this.selectedFields)
-            .reduce((count, fieldName) => count += this.selected.get(fieldName).size, 0);
-    }
-    get uniqueSelected() {
-        return Array.from(Array.from(this.selectedFields).reduce((res, fieldName) => {
-            Array.from(this.selected.get(fieldName)).forEach(v => res.add(v));
-            return res;
-        }, new Set()));
-    }
-    select(resourceName, fieldName) {
-        const values = this.selected.get(fieldName) || new Set();
-        values.add(resourceName);
-        this.selected.set(fieldName, values);
-        this.selectedFields.add(fieldName);
-    }
-    unselect(resourceName, fieldName) {
-        const values = this.selected.get(fieldName) || new Set();
-        values.delete(resourceName);
-        if (values.size < 1) {
-            this.selected.delete(fieldName);
-            this.selectedFields.delete(fieldName);
-            return;
-        }
-        this.selected.set(fieldName, values);
-        this.selectedFields.add(fieldName);
-    }
-    unselectAll() {
-        this.selected = new Map();
-        this.selectedFields = new Set();
-    }
-}
-__decorate([
-    mobx_1.observable
-], SelectionStore.prototype, "selected", void 0);
-__decorate([
-    mobx_1.observable
-], SelectionStore.prototype, "selectedFields", void 0);
-__decorate([
-    mobx_1.computed
-], SelectionStore.prototype, "normalisedSelected", null);
-__decorate([
-    mobx_1.computed
-], SelectionStore.prototype, "countSelected", null);
-__decorate([
-    mobx_1.computed
-], SelectionStore.prototype, "uniqueSelected", null);
-exports.SelectionStore = SelectionStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/stores/ServicesSelectionStore.ts":
-/*!*****************************************************************************!*\
-  !*** ./extension/app/components/resources/stores/ServicesSelectionStore.ts ***!
-  \*****************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ServicesSelectionStore = void 0;
-const SelectionStore_1 = __webpack_require__(/*! ./SelectionStore */ "./extension/app/components/resources/stores/SelectionStore.ts");
-class ServicesSelectionStore extends SelectionStore_1.SelectionStore {
-}
-exports.ServicesSelectionStore = ServicesSelectionStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/views/ResourcesContentView/ResourcesContentView.tsx":
-/*!************************************************************************************************!*\
-  !*** ./extension/app/components/resources/views/ResourcesContentView/ResourcesContentView.tsx ***!
-  \************************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourcesContentView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const PlatformResources_1 = __webpack_require__(/*! ../../PlatformResources/PlatformResources */ "./extension/app/components/resources/PlatformResources/PlatformResources.tsx");
-const stores_1 = __webpack_require__(/*! ../../../../stores */ "./extension/app/stores/index.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
-const types_app_common_1 = __webpack_require__(/*! ../../../../types/types-app-common */ "./extension/app/types/types-app-common.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/resources/views/ResourcesContentView/styles.scss");
-exports.ResourcesContentView = (0, mobx_react_lite_1.observer)(({ className = '', }) => {
-    const appStore = (0, stores_1.useAppStore)();
-    const { platform } = (0, stores_1.usePlatformStore)();
-    const { countAllResources, activeTab } = (0, stores_1.useResourceStore)();
-    const ref = (0, react_1.useRef)();
-    (0, react_1.useEffect)(() => {
-        var _a, _b, _c;
-        if (!((_a = ref.current) === null || _a === void 0 ? void 0 : _a.el)) {
-            return;
-        }
-        (_c = (_b = ref.current.el
-            .querySelector('.simplebar-content-wrapper')) === null || _b === void 0 ? void 0 : _b.scrollTo) === null || _c === void 0 ? void 0 : _c.call(_b, { top: 0 });
-    }, [activeTab]);
-    if (!platform) {
-        return null;
-    }
-    return (countAllResources < 1
-        ? (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                'resource-content-view',
-                'platform-detected',
-                className,
-            ]) }, appStore.isLoading(types_app_common_1.LoadingKey.resourcesAdding)
-            ? (react_1.default.createElement(react_1.default.Fragment, null,
-                "Results are processing...",
-                react_1.default.createElement("br", null),
-                "Please wait..."))
-            : (react_1.default.createElement(react_1.default.Fragment, null,
-                (0, common_helpers_1.getPlatformNameByID)(platform.getID()),
-                " detected. Run a query to see results."))))
-        : (react_1.default.createElement(simplebar_react_1.default, { ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) },
-            react_1.default.createElement(PlatformResources_1.PlatformResources, null))));
-});
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/views/ResourcesFooterView/ResourcesFooterView.tsx":
-/*!**********************************************************************************************!*\
-  !*** ./extension/app/components/resources/views/ResourcesFooterView/ResourcesFooterView.tsx ***!
-  \**********************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourcesFooterView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const BulkResourcesPanel_1 = __webpack_require__(/*! ../../BulkResourcesPanel/BulkResourcesPanel */ "./extension/app/components/resources/BulkResourcesPanel/BulkResourcesPanel.tsx");
-const ResourcesFooterView = () => {
-    return (react_1.default.createElement(BulkResourcesPanel_1.BulkResourcesPanel, null));
-};
-exports.ResourcesFooterView = ResourcesFooterView;
-
-
-/***/ }),
-
-/***/ "./extension/app/components/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx":
-/*!**********************************************************************************************!*\
-  !*** ./extension/app/components/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx ***!
-  \**********************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ResourcesHeaderView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const Spacer_1 = __webpack_require__(/*! ../../../atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const TabsPlatformResources_1 = __webpack_require__(/*! ../../../resources/TabsPlatformResources/TabsPlatformResources */ "./extension/app/components/resources/TabsPlatformResources/TabsPlatformResources.tsx");
-const stores_1 = __webpack_require__(/*! ../../../../stores */ "./extension/app/stores/index.ts");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
-exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
-    const { platform } = (0, stores_1.usePlatformStore)();
-    return (react_1.default.createElement(react_1.default.Fragment, null, platform && (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 32 }),
-        react_1.default.createElement(TabsPlatformResources_1.TabsPlatformResources, null),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 16 })))));
-});
+exports.AppLink = AppLink;
 
 
 /***/ }),
@@ -55503,16 +53822,260 @@ const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules
 const Tooltip_1 = __webpack_require__(/*! ../../atoms/Tooltip/Tooltip */ "./extension/app/components/atoms/Tooltip/Tooltip.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/tooltips/AppTooltip/styles.scss");
-const AppTooltip = (_a) => {
+exports.AppTooltip = (0, mobx_react_lite_1.observer)((_a) => {
     var { className = '', children } = _a, restProps = __rest(_a, ["className", "children"]);
     const appStore = (0, stores_1.useAppStore)();
     return (react_1.default.createElement(Tooltip_1.Tooltip, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'app-tooltip',
             className,
         ]), delayShowMs: 600, mountElem: appStore.rootElement }, restProps), children));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/faq/FaqButton/FaqButton.tsx":
+/*!***************************************************!*\
+  !*** ./extension/app/faq/FaqButton/FaqButton.tsx ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.AppTooltip = AppTooltip;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FaqButton = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const RoundedQuestionMarkIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon */ "./extension/app/components/atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/faq/FaqButton/styles.scss");
+const FaqButton = () => {
+    const appStore = (0, stores_1.useAppStore)();
+    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "faq-button", onClick: () => {
+            appStore.view = 'faq';
+        } },
+        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "FAQ", className: "small" },
+            react_1.default.createElement(RoundedQuestionMarkIcon_1.RoundedQuestionMarkIcon, null))));
+};
+exports.FaqButton = FaqButton;
+
+
+/***/ }),
+
+/***/ "./extension/app/faq/views/FaqContentView/FaqContentView.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/faq/views/FaqContentView/FaqContentView.tsx ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FaqContentView = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const AppCollapsible_1 = __webpack_require__(/*! ../../../components/collapsibles/AppCollapsible/AppCollapsible */ "./extension/app/components/collapsibles/AppCollapsible/AppCollapsible.tsx");
+const List_1 = __webpack_require__(/*! ../../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const AppLink_1 = __webpack_require__(/*! ../../../components/links/AppLink/AppLink */ "./extension/app/components/links/AppLink/AppLink.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/faq/views/FaqContentView/styles.scss");
+const FaqContentView = () => {
+    const items = (0, react_1.useMemo)(() => {
+        return [
+            {
+                title: 'What security platforms are supported?',
+                content: 'Currently, the extension works with Splunk, QRadar, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
+            },
+            {
+                title: 'How can I give feedback or get help?',
+                content: [
+                    'If you have any questions, would like to give feedback, or need help, contact us at ',
+                    react_1.default.createElement(AppLink_1.AppLink, { key: "email", href: "mailto:support@socprime.com" }, "support@socprime.com"),
+                ],
+            },
+            {
+                title: 'How do you handle my data?',
+                content: 'The Prime Hunt browser extension does not send any data outside your laptop/browser. It works only with the data that is on the page of your browser.',
+            },
+            {
+                title: 'Can I add custom fields to the results?',
+                content: 'Yes, you can add any fields to the results in the extension. To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field',
+            },
+            {
+                title: 'Can I customize Search At integrations?',
+                content: (react_1.default.createElement("div", null,
+                    "Yes, you can. Set a checkmark next to a result to show the bulk actions menu and select Search At > Search Settings. In this menu you can:",
+                    react_1.default.createElement(List_1.List, { items: [
+                            {
+                                id: '1',
+                                content: 'Customize the name and URL for any existing integration',
+                            },
+                            {
+                                id: '2',
+                                content: (react_1.default.createElement("div", null,
+                                    "Define behavior for opening multiple results:",
+                                    react_1.default.createElement(List_1.List, { items: [
+                                            {
+                                                id: '1',
+                                                content: '$VALUE$: each result is opened in a separate new tab',
+                                            },
+                                            {
+                                                id: '2',
+                                                content: '$VALUES$: all results are opened in a single new tab',
+                                            },
+                                        ] }))),
+                            },
+                            {
+                                id: '3',
+                                content: 'Replace the HOSTNAME:PORT placeholder in the OpenCTI integration URL with the hostname and port of your account to use the OpenCTI integration',
+                            },
+                            {
+                                id: '4',
+                                content: 'Add a new integration or remove an existing one',
+                            },
+                        ] }))),
+            },
+            {
+                title: 'Can I reset the extension position to default?',
+                content: 'Yes, you should remove "the-prime-hunt--extension--position" key in your browser\'s local storage and restart the browser page',
+            },
+            {
+                title: 'Can I reset the watchers fields list to default?',
+                content: 'Yes, you should remove "the-prime-hunt--extension--watchers" key in your browser\'s local storage and restart the browser page',
+            },
+        ];
+    }, []);
+    return (react_1.default.createElement(simplebar_react_1.default, { className: "faq-content-view" }, items.map(({ content, title }, index) => {
+        return (react_1.default.createElement(AppCollapsible_1.AppCollapsible, { header: title, key: title, open: index === 0 },
+            react_1.default.createElement("div", null,
+                react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
+                content,
+                react_1.default.createElement(Spacer_1.Spacer, { height: 14 }))));
+    })));
+};
+exports.FaqContentView = FaqContentView;
+
+
+/***/ }),
+
+/***/ "./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx":
+/*!*****************************************************************!*\
+  !*** ./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FaqFooterView = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const FaqFooterView = () => {
+    const appStore = (0, stores_1.useAppStore)();
+    (0, react_1.useEffect)(() => {
+        const onKeyDown = (e) => {
+            var _a, _b;
+            const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
+            if (code === 'escape') {
+                appStore.view = 'resources';
+            }
+        };
+        document.addEventListener('keydown', onKeyDown);
+        return () => document.removeEventListener('keydown', onKeyDown);
+    }, [appStore]);
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement(Spacer_1.Spacer, { height: 32 }),
+        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Close (Esc)", className: "small" },
+            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { onClick: () => {
+                    appStore.view = 'resources';
+                } }, "Close"))));
+};
+exports.FaqFooterView = FaqFooterView;
+
+
+/***/ }),
+
+/***/ "./extension/app/faq/views/FaqHeaderView/FaqHeaderView.tsx":
+/*!*****************************************************************!*\
+  !*** ./extension/app/faq/views/FaqHeaderView/FaqHeaderView.tsx ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FaqHeaderView = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const FaqHeaderView = () => {
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
+        react_1.default.createElement(AppHeader_1.AppHeader, null, "FAQ"),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 8 })));
+};
+exports.FaqHeaderView = FaqHeaderView;
 
 
 /***/ }),
@@ -55531,7 +54094,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const client_1 = __importDefault(__webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js"));
-const App_1 = __webpack_require__(/*! ./components/App/App */ "./extension/app/components/App/App.tsx");
+const App_1 = __webpack_require__(/*! ./root/App/App */ "./extension/app/root/App/App.tsx");
 const stores_1 = __webpack_require__(/*! ./stores */ "./extension/app/stores/index.ts");
 const types_1 = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
 const common_helpers_1 = __webpack_require__(/*! ../common/common-helpers */ "./extension/common/common-helpers.ts");
@@ -55593,6 +54156,2617 @@ stores_1.rootStore.appStore.mounted = true;
 
 /***/ }),
 
+/***/ "./extension/app/integrations/Integration/Integration.tsx":
+/*!****************************************************************!*\
+  !*** ./extension/app/integrations/Integration/Integration.tsx ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Integration = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const IntegrationInput_1 = __webpack_require__(/*! ../IntegrationInput/IntegrationInput */ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/Integration/styles.scss");
+const Integration = ({ id, name, url, }) => {
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    return (react_1.default.createElement("div", { className: "integration" },
+        react_1.default.createElement(IntegrationInput_1.IntegrationInput, { label: [
+                'Display Name',
+                react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { key: id, onClick: () => {
+                        integrationsStore.integrations =
+                            integrationsStore.integrations.filter(i => i.id !== id);
+                    } }),
+            ], value: name, placeholder: "ex Open CTI", onChange: value => {
+                integrationsStore.integrations.find(i => i.id === id).name = value;
+            } }),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
+        react_1.default.createElement(IntegrationInput_1.IntegrationInput, { label: "Integration URL", value: url, placeholder: "ex https://my-host/search=$VALUE$", onChange: value => {
+                integrationsStore.integrations.find(i => i.id === id).url = value;
+            } }),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 16 })));
+};
+exports.Integration = Integration;
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx":
+/*!**************************************************************************!*\
+  !*** ./extension/app/integrations/IntegrationInput/IntegrationInput.tsx ***!
+  \**************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationInput = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
+const ValidationInput_1 = __webpack_require__(/*! ../../components/inputs/ValidationInput/ValidationInput */ "./extension/app/components/inputs/ValidationInput/ValidationInput.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/IntegrationInput/styles.scss");
+const validateMessage = 'This field is required';
+const IntegrationInput = (_a) => {
+    var { label, value, onChange } = _a, restProps = __rest(_a, ["label", "value", "onChange"]);
+    return (react_1.default.createElement(ValidationInput_1.ValidationInput, Object.assign({ label: label, className: "integration-input", validators: [
+            (v) => (0, validators_1.isNotEmptyString)(v, validateMessage),
+        ], value: value, onChange: onChange }, restProps)));
+};
+exports.IntegrationInput = IntegrationInput;
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/SettingsButton/SettingsButton.tsx":
+/*!**********************************************************************!*\
+  !*** ./extension/app/integrations/SettingsButton/SettingsButton.tsx ***!
+  \**********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SettingsButton = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const SettingsIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SettingsIcon/SettingsIcon */ "./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/SettingsButton/styles.scss");
+const SettingsButton = () => {
+    const appStore = (0, stores_1.useAppStore)();
+    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "settings-button", onClick: () => {
+            appStore.view = 'integrations';
+        } },
+        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Integrations settings", className: "small" },
+            react_1.default.createElement(SettingsIcon_1.SettingsIcon, null))));
+};
+exports.SettingsButton = SettingsButton;
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/integrations.ts":
+/*!****************************************************!*\
+  !*** ./extension/app/integrations/integrations.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.integrations = void 0;
+exports.integrations = [
+    {
+        id: 'virus-total',
+        name: 'VirusTotal',
+        url: 'https://www.virustotal.com/gui/search/$VALUE$',
+    },
+    {
+        id: 'virus-total-enterprise',
+        name: 'VirusTotal Enterprise',
+        url: 'https://www.virustotal.com/gui/search/$VALUES$',
+    },
+    {
+        id: 'anomali',
+        name: 'Anomali',
+        url: 'https://ui.threatstream.com/search?status=active&multiSearchResults=true&value__re=.*$VALUE$.*',
+    },
+    {
+        id: 'open-cti',
+        name: 'OpenCTI',
+        url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
+    },
+    {
+        id: '$echo-trail',
+        name: 'EchoTrail',
+        url: 'https://www.echotrail.io/insights/search/$VALUE$',
+    },
+    {
+        id: '$ultimate-windows-security',
+        name: 'Ultimate Windows Security',
+        url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
+    },
+];
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/stores/IntegrationsStore.ts":
+/*!****************************************************************!*\
+  !*** ./extension/app/integrations/stores/IntegrationsStore.ts ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationsStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
+class IntegrationsStore {
+    constructor() {
+        this.integrations = [];
+        this.set();
+        (0, mobx_1.makeObservable)(this);
+    }
+    get emptyIntegration() {
+        return this.integrations.some(i => !i.name || !i.url);
+    }
+    set() {
+        this.integrations = (0, local_storage_1.getIntegrations)();
+    }
+    save() {
+        (0, local_storage_1.setIntegrations)(this.integrations);
+    }
+    restoreIntegrations() {
+        this.integrations = (0, local_storage_1.restoreIntegrations)();
+    }
+    getReadyUrls(values, url) {
+        const formatValue = (v) => `\\$${v}\\$`;
+        if (url.indexOf('$VALUES$') > -1) {
+            return [
+                encodeURI((0, helpers_1.formatString)(url, { VALUES: values.join(',') }, formatValue)),
+            ];
+        }
+        return values.map(value => {
+            return encodeURI((0, helpers_1.formatString)(url, { VALUE: value }, formatValue));
+        });
+    }
+}
+__decorate([
+    mobx_1.observable
+], IntegrationsStore.prototype, "integrations", void 0);
+__decorate([
+    mobx_1.computed
+], IntegrationsStore.prototype, "emptyIntegration", null);
+exports.IntegrationsStore = IntegrationsStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationContentView/IntegrationContentView.tsx":
+/*!********************************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationContentView/IntegrationContentView.tsx ***!
+  \********************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationContentView = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const Integration_1 = __webpack_require__(/*! ../../Integration/Integration */ "./extension/app/integrations/Integration/Integration.tsx");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationContentView/styles.scss");
+exports.IntegrationContentView = (0, mobx_react_lite_1.observer)(() => {
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    return (react_1.default.createElement(simplebar_react_1.default, { className: "integration-content-view" }, integrationsStore.integrations.map(({ url, name, id }) => {
+        return (react_1.default.createElement(Integration_1.Integration, { key: id, name: name, url: url, id: id }));
+    })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx":
+/*!******************************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx ***!
+  \******************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationFooterView = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const PlusIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
+const CheckIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationFooterView/styles.scss");
+exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
+    const appStore = (0, stores_1.useAppStore)();
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    const onSaveAndCloseClick = (0, react_1.useCallback)(() => {
+        var _a;
+        if (integrationsStore.emptyIntegration) {
+            const input = (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.validation-input.empty');
+            input.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                input.focus();
+                input.blur();
+            }, 300);
+            return;
+        }
+        integrationsStore.save();
+        appStore.view = 'resources';
+    }, [appStore, integrationsStore]);
+    (0, react_1.useEffect)(() => {
+        const onKeyDown = (e) => {
+            var _a, _b;
+            const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
+            if (code === 'escape') {
+                onSaveAndCloseClick();
+            }
+        };
+        document.addEventListener('keydown', onKeyDown);
+        return () => document.removeEventListener('keydown', onKeyDown);
+    }, [onSaveAndCloseClick]);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(Spacer_1.Spacer, { height: 20 }),
+        react_1.default.createElement("div", { className: "integration-footer-view" },
+            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null), onClick: () => {
+                    integrationsStore.integrations.push({ id: (0, helpers_1.uuid)(), url: '', name: '' });
+                    setTimeout(() => {
+                        var _a;
+                        (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.integration:last-child').scrollIntoView({
+                            block: 'end',
+                            behavior: 'smooth',
+                        });
+                    }, 0);
+                } }, "Add New Integration"),
+            react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Save and close (Esc)" },
+                react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(CheckIcon_1.CheckIcon, null), className: (0, common_helpers_1.createClassName)([
+                        integrationsStore.emptyIntegration ? 'error' : 'success-btn',
+                    ]), onClick: onSaveAndCloseClick }, "Save & Close")))));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx":
+/*!******************************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx ***!
+  \******************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationHeaderView = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationHeaderView/styles.scss");
+const IntegrationHeaderView = () => {
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    return (react_1.default.createElement("div", { className: "integration-header-view" },
+        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
+        react_1.default.createElement("div", { className: "group" },
+            react_1.default.createElement(AppHeader_1.AppHeader, null, "Integration Settings"),
+            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(RefreshIcon_1.RefreshIcon, null), onClick: () => {
+                    integrationsStore.restoreIntegrations();
+                } }, "Restore Defaults")),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 24 })));
+};
+exports.IntegrationHeaderView = IntegrationHeaderView;
+
+
+/***/ }),
+
+/***/ "./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx":
+/*!***********************************************************************************!*\
+  !*** ./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx ***!
+  \***********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NotFoundContentView = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+__webpack_require__(/*! ./styles.scss */ "./extension/app/not-found/views/NotFoundContentView/styles.scss");
+const NotFoundContentView = () => {
+    return (react_1.default.createElement("div", { className: "not-found-content-view" },
+        react_1.default.createElement("div", null,
+            "No supported platform detected.",
+            react_1.default.createElement("br", null),
+            "You can use this extension with",
+            react_1.default.createElement("br", null),
+            "Splunk, QRadar, Microsoft Sentinel",
+            react_1.default.createElement("br", null),
+            "Microsoft Defender for Endpoint.")));
+};
+exports.NotFoundContentView = NotFoundContentView;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/AddFieldInput/AddFieldInput.tsx":
+/*!*****************************************************************!*\
+  !*** ./extension/app/resources/AddFieldInput/AddFieldInput.tsx ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AddFieldInput = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const AppControlInput_1 = __webpack_require__(/*! ../../components/inputs/AppControlInput/AppControlInput */ "./extension/app/components/inputs/AppControlInput/AppControlInput.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const CheckIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
+const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
+const SearchDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon */ "./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/AddFieldInput/styles.scss");
+exports.AddFieldInput = (0, react_1.forwardRef)((_a, ref) => {
+    var { className = '', onApply, onRemove } = _a, restProps = __rest(_a, ["className", "onApply", "onRemove"]);
+    const [inputValue, setInputValue] = (0, react_1.useState)('');
+    const inputRef = (0, react_1.useRef)(null);
+    (0, react_1.useEffect)(() => {
+        inputRef.current.focus();
+    }, []);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'add-field-input-wrapper',
+            className,
+        ]), ref: ref, onKeyDown: e => {
+            var _a, _b;
+            const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
+            if (code === 'enter') {
+                onApply(inputValue);
+            }
+            if (code === 'escape') {
+                onRemove();
+            }
+        } },
+        react_1.default.createElement("span", null,
+            react_1.default.createElement(SearchDocumentIcon_1.SearchDocumentIcon, null)),
+        react_1.default.createElement(AppControlInput_1.AppControlInput, Object.assign({ edit: true, ref: inputRef, className: (0, common_helpers_1.createClassName)([
+                'add-field-input',
+                className,
+            ]), onType: v => setInputValue(v.trim()) }, restProps, { placeholder: "Enter Field Name", controls: react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement("span", { className: "control" },
+                    react_1.default.createElement(CheckIcon_1.CheckIcon, { onClick: () => {
+                            onApply(inputValue);
+                        } })),
+                react_1.default.createElement("span", { className: "control" },
+                    react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
+                            onRemove();
+                        } }))), value: inputValue }))));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/AddNewButton/AddNewButton.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/resources/AddNewButton/AddNewButton.tsx ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AddNewButton = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/AddNewButton/styles.scss");
+const AddNewButton = (_a) => {
+    var { className = '' } = _a, restProps = __rest(_a, ["className"]);
+    return (react_1.default.createElement(StaticButton_1.StaticButton, Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'add-new-button',
+            className,
+        ]) }, restProps),
+        react_1.default.createElement(PlusIcon_1.PlusIcon, null)));
+};
+exports.AddNewButton = AddNewButton;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/BulkResourcesPanel/BulkResourcesPanel.tsx":
+/*!***************************************************************************!*\
+  !*** ./extension/app/resources/BulkResourcesPanel/BulkResourcesPanel.tsx ***!
+  \***************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.BulkResourcesPanel = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
+const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
+const SeeDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
+const MagnifyingIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MagnifyingIcon/MagnifyingIcon */ "./extension/app/components/atoms/icons/MagnifyingIcon/MagnifyingIcon.tsx");
+const List_1 = __webpack_require__(/*! ../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
+const AppDropdown_1 = __webpack_require__(/*! ../../components/dropdowns/AppDropdown/AppDropdown */ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/BulkResourcesPanel/styles.scss");
+const MAX_COUNT_SELECTED = 30;
+exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
+    const selectionStore = (0, stores_1.useResourcesSelectionStore)();
+    const platformStore = (0, stores_1.usePlatformStore)();
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    const { normalisedSelected, countSelected, uniqueSelected } = selectionStore;
+    const items = (0, react_1.useMemo)(() => {
+        const result = [];
+        integrationsStore.integrations.forEach(({ name, id, url }) => {
+            result.push({
+                id,
+                content: name,
+                onClick: () => {
+                    integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
+                        window.open(u, '_blank');
+                    });
+                },
+            });
+        });
+        return result;
+    }, [integrationsStore, uniqueSelected]);
+    const onCopyIconClick = (0, react_1.useCallback)(() => {
+        setTimeout(() => {
+            (0, common_helpers_1.copyToClipboard)(`where ${platformStore.buildQueryParts('include', normalisedSelected)}`);
+        }, 300);
+    }, [platformStore, normalisedSelected]);
+    const onActionsClick = (0, react_1.useCallback)((type) => {
+        platformStore.modifyQuery(type, Object.keys(normalisedSelected).reduce((normalizedParsedResources, fieldName) => {
+            normalizedParsedResources[fieldName] = normalisedSelected[fieldName].slice(0, MAX_COUNT_SELECTED);
+            return normalizedParsedResources;
+        }, {}));
+    }, [normalisedSelected, platformStore]);
+    const disabled = countSelected < 1;
+    const getCountSelected = (0, react_1.useCallback)((count) => {
+        if (count <= MAX_COUNT_SELECTED) {
+            return count;
+        }
+        return (react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "error max-selected-tooltip", content: react_1.default.createElement(react_1.default.Fragment, null,
+                "The total number of selected items can\u2019t be more than",
+                react_1.default.createElement("span", { className: "strong" },
+                    " ",
+                    MAX_COUNT_SELECTED,
+                    " "),
+                "to avoid overloading your browser") }, count));
+    }, []);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'bulk-resources-panel',
+            disabled ? 'empty' : '',
+        ]) },
+        react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
+        react_1.default.createElement("div", { className: "count-selected" },
+            react_1.default.createElement("span", { className: "strong" },
+                "\u2014 ",
+                getCountSelected(countSelected),
+                " item(s)"),
+            "selected"),
+        react_1.default.createElement("div", { className: "buttons-area" },
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, animatedIcon: true, onClick: onCopyIconClick, icon: react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) }, "Copy"),
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('include'), icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null) }, "Include"),
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('exclude'), icon: react_1.default.createElement(MinusIcon_1.MinusIcon, null) }, "Exclude"),
+            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('show all'), icon: react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, null) }, "Show All Events"),
+            react_1.default.createElement(AppDropdown_1.AppDropdown, { disabled: disabled, opener: react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, icon: react_1.default.createElement(MagnifyingIcon_1.MagnifyingIcon, null) }, "Search at"), classNameMenu: "dropdown-search-sites-menu" },
+                react_1.default.createElement(List_1.List, { className: "search-sites-list", items: items })))));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/CollapsibleResource/CollapsibleResource.tsx":
+/*!*****************************************************************************!*\
+  !*** ./extension/app/resources/CollapsibleResource/CollapsibleResource.tsx ***!
+  \*****************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CollapsibleResource = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const ResourceList_1 = __webpack_require__(/*! ../ResourceList/ResourceList */ "./extension/app/resources/ResourceList/ResourceList.tsx");
+const AppCollapsible_1 = __webpack_require__(/*! ../../components/collapsibles/AppCollapsible/AppCollapsible */ "./extension/app/components/collapsibles/AppCollapsible/AppCollapsible.tsx");
+const ResourceFieldName_1 = __webpack_require__(/*! ../ResourceFieldName/ResourceFieldName */ "./extension/app/resources/ResourceFieldName/ResourceFieldName.tsx");
+const NestedItemsCheckbox_1 = __webpack_require__(/*! ../../components/checkboxes/NestedItemsCheckbox/NestedItemsCheckbox */ "./extension/app/components/checkboxes/NestedItemsCheckbox/NestedItemsCheckbox.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
+const types_app_common_1 = __webpack_require__(/*! ../../types/types-app-common */ "./extension/app/types/types-app-common.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/CollapsibleResource/styles.scss");
+const CollapsibleResource = ({ icon, fieldName, values, selectedValues, }) => {
+    const appStore = (0, stores_1.useAppStore)();
+    const resourceStore = (0, stores_1.useResourceStore)();
+    const selectionStore = (0, stores_1.useResourcesSelectionStore)();
+    const getGroup = (0, react_1.useCallback)((fieldNameToRemove) => {
+        return (react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                appStore.startLoading(types_app_common_1.LoadingKey.watchersChanging);
+                setTimeout(() => {
+                    resourceStore.removeField(fieldNameToRemove, true);
+                    appStore.stopLoading(types_app_common_1.LoadingKey.watchersChanging);
+                }, 0);
+            } }));
+    }, [appStore, resourceStore]);
+    const isDisabled = values.length < 1;
+    const checkboxState = selectedValues.length < 1
+        ? 'nothing'
+        : selectedValues.length === values.length
+            ? 'all'
+            : selectedValues.length > 0
+                ? 'some'
+                : 'nothing';
+    return (react_1.default.createElement(AppCollapsible_1.AppCollapsible, { disabled: isDisabled, className: "collapsible-resource", header: react_1.default.createElement(NestedItemsCheckbox_1.NestedItemsCheckbox, { disabled: isDisabled, content: react_1.default.createElement(ResourceFieldName_1.ResourceFieldName, { icon: icon, fieldName: fieldName, count: values.length, disabled: isDisabled }), state: checkboxState, onClick: isChecked => {
+                if (isDisabled) {
+                    return;
+                }
+                if (!isChecked) {
+                    selectionStore.unselect(fieldName);
+                }
+                else {
+                    selectionStore.select(fieldName);
+                }
+            } }), group: getGroup(fieldName) }, !isDisabled &&
+        react_1.default.createElement(ResourceList_1.ResourceList, { items: values.slice(0, 100), selectedItems: selectedValues, fieldName: fieldName })));
+};
+exports.CollapsibleResource = CollapsibleResource;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/CollapsibleResources/CollapsibleResources.tsx":
+/*!*******************************************************************************!*\
+  !*** ./extension/app/resources/CollapsibleResources/CollapsibleResources.tsx ***!
+  \*******************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CollapsibleResources = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const CollapsibleResource_1 = __webpack_require__(/*! ../CollapsibleResource/CollapsibleResource */ "./extension/app/resources/CollapsibleResource/CollapsibleResource.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const EyeIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/EyeIcon/EyeIcon */ "./extension/app/components/atoms/icons/EyeIcon/EyeIcon.tsx");
+const CrossedEye_1 = __webpack_require__(/*! ../../components/atoms/icons/CrossedEye/CrossedEye */ "./extension/app/components/atoms/icons/CrossedEye/CrossedEye.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../app-hooks */ "./extension/app/app-hooks.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/CollapsibleResources/styles.scss");
+exports.CollapsibleResources = (0, mobx_react_lite_1.observer)(({ className = '', resources, icon, }) => {
+    const [showEmpty, setShowEmpty] = (0, react_1.useState)(false);
+    const previousShowEmpty = (0, app_hooks_1.usePrevious)(showEmpty);
+    const selectionStore = (0, stores_1.useResourcesSelectionStore)();
+    const appStore = (0, stores_1.useAppStore)();
+    (0, react_1.useEffect)(() => {
+        var _a, _b, _c, _d;
+        if (previousShowEmpty && !showEmpty) {
+            (_d = (_c = (_b = (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.resource-content-view')) === null || _b === void 0 ? void 0 : _b.querySelector('.simplebar-content-wrapper')) === null || _c === void 0 ? void 0 : _c.scrollTo) === null || _d === void 0 ? void 0 : _d.call(_c, { top: 0 });
+        }
+    }, [
+        appStore.rootElement,
+        previousShowEmpty,
+        showEmpty,
+    ]);
+    const getResources = (0, react_1.useCallback)((passedResources) => {
+        const emptyResources = [];
+        const notEmptyResources = [];
+        Object.keys(passedResources).forEach(fieldName => {
+            if (passedResources[fieldName].size > 0) {
+                notEmptyResources.push({
+                    fieldName,
+                    values: Array.from(passedResources[fieldName]),
+                });
+            }
+            else {
+                emptyResources.push({
+                    fieldName,
+                    values: Array.from(passedResources[fieldName]),
+                });
+            }
+        });
+        return { emptyResources, notEmptyResources };
+    }, []);
+    const getCollapsible = (0, react_1.useCallback)((fieldName, collapsibleIcon, values, selectedValues) => {
+        return (react_1.default.createElement(CollapsibleResource_1.CollapsibleResource, { key: fieldName, fieldName: fieldName, icon: collapsibleIcon, values: values, selectedValues: selectedValues }));
+    }, []);
+    const { emptyResources, notEmptyResources } = getResources(resources);
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible-resources', className]) },
+        notEmptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || []))),
+        emptyResources.length > 0 && (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
+            react_1.default.createElement("div", { className: "fields-separator", onClick: () => {
+                    setShowEmpty(!showEmpty);
+                } },
+                react_1.default.createElement(Spacer_1.Spacer, { height: 3 }),
+                react_1.default.createElement("span", null,
+                    react_1.default.createElement("span", null,
+                        showEmpty ? react_1.default.createElement(CrossedEye_1.CrossedEye, null) : react_1.default.createElement(EyeIcon_1.EyeIcon, null),
+                        showEmpty ? 'Hide empty' : 'Show empty',
+                        "\u00A0"),
+                    "(",
+                    emptyResources.length,
+                    ")"),
+                react_1.default.createElement(Spacer_1.Spacer, { height: 3 }),
+                react_1.default.createElement("hr", null)),
+            react_1.default.createElement(Spacer_1.Spacer, { height: 2 }),
+            showEmpty && emptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])))))));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ExportButton/ExportButton.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/resources/ExportButton/ExportButton.tsx ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ExportButton = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const ExportIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/ExportIcon/ExportIcon */ "./extension/app/components/atoms/icons/ExportIcon/ExportIcon.tsx");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ExportButton/styles.scss");
+exports.ExportButton = (0, mobx_react_lite_1.observer)(() => {
+    const { selectedResources, selectedResourcesFields, countAllSelected } = (0, stores_1.useResourcesSelectionStore)();
+    const onExportClick = (0, react_1.useCallback)(() => {
+        if (countAllSelected < 1) {
+            return;
+        }
+        const rows = [
+            'Type,Field,Value',
+        ];
+        Object.keys(selectedResourcesFields).forEach(typeID => {
+            Array.from(selectedResourcesFields[typeID]).forEach(fieldName => {
+                Array.from(selectedResources[typeID].get(fieldName)).forEach(value => {
+                    rows.push([typeID, fieldName, value].join(','));
+                });
+            });
+        });
+        (0, common_helpers_1.downloadFile)('csv', rows.join('\n'), `the-prime-hunt-results_${(0, helpers_1.formatDate)('%Y-%M-%d_%h-%m', new Date())}`);
+    }, [countAllSelected, selectedResources, selectedResourcesFields]);
+    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "export-button", onClick: onExportClick },
+        react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: react_1.default.createElement(react_1.default.Fragment, null,
+                "Export selected to CSV ",
+                react_1.default.createElement("span", { className: "strong" }, countAllSelected)) },
+            react_1.default.createElement(ExportIcon_1.ExportIcon, null))));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/PlatformResources/PlatformResources.tsx":
+/*!*************************************************************************!*\
+  !*** ./extension/app/resources/PlatformResources/PlatformResources.tsx ***!
+  \*************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PlatformResources = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const CollapsibleResources_1 = __webpack_require__(/*! ../CollapsibleResources/CollapsibleResources */ "./extension/app/resources/CollapsibleResources/CollapsibleResources.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const UserIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/UserIcon/UserIcon */ "./extension/app/components/atoms/icons/UserIcon/UserIcon.tsx");
+const AssetIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/AssetIcon/AssetIcon */ "./extension/app/components/atoms/icons/AssetIcon/AssetIcon.tsx");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const SearchDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon */ "./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/PlatformResources/styles.scss");
+exports.PlatformResources = (0, mobx_react_lite_1.observer)(() => {
+    const { resources, activeTabID } = (0, stores_1.useResourceStore)();
+    const getIcon = (0, react_1.useCallback)((typeID) => {
+        if (typeID === 'Accounts') {
+            return react_1.default.createElement(UserIcon_1.UserIcon, null);
+        }
+        if (typeID === 'Assets') {
+            return react_1.default.createElement(AssetIcon_1.AssetIcon, null);
+        }
+        return react_1.default.createElement(SearchDocumentIcon_1.SearchDocumentIcon, null);
+    }, []);
+    return (react_1.default.createElement("div", { className: "platform-resources" }, Object.keys(resources).map(typeID => {
+        return (react_1.default.createElement(CollapsibleResources_1.CollapsibleResources, { key: typeID, resources: resources[typeID], icon: getIcon(typeID), className: activeTabID === typeID ? '' : 'invisible' }));
+    })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceFieldName/ResourceFieldName.tsx":
+/*!*************************************************************************!*\
+  !*** ./extension/app/resources/ResourceFieldName/ResourceFieldName.tsx ***!
+  \*************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourceFieldName = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceFieldName/styles.scss");
+const ResourceFieldName = ({ disabled, icon, fieldName, count }) => {
+    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+            'resource-field-name',
+            disabled ? 'disabled' : '',
+        ]) },
+        icon,
+        react_1.default.createElement("span", { className: "field-name strong" }, fieldName),
+        "\u00A0",
+        count > 100 ? (react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "error resource-count-values-tooltip", content: react_1.default.createElement(react_1.default.Fragment, null,
+                "Maximum",
+                react_1.default.createElement("span", { className: "strong" }, " 100 "),
+                "values will be displayed to avoid overloading your browser") }, count)) : (react_1.default.createElement(react_1.default.Fragment, null, count))));
+};
+exports.ResourceFieldName = ResourceFieldName;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceList/ResourceList.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/resources/ResourceList/ResourceList.tsx ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourceList = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const List_1 = __webpack_require__(/*! ../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
+const ResourceListItem_1 = __webpack_require__(/*! ../ResourceListItem/ResourceListItem */ "./extension/app/resources/ResourceListItem/ResourceListItem.tsx");
+const SuccessCheckbox_1 = __webpack_require__(/*! ../../components/checkboxes/SucessCheckbox/SuccessCheckbox */ "./extension/app/components/checkboxes/SucessCheckbox/SuccessCheckbox.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceList/styles.scss");
+exports.ResourceList = (0, react_1.memo)(({ fieldName, items, selectedItems, }) => {
+    const selectionStore = (0, stores_1.useResourcesSelectionStore)();
+    const getTooltipPosition = (0, react_1.useCallback)((tooltip) => {
+        const coords = tooltip.getBoundingClientRect();
+        return {
+            left: coords.left,
+        };
+    }, []);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(List_1.List, { className: "resource-list", items: items.map(item => {
+                return {
+                    id: item,
+                    content: (react_1.default.createElement(ResourceListItem_1.ResourceListItem, { resourceName: item, fieldName: fieldName },
+                        react_1.default.createElement(SuccessCheckbox_1.SuccessCheckbox, { content: item.length > 20
+                                ? react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "resource-value-tooltip small", content: item, getPosition: getTooltipPosition, delayShowMs: 1200 }, item)
+                                : item, checked: selectedItems.includes(item), onStateChanged: isChecked => {
+                                if (isChecked) {
+                                    selectionStore.select(fieldName, item);
+                                }
+                                else {
+                                    selectionStore.unselect(fieldName, item);
+                                }
+                            } }))),
+                };
+            }) }),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 12 })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceListItem/ResourceListItem.tsx":
+/*!***********************************************************************!*\
+  !*** ./extension/app/resources/ResourceListItem/ResourceListItem.tsx ***!
+  \***********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourceListItem = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
+const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
+const SeeDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
+const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceListItem/styles.scss");
+exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceName, }) => {
+    const [isActionMenu, setIsActionMenu] = (0, react_1.useState)(false);
+    const platformStore = (0, stores_1.usePlatformStore)();
+    const onActionClick = (0, react_1.useCallback)((actionType) => __awaiter(void 0, void 0, void 0, function* () {
+        if (actionType === 'copy') {
+            setTimeout(() => {
+                (0, common_helpers_1.copyToClipboard)(`where ${platformStore.buildQueryParts('include', { [fieldName]: [resourceName] })}`);
+            }, 300);
+            return;
+        }
+        platformStore.modifyQuery(actionType, { [fieldName]: [resourceName] });
+        return;
+    }), [platformStore, fieldName, resourceName]);
+    return (react_1.default.createElement("div", { className: "resource-list-item", onMouseEnter: () => {
+            setIsActionMenu(true);
+        }, onMouseLeave: () => {
+            setIsActionMenu(false);
+        } },
+        react_1.default.createElement("div", { className: "resource-list-item-wrapper" },
+            children,
+            isActionMenu && (react_1.default.createElement("div", { className: "action-menu" },
+                react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }),
+                react_1.default.createElement(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }),
+                react_1.default.createElement(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }),
+                react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') }))))));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/ResourceTabInput/ResourceTabInput.tsx":
+/*!***********************************************************************!*\
+  !*** ./extension/app/resources/ResourceTabInput/ResourceTabInput.tsx ***!
+  \***********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourceTabInput = exports.newTabName = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const CheckIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
+const app_hooks_1 = __webpack_require__(/*! ../../app-hooks */ "./extension/app/app-hooks.ts");
+const AppControlInput_1 = __webpack_require__(/*! ../../components/inputs/AppControlInput/AppControlInput */ "./extension/app/components/inputs/AppControlInput/AppControlInput.tsx");
+const resources_types_1 = __webpack_require__(/*! ../resources-types */ "./extension/app/resources/resources-types.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceTabInput/styles.scss");
+exports.newTabName = '$$new-tab$$';
+const ResourceTabInput = (_a) => {
+    var { typeID, onApply, onRemove, className = '', edit, value = '' } = _a, restProps = __rest(_a, ["typeID", "onApply", "onRemove", "className", "edit", "value"]);
+    const isNewTab = value === exports.newTabName;
+    const [editMode, setEditMode] = (0, react_1.useState)(edit || isNewTab);
+    const prevEditMode = (0, app_hooks_1.usePrevious)(editMode);
+    const resourceStore = (0, stores_1.useResourceStore)();
+    const [inputValue, setInputValue] = (0, react_1.useState)(isNewTab ? '' : value);
+    const prevInputValue = (0, app_hooks_1.usePrevious)(inputValue, (v) => v.trim() !== '');
+    const inputRef = (0, react_1.useRef)(null);
+    const virtualInputRef = (0, react_1.useRef)(null);
+    const inputWrapperRef = (0, react_1.useRef)(null);
+    const normalizeTabName = (0, react_1.useCallback)((id, name) => {
+        const values = resourceStore.tabsNames.filter(tn => tn !== id);
+        if (!values.includes(name)) {
+            return name;
+        }
+        return (0, helpers_1.createNonDuplicateValue)(name, values);
+    }, [resourceStore]);
+    const finishEdit = (0, react_1.useCallback)((currentValue, prevValue) => {
+        const normalizedValue = currentValue.trim();
+        const newValue = normalizedValue ? normalizedValue : (prevValue === null || prevValue === void 0 ? void 0 : prevValue.trim()) || 'New Tab';
+        const newName = normalizeTabName(typeID, newValue);
+        inputRef.current.setSelectionRange(0, 0);
+        inputRef.current.focus();
+        setInputValue(newName);
+        setEditMode(false);
+        onApply(newName);
+    }, [normalizeTabName, onApply, typeID]);
+    (0, app_hooks_1.useOnClickOutside)(() => {
+        if (editMode) {
+            finishEdit(inputValue, prevInputValue);
+        }
+    }, inputWrapperRef);
+    const focusInput = (0, react_1.useCallback)((currentValue) => {
+        if (!(inputRef === null || inputRef === void 0 ? void 0 : inputRef.current)) {
+            return;
+        }
+        inputRef.current.setSelectionRange(currentValue.length, currentValue.length);
+        inputRef.current.focus();
+    }, []);
+    const setInputWidth = (0, react_1.useCallback)(() => {
+        if (!(inputRef === null || inputRef === void 0 ? void 0 : inputRef.current)) {
+            return;
+        }
+        inputRef.current.style.width = `${virtualInputRef.current.offsetWidth}px`;
+    }, []);
+    (0, react_1.useEffect)(() => {
+        const observer = new ResizeObserver(setInputWidth);
+        observer.observe(virtualInputRef.current);
+        return () => observer.disconnect();
+    }, [setInputWidth]);
+    (0, react_1.useEffect)(() => {
+        setInputWidth();
+    }, [inputValue, setInputWidth]);
+    (0, react_1.useEffect)(() => {
+        if (editMode && !prevEditMode && (inputRef === null || inputRef === void 0 ? void 0 : inputRef.current)) {
+            focusInput(inputValue);
+        }
+    }, [inputValue, editMode, focusInput, prevEditMode]);
+    const getControls = (0, react_1.useCallback)((inputVal, prevInputVal) => {
+        return (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Apply changes (Enter/Esc)" },
+                react_1.default.createElement("span", { className: "control" },
+                    react_1.default.createElement(CheckIcon_1.CheckIcon, { onClick: () => {
+                            finishEdit(inputVal, prevInputVal);
+                        } }))),
+            react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Delete tab" },
+                react_1.default.createElement("span", { className: "control" },
+                    react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
+                            setEditMode(false);
+                            onRemove();
+                        } })))));
+    }, [finishEdit, onRemove]);
+    return (react_1.default.createElement("div", { ref: inputWrapperRef, className: (0, common_helpers_1.createClassName)([
+            'resource-tab-input-wrapper',
+            editMode ? 'edit' : '',
+            className,
+        ]), onDoubleClick: () => {
+            if (!editMode && !resources_types_1.boundedResourcesTypeIDs.includes(typeID)) {
+                setEditMode(true);
+            }
+        }, onKeyDown: e => {
+            var _a, _b;
+            const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
+            if (code === 'enter' || code === 'escape') {
+                finishEdit(inputValue, prevInputValue);
+            }
+        } },
+        react_1.default.createElement(AppControlInput_1.AppControlInput, Object.assign({ ref: inputRef, className: (0, common_helpers_1.createClassName)([
+                'resource-tab-input',
+                className,
+            ]), onType: (v) => {
+                setInputValue(v);
+            }, edit: editMode, disabled: !editMode, controls: getControls(inputValue, prevInputValue), value: inputValue }, restProps)),
+        react_1.default.createElement("span", { className: "virtual-input", style: {
+                position: 'absolute',
+                opacity: 0,
+                pointerEvents: 'none',
+                top: -99999,
+                left: -99999,
+                whiteSpace: 'pre',
+            }, ref: virtualInputRef }, inputValue || '1')));
+};
+exports.ResourceTabInput = ResourceTabInput;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/TabsPlatformResources/TabsPlatformResources.tsx":
+/*!*********************************************************************************!*\
+  !*** ./extension/app/resources/TabsPlatformResources/TabsPlatformResources.tsx ***!
+  \*********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TabsPlatformResources = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const TabsPanel_1 = __webpack_require__(/*! ../../components/atoms/TabsPanel/TabsPanel */ "./extension/app/components/atoms/TabsPanel/TabsPanel.tsx");
+const HoverButton_1 = __webpack_require__(/*! ../../components/buttons/HoverButton/HoverButton */ "./extension/app/components/buttons/HoverButton/HoverButton.tsx");
+const UserIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/UserIcon/UserIcon */ "./extension/app/components/atoms/icons/UserIcon/UserIcon.tsx");
+const AssetIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/AssetIcon/AssetIcon */ "./extension/app/components/atoms/icons/AssetIcon/AssetIcon.tsx");
+const ResourceTabInput_1 = __webpack_require__(/*! ../ResourceTabInput/ResourceTabInput */ "./extension/app/resources/ResourceTabInput/ResourceTabInput.tsx");
+const resources_types_1 = __webpack_require__(/*! ../resources-types */ "./extension/app/resources/resources-types.ts");
+const SearchDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon */ "./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx");
+const AddNewButton_1 = __webpack_require__(/*! ../AddNewButton/AddNewButton */ "./extension/app/resources/AddNewButton/AddNewButton.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/TabsPlatformResources/styles.scss");
+exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) => {
+    const resourceStore = (0, stores_1.useResourceStore)();
+    const { resources, activeTabID } = resourceStore;
+    const countResources = (0, react_1.useCallback)((typeID, allResources) => {
+        return Object.keys((allResources === null || allResources === void 0 ? void 0 : allResources[typeID]) || {})
+            .reduce((count, fieldName) => {
+            return count + allResources[typeID][fieldName].size;
+        }, 0);
+    }, []);
+    const getTab = (0, react_1.useCallback)((id, icon, name, size, isHovered) => {
+        return (react_1.default.createElement(HoverButton_1.HoverButton, { icon: icon, hovered: isHovered, key: id },
+            react_1.default.createElement(ResourceTabInput_1.ResourceTabInput, { typeID: id, value: name, onApply: value => {
+                    resourceStore.renameTab(id, value, true);
+                    resourceStore.activeTabID = value;
+                }, onRemove: () => {
+                    resourceStore.removeTab(id, true);
+                } }),
+            react_1.default.createElement("span", { className: "resources-count strong" }, size)));
+    }, [resourceStore]);
+    const addNewTab = (0, react_1.useMemo)(() => {
+        return {
+            id: '$$add-new-tab$$',
+            component: react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Add custom tab" },
+                react_1.default.createElement(AddNewButton_1.AddNewButton, { className: "add-new-tab-button", onClick: () => {
+                        resourceStore.addTab(ResourceTabInput_1.newTabName, true);
+                        resourceStore.activeTabID = ResourceTabInput_1.newTabName;
+                    } })),
+            isDisabled: true,
+        };
+    }, [resourceStore]);
+    const tabs = (0, react_1.useMemo)(() => {
+        const result = [];
+        resources_types_1.boundedResourcesTypeIDs.forEach(typeID => {
+            result.push({
+                id: typeID,
+                component: getTab(typeID, typeID === resources_types_1.BoundedResourceTypeID.Accounts
+                    ? react_1.default.createElement(UserIcon_1.UserIcon, null)
+                    : react_1.default.createElement(AssetIcon_1.AssetIcon, null), typeID, countResources(typeID, resources), typeID === activeTabID),
+            });
+        });
+        Object.keys(resources).forEach(typeID => {
+            if (resources_types_1.boundedResourcesTypeIDs.includes(typeID)) {
+                return;
+            }
+            result.push({
+                id: typeID,
+                component: getTab(typeID, react_1.default.createElement(SearchDocumentIcon_1.SearchDocumentIcon, null), typeID, countResources(typeID, resources), typeID === activeTabID),
+            });
+        });
+        return result;
+    }, [activeTabID, countResources, getTab, resources]);
+    return (react_1.default.createElement("div", { className: "tabs-platform-resources-wrapper" },
+        react_1.default.createElement(TabsPanel_1.TabsPanel, { className: "tabs-platform-resources", tabs: [...tabs, addNewTab], onActiveTabChanged: id => {
+                if (resourceStore.isTabExist(id)) {
+                    resourceStore.activeTabID = id;
+                }
+            }, activeTab: activeTabID }, children)));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/resources-types.ts":
+/*!****************************************************!*\
+  !*** ./extension/app/resources/resources-types.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.boundedResourcesTypeIDs = exports.BoundedResourceTypeID = void 0;
+var BoundedResourceTypeID;
+(function (BoundedResourceTypeID) {
+    BoundedResourceTypeID["Accounts"] = "Accounts";
+    BoundedResourceTypeID["Assets"] = "Assets";
+})(BoundedResourceTypeID = exports.BoundedResourceTypeID || (exports.BoundedResourceTypeID = {}));
+exports.boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/stores/PlatformStore.ts":
+/*!*********************************************************!*\
+  !*** ./extension/app/resources/stores/PlatformStore.ts ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PlatformStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
+const content_services_1 = __webpack_require__(/*! ../../../content/services/content-services */ "./extension/content/services/content-services.ts");
+const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
+class PlatformStore {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    setPlatform(platform) {
+        if (!platform) {
+            return;
+        }
+        platform.connect();
+        this.platform = platform;
+        this.rootStore.appStore.view = 'resources';
+        this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
+        const watchers = (0, local_storage_1.getWatchers)(platform.getID());
+        Object.keys((0, local_storage_1.getWatchers)(platform.getID())).forEach(typeID => {
+            this.rootStore.resourceStore.addTab(typeID);
+            watchers[typeID].forEach(fieldName => {
+                this.rootStore.resourceStore.addField(fieldName, false, typeID);
+            });
+        });
+        (0, content_services_1.sendMessageFromApp)({
+            id: 'platform-set',
+            type: types_background_messages_1.MessageToBackground.BGRegisterPlatformTab,
+            payload: {
+                platformID: platform.getID(),
+            },
+        });
+        this.rootStore.resourceStore.saveWatchers('platform-set');
+    }
+    modifyQuery(modifyType, resources) {
+        (0, content_services_1.sendMessageFromApp)({
+            id: 'modify-query',
+            type: types_background_messages_1.MessageToBackground.BGModifyQuery,
+            payload: {
+                resources,
+                modifyType,
+            },
+        });
+    }
+    buildQueryParts(modifyType, resources) {
+        if (!this.platform) {
+            return 'Undefined platform';
+        }
+        return this.platform.buildQueryParts(modifyType, resources);
+    }
+    getName() {
+        if (!this.platform) {
+            return 'Undefined platform';
+        }
+        return this.platform.getName();
+    }
+}
+__decorate([
+    mobx_1.observable
+], PlatformStore.prototype, "platform", void 0);
+exports.PlatformStore = PlatformStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/stores/ResourceStore.ts":
+/*!*********************************************************!*\
+  !*** ./extension/app/resources/stores/ResourceStore.ts ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourceStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
+const content_services_1 = __webpack_require__(/*! ../../../content/services/content-services */ "./extension/content/services/content-services.ts");
+const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const resources_types_1 = __webpack_require__(/*! ../resources-types */ "./extension/app/resources/resources-types.ts");
+class ResourceStore {
+    constructor(rootStore) {
+        this.resources = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: {},
+            [resources_types_1.BoundedResourceTypeID.Assets]: {},
+        };
+        this.activeTabID = resources_types_1.BoundedResourceTypeID.Accounts;
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    refreshResources() {
+        this.resources = Object.assign({}, this.resources);
+    }
+    get tabsNames() {
+        return Object.keys(this.resources || {});
+    }
+    get countAllResources() {
+        let result = 0;
+        Object.keys(this.resources).forEach(typeID => {
+            Object.keys(this.resources[typeID]).forEach(fieldName => {
+                var _a;
+                result += ((_a = this.resources[typeID][fieldName]) === null || _a === void 0 ? void 0 : _a.size) || 0;
+            });
+        });
+        return result;
+    }
+    isTabExist(tabID) {
+        return typeof this.resources[tabID] !== 'undefined';
+    }
+    isFieldExist(tabID, fieldName) {
+        return typeof this.resources[tabID][fieldName] !== 'undefined';
+    }
+    getFieldsNames(typeID = this.activeTabID) {
+        return Object.keys(this.resources[typeID] || []);
+    }
+    addResources(resources) {
+        let needSaveWatchers = false;
+        Object.keys(resources || {}).forEach(tabID => {
+            if (!this.isTabExist(tabID)) {
+                this.addTab(tabID);
+                needSaveWatchers = true;
+            }
+            Object.keys(resources[tabID]).forEach(fieldName => {
+                if (!this.isFieldExist(tabID, fieldName)) {
+                    needSaveWatchers = true;
+                    this.addField(fieldName, false, tabID);
+                }
+                let set = this.resources[tabID][fieldName];
+                resources[tabID][fieldName].forEach(resourceName => {
+                    if (!set.has(resourceName)) {
+                        set.add(resourceName);
+                    }
+                });
+                this.resources[tabID][fieldName] = set;
+            });
+        });
+        if (needSaveWatchers) {
+            this.saveWatchers('add-resources');
+        }
+        this.refreshResources();
+    }
+    clearResources() {
+        const newResources = {};
+        Object.keys(this.resources).forEach(typeID => {
+            newResources[typeID] = {};
+            Object.keys(this.resources[typeID]).forEach(fieldName => {
+                newResources[typeID][fieldName] = new Set();
+            });
+        });
+        this.rootStore.resourcesSelectionStore.unselectAll();
+        this.resources = newResources;
+    }
+    getResources(fieldName, tabID = this.activeTabID) {
+        return Array.from(this.resources[tabID][fieldName]);
+    }
+    addTab(tabID, save = false) {
+        if (this.resources[tabID]) {
+            return;
+        }
+        this.resources[tabID] = {};
+        if (save) {
+            this.saveWatchers('add-tab');
+        }
+        this.refreshResources();
+    }
+    removeTab(tabID, save = false) {
+        if (!this.resources[tabID]) {
+            return;
+        }
+        delete this.resources[tabID];
+        if (tabID === this.activeTabID) {
+            this.activeTabID = Object.keys(this.resources)[0];
+        }
+        if (save) {
+            this.saveWatchers('remove-tab');
+        }
+        this.refreshResources();
+    }
+    renameTab(tabID, tabName, save = false) {
+        if (tabID === tabName) {
+            return;
+        }
+        this.resources[tabName] = this.resources[tabID];
+        delete this.resources[tabID];
+        if (save) {
+            this.saveWatchers('rename-tab');
+        }
+        this.refreshResources();
+    }
+    addField(fieldName, save = false, tabID = this.activeTabID) {
+        if (this.resources[tabID][fieldName]) {
+            return;
+        }
+        this.resources[tabID][fieldName] = new Set();
+        if (save) {
+            this.saveWatchers('add-field');
+        }
+        this.refreshResources();
+    }
+    removeField(fieldName, save = false, tabID = this.activeTabID) {
+        const selectionStore = this.rootStore.resourcesSelectionStore;
+        selectionStore.selectedFields.delete(fieldName);
+        selectionStore.selected.delete(fieldName);
+        let resource = this.resources[tabID];
+        this.resources[tabID] = Object
+            .keys(resource)
+            .reduce((r, name) => {
+            if (name !== fieldName) {
+                r[name] = resource[name];
+            }
+            return r;
+        }, {});
+        if (save) {
+            this.saveWatchers('remove-field');
+        }
+        this.refreshResources();
+    }
+    saveWatchers(messageId) {
+        var _a;
+        const platformID = (_a = this.rootStore.platformStore.platform) === null || _a === void 0 ? void 0 : _a.getID();
+        if (!platformID) {
+            return;
+        }
+        (0, content_services_1.sendMessageFromApp)({
+            id: `save-watchers--${messageId ? `${messageId}--` : ''}${(0, helpers_1.uuid)()}`,
+            type: types_background_messages_1.MessageToBackground.BGSetWatchers,
+            payload: {
+                platformID,
+                watchers: (0, local_storage_1.setWatchers)(Object.keys(this.resources).reduce((watchingResources, typeID) => {
+                    watchingResources[typeID] = Object.keys(this.resources[typeID]);
+                    return watchingResources;
+                }, {})),
+            },
+        });
+    }
+}
+__decorate([
+    mobx_1.observable
+], ResourceStore.prototype, "resources", void 0);
+__decorate([
+    mobx_1.computed
+], ResourceStore.prototype, "tabsNames", null);
+__decorate([
+    mobx_1.observable
+], ResourceStore.prototype, "activeTabID", void 0);
+__decorate([
+    mobx_1.computed
+], ResourceStore.prototype, "countAllResources", null);
+exports.ResourceStore = ResourceStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/stores/ResourcesSelectionStore.ts":
+/*!*******************************************************************!*\
+  !*** ./extension/app/resources/stores/ResourcesSelectionStore.ts ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourcesSelectionStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
+class ResourcesSelectionStore {
+    constructor(rootStore) {
+        this.selectedResources = {};
+        this.selectedResourcesFields = {};
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    getActiveTypeID() {
+        return this.rootStore.resourceStore.activeTabID;
+    }
+    refreshSelections() {
+        this.selectedResources = Object.assign({}, this.selectedResources);
+        this.selectedResourcesFields = Object.assign({}, this.selectedResourcesFields);
+    }
+    countByTypeID(typeID) {
+        return Array.from(this.selectedResourcesFields[typeID] || [])
+            .reduce((count, fieldName) => { var _a; return count += ((_a = (this.selectedResources[typeID] || new Map()).get(fieldName)) === null || _a === void 0 ? void 0 : _a.size) || 0; }, 0);
+    }
+    unselectByTypeID(typeID) {
+        this.selectedResources[typeID] = new Map();
+        this.selectedResourcesFields[typeID] = new Set();
+    }
+    get selected() {
+        const typeID = this.getActiveTypeID();
+        if (!this.selectedResources[typeID]) {
+            this.selectedResources[typeID] = new Map();
+        }
+        return this.selectedResources[typeID];
+    }
+    get selectedFields() {
+        const typeID = this.getActiveTypeID();
+        if (!this.selectedResourcesFields[typeID]) {
+            this.selectedResourcesFields[typeID] = new Set();
+        }
+        return this.selectedResourcesFields[typeID];
+    }
+    get normalisedSelected() {
+        return Array.from(this.selectedFields)
+            .reduce((result, fieldName) => {
+            result[fieldName] = Array.from(this.selected.get(fieldName));
+            return result;
+        }, {});
+    }
+    get countSelected() {
+        return this.countByTypeID(this.getActiveTypeID());
+    }
+    get countAllSelected() {
+        let result = 0;
+        Object.keys(this.selectedResources).forEach(typeID => {
+            result = result + this.countByTypeID(typeID);
+        });
+        return result;
+    }
+    get uniqueSelected() {
+        return Array.from(Array.from(this.selectedFields).reduce((res, fieldName) => {
+            Array.from(this.selected.get(fieldName)).forEach(v => res.add(v));
+            return res;
+        }, new Set()));
+    }
+    select(fieldName, resourceName, tabID = this.getActiveTypeID()) {
+        if (typeof resourceName === 'undefined') {
+            this.selectedResources[tabID].set(fieldName, new Set(this.rootStore.resourceStore.getResources(fieldName, tabID)));
+            this.selectedResourcesFields[tabID].add(fieldName);
+            this.refreshSelections();
+            return;
+        }
+        const values = this.selected.get(fieldName) || new Set();
+        values.add(resourceName);
+        this.selectedResources[tabID].set(fieldName, values);
+        this.selectedResourcesFields[tabID].add(fieldName);
+        this.refreshSelections();
+    }
+    unselect(fieldName, resourceName, tabID = this.getActiveTypeID()) {
+        let values = this.selected.get(fieldName) || new Set();
+        if (typeof resourceName === 'undefined') {
+            values = new Set();
+        }
+        else {
+            values.delete(resourceName);
+        }
+        if (values.size < 1) {
+            this.selectedResources[tabID].delete(fieldName);
+            this.selectedResourcesFields[tabID].delete(fieldName);
+            this.refreshSelections();
+            return;
+        }
+        this.selectedResources[tabID].set(fieldName, values);
+        this.selectedResourcesFields[tabID].add(fieldName);
+        this.refreshSelections();
+    }
+    unselectAll() {
+        Object.keys(this.selectedResources).forEach(typeID => {
+            this.unselectByTypeID(typeID);
+        });
+        this.refreshSelections();
+    }
+}
+__decorate([
+    mobx_1.observable
+], ResourcesSelectionStore.prototype, "selectedResources", void 0);
+__decorate([
+    mobx_1.observable
+], ResourcesSelectionStore.prototype, "selectedResourcesFields", void 0);
+__decorate([
+    mobx_1.computed
+], ResourcesSelectionStore.prototype, "selected", null);
+__decorate([
+    mobx_1.computed
+], ResourcesSelectionStore.prototype, "selectedFields", null);
+__decorate([
+    mobx_1.computed
+], ResourcesSelectionStore.prototype, "normalisedSelected", null);
+__decorate([
+    mobx_1.computed
+], ResourcesSelectionStore.prototype, "countSelected", null);
+__decorate([
+    mobx_1.computed
+], ResourcesSelectionStore.prototype, "countAllSelected", null);
+__decorate([
+    mobx_1.computed
+], ResourcesSelectionStore.prototype, "uniqueSelected", null);
+exports.ResourcesSelectionStore = ResourcesSelectionStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/views/ResourcesContentView/ResourcesContentView.tsx":
+/*!*************************************************************************************!*\
+  !*** ./extension/app/resources/views/ResourcesContentView/ResourcesContentView.tsx ***!
+  \*************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourcesContentView = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const PlatformResources_1 = __webpack_require__(/*! ../../PlatformResources/PlatformResources */ "./extension/app/resources/PlatformResources/PlatformResources.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/views/ResourcesContentView/styles.scss");
+exports.ResourcesContentView = (0, mobx_react_lite_1.observer)(({ className = '', }) => {
+    const platformStore = (0, stores_1.usePlatformStore)();
+    const { activeTabID, countAllResources } = (0, stores_1.useResourceStore)();
+    const ref = (0, react_1.useRef)();
+    (0, react_1.useEffect)(() => {
+        var _a, _b, _c;
+        if (!((_a = ref.current) === null || _a === void 0 ? void 0 : _a.el)) {
+            return;
+        }
+        (_c = (_b = ref.current.el
+            .querySelector('.simplebar-content-wrapper')) === null || _b === void 0 ? void 0 : _b.scrollTo) === null || _c === void 0 ? void 0 : _c.call(_b, { top: 0 });
+    }, [activeTabID]);
+    if (!platformStore.platform) {
+        return null;
+    }
+    return (react_1.default.createElement(simplebar_react_1.default, { ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) },
+        countAllResources < 1 && (react_1.default.createElement("div", { className: "resource-content-view platform-detected" },
+            react_1.default.createElement(Spacer_1.Spacer, { height: 8 }),
+            platformStore.getName(),
+            " detected. Run a query to see results.")),
+        react_1.default.createElement(PlatformResources_1.PlatformResources, null)));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/views/ResourcesFooterView/ResourcesFooterView.tsx":
+/*!***********************************************************************************!*\
+  !*** ./extension/app/resources/views/ResourcesFooterView/ResourcesFooterView.tsx ***!
+  \***********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourcesFooterView = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const BulkResourcesPanel_1 = __webpack_require__(/*! ../../BulkResourcesPanel/BulkResourcesPanel */ "./extension/app/resources/BulkResourcesPanel/BulkResourcesPanel.tsx");
+const ResourcesFooterView = () => {
+    return (react_1.default.createElement(BulkResourcesPanel_1.BulkResourcesPanel, null));
+};
+exports.ResourcesFooterView = ResourcesFooterView;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx":
+/*!***********************************************************************************!*\
+  !*** ./extension/app/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx ***!
+  \***********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResourcesHeaderView = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const TabsPlatformResources_1 = __webpack_require__(/*! ../../TabsPlatformResources/TabsPlatformResources */ "./extension/app/resources/TabsPlatformResources/TabsPlatformResources.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const AddNewButton_1 = __webpack_require__(/*! ../../AddNewButton/AddNewButton */ "./extension/app/resources/AddNewButton/AddNewButton.tsx");
+const AddFieldInput_1 = __webpack_require__(/*! ../../AddFieldInput/AddFieldInput */ "./extension/app/resources/AddFieldInput/AddFieldInput.tsx");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
+const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/views/ResourcesHeaderView/styles.scss");
+exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
+    const [addNewFieldMode, setAddNewFieldMode] = (0, react_1.useState)(false);
+    const platformStore = (0, stores_1.usePlatformStore)();
+    const resourceStore = (0, stores_1.useResourceStore)();
+    const inputWrapperRef = (0, react_1.useRef)(null);
+    (0, app_hooks_1.useOnClickOutside)(() => {
+        if (addNewFieldMode) {
+            setAddNewFieldMode(false);
+        }
+    }, inputWrapperRef);
+    if (!platformStore.platform) {
+        return null;
+    }
+    return (react_1.default.createElement("div", { className: "resources-header-view" },
+        react_1.default.createElement(Spacer_1.Spacer, { height: 18 }),
+        react_1.default.createElement(TabsPlatformResources_1.TabsPlatformResources, null),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 16 }),
+        react_1.default.createElement("div", { className: "fields" },
+            react_1.default.createElement("span", null, "Fields"),
+            react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Add custom field", className: "small" },
+                react_1.default.createElement(AddNewButton_1.AddNewButton, { onClick: () => {
+                        setAddNewFieldMode(true);
+                    } })),
+            react_1.default.createElement(Spacer_1.Spacer, { height: 8 })),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
+        addNewFieldMode && (react_1.default.createElement("div", null,
+            react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
+            react_1.default.createElement(AddFieldInput_1.AddFieldInput, { ref: inputWrapperRef, onApply: value => {
+                    setAddNewFieldMode(false);
+                    const nValue = value.trim();
+                    if (!nValue) {
+                        return;
+                    }
+                    resourceStore.addField((0, helpers_1.createNonDuplicateValue)(nValue, resourceStore.getFieldsNames()), true);
+                }, onRemove: () => {
+                    setAddNewFieldMode(false);
+                } }))),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 4 })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/root/App/App.tsx":
+/*!****************************************!*\
+  !*** ./extension/app/root/App/App.tsx ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.App = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const DraggableResizable_1 = __webpack_require__(/*! ../../components/atoms/DragableResizable/DraggableResizable */ "./extension/app/components/atoms/DragableResizable/DraggableResizable.tsx");
+const AppHeader_1 = __webpack_require__(/*! ../AppHeader/AppHeader */ "./extension/app/root/AppHeader/AppHeader.tsx");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const AppContent_1 = __webpack_require__(/*! ../AppContent/AppContent */ "./extension/app/root/AppContent/AppContent.tsx");
+const AppFooter_1 = __webpack_require__(/*! ../AppFooter/AppFooter */ "./extension/app/root/AppFooter/AppFooter.tsx");
+const app_media_1 = __webpack_require__(/*! ./app-media */ "./extension/app/root/App/app-media.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./app.scss */ "./extension/app/root/App/app.scss");
+const APP_PADDING = 20;
+exports.App = (0, mobx_react_lite_1.observer)(() => {
+    const appStore = (0, stores_1.useAppStore)();
+    const wrapperRef = (0, react_1.useRef)(null);
+    const headerRef = (0, react_1.useRef)(null);
+    const contentRef = (0, react_1.useRef)(null);
+    const footerRef = (0, react_1.useRef)(null);
+    const calculateContentHeight = (0, react_1.useCallback)(() => {
+        if (!(footerRef === null || footerRef === void 0 ? void 0 : footerRef.current) || !(headerRef === null || headerRef === void 0 ? void 0 : headerRef.current) || !(wrapperRef === null || wrapperRef === void 0 ? void 0 : wrapperRef.current)) {
+            return 'unset';
+        }
+        return (wrapperRef.current.offsetHeight -
+            APP_PADDING * 2 -
+            headerRef.current.offsetHeight -
+            footerRef.current.offsetHeight);
+    }, []);
+    const setContentHeightToElement = (0, react_1.useCallback)((value) => {
+        if (!(contentRef === null || contentRef === void 0 ? void 0 : contentRef.current)) {
+            return;
+        }
+        contentRef.current.style.height = typeof value === 'number'
+            ? `${value}px`
+            : value;
+    }, []);
+    (0, react_1.useLayoutEffect)(() => {
+        appStore.rootElement = wrapperRef.current;
+        const prevValuesHeight = { header: 0, footer: 0, wrapper: 0 };
+        const onHeightChangeCallback = (entries, oldHeight) => {
+            const newHeight = entries[0].contentRect.height;
+            if (newHeight !== oldHeight) {
+                setContentHeightToElement(calculateContentHeight());
+            }
+            return newHeight;
+        };
+        let currentScreenType = (0, app_media_1.calculateScreen)(wrapperRef.current.offsetWidth);
+        const onWidthChangeCallback = (entries) => {
+            const screenType = (0, app_media_1.calculateScreen)(entries[0].contentRect.width);
+            if (currentScreenType !== screenType) {
+                wrapperRef.current.classList.add(screenType);
+                wrapperRef.current.classList.remove(currentScreenType);
+                currentScreenType = screenType;
+            }
+        };
+        const [observerHeader, observerFooter, observerWrapper] = ['header', 'footer', 'wrapper']
+            .map(elemName => new ResizeObserver((entries) => {
+            prevValuesHeight[elemName] = onHeightChangeCallback(entries, prevValuesHeight[elemName]);
+            if (elemName === 'wrapper') {
+                onWidthChangeCallback(entries);
+            }
+        }));
+        observerHeader.observe(headerRef.current);
+        observerFooter.observe(footerRef.current);
+        observerWrapper.observe(wrapperRef.current);
+        wrapperRef.current.classList.add(currentScreenType);
+        return () => {
+            observerHeader.disconnect();
+            observerFooter.disconnect();
+            observerWrapper.disconnect();
+        };
+    }, [appStore, calculateContentHeight, setContentHeightToElement]);
+    const content = (0, react_1.useMemo)(() => {
+        return (react_1.default.createElement("div", { className: "app-wrapper", ref: wrapperRef, style: {
+                padding: APP_PADDING,
+            } },
+            react_1.default.createElement(AppHeader_1.AppHeader, { ref: headerRef }),
+            react_1.default.createElement(AppContent_1.AppContent, { ref: contentRef }),
+            react_1.default.createElement(AppFooter_1.AppFooter, { ref: footerRef })));
+    }, []);
+    const position = {
+        top: appStore.topPosition,
+        left: appStore.leftPosition,
+        width: appStore.widthApp,
+        height: appStore.heightApp,
+    };
+    return (react_1.default.createElement(DraggableResizable_1.DraggableResizable, { className: (0, common_helpers_1.createClassName)([
+            'the-prime-hunt--extension--root',
+            appStore.isExtensionOpen ? '' : 'invisible',
+        ]), position: position, dragElementRef: appStore.dragElementRef, minHeight: appStore.getMinHeight(), minWidth: appStore.getMinWidth(), onStart: () => {
+            if (appStore.overlay) {
+                appStore.overlay.style.position = 'fixed';
+            }
+        }, onChange: (type) => {
+            if (type !== 'move' && !appStore.isResizing) {
+                appStore.isResizing = true;
+            }
+        }, onEnd: (newPosition) => {
+            if (appStore.overlay) {
+                appStore.overlay.style.position = 'unset';
+            }
+            if (appStore.isResizing) {
+                appStore.isResizing = false;
+            }
+            if ((0, helpers_1.isFlatObjectsEqual)(newPosition, position)) {
+                return;
+            }
+            appStore.topPosition = newPosition.top;
+            appStore.leftPosition = newPosition.left;
+            appStore.widthApp = newPosition.width;
+            appStore.heightApp = newPosition.height;
+            appStore.savePosition();
+        } }, content));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/root/App/AppStore.ts":
+/*!********************************************!*\
+  !*** ./extension/app/root/App/AppStore.ts ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
+const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
+class AppStore {
+    constructor() {
+        this.mounted = false;
+        this.loadingKeys = [];
+        this.dragElementRef = {};
+        this.isResizing = false;
+        this.isExtensionOpen = false;
+        this.rootElement = null;
+        this.view = 'not-found';
+        this.setPosition();
+        (0, mobx_1.makeObservable)(this);
+    }
+    getMinHeight() {
+        return AppStore.MIN_HEIGHT;
+    }
+    getMinWidth() {
+        return AppStore.MIN_WIDTH;
+    }
+    set widthApp(value) {
+        if (value > 0
+            && value !== this.width) {
+            this.width = value >= AppStore.MIN_WIDTH
+                ? value
+                : AppStore.MIN_WIDTH;
+        }
+    }
+    get widthApp() {
+        return this.width;
+    }
+    set heightApp(value) {
+        if (value > 0
+            && value !== this.height) {
+            this.height = value >= AppStore.MIN_HEIGHT
+                ? value
+                : AppStore.MIN_HEIGHT;
+        }
+    }
+    get heightApp() {
+        return this.height;
+    }
+    set topPosition(value) {
+        if (value !== this.top) {
+            this.top = value;
+        }
+    }
+    get topPosition() {
+        return this.top;
+    }
+    set leftPosition(value) {
+        if (value !== this.left) {
+            this.left = value;
+        }
+    }
+    get leftPosition() {
+        return this.left;
+    }
+    updatePositionValues(position) {
+        const { height, left, width, top } = position;
+        this.widthApp = width;
+        this.heightApp = height;
+        this.topPosition = top;
+        this.leftPosition = left;
+    }
+    startLoading(key) {
+        if (this.isLoading(key)) {
+            return;
+        }
+        this.loadingKeys.push(key);
+    }
+    stopLoading(key) {
+        this.loadingKeys = this.loadingKeys.filter(k => k !== key);
+    }
+    isLoading(key) {
+        return this.loadingKeys.includes(key);
+    }
+    setPosition(position) {
+        const cachedPosition = (0, local_storage_1.getPosition)();
+        if (cachedPosition) {
+            return this.updatePositionValues(cachedPosition);
+        }
+        if (!cachedPosition && position) {
+            return this.updatePositionValues(position);
+        }
+        this.updatePositionValues({
+            top: 100,
+            left: 100,
+            width: 100,
+            height: 100,
+        });
+    }
+    savePosition() {
+        (0, local_storage_1.setPosition)({
+            top: this.top,
+            left: this.left,
+            height: this.height,
+            width: this.width,
+        });
+    }
+}
+AppStore.MIN_HEIGHT = 400;
+AppStore.MIN_WIDTH = 320;
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "mounted", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "loadingKeys", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "dragElementRef", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "isResizing", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "width", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "height", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "top", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "left", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "isExtensionOpen", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "overlay", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "rootElement", void 0);
+__decorate([
+    mobx_1.observable
+], AppStore.prototype, "view", void 0);
+exports.AppStore = AppStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/root/App/app-media.ts":
+/*!*********************************************!*\
+  !*** ./extension/app/root/App/app-media.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.calculateScreen = void 0;
+const calculateScreen = (newWidth) => {
+    if (newWidth < 390) {
+        return 'ssm';
+    }
+    if (newWidth >= 390 && newWidth < 480) {
+        return 'sm';
+    }
+    if (newWidth >= 480 && newWidth < 890) {
+        return 'md';
+    }
+    if (newWidth >= 890 && newWidth < 1200) {
+        return 'lg';
+    }
+    return 'hg';
+};
+exports.calculateScreen = calculateScreen;
+
+
+/***/ }),
+
+/***/ "./extension/app/root/AppContent/AppContent.tsx":
+/*!******************************************************!*\
+  !*** ./extension/app/root/AppContent/AppContent.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppContent = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const NotFoundContentView_1 = __webpack_require__(/*! ../../not-found/views/NotFoundContentView/NotFoundContentView */ "./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx");
+const IntegrationContentView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationContentView/IntegrationContentView */ "./extension/app/integrations/views/IntegrationContentView/IntegrationContentView.tsx");
+const ResourcesContentView_1 = __webpack_require__(/*! ../../resources/views/ResourcesContentView/ResourcesContentView */ "./extension/app/resources/views/ResourcesContentView/ResourcesContentView.tsx");
+const FaqContentView_1 = __webpack_require__(/*! ../../faq/views/FaqContentView/FaqContentView */ "./extension/app/faq/views/FaqContentView/FaqContentView.tsx");
+exports.AppContent = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
+    const { view } = (0, stores_1.useAppStore)();
+    return (react_1.default.createElement("div", { className: "app-content", ref: ref },
+        react_1.default.createElement(ResourcesContentView_1.ResourcesContentView, { className: view === 'resources' ? '' : 'invisible' }),
+        view === 'not-found' && react_1.default.createElement(NotFoundContentView_1.NotFoundContentView, null),
+        view === 'integrations' && react_1.default.createElement(IntegrationContentView_1.IntegrationContentView, null),
+        view === 'faq' && react_1.default.createElement(FaqContentView_1.FaqContentView, null)));
+}));
+
+
+/***/ }),
+
+/***/ "./extension/app/root/AppFooter/AppFooter.tsx":
+/*!****************************************************!*\
+  !*** ./extension/app/root/AppFooter/AppFooter.tsx ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppFooter = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const IntegrationFooterView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationFooterView/IntegrationFooterView */ "./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx");
+const ResourcesFooterView_1 = __webpack_require__(/*! ../../resources/views/ResourcesFooterView/ResourcesFooterView */ "./extension/app/resources/views/ResourcesFooterView/ResourcesFooterView.tsx");
+const FaqFooterView_1 = __webpack_require__(/*! ../../faq/views/FaqFooterView/FaqFooterView */ "./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx");
+exports.AppFooter = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
+    const { view } = (0, stores_1.useAppStore)();
+    return (react_1.default.createElement("div", { className: "app-footer", ref: ref },
+        view === 'resources' && react_1.default.createElement(ResourcesFooterView_1.ResourcesFooterView, null),
+        view === 'integrations' && react_1.default.createElement(IntegrationFooterView_1.IntegrationFooterView, null),
+        view === 'faq' && react_1.default.createElement(FaqFooterView_1.FaqFooterView, null)));
+}));
+
+
+/***/ }),
+
+/***/ "./extension/app/root/AppHeader/AppHeader.tsx":
+/*!****************************************************!*\
+  !*** ./extension/app/root/AppHeader/AppHeader.tsx ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppHeader = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const CloseAppButton_1 = __webpack_require__(/*! ../CloseAppButton/CloseAppButton */ "./extension/app/root/CloseAppButton/CloseAppButton.tsx");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const LogoIcon_1 = __webpack_require__(/*! ../../components/icons/LogoIcon/LogoIcon */ "./extension/app/components/icons/LogoIcon/LogoIcon.tsx");
+const ResourcesHeaderView_1 = __webpack_require__(/*! ../../resources/views/ResourcesHeaderView/ResourcesHeaderView */ "./extension/app/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx");
+const IntegrationHeaderView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationHeaderView/IntegrationHeaderView */ "./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx");
+const FaqButton_1 = __webpack_require__(/*! ../../faq/FaqButton/FaqButton */ "./extension/app/faq/FaqButton/FaqButton.tsx");
+const FaqHeaderView_1 = __webpack_require__(/*! ../../faq/views/FaqHeaderView/FaqHeaderView */ "./extension/app/faq/views/FaqHeaderView/FaqHeaderView.tsx");
+const AppLink_1 = __webpack_require__(/*! ../../components/links/AppLink/AppLink */ "./extension/app/components/links/AppLink/AppLink.tsx");
+const SettingsButton_1 = __webpack_require__(/*! ../../integrations/SettingsButton/SettingsButton */ "./extension/app/integrations/SettingsButton/SettingsButton.tsx");
+const ExportButton_1 = __webpack_require__(/*! ../../resources/ExportButton/ExportButton */ "./extension/app/resources/ExportButton/ExportButton.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/root/AppHeader/styles.scss");
+exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
+    const { platform } = (0, stores_1.usePlatformStore)();
+    const appStore = (0, stores_1.useAppStore)();
+    const dragElementRef = (0, react_1.useRef)(null);
+    (0, react_1.useEffect)(() => {
+        appStore.dragElementRef = dragElementRef;
+    }, [appStore]);
+    return (react_1.default.createElement("div", { className: "app-header", ref: ref },
+        react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+                'app-header-wrapper',
+            ]) },
+            react_1.default.createElement("span", { className: "group" },
+                react_1.default.createElement(AppLink_1.AppLink, { href: "https://socprime.com/?utm_source=addon-logo", target: "_blank" },
+                    react_1.default.createElement(LogoIcon_1.LogoIcon, null)),
+                react_1.default.createElement("span", { className: "name strong drag-activator", ref: dragElementRef }, "The Prime Hunt"),
+                react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+                        'spinner',
+                        appStore.loadingKeys.length > 0 ? '' : 'invisible',
+                    ]) })),
+            react_1.default.createElement("span", { className: "group" },
+                react_1.default.createElement("div", { className: "buttons-wrapper" },
+                    platform
+                        && appStore.view !== 'integrations'
+                        && appStore.view !== 'faq' && react_1.default.createElement(ExportButton_1.ExportButton, null),
+                    appStore.view === 'resources' && react_1.default.createElement(SettingsButton_1.SettingsButton, null),
+                    appStore.view === 'resources' && react_1.default.createElement(FaqButton_1.FaqButton, null),
+                    (appStore.view === 'resources'
+                        || appStore.view === 'not-found') && react_1.default.createElement(CloseAppButton_1.CloseAppButton, null)))),
+        appStore.view === 'resources' && (react_1.default.createElement(ResourcesHeaderView_1.ResourcesHeaderView, null)),
+        appStore.view === 'integrations' && (react_1.default.createElement(IntegrationHeaderView_1.IntegrationHeaderView, null)),
+        appStore.view === 'faq' && (react_1.default.createElement(FaqHeaderView_1.FaqHeaderView, null))));
+}));
+
+
+/***/ }),
+
+/***/ "./extension/app/root/CloseAppButton/CloseAppButton.tsx":
+/*!**************************************************************!*\
+  !*** ./extension/app/root/CloseAppButton/CloseAppButton.tsx ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CloseAppButton = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const CrossIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/CrossIcon/CrossIcon */ "./extension/app/components/atoms/icons/CrossIcon/CrossIcon.tsx");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/root/CloseAppButton/styles.scss");
+const CloseAppButton = () => {
+    const appStore = (0, stores_1.useAppStore)();
+    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "close-app-button", onClick: () => {
+            appStore.isExtensionOpen = false;
+        } },
+        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Hide/Show extension (Ctrl+Q)", className: "small" },
+            react_1.default.createElement(CrossIcon_1.CrossIcon, null))));
+};
+exports.CloseAppButton = CloseAppButton;
+
+
+/***/ }),
+
 /***/ "./extension/app/stores/RootStore.ts":
 /*!*******************************************!*\
   !*** ./extension/app/stores/RootStore.ts ***!
@@ -55603,22 +56777,18 @@ stores_1.rootStore.appStore.mounted = true;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RootStore = void 0;
-const AppStore_1 = __webpack_require__(/*! ../components/App/AppStore */ "./extension/app/components/App/AppStore.ts");
-const ResourceStore_1 = __webpack_require__(/*! ../components/resources/stores/ResourceStore */ "./extension/app/components/resources/stores/ResourceStore.ts");
-const ServicesSelectionStore_1 = __webpack_require__(/*! ../components/resources/stores/ServicesSelectionStore */ "./extension/app/components/resources/stores/ServicesSelectionStore.ts");
-const AssetsSelectionStore_1 = __webpack_require__(/*! ../components/resources/stores/AssetsSelectionStore */ "./extension/app/components/resources/stores/AssetsSelectionStore.ts");
-const AccountsSelectionStore_1 = __webpack_require__(/*! ../components/resources/stores/AccountsSelectionStore */ "./extension/app/components/resources/stores/AccountsSelectionStore.ts");
-const PlatformStore_1 = __webpack_require__(/*! ../components/resources/stores/PlatformStore */ "./extension/app/components/resources/stores/PlatformStore.ts");
-const IntegrationsStore_1 = __webpack_require__(/*! ../components/integrations/stores/IntegrationsStore */ "./extension/app/components/integrations/stores/IntegrationsStore.ts");
+const AppStore_1 = __webpack_require__(/*! ../root/App/AppStore */ "./extension/app/root/App/AppStore.ts");
+const ResourceStore_1 = __webpack_require__(/*! ../resources/stores/ResourceStore */ "./extension/app/resources/stores/ResourceStore.ts");
+const PlatformStore_1 = __webpack_require__(/*! ../resources/stores/PlatformStore */ "./extension/app/resources/stores/PlatformStore.ts");
+const IntegrationsStore_1 = __webpack_require__(/*! ../integrations/stores/IntegrationsStore */ "./extension/app/integrations/stores/IntegrationsStore.ts");
+const ResourcesSelectionStore_1 = __webpack_require__(/*! ../resources/stores/ResourcesSelectionStore */ "./extension/app/resources/stores/ResourcesSelectionStore.ts");
 class RootStore {
     constructor() {
         this.appStore = new AppStore_1.AppStore();
-        this.resourceStore = new ResourceStore_1.ResourceStore(this);
         this.integrationsStore = new IntegrationsStore_1.IntegrationsStore();
-        this.servicesSelectionStore = new ServicesSelectionStore_1.ServicesSelectionStore();
-        this.assetsSelectionStore = new AssetsSelectionStore_1.AssetsSelectionStore();
-        this.accountsSelectionStore = new AccountsSelectionStore_1.AccountsSelectionStore();
+        this.resourceStore = new ResourceStore_1.ResourceStore(this);
         this.platformStore = new PlatformStore_1.PlatformStore(this);
+        this.resourcesSelectionStore = new ResourcesSelectionStore_1.ResourcesSelectionStore(this);
     }
 }
 exports.RootStore = RootStore;
@@ -55635,7 +56805,7 @@ exports.RootStore = RootStore;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.rootStore = exports.useIntegrationsStore = exports.useAccountsSelectionStore = exports.useAssetsSelectionStore = exports.useServicesSelectionStore = exports.usePlatformStore = exports.useResourceStore = exports.useAppStore = exports.useRootStore = exports.RootStoreContext = void 0;
+exports.rootStore = exports.useIntegrationsStore = exports.useResourcesSelectionStore = exports.usePlatformStore = exports.useResourceStore = exports.useAppStore = exports.useRootStore = exports.RootStoreContext = void 0;
 const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/mobx/dist/mobx.esm.js");
 const RootStore_1 = __webpack_require__(/*! ./RootStore */ "./extension/app/stores/RootStore.ts");
@@ -55662,21 +56832,11 @@ const usePlatformStore = () => {
     return rootStore.platformStore;
 };
 exports.usePlatformStore = usePlatformStore;
-const useServicesSelectionStore = () => {
+const useResourcesSelectionStore = () => {
     const rootStore = (0, exports.useRootStore)();
-    return rootStore.servicesSelectionStore;
+    return rootStore.resourcesSelectionStore;
 };
-exports.useServicesSelectionStore = useServicesSelectionStore;
-const useAssetsSelectionStore = () => {
-    const rootStore = (0, exports.useRootStore)();
-    return rootStore.assetsSelectionStore;
-};
-exports.useAssetsSelectionStore = useAssetsSelectionStore;
-const useAccountsSelectionStore = () => {
-    const rootStore = (0, exports.useRootStore)();
-    return rootStore.accountsSelectionStore;
-};
-exports.useAccountsSelectionStore = useAccountsSelectionStore;
+exports.useResourcesSelectionStore = useResourcesSelectionStore;
 const useIntegrationsStore = () => {
     const rootStore = (0, exports.useRootStore)();
     return rootStore.integrationsStore;
@@ -55699,9 +56859,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LoadingKey = void 0;
 var LoadingKey;
 (function (LoadingKey) {
+    LoadingKey["watchersChanging"] = "watchersChanging";
     LoadingKey["resourcesAdding"] = "resourcesAdding";
-    LoadingKey["fieldAdding"] = "fieldAdding";
-    LoadingKey["fieldRemoving"] = "fieldRemoving";
 })(LoadingKey = exports.LoadingKey || (exports.LoadingKey = {}));
 
 
@@ -55724,180 +56883,14 @@ var MessageToApp;
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
     MessageToApp["AppClearResourceData"] = "AppClearResourceData";
-    MessageToApp["AppAddFieldToWatch"] = "AppAddFieldToWatch";
     MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
+    MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
 })(MessageToApp = exports.MessageToApp || (exports.MessageToApp = {}));
 Object.values(MessageToApp).forEach(type => {
     if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
         throw new Error(`Wrong app message type "${type}"`);
     }
 });
-
-
-/***/ }),
-
-/***/ "./extension/background/platforms/background-platforms-helpers.ts":
-/*!************************************************************************!*\
-  !*** ./extension/background/platforms/background-platforms-helpers.ts ***!
-  \************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getNormalizedWatchers = exports.removeFieldFromWatching = exports.addFieldToWatch = void 0;
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
-const addFieldToWatch = (watchers, fieldName, type) => {
-    const fieldsNames = watchers[type] || [];
-    if (!fieldsNames.includes(fieldName)) {
-        fieldsNames.push(fieldName);
-    }
-    watchers[type] = (0, helpers_1.deduplicateArray)(fieldsNames);
-    return watchers;
-};
-exports.addFieldToWatch = addFieldToWatch;
-const removeFieldFromWatching = (watchers, fieldName, type) => {
-    watchers[type] = (watchers[type] || [])
-        .filter(f => f !== fieldName);
-    return watchers;
-};
-exports.removeFieldFromWatching = removeFieldFromWatching;
-const getNormalizedWatchers = (watchers) => {
-    const fieldsNames = new Set();
-    const mapFieldNameToType = new Map();
-    Object.keys(watchers).forEach((type) => {
-        const names = watchers[type];
-        names.forEach(name => {
-            fieldsNames.add(name);
-            const types = mapFieldNameToType.get(name) || [];
-            types.push(type);
-            mapFieldNameToType.set(name, types);
-        });
-    });
-    return { fieldsNames, mapFieldNameToType };
-};
-exports.getNormalizedWatchers = getNormalizedWatchers;
-
-
-/***/ }),
-
-/***/ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts":
-/*!*******************************************************************************************************!*\
-  !*** ./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts ***!
-  \*******************************************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.microsoftDefenderPostsUrls = exports.microsoftDefenderWatchers = void 0;
-exports.microsoftDefenderWatchers = {
-    'accounts': [
-        'AccountName',
-    ],
-    'assets': [
-        'DeviceName',
-    ],
-    'services': [],
-};
-exports.microsoftDefenderPostsUrls = [
-    'https://api-eu.securitycenter.windows.com/api/',
-    'https://security.microsoft.com/apiproxy/mtp/huntingService/queryExecutor',
-];
-
-
-/***/ }),
-
-/***/ "./extension/background/platforms/microsoft-sentinel/microsoft-sentinel-watchers.ts":
-/*!******************************************************************************************!*\
-  !*** ./extension/background/platforms/microsoft-sentinel/microsoft-sentinel-watchers.ts ***!
-  \******************************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.microsoftSentinelPostsUrls = exports.microsoftSentinelWatchers = void 0;
-exports.microsoftSentinelWatchers = {
-    'accounts': [
-        'UserName',
-        'Account',
-        'SubjectUserName',
-        'TargetUserName',
-    ],
-    'assets': [
-        'Computer',
-    ],
-    'services': [],
-};
-exports.microsoftSentinelPostsUrls = [
-    'https://api.loganalytics.io',
-];
-
-
-/***/ }),
-
-/***/ "./extension/background/platforms/splunk/splunk-watchers.ts":
-/*!******************************************************************!*\
-  !*** ./extension/background/platforms/splunk/splunk-watchers.ts ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.matchSplunkResultsUrl = exports.matchSplunkSummaryUrl = exports.splunkWatchers = void 0;
-const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
-const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
-const envs_1 = __webpack_require__(/*! ../../../common/envs */ "./extension/common/envs.ts");
-exports.splunkWatchers = {
-    accounts: (0, helpers_1.deduplicateArray)([
-        'src_user',
-        'src_user_bunit',
-        'user',
-        'Account_Name',
-        'User',
-        'src_user_name',
-        'user_name',
-    ]),
-    assets: (0, helpers_1.deduplicateArray)([
-        'dest_host',
-        'dst',
-        'dest_nt_host',
-        'src_host',
-        'src_nt_host',
-        'src',
-        'dest',
-        'dest_name',
-        'dest_host',
-        'dvc',
-        'dvc_host',
-        'dest_dns',
-        'src_dns',
-        'ComputerName',
-        'DestinationHostname',
-        'SourceHostname',
-    ]),
-    services: [],
-};
-const matchSplunkSummaryUrl = (url) => {
-    var _a;
-    const { protocol, href } = new URL(url);
-    if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
-        return undefined;
-    }
-    return (_a = href.match(/\/search\/jobs\/([.0-9]+)\/summary/)) === null || _a === void 0 ? void 0 : _a[1];
-};
-exports.matchSplunkSummaryUrl = matchSplunkSummaryUrl;
-const matchSplunkResultsUrl = (url) => {
-    var _a;
-    const { protocol, href } = new URL(url);
-    if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
-        return undefined;
-    }
-    return (_a = href.match(/\/search\/jobs\/([.0-9]+)\/results/)) === null || _a === void 0 ? void 0 : _a[1];
-};
-exports.matchSplunkResultsUrl = matchSplunkResultsUrl;
 
 
 /***/ }),
@@ -55919,7 +56912,7 @@ var MessageToBackground;
     MessageToBackground["BGModifyQuery"] = "BGModifyQuery";
     MessageToBackground["BGSetWatchers"] = "BGSetWatchers";
     MessageToBackground["BGRegisterPlatformTab"] = "BGRegisterPlatformTab";
-    MessageToBackground["BGAddFieldToWatch"] = "BGAddFieldToWatch";
+    MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
 Object.values(MessageToBackground).forEach(type => {
     if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
@@ -56105,8 +57098,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getPlatformNameByID = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
-const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
 exports.getBrowserContext = getBrowserContext;
@@ -56116,19 +57108,6 @@ const getWebAccessibleUrl = (path) => {
         : '';
 };
 exports.getWebAccessibleUrl = getWebAccessibleUrl;
-const getPlatformNameByID = (platformID) => {
-    if (platformID === types_common_1.PlatformID.MicrosoftSentinel) {
-        return 'Microsoft Sentinel';
-    }
-    if (platformID === types_common_1.PlatformID.MicrosoftDefender) {
-        return 'Microsoft Defender For Endpoint';
-    }
-    if (platformID === types_common_1.PlatformID.Splunk) {
-        return 'Splunk';
-    }
-    return 'Unknown Platform';
-};
-exports.getPlatformNameByID = getPlatformNameByID;
 const getExecutingContextByMessageType = (message) => {
     let prefix = message.slice(0, 3).toLowerCase();
     if (prefix === 'app') {
@@ -56205,13 +57184,13 @@ const copyToClipboard = (str) => {
     document.body.removeChild(el);
 };
 exports.copyToClipboard = copyToClipboard;
-const downloadFile = (type, content) => {
+const downloadFile = (type, content, name) => {
     const prefix = type === 'csv'
         ? 'data:text/csv;charset=utf-8,'
         : 'data:text/csv;charset=utf-8,';
     const link = document.createElement('a');
     link.setAttribute('href', encodeURI(`${prefix}${content}`));
-    link.setAttribute('download', 'extension-resources.csv');
+    link.setAttribute('download', `${name}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -56292,6 +57271,16 @@ const compareVersions = (version1, version2) => {
             : 'less';
 };
 exports.compareVersions = compareVersions;
+const createFormDataString = (data) => {
+    const urlEncodedDataPairs = [];
+    for (const [name, value] of Object.entries(data)) {
+        urlEncodedDataPairs.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
+    }
+    return urlEncodedDataPairs
+        .join('&')
+        .replace(/%20/g, '+');
+};
+exports.createFormDataString = createFormDataString;
 
 
 /***/ }),
@@ -56307,13 +57296,10 @@ exports.compareVersions = compareVersions;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isMessageMatched = void 0;
 const loggers_1 = __webpack_require__(/*! ./loggers */ "./extension/common/loggers/index.ts");
-const loggers_debug_1 = __webpack_require__(/*! ./loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const common_helpers_1 = __webpack_require__(/*! ./common-helpers */ "./extension/common/common-helpers.ts");
 const isMessageMatched = (matchCondition, message, ...otherInfo) => {
     if (matchCondition()) {
         loggers_1.loggers
             .debug()
-            .addPrefix((0, loggers_debug_1.getDebugPrefix)((0, common_helpers_1.getExecutingContextByMessageType)(message.type)))
             .log(`got ${message.type} message`, message, ...otherInfo);
         return true;
     }
@@ -56348,7 +57334,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.0.2";
+exports.version = "1.1.0";
 
 
 /***/ }),
@@ -56363,10 +57349,8 @@ exports.version = "1.0.2";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setVersion = exports.getVersion = exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.versionStorageKey = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
-const microsoft_sentinel_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-sentinel/microsoft-sentinel-watchers */ "./extension/background/platforms/microsoft-sentinel/microsoft-sentinel-watchers.ts");
-const microsoft_defender_watchers_1 = __webpack_require__(/*! ../background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers */ "./extension/background/platforms/microsoft-defender-for-endpoint/microsoft-defender-watchers.ts");
-const integrations_1 = __webpack_require__(/*! ../app/components/integrations/integrations */ "./extension/app/components/integrations/integrations.ts");
-const splunk_watchers_1 = __webpack_require__(/*! ../background/platforms/splunk/splunk-watchers */ "./extension/background/platforms/splunk/splunk-watchers.ts");
+const integrations_1 = __webpack_require__(/*! ../app/integrations/integrations */ "./extension/app/integrations/integrations.ts");
+const PlatformResolver_1 = __webpack_require__(/*! ../content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
 exports.watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 exports.positionStorageKey = 'the-prime-hunt--extension--position';
 exports.integrationsStorageKey = 'the-prime-hunt--extension--integrations';
@@ -56377,17 +57361,8 @@ const setWatchers = (watchers) => {
 };
 exports.setWatchers = setWatchers;
 const getDefaultWatchers = (platformID) => {
-    let watchers = {};
-    if (platformID === 'MicrosoftSentinel') {
-        watchers = microsoft_sentinel_watchers_1.microsoftSentinelWatchers;
-    }
-    if (platformID === 'MicrosoftDefender') {
-        watchers = microsoft_defender_watchers_1.microsoftDefenderWatchers;
-    }
-    if (platformID === 'Splunk') {
-        watchers = splunk_watchers_1.splunkWatchers;
-    }
-    return watchers;
+    var _a;
+    return ((_a = PlatformResolver_1.platformResolver.getPlatformByID(platformID)) === null || _a === void 0 ? void 0 : _a.defaultWatchers) || {};
 };
 const getWatchers = (platformID) => {
     try {
@@ -56455,7 +57430,7 @@ exports.setVersion = setVersion;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.loggers = exports.Loggers = exports.stopLogging = exports.startLogging = void 0;
+exports.Loggers = exports.stopLogging = exports.startLogging = exports.loggers = void 0;
 const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
 const envs_1 = __webpack_require__(/*! ../envs */ "./extension/common/envs.ts");
 let logging = true;
@@ -56508,6 +57483,10 @@ class Loggers {
     setLevel(level) {
         return this.createInstance(this.prefix, level);
     }
+    setPrefix(prefix) {
+        exports.loggers = this.addPrefix(prefix);
+        return exports.loggers;
+    }
 }
 exports.Loggers = Loggers;
 exports.loggers = new Loggers();
@@ -56556,7 +57535,7 @@ var DebugID;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlatformID = exports.Browser = void 0;
+exports.PlatformName = exports.PlatformID = exports.Browser = void 0;
 var Browser;
 (function (Browser) {
     Browser["chrome"] = "chrome";
@@ -56568,7 +57547,15 @@ var PlatformID;
     PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
     PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
     PlatformID["Splunk"] = "Splunk";
+    PlatformID["QRadar"] = "QRadar";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
+var PlatformName;
+(function (PlatformName) {
+    PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
+    PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
+    PlatformName["Splunk"] = "Splunk";
+    PlatformName["QRadar"] = "IBM QRadar";
+})(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
 /***/ }),
@@ -56587,9 +57574,7 @@ const types_content_common_1 = __webpack_require__(/*! ./types/types-content-com
 const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
 const types_content_messages_1 = __webpack_require__(/*! ./types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
 const PlatformResolver_1 = __webpack_require__(/*! ./platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
-    .addPrefix('listeners');
+const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
 let platform = PlatformResolver_1.platformResolver.resolve();
 if (platform) {
     platform.connect();
@@ -56607,97 +57592,56 @@ loggers.debug().log('mounted');
 
 /***/ }),
 
-/***/ "./extension/content/platforms/PlatformResolver.ts":
-/*!*********************************************************!*\
-  !*** ./extension/content/platforms/PlatformResolver.ts ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.platformResolver = exports.PlatformResolver = void 0;
-const MicrosoftSentinelPlatform_1 = __webpack_require__(/*! ./microsoft-sentinel/MicrosoftSentinelPlatform */ "./extension/content/platforms/microsoft-sentinel/MicrosoftSentinelPlatform.ts");
-const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
-const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./microsoft-defender-for-endpoint/MicrosoftDefenderPlatform */ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts");
-const SplunkPlatform_1 = __webpack_require__(/*! ./splunk/SplunkPlatform */ "./extension/content/platforms/splunk/SplunkPlatform.ts");
-const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
-class PlatformResolver {
-    static getPlatform(platformID) {
-        switch (platformID) {
-            case types_common_1.PlatformID.MicrosoftSentinel: {
-                return new MicrosoftSentinelPlatform_1.MicrosoftSentinelPlatform();
-            }
-            case types_common_1.PlatformID.MicrosoftDefender: {
-                return new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform();
-            }
-            case types_common_1.PlatformID.Splunk: {
-                return new SplunkPlatform_1.SplunkPlatform();
-            }
-        }
-    }
-    static resolveByUrl(url) {
-        const { host, protocol, href } = new URL(url);
-        if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
-            return;
-        }
-        return /(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)
-            ? PlatformResolver.getPlatform(types_common_1.PlatformID.MicrosoftSentinel)
-            : /(security.microsoft.com\/)/.test(href)
-                ? PlatformResolver.getPlatform(types_common_1.PlatformID.MicrosoftDefender)
-                : undefined;
-    }
-    static resolveByContent() {
-        if (document.querySelector('a[aria-label^="splunk"]')) {
-            return PlatformResolver.getPlatform(types_common_1.PlatformID.Splunk);
-        }
-        return undefined;
-    }
-    resolve() {
-        if (envs_1.contentPlatformIDFromENV) {
-            return PlatformResolver.getPlatform(envs_1.contentPlatformIDFromENV);
-        }
-        return PlatformResolver.resolveByUrl(document.location.href)
-            || PlatformResolver.resolveByContent();
-    }
-}
-exports.PlatformResolver = PlatformResolver;
-exports.platformResolver = new PlatformResolver();
-
-
-/***/ }),
-
-/***/ "./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts":
-/*!**************************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-defender-for-endpoint/MicrosoftDefenderPlatform.ts ***!
-  \**************************************************************************************************/
+/***/ "./extension/content/platforms/MicrosoftDefenderPlatform.ts":
+/*!******************************************************************!*\
+  !*** ./extension/content/platforms/MicrosoftDefenderPlatform.ts ***!
+  \******************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MicrosoftDefenderPlatform = void 0;
-const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_services_listeners_1 = __webpack_require__(/*! ../../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const content_services_1 = __webpack_require__(/*! ../../services/content-services */ "./extension/content/services/content-services.ts");
-const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
-const common_listeners_1 = __webpack_require__(/*! ../../../common/common-listeners */ "./extension/common/common-listeners.ts");
-const types_content_messages_1 = __webpack_require__(/*! ../../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
-const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
-const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
-    .addPrefix(types_common_1.PlatformID.MicrosoftDefender);
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+let loggers;
 class MicrosoftDefenderPlatform {
     constructor() {
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'AccountName',
+                'InitiatingProcessName',
+                'RequestAccountName',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'DeviceName',
+            ],
+        };
         this.extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;
+    }
+    static buildQueryParts(type, resources) {
+        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => MicrosoftDefenderPlatform.normalizedValue(v),
+        });
+    }
+    buildQueryParts(type, resources) {
+        return MicrosoftDefenderPlatform.buildQueryParts(type, resources);
     }
     getID() {
         return MicrosoftDefenderPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.MicrosoftDefender;
     }
     static setListeners() {
         content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
@@ -56706,34 +57650,6 @@ class MicrosoftDefenderPlatform {
             }
         });
         loggers.debug().log('listeners were set');
-    }
-    static connectMouseDown() {
-        document.addEventListener('mousedown', (e) => {
-            var _a, _b;
-            if (!e.altKey) {
-                return;
-            }
-            const elements = (0, common_helpers_1.getElementsUnderCursor)(e, elem => {
-                return elem.classList.contains('mtk20')
-                    || (elem.tagName === 'SPAN'
-                        && Array.from(elem.classList).join(',').indexOf('cellName') > -1
-                        && !!elem.closest('[role="columnheader"]'));
-            });
-            const text = elements.length > 1
-                ? null
-                : (0, common_helpers_1.removeDoubleQuotesAround)(((_b = (_a = elements[0]) === null || _a === void 0 ? void 0 : _a.innerText) === null || _b === void 0 ? void 0 : _b.trim()) || '');
-            if (!text) {
-                return;
-            }
-            (0, content_services_1.sendMessageFromContent)({
-                id: `content-add-field--${(0, helpers_1.uuid)()}`,
-                type: types_background_messages_1.MessageToBackground.BGAddFieldToWatch,
-                payload: {
-                    fieldName: text,
-                },
-            });
-        });
-        loggers.debug().log('mousedown event was set successfully');
     }
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
@@ -56746,7 +57662,6 @@ class MicrosoftDefenderPlatform {
     }
     connect() {
         MicrosoftDefenderPlatform.setListeners();
-        MicrosoftDefenderPlatform.connectMouseDown();
         MicrosoftDefenderPlatform.connectInlineListener();
         loggers.debug().log('connected');
     }
@@ -56759,23 +57674,7 @@ MicrosoftDefenderPlatform.extensionDefaultPosition = {
     width: 480,
     height: 480,
 };
-
-
-/***/ }),
-
-/***/ "./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts":
-/*!***************************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-defender-for-endpoint/microsoft-defender-helpers.ts ***!
-  \***************************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildMicrosoftDefenderQueryParts = exports.normalizedValue = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
-const normalizedValue = (value) => {
+MicrosoftDefenderPlatform.normalizedValue = (value) => {
     const nValue = (0, checkers_1.isNumberInString)(value)
         ? parseFloat(value)
         : value;
@@ -56783,22 +57682,15 @@ const normalizedValue = (value) => {
         ? nValue
         : `\"${nValue.replace(/\\/g, '\\\\')}\"`;
 };
-exports.normalizedValue = normalizedValue;
-const buildMicrosoftDefenderQueryParts = (type, resources) => {
-    return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
-        leftOperand: (v) => v,
-        rightOperand: (v) => (0, exports.normalizedValue)(v),
-    });
-};
-exports.buildMicrosoftDefenderQueryParts = buildMicrosoftDefenderQueryParts;
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(MicrosoftDefenderPlatform.id);
 
 
 /***/ }),
 
-/***/ "./extension/content/platforms/microsoft-sentinel/MicrosoftSentinelPlatform.ts":
-/*!*************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-sentinel/MicrosoftSentinelPlatform.ts ***!
-  \*************************************************************************************/
+/***/ "./extension/content/platforms/MicrosoftSentinelPlatform.ts":
+/*!******************************************************************!*\
+  !*** ./extension/content/platforms/MicrosoftSentinelPlatform.ts ***!
+  \******************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -56814,52 +57706,56 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MicrosoftSentinelPlatform = void 0;
-const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
-const content_services_1 = __webpack_require__(/*! ../../services/content-services */ "./extension/content/services/content-services.ts");
-const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const content_services_listeners_1 = __webpack_require__(/*! ../../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
-const types_content_messages_1 = __webpack_require__(/*! ../../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const common_listeners_1 = __webpack_require__(/*! ../../../common/common-listeners */ "./extension/common/common-listeners.ts");
-const envs_1 = __webpack_require__(/*! ../../../common/envs */ "./extension/common/envs.ts");
-const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
-const microsoft_sentinel_helpers_1 = __webpack_require__(/*! ./microsoft-sentinel-helpers */ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
-const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
-    .addPrefix(types_common_1.PlatformID.MicrosoftSentinel);
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+let loggers;
 class MicrosoftSentinelPlatform {
     constructor() {
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'UserName',
+                'Account',
+                'SubjectUserName',
+                'TargetUserName',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'Computer',
+            ],
+        };
         this.extensionDefaultPosition = MicrosoftSentinelPlatform.extensionDefaultPosition;
+    }
+    static normalizedValue(value) {
+        const nValue = (0, checkers_1.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `"${nValue.replace(/\\/g, '\\\\')}"`;
+    }
+    static buildQueryParts(type, resources) {
+        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => MicrosoftSentinelPlatform.normalizedValue(v),
+        });
+    }
+    buildQueryParts(type, resources) {
+        return MicrosoftSentinelPlatform.buildQueryParts(type, resources);
     }
     getID() {
         return MicrosoftSentinelPlatform.id;
     }
-    static connectMouseDown() {
-        document.addEventListener('mousedown', (e) => {
-            var _a, _b;
-            if (!e.altKey) {
-                return;
-            }
-            const elements = (0, common_helpers_1.getElementsUnderCursor)(e, elem => {
-                return elem.classList.contains('ag-header-cell-text')
-                    || elem.classList.contains('ag-group-value');
-            });
-            const text = elements.length > 1 ? null : (_b = (_a = elements[0]) === null || _a === void 0 ? void 0 : _a.innerText) === null || _b === void 0 ? void 0 : _b.trim();
-            if (!text) {
-                return;
-            }
-            (0, content_services_1.sendMessageFromContent)({
-                id: `content-add-field--${(0, helpers_1.uuid)()}`,
-                type: types_background_messages_1.MessageToBackground.BGAddFieldToWatch,
-                payload: {
-                    fieldName: (0, microsoft_sentinel_helpers_1.normalizeFieldValue)(text),
-                },
-            });
-        });
-        loggers.debug().log('mousedown event was set successfully');
+    getName() {
+        return types_common_1.PlatformName.MicrosoftSentinel;
     }
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
@@ -56879,7 +57775,6 @@ class MicrosoftSentinelPlatform {
             const query = `script[src$="${public_resources_1.microsoftSentinelInline}"]`;
             if (!document.querySelector(query)) {
                 MicrosoftSentinelPlatform.connectInlineListener();
-                MicrosoftSentinelPlatform.connectMouseDown();
                 yield (0, common_helpers_1.waitHTMLElement)(query);
             }
             if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
@@ -56901,86 +57796,292 @@ MicrosoftSentinelPlatform.extensionDefaultPosition = {
     width: 500,
     height: 400,
 };
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(MicrosoftSentinelPlatform.id);
 
 
 /***/ }),
 
-/***/ "./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts":
-/*!**************************************************************************************!*\
-  !*** ./extension/content/platforms/microsoft-sentinel/microsoft-sentinel-helpers.ts ***!
-  \**************************************************************************************/
+/***/ "./extension/content/platforms/PlatformResolver.ts":
+/*!*********************************************************!*\
+  !*** ./extension/content/platforms/PlatformResolver.ts ***!
+  \*********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildMicrosoftSentinelQueryParts = exports.normalizedValue = exports.normalizeFieldValue = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
-const normalizeFieldValue = (value) => {
-    return value.indexOf('[UTC]') > -1
-        ? value.split('[UTC]').shift().trim()
-        : value;
-};
-exports.normalizeFieldValue = normalizeFieldValue;
-const normalizedValue = (value) => {
-    const nValue = (0, checkers_1.isNumberInString)(value)
-        ? parseFloat(value)
-        : value;
-    return typeof nValue === 'number'
-        ? nValue
-        : `"${nValue.replace(/\\/g, '\\\\')}"`;
-};
-exports.normalizedValue = normalizedValue;
-const buildMicrosoftSentinelQueryParts = (type, resources) => {
-    return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
-        leftOperand: (v) => v,
-        rightOperand: (v) => (0, exports.normalizedValue)(v),
-    });
-};
-exports.buildMicrosoftSentinelQueryParts = buildMicrosoftSentinelQueryParts;
+exports.platformResolver = exports.PlatformResolver = void 0;
+const MicrosoftSentinelPlatform_1 = __webpack_require__(/*! ./MicrosoftSentinelPlatform */ "./extension/content/platforms/MicrosoftSentinelPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
+const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./MicrosoftDefenderPlatform */ "./extension/content/platforms/MicrosoftDefenderPlatform.ts");
+const SplunkPlatform_1 = __webpack_require__(/*! ./SplunkPlatform */ "./extension/content/platforms/SplunkPlatform.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const Register_1 = __webpack_require__(/*! ../../../common/Register */ "./common/Register.ts");
+const QRadarPlatform_1 = __webpack_require__(/*! ./QRadarPlatform */ "./extension/content/platforms/QRadarPlatform.ts");
+class PlatformResolver {
+    constructor() {
+        this.platforms = new Register_1.Register();
+    }
+    getPlatformByID(platformID) {
+        if (!this.platforms.has(platformID)) {
+            switch (platformID) {
+                case types_common_1.PlatformID.MicrosoftSentinel: {
+                    this.platforms.set(platformID, new MicrosoftSentinelPlatform_1.MicrosoftSentinelPlatform());
+                    break;
+                }
+                case types_common_1.PlatformID.MicrosoftDefender: {
+                    this.platforms.set(platformID, new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform());
+                    break;
+                }
+                case types_common_1.PlatformID.Splunk: {
+                    this.platforms.set(platformID, new SplunkPlatform_1.SplunkPlatform());
+                    break;
+                }
+                case types_common_1.PlatformID.QRadar: {
+                    this.platforms.set(platformID, new QRadarPlatform_1.QRadarPlatform());
+                    break;
+                }
+                default:
+                    return undefined;
+            }
+        }
+        return this.platforms.get(platformID);
+    }
+    resolveByUrl(url) {
+        const { host, protocol, href } = new URL(url);
+        if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
+            return;
+        }
+        if (/(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)) {
+            return this.getPlatformByID(types_common_1.PlatformID.MicrosoftSentinel);
+        }
+        if (/(security.microsoft.com\/)/.test(href)) {
+            return this.getPlatformByID(types_common_1.PlatformID.MicrosoftDefender);
+        }
+        if (/(console\/qradar\/jsp\/QRadar.jsp|console\/do\/ariel\/arielSearch)/.test(href)) {
+            return this.getPlatformByID(types_common_1.PlatformID.QRadar);
+        }
+        return undefined;
+    }
+    resolveByContent() {
+        if (document.querySelector('a[aria-label^="splunk"]')) {
+            return this.getPlatformByID(types_common_1.PlatformID.Splunk);
+        }
+        return undefined;
+    }
+    resolve() {
+        if (envs_1.contentPlatformIDFromENV) {
+            return this.getPlatformByID(envs_1.contentPlatformIDFromENV);
+        }
+        return this.resolveByUrl(document.location.href)
+            || this.resolveByContent();
+    }
+}
+exports.PlatformResolver = PlatformResolver;
+exports.platformResolver = new PlatformResolver();
 
 
 /***/ }),
 
-/***/ "./extension/content/platforms/splunk/SplunkPlatform.ts":
-/*!**************************************************************!*\
-  !*** ./extension/content/platforms/splunk/SplunkPlatform.ts ***!
-  \**************************************************************/
+/***/ "./extension/content/platforms/QRadarPlatform.ts":
+/*!*******************************************************!*\
+  !*** ./extension/content/platforms/QRadarPlatform.ts ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.QRadarPlatform = void 0;
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+let loggers;
+class QRadarPlatform {
+    constructor() {
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'Account Name',
+                'Recipients',
+                'Sender',
+                'Target Username',
+                'Username',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'Client Hostname',
+                'Destination Hostname',
+                'Destination IP',
+                'Hostname',
+                'Machine Identifier',
+                'Recipient Host',
+                'Sender Host',
+                'Source Hostname',
+                'Source Workstation',
+                'Source IP',
+                'Source Asset Name',
+                'Destination Asset Name',
+            ],
+        };
+        this.extensionDefaultPosition = QRadarPlatform.extensionDefaultPosition;
+    }
+    static normalizedValue(value) {
+        const nValue = (0, checkers_1.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `'${nValue}'`;
+    }
+    buildQueryParts(type, resources) {
+        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' AND ' : ' OR ', {
+            leftOperand: (v) => `"${v}"`,
+            rightOperand: (v) => QRadarPlatform.normalizedValue(v),
+        });
+    }
+    connect() {
+        QRadarPlatform.setListeners();
+        loggers.debug().log('connected');
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            if (!document.querySelector('#aceEditor')) {
+                return;
+            }
+            const query = `script[src$="${public_resources_1.qRadarInline}"]`;
+            if (!document.querySelector(query)) {
+                QRadarPlatform.connectInlineListener();
+                yield (0, common_helpers_1.waitHTMLElement)(query);
+            }
+            if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+            }
+        }));
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_helpers_1.getWebAccessibleUrl)(public_resources_1.qRadarInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+    }
+    getID() {
+        return types_common_1.PlatformID.QRadar;
+    }
+    getName() {
+        return types_common_1.PlatformName.QRadar;
+    }
+}
+exports.QRadarPlatform = QRadarPlatform;
+QRadarPlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 500,
+    height: 400,
+};
+QRadarPlatform.id = types_common_1.PlatformID.QRadar;
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(QRadarPlatform.id);
+
+
+/***/ }),
+
+/***/ "./extension/content/platforms/SplunkPlatform.ts":
+/*!*******************************************************!*\
+  !*** ./extension/content/platforms/SplunkPlatform.ts ***!
+  \*******************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SplunkPlatform = void 0;
-const types_content_common_1 = __webpack_require__(/*! ../../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const types_common_1 = __webpack_require__(/*! ../../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_services_listeners_1 = __webpack_require__(/*! ../../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
-const common_listeners_1 = __webpack_require__(/*! ../../../common/common-listeners */ "./extension/common/common-listeners.ts");
-const types_content_messages_1 = __webpack_require__(/*! ../../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
-const content_services_1 = __webpack_require__(/*! ../../services/content-services */ "./extension/content/services/content-services.ts");
-const types_inline_messages_1 = __webpack_require__(/*! ../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const public_resources_1 = __webpack_require__(/*! ../../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
-const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
-const loggers = (__webpack_require__(/*! ../../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)((0, loggers_debug_1.getDebugPrefix)('content'))
-    .addPrefix(types_common_1.PlatformID.Splunk);
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+let loggers;
 class SplunkPlatform {
     constructor() {
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: (0, helpers_1.deduplicateArray)([
+                'src_user',
+                'src_user_bunit',
+                'user',
+                'Account_Name',
+                'User',
+                'src_user_name',
+                'user_name',
+            ]),
+            [resources_types_1.BoundedResourceTypeID.Assets]: (0, helpers_1.deduplicateArray)([
+                'dest_host',
+                'dst',
+                'dest_nt_host',
+                'src_host',
+                'src_nt_host',
+                'src',
+                'dest',
+                'dest_name',
+                'dest_host',
+                'dvc',
+                'dvc_host',
+                'dest_dns',
+                'src_dns',
+                'ComputerName',
+                'DestinationHostname',
+                'SourceHostname',
+            ]),
+        };
         this.extensionDefaultPosition = SplunkPlatform.extensionDefaultPosition;
     }
-    static normalizeValue(value) {
-        if (typeof value !== 'string') {
-            return '';
-        }
-        return (0, common_helpers_1.removeDoubleQuotesAround)(value
-            .replace('=', '')
-            .trim());
+    static normalizedValue(value) {
+        const nValue = (0, checkers_1.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `"${nValue}"`;
+    }
+    static buildQueryParts(type, resources) {
+        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => SplunkPlatform.normalizedValue(v),
+        });
+    }
+    buildQueryParts(type, resources) {
+        return SplunkPlatform.buildQueryParts(type, resources);
     }
     getID() {
         return SplunkPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.Splunk;
     }
     static setListeners() {
         content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
@@ -56988,38 +58089,6 @@ class SplunkPlatform {
                 (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
             }
         });
-    }
-    static connectMouseDown() {
-        document.addEventListener('mousedown', (e) => {
-            var _a, _b;
-            if (!e.altKey) {
-                return;
-            }
-            const elements = (0, common_helpers_1.getElementsUnderCursor)(e, elem => {
-                return (elem.tagName === 'SPAN'
-                    && elem.classList.contains('t')
-                    && elem.classList.contains('h')
-                    && !!elem.closest('.event')) || (elem.tagName === 'SPAN'
-                    && elem.classList.contains('field')
-                    && !!elem.closest('.event')) || (Array.from(elem.attributes)
-                    .map(el => el.name)
-                    .includes('data-sort-key'));
-            });
-            const text = elements.length > 1
-                ? null
-                : SplunkPlatform.normalizeValue(((_a = elements[0]) === null || _a === void 0 ? void 0 : _a.innerText) || ((_b = elements[0]) === null || _b === void 0 ? void 0 : _b.getAttribute('data-sort-key')));
-            if (!text) {
-                return;
-            }
-            (0, content_services_1.sendMessageFromContent)({
-                id: `content-add-field--${(0, helpers_1.uuid)()}`,
-                type: types_background_messages_1.MessageToBackground.BGAddFieldToWatch,
-                payload: {
-                    fieldName: text,
-                },
-            });
-        });
-        loggers.debug().log('mousedown event was set successfully');
     }
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
@@ -57032,7 +58101,6 @@ class SplunkPlatform {
     }
     connect() {
         SplunkPlatform.setListeners();
-        SplunkPlatform.connectMouseDown();
         SplunkPlatform.connectInlineListener();
         loggers.debug().log('connected');
     }
@@ -57045,38 +58113,7 @@ SplunkPlatform.extensionDefaultPosition = {
     width: 480,
     height: 480,
 };
-
-
-/***/ }),
-
-/***/ "./extension/content/platforms/splunk/splunk-helpers.ts":
-/*!**************************************************************!*\
-  !*** ./extension/content/platforms/splunk/splunk-helpers.ts ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildSplunkQueryParts = exports.normalizedValue = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
-const normalizedValue = (value) => {
-    const nValue = (0, checkers_1.isNumberInString)(value)
-        ? parseFloat(value)
-        : value;
-    return typeof nValue === 'number'
-        ? nValue
-        : `"${nValue}"`;
-};
-exports.normalizedValue = normalizedValue;
-const buildSplunkQueryParts = (type, resources) => {
-    return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' and ' : ' or ', {
-        leftOperand: (v) => v,
-        rightOperand: (v) => (0, exports.normalizedValue)(v),
-    });
-};
-exports.buildSplunkQueryParts = buildSplunkQueryParts;
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(SplunkPlatform.id);
 
 
 /***/ }),
@@ -57145,13 +58182,12 @@ listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherPr
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendMessageFromApp = exports.sendMessageFromContent = exports.sendMessage = void 0;
 const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
 const serviceLoggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
 const sendMessage = (loggers, message, runtime = true) => {
     var _a;
-    message.id = message.id || (0, helpers_1.uuid)();
+    message.id = `${message.id ? `${message.id}--` : ''}${(0, helpers_1.uuid)()}`;
     const logPrefix = 'sendMessage';
     try {
         if (!runtime && !(0, api_support_1.isPostMessageSupported)(message)) {
@@ -57173,11 +58209,11 @@ const sendMessage = (loggers, message, runtime = true) => {
 };
 exports.sendMessage = sendMessage;
 const sendMessageFromContent = (message, runtime = true) => {
-    return (0, exports.sendMessage)(serviceLoggers.addPrefix((0, loggers_debug_1.getDebugPrefix)('content')), message, runtime);
+    return (0, exports.sendMessage)(serviceLoggers.addPrefix('message-from-content'), message, runtime);
 };
 exports.sendMessageFromContent = sendMessageFromContent;
 const sendMessageFromApp = (message, runtime = true) => {
-    return (0, exports.sendMessage)(serviceLoggers.addPrefix((0, loggers_debug_1.getDebugPrefix)('app')), message, runtime);
+    return (0, exports.sendMessage)(serviceLoggers.addPrefix('message-from-app'), message, runtime);
 };
 exports.sendMessageFromApp = sendMessageFromApp;
 
@@ -57260,35 +58296,40 @@ Object.values(MessageToInline).forEach(type => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
 exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
 exports.splunkInline = 'inline-splunk.js';
+exports.qRadarInline = 'inline-qradar.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
     [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
+    [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
     app: [exports.appStyles],
 };
 
 
 /***/ }),
 
-/***/ "./extension/updates.ts":
-/*!******************************!*\
-  !*** ./extension/updates.ts ***!
-  \******************************/
+/***/ "./extension/migrations.ts":
+/*!*********************************!*\
+  !*** ./extension/migrations.ts ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
+var _a, _b;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const local_storage_1 = __webpack_require__(/*! ./common/local-storage */ "./extension/common/local-storage.ts");
 const common_helpers_1 = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
 const envs_1 = __webpack_require__(/*! ./common/envs */ "./extension/common/envs.ts");
-const integrations_1 = __webpack_require__(/*! ./app/components/integrations/integrations */ "./extension/app/components/integrations/integrations.ts");
+const integrations_1 = __webpack_require__(/*! ./app/integrations/integrations */ "./extension/app/integrations/integrations.ts");
+const PlatformResolver_1 = __webpack_require__(/*! ./content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
+const types_common_1 = __webpack_require__(/*! ./common/types/types-common */ "./extension/common/types/types-common.ts");
 if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.0.2') === 'less') {
     const storedIntegrations = (0, local_storage_1.getIntegrations)();
     const ids = storedIntegrations.map(i => i.id);
@@ -57299,8 +58340,37 @@ if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.
         storedIntegrations.push(integrations_1.integrations.find(i => i.id === '$ultimate-windows-security'));
     }
     (0, local_storage_1.setIntegrations)(storedIntegrations);
-    (0, local_storage_1.setVersion)(envs_1.version);
 }
+if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.1.0') === 'less') {
+    const watchers = (0, local_storage_1.getWatchers)();
+    if (typeof watchers.accounts !== 'undefined') {
+        watchers.Accounts = [
+            ...(Array.isArray(watchers.accounts) ? watchers.accounts : []),
+            ...(Array.isArray(watchers.Accounts) ? watchers.Accounts : []),
+        ];
+        delete watchers.accounts;
+    }
+    if (typeof watchers.assets !== 'undefined') {
+        watchers.Assets = [
+            ...(Array.isArray(watchers.assets) ? watchers.assets : []),
+            ...(Array.isArray(watchers.Assets) ? watchers.Assets : []),
+        ];
+        delete watchers.assets;
+    }
+    if (typeof watchers.services !== 'undefined'
+        && ((_a = watchers.services) === null || _a === void 0 ? void 0 : _a.length) === 0) {
+        delete watchers.services;
+    }
+    if (((_b = PlatformResolver_1.platformResolver.resolve()) === null || _b === void 0 ? void 0 : _b.getID()) === types_common_1.PlatformID.MicrosoftDefender) {
+        watchers.Accounts = [
+            ...(Array.isArray(watchers.Accounts) ? watchers.Accounts : []),
+            'InitiatingProcessName',
+            'RequestAccountName',
+        ];
+    }
+    (0, local_storage_1.setWatchers)(watchers);
+}
+(0, local_storage_1.setVersion)(envs_1.version);
 
 
 /***/ })
@@ -57407,15 +58477,37 @@ var exports = __webpack_exports__;
   \******************************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const PlatformResolver_1 = __webpack_require__(/*! ./content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
-const common_helpers_1 = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
-__webpack_require__(/*! ./updates */ "./extension/updates.ts");
+const loggers_debug_1 = __webpack_require__(/*! ./common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+const types_background_messages_1 = __webpack_require__(/*! ./background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const helpers_1 = __webpack_require__(/*! ../common/helpers */ "./common/helpers.ts");
+const isInsideIframe = (__webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts").isInsideIframe);
+if (isInsideIframe()) {
+    (__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0, loggers_debug_1.getDebugPrefix)('content'));
+}
+else {
+    (__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0, loggers_debug_1.getDebugPrefix)('app'));
+}
 document.body.onload = () => {
-    if ((0, common_helpers_1.isInsideIframe)()) {
+    const sendMessageFromApp = (__webpack_require__(/*! ./content/services/content-services */ "./extension/content/services/content-services.ts").sendMessageFromApp);
+    const toggleShowExtension = (0, helpers_1.debounce)(() => {
+        sendMessageFromApp({
+            id: 'toggle-show-extension',
+            type: types_background_messages_1.MessageToBackground.BGToggleShowExtension,
+        });
+    }, 100);
+    document.addEventListener('keydown', (e) => {
+        var _a, _b;
+        const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
+        if (code === 'keyq' && e.ctrlKey) {
+            toggleShowExtension();
+        }
+    });
+    if (isInsideIframe()) {
         return __webpack_require__(/*! ./content/content-listeners */ "./extension/content/content-listeners.ts");
     }
+    __webpack_require__(/*! ./migrations */ "./extension/migrations.ts");
     __webpack_require__(/*! ./app/app-listeners */ "./extension/app/app-listeners.ts");
-    const platform = PlatformResolver_1.platformResolver.resolve();
+    const platform = (__webpack_require__(/*! ./content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts").platformResolver.resolve)();
     if (platform) {
         __webpack_require__(/*! ./app */ "./extension/app/index.tsx");
         (__webpack_require__(/*! ./app/stores */ "./extension/app/stores/index.ts").rootStore.platformStore.setPlatform)(platform);

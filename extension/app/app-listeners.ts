@@ -5,16 +5,25 @@ import { MessageToApp } from './types/types-app-messages';
 import { rootStore } from './stores';
 import { LoadingKey } from './types/types-app-common';
 import {
-  AddFieldToWatchPayload,
   ParsedDataPayload,
   SetLoadingStatePayload,
 } from '../common/types/types-common-payloads';
 import { platformResolver } from '../content/platforms/PlatformResolver';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
 
 const loggers = require('../common/loggers').loggers
-  .addPrefix(getDebugPrefix('app'))
   .addPrefix('listeners');
+
+const setExtensionShowState = (
+  isShow: boolean,
+) => {
+  if (!rootStore.platformStore.platform) {
+    rootStore.platformStore.setPlatform(platformResolver.resolve());
+  }
+  if (!rootStore.appStore.mounted) {
+    require('./index');
+  }
+  rootStore.appStore.isExtensionOpen = isShow;
+};
 
 (addListener as MessageListener)(
   ListenerType.OnMessage,
@@ -23,14 +32,8 @@ const loggers = require('../common/loggers').loggers
       () => MessageToApp.AppShowExtension === message.type,
       message,
     )) {
-      if (!rootStore.platformStore.platform) {
-        rootStore.platformStore.setPlatform(platformResolver.resolve());
-      }
-      if (!rootStore.appStore.mounted) {
-        require('./index');
-      }
       if (!rootStore.appStore.isExtensionOpen) {
-        rootStore.appStore.isExtensionOpen = true;
+        setExtensionShowState(true);
       }
     }
 
@@ -39,9 +42,9 @@ const loggers = require('../common/loggers').loggers
       message,
     )) {
       rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
-      rootStore.resourceStore.clearAllData();
+      rootStore.resourceStore.clearResources();
       setTimeout(() => {
-        rootStore.resourceStore.addAllData(message.payload as ParsedDataPayload);
+        rootStore.resourceStore.addResources(message.payload as ParsedDataPayload);
         rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
       }, 0);
     }
@@ -51,7 +54,7 @@ const loggers = require('../common/loggers').loggers
       message,
     )) {
       rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
-      rootStore.resourceStore.addAllData(message.payload as ParsedDataPayload);
+      rootStore.resourceStore.addResources(message.payload as ParsedDataPayload);
       rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
     }
 
@@ -59,16 +62,7 @@ const loggers = require('../common/loggers').loggers
       () => MessageToApp.AppClearResourceData === message.type,
       message,
     )) {
-      rootStore.resourceStore.clearAllData();
-    }
-
-    if (isMessageMatched(
-      () => MessageToApp.AppAddFieldToWatch === message.type,
-      message,
-    )) {
-      const { fieldName } = message.payload as AddFieldToWatchPayload;
-      rootStore.appStore.startLoading(LoadingKey.fieldAdding);
-      rootStore.resourceStore.addField(fieldName);
+      rootStore.resourceStore.clearResources();
     }
 
     if (isMessageMatched(
@@ -81,6 +75,13 @@ const loggers = require('../common/loggers').loggers
       } else {
         rootStore.appStore.stopLoading(key);
       }
+    }
+
+    if (isMessageMatched(
+      () => MessageToApp.AppToggleShowExtension === message.type,
+      message,
+    )) {
+      setExtensionShowState(!rootStore.appStore.isExtensionOpen);
     }
   },
 );

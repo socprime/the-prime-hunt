@@ -5,7 +5,7 @@ export enum MessageToBackground {
   BGModifyQuery = 'BGModifyQuery',
   BGSetWatchers = 'BGSetWatchers',
   BGRegisterPlatformTab = 'BGRegisterPlatformTab',
-  BGAddFieldToWatch = 'BGAddFieldToWatch',
+  BGToggleShowExtension = 'BGToggleShowExtension',
 }
 
 Object.values(MessageToBackground).forEach(type => {

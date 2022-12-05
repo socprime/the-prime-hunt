@@ -1,0 +1,19 @@
+@import '../../scss/palette';
+
+.export-button.button {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    width: 17px;
+    height: 17px;
+    fill: $base-text-color-strong;
+    position: relative;
+    left: 1px;
+    top: 1px;
+  }
+}

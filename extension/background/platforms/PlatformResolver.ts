@@ -1,15 +1,16 @@
 import { Register } from '../../../common/Register';
 import { PlatformID } from '../../common/types/types-common';
-import { MicrosoftSentinelPlatform } from './microsoft-sentinel/MicrosoftSentinelPlatform';
+import { MicrosoftSentinelPlatform } from './MicrosoftSentinelPlatform';
 import { BackgroundPlatform } from '../types/types-background-common';
 import { backgroundPlatformIDFromENV } from '../../common/envs';
-import { MicrosoftDefenderPlatform } from './microsoft-defender-for-endpoint/MicrosoftDefenderPlatform';
-import { SplunkPlatform } from './splunk/SplunkPlatform';
+import { MicrosoftDefenderPlatform } from './MicrosoftDefenderPlatform';
+import { SplunkPlatform } from './SplunkPlatform';
+import { QRadarPlatform } from './QRadarPlatform';
 
 export class PlatformResolver {
   private platforms;
 
-  private getPlatform(platformID: PlatformID): BackgroundPlatform | undefined {
+  private getPlatformByID(platformID?: PlatformID): BackgroundPlatform | undefined {
     if (!this.platforms.has(platformID)) {
       switch (platformID) {
         case PlatformID.MicrosoftSentinel: {
@@ -24,7 +25,16 @@ export class PlatformResolver {
 
         case PlatformID.Splunk: {
           this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new SplunkPlatform());
+          break;
         }
+
+        case PlatformID.QRadar: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new QRadarPlatform());
+          break;
+        }
+
+        default:
+          return undefined;
       }
     }
 
@@ -35,10 +45,10 @@ export class PlatformResolver {
     this.platforms = new Register();
   }
 
-  resolve(platformID: PlatformID): BackgroundPlatform | undefined {
+  resolve(platformID?: PlatformID): BackgroundPlatform | undefined {
     return backgroundPlatformIDFromENV
-      ? this.getPlatform(backgroundPlatformIDFromENV)
-      : this.getPlatform(platformID);
+      ? this.getPlatformByID(backgroundPlatformIDFromENV)
+      : this.getPlatformByID(platformID);
   }
 }
 

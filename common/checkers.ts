@@ -1,4 +1,5 @@
 import { Mode } from './types';
+import { indexOfAll } from './helpers';
 
 export const isString = (value: unknown): boolean => {
   return typeof value === 'string';
@@ -16,7 +17,10 @@ export const isNumberInString = (str: unknown): boolean => {
     return false;
   }
   const sValue = str.trim();
-  if (!/^[.0-9]*$/.test(sValue)) {
+  if (
+    !/^[.0-9]*$/.test(sValue)
+    || indexOfAll(sValue, '.').length > 1
+  ) {
     return false;
   }
   return !Number.isNaN(parseFloat(sValue));

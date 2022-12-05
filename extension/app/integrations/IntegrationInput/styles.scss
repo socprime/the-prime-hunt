@@ -1,0 +1,16 @@
+@import "../../scss/palette";
+
+.integration-input {
+  width: 100%;
+
+  .input-label span {
+    display: flex;
+    justify-content: space-between;
+
+    .icon {
+      fill: $base-text-color;
+      width: 22px;
+      height: 22px;
+    }
+  }
+}

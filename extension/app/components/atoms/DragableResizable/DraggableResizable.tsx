@@ -103,8 +103,8 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
     if (disallowResize) {
       return;
     }
-    e.preventDefault?.();
-    e.stopPropagation?.();
+    e.preventDefault();
+    e.stopPropagation();
     return onMouseDownHandler(e, onMouseMove, onMouseUp);
   }, [disallowResize, onMouseDownHandler]);
 

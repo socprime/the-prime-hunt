@@ -3,7 +3,7 @@ import { createClassName } from '../../../../../common/common-helpers';
 
 export type CrossIconProps = {
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 };
 
 export const CrossIcon: React.FC<CrossIconProps> = ({ className = '', onClick }) => {

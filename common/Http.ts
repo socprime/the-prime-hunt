@@ -11,9 +11,11 @@ export class Http {
     const responseType = callbacks?.onJSONSuccess ? 'json' : 'text';
 
     fetch(url, params)
-      .then(response => responseType === 'json'
-        ? response.json()
-        : response.text(),
+      .then(response => {
+        return responseType === 'json'
+          ? response.json()
+          : response.text();
+      },
       )
       .then(response => {
         return responseType === 'json'
@@ -45,10 +47,11 @@ export class Http {
   post(
     params: {
       url: string,
-      body?: ArrayBuffer | string,
+      body?: ArrayBuffer | string | FormData,
       headers?: Record<string, string>,
     },
     callbacks?: {
+      onTextSuccess?: (response: string) => void,
       onJSONSuccess?: (response: any) => void,
       onError?: (e: Error) => void,
     },

@@ -1,5 +1,4 @@
 export enum LoadingKey {
+  watchersChanging = 'watchersChanging',
   resourcesAdding = 'resourcesAdding',
-  fieldAdding = 'fieldAdding',
-  fieldRemoving = 'fieldRemoving',
 }

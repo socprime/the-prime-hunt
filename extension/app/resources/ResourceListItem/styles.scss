@@ -1,0 +1,74 @@
+@import "../../scss/palette";
+
+.resource-list-item {
+  cursor: pointer;
+  height: 23px;
+  display: flex;
+
+  .resource-list-item-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    .checkbox {
+      overflow: hidden;
+      cursor: default;
+
+      .content {
+        white-space: nowrap;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .resource-value-tooltip {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+    }
+
+    .action-menu {
+      display: inline-flex;
+      padding: 0 10px;
+      background-color: $base-background-area-color;
+
+      > .icon {
+        height: 15px;
+        width: auto;
+        max-width: 15px;
+        fill: $base-text-color;
+        padding: 5px;
+        border-radius: 4px;
+
+        &:not(:first-child) {
+          margin-left: 6px;
+        }
+
+        &:hover {
+          fill: $success;
+        }
+
+        &:active {
+          animation: button-press-animation 0.2s ease-in-out;
+        }
+      }
+
+      .minus-icon {
+        width: 16px;
+      }
+
+      .animated-copy-icon {
+        width: 13px;
+      }
+
+      .see-document-icon {
+        max-width: unset;
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}

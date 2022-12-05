@@ -1,10 +1,11 @@
-import { BrowserTabID, IPlatform, ParsedResult, ResourceType } from '../../common/types/types-common';
+import { BrowserTabID, IPlatform } from '../../common/types/types-common';
 import WebRequestBodyEvent = chrome.webRequest.WebRequestBodyEvent;
 import ExtensionMessageEvent = chrome.runtime.ExtensionMessageEvent;
 import PageActionClickedEvent = chrome.pageAction.PageActionClickedEvent;
 import WebRequestHeadersSynchronousEvent = chrome.webRequest.WebRequestHeadersSynchronousEvent;
 import TabRemovedEvent = chrome.tabs.TabRemovedEvent;
 import { HTMLTextContent, IdentifiedFunction } from '../../../common/types';
+import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
 
 export type TabID = number;
 
@@ -29,7 +30,7 @@ export enum BGListenerType {
 }
 
 export type WatchingResources = {
-  [key in ResourceType]: string[];
+  [key in ResourceTypeID]: FieldName[];
 };
 
 export type BackgroundPlatform = IPlatform & {

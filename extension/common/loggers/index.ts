@@ -3,6 +3,8 @@ import { logLevel, mode } from '../envs';
 
 let logging = true;
 
+export let loggers: Loggers;
+
 export const startLogging = () => logging = true;
 export const stopLogging = () => logging = false;
 
@@ -71,6 +73,11 @@ export class Loggers {
   setLevel(level: LogLevel) {
     return this.createInstance(this.prefix, level);
   }
+
+  setPrefix(prefix: string) {
+    loggers = this.addPrefix(prefix);
+    return loggers;
+  }
 }
 
-export const loggers = new Loggers();
+loggers = new Loggers();

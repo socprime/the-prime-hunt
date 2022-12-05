@@ -20,10 +20,8 @@
   }
 
   &:not(.disabled) {
-    >.button-icon {
-      .icon {
-        fill: $base-text-color;
-      }
+    .icon {
+      fill: $base-text-color;
     }
   }
 

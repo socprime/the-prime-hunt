@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar.
 
 ## Installation
 ### Chrome
@@ -74,8 +74,8 @@ yarn extension --mode=development|production
 **Note:**  
 The position and size of the extension's window are stored as the `the-prime-hunt--extension--position` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), the default position and size are used.
 
-2. Run a query in your SIEM/EDR/XDR environment. If there are results, the extension lists the accounts and assets affected by the suspicious activity.
-3. In the extension, click the down arrow on a tab to show results.
+2. Run a query in your SIEM/EDR/XDR environment. If there are results, the extension lists the accounts and assets affected by the suspicious activity. If there are fields without values, you can show/hide them by clicking **Show empty/Hide empty**.
+3. In the extension, click the down arrow next to a field name to show the results in that field.
 4. Hover over a result:
 
 ![Action menu](.readme/action_menu.png)
@@ -84,9 +84,13 @@ The position and size of the extension's window are stored as the `the-prime-hun
 - Click the plus icon to include the account/asset in the search
 - Click the minus icon to exclude the account/asset from the search
 - Click the eye-and-list icon to search for all events that involve the account/asset
-- To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field.
+- To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR, and click the checkmark icon. To remove a field from the extension, click on the remove icon next to the field.
 
 ![Remove icon](.readme/remove_icon.png)
+
+- To add a custom tab, click the plus icon on the right of the existing tabs, enter an arbitrary title, and click the checkmark. Double-click the created custom tab title to rename or delete the tab.
+
+![Custom tab](.readme/custom_tab.png)
 
 **Note:**  
 The fields that have been added manually are stored as the `the-prime-hunt--extension--watchers` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), only the default fields are used again.
@@ -96,9 +100,13 @@ The fields that have been added manually are stored as the `the-prime-hunt--exte
 - Click the **Include** button to include the selected accounts/assets in the search
 - Click the **Exclude** button to exclude the selected accounts/assets from the search
 - Click the **Show All Events** button to search for all events that involve the selected accounts/assets
-- Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, and Ultimate Windows Security. You can customize or remove any menu item, add your OpenCTI credentials, or add a new integration in **Search Settings**
+- Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, and Ultimate Windows Security
 
 ![Bulk action buttons](.readme/bulk-action_buttons.png)
+
+- You can customize or remove any menu item, add your OpenCTI credentials, or add a new integration in Search Settings
+
+![Search settings](.readme/search_settings.png)
 
 - Optionally, export the selected results as a CSV
 

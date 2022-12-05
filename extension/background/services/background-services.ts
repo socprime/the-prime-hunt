@@ -2,25 +2,26 @@ import { BrowserTab, BGListenerType, TabID } from '../types/types-background-com
 import { getBrowserContext } from '../../common/common-helpers';
 import {
   ExtensionMessage,
-  NormalizedParsedResources,
-  ParsedResources,
   PlatformID,
 } from '../../common/types/types-common';
 import { platformResolver } from '../platforms/PlatformResolver';
-import { PlatformResolver as ContentPlatformResolver } from '../../content/platforms/PlatformResolver';
 import { MessageToBackground } from '../types/types-background-messages';
 import { removeBGInterceptor, setBGInterceptor } from './background-services-listeners';
-import { getDebugPrefix } from '../../common/loggers/loggers-debug';
 import { uuid } from '../../../common/helpers';
-import { isTabsQuerySupported, isTabsSendMessageSupported } from '../../common/api-support';
+import { isTabsSendMessageSupported } from '../../common/api-support';
+import {
+  NormalizedParsedResources,
+  NormalizedResources,
+  ParsedResources,
+  Resources,
+} from '../../app/resources/resources-types';
 
 const loggers = require('../../common/loggers').loggers
-  .addPrefix(getDebugPrefix('background'))
   .addPrefix('services');
 
 export const sendMessageFromBackground = <T = unknown>(tabID: TabID, message: ExtensionMessage<T>) => {
   const context = getBrowserContext();
-  message.id = message.id || uuid();
+  message.id = `${message.id ? `${message.id}--` : ''}${uuid()}`;
 
   if (!isTabsSendMessageSupported(message, tabID)) {
     return;
@@ -43,6 +44,14 @@ export const normalizeParsedResource = (parsedResource: ParsedResources): Normal
     .forEach(fieldName => {
       result[fieldName] = Array.from(parsedResource[fieldName]);
     });
+  return result;
+};
+
+export const normalizeParsedResources = (resources: Resources): NormalizedResources => {
+  const result = {} as NormalizedResources;
+  Object.keys(resources).forEach(typeID => {
+    result[typeID] = normalizeParsedResource(resources[typeID]);
+  });
   return result;
 };
 
@@ -103,25 +112,6 @@ export const unregisterPlatformTabs = (tabsIDs: BrowserTab['id'][]) => {
   if (registeredPlatforms.size < 1) {
     loggers.info().log('there are no platforms tabs left');
   }
-};
-
-export const registerPlatformsOnOpenedTabs = () => {
-  const context = getBrowserContext();
-  if (!isTabsQuerySupported()) {
-    return;
-  }
-  context.tabs.query({}, (tabs: BrowserTab[]) => {
-    tabs.forEach(tab => {
-      if (!tab?.url) {
-        return;
-      }
-      // check diff versions
-      const platform = ContentPlatformResolver.resolveByUrl(tab.url);
-      if (platform) {
-        registerPlatformTab(platform.getID(), tab.id);
-      }
-    });
-  });
 };
 
 export const waitBGMessage = async <T = unknown>(type: MessageToBackground): Promise<T> => {

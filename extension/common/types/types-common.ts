@@ -6,30 +6,11 @@ import { UniqueHash } from '../../../common/types';
 
 export enum Browser {
   chrome = 'chrome',
-  // safari = 'safari',
   firefox = 'firefox',
   edge = 'edge',
 }
 
 export type BrowserTabID = number;
-
-export type ResourceType = 'services' | 'accounts' | 'assets';
-
-export type ParsedResources = {
-  [fieldName: string]: Set<string>;
-};
-
-export type NormalizedParsedResources = {
-  [fieldName: string]: string[];
-};
-
-export type ParsedResult = {
-  [key in ResourceType]: ParsedResources;
-};
-
-export type NormalizedParsedResult = {
-  [key in ResourceType]: NormalizedParsedResources;
-};
 
 export type ExtensionMessageType = MessageToBackground | MessageToContent | MessageToInline | MessageToApp;
 
@@ -45,10 +26,19 @@ export enum PlatformID {
   MicrosoftSentinel = 'MicrosoftSentinel',
   MicrosoftDefender = 'MicrosoftDefender',
   Splunk = 'Splunk',
+  QRadar = 'QRadar',
+}
+
+export enum PlatformName {
+  MicrosoftSentinel = 'Microsoft Sentinel',
+  MicrosoftDefender = 'Microsoft Defender For Endpoint',
+  Splunk = 'Splunk',
+  QRadar = 'IBM QRadar',
 }
 
 export type IPlatform = {
   getID(): PlatformID;
+  getName(): PlatformName;
 };
 
 export type ModifyQueryType = 'include' | 'exclude' | 'show all';

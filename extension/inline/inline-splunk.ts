@@ -1,14 +1,15 @@
-import { ExtensionMessage, PlatformID } from '../common/types/types-common';
+import { ExtensionMessage } from '../common/types/types-common';
 import { isMessageMatched } from '../common/common-listeners';
 import { MessageToInline } from './types/types-inline-messages';
 import { buildNewQuery, getEditor } from './helpers/ace-editor-helpers';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
 import { ModifyQueryPayload } from '../common/types/types-common-payloads';
-import { buildSplunkQueryParts } from '../content/platforms/splunk/splunk-helpers';
+import { SplunkPlatform } from '../content/platforms/SplunkPlatform';
+import { ContentPlatform } from '../content/types/types-content-common';
+
+const platform: ContentPlatform = new SplunkPlatform();
 
 const loggers = require('../common/loggers').loggers
-  .addPrefix(getDebugPrefix('inline'))
-  .addPrefix(PlatformID.Splunk);
+  .addPrefix(platform.getID());
 
 window.addEventListener('message', (event) => {
   const message = event.data as ExtensionMessage;
@@ -26,7 +27,7 @@ window.addEventListener('message', (event) => {
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
-    const suffix = ` | where ${buildSplunkQueryParts(modifyType, resources)}`;
+    const suffix = ` | where ${platform.buildQueryParts(modifyType, resources)}`;
 
     editor.setValue(
       buildNewQuery(

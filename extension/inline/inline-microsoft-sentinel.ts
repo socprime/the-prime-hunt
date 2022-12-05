@@ -1,19 +1,20 @@
 import { MessageToInline } from './types/types-inline-messages';
-import { getDebugPrefix } from '../common/loggers/loggers-debug';
-import { ExtensionMessage, PlatformID } from '../common/types/types-common';
+import { ExtensionMessage } from '../common/types/types-common';
 import { isMessageMatched } from '../common/common-listeners';
 import { ModifyQueryPayload } from '../common/types/types-common-payloads';
-import { buildMicrosoftSentinelQueryParts } from '../content/platforms/microsoft-sentinel/microsoft-sentinel-helpers';
 import {
   buildNewQuery,
   checkEditorExists,
   getEditorByIndex,
   getEditorIndexByFormattedUri,
 } from './helpers/monaco-editor-helpers';
+import { MicrosoftSentinelPlatform } from '../content/platforms/MicrosoftSentinelPlatform';
+import { ContentPlatform } from '../content/types/types-content-common';
+
+const platform: ContentPlatform = new MicrosoftSentinelPlatform();
 
 const loggers = require('../common/loggers').loggers
-  .addPrefix(getDebugPrefix('inline'))
-  .addPrefix(PlatformID.MicrosoftSentinel);
+  .addPrefix(platform.getID());
 
 let editorIndex = 0;
 
@@ -57,7 +58,7 @@ window.addEventListener('message', (event) => {
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
-    const suffix = `| where ${buildMicrosoftSentinelQueryParts(modifyType, resources)}`;
+    const suffix = `| where ${platform.buildQueryParts(modifyType, resources)}`;
     editor.setValue(buildNewQuery(editorIndex, suffix, modifyType));
   }
 });

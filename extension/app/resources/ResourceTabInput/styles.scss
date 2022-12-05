@@ -1,0 +1,40 @@
+@import "../../scss/palette";
+
+.input.control-input.app-control-input.resource-tab-input {
+  max-width: 200px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-control-input.control-input-wrapper.resource-tab-input {
+  background-color: transparent;
+
+  .tooltip.app-tooltip {
+    .control {
+      .icon {
+        margin-left: 9px;
+        fill: $base-text-color;
+      }
+
+      .icon.waste-basket-icon {
+        position: relative;
+        top: 1px;
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover .icon {
+        transform: scale(1.1);
+        fill: $base-text-color-strong;
+
+        &.check-icon {
+          fill: $success;
+        }
+
+        &.waste-basket-icon {
+          fill: $error;
+        }
+      }
+    }
+  }
+}

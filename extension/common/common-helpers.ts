@@ -1,6 +1,7 @@
-import { ExecutingContext, ExtensionMessageType, NormalizedParsedResources, PlatformID } from './types/types-common';
+import { ExecutingContext, ExtensionMessageType } from './types/types-common';
 import { StandardPropertiesHyphen } from 'csstype';
 import { isRuntimeGetUrlSupported } from './api-support';
+import { NormalizedParsedResources } from '../app/resources/resources-types';
 
 export const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
 
@@ -8,24 +9,6 @@ export const getWebAccessibleUrl = (path: string): string => {
   return isRuntimeGetUrlSupported(path)
     ? getBrowserContext().runtime.getURL(path)
     : '';
-};
-
-export const getPlatformNameByID = (
-  platformID: PlatformID,
-): string => {
-  if (platformID === PlatformID.MicrosoftSentinel) {
-    return 'Microsoft Sentinel';
-  }
-
-  if (platformID === PlatformID.MicrosoftDefender) {
-    return 'Microsoft Defender For Endpoint';
-  }
-
-  if (platformID === PlatformID.Splunk) {
-    return 'Splunk';
-  }
-
-  return 'Unknown Platform';
 };
 
 export const getExecutingContextByMessageType = (
@@ -122,6 +105,7 @@ export const copyToClipboard = (str: string) => {
 export const downloadFile = (
   type: 'csv',
   content: string,
+  name: string,
 ) => {
   const prefix = type === 'csv'
     ? 'data:text/csv;charset=utf-8,'
@@ -129,7 +113,7 @@ export const downloadFile = (
 
   const link = document.createElement('a');
   link.setAttribute('href', encodeURI(`${prefix}${content}`));
-  link.setAttribute('download', 'extension-resources.csv');
+  link.setAttribute('download', `${name}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -238,5 +222,15 @@ export const compareVersions = (
     : nVersion1 > nVersion2
       ? 'greater'
       : 'less';
+};
+
+export const createFormDataString = (data: object): string => {
+  const urlEncodedDataPairs = [];
+  for (const [name, value] of Object.entries(data)) {
+    urlEncodedDataPairs.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
+  }
+  return urlEncodedDataPairs
+    .join('&')
+    .replace(/%20/g, '+');
 };
 

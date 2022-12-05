@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
+import { usePrevious } from '../../../app-hooks';
 import './tabs-panel.scss';
 
 export type TabsPanelProps = {
@@ -8,23 +9,32 @@ export type TabsPanelProps = {
     component: React.ReactNode;
     isDisabled?: boolean;
   }[];
-  defaultActiveTab?: string;
+  activeTab?: string;
   onActiveTabChanged?: (activeTabID: string) => void;
   className?: string;
 };
 
 export const TabsPanel: React.FC<React.PropsWithChildren<TabsPanelProps>> = ({
-  defaultActiveTab,
+  activeTab,
   tabs,
   children,
   onActiveTabChanged,
   className = '',
 }) => {
-  const [activeTab, setActiveTab] = useState<string>(defaultActiveTab || '');
+  const [currentActiveTab, setCurrentActiveTab] = useState<string>(activeTab || '');
+  const previousActiveTab = usePrevious(currentActiveTab);
 
   useEffect(() => {
-    onActiveTabChanged?.(activeTab);
-  }, [activeTab, onActiveTabChanged]);
+    if (typeof onActiveTabChanged === 'function' && previousActiveTab !== currentActiveTab) {
+      onActiveTabChanged(currentActiveTab);
+    }
+  }, [currentActiveTab, onActiveTabChanged, previousActiveTab]);
+
+  useEffect(() => {
+    if (activeTab && activeTab !== currentActiveTab) {
+      setCurrentActiveTab(activeTab);
+    }
+  }, [activeTab]);
 
   return (
     <div
@@ -35,13 +45,13 @@ export const TabsPanel: React.FC<React.PropsWithChildren<TabsPanelProps>> = ({
           <div
             className={createClassName([
               'tab',
-              activeTab === id ? 'active' : '',
+              currentActiveTab === id ? 'active' : '',
               isDisabled ? 'disabled' : '',
             ])}
             key={id}
             onClick={() => {
               if (!isDisabled) {
-                setActiveTab(id);
+                setCurrentActiveTab(id);
               }
             }}
           >
