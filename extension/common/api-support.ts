@@ -1,4 +1,4 @@
-import { getBrowserContext } from './common-helpers';
+import { getBrowserContext } from './common-extension-helpers';
 
 const loggers = require('../common/loggers').loggers.addPrefix('api-support');
 

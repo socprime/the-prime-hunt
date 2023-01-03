@@ -1,7 +1,7 @@
 import { ListenerType } from '../types/types-content-common';
-import { getBrowserContext } from '../../common/common-helpers';
 import { DebugID, DebugMessage } from '../../common/loggers/loggers-debug';
 import { isAddEventListenerSupported, isRuntimeOnMessageSupported } from '../../common/api-support';
+import { getBrowserContext } from '../../common/common-extension-helpers';
 
 const listeners: {
   [key in ListenerType]?: Function;

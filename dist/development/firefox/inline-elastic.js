@@ -824,85 +824,74 @@ var PlatformName;
 
 /***/ }),
 
-/***/ "./extension/content/platforms/SplunkPlatform.ts":
-/*!*******************************************************!*\
-  !*** ./extension/content/platforms/SplunkPlatform.ts ***!
-  \*******************************************************/
+/***/ "./extension/content/platforms/ElasticPlatform.ts":
+/*!********************************************************!*\
+  !*** ./extension/content/platforms/ElasticPlatform.ts ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SplunkPlatform = void 0;
+exports.ElasticPlatform = void 0;
 const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
 const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
 const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
 const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
 const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
-const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
-const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 let loggers;
-class SplunkPlatform {
+class ElasticPlatform {
     constructor() {
         this.defaultWatchers = {
-            [resources_types_1.BoundedResourceTypeID.Accounts]: (0, helpers_1.deduplicateArray)([
-                'src_user',
-                'src_user_bunit',
-                'user',
-                'Account_Name',
-                'User',
-                'src_user_name',
-                'user_name',
-            ]),
-            [resources_types_1.BoundedResourceTypeID.Assets]: (0, helpers_1.deduplicateArray)([
-                'dest_host',
-                'dst',
-                'dest_nt_host',
-                'src_host',
-                'src_nt_host',
-                'src',
-                'dest',
-                'dest_name',
-                'dest_host',
-                'dvc',
-                'dvc_host',
-                'dest_dns',
-                'src_dns',
-                'ComputerName',
-                'DestinationHostname',
-                'SourceHostname',
-            ]),
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'user.name',
+                'related.user',
+                'user.full_name',
+                'winlog.event_data.SubjectUserName',
+                'winlog.event_data.TargetUserName',
+                'winlog.user.name',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'host.hostname',
+                'host.name',
+                'winlog.computer_name',
+            ],
         };
-        this.extensionDefaultPosition = SplunkPlatform.extensionDefaultPosition;
-    }
-    static normalizedValue(value) {
-        const nValue = (0, checkers_1.isNumberInString)(value)
-            ? parseFloat(value)
-            : value;
-        return typeof nValue === 'number'
-            ? nValue
-            : `"${nValue}"`;
+        this.extensionDefaultPosition = ElasticPlatform.extensionDefaultPosition;
     }
     static buildQueryParts(type, resources, withPrefix = false) {
-        const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+        const prefix = type === 'include'
+            ? 'AND'
+            : 'AND NOT';
+        const normalizedResources = {};
+        Object.keys(resources).forEach(fieldName => {
+            if (resources[fieldName].length > 1) {
+                normalizedResources[fieldName] = [
+                    `(${resources[fieldName]
+                        .map(rn => ElasticPlatform.normalizedValue(rn))
+                        .join(' OR ')})`,
+                ];
+            }
+            else {
+                normalizedResources[fieldName] = resources[fieldName];
+            }
+        });
+        return (0, common_helpers_1.buildQueryParts)(normalizedResources, type === 'exclude' ? ':' : ':', type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
             leftOperand: (v) => v,
-            rightOperand: (v) => SplunkPlatform.normalizedValue(v),
+            rightOperand: (v) => ElasticPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
     }
-    buildQueryParts(type, resources, withPrefix) {
-        return SplunkPlatform.buildQueryParts(type, resources, withPrefix);
-    }
     getID() {
-        return SplunkPlatform.id;
+        return ElasticPlatform.id;
     }
     getName() {
-        return types_common_1.PlatformName.Splunk;
+        return types_common_1.PlatformName.Elastic;
     }
     static setListeners() {
         content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
@@ -910,31 +899,49 @@ class SplunkPlatform {
                 (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
             }
         });
+        loggers.debug().log('listeners were set');
     }
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
             attributes: {
-                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.splunkInline),
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.elasticInline),
                 type: 'text/javascript',
                 'data-type': 'inline-listener',
             },
         });
+        loggers.debug().log('inline mounted');
     }
     connect() {
-        SplunkPlatform.setListeners();
-        SplunkPlatform.connectInlineListener();
+        ElasticPlatform.setListeners();
+        ElasticPlatform.connectInlineListener();
         loggers.debug().log('connected');
     }
+    buildQueryParts(type, resources, withPrefix) {
+        return ElasticPlatform.buildQueryParts(type, resources, withPrefix);
+    }
 }
-exports.SplunkPlatform = SplunkPlatform;
-SplunkPlatform.id = types_common_1.PlatformID.Splunk;
-SplunkPlatform.extensionDefaultPosition = {
+exports.ElasticPlatform = ElasticPlatform;
+ElasticPlatform.id = types_common_1.PlatformID.Elastic;
+ElasticPlatform.extensionDefaultPosition = {
     top: 0,
     left: 0,
     width: 480,
     height: 480,
 };
-loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(SplunkPlatform.id);
+ElasticPlatform.normalizedValue = (value) => {
+    let nValue = (0, checkers_1.isNumberInString)(value)
+        ? parseFloat(value)
+        : String(value).trim();
+    if (typeof nValue === 'number') {
+        return nValue;
+    }
+    nValue = nValue.replace(/\\/g, '\\\\');
+    if (nValue[0] === '(' || nValue[nValue.length - 1] === ')') {
+        return nValue;
+    }
+    return `"${nValue}"`;
+};
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ElasticPlatform.id);
 
 
 /***/ }),
@@ -1080,38 +1087,6 @@ Object.values(MessageToContent).forEach(type => {
 
 /***/ }),
 
-/***/ "./extension/inline/helpers/ace-editor-helpers.ts":
-/*!********************************************************!*\
-  !*** ./extension/inline/helpers/ace-editor-helpers.ts ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildNewQuery = exports.getEditor = void 0;
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
-const getEditor = (element) => {
-    try {
-        return ace.edit(element);
-    }
-    catch (e) {
-        return null;
-    }
-};
-exports.getEditor = getEditor;
-const buildNewQuery = (currentQuery, suffix, modifyType) => {
-    var _a;
-    const newQuery = `${modifyType === 'show all'
-        ? ((_a = currentQuery.split('|').shift()) === null || _a === void 0 ? void 0 : _a.trim())
-            || '<unknown>'
-        : currentQuery} ${suffix}`;
-    return (0, helpers_1.clearExtraSpaces)(newQuery);
-};
-exports.buildNewQuery = buildNewQuery;
-
-
-/***/ }),
-
 /***/ "./extension/inline/types/types-inline-messages.ts":
 /*!*********************************************************!*\
   !*** ./extension/inline/types/types-inline-messages.ts ***!
@@ -1207,28 +1182,37 @@ const loggers_debug_1 = __webpack_require__(/*! ./common/loggers/loggers-debug *
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 var exports = __webpack_exports__;
-/*!*******************************************!*\
-  !*** ./extension/inline/inline-splunk.ts ***!
-  \*******************************************/
+/*!********************************************!*\
+  !*** ./extension/inline/inline-elastic.ts ***!
+  \********************************************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
 const types_inline_messages_1 = __webpack_require__(/*! ./types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const ace_editor_helpers_1 = __webpack_require__(/*! ./helpers/ace-editor-helpers */ "./extension/inline/helpers/ace-editor-helpers.ts");
-const SplunkPlatform_1 = __webpack_require__(/*! ../content/platforms/SplunkPlatform */ "./extension/content/platforms/SplunkPlatform.ts");
-const platform = new SplunkPlatform_1.SplunkPlatform();
+const ElasticPlatform_1 = __webpack_require__(/*! ../content/platforms/ElasticPlatform */ "./extension/content/platforms/ElasticPlatform.ts");
+const platform = new ElasticPlatform_1.ElasticPlatform();
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(platform.getID());
+const getInput = () => {
+    return document.querySelector('.euiTextArea[data-test-subj="queryInput"]');
+};
 window.addEventListener('message', (event) => {
     const message = event.data;
     if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISModifyQuery === message.type, message, event)) {
-        const element = document.querySelector('pre.ace_editor');
-        const editor = (0, ace_editor_helpers_1.getEditor)(element);
-        if (!editor) {
-            return loggers.error().log('editor not found', ace);
+        const input = getInput();
+        if (!input) {
+            return loggers.warn().log('query input not found');
         }
+        const currentValue = input.value;
         const { resources, modifyType } = message.payload;
-        const suffix = ` | ${platform.buildQueryParts(modifyType, resources, true)}`;
-        editor.setValue((0, ace_editor_helpers_1.buildNewQuery)(editor.getValue(), suffix, modifyType));
+        if (modifyType === 'show all') {
+            input.value = platform.buildQueryParts(modifyType, resources);
+            input.click();
+            return;
+        }
+        let suffix = '';
+        suffix = platform.buildQueryParts(modifyType, resources, true);
+        input.value = `${currentValue} ${suffix}`;
+        input.click();
     }
 });
 loggers.debug().log('mounted');

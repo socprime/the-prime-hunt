@@ -14,7 +14,7 @@ export const FaqContentView: React.FC = () => {
     return [
       {
         title: 'What security platforms are supported?',
-        content: 'Currently, the extension works with Splunk, QRadar, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
+        content: 'Currently, the extension works with Splunk, QRadar, Elastic, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
       },
       {
         title: 'How can I give feedback or get help?',

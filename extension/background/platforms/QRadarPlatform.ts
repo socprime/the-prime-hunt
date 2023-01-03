@@ -50,7 +50,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
   }
 
   private parseLastHtmlResponse(response: LastHtmlResponse): ParsedResult {
-    const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
     const result: ParsedResult = {};
 
     response.result?.rows?.forEach((r) => {
@@ -60,7 +60,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
         const value = elem.text()?.trim();
         const fieldName = elem.attr('propertylabel')?.trim();
         if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
-          const types = mapFieldNameToType.get(fieldName)!;
+          const types = mapFieldNameToTypes.get(fieldName)!;
           types.forEach(t => {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
@@ -75,7 +75,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
   }
 
   private parseAriaSearchResponse(response: string): ParsedResult {
-    const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
     const result: ParsedResult = {};
 
     const $ = require('cheerio').load(response);
@@ -85,7 +85,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
       const fieldName = $(`th[columnid="${id}"]`).text()?.trim();
       const value =  elem.find('span[id]').text()?.trim();
       if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
-        const types = mapFieldNameToType.get(fieldName)!;
+        const types = mapFieldNameToTypes.get(fieldName)!;
         types.forEach(t => {
           if (typeof result[t] === 'undefined') {
             result[t] = {};
@@ -98,7 +98,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  parseResponse(response: object | string): ParsedResult {
+  async parseResponse(response: object | string) {
     const id = uuid();
     loggers.debug().log('started parse response...', id, this.watchingResources);
 
@@ -219,9 +219,9 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
               {
                 onJSONSuccess: isAreaSearch
                   ? undefined
-                  : (response: object) => {
+                  : async (response: object) => {
                     // TODO not working on firefox
-                    const parsedResult = this.parseResponse(response);
+                    const parsedResult = await this.parseResponse(response);
                     if (Object.keys(parsedResult).length < 1) {
                       removeAttached();
                       return;
@@ -236,12 +236,12 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
                     removeAttached();
                   },
                 onTextSuccess: isAreaSearch
-                  ? (response: string) => {
+                  ? async (response: string) => {
                     const startIndex = response.indexOf('table_data:"') + 12;
                     const endIndex = response.indexOf('/table>"') + 7;
                     AbstractBackgroundPlatform.sendParsedData(
                       details.tabId,
-                      this.parseResponse(
+                      await this.parseResponse(
                         response.substring(startIndex, endIndex)
                           .replace(/\\/g, ''),
                       ),

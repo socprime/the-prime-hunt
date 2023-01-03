@@ -10843,6 +10843,9 @@ const isNotEmpty = (str) => {
 };
 exports.isNotEmpty = isNotEmpty;
 const isNumberInString = (str) => {
+    if (typeof str === 'number') {
+        return true;
+    }
     if (typeof str !== 'string') {
         return false;
     }
@@ -10875,7 +10878,7 @@ exports.isAllowedProtocol = isAllowedProtocol;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -10897,6 +10900,15 @@ const clearLineBreaks = (str) => str
     .trim()
     .replace(/(\r\n|\n|\r)/gm, ' ');
 exports.clearLineBreaks = clearLineBreaks;
+const splitByLines = (str, removeEmpty = false) => {
+    const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
+    let res = str.split(regexp);
+    if (removeEmpty) {
+        res = res.filter(r => r && r !== '\r\n' && r !== '\n' && r !== '\r');
+    }
+    return res;
+};
+exports.splitByLines = splitByLines;
 const parseJSONSafe = (obj, fallback) => {
     try {
         return JSON.parse(obj);
@@ -11054,7 +11066,7 @@ var LoadingKey;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToApp = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 var MessageToApp;
 (function (MessageToApp) {
     MessageToApp["AppShowExtension"] = "AppShowExtension";
@@ -11065,7 +11077,7 @@ var MessageToApp;
     MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
 })(MessageToApp = exports.MessageToApp || (exports.MessageToApp = {}));
 Object.values(MessageToApp).forEach(type => {
-    if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
+    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
         throw new Error(`Wrong app message type "${type}"`);
     }
 });
@@ -11161,10 +11173,19 @@ loggers.debug().log('mounted');
 /*!**********************************************************************!*\
   !*** ./extension/background/platforms/AbstractBackgroundPlatform.ts ***!
   \**********************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AbstractBackgroundPlatform = void 0;
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
@@ -11198,7 +11219,7 @@ class AbstractBackgroundPlatform {
         });
     }
     checkValue(value) {
-        return !this.emptyFieldValues.some(v => v.toLowerCase() === value.toLowerCase());
+        return !this.emptyFieldValues.some(v => v.toLowerCase() === String(value).toLowerCase());
     }
     addValueToResource(parent, key, value) {
         var _a;
@@ -11225,7 +11246,7 @@ class AbstractBackgroundPlatform {
                 mapFieldNameToType.set(name, types);
             });
         });
-        return { fieldsNames, mapFieldNameToType };
+        return { fieldsNames, mapFieldNameToTypes: mapFieldNameToType };
     }
     unregister() {
         Array.from(this.interceptorsIDs).forEach(id => {
@@ -11234,15 +11255,17 @@ class AbstractBackgroundPlatform {
         });
     }
     setWatchers(watchers, tabID) {
-        this.watchingResources = watchers;
-        if (!this.lastResponse) {
-            return;
-        }
-        const parsedResponse = this.parseResponse(this.lastResponse);
-        (0, background_services_1.sendMessageFromBackground)(tabID, {
-            id: 're-parsed-last-response',
-            type: types_app_messages_1.MessageToApp.AppTakeResourceData,
-            payload: (0, background_services_1.normalizeParsedResources)(parsedResponse),
+        return __awaiter(this, void 0, void 0, function* () {
+            this.watchingResources = watchers;
+            if (!this.lastResponse) {
+                return;
+            }
+            const parsedResponse = yield this.parseResponse(this.lastResponse);
+            (0, background_services_1.sendMessageFromBackground)(tabID, {
+                id: 're-parsed-last-response',
+                type: types_app_messages_1.MessageToApp.AppTakeResourceData,
+                payload: (0, background_services_1.normalizeParsedResources)(parsedResponse),
+            });
         });
     }
 }
@@ -11251,14 +11274,204 @@ exports.AbstractBackgroundPlatform = AbstractBackgroundPlatform;
 
 /***/ }),
 
+/***/ "./extension/background/platforms/ElasticPlatform.ts":
+/*!***********************************************************!*\
+  !*** ./extension/background/platforms/ElasticPlatform.ts ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ElasticPlatform = void 0;
+const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
+const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+let loggers;
+class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
+    constructor() {
+        super();
+        this.isRunningResponse = false;
+        this.isRunningResponseTimeout = null;
+        this.watchingResources = {};
+        this.emptyFieldValues = [
+            ...this.emptyFieldValues,
+            '-',
+        ];
+    }
+    parseLine(line, mapFieldNameToTypes, fieldsNames) {
+        var _a, _b, _c, _d, _e;
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = [];
+            const parsedDocument = (0, helpers_1.parseJSONSafe)((0, helpers_1.clearExtraSpaces)(line), null);
+            if (!parsedDocument) {
+                return result;
+            }
+            const elasticResponse = parsedDocument;
+            if (this.isRunningResponseTimeout) {
+                clearTimeout(this.isRunningResponseTimeout);
+            }
+            this.isRunningResponse = (_a = elasticResponse === null || elasticResponse === void 0 ? void 0 : elasticResponse.result) === null || _a === void 0 ? void 0 : _a.isRunning;
+            this.isRunningResponseTimeout = setTimeout(() => {
+                this.isRunningResponse = false;
+            }, 3500);
+            (_e = (_d = (_c = (_b = elasticResponse === null || elasticResponse === void 0 ? void 0 : elasticResponse.result) === null || _b === void 0 ? void 0 : _b.rawResponse) === null || _c === void 0 ? void 0 : _c.hits) === null || _d === void 0 ? void 0 : _d.hits) === null || _e === void 0 ? void 0 : _e.forEach(({ fields }) => {
+                Array.from(fieldsNames).forEach(fieldName => {
+                    if (!fields[fieldName]) {
+                        return;
+                    }
+                    const types = mapFieldNameToTypes.get(fieldName);
+                    types.forEach(type => {
+                        result.push({
+                            type,
+                            fieldName,
+                            values: [...fields[fieldName].filter(v => this.checkValue(v))],
+                        });
+                    });
+                });
+            });
+            return result;
+        });
+    }
+    parseResponse(response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lines = (0, helpers_1.splitByLines)(response, true);
+            const result = {};
+            if (lines.length < 1) {
+                return result;
+            }
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources, this.isRunningResponse);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const results = yield Promise.all(lines.map(line => this.parseLine(line, mapFieldNameToTypes, fieldsNames)));
+            results.forEach(r => {
+                r.forEach(d => {
+                    var _a;
+                    const type = result[d.type] ? result[d.type] : {};
+                    const set = type[d.fieldName] || new Set();
+                    (_a = d.values) === null || _a === void 0 ? void 0 : _a.forEach(v => set.add(v));
+                    if (!result[d.type]) {
+                        result[d.type] = {};
+                    }
+                    result[d.type][d.fieldName] = set;
+                });
+            });
+            loggers.debug().log('finished parse response', id, result, this.isRunningResponse);
+            return result;
+        });
+    }
+    getID() {
+        return ElasticPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.Elastic;
+    }
+    register() {
+        const urlsProcessing = new Set();
+        const bodyData = new Map();
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeRequest, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                var _a, _b, _c, _d, _e, _f, _g, _h;
+                return details.method === 'POST'
+                    && !urlsProcessing.has(details.url)
+                    && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
+                    && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
+                    && ElasticPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+            }, params, id)) {
+                bodyData.set(details.url, details.requestBody.raw[0].bytes);
+            }
+        }));
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                return details.method === 'POST'
+                    && !urlsProcessing.has(details.url)
+                    && bodyData.has(details.url)
+                    && ElasticPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+            }, params, id)) {
+                const bodyBytes = bodyData.get(details.url);
+                let bodyStr = new TextDecoder().decode(bodyBytes);
+                const urlDetails = new URL(details.url);
+                urlDetails.searchParams.delete('compress');
+                urlsProcessing.add(details.url);
+                urlsProcessing.add(urlDetails.href);
+                const tabID = details.tabId;
+                const removeAttached = () => {
+                    urlsProcessing.delete(details.url);
+                    urlsProcessing.delete(urlDetails.href);
+                    bodyData.delete(details.url);
+                    if (urlsProcessing.size < 1) {
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(tabID, false);
+                    }
+                };
+                AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(tabID, true);
+                Http_1.http.post({
+                    url: urlDetails.href,
+                    body: bodyBytes,
+                    headers: details.requestHeaders.reduce((res, header) => {
+                        res[header.name] = header.value;
+                        return res;
+                    }, {}),
+                }, {
+                    onTextSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(tabID, yield this.parseResponse(response), !this.isRunningResponse);
+                        this.lastResponse = response;
+                        removeAttached();
+                    }),
+                    onError: (e) => {
+                        this.isRunningResponse = false;
+                        loggers
+                            .error()
+                            .addPrefix('failed webRequest post')
+                            .log(e, details.method, details.url, bodyStr);
+                        removeAttached();
+                    },
+                });
+            }
+        }));
+        loggers.debug().log('registered');
+    }
+}
+exports.ElasticPlatform = ElasticPlatform;
+ElasticPlatform.id = types_common_1.PlatformID.Elastic;
+ElasticPlatform.postUrls = [
+    '/bsearch',
+];
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ElasticPlatform.id);
+
+
+/***/ }),
+
 /***/ "./extension/background/platforms/MicrosoftDefenderPlatform.ts":
 /*!*********************************************************************!*\
   !*** ./extension/background/platforms/MicrosoftDefenderPlatform.ts ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MicrosoftDefenderPlatform = void 0;
 const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
@@ -11280,25 +11493,27 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
         return types_common_1.PlatformName.MicrosoftDefender;
     }
     parseResponse(response) {
-        const id = (0, helpers_1.uuid)();
-        loggers.debug().log('started parse response...', id, this.watchingResources);
-        const result = {};
-        const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
-        ((response === null || response === void 0 ? void 0 : response.Results) || []).forEach(document => {
-            Array.from(fieldsNames).forEach(fieldName => {
-                if (document === null || document === void 0 ? void 0 : document[fieldName]) {
-                    const types = mapFieldNameToType.get(fieldName);
-                    types.forEach(t => {
-                        if (typeof result[t] === 'undefined') {
-                            result[t] = {};
-                        }
-                        this.addValueToResource(result[t], fieldName, document[fieldName]);
-                    });
-                }
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const result = {};
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            ((response === null || response === void 0 ? void 0 : response.Results) || []).forEach(document => {
+                Array.from(fieldsNames).forEach(fieldName => {
+                    if (document === null || document === void 0 ? void 0 : document[fieldName]) {
+                        const types = mapFieldNameToTypes.get(fieldName);
+                        types.forEach(t => {
+                            if (typeof result[t] === 'undefined') {
+                                result[t] = {};
+                            }
+                            this.addValueToResource(result[t], fieldName, document[fieldName]);
+                        });
+                    }
+                });
             });
+            loggers.debug().log('finished parse response', id, result);
+            return result;
         });
-        loggers.debug().log('finished parse response', id, result);
-        return result;
     }
     register() {
         const urlsProcessing = new Set();
@@ -11347,11 +11562,11 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                     return res;
                 }, {}),
             }, {
-                onJSONSuccess: (response) => {
-                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, this.parseResponse(response), true);
+                onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), true);
                     this.lastResponse = response;
                     removeAttached();
-                },
+                }),
                 onError: e => {
                     loggers
                         .error()
@@ -11383,10 +11598,19 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 /*!*********************************************************************!*\
   !*** ./extension/background/platforms/MicrosoftSentinelPlatform.ts ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MicrosoftSentinelPlatform = void 0;
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
@@ -11458,11 +11682,11 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                     return res;
                 }, {}),
             }, {
-                onJSONSuccess: (response) => {
-                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, this.parseResponse(response), true);
+                onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), true);
                     this.lastResponse = response;
                     removeAttached();
-                },
+                }),
                 onError: (e) => {
                     loggers
                         .error()
@@ -11480,30 +11704,32 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
     }
     parseResponse(response) {
         var _a, _b, _c, _d;
-        const id = (0, helpers_1.uuid)();
-        loggers.debug().log('started parse response...', id, this.watchingResources);
-        const result = {};
-        const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
-        const mappedFieldNamesToIndex = (((_b = (_a = response === null || response === void 0 ? void 0 : response.tables) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.columns) || [])
-            .reduce((map, d, index) => {
-            map.set(d.name, index);
-            return map;
-        }, new Map()) || new Map();
-        (((_d = (_c = response === null || response === void 0 ? void 0 : response.tables) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.rows) || []).forEach((row) => {
-            Array.from(fieldsNames).forEach(fieldName => {
-                if (mappedFieldNamesToIndex.has(fieldName)) {
-                    const types = mapFieldNameToType.get(fieldName);
-                    types.forEach(t => {
-                        if (typeof result[t] === 'undefined') {
-                            result[t] = {};
-                        }
-                        this.addValueToResource(result[t], fieldName, row[mappedFieldNamesToIndex.get(fieldName)]);
-                    });
-                }
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const result = {};
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const mappedFieldNamesToIndex = (((_b = (_a = response === null || response === void 0 ? void 0 : response.tables) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.columns) || [])
+                .reduce((map, d, index) => {
+                map.set(d.name, index);
+                return map;
+            }, new Map()) || new Map();
+            (((_d = (_c = response === null || response === void 0 ? void 0 : response.tables) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.rows) || []).forEach((row) => {
+                Array.from(fieldsNames).forEach(fieldName => {
+                    if (mappedFieldNamesToIndex.has(fieldName)) {
+                        const types = mapFieldNameToTypes.get(fieldName);
+                        types.forEach(t => {
+                            if (typeof result[t] === 'undefined') {
+                                result[t] = {};
+                            }
+                            this.addValueToResource(result[t], fieldName, row[mappedFieldNamesToIndex.get(fieldName)]);
+                        });
+                    }
+                });
             });
+            loggers.debug().log('finished parse response', id, result);
+            return result;
         });
-        loggers.debug().log('finished parse response', id, result);
-        return result;
     }
 }
 exports.MicrosoftSentinelPlatform = MicrosoftSentinelPlatform;
@@ -11533,6 +11759,7 @@ const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/
 const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./MicrosoftDefenderPlatform */ "./extension/background/platforms/MicrosoftDefenderPlatform.ts");
 const SplunkPlatform_1 = __webpack_require__(/*! ./SplunkPlatform */ "./extension/background/platforms/SplunkPlatform.ts");
 const QRadarPlatform_1 = __webpack_require__(/*! ./QRadarPlatform */ "./extension/background/platforms/QRadarPlatform.ts");
+const ElasticPlatform_1 = __webpack_require__(/*! ./ElasticPlatform */ "./extension/background/platforms/ElasticPlatform.ts");
 class PlatformResolver {
     constructor() {
         this.platforms = new Register_1.Register();
@@ -11554,6 +11781,10 @@ class PlatformResolver {
                 }
                 case types_common_1.PlatformID.QRadar: {
                     this.platforms.set(platformID, new QRadarPlatform_1.QRadarPlatform());
+                    break;
+                }
+                case types_common_1.PlatformID.Elastic: {
+                    this.platforms.set(platformID, new ElasticPlatform_1.ElasticPlatform());
                     break;
                 }
                 default:
@@ -11578,10 +11809,19 @@ exports.platformResolver = new PlatformResolver();
 /*!**********************************************************!*\
   !*** ./extension/background/platforms/QRadarPlatform.ts ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.QRadarPlatform = void 0;
 const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
@@ -11616,7 +11856,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
     }
     parseLastHtmlResponse(response) {
         var _a, _b;
-        const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
         const result = {};
         (_b = (_a = response.result) === null || _a === void 0 ? void 0 : _a.rows) === null || _b === void 0 ? void 0 : _b.forEach((r) => {
             const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body><table>${r}</table></body>`);
@@ -11626,7 +11866,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                 const value = (_a = elem.text()) === null || _a === void 0 ? void 0 : _a.trim();
                 const fieldName = (_b = elem.attr('propertylabel')) === null || _b === void 0 ? void 0 : _b.trim();
                 if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
-                    const types = mapFieldNameToType.get(fieldName);
+                    const types = mapFieldNameToTypes.get(fieldName);
                     types.forEach(t => {
                         if (typeof result[t] === 'undefined') {
                             result[t] = {};
@@ -11639,7 +11879,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         return result;
     }
     parseAriaSearchResponse(response) {
-        const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
         const result = {};
         const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(response);
         $('td').each((i, e) => {
@@ -11649,7 +11889,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
             const fieldName = (_b = $(`th[columnid="${id}"]`).text()) === null || _b === void 0 ? void 0 : _b.trim();
             const value = (_c = elem.find('span[id]').text()) === null || _c === void 0 ? void 0 : _c.trim();
             if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
-                const types = mapFieldNameToType.get(fieldName);
+                const types = mapFieldNameToTypes.get(fieldName);
                 types.forEach(t => {
                     if (typeof result[t] === 'undefined') {
                         result[t] = {};
@@ -11661,13 +11901,15 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         return result;
     }
     parseResponse(response) {
-        const id = (0, helpers_1.uuid)();
-        loggers.debug().log('started parse response...', id, this.watchingResources);
-        const result = typeof response === 'string'
-            ? this.parseAriaSearchResponse(response)
-            : this.parseLastHtmlResponse(response);
-        loggers.debug().log('finished parse response', id, result);
-        return result;
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const result = typeof response === 'string'
+                ? this.parseAriaSearchResponse(response)
+                : this.parseLastHtmlResponse(response);
+            loggers.debug().log('finished parse response', id, result);
+            return result;
+        });
     }
     register() {
         const urlsProcessing = new Set();
@@ -11739,8 +11981,8 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                 }, {
                     onJSONSuccess: isAreaSearch
                         ? undefined
-                        : (response) => {
-                            const parsedResult = this.parseResponse(response);
+                        : (response) => __awaiter(this, void 0, void 0, function* () {
+                            const parsedResult = yield this.parseResponse(response);
                             if (Object.keys(parsedResult).length < 1) {
                                 removeAttached();
                                 return;
@@ -11749,17 +11991,17 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                             this.lastResponse = response;
                             isNew = false;
                             removeAttached();
-                        },
+                        }),
                     onTextSuccess: isAreaSearch
-                        ? (response) => {
+                        ? (response) => __awaiter(this, void 0, void 0, function* () {
                             const startIndex = response.indexOf('table_data:"') + 12;
                             const endIndex = response.indexOf('/table>"') + 7;
-                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, this.parseResponse(response.substring(startIndex, endIndex)
+                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response.substring(startIndex, endIndex)
                                 .replace(/\\/g, '')), true);
                             this.lastResponse = response;
                             isNew = true;
                             removeAttached();
-                        }
+                        })
                         : undefined,
                     onError: e => {
                         loggers
@@ -11790,10 +12032,19 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 /*!**********************************************************!*\
   !*** ./extension/background/platforms/SplunkPlatform.ts ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SplunkPlatform = void 0;
 const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
@@ -11838,7 +12089,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
     }
     parseSummary(response) {
         const result = {};
-        const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
         const fields = (response === null || response === void 0 ? void 0 : response.fields) || {};
         if (Object.keys(fields).length > 0) {
             Array.from(fieldsNames).forEach(fieldName => {
@@ -11848,7 +12099,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                     if (distinctValues.length < 1) {
                         return;
                     }
-                    const types = mapFieldNameToType.get(fieldName);
+                    const types = mapFieldNameToTypes.get(fieldName);
                     types.forEach(t => {
                         distinctValues.forEach(v => {
                             if (typeof result[t] === 'undefined') {
@@ -11864,7 +12115,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
     }
     parseStatistic(response) {
         const result = {};
-        const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
         ((response === null || response === void 0 ? void 0 : response.rows) || []).forEach(row => {
             row.forEach((fieldsValues, index) => {
                 var _a, _b;
@@ -11872,7 +12123,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                 if (!fieldName || !fieldsNames.has(fieldName)) {
                     return;
                 }
-                const types = mapFieldNameToType.get(fieldName);
+                const types = mapFieldNameToTypes.get(fieldName);
                 types.forEach(t => {
                     if (typeof result[t] === 'undefined') {
                         result[t] = {};
@@ -11891,13 +12142,15 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         return result;
     }
     parseResponse(response) {
-        const id = (0, helpers_1.uuid)();
-        loggers.debug().log('started parse response...', id, this.watchingResources);
-        const parsedResult = (response === null || response === void 0 ? void 0 : response.rows)
-            ? this.parseStatistic(response)
-            : this.parseSummary(response);
-        loggers.debug().log('finished parse response', id, parsedResult);
-        return parsedResult;
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const parsedResult = (response === null || response === void 0 ? void 0 : response.rows)
+                ? this.parseStatistic(response)
+                : this.parseSummary(response);
+            loggers.debug().log('finished parse response', id, parsedResult);
+            return parsedResult;
+        });
     }
     register() {
         let currentJobID = '';
@@ -11944,8 +12197,8 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                             return res;
                         }, {}),
                     }, {
-                        onJSONSuccess: (response) => {
-                            SplunkPlatform.sendParsedData(details.tabId, this.parseResponse(response), isFirst);
+                        onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                            SplunkPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), isFirst);
                             this.lastResponse = response;
                             timeoutID = setTimeout(() => {
                                 if (countRequests > totalRequests) {
@@ -11955,7 +12208,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                                     cleanArtifacts();
                                 }
                             }, 3000);
-                        },
+                        }),
                         onError: (e) => {
                             loggers.error().log(e, details.url);
                             clearTimeout(timeoutID);
@@ -12013,8 +12266,8 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                             return res;
                         }, {}),
                     }, {
-                        onJSONSuccess: (response) => {
-                            SplunkPlatform.sendParsedData(details.tabId, this.parseResponse(response), isFirst);
+                        onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                            SplunkPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), isFirst);
                             this.lastResponse = response;
                             timeoutID = setTimeout(() => {
                                 if (countRequests > totalRequests) {
@@ -12024,7 +12277,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                                     cleanArtifacts();
                                 }
                             }, 3000);
-                        },
+                        }),
                         onError: (e) => {
                             loggers.error().log(e, details.url);
                             clearTimeout(timeoutID);
@@ -12065,17 +12318,17 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.addListener = exports.removeBGInterceptor = exports.setBGInterceptor = exports.isBGInterceptorMatched = exports.interceptors = void 0;
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
 const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
 const listeners = {};
 exports.interceptors = {};
 listeners[types_background_common_1.BGListenerType.OnMessage] = (listener, ...otherProps) => {
     if ((0, api_support_1.isRuntimeOnMessageSupported)()) {
-        (0, common_helpers_1.getBrowserContext)().runtime.onMessage.addListener(listener, ...otherProps);
+        (0, common_extension_helpers_1.getBrowserContext)().runtime.onMessage.addListener(listener, ...otherProps);
     }
     if (!(0, api_support_1.isRuntimeOnMessageExternalSupported)()) {
         return;
@@ -12089,16 +12342,16 @@ listeners[types_background_common_1.BGListenerType.OnMessage] = (listener, ...ot
         }
         listener(...params);
     };
-    (0, common_helpers_1.getBrowserContext)().runtime.onMessageExternal.addListener(boundedListener);
+    (0, common_extension_helpers_1.getBrowserContext)().runtime.onMessageExternal.addListener(boundedListener);
 };
 listeners[types_background_common_1.BGListenerType.OnBrowserTabRemoved] = (listener, ...otherProps) => {
     if (!(0, api_support_1.isTabsOnRemovedSupported)()) {
         return;
     }
-    (0, common_helpers_1.getBrowserContext)().tabs.onRemoved.addListener(listener, ...otherProps);
+    (0, common_extension_helpers_1.getBrowserContext)().tabs.onRemoved.addListener(listener, ...otherProps);
 };
 listeners[types_background_common_1.BGListenerType.OnExtensionIconClicked] = (listener, ...otherProps) => {
-    const context = (0, common_helpers_1.getBrowserContext)();
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
     const contextAction = typeof context.action !== 'undefined' ? 'action' : 'browserAction';
     if (contextAction === 'action' && !(0, api_support_1.isActionOnClickedSupported)()) {
         return;
@@ -12112,13 +12365,13 @@ listeners[types_background_common_1.BGListenerType.OnBeforeRequest] = (listener,
     if (!(0, api_support_1.isOnBeforeRequestSupported)()) {
         return;
     }
-    (0, common_helpers_1.getBrowserContext)().webRequest.onBeforeRequest.addListener(listener, ...otherProps);
+    (0, common_extension_helpers_1.getBrowserContext)().webRequest.onBeforeRequest.addListener(listener, ...otherProps);
 };
 listeners[types_background_common_1.BGListenerType.OnBeforeSendHeaders] = (listener, ...otherProps) => {
     if (!(0, api_support_1.isOnBeforeSendHeadersSupported)()) {
         return;
     }
-    (0, common_helpers_1.getBrowserContext)().webRequest.onBeforeSendHeaders.addListener(listener, ...otherProps);
+    (0, common_extension_helpers_1.getBrowserContext)().webRequest.onBeforeSendHeaders.addListener(listener, ...otherProps);
 };
 const isBGInterceptorMatched = (type, matchCondition, ...otherInfo) => {
     if (matchCondition()) {
@@ -12194,15 +12447,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.waitBGMessage = exports.unregisterPlatformTabs = exports.registerPlatformTab = exports.normalizeParsedResources = exports.normalizeParsedResource = exports.sendMessageFromBackground = void 0;
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const PlatformResolver_1 = __webpack_require__(/*! ../platforms/PlatformResolver */ "./extension/background/platforms/PlatformResolver.ts");
 const background_services_listeners_1 = __webpack_require__(/*! ./background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
 const sendMessageFromBackground = (tabID, message) => {
     var _a;
-    const context = (0, common_helpers_1.getBrowserContext)();
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
     message.id = `${message.id ? `${message.id}--` : ''}${(0, helpers_1.uuid)()}`;
     if (!(0, api_support_1.isTabsSendMessageSupported)(message, tabID)) {
         return;
@@ -12327,7 +12580,7 @@ var BGListenerType;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToBackground = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 var MessageToBackground;
 (function (MessageToBackground) {
     MessageToBackground["BGRunClearData"] = "BGRunClearData";
@@ -12337,7 +12590,7 @@ var MessageToBackground;
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
 Object.values(MessageToBackground).forEach(type => {
-    if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
+    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
         throw new Error(`Wrong background message type "${type}"`);
     }
 });
@@ -12355,7 +12608,7 @@ Object.values(MessageToBackground).forEach(type => {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
-const common_helpers_1 = __webpack_require__(/*! ./common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
 const isPostMessageSupported = (...logData) => {
     if (!(window === null || window === void 0 ? void 0 : window.postMessage)) {
@@ -12379,7 +12632,7 @@ const isAddEventListenerSupported = (...logData) => {
 exports.isAddEventListenerSupported = isAddEventListenerSupported;
 const isRuntimeSendMessageSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
         loggers
             .warn()
             .log('API runtime.sendMessage is not supported', ...logData);
@@ -12390,7 +12643,7 @@ const isRuntimeSendMessageSupported = (...logData) => {
 exports.isRuntimeSendMessageSupported = isRuntimeSendMessageSupported;
 const isRuntimeOnMessageSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
         loggers
             .warn()
             .log('API runtime.onMessage.addListener is not supported', ...logData);
@@ -12401,7 +12654,7 @@ const isRuntimeOnMessageSupported = (...logData) => {
 exports.isRuntimeOnMessageSupported = isRuntimeOnMessageSupported;
 const isRuntimeOnMessageExternalSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessageExternal) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessageExternal) === null || _b === void 0 ? void 0 : _b.addListener)) {
         loggers
             .warn()
             .log('API runtime.onMessageExternal.addListener is not supported', ...logData);
@@ -12412,7 +12665,7 @@ const isRuntimeOnMessageExternalSupported = (...logData) => {
 exports.isRuntimeOnMessageExternalSupported = isRuntimeOnMessageExternalSupported;
 const isTabsOnRemovedSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)().tabs) === null || _a === void 0 ? void 0 : _a.onRemoved) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().tabs) === null || _a === void 0 ? void 0 : _a.onRemoved) === null || _b === void 0 ? void 0 : _b.addListener)) {
         loggers
             .warn()
             .log('API tabs.onRemoved.addListener is not supported', ...logData);
@@ -12423,7 +12676,7 @@ const isTabsOnRemovedSupported = (...logData) => {
 exports.isTabsOnRemovedSupported = isTabsOnRemovedSupported;
 const isActionOnClickedSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.action) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.action) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API action.onClicked.addListener is not supported', ...logData);
@@ -12434,7 +12687,7 @@ const isActionOnClickedSupported = (...logData) => {
 exports.isActionOnClickedSupported = isActionOnClickedSupported;
 const isBrowserActionOnClickedSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.browserAction) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.browserAction) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API browserAction.onClicked.addListener is not supported', ...logData);
@@ -12445,7 +12698,7 @@ const isBrowserActionOnClickedSupported = (...logData) => {
 exports.isBrowserActionOnClickedSupported = isBrowserActionOnClickedSupported;
 const isOnBeforeRequestSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeRequest) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeRequest) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API webRequest.onBeforeRequest is not supported', ...logData);
@@ -12456,7 +12709,7 @@ const isOnBeforeRequestSupported = (...logData) => {
 exports.isOnBeforeRequestSupported = isOnBeforeRequestSupported;
 const isOnBeforeSendHeadersSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeSendHeaders) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeSendHeaders) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API webRequest.onBeforeSendHeaders is not supported', ...logData);
@@ -12467,7 +12720,7 @@ const isOnBeforeSendHeadersSupported = (...logData) => {
 exports.isOnBeforeSendHeadersSupported = isOnBeforeSendHeadersSupported;
 const isTabsQuerySupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.query)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.query)) {
         loggers
             .warn()
             .log('API tabs.query is not supported', ...logData);
@@ -12478,7 +12731,7 @@ const isTabsQuerySupported = (...logData) => {
 exports.isTabsQuerySupported = isTabsQuerySupported;
 const isTabsSendMessageSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
         loggers
             .warn()
             .log('API tabs.sendMessage is not supported', ...logData);
@@ -12489,7 +12742,7 @@ const isTabsSendMessageSupported = (...logData) => {
 exports.isTabsSendMessageSupported = isTabsSendMessageSupported;
 const isRuntimeGetUrlSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.getURL)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.getURL)) {
         loggers
             .warn()
             .log('API runtime.getURL is not supported', ...logData);
@@ -12502,25 +12755,16 @@ exports.isRuntimeGetUrlSupported = isRuntimeGetUrlSupported;
 
 /***/ }),
 
-/***/ "./extension/common/common-helpers.ts":
-/*!********************************************!*\
-  !*** ./extension/common/common-helpers.ts ***!
-  \********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ "./extension/common/common-extension-helpers.ts":
+/*!******************************************************!*\
+  !*** ./extension/common/common-extension-helpers.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
+exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
 exports.getBrowserContext = getBrowserContext;
@@ -12545,6 +12789,29 @@ const getExecutingContextByMessageType = (message) => {
                 : 'unknown';
 };
 exports.getExecutingContextByMessageType = getExecutingContextByMessageType;
+
+
+/***/ }),
+
+/***/ "./extension/common/common-helpers.ts":
+/*!********************************************!*\
+  !*** ./extension/common/common-helpers.ts ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
 const cssObjectToString = (styles) => Object.keys(styles)
     .reduce((res, key) => res += `${key}:${styles[key]};`, '');
 exports.cssObjectToString = cssObjectToString;
@@ -12654,15 +12921,40 @@ const getElementsUnderCursor = (e, filter) => {
     return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
-const buildQueryParts = (resources, operator, separator, decorators) => {
-    return Object.keys(resources).reduce((result, fieldName) => {
+const buildQueryParts = (resources, operator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
+    const queryParts = Object.keys(resources).reduce((result, fieldName) => {
         result.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)} ${operator} ${decorators.rightOperand(v)}`)
-            .join(separator));
+            .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+            .join(valuesSeparator));
         return result;
-    }, []).join(separator);
+    }, []).join(fieldsSeparator);
+    return prefix
+        ? `${prefix} ${queryParts}`
+        : queryParts;
 };
 exports.buildQueryParts = buildQueryParts;
+const removeBracketsAround = (str) => {
+    let result = str;
+    if (str[0] === '(') {
+        result = result.slice(1);
+    }
+    if (str[str.length - 1] === ')') {
+        result = result.slice(0, str.length - 2);
+    }
+    return result;
+};
+exports.removeBracketsAround = removeBracketsAround;
+const removeQuotesAround = (str) => {
+    let result = str;
+    if (str[0] === '"' || str[0] === "'") {
+        result = result.slice(1);
+    }
+    if (str[str.length - 1] === '"' || str[str.length - 1] === "'") {
+        result = result.slice(0, str.length - 2);
+    }
+    return result;
+};
+exports.removeQuotesAround = removeQuotesAround;
 const removeDoubleQuotesAround = (str) => {
     let result = str;
     if (str[0] === '"') {
@@ -12756,7 +13048,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.1.0";
+exports.version = "1.1.1";
 
 
 /***/ }),
@@ -12888,12 +13180,14 @@ var PlatformID;
     PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
+    PlatformID["Elastic"] = "Elastic";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
     PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
     PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
     PlatformName["Splunk"] = "Splunk";
+    PlatformName["Elastic"] = "Elastic";
     PlatformName["QRadar"] = "IBM QRadar";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
@@ -12910,14 +13204,14 @@ var PlatformName;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToContent = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 var MessageToContent;
 (function (MessageToContent) {
     MessageToContent["CSModifyQuery"] = "CSModifyQuery";
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
-    if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
+    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
         throw new Error(`Wrong content message type "${type}"`);
     }
 });

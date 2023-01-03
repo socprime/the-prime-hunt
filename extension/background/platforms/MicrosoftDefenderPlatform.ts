@@ -33,7 +33,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
     return PlatformName.MicrosoftDefender;
   }
 
-  parseResponse(response: {
+  async parseResponse(response: {
     Results: Record<string, string>[];
   }) {
     const id = uuid();
@@ -41,12 +41,12 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
 
     const result: ParsedResult = {};
 
-    const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
 
     (response?.Results || []).forEach(document => {
       Array.from(fieldsNames).forEach(fieldName => {
         if (document?.[fieldName]) {
-          const types = mapFieldNameToType.get(fieldName)!;
+          const types = mapFieldNameToTypes.get(fieldName)!;
           types.forEach(t => {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
@@ -134,10 +134,10 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
               }, {}),
             },
             {
-              onJSONSuccess: (response: any) => {
+              onJSONSuccess: async (response: any) => {
                 AbstractBackgroundPlatform.sendParsedData(
                   details.tabId,
-                  this.parseResponse(response),
+                  await this.parseResponse(response),
                   true,
                 );
                 this.lastResponse = response;

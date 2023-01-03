@@ -130,6 +130,32 @@ table {
   cursor: move;
   user-select: none;
 }
+.the-prime-hunt--extension--root.draggable-resizable > .draggable {
+  position: absolute;
+  z-index: 1;
+}
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-top {
+  top: 0;
+}
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-bottom {
+  bottom: 0;
+}
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-top,
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-bottom {
+  height: 20px;
+  width: 100%;
+}
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-left {
+  left: 0;
+}
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-right {
+  right: 0;
+}
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-left,
+.the-prime-hunt--extension--root.draggable-resizable > .draggable-right {
+  height: 100%;
+  width: 20px;
+}
 @keyframes button-press-animation {
   0% {
     transform: scale(1);
@@ -211,7 +237,7 @@ table {
   cursor: move;
 }
 .draggable-resizable > .resizer {
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   background-color: transparent;
 }
@@ -249,27 +275,6 @@ table {
 .draggable-resizable:not(.disallowResize) > .resizer-bottom {
   cursor: s-resize;
 }
-.settings-button {
-  display: inline-flex;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-}
-.settings-button .icon {
-  width: 16px;
-  height: 16px;
-}
-.close-app-button {
-  display: inline-flex;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-}
-.close-app-button .icon {
-  width: 16px;
-  height: 16px;
-  fill: #F9F9F9;
-}
 .export-button.button {
   padding: 0;
   height: 30px;
@@ -285,11 +290,6 @@ table {
   position: relative;
   left: 1px;
   top: 1px;
-}
-.integration-header-view .group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 .resource-content-view {
   position: relative;
@@ -312,8 +312,31 @@ table {
   vertical-align: middle;
   margin-right: 10px;
 }
-.integration-content-view {
-  height: 100%;
+.settings-button {
+  display: inline-flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+}
+.settings-button .icon {
+  width: 16px;
+  height: 16px;
+}
+.close-app-button {
+  display: inline-flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+}
+.close-app-button .icon {
+  width: 16px;
+  height: 16px;
+  fill: #F9F9F9;
+}
+.integration-header-view .group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .not-found-content-view {
   height: 100%;
@@ -324,6 +347,37 @@ table {
   font-size: 15px;
   width: 100%;
   text-align: center;
+}
+.integration-footer-view {
+  display: flex;
+  justify-content: space-between;
+}
+.integration-footer-view .button.static-button.app-button:not(.disabled) .icon {
+  fill: #F9F9F9;
+}
+.integration-footer-view .button.static-button.app-button:not(.disabled) .icon.check-icon {
+  width: 13px;
+  height: 10px;
+}
+.integration-footer-view .button.static-button.app-button:not(.disabled) .icon.plus-icon {
+  width: 13px;
+  height: 13px;
+  stroke: #F9F9F9;
+  stroke-width: 0.3px;
+}
+
+.app-wrapper.ssm .integration-footer-view {
+  flex-direction: column;
+  align-items: center;
+}
+.app-wrapper.ssm .integration-footer-view .button.static-button {
+  display: inline-flex;
+  justify-content: center;
+  width: 200px;
+  margin-top: 10px;
+}
+.integration-content-view {
+  height: 100%;
 }
 .faq-button {
   display: inline-flex;
@@ -386,34 +440,6 @@ table {
 .app-link.link:hover {
   text-decoration: none;
 }
-.integration-footer-view {
-  display: flex;
-  justify-content: space-between;
-}
-.integration-footer-view .button.static-button.app-button:not(.disabled) .icon {
-  fill: #F9F9F9;
-}
-.integration-footer-view .button.static-button.app-button:not(.disabled) .icon.check-icon {
-  width: 13px;
-  height: 10px;
-}
-.integration-footer-view .button.static-button.app-button:not(.disabled) .icon.plus-icon {
-  width: 13px;
-  height: 13px;
-  stroke: #F9F9F9;
-  stroke-width: 0.3px;
-}
-
-.app-wrapper.ssm .integration-footer-view {
-  flex-direction: column;
-  align-items: center;
-}
-.app-wrapper.ssm .integration-footer-view .button.static-button {
-  display: inline-flex;
-  justify-content: center;
-  width: 200px;
-  margin-top: 10px;
-}
 .button.static-button.big-static-button {
   padding: 10px 20px;
 }
@@ -449,49 +475,6 @@ table {
 }
 .platform-resources .collapsible:not(:first-child) {
   margin-top: 4px;
-}
-.app-header.header {
-  font-size: 16px;
-  color: #F9F9F9;
-}
-.button.app-button.static-button {
-  background-color: #3B3D4F;
-  padding: 5px 12px;
-  color: #F9F9F9;
-}
-.button.app-button.static-button:hover .icon {
-  fill: #F9F9F9;
-}
-.integration:not(:last-child):after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 2px;
-  background-color: #3B3D4F;
-  margin-bottom: 16px;
-}
-.integration .waste-basket-icon.icon:hover {
-  fill: #EB3131;
-}
-.app-tooltip.tooltip-content {
-  padding: 10px 0;
-  font-size: 13px;
-}
-.app-tooltip.tooltip-content .tooltip-content-wrapper {
-  padding: 12px 14px;
-  background-color: #303344;
-  border-radius: 6px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-}
-.app-tooltip.tooltip.error {
-  color: #EB3131;
-  margin-right: 2px;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-}
-.app-tooltip.small .tooltip-content-wrapper {
-  font-size: 12px;
-  padding: 8px;
 }
 .bulk-resources-panel > .count-selected {
   display: inline-flex;
@@ -673,6 +656,49 @@ table {
   max-width: 16px;
   max-height: 16px;
 }
+.app-header.header {
+  font-size: 16px;
+  color: #F9F9F9;
+}
+.button.app-button.static-button {
+  background-color: #3B3D4F;
+  padding: 5px 12px;
+  color: #F9F9F9;
+}
+.button.app-button.static-button:hover .icon {
+  fill: #F9F9F9;
+}
+.integration:not(:last-child):after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #3B3D4F;
+  margin-bottom: 16px;
+}
+.integration .waste-basket-icon.icon:hover {
+  fill: #EB3131;
+}
+.app-tooltip.tooltip-content {
+  padding: 10px 0;
+  font-size: 13px;
+}
+.app-tooltip.tooltip-content .tooltip-content-wrapper {
+  padding: 12px 14px;
+  background-color: #303344;
+  border-radius: 6px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+.app-tooltip.tooltip.error {
+  color: #EB3131;
+  margin-right: 2px;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+.app-tooltip.small .tooltip-content-wrapper {
+  font-size: 12px;
+  padding: 8px;
+}
 .collapsible {
   border-radius: 4px;
   background-color: #303344;
@@ -754,28 +780,28 @@ table {
 .waste-basket-icon:active {
   animation: button-press-animation 0.2s ease-in-out;
 }
-.integration-input {
-  width: 100%;
+.animated-copy-icon {
+  position: relative;
+  display: inline-flex;
 }
-.integration-input .input-label span {
-  display: flex;
-  justify-content: space-between;
+.animated-copy-icon .animated {
+  position: absolute;
+  visibility: hidden;
 }
-.integration-input .input-label span .icon {
-  fill: #CFD0D3;
-  width: 22px;
-  height: 22px;
+.animated-copy-icon:not(.disabled):focus .animated {
+  animation: copy-animation 0.26s ease-in-out;
 }
-.collapsible {
-  overflow: hidden;
+.animated-copy-icon:active .animated {
+  animation: none;
 }
-.collapsible > .collapsible-header {
-  cursor: pointer;
-  padding: 12px;
+.button.hover-button {
+  background-color: transparent;
 }
-.collapsible > .collapsible-content {
-  padding: 0 12px;
-  transition: height ease 0.2s;
+.button.hover-button:not(:disabled):hover, .button.hover-button:not(:disabled).hovered {
+  background-color: #3B3D4F;
+}
+.button.hover-button:not(:disabled):hover .icon, .button.hover-button:not(:disabled).hovered .icon {
+  fill: #4AC18E;
 }
 .input.control-input.app-control-input.resource-tab-input {
   max-width: 200px !important;
@@ -846,29 +872,6 @@ table {
   width: 99%;
   top: 50%;
 }
-.animated-copy-icon {
-  position: relative;
-  display: inline-flex;
-}
-.animated-copy-icon .animated {
-  position: absolute;
-  visibility: hidden;
-}
-.animated-copy-icon:not(.disabled):focus .animated {
-  animation: copy-animation 0.26s ease-in-out;
-}
-.animated-copy-icon:active .animated {
-  animation: none;
-}
-.button.hover-button {
-  background-color: transparent;
-}
-.button.hover-button:not(:disabled):hover, .button.hover-button:not(:disabled).hovered {
-  background-color: #3B3D4F;
-}
-.button.hover-button:not(:disabled):hover .icon, .button.hover-button:not(:disabled).hovered .icon {
-  fill: #4AC18E;
-}
 @keyframes button-press-animation {
   0% {
     transform: scale(1);
@@ -923,6 +926,29 @@ table {
 .button.app-button.disabled > .button-icon .icon {
   fill: #727894;
   cursor: default;
+}
+.integration-input {
+  width: 100%;
+}
+.integration-input .input-label span {
+  display: flex;
+  justify-content: space-between;
+}
+.integration-input .input-label span .icon {
+  fill: #CFD0D3;
+  width: 22px;
+  height: 22px;
+}
+.collapsible {
+  overflow: hidden;
+}
+.collapsible > .collapsible-header {
+  cursor: pointer;
+  padding: 12px;
+}
+.collapsible > .collapsible-content {
+  padding: 0 12px;
+  transition: height ease 0.2s;
 }
 .app-dropdown.dropdown.down .app-dropdown-menu {
   margin-top: 13px;
@@ -988,6 +1014,31 @@ table {
 .button:disabled {
   cursor: default;
 }
+.dropdown {
+  position: relative;
+  display: inline-flex;
+  z-index: 1;
+}
+.dropdown .dropdown-opener {
+  cursor: pointer;
+}
+.dropdown.down .dropdown-menu {
+  top: 100%;
+  margin-top: 4px;
+}
+.dropdown.up .dropdown-menu {
+  bottom: 100%;
+  margin-bottom: 4px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  box-sizing: border-box;
+}
+.dropdown-menu.hide {
+  opacity: 0;
+  pointer-events: none;
+}
 .validation-input-wrapper {
   display: inline-flex;
   flex-direction: column;
@@ -1031,31 +1082,6 @@ table {
 }
 .collapsible-resource:hover .collapsible-header .waste-basket-icon.icon {
   opacity: 1;
-}
-.dropdown {
-  position: relative;
-  display: inline-flex;
-  z-index: 1;
-}
-.dropdown .dropdown-opener {
-  cursor: pointer;
-}
-.dropdown.down .dropdown-menu {
-  top: 100%;
-  margin-top: 4px;
-}
-.dropdown.up .dropdown-menu {
-  bottom: 100%;
-  margin-bottom: 4px;
-}
-
-.dropdown-menu {
-  position: absolute;
-  box-sizing: border-box;
-}
-.dropdown-menu.hide {
-  opacity: 0;
-  pointer-events: none;
 }
 .input.app-input {
   background-color: #3B3D4F;
@@ -1188,20 +1214,6 @@ table {
   height: 16px;
   width: 16px;
 }
-.success-check-icon {
-  width: 16px;
-  height: 16px;
-  background-color: #4AC18E;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-.success-check-icon .icon {
-  width: 10px;
-  height: 8px;
-  fill: white;
-}
 .success-minus-icon {
   width: 16px;
   height: 16px;
@@ -1215,6 +1227,20 @@ table {
   width: 10px;
   stroke: white;
   stroke-width: 2px;
+}
+.success-check-icon {
+  width: 16px;
+  height: 16px;
+  background-color: #4AC18E;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.success-check-icon .icon {
+  width: 10px;
+  height: 8px;
+  fill: white;
 }
 .checkbox > .checker-wrapper {
   display: inline-flex;

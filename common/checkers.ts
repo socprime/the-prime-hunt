@@ -13,6 +13,9 @@ export const isNotEmpty = (str: unknown): boolean => {
 };
 
 export const isNumberInString = (str: unknown): boolean => {
+  if (typeof str === 'number') {
+    return true;
+  }
   if (typeof str !== 'string') {
     return false;
   }

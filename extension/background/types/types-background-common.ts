@@ -37,8 +37,8 @@ export type BackgroundPlatform = IPlatform & {
   register(): void;
   unregister(): void;
   setWatchers(watchers: WatchingResources, tabID: BrowserTabID): void;
-  parseResponse(response: object): ParsedResult;
-  parseContent?(content: HTMLTextContent): ParsedResult;
+  parseResponse(response: object): Promise<ParsedResult>;
+  parseContent?(content: HTMLTextContent): Promise<ParsedResult>;
 };
 
 export type BeforeRequestBodyListener = (

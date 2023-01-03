@@ -67,7 +67,7 @@ window.addEventListener('message', (event) => {
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
     const { href } = document.location;
-    const suffix = ` | where ${platform.buildQueryParts(modifyType, resources)}`;
+    const suffix = ` | ${platform.buildQueryParts(modifyType, resources, true)}`;
 
     const editor = getEditorByIndex(editorIndex);
     const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1

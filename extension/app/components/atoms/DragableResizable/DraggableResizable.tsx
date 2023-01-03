@@ -8,7 +8,7 @@ export type ChangesType = 'move' | 'resize-top' | 'resize-bottom' | 'resize-left
 
 export type DraggableResizableProps = {
   position: Position;
-  dragElementRef?: RefObject<HTMLElement>;
+  dragElementsRefs?: RefObject<HTMLElement>[];
   minHeight?: number;
   minWidth?: number;
   onChange?: (type: ChangesType, newPosition: Position, oldPosition: Position) => void;
@@ -29,7 +29,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
   onEnd,
   position,
   onChange,
-  dragElementRef,
+  dragElementsRefs = [],
   onStart,
   minHeight,
   minWidth,
@@ -213,14 +213,18 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
   }, [calculateOnMove, onChangedPositionCallback, onMouseUpCallback, onMoveHandler]);
 
   useLayoutEffect(() => {
-    if (!dragElementRef) {
+    if (!dragElementsRefs) {
       ref.current!.onmousedown = onMoveCallback;
       return;
     }
-    if (dragElementRef?.current) {
-      dragElementRef.current.onmousedown = onMoveCallback;
+    if (dragElementsRefs?.length > 0) {
+      dragElementsRefs.forEach(element => {
+        if (element?.current) {
+          element.current.onmousedown = onMoveCallback;
+        }
+      });
     }
-  }, [dragElementRef, onMoveCallback]);
+  }, [dragElementsRefs, onMoveCallback, dragElementsRefs?.length]);
 
   return (
     <div

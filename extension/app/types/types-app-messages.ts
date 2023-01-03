@@ -1,4 +1,4 @@
-import { getExecutingContextByMessageType } from '../../common/common-helpers';
+import { getExecutingContextByMessageType } from '../../common/common-extension-helpers';
 
 export enum MessageToApp {
   AppShowExtension = 'AppShowExtension',

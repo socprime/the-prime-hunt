@@ -27,12 +27,14 @@ export enum PlatformID {
   MicrosoftDefender = 'MicrosoftDefender',
   Splunk = 'Splunk',
   QRadar = 'QRadar',
+  Elastic = 'Elastic',
 }
 
 export enum PlatformName {
   MicrosoftSentinel = 'Microsoft Sentinel',
   MicrosoftDefender = 'Microsoft Defender For Endpoint',
   Splunk = 'Splunk',
+  Elastic = 'Elastic',
   QRadar = 'IBM QRadar',
 }
 

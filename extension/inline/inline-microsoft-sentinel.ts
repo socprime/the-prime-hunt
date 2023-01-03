@@ -58,7 +58,7 @@ window.addEventListener('message', (event) => {
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
-    const suffix = `| where ${platform.buildQueryParts(modifyType, resources)}`;
+    const suffix = `| ${platform.buildQueryParts(modifyType, resources, true)}`;
     editor.setValue(buildNewQuery(editorIndex, suffix, modifyType));
   }
 });

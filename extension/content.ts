@@ -12,26 +12,24 @@ if (isInsideIframe()) {
     .setPrefix(getDebugPrefix('app'));
 }
 
-document.body.onload = (): any => {
-  const sendMessageFromApp = require('./content/services/content-services').sendMessageFromApp;
-  const toggleShowExtension = debounce(() => {
-    sendMessageFromApp({
-      id: 'toggle-show-extension',
-      type: MessageToBackground.BGToggleShowExtension,
-    });
-  }, 100);
-
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
-    const code = e.code?.toLowerCase?.() || '';
-    if (code === 'keyq' && e.ctrlKey) {
-      toggleShowExtension();
-    }
+const sendMessageFromApp = require('./content/services/content-services').sendMessageFromApp;
+const toggleShowExtension = debounce(() => {
+  sendMessageFromApp({
+    id: 'toggle-show-extension',
+    type: MessageToBackground.BGToggleShowExtension,
   });
+}, 100);
 
-  if (isInsideIframe()) {
-    return require('./content/content-listeners');
+document.addEventListener('keydown', (e: KeyboardEvent) => {
+  const code = e.code?.toLowerCase?.() || '';
+  if (code === 'keyq' && e.ctrlKey) {
+    toggleShowExtension();
   }
+});
 
+if (isInsideIframe()) {
+  require('./content/content-listeners');
+} else {
   require('./migrations');
   require('./app/app-listeners');
 
@@ -42,4 +40,4 @@ document.body.onload = (): any => {
     require('./app');
     require('./app/stores').rootStore.platformStore.setPlatform(platform);
   }
-};
+}

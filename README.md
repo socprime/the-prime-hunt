@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic.
 
 ## Installation
 ### Chrome
@@ -69,7 +69,7 @@ yarn extension --mode=development|production
 ```
 
 ## How to Use
-1. Go to your SIEM/EDR/XDR environment and start the extension from the Extensions panel next to the address bar. You can resize the extension's window by dragging its edges. To move the window, hover over the extension's name and drag it.
+1. Go to your SIEM/EDR/XDR environment and start the extension from the Extensions panel next to the address bar. You can resize the extension's window by dragging its edges. To move the window, hover over the extension's name or the window's edge and drag it.
 
 **Note:**  
 The position and size of the extension's window are stored as the `the-prime-hunt--extension--position` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), the default position and size are used.

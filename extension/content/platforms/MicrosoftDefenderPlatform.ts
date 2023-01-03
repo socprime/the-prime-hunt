@@ -3,7 +3,6 @@ import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/ty
 import { addListener } from '../services/content-services-listeners';
 import {
   buildQueryParts,
-  getWebAccessibleUrl,
   mountHTMLElement,
 } from '../../common/common-helpers';
 import { sendMessageFromContent } from '../services/content-services';
@@ -14,6 +13,7 @@ import { microsoftDefenderInline } from '../../manifest/public-resources';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { isNumberInString } from '../../../common/checkers';
 import { Loggers } from '../../common/loggers';
+import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
 
 let loggers: Loggers;
 
@@ -41,15 +41,19 @@ export class MicrosoftDefenderPlatform implements ContentPlatform {
   static buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix = false,
   ) {
+    const prefix = 'where';
     return buildQueryParts(
       resources,
-      type === 'exclude' ? '!=' : '==',
+      type === 'exclude' ? ' != ' : ' == ',
+      type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {
         leftOperand: (v) => v,
         rightOperand: (v) => MicrosoftDefenderPlatform.normalizedValue(v),
       },
+      withPrefix ? prefix : undefined,
     );
   }
 
@@ -65,8 +69,9 @@ export class MicrosoftDefenderPlatform implements ContentPlatform {
   buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix?: boolean,
   ) {
-    return MicrosoftDefenderPlatform.buildQueryParts(type, resources);
+    return MicrosoftDefenderPlatform.buildQueryParts(type, resources, withPrefix);
   }
 
   extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;

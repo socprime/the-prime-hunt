@@ -68,12 +68,13 @@ export class PlatformStore {
   buildQueryParts(
     modifyType: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix?: boolean,
   ): string {
     if (!this.platform) {
       return 'Undefined platform';
     }
 
-    return this.platform.buildQueryParts(modifyType, resources);
+    return this.platform.buildQueryParts(modifyType, resources, withPrefix);
   }
 
   getName() {

@@ -1,5 +1,4 @@
 import { BrowserTab, BGListenerType, TabID } from '../types/types-background-common';
-import { getBrowserContext } from '../../common/common-helpers';
 import {
   ExtensionMessage,
   PlatformID,
@@ -15,6 +14,7 @@ import {
   ParsedResources,
   Resources,
 } from '../../app/resources/resources-types';
+import { getBrowserContext } from '../../common/common-extension-helpers';
 
 const loggers = require('../../common/loggers').loggers
   .addPrefix('services');

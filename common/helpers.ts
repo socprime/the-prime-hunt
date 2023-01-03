@@ -22,6 +22,18 @@ export const clearLineBreaks = (str: string): string => str
   .trim()
   .replace(/(\r\n|\n|\r)/gm, ' ');
 
+export const splitByLines = (str: string, removeEmpty = false): string[] => {
+  const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
+
+  let res = str.split(regexp);
+
+  if (removeEmpty) {
+    res = res.filter(r => r && r !== '\r\n' && r !== '\n' && r !== '\r');
+  }
+
+  return res;
+};
+
 export const parseJSONSafe = <T = unknown>(obj: unknown, fallback: T): T => {
   try {
     return JSON.parse(obj as string) as T;

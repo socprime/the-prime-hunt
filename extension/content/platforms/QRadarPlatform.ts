@@ -2,7 +2,7 @@ import { ContentPlatform, ListenerType, MessageListener } from '../types/types-c
 import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import {
-  buildQueryParts, getWebAccessibleUrl, mountHTMLElement, waitHTMLElement,
+  buildQueryParts, mountHTMLElement, waitHTMLElement,
 } from '../../common/common-helpers';
 import { isNumberInString } from '../../../common/checkers';
 import { addListener } from '../services/content-services-listeners';
@@ -12,6 +12,7 @@ import { sendMessageFromContent } from '../services/content-services';
 import { MessageToInline } from '../../inline/types/types-inline-messages';
 import { qRadarInline } from '../../manifest/public-resources';
 import { Loggers } from '../../common/loggers';
+import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
 
 let loggers: Loggers;
 
@@ -25,15 +26,22 @@ export class QRadarPlatform implements ContentPlatform {
       : `'${nValue}'`;
   }
 
-  buildQueryParts(type: ModifyQueryType, resources: NormalizedParsedResources): string {
+  buildQueryParts(
+    type: ModifyQueryType,
+    resources: NormalizedParsedResources,
+    withPrefix = false,
+  ): string {
+    const prefix = 'where';
     return buildQueryParts(
       resources,
-      type === 'exclude' ? '!=' : '==',
+      type === 'exclude' ? ' != ' : ' == ',
+      type === 'exclude' ? ' AND ' : ' OR ',
       type === 'exclude' ? ' AND ' : ' OR ',
       {
         leftOperand: (v) => `"${v}"`,
         rightOperand: (v) => QRadarPlatform.normalizedValue(v),
       },
+      withPrefix ? prefix : undefined,
     );
   }
 

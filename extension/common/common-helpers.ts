@@ -1,32 +1,5 @@
-import { ExecutingContext, ExtensionMessageType } from './types/types-common';
 import { StandardPropertiesHyphen } from 'csstype';
-import { isRuntimeGetUrlSupported } from './api-support';
 import { NormalizedParsedResources } from '../app/resources/resources-types';
-
-export const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
-
-export const getWebAccessibleUrl = (path: string): string => {
-  return isRuntimeGetUrlSupported(path)
-    ? getBrowserContext().runtime.getURL(path)
-    : '';
-};
-
-export const getExecutingContextByMessageType = (
-  message: ExtensionMessageType,
-): ExecutingContext => {
-  let prefix = (message as string).slice(0, 3).toLowerCase();
-  if (prefix === 'app') {
-    return 'app';
-  }
-  prefix = prefix.slice(0, 2);
-  return prefix === 'bg'
-    ? 'background'
-    : prefix === 'cs'
-      ? 'content'
-      : prefix === 'is'
-        ? 'inline'
-        : 'unknown' as ExecutingContext;
-};
 
 export const cssObjectToString = (styles: StandardPropertiesHyphen): string =>
   Object.keys(styles)
@@ -173,20 +146,47 @@ export const getElementsUnderCursor = (
 export const buildQueryParts = (
   resources: NormalizedParsedResources,
   operator: string,
-  separator: string,
+  valuesSeparator: string,
+  fieldsSeparator: string,
   decorators: {
     leftOperand: (value: string) => string,
     rightOperand: (value: string | number) => string | number,
   },
+  prefix?: string,
 ): string => {
-  return Object.keys(resources).reduce((result, fieldName) => {
+  const queryParts = Object.keys(resources).reduce((result, fieldName) => {
     result.push(
       resources[fieldName]
-        .map(v => `${decorators.leftOperand(fieldName)} ${operator} ${decorators.rightOperand(v)}`)
-        .join(separator),
+        .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+        .join(valuesSeparator),
     );
     return result;
-  }, [] as string[]).join(separator);
+  }, [] as string[]).join(fieldsSeparator);
+  return prefix
+    ? `${prefix} ${queryParts}`
+    : queryParts;
+};
+
+export const removeBracketsAround = (str: string): string => {
+  let result = str;
+  if (str[0] === '(') {
+    result = result.slice(1);
+  }
+  if (str[str.length - 1] === ')') {
+    result = result.slice(0, str.length - 2);
+  }
+  return result;
+};
+
+export const removeQuotesAround = (str: string): string => {
+  let result = str;
+  if (str[0] === '"' || str[0] === "'") {
+    result = result.slice(1);
+  }
+  if (str[str.length - 1] === '"' || str[str.length - 1] === "'") {
+    result = result.slice(0, str.length - 2);
+  }
+  return result;
 };
 
 export const removeDoubleQuotesAround = (str: string): string => {
@@ -233,4 +233,3 @@ export const createFormDataString = (data: object): string => {
     .join('&')
     .replace(/%20/g, '+');
 };
-

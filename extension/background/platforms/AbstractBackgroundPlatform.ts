@@ -16,7 +16,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
 
   abstract getName(): PlatformName;
 
-  abstract parseResponse(response: object | string): ParsedResult;
+  abstract parseResponse(response: object | string): Promise<ParsedResult>;
 
   abstract register(): void;
 
@@ -54,7 +54,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
   protected interceptorsIDs = new Set<UniqueHash>();
 
   protected checkValue(value: string): boolean {
-    return !this.emptyFieldValues.some(v => v.toLowerCase() === value.toLowerCase());
+    return !this.emptyFieldValues.some(v => v.toLowerCase() === String(value).toLowerCase());
   }
 
   protected addValueToResource(
@@ -80,7 +80,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
     watchers: WatchingResources,
   ): {
       fieldsNames: Set<FieldName>;
-      mapFieldNameToType: Map<FieldName, ResourceTypeID[]>;
+      mapFieldNameToTypes: Map<FieldName, ResourceTypeID[]>;
     } {
     const fieldsNames = new Set<FieldName>();
     const mapFieldNameToType = new Map<FieldName, ResourceTypeID[]>();
@@ -95,7 +95,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
       });
     });
 
-    return { fieldsNames, mapFieldNameToType };
+    return { fieldsNames, mapFieldNameToTypes: mapFieldNameToType };
   }
 
   unregister() {
@@ -105,12 +105,12 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
     });
   }
 
-  setWatchers(watchers: WatchingResources, tabID: BrowserTabID) {
+  async setWatchers(watchers: WatchingResources, tabID: BrowserTabID) {
     this.watchingResources = watchers;
     if (!this.lastResponse) {
       return;
     }
-    const parsedResponse = this.parseResponse(this.lastResponse);
+    const parsedResponse = await this.parseResponse(this.lastResponse);
     sendMessageFromBackground<NormalizedResources>(tabID, {
       id: 're-parsed-last-response',
       type: MessageToApp.AppTakeResourceData,

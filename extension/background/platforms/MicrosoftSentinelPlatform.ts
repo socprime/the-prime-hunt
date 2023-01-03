@@ -110,10 +110,10 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
               }, {}),
             },
             {
-              onJSONSuccess: (response: any) => {
+              onJSONSuccess: async (response: any) => {
                 AbstractBackgroundPlatform.sendParsedData(
                   details.tabId,
-                  this.parseResponse(response),
+                  await this.parseResponse(response),
                   true,
                 );
                 this.lastResponse = response;
@@ -140,7 +140,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
     loggers.debug().log('unregistered');
   }
 
-  parseResponse(response: {
+  async parseResponse(response: {
     tables: [{
       columns: {
         name: string;
@@ -148,13 +148,13 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
       }[]
       rows: [];
     }];
-  }): ParsedResult {
+  }) {
     const id = uuid();
     loggers.debug().log('started parse response...', id, this.watchingResources);
 
     const result: ParsedResult = {};
 
-    const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
 
     const mappedFieldNamesToIndex = (response?.tables?.[0]?.columns || [])
       .reduce((map, d, index) => {
@@ -165,7 +165,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
     (response?.tables?.[0]?.rows || []).forEach((row: string[]) => {
       Array.from(fieldsNames).forEach(fieldName => {
         if (mappedFieldNamesToIndex.has(fieldName)) {
-          const types = mapFieldNameToType.get(fieldName)!;
+          const types = mapFieldNameToTypes.get(fieldName)!;
           types.forEach(t => {
             if (typeof result[t] === 'undefined') {
               result[t] = {};

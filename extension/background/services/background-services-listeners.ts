@@ -1,5 +1,4 @@
 import { BGInterceptor, BGListenerType, MessageInfo } from '../types/types-background-common';
-import { getBrowserContext } from '../../common/common-helpers';
 import { mapType, UniqueHash } from '../../../common/types';
 import { uuid } from '../../../common/helpers';
 import { DebugID, DebugMessage } from '../../common/loggers/loggers-debug';
@@ -12,6 +11,7 @@ import {
   isRuntimeOnMessageSupported,
   isTabsOnRemovedSupported,
 } from '../../common/api-support';
+import { getBrowserContext } from '../../common/common-extension-helpers';
 
 const loggers = require('../../common/loggers').loggers
   .addPrefix('listeners');

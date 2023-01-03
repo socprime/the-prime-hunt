@@ -5,7 +5,6 @@ import { addListener } from '../services/content-services-listeners';
 import { MessageToContent } from '../types/types-content-messages';
 import {
   buildQueryParts,
-  getWebAccessibleUrl,
   mountHTMLElement,
   waitHTMLElement,
 } from '../../common/common-helpers';
@@ -16,6 +15,7 @@ import { microsoftSentinelInline } from '../../manifest/public-resources';
 import { isNumberInString } from '../../../common/checkers';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { Loggers } from '../../common/loggers';
+import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
 
 let loggers: Loggers;
 
@@ -41,15 +41,19 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
   static buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix = false,
   ) {
+    const prefix = 'where';
     return buildQueryParts(
       resources,
-      type === 'exclude' ? '!=' : '==',
+      type === 'exclude' ? ' != ' : ' == ',
+      type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {
         leftOperand: (v) => v,
         rightOperand: (v) => MicrosoftSentinelPlatform.normalizedValue(v),
       },
+      withPrefix ? prefix : undefined,
     );
   }
 
@@ -70,8 +74,9 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
   buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix?: boolean,
   ) {
-    return MicrosoftSentinelPlatform.buildQueryParts(type, resources);
+    return MicrosoftSentinelPlatform.buildQueryParts(type, resources, withPrefix);
   }
 
   getID() {

@@ -19,6 +19,7 @@ export type ContentPlatform = IPlatform & {
   buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix?: boolean,
   ): string;
   connect(): void;
 };

@@ -7,7 +7,6 @@ import { sendMessageFromContent } from '../services/content-services';
 import { MessageToInline } from '../../inline/types/types-inline-messages';
 import {
   buildQueryParts,
-  getWebAccessibleUrl,
   mountHTMLElement,
 } from '../../common/common-helpers';
 import { splunkInline } from '../../manifest/public-resources';
@@ -15,6 +14,7 @@ import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/reso
 import { isNumberInString } from '../../../common/checkers';
 import { deduplicateArray } from '../../../common/helpers';
 import { Loggers } from '../../common/loggers';
+import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
 
 let loggers: Loggers;
 
@@ -70,23 +70,28 @@ export class SplunkPlatform implements ContentPlatform {
   static buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix = false,
   ) {
+    const prefix = 'where';
     return buildQueryParts(
       resources,
-      type === 'exclude' ? '!=' : '==',
+      type === 'exclude' ? ' != ' : ' == ',
+      type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {
         leftOperand: (v) => v,
         rightOperand: (v) => SplunkPlatform.normalizedValue(v),
       },
+      withPrefix ? prefix : undefined,
     );
   }
 
   buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
+    withPrefix?: boolean,
   ) {
-    return SplunkPlatform.buildQueryParts(type, resources);
+    return SplunkPlatform.buildQueryParts(type, resources, withPrefix);
   }
 
   extensionDefaultPosition = SplunkPlatform.extensionDefaultPosition;

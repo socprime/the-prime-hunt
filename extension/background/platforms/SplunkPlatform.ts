@@ -52,7 +52,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
   private parseSummary(response: SummaryResponse): ParsedResult {
     const result: ParsedResult = {};
 
-    const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
 
     const fields = response?.fields || {} as SummaryFields;
 
@@ -63,7 +63,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
           if (distinctValues.length < 1) {
             return;
           }
-          const types = mapFieldNameToType.get(fieldName)!;
+          const types = mapFieldNameToTypes.get(fieldName)!;
           types.forEach(t => {
             distinctValues.forEach(v => {
               if (typeof result[t] === 'undefined') {
@@ -82,7 +82,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
   private parseStatistic(response: StatisticResponse): ParsedResult {
     const result: ParsedResult = {};
 
-    const { mapFieldNameToType, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
 
     (response?.rows || []).forEach(row => {
       row.forEach((fieldsValues, index) => {
@@ -90,7 +90,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
         if (!fieldName || !fieldsNames.has(fieldName)) {
           return;
         }
-        const types = mapFieldNameToType.get(fieldName)!;
+        const types = mapFieldNameToTypes.get(fieldName)!;
         types.forEach(t => {
           if (typeof result[t] === 'undefined') {
             result[t] = {};
@@ -109,7 +109,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  parseResponse(response: SummaryResponse | StatisticResponse): ParsedResult {
+  async parseResponse(response: SummaryResponse | StatisticResponse) {
     const id = uuid();
     loggers.debug().log('started parse response...', id, this.watchingResources);
 
@@ -179,10 +179,10 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                   }, {}),
                 },
                 {
-                  onJSONSuccess: (response: any) => {
+                  onJSONSuccess: async (response: any) => {
                     SplunkPlatform.sendParsedData(
                       details.tabId,
-                      this.parseResponse(response),
+                      await this.parseResponse(response),
                       isFirst,
                     );
                     this.lastResponse = response;
@@ -268,10 +268,10 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                   }, {}),
                 },
                 {
-                  onJSONSuccess: (response: any) => {
+                  onJSONSuccess: async (response: any) => {
                     SplunkPlatform.sendParsedData(
                       details.tabId,
-                      this.parseResponse(response),
+                      await this.parseResponse(response),
                       isFirst,
                     );
                     this.lastResponse = response;

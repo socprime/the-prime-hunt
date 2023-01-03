@@ -1,8 +1,8 @@
-import { getBrowserContext } from '../../common/common-helpers';
 import { ExtensionMessage } from '../../common/types/types-common';
 import { uuid } from '../../../common/helpers';
 import { isPostMessageSupported, isRuntimeSendMessageSupported } from '../../common/api-support';
 import { Loggers } from '../../common/loggers';
+import { getBrowserContext } from '../../common/common-extension-helpers';
 
 const serviceLoggers = require('../../common/loggers').loggers
   .addPrefix('services');

@@ -44,7 +44,7 @@ export const BulkResourcesPanel: React.FC = observer(() => {
 
   const onCopyIconClick = useCallback(() => {
     setTimeout(() => {
-      copyToClipboard(`where ${platformStore.buildQueryParts('include', normalisedSelected)}`);
+      copyToClipboard(platformStore.buildQueryParts('include', normalisedSelected, true));
     }, 300);
   }, [platformStore, normalisedSelected]);
 

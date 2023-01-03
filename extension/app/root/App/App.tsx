@@ -21,6 +21,11 @@ export const App: React.FC = observer(() => {
   const contentRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
+  const dragTopRef = useRef<HTMLDivElement>(null);
+  const dragBottomRef = useRef<HTMLDivElement>(null);
+  const dragLeftRef = useRef<HTMLDivElement>(null);
+  const dragRightRef = useRef<HTMLDivElement>(null);
+
   const calculateContentHeight = useCallback(() => {
     if (!footerRef?.current || !headerRef?.current || !wrapperRef?.current) {
       return 'unset';
@@ -118,7 +123,13 @@ export const App: React.FC = observer(() => {
         appStore.isExtensionOpen ? '' : 'invisible',
       ])}
       position={position}
-      dragElementRef={appStore.dragElementRef}
+      dragElementsRefs={[
+        appStore.dragElementRef,
+        dragTopRef,
+        dragBottomRef,
+        dragLeftRef,
+        dragRightRef,
+      ]}
       minHeight={appStore.getMinHeight()}
       minWidth={appStore.getMinWidth()}
       onStart={() => {
@@ -148,6 +159,10 @@ export const App: React.FC = observer(() => {
         appStore.savePosition();
       }}
     >
+      <div ref={dragTopRef} className="draggable draggable-top drag-activator"></div>
+      <div ref={dragBottomRef} className="draggable draggable-bottom drag-activator"></div>
+      <div ref={dragLeftRef} className="draggable draggable-left drag-activator"></div>
+      <div ref={dragRightRef} className="draggable draggable-right drag-activator"></div>
       {content}
     </DraggableResizable>
   );

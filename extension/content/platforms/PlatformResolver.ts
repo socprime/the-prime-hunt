@@ -8,6 +8,7 @@ import { SplunkPlatform } from './SplunkPlatform';
 import { isAllowedProtocol } from '../../../common/checkers';
 import { Register } from '../../../common/Register';
 import { QRadarPlatform } from './QRadarPlatform';
+import { ElasticPlatform } from './ElasticPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -32,6 +33,11 @@ export class PlatformResolver {
 
         case PlatformID.QRadar: {
           this.platforms.set<PlatformID, ContentPlatform>(platformID, new QRadarPlatform());
+          break;
+        }
+
+        case PlatformID.Elastic: {
+          this.platforms.set<PlatformID, ContentPlatform>(platformID, new ElasticPlatform());
           break;
         }
 
@@ -69,6 +75,14 @@ export class PlatformResolver {
     if (document.querySelector('a[aria-label^="splunk"]')) {
       return this.getPlatformByID(PlatformID.Splunk);
     }
+
+    if (
+      document.querySelector('a.euiHeaderLogo[aria-label^="Elastic"]')
+      || document.querySelector('.euiIcon[aria-label^="Elastic"]')
+    ) {
+      return this.getPlatformByID(PlatformID.Elastic);
+    }
+
     return undefined;
   }
 

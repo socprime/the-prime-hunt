@@ -47,4 +47,37 @@
     cursor: move;
     user-select: none;
   }
+
+  > .draggable {
+    position: absolute;
+    z-index: 1;
+  }
+
+  > .draggable-top {
+    top: 0;
+  }
+
+  > .draggable-bottom {
+    bottom: 0;
+  }
+
+  > .draggable-top,
+  > .draggable-bottom {
+    height: 20px;
+    width: 100%;
+  }
+
+  > .draggable-left {
+    left: 0;
+  }
+
+  > .draggable-right {
+    right: 0;
+  }
+
+  > .draggable-left,
+  > .draggable-right {
+    height: 100%;
+    width: 20px;
+  }
 }

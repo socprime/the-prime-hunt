@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { App } from './root/App/App';
 import { rootStore, RootStoreContext } from './stores';
 import { Mode } from '../../common/types';
-import { getWebAccessibleUrl, mountHTMLElement } from '../common/common-helpers';
-import { mode } from '../common/envs';
+import { mountHTMLElement } from '../common/common-helpers';
+import { mode, version } from '../common/envs';
 import { appStyles } from '../manifest/public-resources';
+import { getWebAccessibleUrl } from '../common/common-extension-helpers';
 
 require('../app/scss/reset.scss');
 require('../app/scss/scroll.scss');
@@ -16,6 +17,7 @@ const rootElement = mountHTMLElement('div', document.body, {
       all: 'initial',
       'z-index': 999999999,
     },
+    'data-version': version,
   },
 });
 
@@ -71,3 +73,13 @@ ReactDOM.createRoot(overlay)
   );
 
 rootStore.appStore.mounted = true;
+
+setTimeout(() => {
+  if (Array.from(
+    document.querySelectorAll(
+      'div[style^="all:initial"]',
+    ),
+  ).length > 1) {
+    alert('Warning! The Prime Hunt Extension is already installed! Please remove previous version first to avoid conflicts.');
+  }
+}, 2000);

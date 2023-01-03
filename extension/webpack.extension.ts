@@ -15,6 +15,7 @@ import {
   microsoftSentinelInline,
   qRadarInline,
   splunkInline,
+  elasticInline,
 } from './manifest/public-resources';
 
 const args = minimist<{
@@ -77,6 +78,7 @@ const inlineEntries = [
   microsoftDefenderInline,
   splunkInline,
   qRadarInline,
+  elasticInline,
 ].reduce((entry, inline) => {
   const name = parse(inline).name;
   entry[name] = [

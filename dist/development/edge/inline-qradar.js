@@ -25,6 +25,9 @@ const isNotEmpty = (str) => {
 };
 exports.isNotEmpty = isNotEmpty;
 const isNumberInString = (str) => {
+    if (typeof str === 'number') {
+        return true;
+    }
     if (typeof str !== 'string') {
         return false;
     }
@@ -56,7 +59,7 @@ exports.isAllowedProtocol = isAllowedProtocol;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -78,6 +81,15 @@ const clearLineBreaks = (str) => str
     .trim()
     .replace(/(\r\n|\n|\r)/gm, ' ');
 exports.clearLineBreaks = clearLineBreaks;
+const splitByLines = (str, removeEmpty = false) => {
+    const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
+    let res = str.split(regexp);
+    if (removeEmpty) {
+        res = res.filter(r => r && r !== '\r\n' && r !== '\n' && r !== '\r');
+    }
+    return res;
+};
+exports.splitByLines = splitByLines;
 const parseJSONSafe = (obj, fallback) => {
     try {
         return JSON.parse(obj);
@@ -233,7 +245,7 @@ exports.boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
-const common_helpers_1 = __webpack_require__(/*! ./common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
 const isPostMessageSupported = (...logData) => {
     if (!(window === null || window === void 0 ? void 0 : window.postMessage)) {
@@ -257,7 +269,7 @@ const isAddEventListenerSupported = (...logData) => {
 exports.isAddEventListenerSupported = isAddEventListenerSupported;
 const isRuntimeSendMessageSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
         loggers
             .warn()
             .log('API runtime.sendMessage is not supported', ...logData);
@@ -268,7 +280,7 @@ const isRuntimeSendMessageSupported = (...logData) => {
 exports.isRuntimeSendMessageSupported = isRuntimeSendMessageSupported;
 const isRuntimeOnMessageSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
         loggers
             .warn()
             .log('API runtime.onMessage.addListener is not supported', ...logData);
@@ -279,7 +291,7 @@ const isRuntimeOnMessageSupported = (...logData) => {
 exports.isRuntimeOnMessageSupported = isRuntimeOnMessageSupported;
 const isRuntimeOnMessageExternalSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessageExternal) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessageExternal) === null || _b === void 0 ? void 0 : _b.addListener)) {
         loggers
             .warn()
             .log('API runtime.onMessageExternal.addListener is not supported', ...logData);
@@ -290,7 +302,7 @@ const isRuntimeOnMessageExternalSupported = (...logData) => {
 exports.isRuntimeOnMessageExternalSupported = isRuntimeOnMessageExternalSupported;
 const isTabsOnRemovedSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)().tabs) === null || _a === void 0 ? void 0 : _a.onRemoved) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().tabs) === null || _a === void 0 ? void 0 : _a.onRemoved) === null || _b === void 0 ? void 0 : _b.addListener)) {
         loggers
             .warn()
             .log('API tabs.onRemoved.addListener is not supported', ...logData);
@@ -301,7 +313,7 @@ const isTabsOnRemovedSupported = (...logData) => {
 exports.isTabsOnRemovedSupported = isTabsOnRemovedSupported;
 const isActionOnClickedSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.action) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.action) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API action.onClicked.addListener is not supported', ...logData);
@@ -312,7 +324,7 @@ const isActionOnClickedSupported = (...logData) => {
 exports.isActionOnClickedSupported = isActionOnClickedSupported;
 const isBrowserActionOnClickedSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.browserAction) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.browserAction) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API browserAction.onClicked.addListener is not supported', ...logData);
@@ -323,7 +335,7 @@ const isBrowserActionOnClickedSupported = (...logData) => {
 exports.isBrowserActionOnClickedSupported = isBrowserActionOnClickedSupported;
 const isOnBeforeRequestSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeRequest) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeRequest) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API webRequest.onBeforeRequest is not supported', ...logData);
@@ -334,7 +346,7 @@ const isOnBeforeRequestSupported = (...logData) => {
 exports.isOnBeforeRequestSupported = isOnBeforeRequestSupported;
 const isOnBeforeSendHeadersSupported = (...logData) => {
     var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeSendHeaders) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeSendHeaders) === null || _c === void 0 ? void 0 : _c.addListener)) {
         loggers
             .warn()
             .log('API webRequest.onBeforeSendHeaders is not supported', ...logData);
@@ -345,7 +357,7 @@ const isOnBeforeSendHeadersSupported = (...logData) => {
 exports.isOnBeforeSendHeadersSupported = isOnBeforeSendHeadersSupported;
 const isTabsQuerySupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.query)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.query)) {
         loggers
             .warn()
             .log('API tabs.query is not supported', ...logData);
@@ -356,7 +368,7 @@ const isTabsQuerySupported = (...logData) => {
 exports.isTabsQuerySupported = isTabsQuerySupported;
 const isTabsSendMessageSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
         loggers
             .warn()
             .log('API tabs.sendMessage is not supported', ...logData);
@@ -367,7 +379,7 @@ const isTabsSendMessageSupported = (...logData) => {
 exports.isTabsSendMessageSupported = isTabsSendMessageSupported;
 const isRuntimeGetUrlSupported = (...logData) => {
     var _a, _b;
-    if (!((_b = (_a = (0, common_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.getURL)) {
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.getURL)) {
         loggers
             .warn()
             .log('API runtime.getURL is not supported', ...logData);
@@ -380,24 +392,15 @@ exports.isRuntimeGetUrlSupported = isRuntimeGetUrlSupported;
 
 /***/ }),
 
-/***/ "./extension/common/common-helpers.ts":
-/*!********************************************!*\
-  !*** ./extension/common/common-helpers.ts ***!
-  \********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ "./extension/common/common-extension-helpers.ts":
+/*!******************************************************!*\
+  !*** ./extension/common/common-extension-helpers.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
+exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
 exports.getBrowserContext = getBrowserContext;
@@ -422,6 +425,28 @@ const getExecutingContextByMessageType = (message) => {
                 : 'unknown';
 };
 exports.getExecutingContextByMessageType = getExecutingContextByMessageType;
+
+
+/***/ }),
+
+/***/ "./extension/common/common-helpers.ts":
+/*!********************************************!*\
+  !*** ./extension/common/common-helpers.ts ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
 const cssObjectToString = (styles) => Object.keys(styles)
     .reduce((res, key) => res += `${key}:${styles[key]};`, '');
 exports.cssObjectToString = cssObjectToString;
@@ -531,15 +556,40 @@ const getElementsUnderCursor = (e, filter) => {
     return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
-const buildQueryParts = (resources, operator, separator, decorators) => {
-    return Object.keys(resources).reduce((result, fieldName) => {
+const buildQueryParts = (resources, operator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
+    const queryParts = Object.keys(resources).reduce((result, fieldName) => {
         result.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)} ${operator} ${decorators.rightOperand(v)}`)
-            .join(separator));
+            .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+            .join(valuesSeparator));
         return result;
-    }, []).join(separator);
+    }, []).join(fieldsSeparator);
+    return prefix
+        ? `${prefix} ${queryParts}`
+        : queryParts;
 };
 exports.buildQueryParts = buildQueryParts;
+const removeBracketsAround = (str) => {
+    let result = str;
+    if (str[0] === '(') {
+        result = result.slice(1);
+    }
+    if (str[str.length - 1] === ')') {
+        result = result.slice(0, str.length - 2);
+    }
+    return result;
+};
+exports.removeBracketsAround = removeBracketsAround;
+const removeQuotesAround = (str) => {
+    let result = str;
+    if (str[0] === '"' || str[0] === "'") {
+        result = result.slice(1);
+    }
+    if (str[str.length - 1] === '"' || str[str.length - 1] === "'") {
+        result = result.slice(0, str.length - 2);
+    }
+    return result;
+};
+exports.removeQuotesAround = removeQuotesAround;
 const removeDoubleQuotesAround = (str) => {
     let result = str;
     if (str[0] === '"') {
@@ -631,7 +681,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.1.0";
+exports.version = "1.1.1";
 
 
 /***/ }),
@@ -760,12 +810,14 @@ var PlatformID;
     PlatformID["MicrosoftDefender"] = "MicrosoftDefender";
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
+    PlatformID["Elastic"] = "Elastic";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
     PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
     PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
     PlatformName["Splunk"] = "Splunk";
+    PlatformName["Elastic"] = "Elastic";
     PlatformName["QRadar"] = "IBM QRadar";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
@@ -801,6 +853,7 @@ const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-
 const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
 const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 let loggers;
 class QRadarPlatform {
     constructor() {
@@ -837,11 +890,12 @@ class QRadarPlatform {
             ? nValue
             : `'${nValue}'`;
     }
-    buildQueryParts(type, resources) {
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? '!=' : '==', type === 'exclude' ? ' AND ' : ' OR ', {
+    buildQueryParts(type, resources, withPrefix = false) {
+        const prefix = 'where';
+        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' OR ', {
             leftOperand: (v) => `"${v}"`,
             rightOperand: (v) => QRadarPlatform.normalizedValue(v),
-        });
+        }, withPrefix ? prefix : undefined);
     }
     connect() {
         QRadarPlatform.setListeners();
@@ -865,7 +919,7 @@ class QRadarPlatform {
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
             attributes: {
-                src: (0, common_helpers_1.getWebAccessibleUrl)(public_resources_1.qRadarInline),
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.qRadarInline),
                 type: 'text/javascript',
                 'data-type': 'inline-listener',
             },
@@ -901,9 +955,9 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.addListener = void 0;
 const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
 const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const listeners = {};
 const addListener = (type, listener, ...otherProps) => {
     var _a;
@@ -915,7 +969,7 @@ exports.addListener = addListener;
 const removeListenersCallbacks = [];
 listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherProps) => {
     if ((0, api_support_1.isRuntimeOnMessageSupported)()) {
-        const action = (0, common_helpers_1.getBrowserContext)().runtime.onMessage;
+        const action = (0, common_extension_helpers_1.getBrowserContext)().runtime.onMessage;
         removeListenersCallbacks.push(() => {
             action.removeListener(listener);
         });
@@ -952,9 +1006,9 @@ listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherPr
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendMessageFromApp = exports.sendMessageFromContent = exports.sendMessage = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const serviceLoggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
 const sendMessage = (loggers, message, runtime = true) => {
     var _a;
@@ -971,7 +1025,7 @@ const sendMessage = (loggers, message, runtime = true) => {
         if (!(0, api_support_1.isRuntimeSendMessageSupported)()) {
             return;
         }
-        (_a = (0, common_helpers_1.getBrowserContext)().runtime.sendMessage(message)) === null || _a === void 0 ? void 0 : _a.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
+        (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime.sendMessage(message)) === null || _a === void 0 ? void 0 : _a.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
         loggers.debug().addPrefix(logPrefix).log(message);
     }
     catch (e) {
@@ -1017,14 +1071,14 @@ var ListenerType;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToContent = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 var MessageToContent;
 (function (MessageToContent) {
     MessageToContent["CSModifyQuery"] = "CSModifyQuery";
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
-    if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
+    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
         throw new Error(`Wrong content message type "${type}"`);
     }
 });
@@ -1169,13 +1223,13 @@ exports.buildNewQuery = buildNewQuery;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToInline = void 0;
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 var MessageToInline;
 (function (MessageToInline) {
     MessageToInline["ISModifyQuery"] = "ISModifyQuery";
 })(MessageToInline = exports.MessageToInline || (exports.MessageToInline = {}));
 Object.values(MessageToInline).forEach(type => {
-    if ((0, common_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
+    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
         throw new Error(`Wrong inline message type "${type}"`);
     }
 });
@@ -1191,18 +1245,20 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
 exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
 exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
+exports.elasticInline = 'inline-elastic.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
     [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
     [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
+    [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
     app: [exports.appStyles],
 };
 

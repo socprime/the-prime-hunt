@@ -6,6 +6,7 @@ import { backgroundPlatformIDFromENV } from '../../common/envs';
 import { MicrosoftDefenderPlatform } from './MicrosoftDefenderPlatform';
 import { SplunkPlatform } from './SplunkPlatform';
 import { QRadarPlatform } from './QRadarPlatform';
+import { ElasticPlatform } from './ElasticPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -30,6 +31,11 @@ export class PlatformResolver {
 
         case PlatformID.QRadar: {
           this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new QRadarPlatform());
+          break;
+        }
+
+        case PlatformID.Elastic: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new ElasticPlatform());
           break;
         }
 
