@@ -16,6 +16,7 @@ import {
   qRadarInline,
   splunkInline,
   elasticInline,
+  arcSightInline,
 } from './manifest/public-resources';
 
 const args = minimist<{
@@ -79,6 +80,7 @@ const inlineEntries = [
   splunkInline,
   qRadarInline,
   elasticInline,
+  arcSightInline,
 ].reduce((entry, inline) => {
   const name = parse(inline).name;
   entry[name] = [

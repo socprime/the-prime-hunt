@@ -46,7 +46,7 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      type === 'exclude' ? ' != ' : ' == ',
+      () => type === 'exclude' ? ' != ' : ' == ',
       type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {

@@ -833,98 +833,133 @@ var PlatformName;
 
 /***/ }),
 
-/***/ "./extension/content/platforms/MicrosoftDefenderPlatform.ts":
-/*!******************************************************************!*\
-  !*** ./extension/content/platforms/MicrosoftDefenderPlatform.ts ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ "./extension/content/platforms/ArcSightPlatform.ts":
+/*!*********************************************************!*\
+  !*** ./extension/content/platforms/ArcSightPlatform.ts ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MicrosoftDefenderPlatform = void 0;
+exports.ArcSightPlatform = void 0;
 const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
-const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
-const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
-const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
 const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 let loggers;
-class MicrosoftDefenderPlatform {
+class ArcSightPlatform {
     constructor() {
         this.defaultWatchers = {
             [resources_types_1.BoundedResourceTypeID.Accounts]: [
-                'AccountName',
-                'InitiatingProcessName',
-                'RequestAccountName',
+                'sourceUserName',
+                'destinationUserName',
             ],
             [resources_types_1.BoundedResourceTypeID.Assets]: [
-                'DeviceName',
+                'sourceAddress',
+                'destinationAddress',
             ],
         };
-        this.extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;
+        this.extensionDefaultPosition = ArcSightPlatform.extensionDefaultPosition;
     }
-    static buildQueryParts(type, resources, withPrefix = false) {
-        const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+    static buildQueryParts(type, resources, withPrefix) {
+        const prefix = 'AND';
+        const result = (0, common_helpers_1.buildQueryParts)(resources, (fieldName, resourceName) => {
+            if (resourceName.indexOf('EET') > -1
+                && (0, checkers_1.isDate)(resourceName.split('EET').shift())) {
+                return type === 'exclude' ? ' <= ' : ' >= ';
+            }
+            return type === 'exclude' ? ' != ' : ' = ';
+        }, type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' OR ', {
             leftOperand: (v) => v,
-            rightOperand: (v) => MicrosoftDefenderPlatform.normalizedValue(v),
-        }, withPrefix ? prefix : undefined);
+            rightOperand: (v) => ArcSightPlatform.normalizedValue(v),
+        }, withPrefix && type !== 'include' ? prefix : undefined);
+        if (type !== 'include' || !prefix) {
+            return result;
+        }
+        if (result.indexOf(' OR ') > -1) {
+            return `${prefix} (${result})`;
+        }
+        return `${prefix} ${result}`;
     }
     buildQueryParts(type, resources, withPrefix) {
-        return MicrosoftDefenderPlatform.buildQueryParts(type, resources, withPrefix);
+        return ArcSightPlatform.buildQueryParts(type, resources, withPrefix);
+    }
+    connect() {
+        ArcSightPlatform.setListeners();
+        loggers.debug().log('connected');
     }
     getID() {
-        return MicrosoftDefenderPlatform.id;
+        return ArcSightPlatform.id;
     }
     getName() {
-        return types_common_1.PlatformName.MicrosoftDefender;
-    }
-    static setListeners() {
-        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
-            if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
-                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
-            }
-        });
-        loggers.debug().log('listeners were set');
+        return types_common_1.PlatformName.ArcSight;
     }
     static connectInlineListener() {
         (0, common_helpers_1.mountHTMLElement)('script', document.body, {
             attributes: {
-                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.microsoftDefenderInline),
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.arcSightInline),
                 type: 'text/javascript',
                 'data-type': 'inline-listener',
             },
         });
+        loggers.debug().log('inline were set');
     }
-    connect() {
-        MicrosoftDefenderPlatform.setListeners();
-        MicrosoftDefenderPlatform.connectInlineListener();
-        loggers.debug().log('connected');
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            if (!document.querySelector('textarea#queryInput')
+                && !envs_1.contentPlatformIDFromENV) {
+                return;
+            }
+            const query = `script[src$="${public_resources_1.arcSightInline}"]`;
+            if (!document.querySelector(query)) {
+                ArcSightPlatform.connectInlineListener();
+                yield (0, common_helpers_1.waitHTMLElement)(query);
+            }
+            if ((0, common_listeners_1.isMessageMatched)(() => {
+                return types_content_messages_1.MessageToContent.CSModifyQuery === message.type;
+            }, message)) {
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+            }
+        }));
+        loggers.debug().log('listeners were set');
     }
 }
-exports.MicrosoftDefenderPlatform = MicrosoftDefenderPlatform;
-MicrosoftDefenderPlatform.id = types_common_1.PlatformID.MicrosoftDefender;
-MicrosoftDefenderPlatform.extensionDefaultPosition = {
+exports.ArcSightPlatform = ArcSightPlatform;
+ArcSightPlatform.normalizedValue = (value) => {
+    if (typeof value === 'number') {
+        return value;
+    }
+    if ((0, checkers_1.isNumberInString)(value)) {
+        return String(parseFloat(value));
+    }
+    return `\"${value.replace(/\\/g, '\\\\')}\"`;
+};
+ArcSightPlatform.id = types_common_1.PlatformID.ArcSight;
+ArcSightPlatform.extensionDefaultPosition = {
     top: 0,
     left: 0,
     width: 480,
     height: 480,
 };
-MicrosoftDefenderPlatform.normalizedValue = (value) => {
-    const nValue = (0, checkers_1.isNumberInString)(value)
-        ? parseFloat(value)
-        : value;
-    return typeof nValue === 'number'
-        ? nValue
-        : `\"${nValue.replace(/\\/g, '\\\\')}\"`;
-};
-loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(MicrosoftDefenderPlatform.id);
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ArcSightPlatform.id);
 
 
 /***/ }),
@@ -1070,102 +1105,6 @@ Object.values(MessageToContent).forEach(type => {
 
 /***/ }),
 
-/***/ "./extension/inline/helpers/monaco-editor-helpers.ts":
-/*!***********************************************************!*\
-  !*** ./extension/inline/helpers/monaco-editor-helpers.ts ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildNewQuery = exports.buildNewJsonQuery = exports.getEditorIndexByFormattedUri = exports.getLastContentLine = exports.getContentFocusedLines = exports.checkEditorExists = exports.getEditorByIndex = void 0;
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
-const getEditorByIndex = (index) => {
-    return monaco.editor.getModels()[index];
-};
-exports.getEditorByIndex = getEditorByIndex;
-const checkEditorExists = () => {
-    var _a, _b;
-    return !!((_b = (_a = monaco === null || monaco === void 0 ? void 0 : monaco.editor) === null || _a === void 0 ? void 0 : _a.getModels) === null || _b === void 0 ? void 0 : _b.call(_a));
-};
-exports.checkEditorExists = checkEditorExists;
-const getContentFocusedLines = (editorIndex) => {
-    var _a;
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
-    const result = [];
-    for (let i = 1; i <= editor.getLineCount(); i++) {
-        if (editor.getLineDecorations(i).some(l => l.options.className)
-            && ((_a = editor.getLineContent(i)) === null || _a === void 0 ? void 0 : _a.trim()) !== '') {
-            result.push(i);
-        }
-    }
-    return result;
-};
-exports.getContentFocusedLines = getContentFocusedLines;
-const getLastContentLine = (editorIndex) => {
-    var _a;
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
-    const contentLines = editor.getLinesContent();
-    while (((_a = contentLines[contentLines.length - 1]) === null || _a === void 0 ? void 0 : _a.trim()) === '') {
-        contentLines.splice(contentLines.length - 1);
-    }
-    return contentLines.length > 0 ? contentLines.length : 1;
-};
-exports.getLastContentLine = getLastContentLine;
-const getEditorIndexByFormattedUri = (uri) => {
-    return monaco.editor.getModels().findIndex(model => {
-        return model.uri._formatted === uri;
-    });
-};
-exports.getEditorIndexByFormattedUri = getEditorIndexByFormattedUri;
-const buildNewJsonQuery = (editorIndex, suffix, modifyType) => {
-    var _a;
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
-    const currentEditorValue = (0, helpers_1.parseJSONSafe)(editor.getValue(), null);
-    const currentQuery = (!currentEditorValue || !currentEditorValue.Query)
-        ? ''
-        : currentEditorValue.Query;
-    const newQuery = `${modifyType === 'show all'
-        ? ((_a = currentQuery.split('|').shift()) === null || _a === void 0 ? void 0 : _a.trim())
-            || '<unknown>'
-        : currentQuery} ${suffix}`;
-    return JSON.stringify({
-        Query: newQuery,
-    }, null, 3);
-};
-exports.buildNewJsonQuery = buildNewJsonQuery;
-const buildNewQuery = (editorIndex, suffix, modifyType) => {
-    let newQuery = '';
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
-    const editorLines = editor.getLinesContent();
-    const focusedLines = (0, exports.getContentFocusedLines)(editorIndex);
-    if (modifyType === 'show all' && focusedLines.length < 1) {
-        const prefix = editorLines
-            .map((l) => l.split('|').shift())
-            .filter(Boolean).pop()
-            || '<unknown>';
-        newQuery = `${prefix} ${suffix}`;
-    }
-    if (modifyType === 'show all' && focusedLines.length >= 1) {
-        const prefix = editorLines[focusedLines[0] - 1].split('|').shift();
-        editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${prefix} ${suffix}`);
-        newQuery = editorLines.join('\n');
-    }
-    if (modifyType !== 'show all') {
-        const lastEditorLineIndex = focusedLines.length > 0
-            ? focusedLines[focusedLines.length - 1]
-            : (0, exports.getLastContentLine)(editorIndex);
-        const lastEditorLine = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
-        editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
-        newQuery = editorLines.join('\n');
-    }
-    return (0, helpers_1.clearExtraSpaces)(newQuery);
-};
-exports.buildNewQuery = buildNewQuery;
-
-
-/***/ }),
-
 /***/ "./extension/inline/types/types-inline-messages.ts":
 /*!*********************************************************!*\
   !*** ./extension/inline/types/types-inline-messages.ts ***!
@@ -1263,58 +1202,34 @@ const loggers_debug_1 = __webpack_require__(/*! ./common/loggers/loggers-debug *
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 var exports = __webpack_exports__;
-/*!*******************************************************!*\
-  !*** ./extension/inline/inline-microsoft-defender.ts ***!
-  \*******************************************************/
+/*!*********************************************!*\
+  !*** ./extension/inline/inline-arcsight.ts ***!
+  \*********************************************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const types_inline_messages_1 = __webpack_require__(/*! ./types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */ "./extension/common/common-listeners.ts");
-const monaco_editor_helpers_1 = __webpack_require__(/*! ./helpers/monaco-editor-helpers */ "./extension/inline/helpers/monaco-editor-helpers.ts");
-const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ../content/platforms/MicrosoftDefenderPlatform */ "./extension/content/platforms/MicrosoftDefenderPlatform.ts");
-const platform = new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform();
+const types_inline_messages_1 = __webpack_require__(/*! ./types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const ArcSightPlatform_1 = __webpack_require__(/*! ../content/platforms/ArcSightPlatform */ "./extension/content/platforms/ArcSightPlatform.ts");
+const platform = new ArcSightPlatform_1.ArcSightPlatform();
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(platform.getID());
-let editorIndex = 2;
-const setIndex = (index) => {
-    if (index === null) {
-        return false;
-    }
-    if (editorIndex !== index) {
-        editorIndex = index;
-        loggers.debug().log('The editor index is set to', index);
-    }
-    return true;
-};
-const getCurrentEditorIndex = () => {
-    let responseEditors = Array.from(document.querySelectorAll('.response-editor .monaco-editor[data-uri^="inmemory:"]')).filter(e => e.scrollWidth > 5);
-    const editorHtml = Array.from(document.querySelectorAll('.monaco-editor[data-uri^="inmemory:"]'))
-        .filter(e => e.scrollWidth > 5)
-        .filter(e => !responseEditors.includes(e))[0];
-    if (!editorHtml) {
-        return null;
-    }
-    const uri = editorHtml
-        .getAttribute('data-uri') || '#failed';
-    const index = (0, monaco_editor_helpers_1.getEditorIndexByFormattedUri)(uri);
-    return typeof index === 'number' && index > -1 ? index : null;
+const getInput = () => {
+    return document.querySelector('#queryInput');
 };
 window.addEventListener('message', (event) => {
     const message = event.data;
     if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISModifyQuery === message.type, message, event)) {
-        if (!(0, monaco_editor_helpers_1.checkEditorExists)()) {
-            return loggers.error().log('editor not found', monaco);
+        const input = getInput();
+        if (!input) {
+            return loggers.warn().log('query input not found');
         }
-        if (!setIndex(getCurrentEditorIndex())) {
-            return loggers.info().log('Can not determine the editor index');
-        }
+        const currentValue = input.value;
         const { resources, modifyType } = message.payload;
-        const { href } = document.location;
-        const suffix = ` | ${platform.buildQueryParts(modifyType, resources, true)}`;
-        const editor = (0, monaco_editor_helpers_1.getEditorByIndex)(editorIndex);
-        const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1
-            ? (0, monaco_editor_helpers_1.buildNewQuery)(editorIndex, suffix, modifyType)
-            : (0, monaco_editor_helpers_1.buildNewJsonQuery)(editorIndex, suffix, modifyType);
-        editor.setValue(newQuery);
+        if (modifyType === 'show all') {
+            input.value = platform.buildQueryParts(modifyType, resources);
+            return;
+        }
+        const suffix = platform.buildQueryParts(modifyType, resources, true);
+        input.value = `${currentValue} ${suffix}`;
     }
 });
 loggers.debug().log('mounted');

@@ -34,7 +34,7 @@ export class QRadarPlatform implements ContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      type === 'exclude' ? ' != ' : ' == ',
+      () => type === 'exclude' ? ' != ' : ' == ',
       type === 'exclude' ? ' AND ' : ' OR ',
       type === 'exclude' ? ' AND ' : ' OR ',
       {

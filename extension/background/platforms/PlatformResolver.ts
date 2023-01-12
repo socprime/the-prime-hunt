@@ -7,6 +7,7 @@ import { MicrosoftDefenderPlatform } from './MicrosoftDefenderPlatform';
 import { SplunkPlatform } from './SplunkPlatform';
 import { QRadarPlatform } from './QRadarPlatform';
 import { ElasticPlatform } from './ElasticPlatform';
+import { ArcSightPlatform } from './ArcSightPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -36,6 +37,11 @@ export class PlatformResolver {
 
         case PlatformID.Elastic: {
           this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new ElasticPlatform());
+          break;
+        }
+
+        case PlatformID.ArcSight: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(platformID, new ArcSightPlatform());
           break;
         }
 

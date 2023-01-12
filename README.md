@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight.
 
 ## Installation
 ### Chrome

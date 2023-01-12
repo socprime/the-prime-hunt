@@ -6,6 +6,7 @@ export const microsoftDefenderInline = 'inline-microsoft-defender.js';
 export const splunkInline = 'inline-splunk.js';
 export const qRadarInline = 'inline-qradar.js';
 export const elasticInline = 'inline-elastic.js';
+export const arcSightInline = 'inline-arcsight.js';
 
 export const accessibleResources: {
   [type: string]: string[];
@@ -15,5 +16,6 @@ export const accessibleResources: {
   [PlatformID.Splunk]: [splunkInline],
   [PlatformID.QRadar]: [qRadarInline],
   [PlatformID.Elastic]: [elasticInline],
+  [PlatformID.ArcSight]: [arcSightInline],
   app: [appStyles],
 };

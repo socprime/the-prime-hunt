@@ -113,7 +113,7 @@ export const formatDate = (
 ): string => {
   return formatString(pattern, {
     'Y': String(data.getFullYear()),
-    'M': formatBinaryDate(data.getMonth()),
+    'M': formatBinaryDate(data.getMonth() + 1),
     'm': formatBinaryDate(data.getMinutes()),
     's': formatBinaryDate(data.getSeconds()),
     'ms': formatBinaryDate(data.getMilliseconds()),
@@ -150,3 +150,4 @@ export const indexOfAll = (str: string, search: string): number[] => {
   }
   return indexes;
 };
+

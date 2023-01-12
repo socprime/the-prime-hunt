@@ -51073,7 +51073,7 @@ exports.Register = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
@@ -51110,6 +51110,12 @@ const isAllowedProtocol = (protocol, mode) => {
     return nProtocol === 'https:' || nProtocol === 'https';
 };
 exports.isAllowedProtocol = isAllowedProtocol;
+const isDate = (value) => {
+    return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
+        ? parseInt(value)
+        : value).getTime() > 567982800000;
+};
+exports.isDate = isDate;
 
 
 /***/ }),
@@ -51213,7 +51219,7 @@ exports.formatBinaryDate = formatBinaryDate;
 const formatDate = (pattern, data) => {
     return (0, exports.formatString)(pattern, {
         'Y': String(data.getFullYear()),
-        'M': (0, exports.formatBinaryDate)(data.getMonth()),
+        'M': (0, exports.formatBinaryDate)(data.getMonth() + 1),
         'm': (0, exports.formatBinaryDate)(data.getMinutes()),
         's': (0, exports.formatBinaryDate)(data.getSeconds()),
         'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
@@ -53932,7 +53938,10 @@ const FaqContentView = () => {
         return [
             {
                 title: 'What security platforms are supported?',
-                content: 'Currently, the extension works with Splunk, QRadar, Elastic, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
+                content: [
+                    'We are hard at work adding support for other platforms. Current list of supporting platforms you can see on our Readme page at requirements section: ',
+                    react_1.default.createElement(AppLink_1.AppLink, { key: "readme", target: "_blank", href: "https://github.com/socprime/the-prime-hunt/blob/master/README.md" }, "github/readme"),
+                ],
             },
             {
                 title: 'How can I give feedback or get help?',
@@ -53947,12 +53956,15 @@ const FaqContentView = () => {
             },
             {
                 title: 'Can I add custom fields to the results?',
-                content: 'Yes, you can add any fields to the results in the extension. To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field',
+                content: [
+                    'Yes, you can add any fields to the results in the extension. To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR, and click the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. You can also get more information about it from our Readme page: ',
+                    react_1.default.createElement(AppLink_1.AppLink, { key: "readme", target: "_blank", href: "https://github.com/socprime/the-prime-hunt/blob/master/README.md" }, "github/readme"),
+                ],
             },
             {
                 title: 'Can I customize Search At integrations?',
                 content: (react_1.default.createElement("div", null,
-                    "Yes, you can. Set a checkmark next to a result to show the bulk actions menu and select Search At > Search Settings. In this menu you can:",
+                    "Yes, you can, just click on Integration settings button placed on header of the extension. On the following page you can:",
                     react_1.default.createElement(List_1.List, { items: [
                             {
                                 id: '1',
@@ -54580,9 +54592,9 @@ const NotFoundContentView = () => {
             react_1.default.createElement("br", null),
             "You can use this extension with",
             react_1.default.createElement("br", null),
-            "Elastic, QRadar, Microsoft Sentinel",
+            "Splunk, Elastic, QRadar, Microsoft Sentinel",
             react_1.default.createElement("br", null),
-            "Splunk, Microsoft Defender for Endpoint.")));
+            "ArcSight, Microsoft Defender for Endpoint.")));
 };
 exports.NotFoundContentView = NotFoundContentView;
 
@@ -57284,16 +57296,17 @@ const getElementsUnderCursor = (e, filter) => {
     return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
-const buildQueryParts = (resources, operator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
-    const queryParts = Object.keys(resources).reduce((result, fieldName) => {
-        result.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
+    const queryParts = [];
+    Object.keys(resources).forEach(fieldName => {
+        queryParts.push(resources[fieldName]
+            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
-        return result;
-    }, []).join(fieldsSeparator);
+    });
+    const queryPartsStr = queryParts.join(fieldsSeparator);
     return prefix
-        ? `${prefix} ${queryParts}`
-        : queryParts;
+        ? `${prefix} ${queryPartsStr}`
+        : queryPartsStr;
 };
 exports.buildQueryParts = buildQueryParts;
 const removeBracketsAround = (str) => {
@@ -57411,7 +57424,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.1.1";
+exports.version = "1.1.2";
 
 
 /***/ }),
@@ -57626,14 +57639,16 @@ var PlatformID;
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
+    PlatformID["ArcSight"] = "ArcSight";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
     PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
     PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
     PlatformName["Splunk"] = "Splunk";
-    PlatformName["Elastic"] = "Elastic";
     PlatformName["QRadar"] = "IBM QRadar";
+    PlatformName["Elastic"] = "Elastic";
+    PlatformName["ArcSight"] = "ArcSight";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -57667,6 +57682,138 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
     }
 });
 loggers.debug().log('mounted');
+
+
+/***/ }),
+
+/***/ "./extension/content/platforms/ArcSightPlatform.ts":
+/*!*********************************************************!*\
+  !*** ./extension/content/platforms/ArcSightPlatform.ts ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ArcSightPlatform = void 0;
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+let loggers;
+class ArcSightPlatform {
+    constructor() {
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'sourceUserName',
+                'destinationUserName',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'sourceAddress',
+                'destinationAddress',
+            ],
+        };
+        this.extensionDefaultPosition = ArcSightPlatform.extensionDefaultPosition;
+    }
+    static buildQueryParts(type, resources, withPrefix) {
+        const prefix = 'AND';
+        const result = (0, common_helpers_1.buildQueryParts)(resources, (fieldName, resourceName) => {
+            if (resourceName.indexOf('EET') > -1
+                && (0, checkers_1.isDate)(resourceName.split('EET').shift())) {
+                return type === 'exclude' ? ' <= ' : ' >= ';
+            }
+            return type === 'exclude' ? ' != ' : ' = ';
+        }, type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' OR ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => ArcSightPlatform.normalizedValue(v),
+        }, withPrefix && type !== 'include' ? prefix : undefined);
+        if (type !== 'include' || !prefix) {
+            return result;
+        }
+        if (result.indexOf(' OR ') > -1) {
+            return `${prefix} (${result})`;
+        }
+        return `${prefix} ${result}`;
+    }
+    buildQueryParts(type, resources, withPrefix) {
+        return ArcSightPlatform.buildQueryParts(type, resources, withPrefix);
+    }
+    connect() {
+        ArcSightPlatform.setListeners();
+        loggers.debug().log('connected');
+    }
+    getID() {
+        return ArcSightPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.ArcSight;
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.arcSightInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+        loggers.debug().log('inline were set');
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            if (!document.querySelector('textarea#queryInput')
+                && !envs_1.contentPlatformIDFromENV) {
+                return;
+            }
+            const query = `script[src$="${public_resources_1.arcSightInline}"]`;
+            if (!document.querySelector(query)) {
+                ArcSightPlatform.connectInlineListener();
+                yield (0, common_helpers_1.waitHTMLElement)(query);
+            }
+            if ((0, common_listeners_1.isMessageMatched)(() => {
+                return types_content_messages_1.MessageToContent.CSModifyQuery === message.type;
+            }, message)) {
+                (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--content-modify-query`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
+            }
+        }));
+        loggers.debug().log('listeners were set');
+    }
+}
+exports.ArcSightPlatform = ArcSightPlatform;
+ArcSightPlatform.normalizedValue = (value) => {
+    if (typeof value === 'number') {
+        return value;
+    }
+    if ((0, checkers_1.isNumberInString)(value)) {
+        return String(parseFloat(value));
+    }
+    return `\"${value.replace(/\\/g, '\\\\')}\"`;
+};
+ArcSightPlatform.id = types_common_1.PlatformID.ArcSight;
+ArcSightPlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 480,
+    height: 480,
+};
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ArcSightPlatform.id);
 
 
 /***/ }),
@@ -57730,7 +57877,7 @@ class ElasticPlatform {
                 normalizedResources[fieldName] = resources[fieldName];
             }
         });
-        return (0, common_helpers_1.buildQueryParts)(normalizedResources, type === 'exclude' ? ':' : ':', type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
+        return (0, common_helpers_1.buildQueryParts)(normalizedResources, () => type === 'exclude' ? ':' : ':', type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
             leftOperand: (v) => v,
             rightOperand: (v) => ElasticPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -57833,7 +57980,7 @@ class MicrosoftDefenderPlatform {
     }
     static buildQueryParts(type, resources, withPrefix = false) {
         const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
             leftOperand: (v) => v,
             rightOperand: (v) => MicrosoftDefenderPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -57949,7 +58096,7 @@ class MicrosoftSentinelPlatform {
     }
     static buildQueryParts(type, resources, withPrefix = false) {
         const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
             leftOperand: (v) => v,
             rightOperand: (v) => MicrosoftSentinelPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -58026,6 +58173,7 @@ const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common
 const Register_1 = __webpack_require__(/*! ../../../common/Register */ "./common/Register.ts");
 const QRadarPlatform_1 = __webpack_require__(/*! ./QRadarPlatform */ "./extension/content/platforms/QRadarPlatform.ts");
 const ElasticPlatform_1 = __webpack_require__(/*! ./ElasticPlatform */ "./extension/content/platforms/ElasticPlatform.ts");
+const ArcSightPlatform_1 = __webpack_require__(/*! ./ArcSightPlatform */ "./extension/content/platforms/ArcSightPlatform.ts");
 class PlatformResolver {
     constructor() {
         this.platforms = new Register_1.Register();
@@ -58053,6 +58201,10 @@ class PlatformResolver {
                     this.platforms.set(platformID, new ElasticPlatform_1.ElasticPlatform());
                     break;
                 }
+                case types_common_1.PlatformID.ArcSight: {
+                    this.platforms.set(platformID, new ArcSightPlatform_1.ArcSightPlatform());
+                    break;
+                }
                 default:
                     return undefined;
             }
@@ -58072,6 +58224,9 @@ class PlatformResolver {
         }
         if (/(console\/qradar\/jsp\/QRadar.jsp|console\/do\/ariel\/arielSearch)/.test(href)) {
             return this.getPlatformByID(types_common_1.PlatformID.QRadar);
+        }
+        if (/(\/\w\w\w\/ui-phoenix\/com.arcsight.phoenix.PhoenixLauncher|logger\/search\.ftl)/.test(href)) {
+            return this.getPlatformByID(types_common_1.PlatformID.ArcSight);
         }
         return undefined;
     }
@@ -58168,7 +58323,7 @@ class QRadarPlatform {
     }
     buildQueryParts(type, resources, withPrefix = false) {
         const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' OR ', {
+        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' OR ', {
             leftOperand: (v) => `"${v}"`,
             rightOperand: (v) => QRadarPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -58288,7 +58443,7 @@ class SplunkPlatform {
     }
     static buildQueryParts(type, resources, withPrefix = false) {
         const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
             leftOperand: (v) => v,
             rightOperand: (v) => SplunkPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -58515,7 +58670,7 @@ Object.values(MessageToInline).forEach(type => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -58523,12 +58678,14 @@ exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
 exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
+exports.arcSightInline = 'inline-arcsight.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
     [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
     [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
     [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
+    [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     app: [exports.appStyles],
 };
 

@@ -145,7 +145,7 @@ export const getElementsUnderCursor = (
 
 export const buildQueryParts = (
   resources: NormalizedParsedResources,
-  operator: string,
+  getOperator: (fieldName: string, resourceName: string) => string,
   valuesSeparator: string,
   fieldsSeparator: string,
   decorators: {
@@ -154,17 +154,21 @@ export const buildQueryParts = (
   },
   prefix?: string,
 ): string => {
-  const queryParts = Object.keys(resources).reduce((result, fieldName) => {
-    result.push(
+  const queryParts: string[] = [];
+
+  Object.keys(resources).forEach(fieldName => {
+    queryParts.push(
       resources[fieldName]
-        .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+        .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
         .join(valuesSeparator),
     );
-    return result;
-  }, [] as string[]).join(fieldsSeparator);
+  });
+
+  const queryPartsStr = queryParts.join(fieldsSeparator);
+
   return prefix
-    ? `${prefix} ${queryParts}`
-    : queryParts;
+    ? `${prefix} ${queryPartsStr}`
+    : queryPartsStr;
 };
 
 export const removeBracketsAround = (str: string): string => {

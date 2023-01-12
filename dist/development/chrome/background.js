@@ -10828,7 +10828,7 @@ exports.Register = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
@@ -10865,6 +10865,12 @@ const isAllowedProtocol = (protocol, mode) => {
     return nProtocol === 'https:' || nProtocol === 'https';
 };
 exports.isAllowedProtocol = isAllowedProtocol;
+const isDate = (value) => {
+    return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
+        ? parseInt(value)
+        : value).getTime() > 567982800000;
+};
+exports.isDate = isDate;
 
 
 /***/ }),
@@ -10968,7 +10974,7 @@ exports.formatBinaryDate = formatBinaryDate;
 const formatDate = (pattern, data) => {
     return (0, exports.formatString)(pattern, {
         'Y': String(data.getFullYear()),
-        'M': (0, exports.formatBinaryDate)(data.getMonth()),
+        'M': (0, exports.formatBinaryDate)(data.getMonth() + 1),
         'm': (0, exports.formatBinaryDate)(data.getMinutes()),
         's': (0, exports.formatBinaryDate)(data.getSeconds()),
         'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
@@ -11270,6 +11276,322 @@ class AbstractBackgroundPlatform {
     }
 }
 exports.AbstractBackgroundPlatform = AbstractBackgroundPlatform;
+
+
+/***/ }),
+
+/***/ "./extension/background/platforms/ArcSightPlatform.ts":
+/*!************************************************************!*\
+  !*** ./extension/background/platforms/ArcSightPlatform.ts ***!
+  \************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ArcSightPlatform = void 0;
+const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
+const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const ElasticPlatform_1 = __webpack_require__(/*! ./ElasticPlatform */ "./extension/background/platforms/ElasticPlatform.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+let loggers;
+class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
+    constructor() {
+        super();
+        this.parseCEFString = (cefString) => {
+            const mappedFields = new Map();
+            const arrayData = cefString.split('|');
+            mappedFields.set('deviceVendor', arrayData[1]);
+            mappedFields.set('deviceProduct', arrayData[2]);
+            mappedFields.set('deviceVersion', arrayData[3]);
+            mappedFields.set('deviceEventClassId', arrayData[4]);
+            mappedFields.set('name', arrayData[5]);
+            mappedFields.set('severity', arrayData[6]);
+            arrayData[7].split(' ').forEach(pairs => {
+                if (!pairs) {
+                    return;
+                }
+                const [fieldName, resourceName] = pairs.split('=');
+                mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName))) : resourceName);
+            });
+            return mappedFields;
+        };
+        this.watchingResources = {};
+        this.emptyFieldValues = [
+            ...this.emptyFieldValues,
+            '-',
+        ];
+    }
+    static getFieldName(cef) {
+        return ArcSightPlatform.mappedFieldsNames.has(cef)
+            ? ArcSightPlatform.mappedFieldsNames.get(cef)
+            : cef;
+    }
+    static toCamelCase(str) {
+        return str.split('_').map((v, i) => i === 0 ? v : (0, helpers_1.capitalizeFirstLetter)(v)).join('');
+    }
+    static parseClass(classStr) {
+        return ArcSightPlatform.toCamelCase(classStr.split('=').shift().split('-').pop());
+    }
+    parseHTMLString(htmlString) {
+        const mappedFields = new Map();
+        const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body>${htmlString}</body>`);
+        const classStr = $('body > *').attr().class;
+        if (!classStr || classStr.indexOf('-Raw-') > -1) {
+            return mappedFields;
+        }
+        const resourceName = $.text();
+        const fieldName = ArcSightPlatform.parseClass(classStr);
+        mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName))) : resourceName);
+        return mappedFields;
+    }
+    parseResponse(response) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = {};
+            const fieldsNamesTest = new Set();
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            (_a = (response || [])) === null || _a === void 0 ? void 0 : _a.forEach(v => {
+                if (!Array.isArray(v)) {
+                    return;
+                }
+                (v || []).forEach(sv => {
+                    if (sv[0] !== '<') {
+                        return;
+                    }
+                    const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body>${sv}</body>`);
+                    const str = $('body').text();
+                    const fields = str.substring(0, 6).toLowerCase() === 'cef:0|'
+                        ? this.parseCEFString(str)
+                        : this.parseHTMLString(sv);
+                    Array.from(fields).forEach(av => fieldsNamesTest.add(av[0]));
+                    Array.from(fieldsNames).forEach(fieldNameToParse => {
+                        if (fields.has(fieldNameToParse)) {
+                            const types = mapFieldNameToTypes.get(fieldNameToParse);
+                            types.forEach(t => {
+                                if (typeof result[t] === 'undefined') {
+                                    result[t] = {};
+                                }
+                                this.addValueToResource(result[t], fieldNameToParse, fields.get(fieldNameToParse));
+                            });
+                        }
+                    });
+                });
+            });
+            loggers.debug().log('finished parse response', id, result);
+            return result;
+        });
+    }
+    getID() {
+        return ArcSightPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.ArcSight;
+    }
+    register() {
+        const urlsProcessing = new Set();
+        const bodyData = new Map();
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeRequest, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                var _a, _b, _c, _d, _e, _f, _g, _h;
+                return details.method === 'POST'
+                    && !urlsProcessing.has(details.url)
+                    && !bodyData.has(details.url)
+                    && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
+                    && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
+                    && ArcSightPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+            })) {
+                bodyData.set(details.url, details.requestBody.raw[0].bytes);
+            }
+        }));
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                return details.method === 'POST'
+                    && !urlsProcessing.has(details.url)
+                    && bodyData.has(details.url)
+                    && ArcSightPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+            }, params, id)) {
+                let reconnectAttempts = 4;
+                const bodyBytes = bodyData.get(details.url);
+                let bodyStr = new TextDecoder().decode(bodyBytes);
+                urlsProcessing.add(details.url);
+                const removeAttached = () => {
+                    urlsProcessing.delete(details.url);
+                    bodyData.delete(details.url);
+                    if (urlsProcessing.size < 1) {
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, false);
+                    }
+                };
+                const doRequest = () => {
+                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
+                    Http_1.http.post({
+                        url: details.url,
+                        body: bodyBytes,
+                        headers: details.requestHeaders.reduce((res, header) => {
+                            res[header.name] = header.value;
+                            return res;
+                        }, {}),
+                    }, {
+                        onTextSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                            const normalizedResponse = response.substring(response.indexOf('['));
+                            const data = (0, helpers_1.parseJSONSafe)(normalizedResponse, false);
+                            if (!data) {
+                                loggers
+                                    .warn()
+                                    .addPrefix('failed parse json response')
+                                    .log(details.method, details.url, bodyStr);
+                                return removeAttached();
+                            }
+                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(data), true);
+                            this.lastResponse = data;
+                            removeAttached();
+                        }),
+                        onError: e => {
+                            loggers
+                                .warn()
+                                .addPrefix('failed webRequest post')
+                                .log(e, details.method, details.url, bodyStr);
+                            if (reconnectAttempts > 0) {
+                                loggers.info().log('retry request');
+                                reconnectAttempts = reconnectAttempts - 1;
+                                return doRequest();
+                            }
+                            removeAttached();
+                        },
+                    });
+                };
+                doRequest();
+            }
+        }));
+    }
+}
+exports.ArcSightPlatform = ArcSightPlatform;
+ArcSightPlatform.id = types_common_1.PlatformID.ArcSight;
+ArcSightPlatform.postUrls = [
+    '/searchx/searchdata',
+];
+ArcSightPlatform.mappedFieldsNames = new Map([
+    ['act', 'deviceAction'],
+    ['app', 'applicationProtocol'],
+    ['c6a1', 'deviceCustomIPv6Address1'],
+    ['c6a1Label', 'deviceCustomIPv6Address1Label'],
+    ['c6a3', 'deviceCustomIPv6Address3'],
+    ['c6a3Label', 'deviceCustomIPv6Address3Label'],
+    ['c6a4', 'deviceCustomIPv6Address4'],
+    ['C6a4Label', 'deviceCustomIPv6Address4Label'],
+    ['cat', 'deviceEventCategory'],
+    ['cfp1', 'deviceCustomFloatingPoint1'],
+    ['cfp1Label', 'deviceCustomFloatingPoint1Label'],
+    ['cfp2', 'deviceCustomFloatingPoint2'],
+    ['cfp2Label', 'deviceCustomFloatingPoint2Label'],
+    ['cfp3', 'deviceCustomFloatingPoint3'],
+    ['cfp3Label', 'deviceCustomFloatingPoint3Label'],
+    ['cfp4', 'deviceCustomFloatingPoint4'],
+    ['cfp4Label', 'deviceCustomFloatingPoint4Label'],
+    ['cn1', 'deviceCustomNumber1'],
+    ['cn1Label', 'deviceCustomNumber1Label'],
+    ['cn2', 'DeviceCustomNumber2'],
+    ['cn2Label', 'deviceCustomNumber2Label'],
+    ['cn3', 'deviceCustomNumber3'],
+    ['cn3Label', 'deviceCustomNumber3Label'],
+    ['cnt', 'baseEventCount'],
+    ['cs1', 'deviceCustomString1'],
+    ['cs1Label', 'deviceCustomString1Label'],
+    ['cs2', 'deviceCustomString2'],
+    ['cs2Label', 'deviceCustomString2Label'],
+    ['cs3', 'deviceCustomString3'],
+    ['cs3Label', 'deviceCustomString3Label'],
+    ['cs4', 'deviceCustomString4'],
+    ['cs4Label', 'deviceCustomString4Label'],
+    ['cs5', 'deviceCustomString5'],
+    ['cs5Label', 'deviceCustomString5Label'],
+    ['cs6', 'deviceCustomString6'],
+    ['cs6Label', 'deviceCustomString6Label'],
+    ['DeviceOutboundInterface', 'deviceOutboundInterface'],
+    ['DevicePayloadId', 'devicePayloadId'],
+    ['dhost', 'destinationHostName'],
+    ['dmac', 'destinationMacAddress'],
+    ['dntdom', 'destinationNtDomain'],
+    ['dpid', 'destinationProcessId'],
+    ['dpriv', 'destinationUserPrivileges'],
+    ['dproc', 'destinationProcessName'],
+    ['dpt', 'destinationPort'],
+    ['dst', 'destinationAddress'],
+    ['dtz', 'deviceTimeZone'],
+    ['duid', 'destinationUserId'],
+    ['duser', 'destinationUserName'],
+    ['dvc', 'deviceAddress'],
+    ['dvchost', 'deviceHostName'],
+    ['dvcmac', 'deviceMacAddress'],
+    ['dvcpid', 'deviceProcessId'],
+    ['end', 'endTime'],
+    ['fname', 'filename'],
+    ['fsize', 'fileSize'],
+    ['in', 'bytesIn'],
+    ['msg', 'message'],
+    ['out', 'bytesOut'],
+    ['outcome', 'eventOutcome'],
+    ['proto', 'transportProtocol'],
+    ['reason', 'Reason'],
+    ['request', 'requestUrl'],
+    ['rt', 'deviceReceiptTime'],
+    ['shost', 'sourceHostName'],
+    ['smac', 'sourceMacAddress'],
+    ['sntdom', 'sourceNtDomain'],
+    ['spid', 'sourceProcessId'],
+    ['spriv', 'sourceUserPrivileges'],
+    ['sproc', 'sourceProcessName'],
+    ['spt', 'sourcePort'],
+    ['src', 'sourceAddress'],
+    ['start', 'startTime'],
+    ['suid', 'sourceUserId'],
+    ['suser', 'sourceUserName'],
+    ['agt', 'agentAddress'],
+    ['ahost', 'agentHostName'],
+    ['aid', 'agentId'],
+    ['amac', 'agentMacAddress'],
+    ['art', 'agentReceiptTime'],
+    ['at', 'agentType'],
+    ['atz', 'agentTimeZone'],
+    ['av', 'agentVersion'],
+    ['dlat', 'destinationGeoLatitude'],
+    ['dlong', 'destinationGeoLongitude'],
+    ['slat', 'sourceGeoLatitude'],
+    ['slong', 'sourceGeoLongitude'],
+    ['oAgtAddress', 'originalAgentAddress'],
+    ['oAgtHostName', 'originalAgentHostName'],
+    ['fdeviceAssetId', 'finalDeviceAssetId'],
+    ['fdeviceZone', 'finalDeviceZone'],
+    ['fdvchost', 'finalDeviceHost'],
+    ['fDvcAddress', 'fDeviceAddress'],
+    ['fDvcHostName', 'fDeviceHostName'],
+    ['fDvcAssetId', 'fDeviceAssetId'],
+    ['fDvcZone', 'fDeviceZone'],
+    ['mrt', 'managerReceiptTime'],
+    ['oAgtAssetId', 'originalAgentAssetId'],
+    ['oAgtZone', 'originalAgentZone'],
+    ['oAgtId', 'originalAgentId'],
+    ['oAgtType', 'originalAgentType'],
+    ['oAgtVersion', 'originalAgentVersion'],
+]);
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ElasticPlatform_1.ElasticPlatform.id);
 
 
 /***/ }),
@@ -11760,6 +12082,7 @@ const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./MicrosoftDefenderP
 const SplunkPlatform_1 = __webpack_require__(/*! ./SplunkPlatform */ "./extension/background/platforms/SplunkPlatform.ts");
 const QRadarPlatform_1 = __webpack_require__(/*! ./QRadarPlatform */ "./extension/background/platforms/QRadarPlatform.ts");
 const ElasticPlatform_1 = __webpack_require__(/*! ./ElasticPlatform */ "./extension/background/platforms/ElasticPlatform.ts");
+const ArcSightPlatform_1 = __webpack_require__(/*! ./ArcSightPlatform */ "./extension/background/platforms/ArcSightPlatform.ts");
 class PlatformResolver {
     constructor() {
         this.platforms = new Register_1.Register();
@@ -11785,6 +12108,10 @@ class PlatformResolver {
                 }
                 case types_common_1.PlatformID.Elastic: {
                     this.platforms.set(platformID, new ElasticPlatform_1.ElasticPlatform());
+                    break;
+                }
+                case types_common_1.PlatformID.ArcSight: {
+                    this.platforms.set(platformID, new ArcSightPlatform_1.ArcSightPlatform());
                     break;
                 }
                 default:
@@ -12921,16 +13248,17 @@ const getElementsUnderCursor = (e, filter) => {
     return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
-const buildQueryParts = (resources, operator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
-    const queryParts = Object.keys(resources).reduce((result, fieldName) => {
-        result.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
+    const queryParts = [];
+    Object.keys(resources).forEach(fieldName => {
+        queryParts.push(resources[fieldName]
+            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
-        return result;
-    }, []).join(fieldsSeparator);
+    });
+    const queryPartsStr = queryParts.join(fieldsSeparator);
     return prefix
-        ? `${prefix} ${queryParts}`
-        : queryParts;
+        ? `${prefix} ${queryPartsStr}`
+        : queryPartsStr;
 };
 exports.buildQueryParts = buildQueryParts;
 const removeBracketsAround = (str) => {
@@ -13048,7 +13376,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.1.1";
+exports.version = "1.1.2";
 
 
 /***/ }),
@@ -13181,14 +13509,16 @@ var PlatformID;
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
+    PlatformID["ArcSight"] = "ArcSight";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
     PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
     PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
     PlatformName["Splunk"] = "Splunk";
-    PlatformName["Elastic"] = "Elastic";
     PlatformName["QRadar"] = "IBM QRadar";
+    PlatformName["Elastic"] = "Elastic";
+    PlatformName["ArcSight"] = "ArcSight";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 

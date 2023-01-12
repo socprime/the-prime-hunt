@@ -9,6 +9,7 @@ import { isAllowedProtocol } from '../../../common/checkers';
 import { Register } from '../../../common/Register';
 import { QRadarPlatform } from './QRadarPlatform';
 import { ElasticPlatform } from './ElasticPlatform';
+import { ArcSightPlatform } from './ArcSightPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -41,6 +42,11 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.ArcSight: {
+          this.platforms.set<PlatformID, ContentPlatform>(platformID, new ArcSightPlatform());
+          break;
+        }
+
         default:
           return undefined;
       }
@@ -66,6 +72,10 @@ export class PlatformResolver {
 
     if (/(console\/qradar\/jsp\/QRadar.jsp|console\/do\/ariel\/arielSearch)/.test(href)) {
       return this.getPlatformByID(PlatformID.QRadar);
+    }
+
+    if (/(\/\w\w\w\/ui-phoenix\/com.arcsight.phoenix.PhoenixLauncher|logger\/search\.ftl)/.test(href)) {
+      return this.getPlatformByID(PlatformID.ArcSight);
     }
 
     return undefined;

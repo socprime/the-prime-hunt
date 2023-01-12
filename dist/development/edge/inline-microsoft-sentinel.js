@@ -10,7 +10,7 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
@@ -47,6 +47,12 @@ const isAllowedProtocol = (protocol, mode) => {
     return nProtocol === 'https:' || nProtocol === 'https';
 };
 exports.isAllowedProtocol = isAllowedProtocol;
+const isDate = (value) => {
+    return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
+        ? parseInt(value)
+        : value).getTime() > 567982800000;
+};
+exports.isDate = isDate;
 
 
 /***/ }),
@@ -149,7 +155,7 @@ exports.formatBinaryDate = formatBinaryDate;
 const formatDate = (pattern, data) => {
     return (0, exports.formatString)(pattern, {
         'Y': String(data.getFullYear()),
-        'M': (0, exports.formatBinaryDate)(data.getMonth()),
+        'M': (0, exports.formatBinaryDate)(data.getMonth() + 1),
         'm': (0, exports.formatBinaryDate)(data.getMinutes()),
         's': (0, exports.formatBinaryDate)(data.getSeconds()),
         'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
@@ -556,16 +562,17 @@ const getElementsUnderCursor = (e, filter) => {
     return filtered;
 };
 exports.getElementsUnderCursor = getElementsUnderCursor;
-const buildQueryParts = (resources, operator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
-    const queryParts = Object.keys(resources).reduce((result, fieldName) => {
-        result.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${operator}${decorators.rightOperand(v)}`)
+const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
+    const queryParts = [];
+    Object.keys(resources).forEach(fieldName => {
+        queryParts.push(resources[fieldName]
+            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
-        return result;
-    }, []).join(fieldsSeparator);
+    });
+    const queryPartsStr = queryParts.join(fieldsSeparator);
     return prefix
-        ? `${prefix} ${queryParts}`
-        : queryParts;
+        ? `${prefix} ${queryPartsStr}`
+        : queryPartsStr;
 };
 exports.buildQueryParts = buildQueryParts;
 const removeBracketsAround = (str) => {
@@ -681,7 +688,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.1.1";
+exports.version = "1.1.2";
 
 
 /***/ }),
@@ -811,14 +818,16 @@ var PlatformID;
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
+    PlatformID["ArcSight"] = "ArcSight";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
     PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
     PlatformName["MicrosoftDefender"] = "Microsoft Defender For Endpoint";
     PlatformName["Splunk"] = "Splunk";
-    PlatformName["Elastic"] = "Elastic";
     PlatformName["QRadar"] = "IBM QRadar";
+    PlatformName["Elastic"] = "Elastic";
+    PlatformName["ArcSight"] = "ArcSight";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -881,7 +890,7 @@ class MicrosoftSentinelPlatform {
     }
     static buildQueryParts(type, resources, withPrefix = false) {
         const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
             leftOperand: (v) => v,
             rightOperand: (v) => MicrosoftSentinelPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -1207,7 +1216,7 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -1215,12 +1224,14 @@ exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
 exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
+exports.arcSightInline = 'inline-arcsight.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
     [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
     [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
     [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
+    [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     app: [exports.appStyles],
 };
 

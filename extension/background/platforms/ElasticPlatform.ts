@@ -25,7 +25,7 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as  WatchingResources;
+    this.watchingResources = {} as WatchingResources;
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',

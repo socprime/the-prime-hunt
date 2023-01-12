@@ -36,3 +36,11 @@ export const isAllowedProtocol = (protocol: string, mode?: Mode): boolean => {
   const nProtocol = protocol.trim().toLowerCase();
   return nProtocol === 'https:' || nProtocol === 'https';
 };
+
+export const isDate = (value: string | number): boolean => {
+  return new Date(
+    typeof value === 'string' && isNumberInString(value)
+      ? parseInt(value)
+      : value,
+  ).getTime() > 567982800000;
+};

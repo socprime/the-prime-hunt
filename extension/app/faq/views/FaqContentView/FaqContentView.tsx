@@ -14,7 +14,10 @@ export const FaqContentView: React.FC = () => {
     return [
       {
         title: 'What security platforms are supported?',
-        content: 'Currently, the extension works with Splunk, QRadar, Elastic, Microsoft Sentinel and Microsoft Defender for Endpoint. We are hard at work adding support for other platforms',
+        content: [
+          'We are hard at work adding support for other platforms. Current list of supporting platforms you can see on our Readme page at requirements section: ',
+          <AppLink key="readme" target="_blank" href="https://github.com/socprime/the-prime-hunt/blob/master/README.md">github/readme</AppLink>,
+        ],
       },
       {
         title: 'How can I give feedback or get help?',
@@ -29,13 +32,16 @@ export const FaqContentView: React.FC = () => {
       },
       {
         title: 'Can I add custom fields to the results?',
-        content: 'Yes, you can add any fields to the results in the extension. To add a field to the active tab in the extension, click on the field in your security platform holding the Alt (Option on Mac) key. To remove a field from the extension, click on the remove icon next to the field',
+        content: [
+          'Yes, you can add any fields to the results in the extension. To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR, and click the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. You can also get more information about it from our Readme page: ',
+          <AppLink key="readme" target="_blank" href="https://github.com/socprime/the-prime-hunt/blob/master/README.md">github/readme</AppLink>,
+        ],
       },
       {
         title: 'Can I customize Search At integrations?',
         content: (
           <div>
-            Yes, you can. Set a checkmark next to a result to show the bulk actions menu and select Search At &gt; Search Settings. In this menu you can:
+            Yes, you can, just click on Integration settings button placed on header of the extension. On the following page you can:
             <List items={[
               {
                 id: '1',

@@ -88,7 +88,7 @@ export class ElasticPlatform implements ContentPlatform {
 
     return buildQueryParts(
       normalizedResources,
-      type === 'exclude' ? ':' : ':',
+      () => type === 'exclude' ? ':' : ':',
       type === 'exclude' ? ' AND NOT ' : ' OR ',
       type === 'exclude' ? ' AND NOT ' : ' AND ',
       {
