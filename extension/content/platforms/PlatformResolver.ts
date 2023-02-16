@@ -1,15 +1,9 @@
 import { ContentPlatform } from '../types/types-content-common';
-import { MicrosoftSentinelPlatform } from './MicrosoftSentinelPlatform';
 import { PlatformID } from '../../common/types/types-common';
 import { Url } from '../../../common/types';
 import { contentPlatformIDFromENV, mode } from '../../common/envs';
-import { MicrosoftDefenderPlatform } from './MicrosoftDefenderPlatform';
-import { SplunkPlatform } from './SplunkPlatform';
 import { isAllowedProtocol } from '../../../common/checkers';
 import { Register } from '../../../common/Register';
-import { QRadarPlatform } from './QRadarPlatform';
-import { ElasticPlatform } from './ElasticPlatform';
-import { ArcSightPlatform } from './ArcSightPlatform';
 
 export class PlatformResolver {
   private platforms;
@@ -18,32 +12,50 @@ export class PlatformResolver {
     if (!this.platforms.has(platformID)) {
       switch (platformID) {
         case PlatformID.MicrosoftSentinel: {
-          this.platforms.set<PlatformID, ContentPlatform>(platformID, new MicrosoftSentinelPlatform());
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./MicrosoftSentinelPlatform').MicrosoftSentinelPlatform)(),
+          );
           break;
         }
 
         case PlatformID.MicrosoftDefender: {
-          this.platforms.set<PlatformID, ContentPlatform>(platformID, new MicrosoftDefenderPlatform());
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./MicrosoftDefenderPlatform').MicrosoftDefenderPlatform)(),
+          );
           break;
         }
 
         case PlatformID.Splunk: {
-          this.platforms.set<PlatformID, ContentPlatform>(platformID, new SplunkPlatform());
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./SplunkPlatform').SplunkPlatform)(),
+          );
           break;
         }
 
         case PlatformID.QRadar: {
-          this.platforms.set<PlatformID, ContentPlatform>(platformID, new QRadarPlatform());
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./QRadarPlatform').QRadarPlatform)(),
+          );
           break;
         }
 
         case PlatformID.Elastic: {
-          this.platforms.set<PlatformID, ContentPlatform>(platformID, new ElasticPlatform());
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./ElasticPlatform').ElasticPlatform)(),
+          );
           break;
         }
 
         case PlatformID.ArcSight: {
-          this.platforms.set<PlatformID, ContentPlatform>(platformID, new ArcSightPlatform());
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./ArcSightPlatform').ArcSightPlatform)(),
+          );
           break;
         }
 

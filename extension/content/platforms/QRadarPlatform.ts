@@ -1,4 +1,4 @@
-import { ContentPlatform, ListenerType, MessageListener } from '../types/types-content-common';
+import { ListenerType, MessageListener } from '../types/types-content-common';
 import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import {
@@ -6,24 +6,23 @@ import {
 } from '../../common/common-helpers';
 import { isNumberInString } from '../../../common/checkers';
 import { addListener } from '../services/content-services-listeners';
-import { isMessageMatched } from '../../common/common-listeners';
-import { MessageToContent } from '../types/types-content-messages';
-import { sendMessageFromContent } from '../services/content-services';
-import { MessageToInline } from '../../inline/types/types-inline-messages';
 import { qRadarInline } from '../../manifest/public-resources';
 import { Loggers } from '../../common/loggers';
 import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
+import { AbstractContentPlatform } from './AbstractContentPlatform';
 
 let loggers: Loggers;
 
-export class QRadarPlatform implements ContentPlatform {
+export class QRadarPlatform extends AbstractContentPlatform {
   static normalizedValue(value: string | number) {
     const nValue = isNumberInString(value)
       ? parseFloat(value as string)
       : value;
     return typeof nValue === 'number'
       ? nValue
-      : `'${nValue}'`;
+      : `'${
+        nValue.replace(/'/g, '"')
+      }'`;
   }
 
   buildQueryParts(
@@ -65,16 +64,7 @@ export class QRadarPlatform implements ContentPlatform {
           await waitHTMLElement(query);
         }
 
-        if (isMessageMatched(
-          () => MessageToContent.CSModifyQuery === message.type,
-          message,
-        )) {
-          sendMessageFromContent({
-            ...message,
-            id: `${message.id}--content-modify-query`,
-            type: MessageToInline.ISModifyQuery,
-          }, false);
-        }
+        AbstractContentPlatform.processInlineListeners(message);
       },
     );
   }

@@ -5,7 +5,6 @@ import { SeeDocumentIcon } from '../../components/atoms/icons/SeeDocumentIcon/Se
 import { ModifyQueryPayload } from '../../../common/types/types-common-payloads';
 import { AnimatedCopyIcon } from '../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon';
 import { usePlatformStore } from '../../stores';
-import { copyToClipboard } from '../../../common/common-helpers';
 import './styles.scss';
 
 type ResourceListItemProps = {
@@ -23,12 +22,7 @@ export const ResourceListItem: React.FC<React.PropsWithChildren<ResourceListItem
 
   const onActionClick = useCallback(async (actionType: 'copy' | ModifyQueryPayload['modifyType']) => {
     if (actionType === 'copy') {
-      setTimeout(() => {
-        copyToClipboard(`where ${platformStore.buildQueryParts(
-          'include',
-          { [fieldName]:[resourceName] },
-        )}`);
-      }, 300);
+      platformStore.copyToClipboard({ [fieldName]:[resourceName] });
       return;
     }
     platformStore.modifyQuery(actionType, { [fieldName]: [resourceName] });

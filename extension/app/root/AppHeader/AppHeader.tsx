@@ -17,7 +17,7 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
   _,
   ref,
 ) => {
-  const { platform } = usePlatformStore();
+  const isPlatform = !!usePlatformStore().getID();
   const appStore = useAppStore();
 
   const dragElementRef = useRef<HTMLSpanElement>(null);
@@ -48,7 +48,7 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
         </span>
         <span className="group">
           <div className="buttons-wrapper">
-            {platform
+            {isPlatform
               && appStore.view !== 'integrations'
               && appStore.view !== 'faq' && <ExportButton />}
             {appStore.view === 'resources' && <SettingsButton />}

@@ -17,23 +17,26 @@ export const sendMessage = <T = unknown>(
 
   try {
     if (!runtime && !isPostMessageSupported(message)) {
-      return;
+      return message;
     }
     if (!runtime) {
       window.postMessage(message);
-      return loggers.debug().log('postMessage', message);
+      loggers.debug().log('postMessage', message);
+      return message;
     }
 
     if (!isRuntimeSendMessageSupported()) {
-      return;
+      return message;
     }
 
     getBrowserContext().runtime.sendMessage(message)
       ?.catch((e: Error) => loggers.error().addPrefix(logPrefix).log(e, message));
     loggers.debug().addPrefix(logPrefix).log(message);
 
+    return message;
   } catch (e) {
     loggers.error().addPrefix(logPrefix).log(e, message);
+    return message;
   }
 };
 

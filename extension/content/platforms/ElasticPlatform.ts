@@ -1,5 +1,5 @@
 import { Loggers } from '../../common/loggers';
-import { ContentPlatform, ListenerType, MessageListener } from '../types/types-content-common';
+import { ListenerType, MessageListener } from '../types/types-content-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
 import { isNumberInString } from '../../../common/checkers';
@@ -8,15 +8,12 @@ import {
 } from '../../common/common-helpers';
 import { elasticInline } from '../../manifest/public-resources';
 import { addListener } from '../services/content-services-listeners';
-import { isMessageMatched } from '../../common/common-listeners';
-import { MessageToContent } from '../types/types-content-messages';
-import { sendMessageFromContent } from '../services/content-services';
-import { MessageToInline } from '../../inline/types/types-inline-messages';
 import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
+import { AbstractContentPlatform } from './AbstractContentPlatform';
 
 let loggers: Loggers;
 
-export class ElasticPlatform implements ContentPlatform {
+export class ElasticPlatform extends AbstractContentPlatform {
   defaultWatchers = {
     [BoundedResourceTypeID.Accounts]: [
       'user.name',
@@ -51,13 +48,14 @@ export class ElasticPlatform implements ContentPlatform {
       return nValue;
     }
 
-    nValue = nValue.replace(/\\/g, '\\\\');
-
     if (nValue[0] === '(' || nValue[nValue.length - 1] === ')') {
       return nValue;
     }
 
-    return `"${nValue}"`;
+    return `"${
+      nValue
+        .replace(/"/g, '\\"')
+    }"`;
   };
 
 
@@ -113,16 +111,7 @@ export class ElasticPlatform implements ContentPlatform {
     (addListener as MessageListener)(
       ListenerType.OnMessage,
       (message) => {
-        if (isMessageMatched(
-          () => MessageToContent.CSModifyQuery === message.type,
-          message,
-        )) {
-          sendMessageFromContent({
-            ...message,
-            id: `${message.id}--content-modify-query`,
-            type: MessageToInline.ISModifyQuery,
-          }, false);
-        }
+        AbstractContentPlatform.processInlineListeners(message);
       },
     );
 

@@ -13,7 +13,12 @@ import { ExtensionMessage } from '../common/types/types-common';
 import { isMessageMatched } from '../common/common-listeners';
 import { MessageToBackground } from './types/types-background-messages';
 import { MessageToContent } from '../content/types/types-content-messages';
-import { PlatformIDPayload, SetLoadingStatePayload, SetWatchersPayload } from '../common/types/types-common-payloads';
+import {
+  PlatformIDPayload,
+  SetDebugModePayload,
+  SetLoadingStatePayload,
+  SetWatchersPayload,
+} from '../common/types/types-common-payloads';
 import { platformResolver } from './platforms/PlatformResolver';
 import { LoadingKey } from '../app/types/types-app-common';
 
@@ -88,8 +93,44 @@ const loggers = require('../common/loggers').loggers
     )) {
       sendMessageFromBackground(sender.tab.id, {
         ...message,
-        id: `${message.id}--background-modify-query`,
+        id: `${message.id}--${message.type}`,
         type: MessageToContent.CSModifyQuery,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGSetQuery === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id}--${message.type}`,
+        type: MessageToContent.CSSetQuery,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGGetQuery === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id}--${message.type}`,
+        type: MessageToContent.CSGetQuery,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGSendMessageOutside === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id}--${message.type}`,
+        type: MessageToApp.AppSendMessageOutside,
       });
     }
 
@@ -101,7 +142,7 @@ const loggers = require('../common/loggers').loggers
       const { platformID, watchers } = message.payload as SetWatchersPayload;
       platformResolver.resolve(platformID)?.setWatchers(watchers, sender.tab.id);
       sendMessageFromBackground<SetLoadingStatePayload>(sender.tab.id, {
-        id: 'background-set-watchers',
+        id: message.type,
         type: MessageToApp.AppSetLoadingState,
         payload: {
           loading: false,
@@ -126,11 +167,25 @@ const loggers = require('../common/loggers').loggers
     )) {
       sendMessageFromBackground(sender.tab.id, {
         ...message,
-        id: `${message.id ? message.id : ''}--background-toggle-show-extension`,
+        id: `${message.id}--${message.type}`,
         type: MessageToApp.AppToggleShowExtension,
       });
       sendMessageFromBackground(sender.tab.id, {
         type: MessageToContent.CSConnectPlatform,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGSetDebugMode === message.type,
+      message,
+      sender,
+    )) {
+      const { debugMode } = message.payload as SetDebugModePayload;
+      require('../common/loggers').setDebugMode(debugMode);
+      sendMessageFromBackground(sender.tab.id, {
+        ...message,
+        id: `${message.id}--${message.type}`,
+        type: MessageToContent.CSSetDebugMode,
       });
     }
   },

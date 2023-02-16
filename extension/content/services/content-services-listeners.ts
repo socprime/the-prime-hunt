@@ -2,6 +2,7 @@ import { ListenerType } from '../types/types-content-common';
 import { DebugID, DebugMessage } from '../../common/loggers/loggers-debug';
 import { isAddEventListenerSupported, isRuntimeOnMessageSupported } from '../../common/api-support';
 import { getBrowserContext } from '../../common/common-extension-helpers';
+import { getExecutingContextByMessageType } from '../../common/loggers/loggers-helpers';
 
 const listeners: {
   [key in ListenerType]?: Function;
@@ -41,7 +42,10 @@ listeners[ListenerType.OnMessage] = (listener: Function, ...otherProps: any[]) =
     const message: DebugMessage = event.data;
     if (
       event.origin !== window.location.origin
-      || message.externalType !== DebugID.debugIDExternal
+      || (
+        getExecutingContextByMessageType(message.type) !== 'content'
+        && message.externalType !== DebugID.debugIDExternal
+      )
     ) {
       return;
     }

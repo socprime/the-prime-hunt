@@ -23,6 +23,10 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
   constructor() {
     super();
     this.watchingResources = {} as WatchingResources;
+    this.emptyFieldValues = [
+      ...this.emptyFieldValues,
+      '-',
+    ];
   }
   
   getID() {

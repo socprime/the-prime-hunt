@@ -1,31 +1,32 @@
-import { ContentPlatform, ListenerType, MessageListener } from '../types/types-content-common';
+import { ListenerType, MessageListener } from '../types/types-content-common';
 import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
 import { addListener } from '../services/content-services-listeners';
 import {
   buildQueryParts,
   mountHTMLElement,
 } from '../../common/common-helpers';
-import { sendMessageFromContent } from '../services/content-services';
-import { isMessageMatched } from '../../common/common-listeners';
-import { MessageToContent } from '../types/types-content-messages';
-import { MessageToInline } from '../../inline/types/types-inline-messages';
 import { microsoftDefenderInline } from '../../manifest/public-resources';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { isNumberInString } from '../../../common/checkers';
 import { Loggers } from '../../common/loggers';
 import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
+import { AbstractContentPlatform } from './AbstractContentPlatform';
 
 let loggers: Loggers;
 
-export class MicrosoftDefenderPlatform implements ContentPlatform {
+export class MicrosoftDefenderPlatform extends AbstractContentPlatform {
   defaultWatchers = {
     [BoundedResourceTypeID.Accounts]: [
       'AccountName',
-      'InitiatingProcessName',
+      'InitiatingProcessAccountName',
+      'RequestAccountName',
+      'InitiatingProcessAccountSid',
       'RequestAccountName',
     ],
     [BoundedResourceTypeID.Assets]: [
       'DeviceName',
+      'AccountDomain',
+      'InitiatingProcessAccountDomain',
     ],
   };
 
@@ -63,7 +64,11 @@ export class MicrosoftDefenderPlatform implements ContentPlatform {
       : value;
     return typeof nValue === 'number'
       ? nValue
-      : `\"${nValue.replace(/\\/g, '\\\\')}\"`;
+      : `\"${
+        nValue
+          .replace(/\\/g, '\\\\')
+          .replace(/"/g, '\\"')
+      }\"`;
   };
 
   buildQueryParts(
@@ -88,16 +93,7 @@ export class MicrosoftDefenderPlatform implements ContentPlatform {
     (addListener as MessageListener)(
       ListenerType.OnMessage,
       (message) => {
-        if (isMessageMatched(
-          () => MessageToContent.CSModifyQuery === message.type,
-          message,
-        )) {
-          sendMessageFromContent({
-            ...message,
-            id: `${message.id}--content-modify-query`,
-            type: MessageToInline.ISModifyQuery,
-          }, false);
-        }
+        AbstractContentPlatform.processInlineListeners(message);
       },
     );
 

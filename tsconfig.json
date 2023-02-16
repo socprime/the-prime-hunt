@@ -13,6 +13,7 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "lib": [
       "dom",
       "es5",

@@ -48,13 +48,13 @@ browsers = browsers.length ? browsers : allowedBrowsers;
 const mode = String(args?.mode).toLowerCase() === Mode.production ? Mode.production : Mode.development;
 const absDistDirPath = join(__dirname, '../dist');
 
-
 emptyDirSync(join(absDistDirPath, mode));
 
 const browser = browsers.splice(0, 1)[0];
 const relativePath = join(mode, args.output || '');
 const output = join(absDistDirPath, relativePath);
 const iconsFolder = join(__dirname, 'manifest', 'icons');
+const localesFolder = join(__dirname, 'manifest', '_locales');
 const contentPlatform = Object.keys(PlatformID).includes(args['content-platform']!)
   ? args['content-platform']
   : null;
@@ -70,6 +70,9 @@ const buildBrowserAssets = (b: Browser) => {
   if (existsSync(iconsFolder)) {
     copySync(iconsFolder, join(output, b, 'icons'), { overwrite: true });
   }
+  if (existsSync(localesFolder)) {
+    copySync(localesFolder, join(output, b, '_locales'), { overwrite: true });
+  }
 };
 
 const styles = new Map<AbsFilePath, HTMLTextContent>();
@@ -84,8 +87,8 @@ const inlineEntries = [
 ].reduce((entry, inline) => {
   const name = parse(inline).name;
   entry[name] = [
-    join(__dirname, './inline.ts'),
-    join(__dirname, `./inline/${name}.ts`),
+    join(__dirname, 'inline.ts'),
+    join(__dirname, 'inline', name.split('inline-')!.pop()!, `${name}.ts`),
   ];
   return entry;
 }, {} as EntryObject);

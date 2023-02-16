@@ -27,6 +27,7 @@ export const getVersion = () => {
   return version;
 };
 
+// TODO description back
 export const getDescription = () => {
   const { description } = require(packageJsonPath);
   delete require.cache[require.resolve(packageJsonPath)];
@@ -36,8 +37,9 @@ export const getDescription = () => {
 const getCommonManifest = (mode: Mode): ManifestBase => {
   return {
     version: getVersion(),
-    description: getDescription(),
-    name: 'The Prime Hunt',
+    description: '__MSG_extension_description__',
+    name: '__MSG_extension_name__',
+    default_locale: 'en',
     manifest_version: 3,
     icons: generateIconSet(),
     content_scripts: [

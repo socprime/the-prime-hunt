@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './root/App/App';
-import { rootStore, RootStoreContext } from './stores';
+import { rootStore } from './stores';
 import { Mode } from '../../common/types';
 import { mountHTMLElement } from '../common/common-helpers';
 import { mode, version } from '../common/envs';
 import { appStyles } from '../manifest/public-resources';
 import { getWebAccessibleUrl } from '../common/common-extension-helpers';
+import { RootApp } from './root';
 
 require('../app/scss/reset.scss');
 require('../app/scss/scroll.scss');
@@ -66,11 +66,7 @@ const overlay = mountHTMLElement('div', host, {
 rootStore.appStore.overlay = overlay;
 
 ReactDOM.createRoot(overlay)
-  .render(
-    <RootStoreContext.Provider value={rootStore}>
-      <App />
-    </RootStoreContext.Provider>,
-  );
+  .render(<RootApp rootStore={rootStore} />);
 
 rootStore.appStore.mounted = true;
 

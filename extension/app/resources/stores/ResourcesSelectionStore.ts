@@ -5,7 +5,7 @@ import {
   ResourceName,
   ResourceTypeID,
 } from '../resources-types';
-import { computed, makeObservable, observable } from 'mobx';
+import { computed, action, makeObservable, observable } from 'mobx';
 import { RootStore } from '../../stores/RootStore';
 
 export class ResourcesSelectionStore implements IResourceSelectionStore {
@@ -48,9 +48,7 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
   @computed
   get selected() {
     const typeID = this.getActiveTypeID();
-    if (!this.selectedResources[typeID]) {
-      this.selectedResources[typeID] = new Map();
-    }
+    this.createType(typeID);
 
     return this.selectedResources[typeID];
   }
@@ -58,12 +56,21 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
   @computed
   get selectedFields() {
     const typeID = this.getActiveTypeID();
-    if (!this.selectedResourcesFields[typeID]) {
-      this.selectedResourcesFields[typeID] = new Set();
-    }
+    this.createType(typeID);
 
     return this.selectedResourcesFields[typeID];
   }
+
+  @action
+  private createType(typeID: ResourceTypeID) {
+    if (!this.selectedResources[typeID]) {
+      this.selectedResources[typeID] = new Map();
+    }
+    if (!this.selectedResourcesFields[typeID]) {
+      this.selectedResourcesFields[typeID] = new Set();
+    }
+  }
+
 
   @computed
   get normalisedSelected(): NormalizedParsedResources {

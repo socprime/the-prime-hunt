@@ -3,7 +3,6 @@ import { PlatformID } from './types/types-common';
 import { Position } from '../content/types/types-content-common';
 import { Integration } from '../app/integrations/integrations-types';
 import { integrations } from '../app/integrations/integrations';
-import { platformResolver } from '../content/platforms/PlatformResolver';
 
 export const watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 
@@ -24,7 +23,7 @@ export const setWatchers = (watchers: WatchingResources): WatchingResources => {
 const getDefaultWatchers = (
   platformID?: PlatformID,
 ) => {
-  return platformResolver.getPlatformByID(platformID)?.defaultWatchers || {};
+  return require('../content/platforms/PlatformResolver').platformResolver.getPlatformByID(platformID)?.defaultWatchers || {};
 };
 
 export const getWatchers = (

@@ -11,7 +11,7 @@ import { AnimatedCopyIcon } from '../../components/icons/AnimatedCopyIcon/Animat
 import { useIntegrationsStore, usePlatformStore, useResourcesSelectionStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ModifyQueryPayload } from '../../../common/types/types-common-payloads';
-import { copyToClipboard, createClassName } from '../../../common/common-helpers';
+import { createClassName } from '../../../common/common-helpers';
 import { AppTooltip } from '../../components/tooltips/AppTooltip/AppTooltip';
 import { NormalizedParsedResources } from '../resources-types';
 import './styles.scss';
@@ -43,9 +43,7 @@ export const BulkResourcesPanel: React.FC = observer(() => {
   }, [integrationsStore, uniqueSelected]);
 
   const onCopyIconClick = useCallback(() => {
-    setTimeout(() => {
-      copyToClipboard(platformStore.buildQueryParts('include', normalisedSelected, true));
-    }, 300);
+    platformStore.copyToClipboard(normalisedSelected);
   }, [platformStore, normalisedSelected]);
 
   const onActionsClick = useCallback((type: ModifyQueryPayload['modifyType']) => {

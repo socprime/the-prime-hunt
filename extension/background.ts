@@ -1,7 +1,6 @@
-import { getDebugPrefix } from './common/loggers/loggers-debug';
+import { getDebugPrefix } from './common/loggers/loggers-helpers';
 
 require('./common/loggers').loggers
   .setPrefix(getDebugPrefix('background'));
 
 require('./background/background-listeners');
-

@@ -1,8 +1,12 @@
-import { getExecutingContextByMessageType } from '../../common/common-extension-helpers';
+import { getExecutingContextByMessageType } from '../../common/loggers/loggers-helpers';
 
 export enum MessageToContent {
   CSModifyQuery = 'CSModifyQuery',
+  CSSetQuery = 'CSSetQuery',
+  CSGetQuery = 'CSGetQuery',
+  CSSendMessageOutside = 'CSSendMessageOutside',
   CSConnectPlatform = 'CSConnectPlatform',
+  CSSetDebugMode = 'CSSetDebugMode',
 }
 
 Object.values(MessageToContent).forEach(type => {

@@ -66,6 +66,7 @@ export const copyToClipboard = (str: string) => {
   const el = document.createElement('textarea');
   el.value = str;
   el.setAttribute('readonly', '');
+  el.style.opacity = '0';
   el.style.position = 'absolute';
   el.style.left = '-99999px';
   el.style.top = '-99999px';

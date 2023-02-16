@@ -27,7 +27,7 @@ export const ResourcesContentView: React.FC<ResourcesContentViewProps> = observe
       ?.scrollTo?.({ top: 0 });
   }, [activeTabID]);
 
-  if (!platformStore.platform) {
+  if (!platformStore.getID()) {
     return null;
   }
 

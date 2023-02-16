@@ -1,10 +1,9 @@
-import { computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { RootStore } from '../../stores/RootStore';
 import { sendMessageFromApp } from '../../../content/services/content-services';
 import { MessageToBackground } from '../../../background/types/types-background-messages';
 import { SetWatchersPayload } from '../../../common/types/types-common-payloads';
 import { setWatchers } from '../../../common/local-storage';
-import { uuid } from '../../../../common/helpers';
 import {
   BoundedResourceTypeID,
   FieldName,
@@ -67,6 +66,7 @@ export class ResourceStore {
     return Object.keys(this.resources[typeID] || []);
   }
 
+  @action
   addResources(resources: NormalizedResources) {
     let needSaveWatchers = false;
 
@@ -206,13 +206,13 @@ export class ResourceStore {
   saveWatchers(
     messageId?: string,
   ) {
-    const platformID = this.rootStore.platformStore.platform?.getID();
+    const platformID = this.rootStore.platformStore.getID();
     if (!platformID) {
       return;
     }
 
     sendMessageFromApp<SetWatchersPayload>({
-      id: `save-watchers--${messageId ? `${messageId}--` : ''}${uuid()}`,
+      id: `save-watchers${messageId ? `--${messageId}` : ''}`,
       type: MessageToBackground.BGSetWatchers,
       payload: {
         platformID,

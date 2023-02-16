@@ -10,11 +10,11 @@ import { MessageToBackground } from '../../../background/types/types-background-
 import { RootStore } from '../../stores/RootStore';
 import { getWatchers } from '../../../common/local-storage';
 import { NormalizedParsedResources } from '../resources-types';
+import { copyToClipboard } from '../../../common/common-helpers';
 
 export class PlatformStore {
-  // TODO should be private
   @observable
-  public platform: ContentPlatform;
+  private platform: ContentPlatform;
 
   private readonly rootStore: RootStore;
 
@@ -23,7 +23,7 @@ export class PlatformStore {
     makeObservable(this);
   }
 
-  setPlatform(platform: ContentPlatform | undefined) {
+  setPlatform(platform?: ContentPlatform) {
     if (!platform) {
       return;
     }
@@ -40,7 +40,7 @@ export class PlatformStore {
       });
     });
 
-    sendMessageFromApp<PlatformIDPayload>({
+    const message = sendMessageFromApp<PlatformIDPayload>({
       id: 'platform-set',
       type: MessageToBackground.BGRegisterPlatformTab,
       payload: {
@@ -48,7 +48,22 @@ export class PlatformStore {
       },
     });
 
-    this.rootStore.resourceStore.saveWatchers('platform-set');
+    this.rootStore.resourceStore.saveWatchers(message.id);
+  }
+
+  copyToClipboard(
+    resources: NormalizedParsedResources,
+    timeout = 300,
+  ) {
+    setTimeout(() => {
+      copyToClipboard(
+        this.buildQueryParts(
+          'include',
+          resources,
+          true,
+        ),
+      );
+    }, timeout);
   }
 
   modifyQuery(
@@ -83,5 +98,13 @@ export class PlatformStore {
     }
 
     return this.platform.getName();
+  }
+
+  getID() {
+    if (!this.platform) {
+      return null;
+    }
+
+    return this.platform.getID();
   }
 }

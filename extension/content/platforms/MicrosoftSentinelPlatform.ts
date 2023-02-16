@@ -1,25 +1,22 @@
-import { sendMessageFromContent } from '../services/content-services';
 import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
-import { ContentPlatform, ListenerType, MessageListener } from '../types/types-content-common';
+import { ListenerType, MessageListener } from '../types/types-content-common';
 import { addListener } from '../services/content-services-listeners';
-import { MessageToContent } from '../types/types-content-messages';
 import {
   buildQueryParts,
   mountHTMLElement,
   waitHTMLElement,
 } from '../../common/common-helpers';
-import { MessageToInline } from '../../inline/types/types-inline-messages';
-import { isMessageMatched } from '../../common/common-listeners';
 import { contentPlatformIDFromENV } from '../../common/envs';
 import { microsoftSentinelInline } from '../../manifest/public-resources';
 import { isNumberInString } from '../../../common/checkers';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { Loggers } from '../../common/loggers';
 import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
+import { AbstractContentPlatform } from './AbstractContentPlatform';
 
 let loggers: Loggers;
 
-export class MicrosoftSentinelPlatform implements ContentPlatform {
+export class MicrosoftSentinelPlatform extends AbstractContentPlatform {
   static readonly id = PlatformID.MicrosoftSentinel;
 
   static readonly extensionDefaultPosition = {
@@ -35,7 +32,11 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
       : value;
     return typeof nValue === 'number'
       ? nValue
-      : `"${nValue.replace(/\\/g, '\\\\')}"`;
+      : `"${
+        nValue
+          .replace(/\\/g, '\\\\')
+          .replace(/"/g, '\\"')
+      }"`;
   }
 
   static buildQueryParts(
@@ -63,9 +64,27 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
       'Account',
       'SubjectUserName',
       'TargetUserName',
+      'UserDisplayName',
+      'UserPrincipalName',
+      'UPN',
+      'Identity',
+      'Name',
+      'FullName',
+      'NTDomain',
+      'UPNSuffix',
+      'Sid',
+      'AadUserId',
+      'DisplayName',
     ],
     [BoundedResourceTypeID.Assets]: [
       'Computer',
+      'DeviceName',
+      'HostName',
+      'FullDisplayName',
+      'ServicePrincipalName',
+      'DnsDomain',
+      'NetBiosName',
+      'OMSAgentID',
     ],
   };
 
@@ -115,16 +134,7 @@ export class MicrosoftSentinelPlatform implements ContentPlatform {
           await waitHTMLElement(query);
         }
 
-        if (isMessageMatched(
-          () => MessageToContent.CSModifyQuery === message.type,
-          message,
-        )) {
-          sendMessageFromContent({
-            ...message,
-            id: `${message.id}--content-modify-query`,
-            type: MessageToInline.ISModifyQuery,
-          }, false);
-        }
+        AbstractContentPlatform.processInlineListeners(message);
       },
     );
 

@@ -1,15 +1,15 @@
-import { getDebugPrefix } from './common/loggers/loggers-debug';
 import { MessageToBackground } from './background/types/types-background-messages';
 import { debounce } from '../common/helpers';
+import { getDebugPrefix } from './common/loggers/loggers-helpers';
+import { loggers } from './common/loggers';
 
 const isInsideIframe = require('./common/common-helpers').isInsideIframe;
 
+// TODO content not always inside iframe
 if (isInsideIframe()) {
-  require('./common/loggers').loggers
-    .setPrefix(getDebugPrefix('content'));
+  loggers.setPrefix(getDebugPrefix('content'));
 } else {
-  require('./common/loggers').loggers
-    .setPrefix(getDebugPrefix('app'));
+  loggers.setPrefix(getDebugPrefix('app'));
 }
 
 const sendMessageFromApp = require('./content/services/content-services').sendMessageFromApp;

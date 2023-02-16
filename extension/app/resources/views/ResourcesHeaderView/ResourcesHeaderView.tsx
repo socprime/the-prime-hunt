@@ -26,7 +26,7 @@ export const ResourcesHeaderView: React.FC = observer(() => {
 
 
 
-  if (!platformStore.platform) {
+  if (!platformStore.getID()) {
     return null;
   }
 
@@ -41,9 +41,12 @@ export const ResourcesHeaderView: React.FC = observer(() => {
         content="Add custom field"
         className="small"
        >
-         <AddNewButton onClick={() => {
-           setAddNewFieldMode(true);
-         }} />
+         <AddNewButton
+           className="add-new-field"
+           onClick={() => {
+             setAddNewFieldMode(true);
+           }
+         } />
        </AppTooltip>
        <Spacer height={8} />
      </div>

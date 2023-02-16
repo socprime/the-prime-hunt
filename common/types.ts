@@ -25,3 +25,14 @@ export type ValidationResult = {
   isValid: boolean;
   reasons: Set<string>;
 };
+
+export type ILoggers = {
+  log(...params: any[]): void;
+  warn(): ILoggers;
+  info(): ILoggers;
+  debug(): ILoggers;
+  error(): ILoggers;
+  addPrefix(prefix: string): ILoggers;
+  setPrefix(prefix: string): ILoggers;
+  setLevel(level: LogLevel): ILoggers;
+};

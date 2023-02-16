@@ -1,7 +1,10 @@
-import { getExecutingContextByMessageType } from '../../common/common-extension-helpers';
+import { getExecutingContextByMessageType } from '../../common/loggers/loggers-helpers';
 
 export enum MessageToInline {
   ISModifyQuery = 'ISModifyQuery',
+  ISSetQuery = 'ISSetQuery',
+  ISGetQuery = 'ISGetQuery',
+  ISSetDebugMode = 'ISSetDebugMode',
 }
 
 Object.values(MessageToInline).forEach(type => {

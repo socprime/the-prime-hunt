@@ -3,6 +3,7 @@ import { ListenerType, MessageListener } from './types/types-content-common';
 import { isMessageMatched } from '../common/common-listeners';
 import { MessageToContent } from './types/types-content-messages';
 import { platformResolver } from './platforms/PlatformResolver';
+import { SetDebugModePayload } from '../common/types/types-common-payloads';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -22,6 +23,14 @@ if (platform) {
       if (!platform) {
         platformResolver.resolve()?.connect?.();
       }
+    }
+
+    if (isMessageMatched(
+      () => MessageToContent.CSSetDebugMode === message.type,
+      message,
+    )) {
+      const { debugMode } = message.payload as SetDebugModePayload;
+      require('../common/loggers').setDebugMode(debugMode);
     }
   },
 );

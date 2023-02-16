@@ -10879,12 +10879,21 @@ exports.isDate = isDate;
 /*!***************************!*\
   !*** ./common/helpers.ts ***!
   \***************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -11011,6 +11020,14 @@ const indexOfAll = (str, search) => {
     return indexes;
 };
 exports.indexOfAll = indexOfAll;
+const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(null);
+        }, sec * 1000);
+    });
+});
+exports.sleep = sleep;
 
 
 /***/ }),
@@ -11072,7 +11089,7 @@ var LoadingKey;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToApp = void 0;
-const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var MessageToApp;
 (function (MessageToApp) {
     MessageToApp["AppShowExtension"] = "AppShowExtension";
@@ -11081,9 +11098,12 @@ var MessageToApp;
     MessageToApp["AppClearResourceData"] = "AppClearResourceData";
     MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
     MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
+    MessageToApp["AppSendToBackground"] = "AppSendToBackground";
+    MessageToApp["AppSendMessageOutside"] = "AppSendMessageOutside";
+    MessageToApp["AppSetDebugMode"] = "AppSetDebugMode";
 })(MessageToApp = exports.MessageToApp || (exports.MessageToApp = {}));
 Object.values(MessageToApp).forEach(type => {
-    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
+    if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
         throw new Error(`Wrong app message type "${type}"`);
     }
 });
@@ -11145,13 +11165,22 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
         });
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGModifyQuery === message.type, message, sender)) {
-        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--background-modify-query`, type: types_content_messages_1.MessageToContent.CSModifyQuery }));
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_content_messages_1.MessageToContent.CSModifyQuery }));
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGSetQuery === message.type, message, sender)) {
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_content_messages_1.MessageToContent.CSSetQuery }));
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGGetQuery === message.type, message, sender)) {
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_content_messages_1.MessageToContent.CSGetQuery }));
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGSendMessageOutside === message.type, message, sender)) {
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_app_messages_1.MessageToApp.AppSendMessageOutside }));
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGSetWatchers === message.type, message, sender)) {
         const { platformID, watchers } = message.payload;
         (_b = PlatformResolver_1.platformResolver.resolve(platformID)) === null || _b === void 0 ? void 0 : _b.setWatchers(watchers, sender.tab.id);
         (0, background_services_1.sendMessageFromBackground)(sender.tab.id, {
-            id: 'background-set-watchers',
+            id: message.type,
             type: types_app_messages_1.MessageToApp.AppSetLoadingState,
             payload: {
                 loading: false,
@@ -11164,10 +11193,15 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
         (0, background_services_1.registerPlatformTab)(platformID, sender.tab.id);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGToggleShowExtension === message.type, message, sender)) {
-        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id ? message.id : ''}--background-toggle-show-extension`, type: types_app_messages_1.MessageToApp.AppToggleShowExtension }));
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_app_messages_1.MessageToApp.AppToggleShowExtension }));
         (0, background_services_1.sendMessageFromBackground)(sender.tab.id, {
             type: types_content_messages_1.MessageToContent.CSConnectPlatform,
         });
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGSetDebugMode === message.type, message, sender)) {
+        const { debugMode } = message.payload;
+        (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_content_messages_1.MessageToContent.CSSetDebugMode }));
     }
 });
 loggers.debug().log('mounted');
@@ -11304,7 +11338,6 @@ const types_common_1 = __webpack_require__(/*! ../../common/types/types-common *
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
-const ElasticPlatform_1 = __webpack_require__(/*! ./ElasticPlatform */ "./extension/background/platforms/ElasticPlatform.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
 let loggers;
@@ -11334,6 +11367,10 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
             ...this.emptyFieldValues,
             '-',
         ];
+    }
+    static normalizeResponse(response) {
+        const normalizedResponse = (response || '').substring((response || '').indexOf('['));
+        return (0, helpers_1.parseJSONSafe)(normalizedResponse, null);
     }
     static getFieldName(cef) {
         return ArcSightPlatform.mappedFieldsNames.has(cef)
@@ -11450,8 +11487,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                         }, {}),
                     }, {
                         onTextSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                            const normalizedResponse = response.substring(response.indexOf('['));
-                            const data = (0, helpers_1.parseJSONSafe)(normalizedResponse, false);
+                            const data = ArcSightPlatform.normalizeResponse(response);
                             if (!data) {
                                 loggers
                                     .warn()
@@ -11591,7 +11627,7 @@ ArcSightPlatform.mappedFieldsNames = new Map([
     ['oAgtType', 'originalAgentType'],
     ['oAgtVersion', 'originalAgentVersion'],
 ]);
-loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ElasticPlatform_1.ElasticPlatform.id);
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ArcSightPlatform.id);
 
 
 /***/ }),
@@ -11807,6 +11843,10 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
     constructor() {
         super();
         this.watchingResources = {};
+        this.emptyFieldValues = [
+            ...this.emptyFieldValues,
+            '-',
+        ];
     }
     getID() {
         return MicrosoftDefenderPlatform.id;
@@ -12076,13 +12116,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.platformResolver = exports.PlatformResolver = void 0;
 const Register_1 = __webpack_require__(/*! ../../../common/Register */ "./common/Register.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const MicrosoftSentinelPlatform_1 = __webpack_require__(/*! ./MicrosoftSentinelPlatform */ "./extension/background/platforms/MicrosoftSentinelPlatform.ts");
 const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
-const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ./MicrosoftDefenderPlatform */ "./extension/background/platforms/MicrosoftDefenderPlatform.ts");
-const SplunkPlatform_1 = __webpack_require__(/*! ./SplunkPlatform */ "./extension/background/platforms/SplunkPlatform.ts");
-const QRadarPlatform_1 = __webpack_require__(/*! ./QRadarPlatform */ "./extension/background/platforms/QRadarPlatform.ts");
-const ElasticPlatform_1 = __webpack_require__(/*! ./ElasticPlatform */ "./extension/background/platforms/ElasticPlatform.ts");
-const ArcSightPlatform_1 = __webpack_require__(/*! ./ArcSightPlatform */ "./extension/background/platforms/ArcSightPlatform.ts");
 class PlatformResolver {
     constructor() {
         this.platforms = new Register_1.Register();
@@ -12091,27 +12125,27 @@ class PlatformResolver {
         if (!this.platforms.has(platformID)) {
             switch (platformID) {
                 case types_common_1.PlatformID.MicrosoftSentinel: {
-                    this.platforms.set(platformID, new MicrosoftSentinelPlatform_1.MicrosoftSentinelPlatform());
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./MicrosoftSentinelPlatform */ "./extension/background/platforms/MicrosoftSentinelPlatform.ts").MicrosoftSentinelPlatform))());
                     break;
                 }
                 case types_common_1.PlatformID.MicrosoftDefender: {
-                    this.platforms.set(platformID, new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform());
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./MicrosoftDefenderPlatform */ "./extension/background/platforms/MicrosoftDefenderPlatform.ts").MicrosoftDefenderPlatform))());
                     break;
                 }
                 case types_common_1.PlatformID.Splunk: {
-                    this.platforms.set(platformID, new SplunkPlatform_1.SplunkPlatform());
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./SplunkPlatform */ "./extension/background/platforms/SplunkPlatform.ts").SplunkPlatform))());
                     break;
                 }
                 case types_common_1.PlatformID.QRadar: {
-                    this.platforms.set(platformID, new QRadarPlatform_1.QRadarPlatform());
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./QRadarPlatform */ "./extension/background/platforms/QRadarPlatform.ts").QRadarPlatform))());
                     break;
                 }
                 case types_common_1.PlatformID.Elastic: {
-                    this.platforms.set(platformID, new ElasticPlatform_1.ElasticPlatform());
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./ElasticPlatform */ "./extension/background/platforms/ElasticPlatform.ts").ElasticPlatform))());
                     break;
                 }
                 case types_common_1.PlatformID.ArcSight: {
-                    this.platforms.set(platformID, new ArcSightPlatform_1.ArcSightPlatform());
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./ArcSightPlatform */ "./extension/background/platforms/ArcSightPlatform.ts").ArcSightPlatform))());
                     break;
                 }
                 default:
@@ -12907,17 +12941,21 @@ var BGListenerType;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToBackground = void 0;
-const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var MessageToBackground;
 (function (MessageToBackground) {
     MessageToBackground["BGRunClearData"] = "BGRunClearData";
     MessageToBackground["BGModifyQuery"] = "BGModifyQuery";
+    MessageToBackground["BGSetQuery"] = "BGSetQuery";
+    MessageToBackground["BGGetQuery"] = "BGGetQuery";
+    MessageToBackground["BGSendMessageOutside"] = "BGSendMessageOutside";
     MessageToBackground["BGSetWatchers"] = "BGSetWatchers";
     MessageToBackground["BGRegisterPlatformTab"] = "BGRegisterPlatformTab";
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
+    MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
 Object.values(MessageToBackground).forEach(type => {
-    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
+    if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
         throw new Error(`Wrong background message type "${type}"`);
     }
 });
@@ -13091,7 +13129,7 @@ exports.isRuntimeGetUrlSupported = isRuntimeGetUrlSupported;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getExecutingContextByMessageType = exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
+exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
 const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
 exports.getBrowserContext = getBrowserContext;
@@ -13101,21 +13139,6 @@ const getWebAccessibleUrl = (path) => {
         : '';
 };
 exports.getWebAccessibleUrl = getWebAccessibleUrl;
-const getExecutingContextByMessageType = (message) => {
-    let prefix = message.slice(0, 3).toLowerCase();
-    if (prefix === 'app') {
-        return 'app';
-    }
-    prefix = prefix.slice(0, 2);
-    return prefix === 'bg'
-        ? 'background'
-        : prefix === 'cs'
-            ? 'content'
-            : prefix === 'is'
-                ? 'inline'
-                : 'unknown';
-};
-exports.getExecutingContextByMessageType = getExecutingContextByMessageType;
 
 
 /***/ }),
@@ -13191,6 +13214,7 @@ const copyToClipboard = (str) => {
     const el = document.createElement('textarea');
     el.value = str;
     el.setAttribute('readonly', '');
+    el.style.opacity = '0';
     el.style.position = 'absolute';
     el.style.left = '-99999px';
     el.style.top = '-99999px';
@@ -13376,7 +13400,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.1.2";
+exports.version = "1.2.1";
 
 
 /***/ }),
@@ -13390,14 +13414,14 @@ exports.version = "1.1.2";
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Loggers = exports.stopLogging = exports.startLogging = exports.loggers = void 0;
+exports.setLoggers = exports.Loggers = exports.setDebugMode = exports.loggers = void 0;
 const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
 const envs_1 = __webpack_require__(/*! ../envs */ "./extension/common/envs.ts");
-let logging = true;
-const startLogging = () => logging = true;
-exports.startLogging = startLogging;
-const stopLogging = () => logging = false;
-exports.stopLogging = stopLogging;
+let isDebugMode = envs_1.mode === types_1.Mode.development || envs_1.logLevel === types_1.LogLevel.debug;
+const setDebugMode = (debugMode) => {
+    isDebugMode = debugMode;
+};
+exports.setDebugMode = setDebugMode;
 class Loggers {
     constructor(prefix = '', level = types_1.LogLevel.info) {
         this.prefix = '';
@@ -13409,21 +13433,14 @@ class Loggers {
         return new Loggers(prefix, level);
     }
     log(...params) {
-        if (!logging) {
+        if (this.level === types_1.LogLevel.debug && !isDebugMode) {
             return;
         }
-        if (envs_1.mode === types_1.Mode.production
-            && this.level === types_1.LogLevel.debug
-            && envs_1.logLevel !== types_1.LogLevel.debug) {
-            return;
-        }
-        if (envs_1.mode !== types_1.Mode.production) {
-            console[this.level === types_1.LogLevel.error
-                ? 'error'
-                : this.level === types_1.LogLevel.warn
-                    ? 'warn'
-                    : 'log'](this.prefix || '==>', ...params);
-        }
+        console[this.level === types_1.LogLevel.error
+            ? 'error'
+            : this.level === types_1.LogLevel.warn
+                ? 'warn'
+                : 'log'](this.prefix || '==>', ...params);
     }
     error() {
         return this.createInstance(`ERROR: ${this.prefix}`, types_1.LogLevel.error);
@@ -13450,6 +13467,10 @@ class Loggers {
 }
 exports.Loggers = Loggers;
 exports.loggers = new Loggers();
+const setLoggers = (newLoggers) => {
+    exports.loggers = newLoggers;
+};
+exports.setLoggers = setLoggers;
 
 
 /***/ }),
@@ -13463,8 +13484,27 @@ exports.loggers = new Loggers();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DebugID = exports.getDebugPrefix = void 0;
+exports.DebugID = void 0;
 const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
+const loggers_helpers_1 = __webpack_require__(/*! ./loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
+var DebugID;
+(function (DebugID) {
+    DebugID[DebugID["debugIDExternal"] = (0, types_1.mapType)( false || loggers_helpers_1.debugID)] = "debugIDExternal";
+})(DebugID = exports.DebugID || (exports.DebugID = {}));
+
+
+/***/ }),
+
+/***/ "./extension/common/loggers/loggers-helpers.ts":
+/*!*****************************************************!*\
+  !*** ./extension/common/loggers/loggers-helpers.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.debugID = exports.getExecutingContextByMessageType = exports.getDebugPrefix = void 0;
 const getDebugPrefix = (context) => {
     return context === 'background'
         ? 'bg ==>'
@@ -13477,11 +13517,22 @@ const getDebugPrefix = (context) => {
                     : 'unknown ==>';
 };
 exports.getDebugPrefix = getDebugPrefix;
-const debugID = (0, types_1.mapType)( false || 'debug-external-der3edc3op3e4dde44rt');
-var DebugID;
-(function (DebugID) {
-    DebugID[DebugID["debugIDExternal"] = debugID] = "debugIDExternal";
-})(DebugID = exports.DebugID || (exports.DebugID = {}));
+const getExecutingContextByMessageType = (messageType) => {
+    let prefix = (messageType || '').slice(0, 3).toLowerCase();
+    if (prefix === 'app') {
+        return 'app';
+    }
+    prefix = prefix.slice(0, 2);
+    return prefix === 'bg'
+        ? 'background'
+        : prefix === 'cs'
+            ? 'content'
+            : prefix === 'is'
+                ? 'inline'
+                : 'unknown';
+};
+exports.getExecutingContextByMessageType = getExecutingContextByMessageType;
+exports.debugID = 'debug-external-der3edc3op3e4dde44rt';
 
 
 /***/ }),
@@ -13534,14 +13585,18 @@ var PlatformName;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MessageToContent = void 0;
-const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var MessageToContent;
 (function (MessageToContent) {
     MessageToContent["CSModifyQuery"] = "CSModifyQuery";
+    MessageToContent["CSSetQuery"] = "CSSetQuery";
+    MessageToContent["CSGetQuery"] = "CSGetQuery";
+    MessageToContent["CSSendMessageOutside"] = "CSSendMessageOutside";
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
+    MessageToContent["CSSetDebugMode"] = "CSSetDebugMode";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
-    if ((0, common_extension_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
+    if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
         throw new Error(`Wrong content message type "${type}"`);
     }
 });
@@ -22031,8 +22086,8 @@ var exports = __webpack_exports__;
   \*********************************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const loggers_debug_1 = __webpack_require__(/*! ./common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0, loggers_debug_1.getDebugPrefix)('background'));
+const loggers_helpers_1 = __webpack_require__(/*! ./common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
+(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0, loggers_helpers_1.getDebugPrefix)('background'));
 __webpack_require__(/*! ./background/background-listeners */ "./extension/background/background-listeners.ts");
 
 })();

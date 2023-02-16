@@ -1,4 +1,4 @@
-import { getExecutingContextByMessageType } from '../../common/common-extension-helpers';
+import { getExecutingContextByMessageType } from '../../common/loggers/loggers-helpers';
 
 export enum MessageToApp {
   AppShowExtension = 'AppShowExtension',
@@ -7,6 +7,9 @@ export enum MessageToApp {
   AppClearResourceData = 'AppClearResourceData',
   AppSetLoadingState = 'AppSetLoadingState',
   AppToggleShowExtension = 'AppToggleShowExtension',
+  AppSendToBackground = 'AppSendToBackground',
+  AppSendMessageOutside = 'AppSendMessageOutside',
+  AppSetDebugMode = 'AppSetDebugMode',
 }
 
 Object.values(MessageToApp).forEach(type => {

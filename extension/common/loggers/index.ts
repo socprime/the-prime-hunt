@@ -1,14 +1,15 @@
-import { LogLevel, Mode } from '../../../common/types';
+import { ILoggers, LogLevel, Mode } from '../../../common/types';
 import { logLevel, mode } from '../envs';
 
-let logging = true;
+export let loggers: ILoggers;
 
-export let loggers: Loggers;
+let isDebugMode = mode === Mode.development || logLevel === LogLevel.debug;
 
-export const startLogging = () => logging = true;
-export const stopLogging = () => logging = false;
+export const setDebugMode = (debugMode: boolean) => {
+  isDebugMode = debugMode;
+};
 
-export class Loggers {
+export class Loggers implements ILoggers {
   private readonly prefix: string = '';
 
   private readonly level: LogLevel = LogLevel.info;
@@ -26,25 +27,16 @@ export class Loggers {
   }
 
   log(...params: any[]) {
-    if (!logging) {
+    if (this.level === LogLevel.debug && !isDebugMode) {
       return;
     }
-    if (
-      mode === Mode.production
-      && this.level === LogLevel.debug
-      && logLevel !== LogLevel.debug
-    ) {
-      return;
-    }
-    if (mode !== Mode.production) {
-      console[
-        this.level === LogLevel.error
-          ? 'error'
-          : this.level === LogLevel.warn
-            ? 'warn'
-            : 'log'
-      ](this.prefix || '==>', ...params);
-    }
+    console[
+      this.level === LogLevel.error
+        ? 'error'
+        : this.level === LogLevel.warn
+          ? 'warn'
+          : 'log'
+    ](this.prefix || '==>', ...params);
   }
 
   error() {
@@ -81,3 +73,7 @@ export class Loggers {
 }
 
 loggers = new Loggers();
+
+export const setLoggers = (newLoggers: ILoggers) => {
+  loggers = newLoggers;
+};

@@ -8,7 +8,6 @@ import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { http } from '../../../common/Http';
 import { Loggers } from '../../common/loggers';
-import { ElasticPlatform } from './ElasticPlatform';
 import { capitalizeFirstLetter, formatDate, parseJSONSafe, uuid } from '../../../common/helpers';
 import { isDate } from '../../../common/checkers';
 
@@ -20,6 +19,11 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
   private static postUrls: Url[] = [
     '/searchx/searchdata',
   ];
+
+  private static normalizeResponse(response: string): (number | string[])[] | null {
+    const normalizedResponse = (response || '').substring((response || '').indexOf('['));
+    return parseJSONSafe(normalizedResponse, null);
+  }
 
   constructor() {
     super();
@@ -241,7 +245,6 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
             });
           }
         });
-
       });
     });
 
@@ -325,8 +328,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                 },
                 {
                   onTextSuccess: async (response: string) => {
-                    const normalizedResponse = response.substring(response.indexOf('['));
-                    const data = parseJSONSafe(normalizedResponse, false);
+                    const data = ArcSightPlatform.normalizeResponse(response);
                     if (!data) {
                       loggers
                         .warn()
@@ -337,7 +339,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                     AbstractBackgroundPlatform.sendParsedData(
                       details.tabId,
                       await this.parseResponse(data),
-                      true, // TODO check
+                      true,
                     );
                     this.lastResponse = data;
                     removeAttached();
@@ -367,4 +369,4 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
 }
 
 loggers = require('../../common/loggers').loggers
-  .addPrefix(ElasticPlatform.id);
+  .addPrefix(ArcSightPlatform.id);
