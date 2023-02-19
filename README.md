@@ -1,6 +1,6 @@
 [![Logo](.readme/logo.png)](https://socprime.com/)
 # The Prime Hunt Browser Extension
-The Prime Hunt is a browser extension for threat hunting. It introduces a One UI idea to simplify and speed up the investigation process regardless of the SIEMs or EDR in use. This is useful both for threat hunters starting off their careers and for seasoned professionals. The former can master the different security platforms and query languages faster, learning the right methodology from the very beginning, while the latter benefit from a streamlined workflow.
+The Prime Hunt is an open-source browser extension for threat hunting developed by SOC Prime. It introduces a One UI idea to simplify and speed up the investigation process regardless of the SIEMs or EDR in use. This is useful both for threat hunters starting off their careers and for seasoned professionals. The former can master the different security platforms and query languages faster, learning the right methodology from the very beginning, while the latter benefit from a streamlined workflow.
 
 One UI for different technologies mirrors the concept of Sigma as a single language for cybersecurity. Sigma rules can be translated into multiple platform formats. This extension helps any threat hunter easily run and tune Sigma rule translations in those platforms, ensuring the community is Sigma-enabled. Meanwhile, sharing query hits (coming soon) helps the entire community measure and consolidate the MITRE ATT&CK® technique prevalence and rule quality.
 
@@ -15,7 +15,13 @@ Supported browsers: Chrome, Firefox, Edge.
 Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight.
 
 ## Installation
+Follow the instructions below. After the installation, reload the page.
+
 ### Chrome
+Install the extension from the [Chrome Web Store](https://chrome.google.com/webstore/detail/the-prime-hunt/jgelecjbbjlmghiejapgafechokhpmcc).
+
+Alternatively, you can download the extension pack from GitHub and install it manually:
+
 1. Open the three-dots menu and select **More Tools** > **Extensions**.
 
 ![First step](.readme/chrome_1.png)
@@ -28,7 +34,11 @@ Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoin
 
 ![Third step](.readme/chrome_3.png)
 
+Please note that the extension might not work if a self-signed certificate is used in your SIEM instance.
+
 ### Firefox
+Download the extension pack from GitHub and install it manually:
+
 1. Open the three-bars menu and select **Add-ons and Themes**.
 
 ![First step](.readme/firefox_1.png)
@@ -46,6 +56,10 @@ Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoin
 ![Fourth step](.readme/firefox_4.png)
 
 ### Edge
+Install the extension from the [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/the-prime-hunt/lphlpfloalbpofhppgkfggebccinmigb).
+
+Alternatively, you can download the extension pack from GitHub and install it manually:
+
 1. Open the three-dots menu and select **Extensions**.
 
 ![First step](.readme/edge_1.png)
