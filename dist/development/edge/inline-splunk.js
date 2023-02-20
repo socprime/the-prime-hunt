@@ -722,7 +722,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.1";
+exports.version = "1.2.2";
 
 
 /***/ }),

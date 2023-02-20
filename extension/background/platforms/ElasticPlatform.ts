@@ -1,3 +1,4 @@
+import pako from 'pako';
 import { Loggers } from '../../common/loggers';
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
 import { BGListenerType, WatchingResources } from '../types/types-background-common';
@@ -71,8 +72,25 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
+  protected static decompress(response: string): string {
+    if (
+      response?.trim().length < 11
+      || response.slice(0, 10).indexOf('{') > -1
+    ) {
+      return response;
+    }
+    try {
+      const gzipedDataArray = Uint8Array.from(atob(response), c => c.charCodeAt(0));
+      return new TextDecoder()
+        .decode(pako.ungzip(gzipedDataArray));
+    } catch (e) {
+      return response;
+    }
+  }
+
   async parseResponse(response: object | string): Promise<ParsedResult> {
-    const lines = splitByLines(response as string, true);
+    const decompressedResponse = ElasticPlatform.decompress(response as string);
+    const lines = splitByLines(decompressedResponse, true);
 
     const result = {} as ParsedResult;
 
