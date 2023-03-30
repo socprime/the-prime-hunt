@@ -4,6 +4,7 @@ export enum Mode {
 }
 
 export type Url = string;
+export type SHA256 = string;
 export type UniqueHash = string;
 export type HTMLTextContent = string;
 export type AbsFilePath = string;

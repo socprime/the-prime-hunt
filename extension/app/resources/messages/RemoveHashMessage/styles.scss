@@ -1,0 +1,29 @@
+@import '../../../scss/palette';
+
+.remove-hash-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 1px solid $warning;
+  border-radius: 4px;
+  padding: 8px 16px;
+
+  .warning-icon {
+    height: 18px;
+    width: 20px;
+    fill: $warning;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+
+  .button.static-button {
+    font-size: 14px;
+    margin-left: 10px;
+    height: 28px;
+
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+}

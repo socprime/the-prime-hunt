@@ -10434,6 +10434,535 @@ exports.DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modu
 
 /***/ }),
 
+/***/ "./node_modules/js-sha256/src/sha256.js":
+/*!**********************************************!*\
+  !*** ./node_modules/js-sha256/src/sha256.js ***!
+  \**********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * [js-sha256]{@link https://github.com/emn178/js-sha256}
+ *
+ * @version 0.9.0
+ * @author Chen, Yi-Cyuan [emn178@gmail.com]
+ * @copyright Chen, Yi-Cyuan 2014-2017
+ * @license MIT
+ */
+/*jslint bitwise: true */
+(function () {
+  'use strict';
+
+  var ERROR = 'input is invalid type';
+  var WINDOW = typeof window === 'object';
+  var root = WINDOW ? window : {};
+  if (root.JS_SHA256_NO_WINDOW) {
+    WINDOW = false;
+  }
+  var WEB_WORKER = !WINDOW && typeof self === 'object';
+  var NODE_JS = !root.JS_SHA256_NO_NODE_JS && typeof process === 'object' && process.versions && process.versions.node;
+  if (NODE_JS) {
+    root = __webpack_require__.g;
+  } else if (WEB_WORKER) {
+    root = self;
+  }
+  var COMMON_JS = !root.JS_SHA256_NO_COMMON_JS && "object" === 'object' && module.exports;
+  var AMD =  true && __webpack_require__.amdO;
+  var ARRAY_BUFFER = !root.JS_SHA256_NO_ARRAY_BUFFER && typeof ArrayBuffer !== 'undefined';
+  var HEX_CHARS = '0123456789abcdef'.split('');
+  var EXTRA = [-2147483648, 8388608, 32768, 128];
+  var SHIFT = [24, 16, 8, 0];
+  var K = [
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+  ];
+  var OUTPUT_TYPES = ['hex', 'array', 'digest', 'arrayBuffer'];
+
+  var blocks = [];
+
+  if (root.JS_SHA256_NO_NODE_JS || !Array.isArray) {
+    Array.isArray = function (obj) {
+      return Object.prototype.toString.call(obj) === '[object Array]';
+    };
+  }
+
+  if (ARRAY_BUFFER && (root.JS_SHA256_NO_ARRAY_BUFFER_IS_VIEW || !ArrayBuffer.isView)) {
+    ArrayBuffer.isView = function (obj) {
+      return typeof obj === 'object' && obj.buffer && obj.buffer.constructor === ArrayBuffer;
+    };
+  }
+
+  var createOutputMethod = function (outputType, is224) {
+    return function (message) {
+      return new Sha256(is224, true).update(message)[outputType]();
+    };
+  };
+
+  var createMethod = function (is224) {
+    var method = createOutputMethod('hex', is224);
+    if (NODE_JS) {
+      method = nodeWrap(method, is224);
+    }
+    method.create = function () {
+      return new Sha256(is224);
+    };
+    method.update = function (message) {
+      return method.create().update(message);
+    };
+    for (var i = 0; i < OUTPUT_TYPES.length; ++i) {
+      var type = OUTPUT_TYPES[i];
+      method[type] = createOutputMethod(type, is224);
+    }
+    return method;
+  };
+
+  var nodeWrap = function (method, is224) {
+    var crypto = eval("require('crypto')");
+    var Buffer = eval("require('buffer').Buffer");
+    var algorithm = is224 ? 'sha224' : 'sha256';
+    var nodeMethod = function (message) {
+      if (typeof message === 'string') {
+        return crypto.createHash(algorithm).update(message, 'utf8').digest('hex');
+      } else {
+        if (message === null || message === undefined) {
+          throw new Error(ERROR);
+        } else if (message.constructor === ArrayBuffer) {
+          message = new Uint8Array(message);
+        }
+      }
+      if (Array.isArray(message) || ArrayBuffer.isView(message) ||
+        message.constructor === Buffer) {
+        return crypto.createHash(algorithm).update(new Buffer(message)).digest('hex');
+      } else {
+        return method(message);
+      }
+    };
+    return nodeMethod;
+  };
+
+  var createHmacOutputMethod = function (outputType, is224) {
+    return function (key, message) {
+      return new HmacSha256(key, is224, true).update(message)[outputType]();
+    };
+  };
+
+  var createHmacMethod = function (is224) {
+    var method = createHmacOutputMethod('hex', is224);
+    method.create = function (key) {
+      return new HmacSha256(key, is224);
+    };
+    method.update = function (key, message) {
+      return method.create(key).update(message);
+    };
+    for (var i = 0; i < OUTPUT_TYPES.length; ++i) {
+      var type = OUTPUT_TYPES[i];
+      method[type] = createHmacOutputMethod(type, is224);
+    }
+    return method;
+  };
+
+  function Sha256(is224, sharedMemory) {
+    if (sharedMemory) {
+      blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] =
+        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+      this.blocks = blocks;
+    } else {
+      this.blocks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+
+    if (is224) {
+      this.h0 = 0xc1059ed8;
+      this.h1 = 0x367cd507;
+      this.h2 = 0x3070dd17;
+      this.h3 = 0xf70e5939;
+      this.h4 = 0xffc00b31;
+      this.h5 = 0x68581511;
+      this.h6 = 0x64f98fa7;
+      this.h7 = 0xbefa4fa4;
+    } else { // 256
+      this.h0 = 0x6a09e667;
+      this.h1 = 0xbb67ae85;
+      this.h2 = 0x3c6ef372;
+      this.h3 = 0xa54ff53a;
+      this.h4 = 0x510e527f;
+      this.h5 = 0x9b05688c;
+      this.h6 = 0x1f83d9ab;
+      this.h7 = 0x5be0cd19;
+    }
+
+    this.block = this.start = this.bytes = this.hBytes = 0;
+    this.finalized = this.hashed = false;
+    this.first = true;
+    this.is224 = is224;
+  }
+
+  Sha256.prototype.update = function (message) {
+    if (this.finalized) {
+      return;
+    }
+    var notString, type = typeof message;
+    if (type !== 'string') {
+      if (type === 'object') {
+        if (message === null) {
+          throw new Error(ERROR);
+        } else if (ARRAY_BUFFER && message.constructor === ArrayBuffer) {
+          message = new Uint8Array(message);
+        } else if (!Array.isArray(message)) {
+          if (!ARRAY_BUFFER || !ArrayBuffer.isView(message)) {
+            throw new Error(ERROR);
+          }
+        }
+      } else {
+        throw new Error(ERROR);
+      }
+      notString = true;
+    }
+    var code, index = 0, i, length = message.length, blocks = this.blocks;
+
+    while (index < length) {
+      if (this.hashed) {
+        this.hashed = false;
+        blocks[0] = this.block;
+        blocks[16] = blocks[1] = blocks[2] = blocks[3] =
+          blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+          blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+          blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+      }
+
+      if (notString) {
+        for (i = this.start; index < length && i < 64; ++index) {
+          blocks[i >> 2] |= message[index] << SHIFT[i++ & 3];
+        }
+      } else {
+        for (i = this.start; index < length && i < 64; ++index) {
+          code = message.charCodeAt(index);
+          if (code < 0x80) {
+            blocks[i >> 2] |= code << SHIFT[i++ & 3];
+          } else if (code < 0x800) {
+            blocks[i >> 2] |= (0xc0 | (code >> 6)) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | (code & 0x3f)) << SHIFT[i++ & 3];
+          } else if (code < 0xd800 || code >= 0xe000) {
+            blocks[i >> 2] |= (0xe0 | (code >> 12)) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | ((code >> 6) & 0x3f)) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | (code & 0x3f)) << SHIFT[i++ & 3];
+          } else {
+            code = 0x10000 + (((code & 0x3ff) << 10) | (message.charCodeAt(++index) & 0x3ff));
+            blocks[i >> 2] |= (0xf0 | (code >> 18)) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | ((code >> 12) & 0x3f)) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | ((code >> 6) & 0x3f)) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | (code & 0x3f)) << SHIFT[i++ & 3];
+          }
+        }
+      }
+
+      this.lastByteIndex = i;
+      this.bytes += i - this.start;
+      if (i >= 64) {
+        this.block = blocks[16];
+        this.start = i - 64;
+        this.hash();
+        this.hashed = true;
+      } else {
+        this.start = i;
+      }
+    }
+    if (this.bytes > 4294967295) {
+      this.hBytes += this.bytes / 4294967296 << 0;
+      this.bytes = this.bytes % 4294967296;
+    }
+    return this;
+  };
+
+  Sha256.prototype.finalize = function () {
+    if (this.finalized) {
+      return;
+    }
+    this.finalized = true;
+    var blocks = this.blocks, i = this.lastByteIndex;
+    blocks[16] = this.block;
+    blocks[i >> 2] |= EXTRA[i & 3];
+    this.block = blocks[16];
+    if (i >= 56) {
+      if (!this.hashed) {
+        this.hash();
+      }
+      blocks[0] = this.block;
+      blocks[16] = blocks[1] = blocks[2] = blocks[3] =
+        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+    }
+    blocks[14] = this.hBytes << 3 | this.bytes >>> 29;
+    blocks[15] = this.bytes << 3;
+    this.hash();
+  };
+
+  Sha256.prototype.hash = function () {
+    var a = this.h0, b = this.h1, c = this.h2, d = this.h3, e = this.h4, f = this.h5, g = this.h6,
+      h = this.h7, blocks = this.blocks, j, s0, s1, maj, t1, t2, ch, ab, da, cd, bc;
+
+    for (j = 16; j < 64; ++j) {
+      // rightrotate
+      t1 = blocks[j - 15];
+      s0 = ((t1 >>> 7) | (t1 << 25)) ^ ((t1 >>> 18) | (t1 << 14)) ^ (t1 >>> 3);
+      t1 = blocks[j - 2];
+      s1 = ((t1 >>> 17) | (t1 << 15)) ^ ((t1 >>> 19) | (t1 << 13)) ^ (t1 >>> 10);
+      blocks[j] = blocks[j - 16] + s0 + blocks[j - 7] + s1 << 0;
+    }
+
+    bc = b & c;
+    for (j = 0; j < 64; j += 4) {
+      if (this.first) {
+        if (this.is224) {
+          ab = 300032;
+          t1 = blocks[0] - 1413257819;
+          h = t1 - 150054599 << 0;
+          d = t1 + 24177077 << 0;
+        } else {
+          ab = 704751109;
+          t1 = blocks[0] - 210244248;
+          h = t1 - 1521486534 << 0;
+          d = t1 + 143694565 << 0;
+        }
+        this.first = false;
+      } else {
+        s0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+        s1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+        ab = a & b;
+        maj = ab ^ (a & c) ^ bc;
+        ch = (e & f) ^ (~e & g);
+        t1 = h + s1 + ch + K[j] + blocks[j];
+        t2 = s0 + maj;
+        h = d + t1 << 0;
+        d = t1 + t2 << 0;
+      }
+      s0 = ((d >>> 2) | (d << 30)) ^ ((d >>> 13) | (d << 19)) ^ ((d >>> 22) | (d << 10));
+      s1 = ((h >>> 6) | (h << 26)) ^ ((h >>> 11) | (h << 21)) ^ ((h >>> 25) | (h << 7));
+      da = d & a;
+      maj = da ^ (d & b) ^ ab;
+      ch = (h & e) ^ (~h & f);
+      t1 = g + s1 + ch + K[j + 1] + blocks[j + 1];
+      t2 = s0 + maj;
+      g = c + t1 << 0;
+      c = t1 + t2 << 0;
+      s0 = ((c >>> 2) | (c << 30)) ^ ((c >>> 13) | (c << 19)) ^ ((c >>> 22) | (c << 10));
+      s1 = ((g >>> 6) | (g << 26)) ^ ((g >>> 11) | (g << 21)) ^ ((g >>> 25) | (g << 7));
+      cd = c & d;
+      maj = cd ^ (c & a) ^ da;
+      ch = (g & h) ^ (~g & e);
+      t1 = f + s1 + ch + K[j + 2] + blocks[j + 2];
+      t2 = s0 + maj;
+      f = b + t1 << 0;
+      b = t1 + t2 << 0;
+      s0 = ((b >>> 2) | (b << 30)) ^ ((b >>> 13) | (b << 19)) ^ ((b >>> 22) | (b << 10));
+      s1 = ((f >>> 6) | (f << 26)) ^ ((f >>> 11) | (f << 21)) ^ ((f >>> 25) | (f << 7));
+      bc = b & c;
+      maj = bc ^ (b & d) ^ cd;
+      ch = (f & g) ^ (~f & h);
+      t1 = e + s1 + ch + K[j + 3] + blocks[j + 3];
+      t2 = s0 + maj;
+      e = a + t1 << 0;
+      a = t1 + t2 << 0;
+    }
+
+    this.h0 = this.h0 + a << 0;
+    this.h1 = this.h1 + b << 0;
+    this.h2 = this.h2 + c << 0;
+    this.h3 = this.h3 + d << 0;
+    this.h4 = this.h4 + e << 0;
+    this.h5 = this.h5 + f << 0;
+    this.h6 = this.h6 + g << 0;
+    this.h7 = this.h7 + h << 0;
+  };
+
+  Sha256.prototype.hex = function () {
+    this.finalize();
+
+    var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5,
+      h6 = this.h6, h7 = this.h7;
+
+    var hex = HEX_CHARS[(h0 >> 28) & 0x0F] + HEX_CHARS[(h0 >> 24) & 0x0F] +
+      HEX_CHARS[(h0 >> 20) & 0x0F] + HEX_CHARS[(h0 >> 16) & 0x0F] +
+      HEX_CHARS[(h0 >> 12) & 0x0F] + HEX_CHARS[(h0 >> 8) & 0x0F] +
+      HEX_CHARS[(h0 >> 4) & 0x0F] + HEX_CHARS[h0 & 0x0F] +
+      HEX_CHARS[(h1 >> 28) & 0x0F] + HEX_CHARS[(h1 >> 24) & 0x0F] +
+      HEX_CHARS[(h1 >> 20) & 0x0F] + HEX_CHARS[(h1 >> 16) & 0x0F] +
+      HEX_CHARS[(h1 >> 12) & 0x0F] + HEX_CHARS[(h1 >> 8) & 0x0F] +
+      HEX_CHARS[(h1 >> 4) & 0x0F] + HEX_CHARS[h1 & 0x0F] +
+      HEX_CHARS[(h2 >> 28) & 0x0F] + HEX_CHARS[(h2 >> 24) & 0x0F] +
+      HEX_CHARS[(h2 >> 20) & 0x0F] + HEX_CHARS[(h2 >> 16) & 0x0F] +
+      HEX_CHARS[(h2 >> 12) & 0x0F] + HEX_CHARS[(h2 >> 8) & 0x0F] +
+      HEX_CHARS[(h2 >> 4) & 0x0F] + HEX_CHARS[h2 & 0x0F] +
+      HEX_CHARS[(h3 >> 28) & 0x0F] + HEX_CHARS[(h3 >> 24) & 0x0F] +
+      HEX_CHARS[(h3 >> 20) & 0x0F] + HEX_CHARS[(h3 >> 16) & 0x0F] +
+      HEX_CHARS[(h3 >> 12) & 0x0F] + HEX_CHARS[(h3 >> 8) & 0x0F] +
+      HEX_CHARS[(h3 >> 4) & 0x0F] + HEX_CHARS[h3 & 0x0F] +
+      HEX_CHARS[(h4 >> 28) & 0x0F] + HEX_CHARS[(h4 >> 24) & 0x0F] +
+      HEX_CHARS[(h4 >> 20) & 0x0F] + HEX_CHARS[(h4 >> 16) & 0x0F] +
+      HEX_CHARS[(h4 >> 12) & 0x0F] + HEX_CHARS[(h4 >> 8) & 0x0F] +
+      HEX_CHARS[(h4 >> 4) & 0x0F] + HEX_CHARS[h4 & 0x0F] +
+      HEX_CHARS[(h5 >> 28) & 0x0F] + HEX_CHARS[(h5 >> 24) & 0x0F] +
+      HEX_CHARS[(h5 >> 20) & 0x0F] + HEX_CHARS[(h5 >> 16) & 0x0F] +
+      HEX_CHARS[(h5 >> 12) & 0x0F] + HEX_CHARS[(h5 >> 8) & 0x0F] +
+      HEX_CHARS[(h5 >> 4) & 0x0F] + HEX_CHARS[h5 & 0x0F] +
+      HEX_CHARS[(h6 >> 28) & 0x0F] + HEX_CHARS[(h6 >> 24) & 0x0F] +
+      HEX_CHARS[(h6 >> 20) & 0x0F] + HEX_CHARS[(h6 >> 16) & 0x0F] +
+      HEX_CHARS[(h6 >> 12) & 0x0F] + HEX_CHARS[(h6 >> 8) & 0x0F] +
+      HEX_CHARS[(h6 >> 4) & 0x0F] + HEX_CHARS[h6 & 0x0F];
+    if (!this.is224) {
+      hex += HEX_CHARS[(h7 >> 28) & 0x0F] + HEX_CHARS[(h7 >> 24) & 0x0F] +
+        HEX_CHARS[(h7 >> 20) & 0x0F] + HEX_CHARS[(h7 >> 16) & 0x0F] +
+        HEX_CHARS[(h7 >> 12) & 0x0F] + HEX_CHARS[(h7 >> 8) & 0x0F] +
+        HEX_CHARS[(h7 >> 4) & 0x0F] + HEX_CHARS[h7 & 0x0F];
+    }
+    return hex;
+  };
+
+  Sha256.prototype.toString = Sha256.prototype.hex;
+
+  Sha256.prototype.digest = function () {
+    this.finalize();
+
+    var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3, h4 = this.h4, h5 = this.h5,
+      h6 = this.h6, h7 = this.h7;
+
+    var arr = [
+      (h0 >> 24) & 0xFF, (h0 >> 16) & 0xFF, (h0 >> 8) & 0xFF, h0 & 0xFF,
+      (h1 >> 24) & 0xFF, (h1 >> 16) & 0xFF, (h1 >> 8) & 0xFF, h1 & 0xFF,
+      (h2 >> 24) & 0xFF, (h2 >> 16) & 0xFF, (h2 >> 8) & 0xFF, h2 & 0xFF,
+      (h3 >> 24) & 0xFF, (h3 >> 16) & 0xFF, (h3 >> 8) & 0xFF, h3 & 0xFF,
+      (h4 >> 24) & 0xFF, (h4 >> 16) & 0xFF, (h4 >> 8) & 0xFF, h4 & 0xFF,
+      (h5 >> 24) & 0xFF, (h5 >> 16) & 0xFF, (h5 >> 8) & 0xFF, h5 & 0xFF,
+      (h6 >> 24) & 0xFF, (h6 >> 16) & 0xFF, (h6 >> 8) & 0xFF, h6 & 0xFF
+    ];
+    if (!this.is224) {
+      arr.push((h7 >> 24) & 0xFF, (h7 >> 16) & 0xFF, (h7 >> 8) & 0xFF, h7 & 0xFF);
+    }
+    return arr;
+  };
+
+  Sha256.prototype.array = Sha256.prototype.digest;
+
+  Sha256.prototype.arrayBuffer = function () {
+    this.finalize();
+
+    var buffer = new ArrayBuffer(this.is224 ? 28 : 32);
+    var dataView = new DataView(buffer);
+    dataView.setUint32(0, this.h0);
+    dataView.setUint32(4, this.h1);
+    dataView.setUint32(8, this.h2);
+    dataView.setUint32(12, this.h3);
+    dataView.setUint32(16, this.h4);
+    dataView.setUint32(20, this.h5);
+    dataView.setUint32(24, this.h6);
+    if (!this.is224) {
+      dataView.setUint32(28, this.h7);
+    }
+    return buffer;
+  };
+
+  function HmacSha256(key, is224, sharedMemory) {
+    var i, type = typeof key;
+    if (type === 'string') {
+      var bytes = [], length = key.length, index = 0, code;
+      for (i = 0; i < length; ++i) {
+        code = key.charCodeAt(i);
+        if (code < 0x80) {
+          bytes[index++] = code;
+        } else if (code < 0x800) {
+          bytes[index++] = (0xc0 | (code >> 6));
+          bytes[index++] = (0x80 | (code & 0x3f));
+        } else if (code < 0xd800 || code >= 0xe000) {
+          bytes[index++] = (0xe0 | (code >> 12));
+          bytes[index++] = (0x80 | ((code >> 6) & 0x3f));
+          bytes[index++] = (0x80 | (code & 0x3f));
+        } else {
+          code = 0x10000 + (((code & 0x3ff) << 10) | (key.charCodeAt(++i) & 0x3ff));
+          bytes[index++] = (0xf0 | (code >> 18));
+          bytes[index++] = (0x80 | ((code >> 12) & 0x3f));
+          bytes[index++] = (0x80 | ((code >> 6) & 0x3f));
+          bytes[index++] = (0x80 | (code & 0x3f));
+        }
+      }
+      key = bytes;
+    } else {
+      if (type === 'object') {
+        if (key === null) {
+          throw new Error(ERROR);
+        } else if (ARRAY_BUFFER && key.constructor === ArrayBuffer) {
+          key = new Uint8Array(key);
+        } else if (!Array.isArray(key)) {
+          if (!ARRAY_BUFFER || !ArrayBuffer.isView(key)) {
+            throw new Error(ERROR);
+          }
+        }
+      } else {
+        throw new Error(ERROR);
+      }
+    }
+
+    if (key.length > 64) {
+      key = (new Sha256(is224, true)).update(key).array();
+    }
+
+    var oKeyPad = [], iKeyPad = [];
+    for (i = 0; i < 64; ++i) {
+      var b = key[i] || 0;
+      oKeyPad[i] = 0x5c ^ b;
+      iKeyPad[i] = 0x36 ^ b;
+    }
+
+    Sha256.call(this, is224, sharedMemory);
+
+    this.update(iKeyPad);
+    this.oKeyPad = oKeyPad;
+    this.inner = true;
+    this.sharedMemory = sharedMemory;
+  }
+  HmacSha256.prototype = new Sha256();
+
+  HmacSha256.prototype.finalize = function () {
+    Sha256.prototype.finalize.call(this);
+    if (this.inner) {
+      this.inner = false;
+      var innerHash = this.array();
+      Sha256.call(this, this.is224, this.sharedMemory);
+      this.update(this.oKeyPad);
+      this.update(innerHash);
+      Sha256.prototype.finalize.call(this);
+    }
+  };
+
+  var exports = createMethod();
+  exports.sha256 = exports;
+  exports.sha224 = createMethod(true);
+  exports.sha256.hmac = createHmacMethod();
+  exports.sha224.hmac = createHmacMethod(true);
+
+  if (COMMON_JS) {
+    module.exports = exports;
+  } else {
+    root.sha256 = exports.sha256;
+    root.sha224 = exports.sha224;
+    if (AMD) {
+      !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+        return exports;
+      }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }
+  }
+})();
+
+
+/***/ }),
+
 /***/ "./node_modules/nth-check/lib/compile.js":
 /*!***********************************************!*\
   !*** ./node_modules/nth-check/lib/compile.js ***!
@@ -17863,7 +18392,7 @@ const isNumberInString = (str) => {
         return false;
     }
     const sValue = str.trim();
-    if (!/^[.0-9]*$/.test(sValue)
+    if (!/^[-.0-9]*$/.test(sValue)
         || (0, helpers_1.indexOfAll)(sValue, '.').length > 1) {
         return false;
     }
@@ -18108,6 +18637,7 @@ var MessageToApp;
     MessageToApp["AppShowExtension"] = "AppShowExtension";
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
+    MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
     MessageToApp["AppClearResourceData"] = "AppClearResourceData";
     MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
     MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
@@ -18216,6 +18746,21 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
         (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
         (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_content_messages_1.MessageToContent.CSSetDebugMode }));
     }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGDirectMessageToApp === message.type, message, sender)) {
+        const { type, payload } = message.payload;
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, {
+            id: `${message.id}--${message.type}`,
+            type,
+            payload,
+        });
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGDirectMessageToInline === message.type, message, sender)) {
+        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, {
+            id: `${message.id}--${message.type}`,
+            type: types_content_messages_1.MessageToContent.CSDirectMessageToInline,
+            payload: message.payload,
+        });
+    }
 });
 loggers.debug().log('mounted');
 
@@ -18323,6 +18868,325 @@ class AbstractBackgroundPlatform {
     }
 }
 exports.AbstractBackgroundPlatform = AbstractBackgroundPlatform;
+
+
+/***/ }),
+
+/***/ "./extension/background/platforms/AmazonAthenaPlatform.ts":
+/*!****************************************************************!*\
+  !*** ./extension/background/platforms/AmazonAthenaPlatform.ts ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AmazonAthenaPlatform = void 0;
+const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
+const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
+const js_sha256_1 = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+let loggers;
+class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
+    constructor() {
+        super();
+        this.watchingResources = {};
+        this.emptyFieldValues = [
+            ...this.emptyFieldValues,
+            '-',
+            'null',
+        ];
+    }
+    static normalizeFieldName(fieldName) {
+        const parts = fieldName.split('.').filter(Boolean);
+        const nFieldName = parts.shift();
+        return [
+            nFieldName,
+            parts,
+        ];
+    }
+    static repairStrWithReplacements(str) {
+        if (str.indexOf(AmazonAthenaPlatform.replacementID) < 0) {
+            return str;
+        }
+        let newStr = str;
+        (str.match(new RegExp(`${AmazonAthenaPlatform.replacementID}[0-9]+`, 'g')) || []).forEach(id => {
+            newStr = newStr.split(id).join(AmazonAthenaPlatform.replacements.get(id));
+        });
+        return newStr;
+    }
+    static replaceScopes(str) {
+        let result = str;
+        let firstBracketIndex = result.indexOf('[');
+        let firstCurlyBracketIndex = result.indexOf('{');
+        while (firstCurlyBracketIndex > -1 || firstBracketIndex > -1) {
+            const openScopeSymbol = firstCurlyBracketIndex > firstBracketIndex ? '{' : '[';
+            const closeScopeSymbol = firstCurlyBracketIndex > firstBracketIndex ? '}' : ']';
+            const indexes = AmazonAthenaPlatform.getScopeIndexes(result, openScopeSymbol, closeScopeSymbol);
+            const replacementStr = result.substring(indexes.start, indexes.end);
+            const replacementsKey = AmazonAthenaPlatform.replacementsStrings.has(replacementStr)
+                ? AmazonAthenaPlatform.replacementsStrings.get(replacementStr)
+                : `${AmazonAthenaPlatform.replacementID}${++AmazonAthenaPlatform.replacementsCounter}`;
+            AmazonAthenaPlatform.replacements.set(replacementsKey, replacementStr);
+            AmazonAthenaPlatform.replacementsStrings.set(replacementStr, replacementsKey);
+            result = result.split(replacementStr).join(replacementsKey);
+            firstBracketIndex = result.indexOf('[');
+            firstCurlyBracketIndex = result.indexOf('{');
+        }
+        return result;
+    }
+    static getArrayObj(value) {
+        let normalizedValue = value.trim();
+        if (normalizedValue[0] !== '['
+            || normalizedValue[normalizedValue.length - 1] !== ']') {
+            return null;
+        }
+        normalizedValue = normalizedValue.substring(1, normalizedValue.length - 1).trim();
+        normalizedValue = AmazonAthenaPlatform.replaceScopes(normalizedValue);
+        return normalizedValue
+            .split(', ')
+            .map(v => AmazonAthenaPlatform.replacements.get(v) || v)
+            .map(v => AmazonAthenaPlatform.repairStrWithReplacements(v.trim()).trim());
+    }
+    static parseObj(value) {
+        let str = AmazonAthenaPlatform.repairStrWithReplacements(value.trim()).trim();
+        const result = {
+            $$value$$: str,
+        };
+        if (str[0] === '{'
+            && str[str.length - 1] === '}') {
+            str = str.substring(1, str.length - 1).trim();
+        }
+        if (str[0] === '['
+            && str[str.length - 1] === ']') {
+            return AmazonAthenaPlatform.parseStruct(str);
+        }
+        str = AmazonAthenaPlatform.replaceScopes(str);
+        let separateIndex = str.lastIndexOf('=');
+        do {
+            separateIndex = str.lastIndexOf(', ', separateIndex);
+            const [key, v] = str
+                .substring(separateIndex > -1 ? separateIndex + 2 : 0)
+                .split('=');
+            str = str.substring(0, separateIndex);
+            separateIndex = str.lastIndexOf('=', separateIndex);
+            if (!v) {
+                continue;
+            }
+            if (AmazonAthenaPlatform.replacements.has(v)) {
+                result[key.trim()] = AmazonAthenaPlatform.parseStruct(AmazonAthenaPlatform.replacements.get(v));
+                continue;
+            }
+            result[key.trim()] = AmazonAthenaPlatform.parseObj(v.trim());
+        } while (separateIndex > -1);
+        return result;
+    }
+    static parseStruct(value) {
+        const nValue = AmazonAthenaPlatform.repairStrWithReplacements(value.trim()).trim();
+        if (nValue[0] === '[' && nValue[nValue.length - 1] === ']') {
+            return {
+                $$value$$: nValue,
+                $$array$$: (AmazonAthenaPlatform.getArrayObj(nValue) || [])
+                    .map(v => AmazonAthenaPlatform.parseObj(v)),
+            };
+        }
+        return AmazonAthenaPlatform.parseObj(nValue);
+    }
+    static parse(str, fieldName) {
+        const fieldsNames = fieldName.split('.').map(v => v.trim());
+        let pointers = [
+            AmazonAthenaPlatform.parseStruct(str),
+        ];
+        const arrayParse = (arr, key) => {
+            return arr.map(a => {
+                if (typeof (a === null || a === void 0 ? void 0 : a[key]) === 'undefined' && (a === null || a === void 0 ? void 0 : a.$$array$$)) {
+                    return arrayParse(a.$$array$$, key);
+                }
+                return a[key];
+            }).flat(20);
+        };
+        fieldsNames.forEach((key) => {
+            let newPointers = [];
+            pointers.forEach((pointer) => {
+                if (!pointer) {
+                    return;
+                }
+                if (!pointer.$$array$$) {
+                    return newPointers.push(pointer[key]);
+                }
+                newPointers = [
+                    ...newPointers,
+                    ...arrayParse(pointer.$$array$$, key),
+                ];
+            });
+            pointers = newPointers;
+        });
+        return Array.from(new Set(pointers.reduce((result, current) => {
+            if (typeof (current === null || current === void 0 ? void 0 : current.$$value$$) === 'string') {
+                result.push(AmazonAthenaPlatform.repairStrWithReplacements(current.$$value$$));
+            }
+            return result;
+        }, [])));
+    }
+    parseResponse(response) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const result = {};
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            (((_a = response === null || response === void 0 ? void 0 : response.ResultSet) === null || _a === void 0 ? void 0 : _a.Rows) || []).slice(1).forEach((row) => {
+                ((row || {}).Data || []).forEach((data, index) => {
+                    var _a, _b, _c, _d;
+                    const label = ((_d = (_c = (_b = (_a = response === null || response === void 0 ? void 0 : response.ResultSet) === null || _a === void 0 ? void 0 : _a.ResultSetMetadata) === null || _b === void 0 ? void 0 : _b.ColumnInfo) === null || _c === void 0 ? void 0 : _c[index]) === null || _d === void 0 ? void 0 : _d.Label) || '';
+                    if (!label) {
+                        return;
+                    }
+                    const value = Object.values(data || {})[0];
+                    if (!value) {
+                        return;
+                    }
+                    Array.from(fieldsNames).forEach(fn => {
+                        const [fieldName, parts] = AmazonAthenaPlatform.normalizeFieldName(fn);
+                        if (label === fieldName) {
+                            const types = mapFieldNameToTypes.get(fn);
+                            types.forEach(t => {
+                                if (typeof result[t] === 'undefined') {
+                                    result[t] = {};
+                                }
+                                if (parts.length > 0) {
+                                    AmazonAthenaPlatform.parse(value, parts.join('.')).forEach(v => {
+                                        this.addValueToResource(result[t], fn, v);
+                                    });
+                                }
+                                else {
+                                    this.addValueToResource(result[t], fieldName, value);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+            loggers.debug().log('finished parse response', id, result);
+            return result;
+        });
+    }
+    getID() {
+        return AmazonAthenaPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.Athena;
+    }
+    register() {
+        const urlsProcessing = new Set();
+        const bodyData = new Map();
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeRequest, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                var _a, _b, _c, _d, _e, _f, _g, _h;
+                return details.method === 'POST'
+                    && !urlsProcessing.has(details.url)
+                    && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
+                    && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
+                    && AmazonAthenaPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+            }, params, id)) {
+                const bodyBytes = details.requestBody.raw[0].bytes;
+                let bodyStr = new TextDecoder().decode(bodyBytes);
+                const parsedBodyData = (0, helpers_1.parseJSONSafe)(bodyStr, null);
+                if (parsedBodyData && !parsedBodyData.QueryExecutionId) {
+                    return;
+                }
+                bodyData.set((0, js_sha256_1.sha256)(bodyStr), bodyStr);
+            }
+        }));
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                return details.method === 'POST'
+                    && !urlsProcessing.has(details.url)
+                    && AmazonAthenaPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+            }, params, id)) {
+                const headers = details.requestHeaders.reduce((res, header) => {
+                    res[header.name] = header.value;
+                    return res;
+                }, {});
+                const bodySha256 = headers['X-Amz-Content-Sha256'];
+                if (!bodyData.has(bodySha256)
+                    || headers['X-Amz-Target'] !== 'AmazonAthena.GetQueryResults') {
+                    return;
+                }
+                const bodyStr = bodyData.get(bodySha256);
+                urlsProcessing.add(details.url);
+                const removeAttached = () => {
+                    urlsProcessing.delete(details.url);
+                    bodyData.delete(bodySha256);
+                    if (urlsProcessing.size < 1) {
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, false);
+                    }
+                };
+                AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
+                Http_1.http.post({
+                    url: details.url,
+                    body: bodyStr,
+                    headers,
+                }, {
+                    onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), true);
+                        this.lastResponse = response;
+                        removeAttached();
+                    }),
+                    onError: e => {
+                        loggers
+                            .error()
+                            .addPrefix('failed webRequest post')
+                            .log(e, details.method, details.url, bodyStr);
+                        removeAttached();
+                    },
+                });
+            }
+        }));
+    }
+}
+exports.AmazonAthenaPlatform = AmazonAthenaPlatform;
+AmazonAthenaPlatform.postUrls = [
+    '.amazonaws.com',
+];
+AmazonAthenaPlatform.replacements = new Map();
+AmazonAthenaPlatform.replacementsStrings = new Map();
+AmazonAthenaPlatform.replacementID = '@@replacement@@';
+AmazonAthenaPlatform.replacementsCounter = 0;
+AmazonAthenaPlatform.getScopeIndexes = (string, openScopeSymbol, closeScopeSymbol) => {
+    const result = {
+        start: 0,
+        end: string.length - 1,
+    };
+    result.start = string.indexOf(openScopeSymbol);
+    if (result.start < 0) {
+        result.start = 0;
+    }
+    result.end = string.indexOf(closeScopeSymbol) + 1;
+    if (result.end < 0) {
+        result.end = string.length - 1;
+    }
+    if (string.lastIndexOf(openScopeSymbol, result.end) > -1) {
+        result.start = string.lastIndexOf(openScopeSymbol, result.end);
+    }
+    return result;
+};
+AmazonAthenaPlatform.id = types_common_1.PlatformID.Athena;
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(AmazonAthenaPlatform.id);
 
 
 /***/ }),
@@ -19156,6 +20020,10 @@ class PlatformResolver {
     getPlatformByID(platformID) {
         if (!this.platforms.has(platformID)) {
             switch (platformID) {
+                case types_common_1.PlatformID.Athena: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./AmazonAthenaPlatform */ "./extension/background/platforms/AmazonAthenaPlatform.ts").AmazonAthenaPlatform))());
+                    break;
+                }
                 case types_common_1.PlatformID.MicrosoftSentinel: {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./MicrosoftSentinelPlatform */ "./extension/background/platforms/MicrosoftSentinelPlatform.ts").MicrosoftSentinelPlatform))());
                     break;
@@ -19980,11 +20848,13 @@ var MessageToBackground;
     MessageToBackground["BGModifyQuery"] = "BGModifyQuery";
     MessageToBackground["BGSetQuery"] = "BGSetQuery";
     MessageToBackground["BGGetQuery"] = "BGGetQuery";
+    MessageToBackground["BGDirectMessageToApp"] = "BGDirectMessageToApp";
     MessageToBackground["BGSendMessageOutside"] = "BGSendMessageOutside";
     MessageToBackground["BGSetWatchers"] = "BGSetWatchers";
     MessageToBackground["BGRegisterPlatformTab"] = "BGRegisterPlatformTab";
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
+    MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
 Object.values(MessageToBackground).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
@@ -20432,7 +21302,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.2";
+exports.version = "1.2.3";
 
 
 /***/ }),
@@ -20593,6 +21463,7 @@ var PlatformID;
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
     PlatformID["ArcSight"] = "ArcSight";
+    PlatformID["Athena"] = "Athena";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -20602,6 +21473,7 @@ var PlatformName;
     PlatformName["QRadar"] = "IBM QRadar";
     PlatformName["Elastic"] = "Elastic";
     PlatformName["ArcSight"] = "ArcSight";
+    PlatformName["Athena"] = "Amazon Athena";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -20626,6 +21498,8 @@ var MessageToContent;
     MessageToContent["CSSendMessageOutside"] = "CSSendMessageOutside";
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
     MessageToContent["CSSetDebugMode"] = "CSSetDebugMode";
+    MessageToContent["CSDirectMessageToApp"] = "CSDirectMessageToApp";
+    MessageToContent["CSDirectMessageToInline"] = "CSDirectMessageToInline";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
@@ -29079,6 +29953,11 @@ exports.defaultTreeAdapter = {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/amd options */
+/******/ 	(() => {
+/******/ 		__webpack_require__.amdO = {};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -29089,6 +29968,18 @@ exports.defaultTreeAdapter = {
 /******/ 				}
 /******/ 			}
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

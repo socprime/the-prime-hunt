@@ -1,4 +1,5 @@
 import {
+  ExtensionMessageType,
   ModifyQueryType,
   PlatformID,
 } from './types-common';
@@ -27,6 +28,15 @@ export type SetQueryPayload = {
 
 export type TakeQueryPayload = {
   queryValue: string;
+};
+
+export type DirectMessagePayload<T = any> = {
+  type: ExtensionMessageType;
+  payload?: T;
+};
+
+export type ShowRemoveHashMessagePayload = {
+  show: boolean;
 };
 
 export type SetWatchersPayload = PlatformIDPayload & {

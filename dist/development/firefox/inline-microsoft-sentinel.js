@@ -32,7 +32,7 @@ const isNumberInString = (str) => {
         return false;
     }
     const sValue = str.trim();
-    if (!/^[.0-9]*$/.test(sValue)
+    if (!/^[-.0-9]*$/.test(sValue)
         || (0, helpers_1.indexOfAll)(sValue, '.').length > 1) {
         return false;
     }
@@ -275,11 +275,13 @@ var MessageToBackground;
     MessageToBackground["BGModifyQuery"] = "BGModifyQuery";
     MessageToBackground["BGSetQuery"] = "BGSetQuery";
     MessageToBackground["BGGetQuery"] = "BGGetQuery";
+    MessageToBackground["BGDirectMessageToApp"] = "BGDirectMessageToApp";
     MessageToBackground["BGSendMessageOutside"] = "BGSendMessageOutside";
     MessageToBackground["BGSetWatchers"] = "BGSetWatchers";
     MessageToBackground["BGRegisterPlatformTab"] = "BGRegisterPlatformTab";
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
+    MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
 Object.values(MessageToBackground).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
@@ -722,7 +724,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.2";
+exports.version = "1.2.3";
 
 
 /***/ }),
@@ -879,6 +881,7 @@ var PlatformID;
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
     PlatformID["ArcSight"] = "ArcSight";
+    PlatformID["Athena"] = "Athena";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -888,6 +891,7 @@ var PlatformName;
     PlatformName["QRadar"] = "IBM QRadar";
     PlatformName["Elastic"] = "Elastic";
     PlatformName["ArcSight"] = "ArcSight";
+    PlatformName["Athena"] = "Amazon Athena";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -925,6 +929,21 @@ class AbstractContentPlatform {
             const { debugMode } = message.payload;
             (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
             (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISSetDebugMode }), false);
+        }
+        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSDirectMessageToApp === message.type, message)) {
+            (0, content_services_1.sendMessageFromContent)({
+                id: `${message.id}--${message.type}`,
+                type: types_background_messages_1.MessageToBackground.BGDirectMessageToApp,
+                payload: message.payload,
+            });
+        }
+        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSDirectMessageToInline === message.type, message)) {
+            const { type, payload } = message.payload;
+            (0, content_services_1.sendMessageFromContent)({
+                id: `${message.id}--${message.type}`,
+                type,
+                payload,
+            }, false);
         }
     }
 }
@@ -1204,6 +1223,8 @@ var MessageToContent;
     MessageToContent["CSSendMessageOutside"] = "CSSendMessageOutside";
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
     MessageToContent["CSSetDebugMode"] = "CSSetDebugMode";
+    MessageToContent["CSDirectMessageToApp"] = "CSDirectMessageToApp";
+    MessageToContent["CSDirectMessageToInline"] = "CSDirectMessageToInline";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
@@ -1326,6 +1347,7 @@ var MessageToInline;
     MessageToInline["ISSetQuery"] = "ISSetQuery";
     MessageToInline["ISGetQuery"] = "ISGetQuery";
     MessageToInline["ISSetDebugMode"] = "ISSetDebugMode";
+    MessageToInline["ISRemoveHash"] = "ISRemoveHash";
 })(MessageToInline = exports.MessageToInline || (exports.MessageToInline = {}));
 Object.values(MessageToInline).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
@@ -1344,11 +1366,12 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
 exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
+exports.amazonAthenaInline = 'inline-amazon-athena.js';
 exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
@@ -1360,6 +1383,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
     [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
+    [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     app: [exports.appStyles],
 };
 

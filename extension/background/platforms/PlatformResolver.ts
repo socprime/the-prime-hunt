@@ -9,6 +9,14 @@ export class PlatformResolver {
   private getPlatformByID(platformID?: PlatformID): BackgroundPlatform | undefined {
     if (!this.platforms.has(platformID)) {
       switch (platformID) {
+        case PlatformID.Athena: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(
+            platformID,
+            new (require('./AmazonAthenaPlatform').AmazonAthenaPlatform)(),
+          );
+          break;
+        }
+
         case PlatformID.MicrosoftSentinel: {
           this.platforms.set<PlatformID, BackgroundPlatform>(
             platformID,

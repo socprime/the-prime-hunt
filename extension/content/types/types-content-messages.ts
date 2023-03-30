@@ -7,6 +7,8 @@ export enum MessageToContent {
   CSSendMessageOutside = 'CSSendMessageOutside',
   CSConnectPlatform = 'CSConnectPlatform',
   CSSetDebugMode = 'CSSetDebugMode',
+  CSDirectMessageToApp = 'CSDirectMessageToApp',
+  CSDirectMessageToInline = 'CSDirectMessageToInline',
 }
 
 Object.values(MessageToContent).forEach(type => {

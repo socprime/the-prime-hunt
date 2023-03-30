@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight, Amazon Athena.
 
 ## Installation
 Follow the instructions below. After the installation, reload the page.
@@ -108,6 +108,10 @@ The position and size of the extension's window are stored as the `the-prime-hun
 
 **Note:**  
 The fields that have been added manually are stored as the `the-prime-hunt--extension--watchers` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), only the default fields are used again.
+
+In Amazon Athena, if the extension detects that your query includes a hash function, you can remove hashing to see the original results. To do it, click **Yes** when you see a corresponding prompt in the extension.
+
+![Prompt to remove hashing](.readme/Remove_hashing.png)
 
 5. You can also select multiple results by setting the checkboxes next to them. In this case, bulk action buttons appear at the extension’s footer:
 - Click the **Copy** button to copy the selected accounts/assets to the clipboard

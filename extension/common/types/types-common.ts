@@ -29,6 +29,7 @@ export enum PlatformID {
   QRadar = 'QRadar',
   Elastic = 'Elastic',
   ArcSight = 'ArcSight',
+  Athena = 'Athena',
 }
 
 export enum PlatformName {
@@ -38,6 +39,7 @@ export enum PlatformName {
   QRadar = 'IBM QRadar',
   Elastic = 'Elastic',
   ArcSight = 'ArcSight',
+  Athena = 'Amazon Athena',
 }
 
 export type IPlatform = {

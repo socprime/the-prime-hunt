@@ -13,6 +13,7 @@ import {
   appStyles,
   microsoftDefenderInline,
   microsoftSentinelInline,
+  amazonAthenaInline,
   qRadarInline,
   splunkInline,
   elasticInline,
@@ -84,6 +85,7 @@ const inlineEntries = [
   qRadarInline,
   elasticInline,
   arcSightInline,
+  amazonAthenaInline,
 ].reduce((entry, inline) => {
   const name = parse(inline).name;
   entry[name] = [

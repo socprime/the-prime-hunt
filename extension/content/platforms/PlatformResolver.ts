@@ -11,6 +11,14 @@ export class PlatformResolver {
   getPlatformByID(platformID?: PlatformID): ContentPlatform | undefined {
     if (!this.platforms.has(platformID)) {
       switch (platformID) {
+        case PlatformID.Athena: {
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./AmazonAthenaPlatform').AmazonAthenaPlatform)(),
+          );
+          break;
+        }
+
         case PlatformID.MicrosoftSentinel: {
           this.platforms.set<PlatformID, ContentPlatform>(
             platformID,
@@ -72,6 +80,10 @@ export class PlatformResolver {
 
     if (!isAllowedProtocol(protocol, mode)) {
       return;
+    }
+
+    if (/(aws.amazon.com\/athena\/)/.test(href)) {
+      return this.getPlatformByID(PlatformID.Athena);
     }
 
     if (/(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)) {

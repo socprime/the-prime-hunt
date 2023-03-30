@@ -471,6 +471,16 @@
 
 /***/ }),
 
+/***/ "./extension/app/resources/messages/RemoveHashMessage/styles.scss":
+/*!************************************************************************!*\
+  !*** ./extension/app/resources/messages/RemoveHashMessage/styles.scss ***!
+  \************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/resources/views/ResourcesContentView/styles.scss":
 /*!************************************************************************!*\
   !*** ./extension/app/resources/views/ResourcesContentView/styles.scss ***!
@@ -51095,7 +51105,7 @@ const isNumberInString = (str) => {
         return false;
     }
     const sValue = str.trim();
-    if (!/^[.0-9]*$/.test(sValue)
+    if (!/^[-.0-9]*$/.test(sValue)
         || (0, helpers_1.indexOfAll)(sValue, '.').length > 1) {
         return false;
     }
@@ -51416,6 +51426,7 @@ const types_app_common_1 = __webpack_require__(/*! ./types/types-app-common */ "
 const PlatformResolver_1 = __webpack_require__(/*! ../content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
 const content_services_1 = __webpack_require__(/*! ../content/services/content-services */ "./extension/content/services/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const RemoveHashMessage_1 = __webpack_require__(/*! ./resources/messages/RemoveHashMessage/RemoveHashMessage */ "./extension/app/resources/messages/RemoveHashMessage/RemoveHashMessage.tsx");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
 const setExtensionShowState = (isShow) => {
     if (!stores_1.rootStore.platformStore.getID()) {
@@ -51436,8 +51447,10 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
         stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
         stores_1.rootStore.resourceStore.clearResources();
         setTimeout(() => {
-            stores_1.rootStore.resourceStore.addResources(message.payload);
-            stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
+            setTimeout(() => {
+                stores_1.rootStore.resourceStore.addResources(message.payload);
+                stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
+            }, 100);
         }, 0);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeResourceData === message.type, message)) {
@@ -51471,6 +51484,12 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
         const { debugMode } = message.payload;
         (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
         (0, content_services_1.sendMessageFromApp)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_background_messages_1.MessageToBackground.BGSetDebugMode }));
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppQueryHasHash === message.type, message)) {
+        if (stores_1.rootStore.platformStore.getID()) {
+            const { show } = message.payload;
+            stores_1.rootStore.platformStore.setMessage(show ? RemoveHashMessage_1.RemoveHashMessage : null);
+        }
     }
 });
 loggers.debug().log('mounted');
@@ -52909,6 +52928,29 @@ const UserIcon = () => {
         react_1.default.createElement("path", { d: "M13.7638 11.5861C13.7458 11.3263 13.7094 11.0429 13.6558 10.7436C13.6017 10.4421 13.532 10.157 13.4486 9.89652C13.3624 9.62725 13.2452 9.36134 13.1004 9.10652C12.95 8.84204 12.7734 8.61173 12.5753 8.42222C12.368 8.22396 12.1143 8.06455 11.821 7.94828C11.5286 7.83262 11.2046 7.77403 10.858 7.77403C10.7219 7.77403 10.5903 7.82987 10.3361 7.99538C10.1796 8.09741 9.99663 8.21541 9.79237 8.34592C9.61771 8.45721 9.3811 8.56148 9.08884 8.65588C8.80371 8.74814 8.5142 8.79494 8.22845 8.79494C7.94271 8.79494 7.6533 8.74814 7.36786 8.65588C7.07591 8.56158 6.8393 8.45731 6.66484 8.34603C6.46251 8.21673 6.2794 8.09873 6.12061 7.99528C5.86671 7.82977 5.73497 7.77393 5.59887 7.77393C5.25219 7.77393 4.92829 7.83262 4.63604 7.94838C4.34287 8.06445 4.08906 8.22385 3.88165 8.42232C3.68359 8.61194 3.50689 8.84214 3.35675 9.10652C3.21199 9.36134 3.09481 9.62715 3.00854 9.89662C2.92523 10.1571 2.85555 10.4421 2.80143 10.7436C2.74782 11.0424 2.71141 11.326 2.6934 11.5864C2.6757 11.8415 2.66675 12.1063 2.66675 12.3737C2.66675 13.0697 2.888 13.6332 3.3243 14.0487C3.7552 14.4588 4.32537 14.6668 5.01873 14.6668H11.4388C12.1321 14.6668 12.7021 14.4589 13.1331 14.0487C13.5695 13.6335 13.7908 13.0699 13.7908 12.3736C13.7907 12.105 13.7816 11.84 13.7638 11.5861Z" })));
 };
 exports.UserIcon = UserIcon;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx":
+/*!**************************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx ***!
+  \**************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.WarningIcon = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const WarningIcon = () => {
+    return (react_1.default.createElement("svg", { className: "warning-icon icon", viewBox: "0 0 20 18", xmlns: "http://www.w3.org/2000/svg" },
+        react_1.default.createElement("path", { d: "M19.5845 13.7734L12.5194 1.36973C11.3843 -0.455365 8.61723 -0.45779 7.48058 1.36973L0.415894 13.7734C-0.744497 15.6384 0.660386 18 2.93472 18H17.065C19.3375 18 20.7448 15.6403 19.5845 13.7734ZM10 15.7616C9.35398 15.7616 8.82812 15.2593 8.82812 14.6424C8.82812 14.0254 9.35398 13.5232 10 13.5232C10.646 13.5232 11.1719 14.0254 11.1719 14.6424C11.1719 15.2593 10.646 15.7616 10 15.7616ZM11.1719 11.2847C11.1719 11.9017 10.646 12.4039 10 12.4039C9.35398 12.4039 8.82812 11.9017 8.82812 11.2847V5.68866C8.82812 5.07168 9.35398 4.56945 10 4.56945C10.646 4.56945 11.1719 5.07168 11.1719 5.68866V11.2847Z" })));
+};
+exports.WarningIcon = WarningIcon;
 
 
 /***/ }),
@@ -54622,9 +54664,9 @@ const NotFoundContentView = () => {
             react_1.default.createElement("br", null),
             "You can use this extension with",
             react_1.default.createElement("br", null),
-            "Splunk, Elastic, QRadar, Microsoft Sentinel",
+            "Microsoft Sentinel, Microsoft Defender for Endpoint",
             react_1.default.createElement("br", null),
-            "ArcSight, Microsoft Defender for Endpoint.")));
+            "Amazon Athena, Splunk, Elastic, QRadar, ArcSight,")));
 };
 exports.NotFoundContentView = NotFoundContentView;
 
@@ -55480,10 +55522,14 @@ const ResourceTabInput = (_a) => {
         inputRef.current.focus();
     }, []);
     const setInputWidth = (0, react_1.useCallback)(() => {
-        if (!(inputRef === null || inputRef === void 0 ? void 0 : inputRef.current)) {
+        if (!(inputRef === null || inputRef === void 0 ? void 0 : inputRef.current)
+            || !(virtualInputRef === null || virtualInputRef === void 0 ? void 0 : virtualInputRef.current)) {
             return;
         }
-        inputRef.current.style.width = `${virtualInputRef.current.offsetWidth}px`;
+        virtualInputRef.current.style.fontStyle = inputRef.current.style.fontStyle;
+        virtualInputRef.current.style.fontFamily = inputRef.current.style.fontFamily;
+        virtualInputRef.current.style.fontSize = inputRef.current.style.fontSize;
+        inputRef.current.style.width = `${virtualInputRef.current.getBoundingClientRect().width}px`;
     }, []);
     (0, react_1.useEffect)(() => {
         const observer = new ResizeObserver(setInputWidth);
@@ -55536,6 +55582,7 @@ const ResourceTabInput = (_a) => {
         react_1.default.createElement("span", { className: "virtual-input", style: {
                 position: 'absolute',
                 opacity: 0,
+                boxSizing: 'border-box',
                 pointerEvents: 'none',
                 top: -99999,
                 left: -99999,
@@ -55655,6 +55702,50 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
 
 /***/ }),
 
+/***/ "./extension/app/resources/messages/RemoveHashMessage/RemoveHashMessage.tsx":
+/*!**********************************************************************************!*\
+  !*** ./extension/app/resources/messages/RemoveHashMessage/RemoveHashMessage.tsx ***!
+  \**********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RemoveHashMessage = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
+const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/RemoveHashMessage/styles.scss");
+exports.RemoveHashMessage = (0, mobx_react_lite_1.observer)(() => {
+    const platformStore = (0, stores_1.usePlatformStore)();
+    return (react_1.default.createElement("div", { className: "remove-hash-message" },
+        react_1.default.createElement(WarningIcon_1.WarningIcon, null),
+        react_1.default.createElement("p", null, "A hash function has been detected in your query. Do you want to remove it to see the data without hashing?"),
+        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
+                (0, content_services_1.sendMessageFromApp)({
+                    type: types_background_messages_1.MessageToBackground.BGDirectMessageToInline,
+                    payload: {
+                        type: types_inline_messages_1.MessageToInline.ISRemoveHash,
+                    },
+                });
+                platformStore.setMessage(null);
+            } }, "Yes"),
+        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
+                platformStore.setMessage(null);
+            } }, "No")));
+});
+
+
+/***/ }),
+
 /***/ "./extension/app/resources/resources-types.ts":
 /*!****************************************************!*\
   !*** ./extension/app/resources/resources-types.ts ***!
@@ -55698,6 +55789,7 @@ const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 class PlatformStore {
     constructor(rootStore) {
+        this.message = null;
         this.rootStore = rootStore;
         (0, mobx_1.makeObservable)(this);
     }
@@ -55758,10 +55850,24 @@ class PlatformStore {
         }
         return this.platform.getID();
     }
+    setMessage(Message) {
+        if (Message && !this.message) {
+            this.message = Message;
+        }
+        if (!Message && this.message) {
+            this.message = Message;
+        }
+    }
+    getMessage() {
+        return this.message;
+    }
 }
 __decorate([
     mobx_1.observable
 ], PlatformStore.prototype, "platform", void 0);
+__decorate([
+    mobx_1.observable
+], PlatformStore.prototype, "message", void 0);
 exports.PlatformStore = PlatformStore;
 
 
@@ -56263,8 +56369,14 @@ exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
     if (!platformStore.getID()) {
         return null;
     }
+    const Message = platformStore.getMessage();
     return (react_1.default.createElement("div", { className: "resources-header-view" },
-        react_1.default.createElement(Spacer_1.Spacer, { height: 18 }),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 6 }),
+        Message && (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement(Spacer_1.Spacer, { height: 6 }),
+            react_1.default.createElement(Message, null),
+            react_1.default.createElement(Spacer_1.Spacer, { height: 6 }))),
+        react_1.default.createElement(Spacer_1.Spacer, { height: 6 }),
         react_1.default.createElement(TabsPlatformResources_1.TabsPlatformResources, null),
         react_1.default.createElement(Spacer_1.Spacer, { height: 16 }),
         react_1.default.createElement("div", { className: "fields" },
@@ -57005,6 +57117,7 @@ var MessageToApp;
     MessageToApp["AppShowExtension"] = "AppShowExtension";
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
+    MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
     MessageToApp["AppClearResourceData"] = "AppClearResourceData";
     MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
     MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
@@ -57038,11 +57151,13 @@ var MessageToBackground;
     MessageToBackground["BGModifyQuery"] = "BGModifyQuery";
     MessageToBackground["BGSetQuery"] = "BGSetQuery";
     MessageToBackground["BGGetQuery"] = "BGGetQuery";
+    MessageToBackground["BGDirectMessageToApp"] = "BGDirectMessageToApp";
     MessageToBackground["BGSendMessageOutside"] = "BGSendMessageOutside";
     MessageToBackground["BGSetWatchers"] = "BGSetWatchers";
     MessageToBackground["BGRegisterPlatformTab"] = "BGRegisterPlatformTab";
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
+    MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
 Object.values(MessageToBackground).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
@@ -57490,7 +57605,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.2";
+exports.version = "1.2.3";
 
 
 /***/ }),
@@ -57732,6 +57847,7 @@ var PlatformID;
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
     PlatformID["ArcSight"] = "ArcSight";
+    PlatformID["Athena"] = "Athena";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -57741,6 +57857,7 @@ var PlatformName;
     PlatformName["QRadar"] = "IBM QRadar";
     PlatformName["Elastic"] = "Elastic";
     PlatformName["ArcSight"] = "ArcSight";
+    PlatformName["Athena"] = "Amazon Athena";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -57816,9 +57933,124 @@ class AbstractContentPlatform {
             (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
             (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISSetDebugMode }), false);
         }
+        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSDirectMessageToApp === message.type, message)) {
+            (0, content_services_1.sendMessageFromContent)({
+                id: `${message.id}--${message.type}`,
+                type: types_background_messages_1.MessageToBackground.BGDirectMessageToApp,
+                payload: message.payload,
+            });
+        }
+        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSDirectMessageToInline === message.type, message)) {
+            const { type, payload } = message.payload;
+            (0, content_services_1.sendMessageFromContent)({
+                id: `${message.id}--${message.type}`,
+                type,
+                payload,
+            }, false);
+        }
     }
 }
 exports.AbstractContentPlatform = AbstractContentPlatform;
+
+
+/***/ }),
+
+/***/ "./extension/content/platforms/AmazonAthenaPlatform.ts":
+/*!*************************************************************!*\
+  !*** ./extension/content/platforms/AmazonAthenaPlatform.ts ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AmazonAthenaPlatform = void 0;
+const AbstractContentPlatform_1 = __webpack_require__(/*! ./AbstractContentPlatform */ "./extension/content/platforms/AbstractContentPlatform.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+let loggers;
+class AmazonAthenaPlatform extends AbstractContentPlatform_1.AbstractContentPlatform {
+    constructor() {
+        super(...arguments);
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'actor.user.name',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'device.name',
+            ],
+        };
+        this.extensionDefaultPosition = AmazonAthenaPlatform.extensionDefaultPosition;
+    }
+    static normalizedValue(value) {
+        const nValue = (0, checkers_1.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `'${nValue.replace(/'/g, '"')}'`;
+    }
+    static buildQueryParts(type, resources, withPrefix) {
+        const prefix = 'where';
+        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' = ', type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' OR ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => AmazonAthenaPlatform.normalizedValue(v),
+        }, withPrefix ? prefix : undefined);
+    }
+    buildQueryParts(type, resources, withPrefix) {
+        return AmazonAthenaPlatform.buildQueryParts(type, resources, withPrefix);
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.amazonAthenaInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            AbstractContentPlatform_1.AbstractContentPlatform.processInlineListeners(message);
+        }));
+        loggers.debug().log('listeners were set');
+    }
+    connect() {
+        AmazonAthenaPlatform.setListeners();
+        AmazonAthenaPlatform.connectInlineListener();
+        loggers.debug().log('connected');
+    }
+    getID() {
+        return AmazonAthenaPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.Athena;
+    }
+}
+exports.AmazonAthenaPlatform = AmazonAthenaPlatform;
+AmazonAthenaPlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 480,
+    height: 480,
+};
+AmazonAthenaPlatform.id = types_common_1.PlatformID.Athena;
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(AmazonAthenaPlatform.id);
 
 
 /***/ }),
@@ -58320,6 +58552,10 @@ class PlatformResolver {
     getPlatformByID(platformID) {
         if (!this.platforms.has(platformID)) {
             switch (platformID) {
+                case types_common_1.PlatformID.Athena: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./AmazonAthenaPlatform */ "./extension/content/platforms/AmazonAthenaPlatform.ts").AmazonAthenaPlatform))());
+                    break;
+                }
                 case types_common_1.PlatformID.MicrosoftSentinel: {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./MicrosoftSentinelPlatform */ "./extension/content/platforms/MicrosoftSentinelPlatform.ts").MicrosoftSentinelPlatform))());
                     break;
@@ -58354,6 +58590,9 @@ class PlatformResolver {
         const { host, protocol, href } = new URL(url);
         if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
             return;
+        }
+        if (/(aws.amazon.com\/athena\/)/.test(href)) {
+            return this.getPlatformByID(types_common_1.PlatformID.Athena);
         }
         if (/(portal.azure.com|reactblade.portal.azure.net|logsextension.hosting.portal.azure.net)$/.test(host)) {
             return this.getPlatformByID(types_common_1.PlatformID.MicrosoftSentinel);
@@ -58768,6 +59007,8 @@ var MessageToContent;
     MessageToContent["CSSendMessageOutside"] = "CSSendMessageOutside";
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
     MessageToContent["CSSetDebugMode"] = "CSSetDebugMode";
+    MessageToContent["CSDirectMessageToApp"] = "CSDirectMessageToApp";
+    MessageToContent["CSDirectMessageToInline"] = "CSDirectMessageToInline";
 })(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
 Object.values(MessageToContent).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
@@ -58795,6 +59036,7 @@ var MessageToInline;
     MessageToInline["ISSetQuery"] = "ISSetQuery";
     MessageToInline["ISGetQuery"] = "ISGetQuery";
     MessageToInline["ISSetDebugMode"] = "ISSetDebugMode";
+    MessageToInline["ISRemoveHash"] = "ISRemoveHash";
 })(MessageToInline = exports.MessageToInline || (exports.MessageToInline = {}));
 Object.values(MessageToInline).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
@@ -58814,11 +59056,12 @@ Object.values(MessageToInline).forEach(type => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
 exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
+exports.amazonAthenaInline = 'inline-amazon-athena.js';
 exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
@@ -58830,6 +59073,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
     [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
+    [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     app: [exports.appStyles],
 };
 

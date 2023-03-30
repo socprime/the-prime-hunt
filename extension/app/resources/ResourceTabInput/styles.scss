@@ -4,6 +4,7 @@
   max-width: 200px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 
 .app-control-input.control-input-wrapper.resource-tab-input {

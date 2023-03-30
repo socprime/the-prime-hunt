@@ -5,11 +5,13 @@ export enum MessageToBackground {
   BGModifyQuery = 'BGModifyQuery',
   BGSetQuery = 'BGSetQuery',
   BGGetQuery = 'BGGetQuery',
+  BGDirectMessageToApp = 'BGDirectMessageToApp',
   BGSendMessageOutside = 'BGSendMessageOutside',
   BGSetWatchers = 'BGSetWatchers',
   BGRegisterPlatformTab = 'BGRegisterPlatformTab',
   BGToggleShowExtension = 'BGToggleShowExtension',
   BGSetDebugMode = 'BGSetDebugMode',
+  BGDirectMessageToInline = 'BGDirectMessageToInline',
 }
 
 Object.values(MessageToBackground).forEach(type => {

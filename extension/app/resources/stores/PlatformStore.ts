@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { makeObservable, observable } from 'mobx';
 import { ContentPlatform } from '../../../content/types/types-content-common';
 import { ModifyQueryType } from '../../../common/types/types-common';
@@ -15,6 +16,9 @@ import { copyToClipboard } from '../../../common/common-helpers';
 export class PlatformStore {
   @observable
   private platform: ContentPlatform;
+
+  @observable
+  private message: FC | null = null;
 
   private readonly rootStore: RootStore;
 
@@ -106,5 +110,19 @@ export class PlatformStore {
     }
 
     return this.platform.getID();
+  }
+
+  setMessage(Message: FC | null) {
+    if (Message && !this.message) {
+      this.message = Message;
+    }
+
+    if (!Message && this.message) {
+      this.message = Message;
+    }
+  }
+
+  getMessage() {
+    return this.message;
   }
 }

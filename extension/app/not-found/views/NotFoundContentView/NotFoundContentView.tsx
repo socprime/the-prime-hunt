@@ -7,8 +7,8 @@ export const NotFoundContentView: React.FC = () => {
       <div>
         No supported platform detected.<br />
         You can use this extension with<br />
-        Splunk, Elastic, QRadar, Microsoft Sentinel<br />
-        ArcSight, Microsoft Defender for Endpoint.
+        Microsoft Sentinel, Microsoft Defender for Endpoint<br />
+        Amazon Athena, Splunk, Elastic, QRadar, ArcSight,
       </div>
     </div>
   );

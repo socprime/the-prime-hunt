@@ -21,7 +21,7 @@ export const isNumberInString = (str: unknown): boolean => {
   }
   const sValue = str.trim();
   if (
-    !/^[.0-9]*$/.test(sValue)
+    !/^[-.0-9]*$/.test(sValue)
     || indexOfAll(sValue, '.').length > 1
   ) {
     return false;

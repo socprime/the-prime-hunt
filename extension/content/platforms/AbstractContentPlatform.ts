@@ -7,7 +7,7 @@ import { MessageToContent } from '../types/types-content-messages';
 import { sendMessageFromContent } from '../services/content-services';
 import { MessageToInline } from '../../inline/types/types-inline-messages';
 import { MessageToBackground } from '../../background/types/types-background-messages';
-import { SetDebugModePayload } from '../../common/types/types-common-payloads';
+import { DirectMessagePayload, SetDebugModePayload } from '../../common/types/types-common-payloads';
 
 export abstract class AbstractContentPlatform implements ContentPlatform {
   abstract buildQueryParts(
@@ -81,6 +81,29 @@ export abstract class AbstractContentPlatform implements ContentPlatform {
         ...message,
         id: `${message.id}--${message.type}`,
         type: MessageToInline.ISSetDebugMode,
+      }, false);
+    }
+
+    if (isMessageMatched(
+      () => MessageToContent.CSDirectMessageToApp === message.type,
+      message,
+    )) {
+      sendMessageFromContent({
+        id: `${message.id}--${message.type}`,
+        type: MessageToBackground.BGDirectMessageToApp,
+        payload: message.payload,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToContent.CSDirectMessageToInline === message.type,
+      message,
+    )) {
+      const { type, payload } = message.payload as DirectMessagePayload;
+      sendMessageFromContent({
+        id: `${message.id}--${message.type}`,
+        type,
+        payload,
       }, false);
     }
   }

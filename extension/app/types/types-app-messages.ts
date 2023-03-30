@@ -4,6 +4,7 @@ export enum MessageToApp {
   AppShowExtension = 'AppShowExtension',
   AppTakeResourceData = 'AppTakeResourceData',
   AppTakeNewResourceData = 'AppTakeNewResourceData',
+  AppQueryHasHash = 'AppQueryHasHash',
   AppClearResourceData = 'AppClearResourceData',
   AppSetLoadingState = 'AppSetLoadingState',
   AppToggleShowExtension = 'AppToggleShowExtension',

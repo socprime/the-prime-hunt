@@ -79,10 +79,16 @@ export const ResourceTabInput: React.FC<ResourceTabInputProps> = ({
   }, []);
 
   const setInputWidth = useCallback(() => {
-    if (!inputRef?.current) {
+    if (
+      !inputRef?.current
+      || !virtualInputRef?.current
+    ) {
       return;
     }
-    inputRef.current.style.width = `${virtualInputRef.current!.offsetWidth}px`;
+    virtualInputRef.current.style.fontStyle = inputRef.current.style.fontStyle;
+    virtualInputRef.current.style.fontFamily = inputRef.current.style.fontFamily;
+    virtualInputRef.current.style.fontSize = inputRef.current.style.fontSize;
+    inputRef.current.style.width = `${virtualInputRef.current.getBoundingClientRect().width}px`;
   }, []);
 
   useEffect(() => {
@@ -176,6 +182,7 @@ export const ResourceTabInput: React.FC<ResourceTabInputProps> = ({
         style={{
           position: 'absolute',
           opacity: 0,
+          boxSizing: 'border-box',
           pointerEvents: 'none',
           top: -99999,
           left: -99999,

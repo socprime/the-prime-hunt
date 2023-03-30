@@ -1,0 +1,22 @@
+import { ElasticPlatform } from './ElasticPlatform';
+
+describe('AmazonAthenaPlatform background tests', () => {
+  let platform: any;
+
+  class Platform extends ElasticPlatform {
+    checkValue(value: string): boolean {
+      return super.checkValue(value);
+    }
+  }
+
+  beforeEach(() => {
+    platform = new Platform();
+  });
+
+  test('checkValue test', () => {
+    expect(platform.checkValue('-')).toEqual(false);
+    expect(platform.checkValue('')).toEqual(false);
+    expect(platform.checkValue(' ')).toEqual(true);
+    expect(platform.checkValue('null')).toEqual(true);
+  });
+});

@@ -24,15 +24,25 @@ export const ResourcesHeaderView: React.FC = observer(() => {
     }
   }, inputWrapperRef);
 
-
-
   if (!platformStore.getID()) {
     return null;
   }
 
+  const Message = platformStore.getMessage();
+
   return (
    <div className="resources-header-view">
-     <Spacer height={18} />
+     <Spacer height={6} />
+     {
+       Message && (
+         <>
+           <Spacer height={6} />
+           {<Message />}
+           <Spacer height={6} />
+         </>
+       )
+     }
+     <Spacer height={6} />
      <TabsPlatformResources />
      <Spacer height={16} />
      <div className="fields">

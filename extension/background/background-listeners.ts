@@ -14,6 +14,7 @@ import { isMessageMatched } from '../common/common-listeners';
 import { MessageToBackground } from './types/types-background-messages';
 import { MessageToContent } from '../content/types/types-content-messages';
 import {
+  DirectMessagePayload,
   PlatformIDPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
@@ -186,6 +187,31 @@ const loggers = require('../common/loggers').loggers
         ...message,
         id: `${message.id}--${message.type}`,
         type: MessageToContent.CSSetDebugMode,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGDirectMessageToApp === message.type,
+      message,
+      sender,
+    )) {
+      const { type, payload } = message.payload as DirectMessagePayload;
+      sendMessageFromBackground(sender.tab.id, {
+        id: `${message.id}--${message.type}`,
+        type,
+        payload,
+      });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGDirectMessageToInline === message.type,
+      message,
+      sender,
+    )) {
+      sendMessageFromBackground(sender.tab.id, {
+        id: `${message.id}--${message.type}`,
+        type: MessageToContent.CSDirectMessageToInline,
+        payload: message.payload,
       });
     }
   },

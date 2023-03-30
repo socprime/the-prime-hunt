@@ -6,13 +6,16 @@ import { rootStore } from './stores';
 import { LoadingKey } from './types/types-app-common';
 import {
   ParsedDataPayload,
-  SendToBackgroundPayload, SetDebugModePayload,
+  SendToBackgroundPayload,
+  SetDebugModePayload,
   SetLoadingStatePayload,
+  ShowRemoveHashMessagePayload,
 } from '../common/types/types-common-payloads';
 import { platformResolver } from '../content/platforms/PlatformResolver';
 import { sendMessageFromApp } from '../content/services/content-services';
 import { ExtensionMessage, ExtensionMessageType } from '../common/types/types-common';
 import { MessageToBackground } from '../background/types/types-background-messages';
+import { RemoveHashMessage } from './resources/messages/RemoveHashMessage/RemoveHashMessage';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -48,8 +51,10 @@ const setExtensionShowState = (
       rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
       rootStore.resourceStore.clearResources();
       setTimeout(() => {
-        rootStore.resourceStore.addResources(message.payload as ParsedDataPayload);
-        rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
+        setTimeout(() => {
+          rootStore.resourceStore.addResources(message.payload as ParsedDataPayload);
+          rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
+        }, 100);
       }, 0);
     }
 
@@ -117,6 +122,16 @@ const setExtensionShowState = (
         id: `${message.id}--${message.type}`,
         type: MessageToBackground.BGSetDebugMode,
       });
+    }
+
+    if (isMessageMatched(
+      () => MessageToApp.AppQueryHasHash === message.type,
+      message,
+    )) {
+      if (rootStore.platformStore.getID()) {
+        const { show } = message.payload as ShowRemoveHashMessagePayload;
+        rootStore.platformStore.setMessage(show ? RemoveHashMessage : null);
+      }
     }
   },
 );
