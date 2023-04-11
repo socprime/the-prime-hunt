@@ -471,6 +471,16 @@
 
 /***/ }),
 
+/***/ "./extension/app/resources/messages/RemoveFieldsSpecificationMessage/styles.scss":
+/*!***************************************************************************************!*\
+  !*** ./extension/app/resources/messages/RemoveFieldsSpecificationMessage/styles.scss ***!
+  \***************************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/resources/messages/RemoveHashMessage/styles.scss":
 /*!************************************************************************!*\
   !*** ./extension/app/resources/messages/RemoveHashMessage/styles.scss ***!
@@ -51427,6 +51437,7 @@ const PlatformResolver_1 = __webpack_require__(/*! ../content/platforms/Platform
 const content_services_1 = __webpack_require__(/*! ../content/services/content-services */ "./extension/content/services/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const RemoveHashMessage_1 = __webpack_require__(/*! ./resources/messages/RemoveHashMessage/RemoveHashMessage */ "./extension/app/resources/messages/RemoveHashMessage/RemoveHashMessage.tsx");
+const RemoveFieldsSpecificationMessage_1 = __webpack_require__(/*! ./resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage */ "./extension/app/resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage.tsx");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
 const setExtensionShowState = (isShow) => {
     if (!stores_1.rootStore.platformStore.getID()) {
@@ -51489,6 +51500,12 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
         if (stores_1.rootStore.platformStore.getID()) {
             const { show } = message.payload;
             stores_1.rootStore.platformStore.setMessage(show ? RemoveHashMessage_1.RemoveHashMessage : null);
+        }
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppQueryHasSpecifyFields === message.type, message)) {
+        if (stores_1.rootStore.platformStore.getID()) {
+            const { show } = message.payload;
+            stores_1.rootStore.platformStore.setMessage(show ? RemoveFieldsSpecificationMessage_1.RemoveFieldsSpecificationMessage : null);
         }
     }
 });
@@ -52683,6 +52700,29 @@ const EyeIcon = () => {
                 react_1.default.createElement("rect", { width: "16", height: "16", transform: "translate(0.5)" })))));
 };
 exports.EyeIcon = EyeIcon;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/icons/GoOutsideIcon/GoOutsideIcon.tsx":
+/*!******************************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/GoOutsideIcon/GoOutsideIcon.tsx ***!
+  \******************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GoOutsideIcon = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const GoOutsideIcon = () => {
+    return (react_1.default.createElement("svg", { viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg", className: "go-outside-icon icon" },
+        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M9.49559 0.0405541C9.2958 0.102542 9.05721 0.324067 8.96879 0.529703C8.81693 0.882835 8.90585 1.28091 9.19459 1.54062C9.45666 1.77631 9.4409 1.77456 11.3111 1.77456H12.9545L9.22767 5.50417C5.10555 9.62938 5.3422 9.36889 5.3422 9.7811C5.3422 10.4239 6.00686 10.847 6.59222 10.5768C6.74145 10.508 7.25697 10.0048 10.4927 6.76955L14.2211 3.04157V4.6855C14.2211 6.55625 14.2194 6.54048 14.455 6.80264C14.8145 7.20262 15.4101 7.20237 15.7699 6.8021C16.0168 6.52744 16.0057 6.69026 15.9962 3.47667L15.9877 0.633006L15.9188 0.504276C15.813 0.306427 15.7112 0.20081 15.5291 0.0998838L15.3624 0.00749589L12.5015 0.00152226C10.0883 -0.0035131 9.61796 0.00258563 9.49559 0.0405541ZM2.19933 1.81041C1.36456 1.96453 0.652723 2.50041 0.265555 3.26619C0.220376 3.35548 0.144587 3.55251 0.0970621 3.70404L0.0107051 3.97949L0.00195059 8.74901C-0.0040525 12.0173 0.00370149 13.5868 0.0265883 13.7355C0.116228 14.3179 0.347472 14.7624 0.792358 15.2074C1.23724 15.6524 1.68157 15.8837 2.26383 15.9734C2.41247 15.9963 3.98147 16.0041 7.24881 15.998L12.0169 15.9893L12.2922 15.9029C13.3073 15.5845 14.0063 14.7984 14.1883 13.7708C14.209 13.6541 14.2211 12.851 14.2211 11.6062C14.2211 9.70682 14.2186 9.62037 14.1589 9.46068C14.0346 9.12835 13.6925 8.89744 13.3275 8.89954C12.9818 8.90154 12.7069 9.07233 12.5378 9.39015L12.4546 9.54653L12.439 11.5638L12.4233 13.5811L12.3504 13.7293C12.3103 13.8108 12.2145 13.9329 12.1376 14.0006C11.8672 14.2387 12.2405 14.2222 7.12384 14.2222C1.91966 14.2222 2.3354 14.2435 2.04869 13.963C1.75295 13.6738 1.77724 14.1276 1.77724 8.88975C1.77724 3.75396 1.7607 4.1293 1.99879 3.85873C2.06648 3.78183 2.18854 3.68603 2.27002 3.6459L2.41819 3.57291L4.41922 3.55727L6.42026 3.54163L6.58415 3.46751C7.0139 3.27319 7.21985 2.74486 7.03194 2.31863C6.93833 2.10633 6.73923 1.91239 6.53735 1.8368C6.37723 1.77688 6.29588 1.77469 4.36332 1.77807C3.25913 1.77997 2.28531 1.79455 2.19933 1.81041Z" })));
+};
+exports.GoOutsideIcon = GoOutsideIcon;
 
 
 /***/ }),
@@ -54418,6 +54458,16 @@ exports.integrations = [
         name: 'Ultimate Windows Security',
         url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
     },
+    {
+        id: '$cyber-chef$',
+        name: 'CyberChef',
+        url: 'https://gchq.github.io/CyberChef/#input=$BASE64-VALUE$',
+    },
+    {
+        id: '$cyber-chef-magic$',
+        name: 'CyberChef (Magic)',
+        url: 'https://gchq.github.io/CyberChef/#recipe=Magic(3,false,false,\'\')&input=$BASE64-VALUE$',
+    },
 ];
 
 
@@ -54462,6 +54512,20 @@ class IntegrationsStore {
     }
     getReadyUrls(values, url) {
         const formatValue = (v) => `\\$${v}\\$`;
+        if (url.indexOf('$BASE64-VALUE$') > -1) {
+            return values.map(value => {
+                const hash = btoa(value)
+                    .replace(/=+/g, '');
+                return encodeURI((0, helpers_1.formatString)(url, { 'BASE64-VALUE': hash }, formatValue));
+            });
+        }
+        if (url.indexOf('$BASE64-VALUES$') > -1) {
+            const hash = btoa(values.join(','))
+                .replace(/=+/g, '');
+            return [
+                encodeURI((0, helpers_1.formatString)(url, { 'BASE64-VALUES': hash }, formatValue)),
+            ];
+        }
         if (url.indexOf('$VALUES$') > -1) {
             return [
                 encodeURI((0, helpers_1.formatString)(url, { VALUES: values.join(',') }, formatValue)),
@@ -54625,10 +54689,15 @@ const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/Bi
 const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationHeaderView/styles.scss");
 const IntegrationHeaderView = () => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
     return (react_1.default.createElement("div", { className: "integration-header-view" },
+        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
+        react_1.default.createElement("div", { className: "warning-message" },
+            react_1.default.createElement(WarningIcon_1.WarningIcon, null),
+            react_1.default.createElement("p", null, "When using integrations with third-party services, do not send to them any sensitive information")),
         react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
         react_1.default.createElement("div", { className: "group" },
             react_1.default.createElement(AppHeader_1.AppHeader, null, "Integration Settings"),
@@ -54666,7 +54735,7 @@ const NotFoundContentView = () => {
             react_1.default.createElement("br", null),
             "Microsoft Sentinel, Microsoft Defender for Endpoint",
             react_1.default.createElement("br", null),
-            "Amazon Athena, Splunk, Elastic, QRadar, ArcSight,")));
+            "Amazon Athena, Splunk, Elastic, OpenSearch, QRadar, ArcSight")));
 };
 exports.NotFoundContentView = NotFoundContentView;
 
@@ -54852,6 +54921,7 @@ const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const GoOutsideIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/GoOutsideIcon/GoOutsideIcon */ "./extension/app/components/atoms/icons/GoOutsideIcon/GoOutsideIcon.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/BulkResourcesPanel/styles.scss");
 const MAX_COUNT_SELECTED = 30;
 exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
@@ -54864,7 +54934,9 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
         integrationsStore.integrations.forEach(({ name, id, url }) => {
             result.push({
                 id,
-                content: name,
+                content: react_1.default.createElement("span", null,
+                    react_1.default.createElement(GoOutsideIcon_1.GoOutsideIcon, null),
+                    name),
                 onClick: () => {
                     integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
                         window.open(u, '_blank');
@@ -55697,6 +55769,50 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
                     resourceStore.activeTabID = id;
                 }
             }, activeTab: activeTabID }, children)));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage.tsx":
+/*!****************************************************************************************************************!*\
+  !*** ./extension/app/resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage.tsx ***!
+  \****************************************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RemoveFieldsSpecificationMessage = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
+const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
+const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const types_inline_messages_1 = __webpack_require__(/*! ../../../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/RemoveFieldsSpecificationMessage/styles.scss");
+exports.RemoveFieldsSpecificationMessage = (0, mobx_react_lite_1.observer)(() => {
+    const platformStore = (0, stores_1.usePlatformStore)();
+    return (react_1.default.createElement("div", { className: "remove-fields-specification-message" },
+        react_1.default.createElement(WarningIcon_1.WarningIcon, null),
+        react_1.default.createElement("p", null, "The query contains a select statement that limits the fields in the results. Do you want to select all the fields available in the table?"),
+        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
+                (0, content_services_1.sendMessageFromApp)({
+                    type: types_background_messages_1.MessageToBackground.BGDirectMessageToInline,
+                    payload: {
+                        type: types_inline_messages_1.MessageToInline.ISRemoveFieldSpecification,
+                    },
+                });
+                platformStore.setMessage(null);
+            } }, "Yes"),
+        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
+                platformStore.setMessage(null);
+            } }, "No")));
 });
 
 
@@ -57118,6 +57234,7 @@ var MessageToApp;
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
     MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
+    MessageToApp["AppQueryHasSpecifyFields"] = "AppQueryHasSpecifyFields";
     MessageToApp["AppClearResourceData"] = "AppClearResourceData";
     MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
     MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
@@ -57605,7 +57722,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.3";
+exports.version = "1.2.5";
 
 
 /***/ }),
@@ -57846,6 +57963,7 @@ var PlatformID;
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
+    PlatformID["OpenSearch"] = "OpenSearch";
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
@@ -57856,6 +57974,7 @@ var PlatformName;
     PlatformName["Splunk"] = "Splunk";
     PlatformName["QRadar"] = "IBM QRadar";
     PlatformName["Elastic"] = "Elastic";
+    PlatformName["OpenSearch"] = "OpenSearch";
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
@@ -58531,6 +58650,125 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 
 /***/ }),
 
+/***/ "./extension/content/platforms/OpenSearchPlatform.ts":
+/*!***********************************************************!*\
+  !*** ./extension/content/platforms/OpenSearchPlatform.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OpenSearchPlatform = void 0;
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const AbstractContentPlatform_1 = __webpack_require__(/*! ./AbstractContentPlatform */ "./extension/content/platforms/AbstractContentPlatform.ts");
+let loggers;
+class OpenSearchPlatform extends AbstractContentPlatform_1.AbstractContentPlatform {
+    constructor() {
+        super(...arguments);
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'user.name',
+                'related.user',
+                'user.full_name',
+                'winlog.event_data.SubjectUserName',
+                'winlog.event_data.TargetUserName',
+                'winlog.user.name',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'host.hostname',
+                'host.name',
+                'winlog.computer_name',
+            ],
+        };
+        this.extensionDefaultPosition = OpenSearchPlatform.extensionDefaultPosition;
+    }
+    static buildQueryParts(type, resources, withPrefix = false) {
+        const prefix = type === 'include'
+            ? 'AND'
+            : 'AND NOT';
+        const normalizedResources = {};
+        Object.keys(resources).forEach(fieldName => {
+            if (resources[fieldName].length > 1) {
+                normalizedResources[fieldName] = [
+                    `(${resources[fieldName]
+                        .map(rn => OpenSearchPlatform.normalizedValue(rn))
+                        .join(' OR ')})`,
+                ];
+            }
+            else {
+                normalizedResources[fieldName] = resources[fieldName];
+            }
+        });
+        return (0, common_helpers_1.buildQueryParts)(normalizedResources, () => type === 'exclude' ? ':' : ':', type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => OpenSearchPlatform.normalizedValue(v),
+        }, withPrefix ? prefix : undefined);
+    }
+    getID() {
+        return OpenSearchPlatform.id;
+    }
+    getName() {
+        return types_common_1.PlatformName.OpenSearch;
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
+            AbstractContentPlatform_1.AbstractContentPlatform.processInlineListeners(message);
+        });
+        loggers.debug().log('listeners were set');
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.openSearchInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+        loggers.debug().log('inline mounted');
+    }
+    connect() {
+        OpenSearchPlatform.setListeners();
+        OpenSearchPlatform.connectInlineListener();
+        loggers.debug().log('connected');
+    }
+    buildQueryParts(type, resources, withPrefix) {
+        return OpenSearchPlatform.buildQueryParts(type, resources, withPrefix);
+    }
+}
+exports.OpenSearchPlatform = OpenSearchPlatform;
+OpenSearchPlatform.id = types_common_1.PlatformID.OpenSearch;
+OpenSearchPlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 480,
+    height: 480,
+};
+OpenSearchPlatform.normalizedValue = (value) => {
+    let nValue = (0, checkers_1.isNumberInString)(value)
+        ? parseFloat(value)
+        : String(value).trim();
+    if (typeof nValue === 'number') {
+        return nValue;
+    }
+    if (nValue[0] === '(' || nValue[nValue.length - 1] === ')') {
+        return nValue;
+    }
+    return `"${nValue
+        .replace(/"/g, '\\"')}"`;
+};
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(OpenSearchPlatform.id);
+
+
+/***/ }),
+
 /***/ "./extension/content/platforms/PlatformResolver.ts":
 /*!*********************************************************!*\
   !*** ./extension/content/platforms/PlatformResolver.ts ***!
@@ -58576,6 +58814,10 @@ class PlatformResolver {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./ElasticPlatform */ "./extension/content/platforms/ElasticPlatform.ts").ElasticPlatform))());
                     break;
                 }
+                case types_common_1.PlatformID.OpenSearch: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./OpenSearchPlatform */ "./extension/content/platforms/OpenSearchPlatform.ts").OpenSearchPlatform))());
+                    break;
+                }
                 case types_common_1.PlatformID.ArcSight: {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./ArcSightPlatform */ "./extension/content/platforms/ArcSightPlatform.ts").ArcSightPlatform))());
                     break;
@@ -58613,8 +58855,11 @@ class PlatformResolver {
             return this.getPlatformByID(types_common_1.PlatformID.Splunk);
         }
         if (document.querySelector('a.euiHeaderLogo[aria-label^="Elastic"]')
-            || document.querySelector('.euiIcon[aria-label^="Elastic"]')) {
+            || document.querySelector('#kibana-body')) {
             return this.getPlatformByID(types_common_1.PlatformID.Elastic);
+        }
+        if (document.querySelector('#opensearch-dashboards-body')) {
+            return this.getPlatformByID(types_common_1.PlatformID.OpenSearch);
         }
         return undefined;
     }
@@ -59037,6 +59282,7 @@ var MessageToInline;
     MessageToInline["ISGetQuery"] = "ISGetQuery";
     MessageToInline["ISSetDebugMode"] = "ISSetDebugMode";
     MessageToInline["ISRemoveHash"] = "ISRemoveHash";
+    MessageToInline["ISRemoveFieldSpecification"] = "ISRemoveFieldSpecification";
 })(MessageToInline = exports.MessageToInline || (exports.MessageToInline = {}));
 Object.values(MessageToInline).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
@@ -59056,7 +59302,7 @@ Object.values(MessageToInline).forEach(type => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -59066,6 +59312,7 @@ exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
+exports.openSearchInline = 'inline-opensearch.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -59074,6 +59321,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
+    [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
     app: [exports.appStyles],
 };
 
@@ -59090,7 +59338,20 @@ exports.accessibleResources = {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const local_storage_1 = __webpack_require__(/*! ./common/local-storage */ "./extension/common/local-storage.ts");
+const integrations_1 = __webpack_require__(/*! ./app/integrations/integrations */ "./extension/app/integrations/integrations.ts");
+const common_helpers_1 = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
 const envs_1 = __webpack_require__(/*! ./common/envs */ "./extension/common/envs.ts");
+if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.2.5') === 'less') {
+    const storedIntegrations = (0, local_storage_1.getIntegrations)();
+    const ids = storedIntegrations.map(i => i.id);
+    if (!ids.includes('$cyber-chef$')) {
+        storedIntegrations.push(integrations_1.integrations.find(i => i.id === '$cyber-chef$'));
+    }
+    if (!ids.includes('$cyber-chef-magic$')) {
+        storedIntegrations.push(integrations_1.integrations.find(i => i.id === '$cyber-chef-magic$'));
+    }
+    (0, local_storage_1.setIntegrations)(storedIntegrations);
+}
 (0, local_storage_1.setVersion)(envs_1.version);
 
 

@@ -32,7 +32,7 @@ describe('AmazonAthena inline tests', () => {
 
     await sleep(0.1);
 
-    expect(valuesStack[0]).toEqual('SELECT testTable WHERE "test3" = \'account3\'');
+    expect(valuesStack[0]).toEqual('SELECT testTable WHERE test3 = \'account3\'');
 
     // exclude
     valuesStack.length = 0;
@@ -48,7 +48,7 @@ describe('AmazonAthena inline tests', () => {
 
     await sleep(0.1);
 
-    expect(valuesStack[0]).toEqual('SELECT testTable WHERE "test3" != \'account3\'');
+    expect(valuesStack[0]).toEqual('SELECT testTable WHERE test3 != \'account3\'');
 
     // show all
     valuesStack.length = 0;
@@ -64,7 +64,7 @@ describe('AmazonAthena inline tests', () => {
 
     await sleep(0.1);
 
-    expect(valuesStack[0]).toEqual('SELECT testTable WHERE "test3" = \'account3\'');
+    expect(valuesStack[0]).toEqual('SELECT testTable WHERE test3 = \'account3\'');
 
     // bulk include
     valuesStack.length = 0;
@@ -82,7 +82,7 @@ describe('AmazonAthena inline tests', () => {
 
     await sleep(0.1);
 
-    expect(valuesStack[0]).toEqual('SELECT testTable WHERE "test3" = \'account3\' OR "test3" = \'account1\' OR "test3" = \'account2\' OR "test1" = \'account4\' OR "test1" = \'account5\' OR "test0" = \'account0\'');
+    expect(valuesStack[0]).toEqual('SELECT testTable WHERE test3 = \'account3\' OR test3 = \'account1\' OR test3 = \'account2\' OR test1 = \'account4\' OR test1 = \'account5\' OR test0 = \'account0\'');
 
     // bulk exclude
     valuesStack.length = 0;
@@ -99,7 +99,7 @@ describe('AmazonAthena inline tests', () => {
 
     await sleep(0.1);
 
-    expect(valuesStack[0]).toEqual('SELECT testTable WHERE "test3" != \'account3\' AND "test3" != \'account1\' AND "test0" != \'account0\'');
+    expect(valuesStack[0]).toEqual('SELECT testTable WHERE test3 != \'account3\' AND test3 != \'account1\' AND test0 != \'account0\'');
 
     // bulk show all
     valuesStack.length = 0;
@@ -116,6 +116,6 @@ describe('AmazonAthena inline tests', () => {
 
     await sleep(0.1);
 
-    expect(valuesStack[0]).toEqual('SELECT testTable WHERE "test3" = \'account3\' OR "test3" = \'account123\' OR "test1" = \'account1\' OR "test1" = \'account22\'');
+    expect(valuesStack[0]).toEqual('SELECT testTable WHERE test3 = \'account3\' OR test3 = \'account123\' OR test1 = \'account1\' OR test1 = \'account22\'');
   });
 });

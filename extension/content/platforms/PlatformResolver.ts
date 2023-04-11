@@ -59,6 +59,14 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.OpenSearch: {
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./OpenSearchPlatform').OpenSearchPlatform)(),
+          );
+          break;
+        }
+
         case PlatformID.ArcSight: {
           this.platforms.set<PlatformID, ContentPlatform>(
             platformID,
@@ -112,9 +120,13 @@ export class PlatformResolver {
 
     if (
       document.querySelector('a.euiHeaderLogo[aria-label^="Elastic"]')
-      || document.querySelector('.euiIcon[aria-label^="Elastic"]')
+      || document.querySelector('#kibana-body')
     ) {
       return this.getPlatformByID(PlatformID.Elastic);
+    }
+
+    if (document.querySelector('#opensearch-dashboards-body')) {
+      return this.getPlatformByID(PlatformID.OpenSearch);
     }
 
     return undefined;

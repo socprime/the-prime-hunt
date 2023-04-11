@@ -6,6 +6,7 @@ export enum MessageToInline {
   ISGetQuery = 'ISGetQuery',
   ISSetDebugMode = 'ISSetDebugMode',
   ISRemoveHash = 'ISRemoveHash',
+  ISRemoveFieldSpecification = 'ISRemoveFieldSpecification',
 }
 
 Object.values(MessageToInline).forEach(type => {

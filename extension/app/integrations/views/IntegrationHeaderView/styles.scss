@@ -1,7 +1,27 @@
+@import '../../../scss/palette';
+
 .integration-header-view {
   .group {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .warning-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border: 1px solid $warning;
+    border-radius: 4px;
+    padding: 8px 16px;
+
+    .warning-icon {
+      height: 18px;
+      width: 20px;
+      fill: $warning;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
   }
 }

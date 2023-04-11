@@ -1,4 +1,4 @@
-import pako from 'pako';
+import getValue from 'get-value';
 import { Loggers } from '../../common/loggers';
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
 import { BGListenerType, WatchingResources } from '../types/types-background-common';
@@ -17,7 +17,9 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
   static readonly id = PlatformID.Elastic;
 
   private static postUrls: Url[] = [
-    '/bsearch',
+    '_search',
+    'bsearch',
+    'search',
   ];
 
   private isRunningResponse = false;
@@ -33,38 +35,70 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
     ];
   }
 
-  private async parseLine(
+  async parseResponseStringObject(
     line: string,
     mapFieldNameToTypes: Map<FieldName, ResourceTypeID[]>,
     fieldsNames: Set<FieldName>,
-  ): Promise<NormalizedParsedDocument[]> {
-    const result = [] as NormalizedParsedDocument[];
-    const parsedDocument = parseJSONSafe(clearExtraSpaces(line), null);
-    if (!parsedDocument) {
+  ): Promise<ParsedResult> {
+    const result = {} as ParsedResult;
+    const parsedObject: any = parseJSONSafe(clearExtraSpaces(line), null);
+    if (!parsedObject) {
       return result;
     }
 
-    const elasticResponse = parsedDocument as ElasticResponse;
+    const response = (typeof parsedObject.result !== 'undefined'
+      ? parsedObject.result
+      : parsedObject) as ResponseResult;
+
+    const rawResponse = (typeof response.rawResponse !== 'undefined'
+      ? response.rawResponse
+      : response) as RawResponse;
+
     if (this.isRunningResponseTimeout) {
       clearTimeout(this.isRunningResponseTimeout);
     }
-    this.isRunningResponse = elasticResponse?.result?.isRunning;
-    this.isRunningResponseTimeout = setTimeout(() => {
-      this.isRunningResponse = false;
-    }, 3500);
 
-    elasticResponse?.result?.rawResponse?.hits?.hits?.forEach(({ fields }) => {
+    this.isRunningResponse = false;
+
+    if (typeof response.isRunning !== 'undefined') {
+      this.isRunningResponse = response.isRunning;
+    }
+
+    if (this.isRunningResponse) {
+      this.isRunningResponseTimeout = setTimeout(() => {
+        this.isRunningResponse = false;
+      }, 3500);
+    }
+
+    (rawResponse?.hits?.hits || []).forEach(({ fields, _source }) => {
       Array.from(fieldsNames).forEach(fieldName => {
-        if (!fields[fieldName]) {
+        let fieldValue: string | number | (number | string)[] = undefined as any;
+
+        if (fields && typeof fields[fieldName] !== 'undefined') {
+          fieldValue = fields[fieldName];
+        }
+
+        const valueFormSource = getValue(_source || {}, fieldName);
+        if (typeof valueFormSource !== 'undefined') {
+          fieldValue = valueFormSource;
+        }
+
+        if (typeof fieldValue === 'undefined') {
           return;
         }
+
         const types = mapFieldNameToTypes.get(fieldName)!;
-        types.forEach(type => {
-          result.push({
-            type,
-            fieldName,
-            values: [...(fields[fieldName] as string[]).filter(v => this.checkValue(v))],
-          });
+        types.forEach(t => {
+          if (typeof result[t] === 'undefined') {
+            result[t] = {};
+          }
+          if (Array.isArray(fieldValue)) {
+            (fieldValue || []).forEach((v) => {
+              this.addValueToResource(result[t], fieldName, v);
+            });
+          } else {
+            this.addValueToResource(result[t], fieldName, fieldValue);
+          }
         });
       });
     });
@@ -72,24 +106,9 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  protected static decompress(response: string): string {
-    if (
-      response?.trim().length < 11
-      || response.slice(0, 10).indexOf('{') > -1
-    ) {
-      return response;
-    }
-    try {
-      const gzipedDataArray = Uint8Array.from(atob(response), c => c.charCodeAt(0));
-      return new TextDecoder()
-        .decode(pako.ungzip(gzipedDataArray));
-    } catch (e) {
-      return response;
-    }
-  }
-
   async parseResponse(response: object | string): Promise<ParsedResult> {
     const decompressedResponse = ElasticPlatform.decompress(response as string);
+
     const lines = splitByLines(decompressedResponse, true);
 
     const result = {} as ParsedResult;
@@ -104,22 +123,29 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
     const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
 
     const results = await Promise.all(
-      lines.map(line => this.parseLine(
+      lines.map(line => this.parseResponseStringObject(
         line,
         mapFieldNameToTypes,
         fieldsNames,
       )),
     );
 
-    results.forEach(r => {
-      r.forEach(d => {
-        const type = result[d.type] ? result[d.type] : {};
-        const set = type[d.fieldName] || new Set();
-        d.values?.forEach(v => set.add(v));
-        if (!result[d.type]) {
-          result[d.type] = {};
+    results.forEach(parsedResult => {
+      Object.keys(parsedResult).forEach(resourceTypeID => {
+        if (!result[resourceTypeID]) {
+          result[resourceTypeID] = {};
         }
-        result[d.type][d.fieldName] = set;
+        const alreadyAppendResources = result[resourceTypeID];
+        const parsedResources = parsedResult[resourceTypeID];
+        Object.keys(parsedResources).forEach(fieldName => {
+          const values = parsedResources[fieldName];
+          if (!alreadyAppendResources[fieldName]) {
+            alreadyAppendResources[fieldName] = new Set();
+          }
+          Array.from(values)
+            .forEach(v => alreadyAppendResources[fieldName].add(v));
+        });
+        result[resourceTypeID] = alreadyAppendResources;
       });
     });
 
@@ -245,12 +271,6 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
   }
 }
 
-type NormalizedParsedDocument = {
-  fieldName: string;
-  values: string[];
-  type: string;
-};
-
 // type ElasticRequest = {
 //   batch: {
 //     request: {
@@ -265,22 +285,29 @@ type NormalizedParsedDocument = {
 //   }[];
 // };
 
-type ElasticResponse = {
+type RawResponse = {
+  hits: {
+    hits: {
+      fields: Record<FieldName, (string | number)[]>;
+      _source: {
+        [fieldName: string]: string | Response['result']['rawResponse']['hits']['hits'][0]['_source'];
+      },
+    }[];
+  }
+};
+
+type ResponseResult = {
+  id: string;
+  isPartial: boolean;
+  isRestored: boolean;
+  isRunning: boolean;
+  loaded: number;
+  rawResponse: RawResponse;
+};
+
+type Response = {
   id: number;
-  result: {
-    id: string;
-    isPartial: boolean;
-    isRestored: boolean;
-    isRunning: boolean;
-    loaded: number;
-    rawResponse: {
-      hits: {
-        hits: {
-          fields: Record<string, unknown>;
-        }[];
-      };
-    };
-  };
+  result: ResponseResult;
 };
 
 loggers = require('../../common/loggers').loggers

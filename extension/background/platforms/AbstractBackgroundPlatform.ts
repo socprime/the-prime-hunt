@@ -1,3 +1,4 @@
+import pako from 'pako';
 import { BackgroundPlatform, TabID, WatchingResources } from '../types/types-background-common';
 import { UniqueHash } from '../../../common/types';
 import { BrowserTabID, PlatformID, PlatformName } from '../../common/types/types-common';
@@ -73,6 +74,22 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
     }
     if (values.size) {
       parent[key] = values;
+    }
+  }
+
+  protected static decompress(response: string): string {
+    if (
+      response?.trim().length < 11
+      || response.slice(0, 10).indexOf('{') > -1
+    ) {
+      return response;
+    }
+    try {
+      const gzipedDataArray = Uint8Array.from(atob(response), c => c.charCodeAt(0));
+      return new TextDecoder()
+        .decode(pako.ungzip(gzipedDataArray));
+    } catch (e) {
+      return response;
     }
   }
 

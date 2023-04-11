@@ -61,5 +61,10 @@
     .list-item:hover {
       background-color: $base-selection-color;
     }
+
+    .go-outside-icon {
+      position: relative;
+      top: 2px;
+    }
   }
 }

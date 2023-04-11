@@ -14,6 +14,7 @@ import {
   microsoftDefenderInline,
   microsoftSentinelInline,
   amazonAthenaInline,
+  openSearchInline,
   qRadarInline,
   splunkInline,
   elasticInline,
@@ -84,6 +85,7 @@ const inlineEntries = [
   splunkInline,
   qRadarInline,
   elasticInline,
+  openSearchInline,
   arcSightInline,
   amazonAthenaInline,
 ].reduce((entry, inline) => {

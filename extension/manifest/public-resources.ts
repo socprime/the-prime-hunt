@@ -8,6 +8,7 @@ export const splunkInline = 'inline-splunk.js';
 export const qRadarInline = 'inline-qradar.js';
 export const elasticInline = 'inline-elastic.js';
 export const arcSightInline = 'inline-arcsight.js';
+export const openSearchInline = 'inline-opensearch.js';
 
 export const accessibleResources: {
   [type: string]: string[];
@@ -19,5 +20,6 @@ export const accessibleResources: {
   [PlatformID.Elastic]: [elasticInline],
   [PlatformID.ArcSight]: [arcSightInline],
   [PlatformID.Athena]: [amazonAthenaInline],
+  [PlatformID.OpenSearch]: [openSearchInline],
   app: [appStyles],
 };

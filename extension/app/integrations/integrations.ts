@@ -31,4 +31,14 @@ export const integrations: Integration[] = [
     name: 'Ultimate Windows Security',
     url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
   },
+  {
+    id: '$cyber-chef$',
+    name: 'CyberChef',
+    url: 'https://gchq.github.io/CyberChef/#input=$BASE64-VALUE$',
+  },
+  {
+    id: '$cyber-chef-magic$',
+    name: 'CyberChef (Magic)',
+    url: 'https://gchq.github.io/CyberChef/#recipe=Magic(3,false,false,\'\')&input=$BASE64-VALUE$',
+  },
 ];

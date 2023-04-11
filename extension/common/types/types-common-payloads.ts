@@ -35,7 +35,7 @@ export type DirectMessagePayload<T = any> = {
   payload?: T;
 };
 
-export type ShowRemoveHashMessagePayload = {
+export type ShowMessagePayload = {
   show: boolean;
 };
 

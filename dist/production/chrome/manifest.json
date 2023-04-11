@@ -1,5 +1,5 @@
 {
-   "version": "1.2.3",
+   "version": "1.2.5",
    "description": "__MSG_extension_description__",
    "name": "__MSG_extension_name__",
    "default_locale": "en",
@@ -41,6 +41,7 @@
             "inline-elastic.js",
             "inline-arcsight.js",
             "inline-amazon-athena.js",
+            "inline-opensearch.js",
             "app-styles.css"
          ],
          "matches": [

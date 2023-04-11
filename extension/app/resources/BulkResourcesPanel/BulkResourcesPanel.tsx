@@ -14,6 +14,7 @@ import { ModifyQueryPayload } from '../../../common/types/types-common-payloads'
 import { createClassName } from '../../../common/common-helpers';
 import { AppTooltip } from '../../components/tooltips/AppTooltip/AppTooltip';
 import { NormalizedParsedResources } from '../resources-types';
+import { GoOutsideIcon } from '../../components/atoms/icons/GoOutsideIcon/GoOutsideIcon';
 import './styles.scss';
 
 const MAX_COUNT_SELECTED = 30;
@@ -31,7 +32,7 @@ export const BulkResourcesPanel: React.FC = observer(() => {
     integrationsStore.integrations.forEach(({ name, id, url }) => {
       result.push({
         id,
-        content: name,
+        content: <span><GoOutsideIcon />{name}</span>,
         onClick: () => {
           integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
             window.open(u, '_blank');

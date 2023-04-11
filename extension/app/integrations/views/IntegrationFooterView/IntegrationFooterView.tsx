@@ -9,6 +9,7 @@ import { uuid } from '../../../../../common/helpers';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
 import { AppTooltip } from '../../../components/tooltips/AppTooltip/AppTooltip';
 import './styles.scss';
+import { Integration } from '../../integrations-types';
 
 export const IntegrationFooterView: React.FC = observer(() => {
   const appStore = useAppStore();
@@ -48,7 +49,7 @@ export const IntegrationFooterView: React.FC = observer(() => {
           icon={<PlusIcon />}
           onClick={() => {
 
-            integrationsStore.integrations.push({ id: uuid(), url: '', name: '' });
+            integrationsStore.integrations.push({ id: uuid() as Integration['id'], url: '', name: '' });
 
             setTimeout(() => {
               appStore.rootElement

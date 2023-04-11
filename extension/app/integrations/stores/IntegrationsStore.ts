@@ -35,11 +35,32 @@ export class IntegrationsStore {
   ): string[] {
     const formatValue = (v: string) => `\\$${v}\\$`;
 
+    if (url.indexOf('$BASE64-VALUE$') > -1) {
+      return values.map(value => {
+        const hash = btoa(value)
+          .replace(/=+/g, '');
+
+        return encodeURI(
+          formatString(url, { 'BASE64-VALUE': hash }, formatValue),
+        );
+      });
+    }
+
+    if (url.indexOf('$BASE64-VALUES$') > -1) {
+      const hash = btoa(values.join(','))
+        .replace(/=+/g, '');
+
+      return [
+        encodeURI(formatString(url, { 'BASE64-VALUES': hash }, formatValue)),
+      ];
+    }
+
     if (url.indexOf('$VALUES$') > -1) {
       return [
         encodeURI(formatString(url, { VALUES: values.join(',') }, formatValue)),
       ];
     }
+
     return values.map(value => {
       return encodeURI(formatString(url, { VALUE: value }, formatValue));
     });

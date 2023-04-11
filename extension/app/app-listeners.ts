@@ -9,13 +9,16 @@ import {
   SendToBackgroundPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
-  ShowRemoveHashMessagePayload,
+  ShowMessagePayload,
 } from '../common/types/types-common-payloads';
 import { platformResolver } from '../content/platforms/PlatformResolver';
 import { sendMessageFromApp } from '../content/services/content-services';
 import { ExtensionMessage, ExtensionMessageType } from '../common/types/types-common';
 import { MessageToBackground } from '../background/types/types-background-messages';
 import { RemoveHashMessage } from './resources/messages/RemoveHashMessage/RemoveHashMessage';
+import {
+  RemoveFieldsSpecificationMessage,
+} from './resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -129,8 +132,18 @@ const setExtensionShowState = (
       message,
     )) {
       if (rootStore.platformStore.getID()) {
-        const { show } = message.payload as ShowRemoveHashMessagePayload;
+        const { show } = message.payload as ShowMessagePayload;
         rootStore.platformStore.setMessage(show ? RemoveHashMessage : null);
+      }
+    }
+
+    if (isMessageMatched(
+      () => MessageToApp.AppQueryHasSpecifyFields === message.type,
+      message,
+    )) {
+      if (rootStore.platformStore.getID()) {
+        const { show } = message.payload as ShowMessagePayload;
+        rootStore.platformStore.setMessage(show ? RemoveFieldsSpecificationMessage : null);
       }
     }
   },

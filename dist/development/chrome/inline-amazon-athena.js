@@ -275,6 +275,7 @@ var MessageToApp;
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
     MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
+    MessageToApp["AppQueryHasSpecifyFields"] = "AppQueryHasSpecifyFields";
     MessageToApp["AppClearResourceData"] = "AppClearResourceData";
     MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
     MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
@@ -756,7 +757,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.3";
+exports.version = "1.2.5";
 
 
 /***/ }),
@@ -912,6 +913,7 @@ var PlatformID;
     PlatformID["Splunk"] = "Splunk";
     PlatformID["QRadar"] = "QRadar";
     PlatformID["Elastic"] = "Elastic";
+    PlatformID["OpenSearch"] = "OpenSearch";
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
@@ -922,6 +924,7 @@ var PlatformName;
     PlatformName["Splunk"] = "Splunk";
     PlatformName["QRadar"] = "IBM QRadar";
     PlatformName["Elastic"] = "Elastic";
+    PlatformName["OpenSearch"] = "OpenSearch";
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
@@ -1380,6 +1383,7 @@ var MessageToInline;
     MessageToInline["ISGetQuery"] = "ISGetQuery";
     MessageToInline["ISSetDebugMode"] = "ISSetDebugMode";
     MessageToInline["ISRemoveHash"] = "ISRemoveHash";
+    MessageToInline["ISRemoveFieldSpecification"] = "ISRemoveFieldSpecification";
 })(MessageToInline = exports.MessageToInline || (exports.MessageToInline = {}));
 Object.values(MessageToInline).forEach(type => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
@@ -1398,7 +1402,7 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -1408,6 +1412,7 @@ exports.splunkInline = 'inline-splunk.js';
 exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
+exports.openSearchInline = 'inline-opensearch.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -1416,6 +1421,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
+    [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
     app: [exports.appStyles],
 };
 
@@ -1485,7 +1491,8 @@ const loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/co
 const getEditor = () => {
     return (0, ace_editor_helpers_1.getEditor)(document.querySelector('.ace_editor'));
 };
-const regExp = /((\s?)+,?to_hex(\s?)+\((\s?)+)?SHA256(\s?)+\((\s?)+CAST(\s?)+\((.*)AS\s+VARBINARY(\s?)+\)(\s?)+\)(\s?)+\)\s+(AS\s+(.*)\s+)?FROM/gi;
+const hasHashRegExp = /((\s?)+,?to_hex(\s?)+\((\s?)+)?SHA256(\s?)+\((\s?)+CAST(\s?)+\((.*)AS\s+VARBINARY(\s?)+\)(\s?)+\)(\s?)+\)\s+(AS\s+(.*)\s+)?FROM/gi;
+const hasFieldSpecificationRegExp = /SELECT\s+(.)+FROM/gi;
 window.addEventListener('message', (event) => {
     var _a;
     const message = event.data;
@@ -1535,7 +1542,7 @@ window.addEventListener('message', (event) => {
         }
         const matchedValues = Array.from(editor
             .getValue()
-            .matchAll(regExp) || []);
+            .matchAll(hasHashRegExp) || []);
         if (!matchedValues[0] || !((_a = matchedValues[0]) === null || _a === void 0 ? void 0 : _a[8])) {
             return;
         }
@@ -1549,27 +1556,49 @@ window.addEventListener('message', (event) => {
         }
         editor.setValue(value);
     }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISRemoveFieldSpecification === message.type, message, event)) {
+        const editor = getEditor();
+        if (!editor) {
+            return;
+        }
+        const matchedValues = Array.from(editor
+            .getValue()
+            .matchAll(hasFieldSpecificationRegExp) || []);
+        const prefix = matchedValues[0][0];
+        let value = editor.getValue();
+        value = value
+            .replace(prefix, 'SELECT * FROM ')
+            .replace(/group\s+by.+/gi, '');
+        editor.setValue(value);
+    }
 });
-const observer = new MutationObserver(() => {
-    var _a, _b;
+const checkFieldSpecification = () => {
     const editor = getEditor();
     if (!editor) {
         return;
     }
     const matchedValues = Array.from(editor
         .getValue()
-        .matchAll(regExp) || []);
-    const isShow = !!((_b = (_a = matchedValues === null || matchedValues === void 0 ? void 0 : matchedValues[0]) === null || _a === void 0 ? void 0 : _a[8]) === null || _b === void 0 ? void 0 : _b.trim());
+        .matchAll(hasFieldSpecificationRegExp) || []);
+    const matched = (matchedValues[0][0] || '')
+        .replace(/SELECT/i, '')
+        .replace(/FROM/i, '')
+        .replace(/ +/i, '')
+        .trim();
+    const isShow = matched.length > 0 && matched !== '*';
     window.postMessage({
         id: (0, helpers_1.uuid)(),
         type: types_content_messages_1.MessageToContent.CSDirectMessageToApp,
         payload: {
-            type: types_app_messages_1.MessageToApp.AppQueryHasHash,
+            type: types_app_messages_1.MessageToApp.AppQueryHasSpecifyFields,
             payload: {
                 show: isShow,
             },
         },
     });
+};
+const observer = new MutationObserver(() => {
+    checkFieldSpecification();
 });
 const aceContent = document.querySelector('.ace_content');
 const observe = (element) => {

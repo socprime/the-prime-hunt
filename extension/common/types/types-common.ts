@@ -28,6 +28,7 @@ export enum PlatformID {
   Splunk = 'Splunk',
   QRadar = 'QRadar',
   Elastic = 'Elastic',
+  OpenSearch = 'OpenSearch',
   ArcSight = 'ArcSight',
   Athena = 'Athena',
 }
@@ -38,6 +39,7 @@ export enum PlatformName {
   Splunk = 'Splunk',
   QRadar = 'IBM QRadar',
   Elastic = 'Elastic',
+  OpenSearch = 'OpenSearch',
   ArcSight = 'ArcSight',
   Athena = 'Amazon Athena',
 }

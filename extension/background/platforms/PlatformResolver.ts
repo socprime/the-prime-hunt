@@ -57,6 +57,14 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.OpenSearch: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(
+            platformID,
+            new (require('./OpenSearchPlatform').OpenSearchPlatform)(),
+          );
+          break;
+        }
+
         case PlatformID.ArcSight: {
           this.platforms.set<PlatformID, BackgroundPlatform>(
             platformID,

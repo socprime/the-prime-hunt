@@ -3,10 +3,12 @@ type IntegrationID = 'virus-total'
 | 'anomali'
 | 'open-cti'
 | '$echo-trail'
-| '$ultimate-windows-security';
+| '$ultimate-windows-security'
+| '$cyber-chef$'
+| '$cyber-chef-magic$';
 
 export type Integration = {
-  id: IntegrationID | string;
+  id: IntegrationID;
   name: string;
   url: string;
 };
