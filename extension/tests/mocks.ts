@@ -69,12 +69,12 @@ export const getPlatformByID = (platformID: PlatformID) => {
     .platformResolver.getPlatformByID(platformID);
 };
 
-export const getMockedResizeObserver = () => {
-  return require('@jest/globals').jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  }));
+export const getMockedResizeObserver = (mockFunction = (type: string) => type) => {
+  return function ResizeObserver() {
+    this.observe = () => mockFunction('observe');
+    this.unobserve = () => mockFunction('unobserve');
+    this.disconnect = () => mockFunction('disconnect');
+  };
 };
 
 export const getMockedMonaco = (

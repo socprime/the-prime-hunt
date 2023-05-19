@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom';
-import { describe } from '@jest/globals';
 import { Checkbox } from './Checkbox';
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
 
 describe('Checkbox tests', () => {
   const getCheckbox = (text: string) => {

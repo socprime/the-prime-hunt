@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState, MutableRefObject, useImperativeHandle } from 'react';
 import { AppControlInput, AppControlInputProps } from '../../components/inputs/AppControlInput/AppControlInput';
 import { createClassName } from '../../../common/common-helpers';
 import { CheckIcon } from '../../components/atoms/icons/CheckIcon/CheckIcon';
@@ -11,15 +11,39 @@ export type AddFieldInputProps = Omit<AppControlInputProps, 'controls' | 'edit'>
   onRemove: () => void;
 };
 
-export const AddFieldInput = forwardRef<HTMLDivElement, AddFieldInputProps>(({
+export type AddFieldInputRefs = {
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+  wrapperRef: MutableRefObject<HTMLDivElement | null>;
+};
+
+export const AddFieldInput = forwardRef<AddFieldInputRefs, AddFieldInputProps>(({
   className = '',
   onApply,
   onRemove,
+  onType,
+  value = '',
   ...restProps
 }, ref) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value);
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+  const wrapperRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    get inputRef() {
+      return inputRef;
+    },
+    get wrapperRef() {
+      return wrapperRef;
+    },
+  }));
+
+
+  useEffect(() => {
+    if (value !== inputValue) {
+      setInputValue(value);
+    }
+  }, [value, inputValue]);
 
   useEffect(() => {
     inputRef.current!.focus();
@@ -31,7 +55,7 @@ export const AddFieldInput = forwardRef<HTMLDivElement, AddFieldInputProps>(({
         'add-field-input-wrapper',
         className,
       ])}
-      ref={ref}
+      ref={wrapperRef}
       onKeyDown={e => {
         const code = e.code?.toLowerCase?.() || '';
         if (code === 'enter') {
@@ -46,14 +70,17 @@ export const AddFieldInput = forwardRef<HTMLDivElement, AddFieldInputProps>(({
         <SearchDocumentIcon />
       </span>
       <AppControlInput
+        {...restProps}
         edit
         ref={inputRef}
         className={createClassName([
           'add-field-input',
           className,
         ])}
-        onType={v => setInputValue(v.trim())}
-        {...restProps}
+        onType={v => {
+          setInputValue(v.trim());
+          onType?.(v);
+        }}
         placeholder="Enter Field Name"
         controls={<>
           <span className="control">

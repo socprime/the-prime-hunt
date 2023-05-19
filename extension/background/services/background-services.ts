@@ -1,12 +1,13 @@
-import { BrowserTab, BGListenerType, TabID } from '../types/types-background-common';
+import { BrowserTab, BGListenerType, TabID, BackgroundPlatform } from '../types/types-background-common';
 import {
+  BrowserTabInfo,
   ExtensionMessage,
   PlatformID,
 } from '../../common/types/types-common';
 import { platformResolver } from '../platforms/PlatformResolver';
 import { MessageToBackground } from '../types/types-background-messages';
 import { removeBGInterceptor, setBGInterceptor } from './background-services-listeners';
-import { uuid } from '../../../common/helpers';
+import { getUrlParamsSafe, uuid } from '../../../common/helpers';
 import { isTabsSendMessageSupported } from '../../common/api-support';
 import {
   NormalizedParsedResources,
@@ -55,61 +56,71 @@ export const normalizeParsedResources = (resources: Resources): NormalizedResour
   return result;
 };
 
-const registeredPlatforms: Map<number, PlatformID> = new Map();
+const registeredPlatforms: Map<
+TabID,
+{
+  platform: BackgroundPlatform;
+  tabInfo: BrowserTabInfo;
+}
+> = new Map();
 
-export const registerPlatformTab = (platformID: PlatformID, tabID: BrowserTab['id']) => {
+export const registerPlatformTab = (platformID: PlatformID, tabInfo: BrowserTabInfo) => {
+  const tabID = tabInfo.id;
   if (!tabID) {
     return loggers.warn().log('No tab id for register', platformID);
   }
   const platform = platformResolver.resolve(platformID);
-  const alreadyRegisteredPlatformID = registeredPlatforms.get(tabID);
-  if (
-    !platform
-    || alreadyRegisteredPlatformID === platformID
-  ) {
+  const isAlreadyRegisteredPlatform = registeredPlatforms.get(tabID)?.platform?.getID() === platformID;
+  if (!platform || isAlreadyRegisteredPlatform) {
     return;
   }
 
   platform.register();
-  registeredPlatforms.set(tabID, platformID);
+  registeredPlatforms.set(tabID, { platform, tabInfo });
 
   loggers.debug().log('registered platform tab', platformID, tabID);
 };
 
-const isExistPlatformTab = (platformID: PlatformID): boolean =>
-  Array.from(registeredPlatforms).some(
-    ([, id]) => id === platformID,
-  );
+export const getTabsInfosByPlatformID = (id: PlatformID): BrowserTabInfo[] => {
+  const result: BrowserTabInfo[] = [];
+  Array.from(registeredPlatforms).forEach(([, { platform, tabInfo }]) => {
+    if (platform.getID() === id) {
+      result.push(tabInfo);
+    }
+  });
+  return result;
+};
 
 export const unregisterPlatformTabs = (tabsIDs: BrowserTab['id'][]) => {
-  const deletedPlatformIDs: Set<PlatformID> =
-    (tabsIDs || []).reduce(
-      (ids, tabID) => {
-        if (!tabID) {
-          return loggers.warn().log('No tab id for unregister', tabID);
-        }
-        const platformID = registeredPlatforms.get(tabID);
-        if (platformID) {
-          ids.add(platformID);
-          registeredPlatforms.delete(tabID);
-          loggers.debug().log('unregistered platform tab', tabID);
-        }
-        return ids;
-      }, new Set<PlatformID>(),
-    );
+  const normalizedTabsIDs = tabsIDs.reduce((res, tabID) => {
+    if (typeof tabID === 'number') {
+      res.push(tabID);
+    }
+    return res;
+  }, [] as number[]);
 
-  Array.from(deletedPlatformIDs).forEach(platformID => {
-    if (isExistPlatformTab(platformID)) {
+  const stillALivePlatform = {} as Record<PlatformID, boolean>;
+  const deletedPlatform: Map<PlatformID, BackgroundPlatform> = new Map();
+
+  Array.from(registeredPlatforms).forEach(([tabID, { platform }]) => {
+    if (normalizedTabsIDs.includes(tabID)) {
+      registeredPlatforms.delete(tabID);
+      deletedPlatform.set(platform.getID(), platform);
+      loggers.debug().log('unregistered platform tab', tabID);
       return;
     }
-    const platform = platformResolver.resolve(platformID);
-    if (!platform) {
-      return loggers.warn().log('can not resolve platform for unregister', platformID);
-    }
-    platform.unregister();
+
+    stillALivePlatform[platform.getID()] = true;
   });
 
-  if (registeredPlatforms.size < 1) {
+  Array.from(deletedPlatform).forEach(([platformID, platform]) => {
+    if (!stillALivePlatform[platformID]) {
+      platform.unregister();
+      loggers.debug().log('unregistered platform', platformID);
+    }
+  });
+
+  if (Object.keys(stillALivePlatform).length < 1) {
     loggers.info().log('there are no platforms tabs left');
   }
 };
@@ -127,4 +138,15 @@ export const waitBGMessage = async <T = unknown>(type: MessageToBackground): Pro
       },
     );
   });
+};
+
+export const getOriginFromSender = (sender: chrome.runtime.MessageSender): string => {
+  const origin = (getUrlParamsSafe(
+    sender.origin || sender.url || sender.tab?.url,
+    'origin',
+  ) || '').trim();
+  if (!origin) {
+    loggers.error().log(`There is no origin from tab ID: ${sender.tab?.id}`, sender);
+  }
+  return origin;
 };

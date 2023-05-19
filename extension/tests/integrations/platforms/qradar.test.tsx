@@ -1,6 +1,4 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { describe, test, beforeEach } from '@jest/globals';
 import { setLoggers } from '../../../common/loggers';
 import {
   getMockedBrowserContext,

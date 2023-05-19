@@ -1,4 +1,4 @@
-import React, { RefObject, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { isFlatObjectsEqual } from '../../../../../common/helpers';
 import { createClassName } from '../../../../common/common-helpers';
 import { Position } from '../../../../content/types/types-content-common';

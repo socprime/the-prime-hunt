@@ -8886,126 +8886,6 @@ Object.defineProperty(exports, "decodeXMLStrict", ({ enumerable: true, get: func
 
 /***/ }),
 
-/***/ "./node_modules/get-value/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/get-value/index.js ***!
-  \*****************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-/*!
- * get-value <https://github.com/jonschlinkert/get-value>
- *
- * Copyright (c) 2014-2018, Jon Schlinkert.
- * Released under the MIT License.
- */
-
-const isObject = __webpack_require__(/*! isobject */ "./node_modules/isobject/index.js");
-
-module.exports = function(target, path, options) {
-  if (!isObject(options)) {
-    options = { default: options };
-  }
-
-  if (!isValidObject(target)) {
-    return typeof options.default !== 'undefined' ? options.default : target;
-  }
-
-  if (typeof path === 'number') {
-    path = String(path);
-  }
-
-  const isArray = Array.isArray(path);
-  const isString = typeof path === 'string';
-  const splitChar = options.separator || '.';
-  const joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
-
-  if (!isString && !isArray) {
-    return target;
-  }
-
-  if (isString && path in target) {
-    return isValid(path, target, options) ? target[path] : options.default;
-  }
-
-  let segs = isArray ? path : split(path, splitChar, options);
-  let len = segs.length;
-  let idx = 0;
-
-  do {
-    let prop = segs[idx];
-    if (typeof prop === 'number') {
-      prop = String(prop);
-    }
-
-    while (prop && prop.slice(-1) === '\\') {
-      prop = join([prop.slice(0, -1), segs[++idx] || ''], joinChar, options);
-    }
-
-    if (prop in target) {
-      if (!isValid(prop, target, options)) {
-        return options.default;
-      }
-
-      target = target[prop];
-    } else {
-      let hasProp = false;
-      let n = idx + 1;
-
-      while (n < len) {
-        prop = join([prop, segs[n++]], joinChar, options);
-
-        if ((hasProp = prop in target)) {
-          if (!isValid(prop, target, options)) {
-            return options.default;
-          }
-
-          target = target[prop];
-          idx = n - 1;
-          break;
-        }
-      }
-
-      if (!hasProp) {
-        return options.default;
-      }
-    }
-  } while (++idx < len && isValidObject(target));
-
-  if (idx === len) {
-    return target;
-  }
-
-  return options.default;
-};
-
-function join(segs, joinChar, options) {
-  if (typeof options.join === 'function') {
-    return options.join(segs);
-  }
-  return segs[0] + joinChar + segs[1];
-}
-
-function split(path, splitChar, options) {
-  if (typeof options.split === 'function') {
-    return options.split(path);
-  }
-  return path.split(splitChar);
-}
-
-function isValid(key, target, options) {
-  if (typeof options.isValid === 'function') {
-    return options.isValid(key, target);
-  }
-  return true;
-}
-
-function isValidObject(val) {
-  return isObject(val) || Array.isArray(val) || typeof val === 'function';
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/htmlparser2/lib/Parser.js":
 /*!************************************************!*\
   !*** ./node_modules/htmlparser2/lib/Parser.js ***!
@@ -10551,29 +10431,6 @@ function parseFeed(feed, options) {
 exports.parseFeed = parseFeed;
 exports.DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js"));
 //# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/isobject/index.js":
-/*!****************************************!*\
-  !*** ./node_modules/isobject/index.js ***!
-  \****************************************/
-/***/ ((module) => {
-
-"use strict";
-/*!
- * isobject <https://github.com/jonschlinkert/isobject>
- *
- * Copyright (c) 2014-2017, Jon Schlinkert.
- * Released under the MIT License.
- */
-
-
-
-module.exports = function isObject(val) {
-  return val != null && typeof val === 'object' && Array.isArray(val) === false;
-};
-
 
 /***/ }),
 
@@ -18513,7 +18370,7 @@ exports.Register = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
@@ -18556,6 +18413,13 @@ const isDate = (value) => {
         : value).getTime() > 567982800000;
 };
 exports.isDate = isDate;
+const isObject = (obj) => {
+    return typeof obj === 'object'
+        && !Array.isArray(obj)
+        && obj !== null
+        && typeof obj !== 'function';
+};
+exports.isObject = isObject;
 
 
 /***/ }),
@@ -18564,7 +18428,7 @@ exports.isDate = isDate;
 /*!***************************!*\
   !*** ./common/helpers.ts ***!
   \***************************/
-/***/ (function(__unused_webpack_module, exports) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -18578,7 +18442,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -18713,6 +18578,32 @@ const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.sleep = sleep;
+const iterateObjectsRecursively = (obj, keyPath, settings) => {
+    const { separator = '.', onIteration } = settings || {};
+    return Object.keys(obj || {}).reduce((result, key) => {
+        const path = keyPath.length ? `${keyPath}${separator}${key}` : key;
+        const value = obj[key];
+        if (typeof onIteration === 'function' && !(onIteration === null || onIteration === void 0 ? void 0 : onIteration(path, key, value, keyPath))) {
+            return keyPath.length ? [...result, keyPath] : result;
+        }
+        return [
+            ...result,
+            ...((0, checkers_1.isObject)(value)
+                ? (0, exports.iterateObjectsRecursively)(value, path, settings)
+                : [path]),
+        ];
+    }, []);
+};
+exports.iterateObjectsRecursively = iterateObjectsRecursively;
+const getUrlParamsSafe = (url, paramName) => {
+    try {
+        return new URL(url)[paramName] || '';
+    }
+    catch (e) {
+        return '';
+    }
+};
+exports.getUrlParamsSafe = getUrlParamsSafe;
 
 
 /***/ }),
@@ -18779,6 +18670,7 @@ var MessageToApp;
 (function (MessageToApp) {
     MessageToApp["AppShowExtension"] = "AppShowExtension";
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
+    MessageToApp["AppSyncWatchers"] = "AppSyncWatchers";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
     MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
     MessageToApp["AppQueryHasSpecifyFields"] = "AppQueryHasSpecifyFields";
@@ -18840,7 +18732,7 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
     urls: ['<all_urls>'],
 }, ['requestHeaders']);
 background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnMessage, (message, sender) => {
-    var _a, _b;
+    var _a;
     if (!((_a = sender.tab) === null || _a === void 0 ? void 0 : _a.id)) {
         return loggers
             .error()
@@ -18864,20 +18756,58 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
         (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_app_messages_1.MessageToApp.AppSendMessageOutside }));
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGSetWatchers === message.type, message, sender)) {
-        const { platformID, watchers } = message.payload;
-        (_b = PlatformResolver_1.platformResolver.resolve(platformID)) === null || _b === void 0 ? void 0 : _b.setWatchers(watchers, sender.tab.id);
-        (0, background_services_1.sendMessageFromBackground)(sender.tab.id, {
-            id: message.type,
-            type: types_app_messages_1.MessageToApp.AppSetLoadingState,
-            payload: {
-                loading: false,
-                key: types_app_common_1.LoadingKey.watchersChanging,
-            },
+        const { platformID, watchers, cacheID } = message.payload;
+        const tabID = sender.tab.id;
+        const platform = PlatformResolver_1.platformResolver.resolve(platformID);
+        if (!platform) {
+            loggers.warn().log(`${message.type}: There is no platform with passed ID: '${platformID}'`);
+            return;
+        }
+        platform.setWatchers(watchers, {
+            origin: (0, background_services_1.getOriginFromSender)(sender),
+            id: sender.tab.id,
+        });
+        (0, background_services_1.getTabsInfosByPlatformID)(platformID).forEach((tabInfo) => {
+            const senderOrigin = (0, background_services_1.getOriginFromSender)(sender);
+            if (tabInfo.origin !== senderOrigin || tabInfo.id === tabID) {
+                return;
+            }
+            (0, background_services_1.sendMessageFromBackground)(tabInfo.id, {
+                id: 'sync-watchers',
+                type: types_app_messages_1.MessageToApp.AppSyncWatchers,
+                payload: { watchers },
+            });
+        });
+        platform.reparseCached(cacheID, {
+            origin: (0, background_services_1.getOriginFromSender)(sender),
+            id: sender.tab.id,
+        })
+            .then((parsedResponse) => {
+            (0, background_services_1.sendMessageFromBackground)(tabID, {
+                id: 're-parsed-last-response',
+                type: types_app_messages_1.MessageToApp.AppTakeResourceData,
+                payload: {
+                    fieldsNames: [],
+                    cacheID,
+                    resources: (0, background_services_1.normalizeParsedResources)(parsedResponse),
+                },
+            });
+            (0, background_services_1.sendMessageFromBackground)(tabID, {
+                id: message.type,
+                type: types_app_messages_1.MessageToApp.AppSetLoadingState,
+                payload: {
+                    loading: false,
+                    key: types_app_common_1.LoadingKey.watchersChanging,
+                },
+            });
         });
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGRegisterPlatformTab === message.type, message, sender)) {
         const { platformID } = message.payload;
-        (0, background_services_1.registerPlatformTab)(platformID, sender.tab.id);
+        (0, background_services_1.registerPlatformTab)(platformID, {
+            id: sender.tab.id,
+            origin: (0, background_services_1.getOriginFromSender)(sender),
+        });
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGToggleShowExtension === message.type, message, sender)) {
         (0, background_services_1.sendMessageFromBackground)(sender.tab.id, Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_app_messages_1.MessageToApp.AppToggleShowExtension }));
@@ -18938,20 +18868,23 @@ const background_services_listeners_1 = __webpack_require__(/*! ../services/back
 const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 const types_app_messages_1 = __webpack_require__(/*! ../../app/types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
 const types_app_common_1 = __webpack_require__(/*! ../../app/types/types-app-common */ "./extension/app/types/types-app-common.ts");
+const loggers_1 = __webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts");
 class AbstractBackgroundPlatform {
     constructor() {
-        this.lastResponse = null;
-        this.watchingResources = {};
+        this.fields = new Set();
+        this.lastResponse = new Map();
         this.emptyFieldValues = [''];
         this.interceptorsIDs = new Set();
+        this.watchingResources = {};
     }
-    static sendParsedData(tabID, parsedResponse, isNew = false) {
-        const result = (0, background_services_1.normalizeParsedResources)(parsedResponse);
-        if (isNew || Object.keys(result).length > 0) {
+    static sendParsedData(tabID, payload, isNew = false) {
+        const { cacheID, resources, fieldsNames } = payload;
+        if (isNew
+            || (Object.keys(resources).length > 0 || fieldsNames.length > 0)) {
             (0, background_services_1.sendMessageFromBackground)(tabID, {
                 id: 'parsed-response',
                 type: isNew ? types_app_messages_1.MessageToApp.AppTakeNewResourceData : types_app_messages_1.MessageToApp.AppTakeResourceData,
-                payload: (0, background_services_1.normalizeParsedResources)(parsedResponse),
+                payload: { cacheID, resources, fieldsNames },
             });
         }
     }
@@ -19014,18 +18947,30 @@ class AbstractBackgroundPlatform {
             this.interceptorsIDs.delete(id);
         });
     }
-    setWatchers(watchers, tabID) {
+    setWatchers(watchers, tabInfo) {
+        const { origin, id } = tabInfo;
+        this.watchingResources[origin] = watchers;
+        this.watchingResources[String(id)] = origin;
+    }
+    getWatchers(tabInfo) {
+        const { origin, id } = tabInfo;
+        let watchingResources = this.watchingResources[origin];
+        if (watchingResources) {
+            return watchingResources;
+        }
+        const savedOriginForCurrentTab = this.watchingResources[String(id)];
+        if (savedOriginForCurrentTab) {
+            return this.watchingResources[savedOriginForCurrentTab];
+        }
+        return {};
+    }
+    reparseCached(cacheID, tabInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.watchingResources = watchers;
-            if (!this.lastResponse) {
-                return;
+            if (!this.lastResponse.has(cacheID)) {
+                loggers_1.loggers.debug().log(`no data was found by cache id: ${cacheID}`);
+                return Promise.resolve({});
             }
-            const parsedResponse = yield this.parseResponse(this.lastResponse);
-            (0, background_services_1.sendMessageFromBackground)(tabID, {
-                id: 're-parsed-last-response',
-                type: types_app_messages_1.MessageToApp.AppTakeResourceData,
-                payload: (0, background_services_1.normalizeParsedResources)(parsedResponse),
-            });
+            return this.parseResponse(this.lastResponse.get(cacheID), tabInfo);
         });
     }
 }
@@ -19060,23 +19005,17 @@ const types_background_common_1 = __webpack_require__(/*! ../types/types-backgro
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 const js_sha256_1 = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
         super();
+        this.result = {};
         this.watchingResources = {};
         this.emptyFieldValues = [
             ...this.emptyFieldValues,
             '-',
             'null',
-        ];
-    }
-    static normalizeFieldName(fieldName) {
-        const parts = fieldName.split('.').filter(Boolean);
-        const nFieldName = parts.shift();
-        return [
-            nFieldName,
-            parts,
         ];
     }
     static repairStrWithReplacements(str) {
@@ -19166,49 +19105,46 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
         }
         return AmazonAthenaPlatform.parseObj(nValue);
     }
-    static parse(str, fieldName) {
-        const fieldsNames = fieldName.split('.').map(v => v.trim());
-        let pointers = [
-            AmazonAthenaPlatform.parseStruct(str),
-        ];
-        const arrayParse = (arr, key) => {
-            return arr.map(a => {
-                if (typeof (a === null || a === void 0 ? void 0 : a[key]) === 'undefined' && (a === null || a === void 0 ? void 0 : a.$$array$$)) {
-                    return arrayParse(a.$$array$$, key);
+    parse(obj, kp = '') {
+        let result = [];
+        const nonArrayResult = (0, helpers_1.iterateObjectsRecursively)(obj, kp, {
+            onIteration: (keyPath, key, value, prevKeyPath) => {
+                if (this.fieldsNames.has(keyPath)) {
+                    const types = this.mapFieldNameToTypes.get(keyPath);
+                    types.forEach(t => {
+                        if (typeof this.result[t] === 'undefined') {
+                            this.result[t] = {};
+                        }
+                        this.addValueToResource(this.result[t], keyPath, value.$$value$$);
+                    });
                 }
-                return a[key];
-            }).flat(20);
-        };
-        fieldsNames.forEach((key) => {
-            let newPointers = [];
-            pointers.forEach((pointer) => {
-                if (!pointer) {
-                    return;
+                if (key === '$$array$$') {
+                    value.forEach((o) => {
+                        result = [
+                            ...result,
+                            ...this.parse(o, prevKeyPath),
+                        ];
+                    });
                 }
-                if (!pointer.$$array$$) {
-                    return newPointers.push(pointer[key]);
-                }
-                newPointers = [
-                    ...newPointers,
-                    ...arrayParse(pointer.$$array$$, key),
-                ];
-            });
-            pointers = newPointers;
+                return key !== '$$value$$' && key !== '$$array$$';
+            },
         });
-        return Array.from(new Set(pointers.reduce((result, current) => {
-            if (typeof (current === null || current === void 0 ? void 0 : current.$$value$$) === 'string') {
-                result.push(AmazonAthenaPlatform.repairStrWithReplacements(current.$$value$$));
-            }
-            return result;
-        }, [])));
+        return [
+            ...result,
+            ...nonArrayResult,
+        ];
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources);
-            const result = {};
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            const { fields } = this;
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            this.result = {};
+            this.mapFieldNameToTypes = mapFieldNameToTypes;
+            this.fieldsNames = fieldsNames;
             (((_a = response === null || response === void 0 ? void 0 : response.ResultSet) === null || _a === void 0 ? void 0 : _a.Rows) || []).slice(1).forEach((row) => {
                 ((row || {}).Data || []).forEach((data, index) => {
                     var _a, _b, _c, _d;
@@ -19216,33 +19152,26 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                     if (!label) {
                         return;
                     }
+                    fields.add(label);
                     const value = Object.values(data || {})[0];
                     if (!value) {
                         return;
                     }
-                    Array.from(fieldsNames).forEach(fn => {
-                        const [fieldName, parts] = AmazonAthenaPlatform.normalizeFieldName(fn);
-                        if (label === fieldName) {
-                            const types = mapFieldNameToTypes.get(fn);
-                            types.forEach(t => {
-                                if (typeof result[t] === 'undefined') {
-                                    result[t] = {};
-                                }
-                                if (parts.length > 0) {
-                                    AmazonAthenaPlatform.parse(value, parts.join('.')).forEach(v => {
-                                        this.addValueToResource(result[t], fn, v);
-                                    });
-                                }
-                                else {
-                                    this.addValueToResource(result[t], fieldName, value);
-                                }
-                            });
-                        }
-                    });
+                    if (fieldsNames.has(label)) {
+                        const types = mapFieldNameToTypes.get(label);
+                        types.forEach(t => {
+                            if (typeof this.result[t] === 'undefined') {
+                                this.result[t] = {};
+                            }
+                            this.addValueToResource(this.result[t], label, value);
+                        });
+                    }
+                    this.parse(AmazonAthenaPlatform.parseStruct(value), label)
+                        .forEach(fn => fields.add(fn));
                 });
             });
-            loggers.debug().log('finished parse response', id, result);
-            return result;
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, this.result);
+            return this.result;
         });
     }
     getID() {
@@ -19299,21 +19228,31 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                     }
                 };
                 AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
+                const url = details.url;
+                const cacheID = url;
                 Http_1.http.post({
-                    url: details.url,
+                    url,
                     body: bodyStr,
                     headers,
                 }, {
                     onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), true);
-                        this.lastResponse = response;
+                        const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                            origin: new URL(details.url).origin,
+                            id: details.tabId,
+                        }));
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                            cacheID,
+                            resources,
+                            fieldsNames: [...this.fields],
+                        }, true);
+                        this.lastResponse.set(cacheID, response);
                         removeAttached();
                     }),
                     onError: e => {
                         loggers
                             .error()
                             .addPrefix('failed webRequest post')
-                            .log(e, details.method, details.url, bodyStr);
+                            .log(e, details.method, url, bodyStr);
                         removeAttached();
                     },
                 });
@@ -19379,6 +19318,7 @@ const background_services_listeners_1 = __webpack_require__(/*! ../services/back
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -19434,14 +19374,15 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
         mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName))) : resourceName);
         return mappedFields;
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const result = {};
-            const fieldsNamesTest = new Set();
+            const watchingFieldsNames = this.fields;
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             (_a = (response || [])) === null || _a === void 0 ? void 0 : _a.forEach(v => {
                 if (!Array.isArray(v)) {
                     return;
@@ -19455,7 +19396,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                     const fields = str.substring(0, 6).toLowerCase() === 'cef:0|'
                         ? this.parseCEFString(str)
                         : this.parseHTMLString(sv);
-                    Array.from(fields).forEach(av => fieldsNamesTest.add(av[0]));
+                    Array.from(fields).forEach(av => watchingFieldsNames.add(av[0]));
                     Array.from(fieldsNames).forEach(fieldNameToParse => {
                         if (fields.has(fieldNameToParse)) {
                             const types = mapFieldNameToTypes.get(fieldNameToParse);
@@ -19469,7 +19410,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                     });
                 });
             });
-            loggers.debug().log('finished parse response', id, result);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
             return result;
         });
     }
@@ -19517,8 +19458,10 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                 };
                 const doRequest = () => {
                     AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
+                    const url = details.url;
+                    const cacheID = url;
                     Http_1.http.post({
-                        url: details.url,
+                        url,
                         body: bodyBytes,
                         headers: details.requestHeaders.reduce((res, header) => {
                             res[header.name] = header.value;
@@ -19531,18 +19474,26 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                                 loggers
                                     .warn()
                                     .addPrefix('failed parse json response')
-                                    .log(details.method, details.url, bodyStr);
+                                    .log(details.method, url, bodyStr);
                                 return removeAttached();
                             }
-                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(data), true);
-                            this.lastResponse = data;
+                            const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(data, {
+                                origin: new URL(details.url).origin,
+                                id: details.tabId,
+                            }));
+                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                                cacheID,
+                                resources,
+                                fieldsNames: [...this.fields],
+                            }, true);
+                            this.lastResponse.set(cacheID, response);
                             removeAttached();
                         }),
                         onError: e => {
                             loggers
                                 .warn()
                                 .addPrefix('failed webRequest post')
-                                .log(e, details.method, details.url, bodyStr);
+                                .log(e, details.method, url, bodyStr);
                             if (reconnectAttempts > 0) {
                                 loggers.info().log('retry request');
                                 reconnectAttempts = reconnectAttempts - 1;
@@ -19688,18 +19639,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ElasticPlatform = void 0;
-const get_value_1 = __importDefault(__webpack_require__(/*! get-value */ "./node_modules/get-value/index.js"));
 const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -19720,6 +19668,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
             if (!parsedObject) {
                 return result;
             }
+            loggers.debug().log('Parsed response', parsedObject);
             const response = (typeof parsedObject.result !== 'undefined'
                 ? parsedObject.result
                 : parsedObject);
@@ -19738,15 +19687,23 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                     this.isRunningResponse = false;
                 }, 3500);
             }
+            const watchingFieldsNames = this.fields;
             (((_a = rawResponse === null || rawResponse === void 0 ? void 0 : rawResponse.hits) === null || _a === void 0 ? void 0 : _a.hits) || []).forEach(({ fields, _source }) => {
                 Array.from(fieldsNames).forEach(fieldName => {
                     let fieldValue = undefined;
                     if (fields && typeof fields[fieldName] !== 'undefined') {
+                        Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
                         fieldValue = fields[fieldName];
                     }
-                    const valueFormSource = (0, get_value_1.default)(_source || {}, fieldName);
-                    if (typeof valueFormSource !== 'undefined') {
-                        fieldValue = valueFormSource;
+                    if (!fieldValue && _source) {
+                        (0, helpers_1.iterateObjectsRecursively)(_source, '', {
+                            onIteration: (keyPath, key, value) => {
+                                if (keyPath === fieldName) {
+                                    fieldValue = value;
+                                }
+                                return true;
+                            },
+                        }).forEach((fn) => watchingFieldsNames.add(fn));
                     }
                     if (typeof fieldValue === 'undefined') {
                         return;
@@ -19770,7 +19727,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
             return result;
         });
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         return __awaiter(this, void 0, void 0, function* () {
             const decompressedResponse = ElasticPlatform.decompress(response);
             const lines = (0, helpers_1.splitByLines)(decompressedResponse, true);
@@ -19779,8 +19736,9 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                 return result;
             }
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources, this.isRunningResponse);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             const results = yield Promise.all(lines.map(line => this.parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames)));
             results.forEach(parsedResult => {
                 Object.keys(parsedResult).forEach(resourceTypeID => {
@@ -19800,7 +19758,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                     result[resourceTypeID] = alreadyAppendResources;
                 });
             });
-            loggers.debug().log('finished parse response', id, result, this.isRunningResponse);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
             return result;
         });
     }
@@ -19850,8 +19808,10 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                     }
                 };
                 AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(tabID, true);
+                const url = urlDetails.href;
+                const cacheID = url;
                 Http_1.http.post({
-                    url: urlDetails.href,
+                    url,
                     body: bodyBytes,
                     headers: details.requestHeaders.reduce((res, header) => {
                         res[header.name] = header.value;
@@ -19859,8 +19819,16 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                     }, {}),
                 }, {
                     onTextSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(tabID, yield this.parseResponse(response), !this.isRunningResponse);
-                        this.lastResponse = response;
+                        const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                            origin: new URL(details.url).origin,
+                            id: details.tabId,
+                        }));
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(tabID, {
+                            cacheID,
+                            resources,
+                            fieldsNames: [...this.fields],
+                        }, !this.isRunningResponse);
+                        this.lastResponse.set(cacheID, response);
                         removeAttached();
                     }),
                     onError: (e) => {
@@ -19868,7 +19836,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                         loggers
                             .error()
                             .addPrefix('failed webRequest post')
-                            .log(e, details.method, details.url, bodyStr);
+                            .log(e, details.method, url, bodyStr);
                         removeAttached();
                     },
                 });
@@ -19914,6 +19882,7 @@ const background_services_listeners_1 = __webpack_require__(/*! ../services/back
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -19930,13 +19899,17 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
     getName() {
         return types_common_1.PlatformName.MicrosoftDefender;
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
             const result = {};
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const { fields } = this;
+            fields.clear();
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             ((response === null || response === void 0 ? void 0 : response.Results) || []).forEach(document => {
+                Object.keys(document).forEach(fn => fields.add(fn));
                 Array.from(fieldsNames).forEach(fieldName => {
                     if (document === null || document === void 0 ? void 0 : document[fieldName]) {
                         const types = mapFieldNameToTypes.get(fieldName);
@@ -19949,7 +19922,7 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                     }
                 });
             });
-            loggers.debug().log('finished parse response', id, result);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
             return result;
         });
     }
@@ -19992,8 +19965,10 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 }
             };
             AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
+            const url = details.url;
+            const cacheID = url;
             Http_1.http.post({
-                url: details.url,
+                url,
                 body: bodyBytes,
                 headers: details.requestHeaders.reduce((res, header) => {
                     res[header.name] = header.value;
@@ -20001,15 +19976,23 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 }, {}),
             }, {
                 onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), true);
-                    this.lastResponse = response;
+                    const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                        origin: new URL(details.url).origin,
+                        id: details.tabId,
+                    }));
+                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                        cacheID,
+                        resources,
+                        fieldsNames: [...this.fields],
+                    }, true);
+                    this.lastResponse.set(cacheID, response);
                     removeAttached();
                 }),
                 onError: e => {
                     loggers
                         .error()
                         .addPrefix('failed webRequest post')
-                        .log(e, details.method, details.url, bodyStr);
+                        .log(e, details.method, url, bodyStr);
                     removeAttached();
                 },
             });
@@ -20057,6 +20040,7 @@ const background_services_listeners_1 = __webpack_require__(/*! ../services/back
 const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -20112,8 +20096,10 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
             const bodyBytes = bodyData.get(details.url);
             const bodyStr = new TextDecoder().decode(bodyBytes);
             AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
+            const url = details.url;
+            const cacheID = url;
             Http_1.http.post({
-                url: details.url,
+                url,
                 body: bodyBytes,
                 headers: details.requestHeaders.reduce((res, header) => {
                     res[header.name] = header.value;
@@ -20121,15 +20107,23 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 }, {}),
             }, {
                 onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), true);
-                    this.lastResponse = response;
+                    const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                        origin: new URL(details.url).origin,
+                        id: details.tabId,
+                    }));
+                    AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                        cacheID,
+                        resources,
+                        fieldsNames: [...this.fields],
+                    }, true);
+                    this.lastResponse.set(cacheID, response);
                     removeAttached();
                 }),
                 onError: (e) => {
                     loggers
                         .error()
                         .addPrefix('failed webRequest post')
-                        .log(e, details.method, details.url, bodyStr);
+                        .log(e, details.method, url, bodyStr);
                     removeAttached();
                 },
             });
@@ -20140,16 +20134,20 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
         super.unregister();
         loggers.debug().log('unregistered');
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function* () {
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            const { fields } = this;
+            fields.clear();
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
             const result = {};
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             const mappedFieldNamesToIndex = (((_b = (_a = response === null || response === void 0 ? void 0 : response.tables) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.columns) || [])
                 .reduce((map, d, index) => {
                 map.set(d.name, index);
+                fields.add(d.name);
                 return map;
             }, new Map()) || new Map();
             (((_d = (_c = response === null || response === void 0 ? void 0 : response.tables) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.rows) || []).forEach((row) => {
@@ -20165,7 +20163,7 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                     }
                 });
             });
-            loggers.debug().log('finished parse response', id, result);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
             return result;
         });
     }
@@ -20197,18 +20195,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OpenSearchPlatform = void 0;
-const get_value_1 = __importDefault(__webpack_require__(/*! get-value */ "./node_modules/get-value/index.js"));
 const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -20244,15 +20239,23 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                     this.isRunningResponse = false;
                 }, 3500);
             }
+            const watchingFieldsNames = this.fields;
             (((_b = (_a = response === null || response === void 0 ? void 0 : response.rawResponse) === null || _a === void 0 ? void 0 : _a.hits) === null || _b === void 0 ? void 0 : _b.hits) || []).forEach(({ fields, _source }) => {
                 Array.from(fieldsNames).forEach(fieldName => {
                     let fieldValue = undefined;
                     if (fields && typeof fields[fieldName] !== 'undefined') {
+                        Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
                         fieldValue = fields[fieldName];
                     }
-                    const valueFormSource = (0, get_value_1.default)(_source || {}, fieldName);
-                    if (typeof valueFormSource !== 'undefined') {
-                        fieldValue = valueFormSource;
+                    if (!fieldValue && _source) {
+                        (0, helpers_1.iterateObjectsRecursively)(_source, '', {
+                            onIteration: (keyPath, key, value) => {
+                                if (keyPath === fieldName) {
+                                    fieldValue = value;
+                                }
+                                return true;
+                            },
+                        }).forEach((fn) => watchingFieldsNames.add(fn));
                     }
                     if (typeof fieldValue === 'undefined') {
                         return;
@@ -20276,7 +20279,7 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
             return result;
         });
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         return __awaiter(this, void 0, void 0, function* () {
             const decompressedResponse = OpenSearchPlatform.decompress(response);
             const lines = (0, helpers_1.splitByLines)(decompressedResponse, true);
@@ -20285,8 +20288,9 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                 return result;
             }
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources, this.isRunningResponse);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
+            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             const results = yield Promise.all(lines.map(line => this.parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames)));
             results.forEach(parsedResult => {
                 Object.keys(parsedResult).forEach(resourceTypeID => {
@@ -20306,7 +20310,7 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                     result[resourceTypeID] = alreadyAppendResources;
                 });
             });
-            loggers.debug().log('finished parse response', id, result, this.isRunningResponse);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
             return result;
         });
     }
@@ -20356,8 +20360,10 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                     }
                 };
                 AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(tabID, true);
+                const url = urlDetails.href;
+                const cacheID = url;
                 Http_1.http.post({
-                    url: urlDetails.href,
+                    url,
                     body: bodyBytes,
                     headers: details.requestHeaders.reduce((res, header) => {
                         res[header.name] = header.value;
@@ -20365,15 +20371,23 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                     }, {}),
                 }, {
                     onTextSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(tabID, yield this.parseResponse(response), !this.isRunningResponse);
-                        this.lastResponse = response;
+                        const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                            origin: new URL(details.url).origin,
+                            id: details.tabId,
+                        }));
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(tabID, {
+                            resources,
+                            cacheID,
+                            fieldsNames: [...this.fields],
+                        }, !this.isRunningResponse);
+                        this.lastResponse.set(cacheID, response);
                         removeAttached();
                     }),
                     onError: (e) => {
                         loggers
                             .error()
                             .addPrefix('failed webRequest post')
-                            .log(e, details.method, details.url, bodyStr);
+                            .log(e, details.method, url, bodyStr);
                         removeAttached();
                     },
                 });
@@ -20488,6 +20502,7 @@ const background_services_listeners_1 = __webpack_require__(/*! ../services/back
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -20511,10 +20526,11 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
     getName() {
         return types_common_1.PlatformName.QRadar;
     }
-    parseLastHtmlResponse(response) {
+    parseLastHtmlResponse(response, watchingResources) {
         var _a, _b;
-        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const result = {};
+        const { fields } = this;
         (_b = (_a = response.result) === null || _a === void 0 ? void 0 : _a.rows) === null || _b === void 0 ? void 0 : _b.forEach((r) => {
             const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body><table>${r}</table></body>`);
             $('td').each((i, e) => {
@@ -20522,6 +20538,9 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                 const elem = $(e);
                 const value = (_a = elem.text()) === null || _a === void 0 ? void 0 : _a.trim();
                 const fieldName = (_b = elem.attr('propertylabel')) === null || _b === void 0 ? void 0 : _b.trim();
+                if (fieldName) {
+                    fields.add(fieldName);
+                }
                 if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
                     const types = mapFieldNameToTypes.get(fieldName);
                     types.forEach(t => {
@@ -20535,15 +20554,19 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         });
         return result;
     }
-    parseAriaSearchResponse(response) {
-        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    parseAriaSearchResponse(response, watchingResources) {
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const result = {};
+        const { fields } = this;
         const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(response);
         $('td').each((i, e) => {
             var _a, _b, _c;
             const elem = $(e);
             const id = (_a = elem.attr('propertyname')) === null || _a === void 0 ? void 0 : _a.trim();
             const fieldName = (_b = $(`th[columnid="${id}"]`).text()) === null || _b === void 0 ? void 0 : _b.trim();
+            if (fieldName) {
+                fields.add(fieldName);
+            }
             const value = (_c = elem.find('span[id]').text()) === null || _c === void 0 ? void 0 : _c.trim();
             if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
                 const types = mapFieldNameToTypes.get(fieldName);
@@ -20557,14 +20580,15 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         });
         return result;
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
             const result = typeof response === 'string'
-                ? this.parseAriaSearchResponse(response)
-                : this.parseLastHtmlResponse(response);
-            loggers.debug().log('finished parse response', id, result);
+                ? this.parseAriaSearchResponse(response, watchingResources)
+                : this.parseLastHtmlResponse(response, watchingResources);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
             return result;
         });
     }
@@ -20628,8 +20652,10 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                     }
                 };
                 QRadarPlatform.sendLoading(details.tabId, true);
+                const url = details.url;
+                const cacheID = url;
                 Http_1.http.post({
-                    url: details.url,
+                    url,
                     body: bodyBytes,
                     headers: details.requestHeaders.reduce((res, header) => {
                         res[header.name] = header.value;
@@ -20639,13 +20665,21 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                     onJSONSuccess: isAreaSearch
                         ? undefined
                         : (response) => __awaiter(this, void 0, void 0, function* () {
-                            const parsedResult = yield this.parseResponse(response);
+                            const parsedResult = yield this.parseResponse(response, {
+                                origin: new URL(details.url).origin,
+                                id: details.tabId,
+                            });
                             if (Object.keys(parsedResult).length < 1) {
                                 removeAttached();
                                 return;
                             }
-                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, parsedResult, isNew);
-                            this.lastResponse = response;
+                            const resources = (0, background_services_1.normalizeParsedResources)(parsedResult);
+                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                                cacheID,
+                                resources,
+                                fieldsNames: [...this.fields],
+                            }, isNew);
+                            this.lastResponse.set(cacheID, response);
                             isNew = false;
                             removeAttached();
                         }),
@@ -20653,9 +20687,17 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                         ? (response) => __awaiter(this, void 0, void 0, function* () {
                             const startIndex = response.indexOf('table_data:"') + 12;
                             const endIndex = response.indexOf('/table>"') + 7;
-                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, yield this.parseResponse(response.substring(startIndex, endIndex)
-                                .replace(/\\/g, '')), true);
-                            this.lastResponse = response;
+                            const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response.substring(startIndex, endIndex)
+                                .replace(/\\/g, ''), {
+                                origin: new URL(details.url).origin,
+                                id: details.tabId,
+                            }));
+                            AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                                cacheID,
+                                resources,
+                                fieldsNames: [...this.fields],
+                            }, true);
+                            this.lastResponse.set(cacheID, response);
                             isNew = true;
                             removeAttached();
                         })
@@ -20664,7 +20706,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                         loggers
                             .warn()
                             .addPrefix('failed webRequest post')
-                            .log(e, details.method, details.url, bodyStr);
+                            .log(e, details.method, url, bodyStr);
                         removeAttached();
                     },
                 });
@@ -20712,6 +20754,7 @@ const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
 const envs_1 = __webpack_require__(/*! ../../common/envs */ "./extension/common/envs.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
 class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
     constructor() {
@@ -20744,11 +20787,14 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
     getName() {
         return types_common_1.PlatformName.Splunk;
     }
-    parseSummary(response) {
+    parseSummary(response, watchingResources) {
         const result = {};
-        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const fields = (response === null || response === void 0 ? void 0 : response.fields) || {};
-        if (Object.keys(fields).length > 0) {
+        const watchingFieldsNames = this.fields;
+        const receivedFieldsNames = Object.keys(fields) || [];
+        receivedFieldsNames.forEach((fn) => watchingFieldsNames.add(fn));
+        if (receivedFieldsNames.length > 0) {
             Array.from(fieldsNames).forEach(fieldName => {
                 var _a, _b;
                 if (fields === null || fields === void 0 ? void 0 : fields[fieldName]) {
@@ -20770,9 +20816,13 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         }
         return result;
     }
-    parseStatistic(response) {
+    parseStatistic(response, watchingResources) {
         const result = {};
-        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+        const watchingFieldsNames = this.fields;
+        ((response === null || response === void 0 ? void 0 : response.fields) || []).forEach(({ name }) => {
+            watchingFieldsNames.add(name);
+        });
         ((response === null || response === void 0 ? void 0 : response.rows) || []).forEach(row => {
             row.forEach((fieldsValues, index) => {
                 var _a, _b;
@@ -20798,14 +20848,15 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         });
         return result;
     }
-    parseResponse(response) {
+    parseResponse(response, tabInfo) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = (0, helpers_1.uuid)();
-            loggers.debug().log('started parse response...', id, this.watchingResources);
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
             const parsedResult = (response === null || response === void 0 ? void 0 : response.rows)
-                ? this.parseStatistic(response)
-                : this.parseSummary(response);
-            loggers.debug().log('finished parse response', id, parsedResult);
+                ? this.parseStatistic(response, watchingResources)
+                : this.parseSummary(response, watchingResources);
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, parsedResult);
             return parsedResult;
         });
     }
@@ -20844,19 +20895,29 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                     countRequests = 0;
                     urlsProcessing.delete(urlDetails.href);
                 };
+                const url = urlDetails.href;
+                const cacheID = url;
                 const getData = (isFirst = false) => {
                     SplunkPlatform.sendLoading(details.tabId, true);
                     const totalRequests = countRequests;
                     Http_1.http.get({
-                        url: urlDetails.href,
+                        url,
                         headers: details.requestHeaders.reduce((res, header) => {
                             res[header.name] = header.value;
                             return res;
                         }, {}),
                     }, {
                         onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                            SplunkPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), isFirst);
-                            this.lastResponse = response;
+                            const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                                origin: new URL(details.url).origin,
+                                id: details.tabId,
+                            }));
+                            SplunkPlatform.sendParsedData(details.tabId, {
+                                cacheID,
+                                fieldsNames: [...this.fields],
+                                resources,
+                            }, isFirst);
+                            this.lastResponse.set(cacheID, response);
                             timeoutID = setTimeout(() => {
                                 if (countRequests > totalRequests) {
                                     getData();
@@ -20867,7 +20928,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                             }, 3000);
                         }),
                         onError: (e) => {
-                            loggers.error().log(e, details.url);
+                            loggers.error().log(e, url);
                             clearTimeout(timeoutID);
                             cleanArtifacts();
                             SplunkPlatform.sendLoading(details.tabId, false);
@@ -20913,19 +20974,29 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                     countRequests = 0;
                     urlsProcessing.delete(urlDetails.href);
                 };
+                const url = urlDetails.href;
+                const cacheID = url;
                 const getData = (isFirst = false) => {
                     AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
                     const totalRequests = countRequests;
                     Http_1.http.get({
-                        url: urlDetails.href,
+                        url,
                         headers: details.requestHeaders.reduce((res, header) => {
                             res[header.name] = header.value;
                             return res;
                         }, {}),
                     }, {
                         onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                            SplunkPlatform.sendParsedData(details.tabId, yield this.parseResponse(response), isFirst);
-                            this.lastResponse = response;
+                            const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                                origin: new URL(details.url).origin,
+                                id: details.tabId,
+                            }));
+                            SplunkPlatform.sendParsedData(details.tabId, {
+                                cacheID,
+                                fieldsNames: [...this.fields],
+                                resources,
+                            }, isFirst);
+                            this.lastResponse.set(cacheID, response);
                             timeoutID = setTimeout(() => {
                                 if (countRequests > totalRequests) {
                                     getData();
@@ -20936,7 +21007,7 @@ class SplunkPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                             }, 3000);
                         }),
                         onError: (e) => {
-                            loggers.error().log(e, details.url);
+                            loggers.error().log(e, url);
                             clearTimeout(timeoutID);
                             cleanArtifacts();
                             AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, false);
@@ -21102,7 +21173,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.waitBGMessage = exports.unregisterPlatformTabs = exports.registerPlatformTab = exports.normalizeParsedResources = exports.normalizeParsedResource = exports.sendMessageFromBackground = void 0;
+exports.getOriginFromSender = exports.waitBGMessage = exports.unregisterPlatformTabs = exports.getTabsInfosByPlatformID = exports.registerPlatformTab = exports.normalizeParsedResources = exports.normalizeParsedResource = exports.sendMessageFromBackground = void 0;
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 const PlatformResolver_1 = __webpack_require__(/*! ../platforms/PlatformResolver */ "./extension/background/platforms/PlatformResolver.ts");
 const background_services_listeners_1 = __webpack_require__(/*! ./background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
@@ -21145,46 +21216,57 @@ const normalizeParsedResources = (resources) => {
 };
 exports.normalizeParsedResources = normalizeParsedResources;
 const registeredPlatforms = new Map();
-const registerPlatformTab = (platformID, tabID) => {
+const registerPlatformTab = (platformID, tabInfo) => {
+    var _a, _b;
+    const tabID = tabInfo.id;
     if (!tabID) {
         return loggers.warn().log('No tab id for register', platformID);
     }
     const platform = PlatformResolver_1.platformResolver.resolve(platformID);
-    const alreadyRegisteredPlatformID = registeredPlatforms.get(tabID);
-    if (!platform
-        || alreadyRegisteredPlatformID === platformID) {
+    const isAlreadyRegisteredPlatform = ((_b = (_a = registeredPlatforms.get(tabID)) === null || _a === void 0 ? void 0 : _a.platform) === null || _b === void 0 ? void 0 : _b.getID()) === platformID;
+    if (!platform || isAlreadyRegisteredPlatform) {
         return;
     }
     platform.register();
-    registeredPlatforms.set(tabID, platformID);
+    registeredPlatforms.set(tabID, { platform, tabInfo });
     loggers.debug().log('registered platform tab', platformID, tabID);
 };
 exports.registerPlatformTab = registerPlatformTab;
-const isExistPlatformTab = (platformID) => Array.from(registeredPlatforms).some(([, id]) => id === platformID);
+const getTabsInfosByPlatformID = (id) => {
+    const result = [];
+    Array.from(registeredPlatforms).forEach(([, { platform, tabInfo }]) => {
+        if (platform.getID() === id) {
+            result.push(tabInfo);
+        }
+    });
+    return result;
+};
+exports.getTabsInfosByPlatformID = getTabsInfosByPlatformID;
 const unregisterPlatformTabs = (tabsIDs) => {
-    const deletedPlatformIDs = (tabsIDs || []).reduce((ids, tabID) => {
-        if (!tabID) {
-            return loggers.warn().log('No tab id for unregister', tabID);
+    const normalizedTabsIDs = tabsIDs.reduce((res, tabID) => {
+        if (typeof tabID === 'number') {
+            res.push(tabID);
         }
-        const platformID = registeredPlatforms.get(tabID);
-        if (platformID) {
-            ids.add(platformID);
+        return res;
+    }, []);
+    const stillALivePlatform = {};
+    const deletedPlatform = new Map();
+    Array.from(registeredPlatforms).forEach(([tabID, { platform }]) => {
+        if (normalizedTabsIDs.includes(tabID)) {
             registeredPlatforms.delete(tabID);
+            deletedPlatform.set(platform.getID(), platform);
             loggers.debug().log('unregistered platform tab', tabID);
-        }
-        return ids;
-    }, new Set());
-    Array.from(deletedPlatformIDs).forEach(platformID => {
-        if (isExistPlatformTab(platformID)) {
             return;
         }
-        const platform = PlatformResolver_1.platformResolver.resolve(platformID);
-        if (!platform) {
-            return loggers.warn().log('can not resolve platform for unregister', platformID);
-        }
-        platform.unregister();
+        stillALivePlatform[platform.getID()] = true;
     });
-    if (registeredPlatforms.size < 1) {
+    Array.from(deletedPlatform).forEach(([platformID, platform]) => {
+        if (!stillALivePlatform[platformID]) {
+            platform.unregister();
+            loggers.debug().log('unregistered platform', platformID);
+        }
+    });
+    if (Object.keys(stillALivePlatform).length < 1) {
         loggers.info().log('there are no platforms tabs left');
     }
 };
@@ -21201,6 +21283,15 @@ const waitBGMessage = (type) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.waitBGMessage = waitBGMessage;
+const getOriginFromSender = (sender) => {
+    var _a, _b;
+    const origin = ((0, helpers_1.getUrlParamsSafe)(sender.origin || sender.url || ((_a = sender.tab) === null || _a === void 0 ? void 0 : _a.url), 'origin') || '').trim();
+    if (!origin) {
+        loggers.error().log(`There is no origin from tab ID: ${(_b = sender.tab) === null || _b === void 0 ? void 0 : _b.id}`, sender);
+    }
+    return origin;
+};
+exports.getOriginFromSender = getOriginFromSender;
 
 
 /***/ }),
@@ -21698,7 +21789,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.5";
+exports.version = "1.3.0";
 
 
 /***/ }),

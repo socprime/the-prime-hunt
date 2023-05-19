@@ -1,4 +1,4 @@
-import React, {
+import {
   useRef,
   useState,
   forwardRef,
@@ -35,8 +35,8 @@ export type DropdownProps = {
 };
 
 export type DropdownForwardRef = {
-  dropdown: React.RefObject<HTMLDivElement | null>;
-  dropdownMenu: React.RefObject<HTMLDivElement | null>;
+  dropdown: React.MutableRefObject<HTMLDivElement | null>;
+  dropdownMenu: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<DropdownProps>>((

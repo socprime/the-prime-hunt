@@ -21,6 +21,8 @@ const entries = [
   'qradar',
   'splunk',
   'arcsight',
+  'opensearch',
+  'athena',
   'microsoft-sentinel',
   'microsoft-defender',
 ].reduce((entry, name) => {

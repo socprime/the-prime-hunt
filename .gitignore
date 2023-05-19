@@ -3,3 +3,5 @@
 node_modules
 tmp
 yarn-error.log
+@libraries
+@modules

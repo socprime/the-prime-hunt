@@ -1,8 +1,8 @@
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
 import { FieldName, ParsedResult, ResourceName } from '../../app/resources/resources-types';
-import { PlatformID, PlatformName } from '../../common/types/types-common';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
 import { Url } from '../../../common/types';
-import { BGListenerType, WatchingResources } from '../types/types-background-common';
+import { BGListenerType } from '../types/types-background-common';
 import { setBGInterceptor } from '../services/background-services-listeners';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
@@ -10,6 +10,7 @@ import { http } from '../../../common/Http';
 import { Loggers } from '../../common/loggers';
 import { capitalizeFirstLetter, formatDate, parseJSONSafe, uuid } from '../../../common/helpers';
 import { isDate } from '../../../common/checkers';
+import { normalizeParsedResources } from '../services/background-services';
 
 let loggers: Loggers;
 
@@ -27,7 +28,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as WatchingResources;
+    this.watchingResources = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',
@@ -207,14 +208,15 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
     return mappedFields;
   }
 
-  async parseResponse(response: (number | string[])[]): Promise<ParsedResult> {
+  async parseResponse(response: (number | string[])[], tabInfo: BrowserTabInfo): Promise<ParsedResult> {
     const result = {} as ParsedResult;
-    const fieldsNamesTest = new Set();
+    const watchingFieldsNames = this.fields;
 
     const id = uuid();
-    loggers.debug().log('started parse response...', id, this.watchingResources);
+    const watchingResources = this.getWatchers(tabInfo);
+    loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     (response || [])?.forEach(v => {
       if (!Array.isArray(v)) {
@@ -232,7 +234,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
           ? this.parseCEFString(str)
           : this.parseHTMLString(sv);
 
-        Array.from(fields).forEach(av => fieldsNamesTest.add(av[0]));
+        Array.from(fields).forEach(av => watchingFieldsNames.add(av[0]));
 
         Array.from(fieldsNames).forEach(fieldNameToParse => {
           if (fields.has(fieldNameToParse)) {
@@ -248,7 +250,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
       });
     });
 
-    loggers.debug().log('finished parse response', id, result);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
 
     return result;
   }
@@ -317,9 +319,12 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
             const doRequest = () => {
               AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
+              const url = details.url;
+              const cacheID = url;
+
               http.post(
                 {
-                  url: details.url,
+                  url,
                   body: bodyBytes,
                   headers: details.requestHeaders!.reduce((res: any, header: any) => {
                     res[header.name] = header.value;
@@ -333,22 +338,32 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                       loggers
                         .warn()
                         .addPrefix('failed parse json response')
-                        .log(details.method, details.url, bodyStr);
+                        .log(details.method, url, bodyStr);
                       return removeAttached();
                     }
+                    const resources = normalizeParsedResources(
+                      await this.parseResponse(data, {
+                        origin: new URL(details.url).origin,
+                        id: details.tabId,
+                      }),
+                    );
                     AbstractBackgroundPlatform.sendParsedData(
                       details.tabId,
-                      await this.parseResponse(data),
+                      {
+                        cacheID,
+                        resources,
+                        fieldsNames: [...this.fields],
+                      },
                       true,
                     );
-                    this.lastResponse = data;
+                    this.lastResponse.set(cacheID, response);
                     removeAttached();
                   },
                   onError: e => {
                     loggers
                       .warn()
                       .addPrefix('failed webRequest post')
-                      .log(e, details.method, details.url, bodyStr);
+                      .log(e, details.method, url, bodyStr);
                     if (reconnectAttempts > 0) {
                       loggers.info().log('retry request');
                       reconnectAttempts = reconnectAttempts - 1;

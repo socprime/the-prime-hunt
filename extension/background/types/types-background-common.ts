@@ -1,4 +1,4 @@
-import { BrowserTabID, IPlatform } from '../../common/types/types-common';
+import { BrowserTabInfo, IPlatform } from '../../common/types/types-common';
 import WebRequestBodyEvent = chrome.webRequest.WebRequestBodyEvent;
 import ExtensionMessageEvent = chrome.runtime.ExtensionMessageEvent;
 import PageActionClickedEvent = chrome.pageAction.PageActionClickedEvent;
@@ -36,8 +36,9 @@ export type WatchingResources = {
 export type BackgroundPlatform = IPlatform & {
   register(): void;
   unregister(): void;
-  setWatchers(watchers: WatchingResources, tabID: BrowserTabID): void;
-  parseResponse(response: object): Promise<ParsedResult>;
+  setWatchers(watchers: WatchingResources, tabInfo: BrowserTabInfo): void;
+  reparseCached(cacheID: string, tabInfo: BrowserTabInfo): Promise<ParsedResult>;
+  parseResponse(response: object, tabInfo: BrowserTabInfo): Promise<ParsedResult>;
   parseContent?(content: HTMLTextContent): Promise<ParsedResult>;
 };
 

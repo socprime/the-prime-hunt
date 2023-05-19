@@ -1,6 +1,4 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { describe, test, beforeEach } from '@jest/globals';
 import { setLoggers } from '../../../common/loggers';
 import {
   getMockedBrowserContext,
@@ -25,7 +23,7 @@ const mockedCopyToClipboard = jest.fn();
 
 jest.mock('../../../common/common-helpers', () => {
   return {
-    ...jest.requireActual('../../../common/common-helpers'),
+    ...(jest.requireActual<{}>('../../../common/common-helpers')),
     copyToClipboard: mockedCopyToClipboard,
   };
 });

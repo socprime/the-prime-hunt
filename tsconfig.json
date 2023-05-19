@@ -4,7 +4,7 @@
     "module": "CommonJS",
     "removeComments": true,
     "target": "ES6",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
@@ -23,7 +23,14 @@
     "typeRoots": [
       "node_modules/@types",
       "./@types"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@modules/*": ["@modules/*"],
+      "@atoms/*": ["@libraries/atoms/*"],
+      "@libraries/*": ["@libraries/helpers/*"],
+      "@hooks/*": ["@libraries/hooks/*"]
+    }
   },
   "exclude": [
     "node_modules",

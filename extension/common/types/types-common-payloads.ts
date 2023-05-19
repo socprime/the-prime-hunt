@@ -10,12 +10,17 @@ import {
   NormalizedResources,
 } from '../../app/resources/resources-types';
 import { MessageToBackground } from '../../background/types/types-background-messages';
+import { Url } from '../../../common/types';
 
 export type PlatformIDPayload = {
   platformID: PlatformID;
 };
 
-export type ParsedDataPayload = NormalizedResources;
+export type ParsedDataPayload = {
+  cacheID: Url;
+  resources: NormalizedResources;
+  fieldsNames: string[];
+};
 
 export type ModifyQueryPayload = {
   modifyType: ModifyQueryType;
@@ -40,6 +45,11 @@ export type ShowMessagePayload = {
 };
 
 export type SetWatchersPayload = PlatformIDPayload & {
+  cacheID: Url;
+  watchers: WatchingResources;
+};
+
+export type SyncWatchersPayload = {
   watchers: WatchingResources;
 };
 

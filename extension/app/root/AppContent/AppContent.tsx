@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useAppStore } from '../../stores';
 import { NotFoundContentView } from '../../not-found/views/NotFoundContentView/NotFoundContentView';

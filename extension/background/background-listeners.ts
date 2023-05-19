@@ -7,7 +7,14 @@ import {
   IconClickedListener,
   MessageListener,
 } from './types/types-background-common';
-import { registerPlatformTab, sendMessageFromBackground, unregisterPlatformTabs } from './services/background-services';
+import {
+  getOriginFromSender,
+  getTabsInfosByPlatformID,
+  normalizeParsedResources,
+  registerPlatformTab,
+  sendMessageFromBackground,
+  unregisterPlatformTabs,
+} from './services/background-services';
 import { MessageToApp } from '../app/types/types-app-messages';
 import { ExtensionMessage } from '../common/types/types-common';
 import { isMessageMatched } from '../common/common-listeners';
@@ -15,10 +22,12 @@ import { MessageToBackground } from './types/types-background-messages';
 import { MessageToContent } from '../content/types/types-content-messages';
 import {
   DirectMessagePayload,
+  ParsedDataPayload,
   PlatformIDPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
   SetWatchersPayload,
+  SyncWatchersPayload,
 } from '../common/types/types-common-payloads';
 import { platformResolver } from './platforms/PlatformResolver';
 import { LoadingKey } from '../app/types/types-app-common';
@@ -140,16 +149,55 @@ const loggers = require('../common/loggers').loggers
       message,
       sender,
     )) {
-      const { platformID, watchers } = message.payload as SetWatchersPayload;
-      platformResolver.resolve(platformID)?.setWatchers(watchers, sender.tab.id);
-      sendMessageFromBackground<SetLoadingStatePayload>(sender.tab.id, {
-        id: message.type,
-        type: MessageToApp.AppSetLoadingState,
-        payload: {
-          loading: false,
-          key: LoadingKey.watchersChanging,
-        },
+      const { platformID, watchers, cacheID } = message.payload as SetWatchersPayload;
+      const tabID = sender.tab.id;
+      const platform = platformResolver.resolve(platformID);
+      if (!platform) {
+        loggers.warn().log(`${message.type}: There is no platform with passed ID: '${platformID}'`);
+        return;
+      }
+
+      platform.setWatchers(watchers, {
+        origin: getOriginFromSender(sender),
+        id: sender.tab.id,
       });
+
+      getTabsInfosByPlatformID(platformID).forEach((tabInfo) => {
+        const senderOrigin = getOriginFromSender(sender);
+        if (tabInfo.origin !== senderOrigin || tabInfo.id === tabID) {
+          return;
+        }
+        sendMessageFromBackground<SyncWatchersPayload>(tabInfo.id, {
+          id: 'sync-watchers',
+          type: MessageToApp.AppSyncWatchers,
+          payload: { watchers },
+        });
+      });
+
+      platform.reparseCached(cacheID, {
+        origin: getOriginFromSender(sender),
+        id: sender.tab.id,
+      })
+        .then((parsedResponse) => {
+          sendMessageFromBackground<ParsedDataPayload>(tabID, {
+            id: 're-parsed-last-response',
+            type: MessageToApp.AppTakeResourceData,
+            payload: {
+              fieldsNames: [],
+              cacheID,
+              resources: normalizeParsedResources(parsedResponse),
+            },
+          });
+
+          sendMessageFromBackground<SetLoadingStatePayload>(tabID, {
+            id: message.type,
+            type: MessageToApp.AppSetLoadingState,
+            payload: {
+              loading: false,
+              key: LoadingKey.watchersChanging,
+            },
+          });
+        });
     }
 
     if (isMessageMatched(
@@ -158,7 +206,10 @@ const loggers = require('../common/loggers').loggers
       sender,
     )) {
       const { platformID } = message.payload as PlatformIDPayload;
-      registerPlatformTab(platformID, sender.tab.id);
+      registerPlatformTab(platformID, {
+        id: sender.tab.id,
+        origin: getOriginFromSender(sender),
+      });
     }
     
     if (isMessageMatched(

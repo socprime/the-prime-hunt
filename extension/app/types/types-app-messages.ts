@@ -3,6 +3,7 @@ import { getExecutingContextByMessageType } from '../../common/loggers/loggers-h
 export enum MessageToApp {
   AppShowExtension = 'AppShowExtension',
   AppTakeResourceData = 'AppTakeResourceData',
+  AppSyncWatchers = 'AppSyncWatchers',
   AppTakeNewResourceData = 'AppTakeNewResourceData',
   AppQueryHasHash = 'AppQueryHasHash',
   AppQueryHasSpecifyFields = 'AppQueryHasSpecifyFields',

@@ -44,3 +44,10 @@ export const isDate = (value: string | number): boolean => {
       : value,
   ).getTime() > 567982800000;
 };
+
+export const isObject = (obj: unknown): boolean => {
+  return typeof obj === 'object'
+    && !Array.isArray(obj)
+    && obj !== null
+    && typeof obj !== 'function';
+};

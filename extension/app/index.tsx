@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { rootStore } from './stores';
 import { Mode } from '../../common/types';

@@ -1,7 +1,5 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, test, beforeEach } from '@jest/globals';
 import {
   getMockedResourcesData,
   getMockedBrowserContext,

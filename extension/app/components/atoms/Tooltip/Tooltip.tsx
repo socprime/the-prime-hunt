@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 import { createPortal } from 'react-dom';
 import './tooltip.scss';

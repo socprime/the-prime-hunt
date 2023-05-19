@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { ControlInput, ControlInputProps } from '../../atoms/ControlInput/ControlInput';
 import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';

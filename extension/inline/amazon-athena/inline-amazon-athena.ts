@@ -149,9 +149,9 @@ window.addEventListener('message', (event) => {
       return;
     }
 
-    const matchedValues = Array.from(editor
-      .getValue()
-      .matchAll(hasFieldSpecificationRegExp) || []);
+    const matchedValues = Array.from(
+      (editor.getValue() || '')
+        .matchAll(hasFieldSpecificationRegExp) || []);
 
     const prefix = matchedValues[0][0];
     let value = editor.getValue();
@@ -197,7 +197,7 @@ const checkFieldSpecification = () => {
     .getValue()
     .matchAll(hasFieldSpecificationRegExp) || []);
 
-  const matched = (matchedValues[0][0] || '')
+  const matched = (matchedValues?.[0]?.[0] || '')
     .replace(/SELECT/i, '')
     .replace(/FROM/i, '')
     .replace(/ +/i, '')

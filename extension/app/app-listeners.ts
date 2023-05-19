@@ -4,12 +4,14 @@ import { isMessageMatched } from '../common/common-listeners';
 import { MessageToApp } from './types/types-app-messages';
 import { rootStore } from './stores';
 import { LoadingKey } from './types/types-app-common';
+import { setWatchers } from '../common/local-storage';
 import {
   ParsedDataPayload,
   SendToBackgroundPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
   ShowMessagePayload,
+  SyncWatchersPayload,
 } from '../common/types/types-common-payloads';
 import { platformResolver } from '../content/platforms/PlatformResolver';
 import { sendMessageFromApp } from '../content/services/content-services';
@@ -35,6 +37,22 @@ const setExtensionShowState = (
   rootStore.appStore.isExtensionOpen = isShow;
 };
 
+const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
+  const { resources, cacheID, fieldsNames } = payload;
+  rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
+  if (isNew) {
+    rootStore.resourceStore.clearResources();
+  }
+
+  setTimeout(() => {
+    rootStore.resourceStore.addResources(resources);
+    rootStore.resourceStore.cacheID = cacheID;
+    rootStore.platformStore.setFieldsNames(fieldsNames);
+    rootStore.platformStore.saveFieldsNames();
+    rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
+  }, 0);
+};
+
 (addListener as MessageListener)(
   ListenerType.OnMessage,
   (message) => {
@@ -51,23 +69,14 @@ const setExtensionShowState = (
       () => MessageToApp.AppTakeNewResourceData === message.type,
       message,
     )) {
-      rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
-      rootStore.resourceStore.clearResources();
-      setTimeout(() => {
-        setTimeout(() => {
-          rootStore.resourceStore.addResources(message.payload as ParsedDataPayload);
-          rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
-        }, 100);
-      }, 0);
+      handleResources(message.payload as ParsedDataPayload, true);
     }
 
     if (isMessageMatched(
       () => MessageToApp.AppTakeResourceData === message.type,
       message,
     )) {
-      rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
-      rootStore.resourceStore.addResources(message.payload as ParsedDataPayload);
-      rootStore.appStore.stopLoading(LoadingKey.resourcesAdding);
+      handleResources(message.payload as ParsedDataPayload, false);
     }
 
     if (isMessageMatched(
@@ -145,6 +154,16 @@ const setExtensionShowState = (
         const { show } = message.payload as ShowMessagePayload;
         rootStore.platformStore.setMessage(show ? RemoveFieldsSpecificationMessage : null);
       }
+    }
+
+    if (isMessageMatched(
+      () => MessageToApp.AppSyncWatchers === message.type,
+      message,
+    )) {
+      const { watchers } = message.payload as SyncWatchersPayload;
+      rootStore.resourceStore.setWatchers(watchers);
+      // TODO should be inside store
+      setWatchers(watchers);
     }
   },
 );

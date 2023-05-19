@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 
 export type ListProps = {

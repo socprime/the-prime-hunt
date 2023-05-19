@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { Input, InputProps } from '../../atoms/Input/Input';
 import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';

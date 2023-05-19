@@ -1,3 +1,4 @@
+// TODO legacy
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 import './input.scss';
@@ -10,6 +11,7 @@ export type InputProps = {
   onType?: (value: string) => void;
   onChange?: (value: string) => void;
   onBlur?: (value: string) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onDoubleClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
   onFocus?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
@@ -22,6 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   onChange,
   onClick,
   onType,
+  onKeyDown,
   onDoubleClick,
   onFocus,
   onBlur,
@@ -67,6 +70,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
           !inputValue ? 'empty' : '',
           className,
         ])}
+        onKeyDown={(e) => {
+          onKeyDown?.(e);
+        }}
         onClick={onClick}
         onMouseOut={onFocus}
         onBlur={() => {

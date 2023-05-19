@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { useAppStore, usePlatformStore } from '../../stores';
 import { CloseAppButton } from '../CloseAppButton/CloseAppButton';
 import { observer } from 'mobx-react-lite';

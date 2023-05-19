@@ -1,4 +1,3 @@
-import { beforeEach, describe, test } from '@jest/globals';
 import { setLoggers } from '../../../common/loggers';
 import { getMockedBrowserContext, getMockedLoggers, getNewRootStore, getPlatformByID } from '../../../tests/mocks';
 import { ExtensionMessage, PlatformID, PlatformName } from '../../../common/types/types-common';

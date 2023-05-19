@@ -99,7 +99,7 @@ The position and size of the extension's window are stored as the `the-prime-hun
 - Click the plus icon to include the account/asset in the search
 - Click the minus icon to exclude the account/asset from the search
 - Click the eye-and-list icon to search for all events that involve the account/asset
-- To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR, and click the checkmark icon. To remove a field from the extension, click on the remove icon next to the field.
+- To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR using the relevant suggester option, and click on the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. **Note**: field names for the suggester are stored as the `the-prime-hunt--extension--fields` key in the browser's local storage.
 
 ![Remove icon](.readme/remove_icon.png)
 
@@ -172,6 +172,12 @@ To delete an integration, click the remove icon next to it.
 
 **NOTE:** The Prime Hunt browser extension does not send any data outside your laptop/browser. It works only with the data that is on the page of your browser.
 
+## Hot Keys
+- Hide/Show the extension: Ctrl + Q
+- Close FAQ: Esc
+- Save and close the Integration Settings: Esc
+- Apply changes when creating or editing a custom tab: Enter(Return)/Esc
+
 ## Credits
 This software was created as a work made for hire for SOC Prime, Inc. by the following individuals:
 - Pavlo Nedzelskiy
@@ -185,9 +191,8 @@ The Prime Hunt browser extension is licensed as [LGPL v3](LICENSE.md).
 1. Add more SIEM/EDR/XDR technologies supported by Sigma.
 2. Add more integrations:
 - Uncoder.IO, CTI.uncoder.io, tdm.socprime.com, and SigmaHQ
-- Sigma Rules Bot for Threat Bounty (Slackbot) API for Sigma rules quality check, easy code updates, spell check, collaboration, false-positives and filters sharing
+- Sigma Rules Bot for Threat Bounty (Slackbot) API for Sigma rules quality check, easy code updates, spell check, collaboration, false-positives, and filters sharing
 - socprime.com search engine for Sigma rule source, context, and timeline overview
 - Qualys, Tenable, NVD for CVE lookup
-- Shodan, CyberChef, GreyNoise, PolySwarm
+- Shodan, GreyNoise, PolySwarm
 - Jira, SNOW
-3. Publishing of the browser extension via marketplace / add-on store

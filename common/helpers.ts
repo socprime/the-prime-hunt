@@ -1,3 +1,5 @@
+import { isObject } from './checkers';
+
 export const isFlatObjectsEqual = (
   obj1: Record<string, unknown>,
   obj2: Record<string, unknown>,
@@ -158,3 +160,42 @@ export const sleep = async (sec: number) => {
     }, sec * 1000);
   });
 };
+
+export const iterateObjectsRecursively = (
+  obj: Record<string, unknown>,
+  keyPath: string,
+  settings?: {
+    separator?: string;
+    onIteration?: (
+      keyPath: string,
+      key: string,
+      value: unknown,
+      prevKeyPath: string,
+    ) => boolean;
+  },
+): string[] => {
+  const { separator = '.', onIteration } = settings || {};
+  return Object.keys(obj || {}).reduce((result, key) => {
+    const path = keyPath.length ? `${keyPath}${separator}${key}` : key;
+    const value = obj[key];
+    if (typeof onIteration === 'function' && !onIteration?.(path, key, value, keyPath)) {
+      return keyPath.length ? [ ...result, keyPath ] : result;
+    }
+    return [
+      ...result,
+      ...(
+        isObject(value)
+          ? iterateObjectsRecursively(value as Record<string, unknown>, path, settings)
+          : [path]
+      ),
+    ];
+  }, [] as string[]);
+};
+
+export const getUrlParamsSafe = (url: unknown, paramName: string): string => {
+  try {
+    return (new URL(url as string) as any)[paramName] as string || '';
+  } catch (e) {
+    return '';
+  }
+}

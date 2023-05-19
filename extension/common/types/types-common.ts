@@ -12,6 +12,11 @@ export enum Browser {
 
 export type BrowserTabID = number;
 
+export type BrowserTabInfo = {
+  id: BrowserTabID;
+  origin: string;
+};
+
 export type ExtensionMessageType = MessageToBackground | MessageToContent | MessageToInline | MessageToApp;
 
 export type ExecutingContext = 'background' | 'app' | 'content' | 'inline';

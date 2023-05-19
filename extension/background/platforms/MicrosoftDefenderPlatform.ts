@@ -1,14 +1,15 @@
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
-import { PlatformID, PlatformName } from '../../common/types/types-common';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
 import { Url } from '../../../common/types';
 import { setBGInterceptor } from '../services/background-services-listeners';
-import { BGListenerType, WatchingResources } from '../types/types-background-common';
+import { BGListenerType } from '../types/types-background-common';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { uuid } from '../../../common/helpers';
 import { http } from '../../../common/Http';
 import { ParsedResult } from '../../app/resources/resources-types';
 import { Loggers } from '../../common/loggers';
+import { normalizeParsedResources } from '../services/background-services';
 
 let loggers: Loggers;
 
@@ -22,7 +23,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as WatchingResources;
+    this.watchingResources = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',
@@ -39,15 +40,19 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
 
   async parseResponse(response: {
     Results: Record<string, string>[];
-  }) {
+  }, tabInfo: BrowserTabInfo) {
     const id = uuid();
-    loggers.debug().log('started parse response...', id, this.watchingResources);
+    const watchingResources = this.getWatchers(tabInfo);
+    loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
     const result: ParsedResult = {};
+    const { fields } = this;
+    fields.clear();
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     (response?.Results || []).forEach(document => {
+      Object.keys(document).forEach(fn => fields.add(fn));
       Array.from(fieldsNames).forEach(fieldName => {
         if (document?.[fieldName]) {
           const types = mapFieldNameToTypes.get(fieldName)!;
@@ -61,7 +66,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
       });
     });
 
-    loggers.debug().log('finished parse response', id, result);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
 
     return result;
   }
@@ -128,9 +133,12 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
 
           AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
+          const url = details.url;
+          const cacheID = url;
+
           http.post(
             {
-              url: details.url,
+              url,
               body: bodyBytes,
               headers: details.requestHeaders!.reduce((res: any, header: any) => {
                 res[header.name] = header.value;
@@ -139,19 +147,29 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
             },
             {
               onJSONSuccess: async (response: any) => {
+                const resources = normalizeParsedResources(
+                  await this.parseResponse(response, {
+                    origin: new URL(details.url).origin,
+                    id: details.tabId,
+                  }),
+                );
                 AbstractBackgroundPlatform.sendParsedData(
                   details.tabId,
-                  await this.parseResponse(response),
+                  {
+                    cacheID,
+                    resources,
+                    fieldsNames: [...this.fields],
+                  },
                   true,
                 );
-                this.lastResponse = response;
+                this.lastResponse.set(cacheID, response);
                 removeAttached();
               },
               onError: e => {
                 loggers
                   .error()
                   .addPrefix('failed webRequest post')
-                  .log(e, details.method, details.url, bodyStr);
+                  .log(e, details.method, url, bodyStr);
                 removeAttached();
               },
             },

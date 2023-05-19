@@ -8,8 +8,8 @@ import { createClassName } from '../../../../common/common-helpers';
 import { uuid } from '../../../../../common/helpers';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
 import { AppTooltip } from '../../../components/tooltips/AppTooltip/AppTooltip';
-import './styles.scss';
 import { Integration } from '../../integrations-types';
+import './styles.scss';
 
 export const IntegrationFooterView: React.FC = observer(() => {
   const appStore = useAppStore();

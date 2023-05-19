@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import { Spacer } from '../../../components/atoms/Spacer/Spacer';
 import { TabsPlatformResources } from '../../TabsPlatformResources/TabsPlatformResources';
 import { usePlatformStore, useResourceStore } from '../../../stores';
@@ -8,6 +8,7 @@ import { AddFieldInput } from '../../AddFieldInput/AddFieldInput';
 import { createNonDuplicateValue } from '../../../../../common/helpers';
 import { useOnClickOutside } from '../../../app-hooks';
 import { AppTooltip } from '../../../components/tooltips/AppTooltip/AppTooltip';
+import { AutocompleteInput } from '../../../components/inputs/AutocompleteInput';
 import './styles.scss';
 
 export const ResourcesHeaderView: React.FC = observer(() => {
@@ -16,13 +17,16 @@ export const ResourcesHeaderView: React.FC = observer(() => {
   const platformStore = usePlatformStore();
   const resourceStore = useResourceStore();
 
-  const inputWrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+  const inputWrapperRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+
+  const autocompleteDropdownRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   useOnClickOutside(() => {
     if (addNewFieldMode) {
       setAddNewFieldMode(false);
     }
-  }, inputWrapperRef);
+  }, inputWrapperRef, autocompleteDropdownRef);
 
   if (!platformStore.getID()) {
     return null;
@@ -63,27 +67,50 @@ export const ResourcesHeaderView: React.FC = observer(() => {
      <Spacer height={4} />
      {addNewFieldMode && (<div>
        <Spacer height={4} />
-       <AddFieldInput
-         ref={inputWrapperRef}
-         onApply={value => {
-           setAddNewFieldMode(false);
-           const nValue = value.trim();
-
-           if (!nValue) {
-             return;
+       <AutocompleteInput
+         ref={(refs) => {
+           if (refs?.dropdownMenu?.current) {
+             autocompleteDropdownRef.current = refs.dropdownMenu.current;
            }
+         }}
+         onValueSelect={() => {
+           inputRef.current?.focus?.();
+         }}
+         countSymbolsToActivate={2}
+         className="add-field"
+         list={platformStore.getFieldsNames()}
+         Input={(props) =>
+           <AddFieldInput
+             {...props}
+             ref={(refs) => {
+               if (refs?.wrapperRef?.current) {
+                 inputWrapperRef.current = refs.wrapperRef.current;
+               }
+               if (refs?.inputRef?.current) {
+                 inputRef.current = refs.inputRef.current;
+               }
+             }}
+             onApply={value => {
+               setAddNewFieldMode(false);
+               const nValue = value.trim();
 
-           resourceStore.addField(
-             createNonDuplicateValue(
-               nValue,
-               resourceStore.getFieldsNames(),
-             ),
-             true,
-           );
-         }}
-         onRemove={() => {
-           setAddNewFieldMode(false);
-         }}
+               if (!nValue) {
+                 return;
+               }
+
+               resourceStore.addField(
+                 createNonDuplicateValue(
+                   nValue,
+                   resourceStore.getFieldsNames(),
+                 ),
+                 true,
+               );
+             }}
+             onRemove={() => {
+               setAddNewFieldMode(false);
+             }}
+           />
+         }
        />
      </div>)}
      <Spacer height={4} />

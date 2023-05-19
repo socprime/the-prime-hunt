@@ -16,6 +16,7 @@ export type Position = {
 export type ContentPlatform = IPlatform & {
   defaultWatchers: WatchingResources;
   extensionDefaultPosition: Position;
+  fields: Set<string>;
   buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,

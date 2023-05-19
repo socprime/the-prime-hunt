@@ -1,37 +1,42 @@
 import pako from 'pako';
 import { BackgroundPlatform, TabID, WatchingResources } from '../types/types-background-common';
-import { UniqueHash } from '../../../common/types';
-import { BrowserTabID, PlatformID, PlatformName } from '../../common/types/types-common';
+import { UniqueHash, Url } from '../../../common/types';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
 import { removeBGInterceptor } from '../services/background-services-listeners';
-import {
-  normalizeParsedResources,
-  sendMessageFromBackground,
-} from '../services/background-services';
+import { sendMessageFromBackground } from '../services/background-services';
 import { MessageToApp } from '../../app/types/types-app-messages';
-import { FieldName, NormalizedResources, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
-import { SetLoadingStatePayload } from '../../common/types/types-common-payloads';
+import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
+import { ParsedDataPayload, SetLoadingStatePayload } from '../../common/types/types-common-payloads';
 import { LoadingKey } from '../../app/types/types-app-common';
+import { loggers } from '../../common/loggers';
+
+type Origin = string;
 
 export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
   abstract getID(): PlatformID;
 
   abstract getName(): PlatformName;
 
-  abstract parseResponse(response: object | string): Promise<ParsedResult>;
+  abstract parseResponse(response: object | string, tabInfo: BrowserTabInfo): Promise<ParsedResult>;
 
   abstract register(): void;
 
+  protected fields = new Set<string>();
+
   protected static sendParsedData(
     tabID: TabID,
-    parsedResponse: ParsedResult,
+    payload: ParsedDataPayload,
     isNew = false,
   ) {
-    const result = normalizeParsedResources(parsedResponse);
-    if (isNew || Object.keys(result).length > 0) {
-      sendMessageFromBackground<NormalizedResources>(tabID, {
+    const { cacheID, resources, fieldsNames } = payload;
+    if (
+      isNew
+      || (Object.keys(resources).length > 0 || fieldsNames.length > 0)
+    ) {
+      sendMessageFromBackground<ParsedDataPayload>(tabID, {
         id: 'parsed-response',
         type: isNew ? MessageToApp.AppTakeNewResourceData : MessageToApp.AppTakeResourceData,
-        payload: normalizeParsedResources(parsedResponse),
+        payload: { cacheID, resources, fieldsNames },
       });
     }
   }
@@ -46,9 +51,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
     });
   }
 
-  protected lastResponse: object | string | null = null;
-
-  protected watchingResources = {} as WatchingResources;
+  protected lastResponse: Map<string, object | string> = new Map();
 
   protected emptyFieldValues = [''];
 
@@ -122,16 +125,42 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
     });
   }
 
-  async setWatchers(watchers: WatchingResources, tabID: BrowserTabID) {
-    this.watchingResources = watchers;
-    if (!this.lastResponse) {
-      return;
+  protected watchingResources = {} as {
+    [origin: Origin]: WatchingResources;
+  } | {
+    [tabID: string]: Origin;
+  };
+
+  setWatchers(
+    watchers: WatchingResources,
+    tabInfo: BrowserTabInfo,
+  ) {
+    const { origin, id } = tabInfo;
+    this.watchingResources[origin] = watchers;
+    this.watchingResources[String(id)] = origin;
+  }
+
+  getWatchers(
+    tabInfo: BrowserTabInfo,
+  ): WatchingResources {
+    const { origin, id } = tabInfo;
+    let watchingResources = this.watchingResources[origin] as WatchingResources;
+    if (watchingResources) {
+      return watchingResources;
     }
-    const parsedResponse = await this.parseResponse(this.lastResponse);
-    sendMessageFromBackground<NormalizedResources>(tabID, {
-      id: 're-parsed-last-response',
-      type: MessageToApp.AppTakeResourceData,
-      payload: normalizeParsedResources(parsedResponse),
-    });
+    const savedOriginForCurrentTab = this.watchingResources[String(id)] as string;
+    if (savedOriginForCurrentTab) {
+      return this.watchingResources[savedOriginForCurrentTab] as WatchingResources;
+    }
+
+    return {};
+  }
+
+  async reparseCached(cacheID: Url, tabInfo: BrowserTabInfo) {
+    if (!this.lastResponse.has(cacheID)) {
+      loggers.debug().log(`no data was found by cache id: ${cacheID}`);
+      return Promise.resolve({});
+    }
+    return this.parseResponse(this.lastResponse.get(cacheID)!, tabInfo);
   }
 }

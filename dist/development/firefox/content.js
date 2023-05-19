@@ -46384,6 +46384,1331 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react/cjs/react-jsx-runtime.development.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react/cjs/react-jsx-runtime.development.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * react-jsx-runtime.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+// ATTENTION
+// When adding new symbols to this file,
+// Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
+// The Symbol used to tag the ReactElement-like types.
+var REACT_ELEMENT_TYPE = Symbol.for('react.element');
+var REACT_PORTAL_TYPE = Symbol.for('react.portal');
+var REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
+var REACT_STRICT_MODE_TYPE = Symbol.for('react.strict_mode');
+var REACT_PROFILER_TYPE = Symbol.for('react.profiler');
+var REACT_PROVIDER_TYPE = Symbol.for('react.provider');
+var REACT_CONTEXT_TYPE = Symbol.for('react.context');
+var REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
+var REACT_SUSPENSE_TYPE = Symbol.for('react.suspense');
+var REACT_SUSPENSE_LIST_TYPE = Symbol.for('react.suspense_list');
+var REACT_MEMO_TYPE = Symbol.for('react.memo');
+var REACT_LAZY_TYPE = Symbol.for('react.lazy');
+var REACT_OFFSCREEN_TYPE = Symbol.for('react.offscreen');
+var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
+var FAUX_ITERATOR_SYMBOL = '@@iterator';
+function getIteratorFn(maybeIterable) {
+  if (maybeIterable === null || typeof maybeIterable !== 'object') {
+    return null;
+  }
+
+  var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+
+  if (typeof maybeIterator === 'function') {
+    return maybeIterator;
+  }
+
+  return null;
+}
+
+var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+
+function error(format) {
+  {
+    {
+      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      printWarning('error', format, args);
+    }
+  }
+}
+
+function printWarning(level, format, args) {
+  // When changing this logic, you might want to also
+  // update consoleWithStackDev.www.js as well.
+  {
+    var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+    var stack = ReactDebugCurrentFrame.getStackAddendum();
+
+    if (stack !== '') {
+      format += '%s';
+      args = args.concat([stack]);
+    } // eslint-disable-next-line react-internal/safe-string-coercion
+
+
+    var argsWithFormat = args.map(function (item) {
+      return String(item);
+    }); // Careful: RN currently depends on this prefix
+
+    argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
+    // breaks IE9: https://github.com/facebook/react/issues/13610
+    // eslint-disable-next-line react-internal/no-production-logging
+
+    Function.prototype.apply.call(console[level], console, argsWithFormat);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+var enableScopeAPI = false; // Experimental Create Event Handle API.
+var enableCacheElement = false;
+var enableTransitionTracing = false; // No known bugs, but needs performance testing
+
+var enableLegacyHidden = false; // Enables unstable_avoidThisFallback feature in Fiber
+// stuff. Intended to enable React core members to more easily debug scheduling
+// issues in DEV builds.
+
+var enableDebugTracing = false; // Track which Fiber(s) schedule render work.
+
+var REACT_MODULE_REFERENCE;
+
+{
+  REACT_MODULE_REFERENCE = Symbol.for('react.module.reference');
+}
+
+function isValidElementType(type) {
+  if (typeof type === 'string' || typeof type === 'function') {
+    return true;
+  } // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
+
+
+  if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing  || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden  || type === REACT_OFFSCREEN_TYPE || enableScopeAPI  || enableCacheElement  || enableTransitionTracing ) {
+    return true;
+  }
+
+  if (typeof type === 'object' && type !== null) {
+    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
+    // types supported by any Flight configuration anywhere since
+    // we don't know which Flight build this will end up being used
+    // with.
+    type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== undefined) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function getWrappedName(outerType, innerType, wrapperName) {
+  var displayName = outerType.displayName;
+
+  if (displayName) {
+    return displayName;
+  }
+
+  var functionName = innerType.displayName || innerType.name || '';
+  return functionName !== '' ? wrapperName + "(" + functionName + ")" : wrapperName;
+} // Keep in sync with react-reconciler/getComponentNameFromFiber
+
+
+function getContextName(type) {
+  return type.displayName || 'Context';
+} // Note that the reconciler package should generally prefer to use getComponentNameFromFiber() instead.
+
+
+function getComponentNameFromType(type) {
+  if (type == null) {
+    // Host root, text node or just invalid type.
+    return null;
+  }
+
+  {
+    if (typeof type.tag === 'number') {
+      error('Received an unexpected object in getComponentNameFromType(). ' + 'This is likely a bug in React. Please file an issue.');
+    }
+  }
+
+  if (typeof type === 'function') {
+    return type.displayName || type.name || null;
+  }
+
+  if (typeof type === 'string') {
+    return type;
+  }
+
+  switch (type) {
+    case REACT_FRAGMENT_TYPE:
+      return 'Fragment';
+
+    case REACT_PORTAL_TYPE:
+      return 'Portal';
+
+    case REACT_PROFILER_TYPE:
+      return 'Profiler';
+
+    case REACT_STRICT_MODE_TYPE:
+      return 'StrictMode';
+
+    case REACT_SUSPENSE_TYPE:
+      return 'Suspense';
+
+    case REACT_SUSPENSE_LIST_TYPE:
+      return 'SuspenseList';
+
+  }
+
+  if (typeof type === 'object') {
+    switch (type.$$typeof) {
+      case REACT_CONTEXT_TYPE:
+        var context = type;
+        return getContextName(context) + '.Consumer';
+
+      case REACT_PROVIDER_TYPE:
+        var provider = type;
+        return getContextName(provider._context) + '.Provider';
+
+      case REACT_FORWARD_REF_TYPE:
+        return getWrappedName(type, type.render, 'ForwardRef');
+
+      case REACT_MEMO_TYPE:
+        var outerName = type.displayName || null;
+
+        if (outerName !== null) {
+          return outerName;
+        }
+
+        return getComponentNameFromType(type.type) || 'Memo';
+
+      case REACT_LAZY_TYPE:
+        {
+          var lazyComponent = type;
+          var payload = lazyComponent._payload;
+          var init = lazyComponent._init;
+
+          try {
+            return getComponentNameFromType(init(payload));
+          } catch (x) {
+            return null;
+          }
+        }
+
+      // eslint-disable-next-line no-fallthrough
+    }
+  }
+
+  return null;
+}
+
+var assign = Object.assign;
+
+// Helpers to patch console.logs to avoid logging during side-effect free
+// replaying on render function. This currently only patches the object
+// lazily which won't cover if the log function was extracted eagerly.
+// We could also eagerly patch the method.
+var disabledDepth = 0;
+var prevLog;
+var prevInfo;
+var prevWarn;
+var prevError;
+var prevGroup;
+var prevGroupCollapsed;
+var prevGroupEnd;
+
+function disabledLog() {}
+
+disabledLog.__reactDisabledLog = true;
+function disableLogs() {
+  {
+    if (disabledDepth === 0) {
+      /* eslint-disable react-internal/no-production-logging */
+      prevLog = console.log;
+      prevInfo = console.info;
+      prevWarn = console.warn;
+      prevError = console.error;
+      prevGroup = console.group;
+      prevGroupCollapsed = console.groupCollapsed;
+      prevGroupEnd = console.groupEnd; // https://github.com/facebook/react/issues/19099
+
+      var props = {
+        configurable: true,
+        enumerable: true,
+        value: disabledLog,
+        writable: true
+      }; // $FlowFixMe Flow thinks console is immutable.
+
+      Object.defineProperties(console, {
+        info: props,
+        log: props,
+        warn: props,
+        error: props,
+        group: props,
+        groupCollapsed: props,
+        groupEnd: props
+      });
+      /* eslint-enable react-internal/no-production-logging */
+    }
+
+    disabledDepth++;
+  }
+}
+function reenableLogs() {
+  {
+    disabledDepth--;
+
+    if (disabledDepth === 0) {
+      /* eslint-disable react-internal/no-production-logging */
+      var props = {
+        configurable: true,
+        enumerable: true,
+        writable: true
+      }; // $FlowFixMe Flow thinks console is immutable.
+
+      Object.defineProperties(console, {
+        log: assign({}, props, {
+          value: prevLog
+        }),
+        info: assign({}, props, {
+          value: prevInfo
+        }),
+        warn: assign({}, props, {
+          value: prevWarn
+        }),
+        error: assign({}, props, {
+          value: prevError
+        }),
+        group: assign({}, props, {
+          value: prevGroup
+        }),
+        groupCollapsed: assign({}, props, {
+          value: prevGroupCollapsed
+        }),
+        groupEnd: assign({}, props, {
+          value: prevGroupEnd
+        })
+      });
+      /* eslint-enable react-internal/no-production-logging */
+    }
+
+    if (disabledDepth < 0) {
+      error('disabledDepth fell below zero. ' + 'This is a bug in React. Please file an issue.');
+    }
+  }
+}
+
+var ReactCurrentDispatcher = ReactSharedInternals.ReactCurrentDispatcher;
+var prefix;
+function describeBuiltInComponentFrame(name, source, ownerFn) {
+  {
+    if (prefix === undefined) {
+      // Extract the VM specific prefix used by each line.
+      try {
+        throw Error();
+      } catch (x) {
+        var match = x.stack.trim().match(/\n( *(at )?)/);
+        prefix = match && match[1] || '';
+      }
+    } // We use the prefix to ensure our stacks line up with native stack frames.
+
+
+    return '\n' + prefix + name;
+  }
+}
+var reentry = false;
+var componentFrameCache;
+
+{
+  var PossiblyWeakMap = typeof WeakMap === 'function' ? WeakMap : Map;
+  componentFrameCache = new PossiblyWeakMap();
+}
+
+function describeNativeComponentFrame(fn, construct) {
+  // If something asked for a stack inside a fake render, it should get ignored.
+  if ( !fn || reentry) {
+    return '';
+  }
+
+  {
+    var frame = componentFrameCache.get(fn);
+
+    if (frame !== undefined) {
+      return frame;
+    }
+  }
+
+  var control;
+  reentry = true;
+  var previousPrepareStackTrace = Error.prepareStackTrace; // $FlowFixMe It does accept undefined.
+
+  Error.prepareStackTrace = undefined;
+  var previousDispatcher;
+
+  {
+    previousDispatcher = ReactCurrentDispatcher.current; // Set the dispatcher in DEV because this might be call in the render function
+    // for warnings.
+
+    ReactCurrentDispatcher.current = null;
+    disableLogs();
+  }
+
+  try {
+    // This should throw.
+    if (construct) {
+      // Something should be setting the props in the constructor.
+      var Fake = function () {
+        throw Error();
+      }; // $FlowFixMe
+
+
+      Object.defineProperty(Fake.prototype, 'props', {
+        set: function () {
+          // We use a throwing setter instead of frozen or non-writable props
+          // because that won't throw in a non-strict mode function.
+          throw Error();
+        }
+      });
+
+      if (typeof Reflect === 'object' && Reflect.construct) {
+        // We construct a different control for this case to include any extra
+        // frames added by the construct call.
+        try {
+          Reflect.construct(Fake, []);
+        } catch (x) {
+          control = x;
+        }
+
+        Reflect.construct(fn, [], Fake);
+      } else {
+        try {
+          Fake.call();
+        } catch (x) {
+          control = x;
+        }
+
+        fn.call(Fake.prototype);
+      }
+    } else {
+      try {
+        throw Error();
+      } catch (x) {
+        control = x;
+      }
+
+      fn();
+    }
+  } catch (sample) {
+    // This is inlined manually because closure doesn't do it for us.
+    if (sample && control && typeof sample.stack === 'string') {
+      // This extracts the first frame from the sample that isn't also in the control.
+      // Skipping one frame that we assume is the frame that calls the two.
+      var sampleLines = sample.stack.split('\n');
+      var controlLines = control.stack.split('\n');
+      var s = sampleLines.length - 1;
+      var c = controlLines.length - 1;
+
+      while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
+        // We expect at least one stack frame to be shared.
+        // Typically this will be the root most one. However, stack frames may be
+        // cut off due to maximum stack limits. In this case, one maybe cut off
+        // earlier than the other. We assume that the sample is longer or the same
+        // and there for cut off earlier. So we should find the root most frame in
+        // the sample somewhere in the control.
+        c--;
+      }
+
+      for (; s >= 1 && c >= 0; s--, c--) {
+        // Next we find the first one that isn't the same which should be the
+        // frame that called our sample function and the control.
+        if (sampleLines[s] !== controlLines[c]) {
+          // In V8, the first line is describing the message but other VMs don't.
+          // If we're about to return the first line, and the control is also on the same
+          // line, that's a pretty good indicator that our sample threw at same line as
+          // the control. I.e. before we entered the sample frame. So we ignore this result.
+          // This can happen if you passed a class to function component, or non-function.
+          if (s !== 1 || c !== 1) {
+            do {
+              s--;
+              c--; // We may still have similar intermediate frames from the construct call.
+              // The next one that isn't the same should be our match though.
+
+              if (c < 0 || sampleLines[s] !== controlLines[c]) {
+                // V8 adds a "new" prefix for native classes. Let's remove it to make it prettier.
+                var _frame = '\n' + sampleLines[s].replace(' at new ', ' at '); // If our component frame is labeled "<anonymous>"
+                // but we have a user-provided "displayName"
+                // splice it in to make the stack more readable.
+
+
+                if (fn.displayName && _frame.includes('<anonymous>')) {
+                  _frame = _frame.replace('<anonymous>', fn.displayName);
+                }
+
+                {
+                  if (typeof fn === 'function') {
+                    componentFrameCache.set(fn, _frame);
+                  }
+                } // Return the line we found.
+
+
+                return _frame;
+              }
+            } while (s >= 1 && c >= 0);
+          }
+
+          break;
+        }
+      }
+    }
+  } finally {
+    reentry = false;
+
+    {
+      ReactCurrentDispatcher.current = previousDispatcher;
+      reenableLogs();
+    }
+
+    Error.prepareStackTrace = previousPrepareStackTrace;
+  } // Fallback to just using the name if we couldn't make it throw.
+
+
+  var name = fn ? fn.displayName || fn.name : '';
+  var syntheticFrame = name ? describeBuiltInComponentFrame(name) : '';
+
+  {
+    if (typeof fn === 'function') {
+      componentFrameCache.set(fn, syntheticFrame);
+    }
+  }
+
+  return syntheticFrame;
+}
+function describeFunctionComponentFrame(fn, source, ownerFn) {
+  {
+    return describeNativeComponentFrame(fn, false);
+  }
+}
+
+function shouldConstruct(Component) {
+  var prototype = Component.prototype;
+  return !!(prototype && prototype.isReactComponent);
+}
+
+function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
+
+  if (type == null) {
+    return '';
+  }
+
+  if (typeof type === 'function') {
+    {
+      return describeNativeComponentFrame(type, shouldConstruct(type));
+    }
+  }
+
+  if (typeof type === 'string') {
+    return describeBuiltInComponentFrame(type);
+  }
+
+  switch (type) {
+    case REACT_SUSPENSE_TYPE:
+      return describeBuiltInComponentFrame('Suspense');
+
+    case REACT_SUSPENSE_LIST_TYPE:
+      return describeBuiltInComponentFrame('SuspenseList');
+  }
+
+  if (typeof type === 'object') {
+    switch (type.$$typeof) {
+      case REACT_FORWARD_REF_TYPE:
+        return describeFunctionComponentFrame(type.render);
+
+      case REACT_MEMO_TYPE:
+        // Memo may contain any component type so we recursively resolve it.
+        return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
+
+      case REACT_LAZY_TYPE:
+        {
+          var lazyComponent = type;
+          var payload = lazyComponent._payload;
+          var init = lazyComponent._init;
+
+          try {
+            // Lazy may contain any component type so we recursively resolve it.
+            return describeUnknownElementTypeFrameInDEV(init(payload), source, ownerFn);
+          } catch (x) {}
+        }
+    }
+  }
+
+  return '';
+}
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var loggedTypeFailures = {};
+var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+
+function setCurrentlyValidatingElement(element) {
+  {
+    if (element) {
+      var owner = element._owner;
+      var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+      ReactDebugCurrentFrame.setExtraStackFrame(stack);
+    } else {
+      ReactDebugCurrentFrame.setExtraStackFrame(null);
+    }
+  }
+}
+
+function checkPropTypes(typeSpecs, values, location, componentName, element) {
+  {
+    // $FlowFixMe This is okay but Flow doesn't know it.
+    var has = Function.call.bind(hasOwnProperty);
+
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error$1 = void 0; // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            // eslint-disable-next-line react-internal/prod-error-codes
+            var err = Error((componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' + 'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.' + 'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.');
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+
+          error$1 = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED');
+        } catch (ex) {
+          error$1 = ex;
+        }
+
+        if (error$1 && !(error$1 instanceof Error)) {
+          setCurrentlyValidatingElement(element);
+
+          error('%s: type specification of %s' + ' `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error$1);
+
+          setCurrentlyValidatingElement(null);
+        }
+
+        if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error$1.message] = true;
+          setCurrentlyValidatingElement(element);
+
+          error('Failed %s type: %s', location, error$1.message);
+
+          setCurrentlyValidatingElement(null);
+        }
+      }
+    }
+  }
+}
+
+var isArrayImpl = Array.isArray; // eslint-disable-next-line no-redeclare
+
+function isArray(a) {
+  return isArrayImpl(a);
+}
+
+/*
+ * The `'' + value` pattern (used in in perf-sensitive code) throws for Symbol
+ * and Temporal.* types. See https://github.com/facebook/react/pull/22064.
+ *
+ * The functions in this module will throw an easier-to-understand,
+ * easier-to-debug exception with a clear errors message message explaining the
+ * problem. (Instead of a confusing exception thrown inside the implementation
+ * of the `value` object).
+ */
+// $FlowFixMe only called in DEV, so void return is not possible.
+function typeName(value) {
+  {
+    // toStringTag is needed for namespaced types like Temporal.Instant
+    var hasToStringTag = typeof Symbol === 'function' && Symbol.toStringTag;
+    var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || 'Object';
+    return type;
+  }
+} // $FlowFixMe only called in DEV, so void return is not possible.
+
+
+function willCoercionThrow(value) {
+  {
+    try {
+      testStringCoercion(value);
+      return false;
+    } catch (e) {
+      return true;
+    }
+  }
+}
+
+function testStringCoercion(value) {
+  // If you ended up here by following an exception call stack, here's what's
+  // happened: you supplied an object or symbol value to React (as a prop, key,
+  // DOM attribute, CSS property, string ref, etc.) and when React tried to
+  // coerce it to a string using `'' + value`, an exception was thrown.
+  //
+  // The most common types that will cause this exception are `Symbol` instances
+  // and Temporal objects like `Temporal.Instant`. But any object that has a
+  // `valueOf` or `[Symbol.toPrimitive]` method that throws will also cause this
+  // exception. (Library authors do this to prevent users from using built-in
+  // numeric operators like `+` or comparison operators like `>=` because custom
+  // methods are needed to perform accurate arithmetic or comparison.)
+  //
+  // To fix the problem, coerce this object or symbol value to a string before
+  // passing it to React. The most reliable way is usually `String(value)`.
+  //
+  // To find which value is throwing, check the browser or debugger console.
+  // Before this exception was thrown, there should be `console.error` output
+  // that shows the type (Symbol, Temporal.PlainDate, etc.) that caused the
+  // problem and how that type was used: key, atrribute, input value prop, etc.
+  // In most cases, this console output also shows the component and its
+  // ancestor components where the exception happened.
+  //
+  // eslint-disable-next-line react-internal/safe-string-coercion
+  return '' + value;
+}
+function checkKeyStringCoercion(value) {
+  {
+    if (willCoercionThrow(value)) {
+      error('The provided key is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', typeName(value));
+
+      return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
+    }
+  }
+}
+
+var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
+var RESERVED_PROPS = {
+  key: true,
+  ref: true,
+  __self: true,
+  __source: true
+};
+var specialPropKeyWarningShown;
+var specialPropRefWarningShown;
+var didWarnAboutStringRefs;
+
+{
+  didWarnAboutStringRefs = {};
+}
+
+function hasValidRef(config) {
+  {
+    if (hasOwnProperty.call(config, 'ref')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+
+  return config.ref !== undefined;
+}
+
+function hasValidKey(config) {
+  {
+    if (hasOwnProperty.call(config, 'key')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
+
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+
+  return config.key !== undefined;
+}
+
+function warnIfStringRefCannotBeAutoConverted(config, self) {
+  {
+    if (typeof config.ref === 'string' && ReactCurrentOwner.current && self && ReactCurrentOwner.current.stateNode !== self) {
+      var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
+
+      if (!didWarnAboutStringRefs[componentName]) {
+        error('Component "%s" contains the string ref "%s". ' + 'Support for string refs will be removed in a future major release. ' + 'This case cannot be automatically converted to an arrow function. ' + 'We ask you to manually fix this case by using useRef() or createRef() instead. ' + 'Learn more about using refs safely here: ' + 'https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config.ref);
+
+        didWarnAboutStringRefs[componentName] = true;
+      }
+    }
+  }
+}
+
+function defineKeyPropWarningGetter(props, displayName) {
+  {
+    var warnAboutAccessingKey = function () {
+      if (!specialPropKeyWarningShown) {
+        specialPropKeyWarningShown = true;
+
+        error('%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://reactjs.org/link/special-props)', displayName);
+      }
+    };
+
+    warnAboutAccessingKey.isReactWarning = true;
+    Object.defineProperty(props, 'key', {
+      get: warnAboutAccessingKey,
+      configurable: true
+    });
+  }
+}
+
+function defineRefPropWarningGetter(props, displayName) {
+  {
+    var warnAboutAccessingRef = function () {
+      if (!specialPropRefWarningShown) {
+        specialPropRefWarningShown = true;
+
+        error('%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://reactjs.org/link/special-props)', displayName);
+      }
+    };
+
+    warnAboutAccessingRef.isReactWarning = true;
+    Object.defineProperty(props, 'ref', {
+      get: warnAboutAccessingRef,
+      configurable: true
+    });
+  }
+}
+/**
+ * Factory method to create a new React element. This no longer adheres to
+ * the class pattern, so do not use new to call it. Also, instanceof check
+ * will not work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * if something is a React Element.
+ *
+ * @param {*} type
+ * @param {*} props
+ * @param {*} key
+ * @param {string|object} ref
+ * @param {*} owner
+ * @param {*} self A *temporary* helper to detect places where `this` is
+ * different from the `owner` when React.createElement is called, so that we
+ * can warn. We want to get rid of owner and replace string `ref`s with arrow
+ * functions, and as long as `this` and owner are the same, there will be no
+ * change in behavior.
+ * @param {*} source An annotation object (added by a transpiler or otherwise)
+ * indicating filename, line number, and/or other information.
+ * @internal
+ */
+
+
+var ReactElement = function (type, key, ref, self, source, owner, props) {
+  var element = {
+    // This tag allows us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+    // Built-in properties that belong on the element
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+    // Record the component responsible for creating this element.
+    _owner: owner
+  };
+
+  {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {}; // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+
+    Object.defineProperty(element._store, 'validated', {
+      configurable: false,
+      enumerable: false,
+      writable: true,
+      value: false
+    }); // self and source are DEV only properties.
+
+    Object.defineProperty(element, '_self', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: self
+    }); // Two elements created in two different places should be considered
+    // equal for testing purposes and therefore we hide it from enumeration.
+
+    Object.defineProperty(element, '_source', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: source
+    });
+
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
+
+  return element;
+};
+/**
+ * https://github.com/reactjs/rfcs/pull/107
+ * @param {*} type
+ * @param {object} props
+ * @param {string} key
+ */
+
+function jsxDEV(type, config, maybeKey, source, self) {
+  {
+    var propName; // Reserved names are extracted
+
+    var props = {};
+    var key = null;
+    var ref = null; // Currently, key can be spread in as a prop. This causes a potential
+    // issue if key is also explicitly declared (ie. <div {...props} key="Hi" />
+    // or <div key="Hi" {...props} /> ). We want to deprecate key spread,
+    // but as an intermediary step, we will use jsxDEV for everything except
+    // <div {...props} key="Hi" />, because we aren't currently able to tell if
+    // key is explicitly declared to be undefined or not.
+
+    if (maybeKey !== undefined) {
+      {
+        checkKeyStringCoercion(maybeKey);
+      }
+
+      key = '' + maybeKey;
+    }
+
+    if (hasValidKey(config)) {
+      {
+        checkKeyStringCoercion(config.key);
+      }
+
+      key = '' + config.key;
+    }
+
+    if (hasValidRef(config)) {
+      ref = config.ref;
+      warnIfStringRefCannotBeAutoConverted(config, self);
+    } // Remaining properties are added to a new props object
+
+
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        props[propName] = config[propName];
+      }
+    } // Resolve default props
+
+
+    if (type && type.defaultProps) {
+      var defaultProps = type.defaultProps;
+
+      for (propName in defaultProps) {
+        if (props[propName] === undefined) {
+          props[propName] = defaultProps[propName];
+        }
+      }
+    }
+
+    if (key || ref) {
+      var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
+
+      if (key) {
+        defineKeyPropWarningGetter(props, displayName);
+      }
+
+      if (ref) {
+        defineRefPropWarningGetter(props, displayName);
+      }
+    }
+
+    return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+  }
+}
+
+var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
+var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
+
+function setCurrentlyValidatingElement$1(element) {
+  {
+    if (element) {
+      var owner = element._owner;
+      var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+      ReactDebugCurrentFrame$1.setExtraStackFrame(stack);
+    } else {
+      ReactDebugCurrentFrame$1.setExtraStackFrame(null);
+    }
+  }
+}
+
+var propTypesMisspellWarningShown;
+
+{
+  propTypesMisspellWarningShown = false;
+}
+/**
+ * Verifies the object is a ReactElement.
+ * See https://reactjs.org/docs/react-api.html#isvalidelement
+ * @param {?object} object
+ * @return {boolean} True if `object` is a ReactElement.
+ * @final
+ */
+
+
+function isValidElement(object) {
+  {
+    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  }
+}
+
+function getDeclarationErrorAddendum() {
+  {
+    if (ReactCurrentOwner$1.current) {
+      var name = getComponentNameFromType(ReactCurrentOwner$1.current.type);
+
+      if (name) {
+        return '\n\nCheck the render method of `' + name + '`.';
+      }
+    }
+
+    return '';
+  }
+}
+
+function getSourceInfoErrorAddendum(source) {
+  {
+    if (source !== undefined) {
+      var fileName = source.fileName.replace(/^.*[\\\/]/, '');
+      var lineNumber = source.lineNumber;
+      return '\n\nCheck your code at ' + fileName + ':' + lineNumber + '.';
+    }
+
+    return '';
+  }
+}
+/**
+ * Warn if there's no key explicitly set on dynamic arrays of children or
+ * object keys are not valid. This allows us to keep track of children between
+ * updates.
+ */
+
+
+var ownerHasKeyUseWarning = {};
+
+function getCurrentComponentErrorInfo(parentType) {
+  {
+    var info = getDeclarationErrorAddendum();
+
+    if (!info) {
+      var parentName = typeof parentType === 'string' ? parentType : parentType.displayName || parentType.name;
+
+      if (parentName) {
+        info = "\n\nCheck the top-level render call using <" + parentName + ">.";
+      }
+    }
+
+    return info;
+  }
+}
+/**
+ * Warn if the element doesn't have an explicit key assigned to it.
+ * This element is in an array. The array could grow and shrink or be
+ * reordered. All children that haven't already been validated are required to
+ * have a "key" property assigned to it. Error statuses are cached so a warning
+ * will only be shown once.
+ *
+ * @internal
+ * @param {ReactElement} element Element that requires a key.
+ * @param {*} parentType element's parent's type.
+ */
+
+
+function validateExplicitKey(element, parentType) {
+  {
+    if (!element._store || element._store.validated || element.key != null) {
+      return;
+    }
+
+    element._store.validated = true;
+    var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+
+    if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+      return;
+    }
+
+    ownerHasKeyUseWarning[currentComponentErrorInfo] = true; // Usually the current owner is the offender, but if it accepts children as a
+    // property, it may be the creator of the child that's responsible for
+    // assigning it a key.
+
+    var childOwner = '';
+
+    if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
+      // Give the component that originally created this child.
+      childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
+    }
+
+    setCurrentlyValidatingElement$1(element);
+
+    error('Each child in a list should have a unique "key" prop.' + '%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
+
+    setCurrentlyValidatingElement$1(null);
+  }
+}
+/**
+ * Ensure that every element either is passed in a static location, in an
+ * array with an explicit keys property defined, or in an object literal
+ * with valid key property.
+ *
+ * @internal
+ * @param {ReactNode} node Statically passed child of any type.
+ * @param {*} parentType node's parent's type.
+ */
+
+
+function validateChildKeys(node, parentType) {
+  {
+    if (typeof node !== 'object') {
+      return;
+    }
+
+    if (isArray(node)) {
+      for (var i = 0; i < node.length; i++) {
+        var child = node[i];
+
+        if (isValidElement(child)) {
+          validateExplicitKey(child, parentType);
+        }
+      }
+    } else if (isValidElement(node)) {
+      // This element was passed in a valid location.
+      if (node._store) {
+        node._store.validated = true;
+      }
+    } else if (node) {
+      var iteratorFn = getIteratorFn(node);
+
+      if (typeof iteratorFn === 'function') {
+        // Entry iterators used to provide implicit keys,
+        // but now we print a separate warning for them later.
+        if (iteratorFn !== node.entries) {
+          var iterator = iteratorFn.call(node);
+          var step;
+
+          while (!(step = iterator.next()).done) {
+            if (isValidElement(step.value)) {
+              validateExplicitKey(step.value, parentType);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/**
+ * Given an element, validate that its props follow the propTypes definition,
+ * provided by the type.
+ *
+ * @param {ReactElement} element
+ */
+
+
+function validatePropTypes(element) {
+  {
+    var type = element.type;
+
+    if (type === null || type === undefined || typeof type === 'string') {
+      return;
+    }
+
+    var propTypes;
+
+    if (typeof type === 'function') {
+      propTypes = type.propTypes;
+    } else if (typeof type === 'object' && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
+    // Inner props are checked in the reconciler.
+    type.$$typeof === REACT_MEMO_TYPE)) {
+      propTypes = type.propTypes;
+    } else {
+      return;
+    }
+
+    if (propTypes) {
+      // Intentionally inside to avoid triggering lazy initializers:
+      var name = getComponentNameFromType(type);
+      checkPropTypes(propTypes, element.props, 'prop', name, element);
+    } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
+      propTypesMisspellWarningShown = true; // Intentionally inside to avoid triggering lazy initializers:
+
+      var _name = getComponentNameFromType(type);
+
+      error('Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', _name || 'Unknown');
+    }
+
+    if (typeof type.getDefaultProps === 'function' && !type.getDefaultProps.isReactClassApproved) {
+      error('getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.');
+    }
+  }
+}
+/**
+ * Given a fragment, validate that it can only be provided with fragment props
+ * @param {ReactElement} fragment
+ */
+
+
+function validateFragmentProps(fragment) {
+  {
+    var keys = Object.keys(fragment.props);
+
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+
+      if (key !== 'children' && key !== 'key') {
+        setCurrentlyValidatingElement$1(fragment);
+
+        error('Invalid prop `%s` supplied to `React.Fragment`. ' + 'React.Fragment can only have `key` and `children` props.', key);
+
+        setCurrentlyValidatingElement$1(null);
+        break;
+      }
+    }
+
+    if (fragment.ref !== null) {
+      setCurrentlyValidatingElement$1(fragment);
+
+      error('Invalid attribute `ref` supplied to `React.Fragment`.');
+
+      setCurrentlyValidatingElement$1(null);
+    }
+  }
+}
+
+function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
+  {
+    var validType = isValidElementType(type); // We warn in this case but don't throw. We expect the element creation to
+    // succeed and there will likely be errors in render.
+
+    if (!validType) {
+      var info = '';
+
+      if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+        info += ' You likely forgot to export your component from the file ' + "it's defined in, or you might have mixed up default and named imports.";
+      }
+
+      var sourceInfo = getSourceInfoErrorAddendum(source);
+
+      if (sourceInfo) {
+        info += sourceInfo;
+      } else {
+        info += getDeclarationErrorAddendum();
+      }
+
+      var typeString;
+
+      if (type === null) {
+        typeString = 'null';
+      } else if (isArray(type)) {
+        typeString = 'array';
+      } else if (type !== undefined && type.$$typeof === REACT_ELEMENT_TYPE) {
+        typeString = "<" + (getComponentNameFromType(type.type) || 'Unknown') + " />";
+        info = ' Did you accidentally export a JSX literal instead of a component?';
+      } else {
+        typeString = typeof type;
+      }
+
+      error('React.jsx: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', typeString, info);
+    }
+
+    var element = jsxDEV(type, props, key, source, self); // The result can be nullish if a mock or a custom function is used.
+    // TODO: Drop this when these are no longer allowed as the type argument.
+
+    if (element == null) {
+      return element;
+    } // Skip key warning if the type isn't valid since our key validation logic
+    // doesn't expect a non-string/function type and can throw confusing errors.
+    // We don't want exception behavior to differ between dev and prod.
+    // (Rendering will throw with a helpful message and as soon as the type is
+    // fixed, the key warnings will appear.)
+
+
+    if (validType) {
+      var children = props.children;
+
+      if (children !== undefined) {
+        if (isStaticChildren) {
+          if (isArray(children)) {
+            for (var i = 0; i < children.length; i++) {
+              validateChildKeys(children[i], type);
+            }
+
+            if (Object.freeze) {
+              Object.freeze(children);
+            }
+          } else {
+            error('React.jsx: Static children should always be an array. ' + 'You are likely explicitly calling React.jsxs or React.jsxDEV. ' + 'Use the Babel transform instead.');
+          }
+        } else {
+          validateChildKeys(children, type);
+        }
+      }
+    }
+
+    if (type === REACT_FRAGMENT_TYPE) {
+      validateFragmentProps(element);
+    } else {
+      validatePropTypes(element);
+    }
+
+    return element;
+  }
+} // These two functions exist to still get child warnings in dev
+// even with the prod transform. This means that jsxDEV is purely
+// opt-in behavior for better messages but that we won't stop
+// giving you warnings if you use production apis.
+
+function jsxWithValidationStatic(type, props, key) {
+  {
+    return jsxWithValidation(type, props, key, true);
+  }
+}
+function jsxWithValidationDynamic(type, props, key) {
+  {
+    return jsxWithValidation(type, props, key, false);
+  }
+}
+
+var jsx =  jsxWithValidationDynamic ; // we may want to special case jsxs internally to take advantage of static children.
+// for now we can ship identical prod functions
+
+var jsxs =  jsxWithValidationStatic ;
+
+exports.Fragment = REACT_FRAGMENT_TYPE;
+exports.jsx = jsx;
+exports.jsxs = jsxs;
+  })();
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -49151,6 +50476,22 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react/jsx-runtime.js":
+/*!*******************************************!*\
+  !*** ./node_modules/react/jsx-runtime.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/react-jsx-runtime.development.js */ "./node_modules/react/cjs/react-jsx-runtime.development.js");
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/scheduler/cjs/scheduler.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
@@ -51093,7 +52434,7 @@ exports.Register = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
@@ -51136,6 +52477,13 @@ const isDate = (value) => {
         : value).getTime() > 567982800000;
 };
 exports.isDate = isDate;
+const isObject = (obj) => {
+    return typeof obj === 'object'
+        && !Array.isArray(obj)
+        && obj !== null
+        && typeof obj !== 'function';
+};
+exports.isObject = isObject;
 
 
 /***/ }),
@@ -51144,7 +52492,7 @@ exports.isDate = isDate;
 /*!***************************!*\
   !*** ./common/helpers.ts ***!
   \***************************/
-/***/ (function(__unused_webpack_module, exports) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -51158,7 +52506,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -51293,6 +52642,32 @@ const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.sleep = sleep;
+const iterateObjectsRecursively = (obj, keyPath, settings) => {
+    const { separator = '.', onIteration } = settings || {};
+    return Object.keys(obj || {}).reduce((result, key) => {
+        const path = keyPath.length ? `${keyPath}${separator}${key}` : key;
+        const value = obj[key];
+        if (typeof onIteration === 'function' && !(onIteration === null || onIteration === void 0 ? void 0 : onIteration(path, key, value, keyPath))) {
+            return keyPath.length ? [...result, keyPath] : result;
+        }
+        return [
+            ...result,
+            ...((0, checkers_1.isObject)(value)
+                ? (0, exports.iterateObjectsRecursively)(value, path, settings)
+                : [path]),
+        ];
+    }, []);
+};
+exports.iterateObjectsRecursively = iterateObjectsRecursively;
+const getUrlParamsSafe = (url, paramName) => {
+    try {
+        return new URL(url)[paramName] || '';
+    }
+    catch (e) {
+        return '';
+    }
+};
+exports.getUrlParamsSafe = getUrlParamsSafe;
 
 
 /***/ }),
@@ -51433,6 +52808,7 @@ const common_listeners_1 = __webpack_require__(/*! ../common/common-listeners */
 const types_app_messages_1 = __webpack_require__(/*! ./types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
 const stores_1 = __webpack_require__(/*! ./stores */ "./extension/app/stores/index.ts");
 const types_app_common_1 = __webpack_require__(/*! ./types/types-app-common */ "./extension/app/types/types-app-common.ts");
+const local_storage_1 = __webpack_require__(/*! ../common/local-storage */ "./extension/common/local-storage.ts");
 const PlatformResolver_1 = __webpack_require__(/*! ../content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts");
 const content_services_1 = __webpack_require__(/*! ../content/services/content-services */ "./extension/content/services/content-services.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
@@ -51448,6 +52824,20 @@ const setExtensionShowState = (isShow) => {
     }
     stores_1.rootStore.appStore.isExtensionOpen = isShow;
 };
+const handleResources = (payload, isNew) => {
+    const { resources, cacheID, fieldsNames } = payload;
+    stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
+    if (isNew) {
+        stores_1.rootStore.resourceStore.clearResources();
+    }
+    setTimeout(() => {
+        stores_1.rootStore.resourceStore.addResources(resources);
+        stores_1.rootStore.resourceStore.cacheID = cacheID;
+        stores_1.rootStore.platformStore.setFieldsNames(fieldsNames);
+        stores_1.rootStore.platformStore.saveFieldsNames();
+        stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
+    }, 0);
+};
 content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppShowExtension === message.type, message)) {
         if (!stores_1.rootStore.appStore.isExtensionOpen) {
@@ -51455,19 +52845,10 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
         }
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeNewResourceData === message.type, message)) {
-        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        stores_1.rootStore.resourceStore.clearResources();
-        setTimeout(() => {
-            setTimeout(() => {
-                stores_1.rootStore.resourceStore.addResources(message.payload);
-                stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
-            }, 100);
-        }, 0);
+        handleResources(message.payload, true);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppTakeResourceData === message.type, message)) {
-        stores_1.rootStore.appStore.startLoading(types_app_common_1.LoadingKey.resourcesAdding);
-        stores_1.rootStore.resourceStore.addResources(message.payload);
-        stores_1.rootStore.appStore.stopLoading(types_app_common_1.LoadingKey.resourcesAdding);
+        handleResources(message.payload, false);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppClearResourceData === message.type, message)) {
         stores_1.rootStore.resourceStore.clearResources();
@@ -51508,6 +52889,11 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
             stores_1.rootStore.platformStore.setMessage(show ? RemoveFieldsSpecificationMessage_1.RemoveFieldsSpecificationMessage : null);
         }
     }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppSyncWatchers === message.type, message)) {
+        const { watchers } = message.payload;
+        stores_1.rootStore.resourceStore.setWatchers(watchers);
+        (0, local_storage_1.setWatchers)(watchers);
+    }
 });
 loggers.debug().log('mounted');
 
@@ -51518,20 +52904,17 @@ loggers.debug().log('mounted');
 /*!**********************************************************!*\
   !*** ./extension/app/components/atoms/Button/Button.tsx ***!
   \**********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Button = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./button.scss */ "./extension/app/components/atoms/Button/button.scss");
 const Button = ({ onClick, icon, children, disabled, className = '', }) => {
-    return (react_1.default.createElement("button", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("button", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'button',
             disabled ? 'disabled' : '',
             className,
@@ -51540,15 +52923,13 @@ const Button = ({ onClick, icon, children, disabled, className = '', }) => {
                 return;
             }
             onClick === null || onClick === void 0 ? void 0 : onClick(e);
-        } },
-        icon && react_1.default.createElement("span", { className: "button-icon", onClick: e => {
-                if (disabled) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    return;
-                }
-            } }, icon),
-        react_1.default.createElement("div", { className: "button-content" }, children)));
+        } }, { children: [icon && (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "button-icon", onClick: e => {
+                    if (disabled) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        return;
+                    }
+                } }, { children: icon })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "button-content" }, { children: children }))] })));
 };
 exports.Button = Button;
 
@@ -51559,36 +52940,14 @@ exports.Button = Button;
 /*!**************************************************************!*\
   !*** ./extension/app/components/atoms/Checkbox/Checkbox.tsx ***!
   \**************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Checkbox = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./checkbox.scss */ "./extension/app/components/atoms/Checkbox/checkbox.scss");
@@ -51606,28 +52965,26 @@ const Checkbox = ({ onStateChanged, content, disabled, checked, onClick, checkIc
             setIsChecked(checked);
         }
     }, [checked]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'checkbox',
             isChecked ? 'checked' : 'not-checked',
             disabled ? 'disabled' : '',
             className,
-        ]) },
-        react_1.default.createElement("span", { className: (0, common_helpers_1.createClassName)([
-                'checker-wrapper',
-                isChecked ? 'checked' : 'not-checked',
-                disabled ? 'disabled' : '',
-                className,
-            ]), onClick: (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                if (disabled) {
-                    return;
-                }
-                const newValue = !isChecked;
-                setIsChecked(newValue);
-                onClick === null || onClick === void 0 ? void 0 : onClick(newValue);
-            } }, isChecked ? checkIcon : uncheckIcon),
-        react_1.default.createElement("div", { className: "content", title: title }, content)));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)("span", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                    'checker-wrapper',
+                    isChecked ? 'checked' : 'not-checked',
+                    disabled ? 'disabled' : '',
+                    className,
+                ]), onClick: (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (disabled) {
+                        return;
+                    }
+                    const newValue = !isChecked;
+                    setIsChecked(newValue);
+                    onClick === null || onClick === void 0 ? void 0 : onClick(newValue);
+                } }, { children: isChecked ? checkIcon : uncheckIcon })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "content", title: title }, { children: content }))] })));
 };
 exports.Checkbox = Checkbox;
 
@@ -51638,36 +52995,14 @@ exports.Checkbox = Checkbox;
 /*!********************************************************************!*\
   !*** ./extension/app/components/atoms/Collapsible/Collapsible.tsx ***!
   \********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Collapsible = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./collapsible.scss */ "./extension/app/components/atoms/Collapsible/collapsible.scss");
 const Collapsible = ({ className = '', disabled, children, header, onClick, open, }) => {
@@ -51705,25 +53040,23 @@ const Collapsible = ({ className = '', disabled, children, header, onClick, open
             widthObserver.disconnect();
         };
     }, [getNewHeight]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'collapsible',
             isOpen ? 'open' : 'closed',
             disabled ? 'disabled' : '',
             className,
-        ]) },
-        react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                'collapsible-header',
-                isOpen ? 'open' : 'closed',
-                disabled ? 'disabled' : '',
-                className,
-            ]), onClick: e => {
-                if (!children || disabled) {
-                    return;
-                }
-                setIsOpen(!isOpen);
-                onClick === null || onClick === void 0 ? void 0 : onClick(e);
-            } }, header),
-        children && (react_1.default.createElement("div", { className: "collapsible-content", ref: contentRef, style: { height: isOpen ? height : 0 } }, isOpen && children))));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                    'collapsible-header',
+                    isOpen ? 'open' : 'closed',
+                    disabled ? 'disabled' : '',
+                    className,
+                ]), onClick: e => {
+                    if (!children || disabled) {
+                        return;
+                    }
+                    setIsOpen(!isOpen);
+                    onClick === null || onClick === void 0 ? void 0 : onClick(e);
+                } }, { children: header })), children && ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "collapsible-content", ref: contentRef, style: { height: isOpen ? height : 0 } }, { children: isOpen && children })))] })));
 };
 exports.Collapsible = Collapsible;
 
@@ -51738,29 +53071,6 @@ exports.Collapsible = Collapsible;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -51774,25 +53084,24 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ControlInput = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const Input_1 = __webpack_require__(/*! ../Input/Input */ "./extension/app/components/atoms/Input/Input.tsx");
 exports.ControlInput = (0, react_1.forwardRef)((_a, ref) => {
     var { className = '', controls, edit, disabled } = _a, restProps = __rest(_a, ["className", "controls", "edit", "disabled"]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'control-input-wrapper',
             edit ? 'edit' : '',
             disabled ? 'disabled' : '',
             className,
-        ]) },
-        react_1.default.createElement(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
-                'control-input',
-                edit ? 'edit' : '',
-                className,
-            ]), disabled: typeof disabled !== 'undefined'
-                ? disabled
-                : !edit }, restProps)),
-        edit && controls));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
+                    'control-input',
+                    edit ? 'edit' : '',
+                    className,
+                ]), disabled: typeof disabled !== 'undefined'
+                    ? disabled
+                    : !edit }, restProps)), edit && controls] })));
 });
 
 
@@ -51802,36 +53111,14 @@ exports.ControlInput = (0, react_1.forwardRef)((_a, ref) => {
 /*!*********************************************************************************!*\
   !*** ./extension/app/components/atoms/DragableResizable/DraggableResizable.tsx ***!
   \*********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DraggableResizable = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./draggable-resizable.scss */ "./extension/app/components/atoms/DragableResizable/draggable-resizable.scss");
@@ -51949,73 +53236,68 @@ const DraggableResizable = ({ className = '', children, onEnd, position, onChang
             });
         }
     }, [dragElementsRefs, onMoveCallback, dragElementsRefs === null || dragElementsRefs === void 0 ? void 0 : dragElementsRefs.length]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'draggable-resizable',
             className,
             disallowResize ? 'disallowResize' : '',
             disallowDrag ? 'disallowDrag' : '',
-        ]), ref: ref, style: elementPosition },
-        react_1.default.createElement("div", { className: "resizer resizer-top", onMouseDown: e => {
-                onResizeHandler(e, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeTop(event, prev);
-                        onChangedPositionCallback('resize-top', newPosition, prev);
-                        return newPosition;
+        ]), ref: ref, style: elementPosition }, { children: [(0, jsx_runtime_1.jsx)("div", { className: "resizer resizer-top", onMouseDown: e => {
+                    onResizeHandler(e, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeTop(event, prev);
+                            onChangedPositionCallback('resize-top', newPosition, prev);
+                            return newPosition;
+                        });
+                    }, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeTop(event, prev);
+                            onMouseUpCallback(newPosition);
+                            return newPosition;
+                        });
                     });
-                }, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeTop(event, prev);
-                        onMouseUpCallback(newPosition);
-                        return newPosition;
+                } }), (0, jsx_runtime_1.jsx)("div", { className: "resizer resizer-bottom", onMouseDown: e => {
+                    onResizeHandler(e, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeBottom(event, prev);
+                            onChangedPositionCallback('resize-bottom', newPosition, prev);
+                            return newPosition;
+                        });
+                    }, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeBottom(event, prev);
+                            onMouseUpCallback(newPosition);
+                            return newPosition;
+                        });
                     });
-                });
-            } }),
-        react_1.default.createElement("div", { className: "resizer resizer-bottom", onMouseDown: e => {
-                onResizeHandler(e, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeBottom(event, prev);
-                        onChangedPositionCallback('resize-bottom', newPosition, prev);
-                        return newPosition;
+                } }), (0, jsx_runtime_1.jsx)("div", { className: "resizer resizer-left", onMouseDown: e => {
+                    onResizeHandler(e, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeLeft(event, prev);
+                            onChangedPositionCallback('resize-left', newPosition, prev);
+                            return newPosition;
+                        });
+                    }, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeLeft(event, prev);
+                            onMouseUpCallback(newPosition);
+                            return newPosition;
+                        });
                     });
-                }, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeBottom(event, prev);
-                        onMouseUpCallback(newPosition);
-                        return newPosition;
+                } }), (0, jsx_runtime_1.jsx)("div", { className: "resizer resizer-right", onMouseDown: e => {
+                    onResizeHandler(e, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeRight(event, prev);
+                            onChangedPositionCallback('resize-right', newPosition, prev);
+                            return newPosition;
+                        });
+                    }, (event) => {
+                        setElementPosition(prev => {
+                            const newPosition = calculateOnResizeRight(event, prev);
+                            onMouseUpCallback(newPosition);
+                            return newPosition;
+                        });
                     });
-                });
-            } }),
-        react_1.default.createElement("div", { className: "resizer resizer-left", onMouseDown: e => {
-                onResizeHandler(e, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeLeft(event, prev);
-                        onChangedPositionCallback('resize-left', newPosition, prev);
-                        return newPosition;
-                    });
-                }, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeLeft(event, prev);
-                        onMouseUpCallback(newPosition);
-                        return newPosition;
-                    });
-                });
-            } }),
-        react_1.default.createElement("div", { className: "resizer resizer-right", onMouseDown: e => {
-                onResizeHandler(e, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeRight(event, prev);
-                        onChangedPositionCallback('resize-right', newPosition, prev);
-                        return newPosition;
-                    });
-                }, (event) => {
-                    setElementPosition(prev => {
-                        const newPosition = calculateOnResizeRight(event, prev);
-                        onMouseUpCallback(newPosition);
-                        return newPosition;
-                    });
-                });
-            } }),
-        children));
+                } }), children] })));
 };
 exports.DraggableResizable = DraggableResizable;
 
@@ -52026,36 +53308,14 @@ exports.DraggableResizable = DraggableResizable;
 /*!**************************************************************!*\
   !*** ./extension/app/components/atoms/Dropdown/Dropdown.tsx ***!
   \**************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Dropdown = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
@@ -52089,11 +53349,11 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
         },
     }));
     const getMenuElement = (0, react_1.useCallback)((styles) => {
-        return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+        return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
                 'dropdown-menu',
                 classNameMenu,
                 isOpen ? 'show' : 'hide',
-            ]), style: styles, ref: dropdownMenuRef }, children));
+            ]), style: styles, ref: dropdownMenuRef }, { children: children })));
     }, [children, classNameMenu, isOpen]);
     const menu = (0, react_1.useMemo)(() => {
         var _a, _b, _c, _d;
@@ -52120,23 +53380,20 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
             ? null
             : (0, react_dom_1.createPortal)(getMenuElement(styles || {}), mountElement);
     }, [direction, getMenuElement, getMenuStyles, isOpen, mountElement]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'dropdown',
             direction,
             className,
             isOpen ? 'open' : '',
             disabled ? 'disabled' : '',
-        ]), ref: dropdownRef },
-        react_1.default.createElement("div", { className: "dropdown-header" }, header),
-        react_1.default.createElement("div", { className: "dropdown-opener", onClick: e => {
-                if (disabled) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return;
-                }
-                setIsOpen(!isOpen);
-            } }, opener),
-        menu));
+        ]), ref: dropdownRef }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dropdown-header" }, { children: header })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dropdown-opener", onClick: e => {
+                    if (disabled) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return;
+                    }
+                    setIsOpen(!isOpen);
+                } }, { children: opener })), menu] })));
 });
 
 
@@ -52146,19 +53403,16 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
 /*!**********************************************************!*\
   !*** ./extension/app/components/atoms/Header/Header.tsx ***!
   \**********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Header = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const Header = ({ children, className = '', }) => {
-    return (react_1.default.createElement("header", { className: (0, common_helpers_1.createClassName)(['header', className]) }, children));
+    return ((0, jsx_runtime_1.jsx)("header", Object.assign({ className: (0, common_helpers_1.createClassName)(['header', className]) }, { children: children })));
 };
 exports.Header = Header;
 
@@ -52169,39 +53423,17 @@ exports.Header = Header;
 /*!********************************************************!*\
   !*** ./extension/app/components/atoms/Input/Input.tsx ***!
   \********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Input = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./input.scss */ "./extension/app/components/atoms/Input/input.scss");
-exports.Input = (0, react_1.forwardRef)(({ className = '', onChange, onClick, onType, onDoubleClick, onFocus, onBlur, label, placeholder = '', debounceMs, disabled, value = '', }, ref) => {
+exports.Input = (0, react_1.forwardRef)(({ className = '', onChange, onClick, onType, onKeyDown, onDoubleClick, onFocus, onBlur, label, placeholder = '', debounceMs, disabled, value = '', }, ref) => {
     const [inputValue, setInputValue] = (0, react_1.useState)(value);
     const timeoutID = (0, react_1.useRef)();
     (0, react_1.useEffect)(() => {
@@ -52217,19 +53449,19 @@ exports.Input = (0, react_1.forwardRef)(({ className = '', onChange, onClick, on
             onChange === null || onChange === void 0 ? void 0 : onChange(target.value);
         }, debounceMs || 350);
     }, [debounceMs, onChange, onType]);
-    return (react_1.default.createElement("label", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("label", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'input-label',
             className,
-        ]) },
-        label && react_1.default.createElement("span", null, label),
-        react_1.default.createElement("input", { ref: ref, placeholder: placeholder, className: (0, common_helpers_1.createClassName)([
-                'input',
-                disabled ? 'disabled' : '',
-                !inputValue ? 'empty' : '',
-                className,
-            ]), onClick: onClick, onMouseOut: onFocus, onBlur: () => {
-                onBlur === null || onBlur === void 0 ? void 0 : onBlur(inputValue);
-            }, disabled: disabled, type: "text", value: inputValue, onChange: onChangeCallback, onDoubleClick: onDoubleClick })));
+        ]) }, { children: [label && (0, jsx_runtime_1.jsx)("span", { children: label }), (0, jsx_runtime_1.jsx)("input", { ref: ref, placeholder: placeholder, className: (0, common_helpers_1.createClassName)([
+                    'input',
+                    disabled ? 'disabled' : '',
+                    !inputValue ? 'empty' : '',
+                    className,
+                ]), onKeyDown: (e) => {
+                    onKeyDown === null || onKeyDown === void 0 ? void 0 : onKeyDown(e);
+                }, onClick: onClick, onMouseOut: onFocus, onBlur: () => {
+                    onBlur === null || onBlur === void 0 ? void 0 : onBlur(inputValue);
+                }, disabled: disabled, type: "text", value: inputValue, onChange: onChangeCallback, onDoubleClick: onDoubleClick })] })));
 });
 
 
@@ -52254,16 +53486,13 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Link = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const Link = (_a) => {
     var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
-    return (react_1.default.createElement("a", Object.assign({ className: (0, common_helpers_1.createClassName)(['link', className]) }, restProps), children));
+    return ((0, jsx_runtime_1.jsx)("a", Object.assign({ className: (0, common_helpers_1.createClassName)(['link', className]) }, restProps, { children: children })));
 };
 exports.Link = Link;
 
@@ -52274,44 +53503,22 @@ exports.Link = Link;
 /*!******************************************************!*\
   !*** ./extension/app/components/atoms/List/List.tsx ***!
   \******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.List = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 exports.List = (0, react_1.forwardRef)(({ className = '', items, }, ref) => {
-    return (react_1.default.createElement("ul", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)("ul", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'list',
             className,
-        ]), ref: ref }, items.map(({ id, content, onClick }) => {
-        return (react_1.default.createElement("li", { className: "list-item", key: id, onClick: onClick }, content));
-    })));
+        ]), ref: ref }, { children: items.map(({ id, content, onClick }) => {
+            return ((0, jsx_runtime_1.jsx)("li", Object.assign({ className: "list-item", onClick: onClick }, { children: content }), id));
+        }) })));
 });
 
 
@@ -52321,18 +53528,15 @@ exports.List = (0, react_1.forwardRef)(({ className = '', items, }, ref) => {
 /*!**********************************************************!*\
   !*** ./extension/app/components/atoms/Spacer/Spacer.tsx ***!
   \**********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Spacer = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const Spacer = ({ height }) => {
-    return react_1.default.createElement("div", { className: "spacer", style: { height } });
+    return (0, jsx_runtime_1.jsx)("div", { className: "spacer", style: { height } });
 };
 exports.Spacer = Spacer;
 
@@ -52343,36 +53547,14 @@ exports.Spacer = Spacer;
 /*!****************************************************************!*\
   !*** ./extension/app/components/atoms/TabsPanel/TabsPanel.tsx ***!
   \****************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TabsPanel = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 __webpack_require__(/*! ./tabs-panel.scss */ "./extension/app/components/atoms/TabsPanel/tabs-panel.scss");
@@ -52389,17 +53571,15 @@ const TabsPanel = ({ activeTab, tabs, children, onActiveTabChanged, className = 
             setCurrentActiveTab(activeTab);
         }
     }, [activeTab]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['tabs-panel', className]) },
-        react_1.default.createElement("div", { className: "tabs-wrapper" }, tabs.map(({ component, id, isDisabled }) => (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                'tab',
-                currentActiveTab === id ? 'active' : '',
-                isDisabled ? 'disabled' : '',
-            ]), key: id, onClick: () => {
-                if (!isDisabled) {
-                    setCurrentActiveTab(id);
-                }
-            } }, component)))),
-        children));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)(['tabs-panel', className]) }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: "tabs-wrapper" }, { children: tabs.map(({ component, id, isDisabled }) => ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                        'tab',
+                        currentActiveTab === id ? 'active' : '',
+                        isDisabled ? 'disabled' : '',
+                    ]), onClick: () => {
+                        if (!isDisabled) {
+                            setCurrentActiveTab(id);
+                        }
+                    } }, { children: component }), id))) })), children] })));
 };
 exports.TabsPanel = TabsPanel;
 
@@ -52410,36 +53590,14 @@ exports.TabsPanel = TabsPanel;
 /*!************************************************************!*\
   !*** ./extension/app/components/atoms/Tooltip/Tooltip.tsx ***!
   \************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Tooltip = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 __webpack_require__(/*! ./tooltip.scss */ "./extension/app/components/atoms/Tooltip/tooltip.scss");
@@ -52513,16 +53671,13 @@ const Tooltip = ({ children, mountElem, content, getPosition, className = '', de
             return;
         }
         const { top, left } = calculateCoords(tooltipRef.current, hintRef.current);
-        return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+        return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
                 'tooltip-content',
                 className,
                 show ? '' : 'transparent',
-            ]), style: { top, left }, onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave, ref: hintRef },
-            react_1.default.createElement("div", { className: "tooltip-content-wrapper" }, content)));
+            ]), style: { top, left }, onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave, ref: hintRef }, { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "tooltip-content-wrapper" }, { children: content })) })));
     }, [calculateCoords, className, content, onMouseLeave, onMouseEnter]);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['tooltip', className]), onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave, ref: tooltipRef },
-        children,
-        isMounted && mountElem && (0, react_dom_1.createPortal)(getHint(isShow), mountElem)));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)(['tooltip', className]), onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave, ref: tooltipRef }, { children: [children, isMounted && mountElem && (0, react_dom_1.createPortal)(getHint(isShow), mountElem)] })));
 };
 exports.Tooltip = Tooltip;
 
@@ -52533,19 +53688,15 @@ exports.Tooltip = Tooltip;
 /*!**********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/AssetIcon/AssetIcon.tsx ***!
   \**********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AssetIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const AssetIcon = () => {
-    return (react_1.default.createElement("svg", { className: "asset-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M13.7838 3.05973H13.0921V2.44153C13.0921 2.1978 12.8944 2 12.6506 2H3.34966C3.10586 2 2.90813 2.19783 2.90813 2.44153V4.73736C2.90813 4.98122 3.10586 5.17886 3.34966 5.17886H12.6506C12.8944 5.17886 13.0921 4.98122 13.0921 4.73736V3.94259H13.7838V12.0663H13.0921V11.2715C13.0921 11.0277 12.8944 10.83 12.6506 10.83H3.34966C3.10586 10.83 2.90813 11.0277 2.90813 11.2715V12.0663H2.21653V8.44595H2.90816V9.15228C2.90816 9.39604 3.10589 9.59374 3.34969 9.59374H12.6506C12.8944 9.59374 13.0922 9.39604 13.0922 9.15228V6.85655C13.0922 6.61272 12.8944 6.41505 12.6506 6.41505H3.34966C3.10586 6.41505 2.90813 6.61272 2.90813 6.85655V7.56288H2.21653C1.72966 7.56291 1.3335 7.95905 1.3335 8.44591V12.0662C1.3335 12.5531 1.72963 12.9491 2.21653 12.9491H2.90816V13.5673C2.90816 13.811 3.10589 14.0088 3.34969 14.0088H12.6506C12.8944 14.0088 13.0922 13.811 13.0922 13.5673V12.9491H13.7838C14.2707 12.9491 14.6668 12.5531 14.6668 12.0662V3.94266C14.6668 3.45573 14.2706 3.05973 13.7838 3.05973ZM10.9435 7.56301C10.9435 7.38015 11.0917 7.23182 11.2746 7.23182C11.4575 7.23182 11.6058 7.38012 11.6058 7.56301V8.44595C11.6058 8.62881 11.4576 8.77718 11.2746 8.77718C11.0917 8.77718 10.9435 8.62888 10.9435 8.44595V7.56301ZM9.47181 7.56301C9.47181 7.38015 9.62001 7.23182 9.80291 7.23182C9.98581 7.23182 10.134 7.38012 10.134 7.56301V8.44595C10.134 8.62881 9.98584 8.77718 9.80291 8.77718C9.62007 8.77718 9.47181 8.62888 9.47181 8.44595V7.56301ZM8.00015 7.56301C8.00015 7.38015 8.14838 7.23182 8.33128 7.23182C8.51411 7.23182 8.66248 7.38012 8.66248 7.56301V8.44595C8.66248 8.62881 8.51421 8.77718 8.33128 8.77718C8.14841 8.77718 8.00015 8.62884 8.00015 8.44595V7.56301ZM8.66238 12.8609C8.66238 13.0438 8.51411 13.1921 8.33114 13.1921C8.14831 13.1921 8.00005 13.0439 8.00005 12.8609V11.978C8.00005 11.7953 8.14824 11.647 8.33114 11.647C8.51404 11.647 8.66238 11.7951 8.66238 11.978V12.8609ZM10.134 12.8609C10.134 13.0438 9.98584 13.1921 9.80291 13.1921C9.62007 13.1921 9.47181 13.0439 9.47181 12.8609V11.978C9.47181 11.7953 9.62001 11.647 9.80291 11.647C9.98581 11.647 10.134 11.7951 10.134 11.978V12.8609ZM11.6057 12.8609C11.6057 13.0438 11.4575 13.1921 11.2745 13.1921C11.0917 13.1921 10.9434 13.0439 10.9434 12.8609V11.978C10.9434 11.7953 11.0916 11.647 11.2745 11.647C11.4574 11.647 11.6057 11.7951 11.6057 11.978V12.8609Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "asset-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M13.7838 3.05973H13.0921V2.44153C13.0921 2.1978 12.8944 2 12.6506 2H3.34966C3.10586 2 2.90813 2.19783 2.90813 2.44153V4.73736C2.90813 4.98122 3.10586 5.17886 3.34966 5.17886H12.6506C12.8944 5.17886 13.0921 4.98122 13.0921 4.73736V3.94259H13.7838V12.0663H13.0921V11.2715C13.0921 11.0277 12.8944 10.83 12.6506 10.83H3.34966C3.10586 10.83 2.90813 11.0277 2.90813 11.2715V12.0663H2.21653V8.44595H2.90816V9.15228C2.90816 9.39604 3.10589 9.59374 3.34969 9.59374H12.6506C12.8944 9.59374 13.0922 9.39604 13.0922 9.15228V6.85655C13.0922 6.61272 12.8944 6.41505 12.6506 6.41505H3.34966C3.10586 6.41505 2.90813 6.61272 2.90813 6.85655V7.56288H2.21653C1.72966 7.56291 1.3335 7.95905 1.3335 8.44591V12.0662C1.3335 12.5531 1.72963 12.9491 2.21653 12.9491H2.90816V13.5673C2.90816 13.811 3.10589 14.0088 3.34969 14.0088H12.6506C12.8944 14.0088 13.0922 13.811 13.0922 13.5673V12.9491H13.7838C14.2707 12.9491 14.6668 12.5531 14.6668 12.0662V3.94266C14.6668 3.45573 14.2706 3.05973 13.7838 3.05973ZM10.9435 7.56301C10.9435 7.38015 11.0917 7.23182 11.2746 7.23182C11.4575 7.23182 11.6058 7.38012 11.6058 7.56301V8.44595C11.6058 8.62881 11.4576 8.77718 11.2746 8.77718C11.0917 8.77718 10.9435 8.62888 10.9435 8.44595V7.56301ZM9.47181 7.56301C9.47181 7.38015 9.62001 7.23182 9.80291 7.23182C9.98581 7.23182 10.134 7.38012 10.134 7.56301V8.44595C10.134 8.62881 9.98584 8.77718 9.80291 8.77718C9.62007 8.77718 9.47181 8.62888 9.47181 8.44595V7.56301ZM8.00015 7.56301C8.00015 7.38015 8.14838 7.23182 8.33128 7.23182C8.51411 7.23182 8.66248 7.38012 8.66248 7.56301V8.44595C8.66248 8.62881 8.51421 8.77718 8.33128 8.77718C8.14841 8.77718 8.00015 8.62884 8.00015 8.44595V7.56301ZM8.66238 12.8609C8.66238 13.0438 8.51411 13.1921 8.33114 13.1921C8.14831 13.1921 8.00005 13.0439 8.00005 12.8609V11.978C8.00005 11.7953 8.14824 11.647 8.33114 11.647C8.51404 11.647 8.66238 11.7951 8.66238 11.978V12.8609ZM10.134 12.8609C10.134 13.0438 9.98584 13.1921 9.80291 13.1921C9.62007 13.1921 9.47181 13.0439 9.47181 12.8609V11.978C9.47181 11.7953 9.62001 11.647 9.80291 11.647C9.98581 11.647 10.134 11.7951 10.134 11.978V12.8609ZM11.6057 12.8609C11.6057 13.0438 11.4575 13.1921 11.2745 13.1921C11.0917 13.1921 10.9434 13.0439 10.9434 12.8609V11.978C10.9434 11.7953 11.0916 11.647 11.2745 11.647C11.4574 11.647 11.6057 11.7951 11.6057 11.978V12.8609Z" }) })));
 };
 exports.AssetIcon = AssetIcon;
 
@@ -52556,20 +53707,16 @@ exports.AssetIcon = AssetIcon;
 /*!**********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx ***!
   \**********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CheckIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const CheckIcon = ({ onClick, className = '' }) => {
-    return (react_1.default.createElement("svg", { onClick: onClick, className: (0, common_helpers_1.createClassName)(['check-icon', 'icon', className]), viewBox: "0 0 10 9", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M3.31476 8.35849L0.132954 4.94149C-0.044318 4.75349 -0.044318 4.44749 0.132954 4.25749L0.775678 3.57449C0.95295 3.38649 1.24113 3.38649 1.4184 3.57449L3.63657 5.96649L8.5811 0.641488C8.75837 0.453488 9.04655 0.453488 9.22382 0.641488L9.86655 1.32549C10.0438 1.51349 10.0438 1.82049 9.86655 2.00749L3.95748 8.35849C3.78021 8.54649 3.49203 8.54649 3.31476 8.35849Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ onClick: onClick, className: (0, common_helpers_1.createClassName)(['check-icon', 'icon', className]), viewBox: "0 0 10 9", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M3.31476 8.35849L0.132954 4.94149C-0.044318 4.75349 -0.044318 4.44749 0.132954 4.25749L0.775678 3.57449C0.95295 3.38649 1.24113 3.38649 1.4184 3.57449L3.63657 5.96649L8.5811 0.641488C8.75837 0.453488 9.04655 0.453488 9.22382 0.641488L9.86655 1.32549C10.0438 1.51349 10.0438 1.82049 9.86655 2.00749L3.95748 8.35849C3.78021 8.54649 3.49203 8.54649 3.31476 8.35849Z" }) })));
 };
 exports.CheckIcon = CheckIcon;
 
@@ -52580,20 +53727,16 @@ exports.CheckIcon = CheckIcon;
 /*!********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/CopyIcon/CopyIcon.tsx ***!
   \********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CopyIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const CopyIcon = ({ onClick, className = '' }) => {
-    return (react_1.default.createElement("svg", { className: (0, common_helpers_1.createClassName)(['copy-icon', 'icon', className]), onClick: onClick, viewBox: "0 0 14 17", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M7.66683 13.8333C8.55056 13.8323 9.39779 13.4808 10.0227 12.8559C10.6476 12.231 10.9991 11.3837 11.0002 10.5V4.66201C11.0012 4.31158 10.9327 3.96444 10.7985 3.64069C10.6644 3.31694 10.4674 3.02304 10.2188 2.77601L8.72416 1.28135C8.47714 1.03279 8.18323 0.835747 7.85948 0.701625C7.53574 0.567503 7.18859 0.498975 6.83816 0.500012H3.66683C2.7831 0.50107 1.93587 0.8526 1.31098 1.47749C0.686084 2.10238 0.334555 2.94961 0.333496 3.83334V10.5C0.334555 11.3837 0.686084 12.231 1.31098 12.8559C1.93587 13.4808 2.7831 13.8323 3.66683 13.8333H7.66683ZM1.66683 10.5V3.83334C1.66683 3.30291 1.87754 2.7942 2.25262 2.41913C2.62769 2.04406 3.1364 1.83334 3.66683 1.83334C3.66683 1.83334 6.94616 1.84268 7.00016 1.84934V3.16668C7.00016 3.5203 7.14064 3.85944 7.39069 4.10949C7.64074 4.35954 7.97987 4.50001 8.3335 4.50001H9.65083C9.6575 4.55401 9.66683 10.5 9.66683 10.5C9.66683 11.0304 9.45612 11.5392 9.08104 11.9142C8.70597 12.2893 8.19726 12.5 7.66683 12.5H3.66683C3.1364 12.5 2.62769 12.2893 2.25262 11.9142C1.87754 11.5392 1.66683 11.0304 1.66683 10.5ZM13.6668 5.83334V13.1667C13.6658 14.0504 13.3142 14.8976 12.6894 15.5225C12.0645 16.1474 11.2172 16.499 10.3335 16.5H4.3335C4.15669 16.5 3.98712 16.4298 3.86209 16.3048C3.73707 16.1797 3.66683 16.0102 3.66683 15.8333C3.66683 15.6565 3.73707 15.487 3.86209 15.3619C3.98712 15.2369 4.15669 15.1667 4.3335 15.1667H10.3335C10.8639 15.1667 11.3726 14.956 11.7477 14.5809C12.1228 14.2058 12.3335 13.6971 12.3335 13.1667V5.83334C12.3335 5.65653 12.4037 5.48696 12.5288 5.36194C12.6538 5.23692 12.8234 5.16668 13.0002 5.16668C13.177 5.16668 13.3465 5.23692 13.4716 5.36194C13.5966 5.48696 13.6668 5.65653 13.6668 5.83334Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: (0, common_helpers_1.createClassName)(['copy-icon', 'icon', className]), onClick: onClick, viewBox: "0 0 14 17", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M7.66683 13.8333C8.55056 13.8323 9.39779 13.4808 10.0227 12.8559C10.6476 12.231 10.9991 11.3837 11.0002 10.5V4.66201C11.0012 4.31158 10.9327 3.96444 10.7985 3.64069C10.6644 3.31694 10.4674 3.02304 10.2188 2.77601L8.72416 1.28135C8.47714 1.03279 8.18323 0.835747 7.85948 0.701625C7.53574 0.567503 7.18859 0.498975 6.83816 0.500012H3.66683C2.7831 0.50107 1.93587 0.8526 1.31098 1.47749C0.686084 2.10238 0.334555 2.94961 0.333496 3.83334V10.5C0.334555 11.3837 0.686084 12.231 1.31098 12.8559C1.93587 13.4808 2.7831 13.8323 3.66683 13.8333H7.66683ZM1.66683 10.5V3.83334C1.66683 3.30291 1.87754 2.7942 2.25262 2.41913C2.62769 2.04406 3.1364 1.83334 3.66683 1.83334C3.66683 1.83334 6.94616 1.84268 7.00016 1.84934V3.16668C7.00016 3.5203 7.14064 3.85944 7.39069 4.10949C7.64074 4.35954 7.97987 4.50001 8.3335 4.50001H9.65083C9.6575 4.55401 9.66683 10.5 9.66683 10.5C9.66683 11.0304 9.45612 11.5392 9.08104 11.9142C8.70597 12.2893 8.19726 12.5 7.66683 12.5H3.66683C3.1364 12.5 2.62769 12.2893 2.25262 11.9142C1.87754 11.5392 1.66683 11.0304 1.66683 10.5ZM13.6668 5.83334V13.1667C13.6658 14.0504 13.3142 14.8976 12.6894 15.5225C12.0645 16.1474 11.2172 16.499 10.3335 16.5H4.3335C4.15669 16.5 3.98712 16.4298 3.86209 16.3048C3.73707 16.1797 3.66683 16.0102 3.66683 15.8333C3.66683 15.6565 3.73707 15.487 3.86209 15.3619C3.98712 15.2369 4.15669 15.1667 4.3335 15.1667H10.3335C10.8639 15.1667 11.3726 14.956 11.7477 14.5809C12.1228 14.2058 12.3335 13.6971 12.3335 13.1667V5.83334C12.3335 5.65653 12.4037 5.48696 12.5288 5.36194C12.6538 5.23692 12.8234 5.16668 13.0002 5.16668C13.177 5.16668 13.3465 5.23692 13.4716 5.36194C13.5966 5.48696 13.6668 5.65653 13.6668 5.83334Z" }) })));
 };
 exports.CopyIcon = CopyIcon;
 
@@ -52604,20 +53747,16 @@ exports.CopyIcon = CopyIcon;
 /*!**********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/CrossIcon/CrossIcon.tsx ***!
   \**********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CrossIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const CrossIcon = ({ className = '', onClick }) => {
-    return (react_1.default.createElement("svg", { onClick: onClick, className: (0, common_helpers_1.createClassName)(['cross-icon', 'icon', className]), viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M14.1454 0.318191L8 6.46364L1.85455 0.318191C1.65082 0.114457 1.3745 5.49446e-07 1.08637 5.49446e-07C0.798248 5.49446e-07 0.521925 0.114457 0.318191 0.318191C0.114457 0.521926 0 0.798248 0 1.08637C0 1.3745 0.114457 1.65082 0.318191 1.85455L6.46364 8L0.318191 14.1454C0.114457 14.3492 0 14.6255 0 14.9136C0 15.2018 0.114457 15.4781 0.318191 15.6818C0.521925 15.8855 0.798248 16 1.08637 16C1.3745 16 1.65082 15.8855 1.85455 15.6818L8 9.53636L14.1454 15.6818C14.3492 15.8855 14.6255 16 14.9136 16C15.2018 16 15.4781 15.8855 15.6818 15.6818C15.8855 15.4781 16 15.2018 16 14.9136C16 14.6255 15.8855 14.3492 15.6818 14.1454L9.53636 8L15.6818 1.85455C15.8855 1.65082 16 1.3745 16 1.08637C16 0.798248 15.8855 0.521926 15.6818 0.318191C15.4781 0.114457 15.2018 0 14.9136 0C14.6255 0 14.3492 0.114457 14.1454 0.318191Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ onClick: onClick, className: (0, common_helpers_1.createClassName)(['cross-icon', 'icon', className]), viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M14.1454 0.318191L8 6.46364L1.85455 0.318191C1.65082 0.114457 1.3745 5.49446e-07 1.08637 5.49446e-07C0.798248 5.49446e-07 0.521925 0.114457 0.318191 0.318191C0.114457 0.521926 0 0.798248 0 1.08637C0 1.3745 0.114457 1.65082 0.318191 1.85455L6.46364 8L0.318191 14.1454C0.114457 14.3492 0 14.6255 0 14.9136C0 15.2018 0.114457 15.4781 0.318191 15.6818C0.521925 15.8855 0.798248 16 1.08637 16C1.3745 16 1.65082 15.8855 1.85455 15.6818L8 9.53636L14.1454 15.6818C14.3492 15.8855 14.6255 16 14.9136 16C15.2018 16 15.4781 15.8855 15.6818 15.6818C15.8855 15.4781 16 15.2018 16 14.9136C16 14.6255 15.8855 14.3492 15.6818 14.1454L9.53636 8L15.6818 1.85455C15.8855 1.65082 16 1.3745 16 1.08637C16 0.798248 15.8855 0.521926 15.6818 0.318191C15.4781 0.114457 15.2018 0 14.9136 0C14.6255 0 14.3492 0.114457 14.1454 0.318191Z" }) })));
 };
 exports.CrossIcon = CrossIcon;
 
@@ -52628,19 +53767,15 @@ exports.CrossIcon = CrossIcon;
 /*!************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/CrossedEye/CrossedEye.tsx ***!
   \************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CrossedEye = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const CrossedEye = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 16 15", xmlns: "http://www.w3.org/2000/svg", className: "crossed-eye-icon icon" },
-        react_1.default.createElement("path", { d: "M15.5139 5.77923C14.9121 4.79372 14.1529 3.9134 13.2666 3.17323L15.1332 1.30657C15.2547 1.18083 15.3219 1.01243 15.3204 0.837632C15.3188 0.662834 15.2487 0.495625 15.1251 0.37202C15.0015 0.248415 14.8343 0.178302 14.6595 0.176783C14.4847 0.175264 14.3163 0.24246 14.1906 0.363899L12.1606 2.39657C10.9022 1.64911 9.46353 1.25954 7.99991 1.2699C3.87258 1.2699 1.52058 4.09523 0.485912 5.77923C0.166264 6.29624 -0.00305176 6.89206 -0.00305176 7.4999C-0.00305176 8.10774 0.166264 8.70356 0.485912 9.22057C1.08775 10.2061 1.8469 11.0864 2.73325 11.8266L0.866579 13.6932C0.802905 13.7547 0.752117 13.8283 0.717178 13.9096C0.682239 13.991 0.663848 14.0784 0.663078 14.167C0.662309 14.2555 0.679177 14.3433 0.712698 14.4252C0.746218 14.5071 0.79572 14.5816 0.858315 14.6442C0.920911 14.7068 0.995345 14.7563 1.07728 14.7898C1.15921 14.8233 1.24699 14.8402 1.33551 14.8394C1.42403 14.8386 1.51151 14.8202 1.59285 14.7853C1.67418 14.7504 1.74775 14.6996 1.80925 14.6359L3.84391 12.6012C5.10076 13.3486 6.53769 13.7388 7.99991 13.7299C12.1272 13.7299 14.4792 10.9046 15.5139 9.22057C15.8336 8.70356 16.0029 8.10774 16.0029 7.4999C16.0029 6.89206 15.8336 6.29624 15.5139 5.77923ZM1.62191 8.52257C1.432 8.21526 1.33141 7.86115 1.33141 7.4999C1.33141 7.13865 1.432 6.78454 1.62191 6.47723C2.51125 5.03323 4.52125 2.60323 7.99991 2.60323C9.10676 2.59703 10.1981 2.86379 11.1772 3.3799L9.83525 4.7219C9.1952 4.29697 8.42785 4.10656 7.6634 4.183C6.89895 4.25943 6.18449 4.59799 5.64125 5.14123C5.098 5.68448 4.75944 6.39894 4.68301 7.16339C4.60658 7.92784 4.79698 8.69519 5.22191 9.33523L3.68191 10.8752C2.86531 10.215 2.16847 9.4192 1.62191 8.52257ZM9.99991 7.4999C9.99991 8.03033 9.7892 8.53904 9.41413 8.91411C9.03905 9.28919 8.53035 9.4999 7.99991 9.4999C7.70292 9.49875 7.41004 9.43037 7.14325 9.2999L9.79991 6.64323C9.93039 6.91003 9.99876 7.20291 9.99991 7.4999ZM5.99991 7.4999C5.99991 6.96947 6.21063 6.46076 6.5857 6.08569C6.96077 5.71061 7.46948 5.4999 7.99991 5.4999C8.2969 5.50105 8.58978 5.56943 8.85658 5.6999L6.19991 8.35657C6.06944 8.08977 6.00106 7.79689 5.99991 7.4999ZM14.3779 8.52257C13.4886 9.96657 11.4786 12.3966 7.99991 12.3966C6.89306 12.4028 5.80175 12.136 4.82258 11.6199L6.16458 10.2779C6.80462 10.7028 7.57197 10.8932 8.33642 10.8168C9.10087 10.7404 9.81534 10.4018 10.3586 9.85856C10.9018 9.31532 11.2404 8.60086 11.3168 7.83641C11.3932 7.07196 11.2028 6.30461 10.7779 5.66457L12.3179 4.12457C13.1345 4.78475 13.8314 5.5806 14.3779 6.47723C14.5678 6.78454 14.6684 7.13865 14.6684 7.4999C14.6684 7.86115 14.5678 8.21526 14.3779 8.52257Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ viewBox: "0 0 16 15", xmlns: "http://www.w3.org/2000/svg", className: "crossed-eye-icon icon" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M15.5139 5.77923C14.9121 4.79372 14.1529 3.9134 13.2666 3.17323L15.1332 1.30657C15.2547 1.18083 15.3219 1.01243 15.3204 0.837632C15.3188 0.662834 15.2487 0.495625 15.1251 0.37202C15.0015 0.248415 14.8343 0.178302 14.6595 0.176783C14.4847 0.175264 14.3163 0.24246 14.1906 0.363899L12.1606 2.39657C10.9022 1.64911 9.46353 1.25954 7.99991 1.2699C3.87258 1.2699 1.52058 4.09523 0.485912 5.77923C0.166264 6.29624 -0.00305176 6.89206 -0.00305176 7.4999C-0.00305176 8.10774 0.166264 8.70356 0.485912 9.22057C1.08775 10.2061 1.8469 11.0864 2.73325 11.8266L0.866579 13.6932C0.802905 13.7547 0.752117 13.8283 0.717178 13.9096C0.682239 13.991 0.663848 14.0784 0.663078 14.167C0.662309 14.2555 0.679177 14.3433 0.712698 14.4252C0.746218 14.5071 0.79572 14.5816 0.858315 14.6442C0.920911 14.7068 0.995345 14.7563 1.07728 14.7898C1.15921 14.8233 1.24699 14.8402 1.33551 14.8394C1.42403 14.8386 1.51151 14.8202 1.59285 14.7853C1.67418 14.7504 1.74775 14.6996 1.80925 14.6359L3.84391 12.6012C5.10076 13.3486 6.53769 13.7388 7.99991 13.7299C12.1272 13.7299 14.4792 10.9046 15.5139 9.22057C15.8336 8.70356 16.0029 8.10774 16.0029 7.4999C16.0029 6.89206 15.8336 6.29624 15.5139 5.77923ZM1.62191 8.52257C1.432 8.21526 1.33141 7.86115 1.33141 7.4999C1.33141 7.13865 1.432 6.78454 1.62191 6.47723C2.51125 5.03323 4.52125 2.60323 7.99991 2.60323C9.10676 2.59703 10.1981 2.86379 11.1772 3.3799L9.83525 4.7219C9.1952 4.29697 8.42785 4.10656 7.6634 4.183C6.89895 4.25943 6.18449 4.59799 5.64125 5.14123C5.098 5.68448 4.75944 6.39894 4.68301 7.16339C4.60658 7.92784 4.79698 8.69519 5.22191 9.33523L3.68191 10.8752C2.86531 10.215 2.16847 9.4192 1.62191 8.52257ZM9.99991 7.4999C9.99991 8.03033 9.7892 8.53904 9.41413 8.91411C9.03905 9.28919 8.53035 9.4999 7.99991 9.4999C7.70292 9.49875 7.41004 9.43037 7.14325 9.2999L9.79991 6.64323C9.93039 6.91003 9.99876 7.20291 9.99991 7.4999ZM5.99991 7.4999C5.99991 6.96947 6.21063 6.46076 6.5857 6.08569C6.96077 5.71061 7.46948 5.4999 7.99991 5.4999C8.2969 5.50105 8.58978 5.56943 8.85658 5.6999L6.19991 8.35657C6.06944 8.08977 6.00106 7.79689 5.99991 7.4999ZM14.3779 8.52257C13.4886 9.96657 11.4786 12.3966 7.99991 12.3966C6.89306 12.4028 5.80175 12.136 4.82258 11.6199L6.16458 10.2779C6.80462 10.7028 7.57197 10.8932 8.33642 10.8168C9.10087 10.7404 9.81534 10.4018 10.3586 9.85856C10.9018 9.31532 11.2404 8.60086 11.3168 7.83641C11.3932 7.07196 11.2028 6.30461 10.7779 5.66457L12.3179 4.12457C13.1345 4.78475 13.8314 5.5806 14.3779 6.47723C14.5678 6.78454 14.6684 7.13865 14.6684 7.4999C14.6684 7.86115 14.5678 8.21526 14.3779 8.52257Z" }) })));
 };
 exports.CrossedEye = CrossedEye;
 
@@ -52651,25 +53786,16 @@ exports.CrossedEye = CrossedEye;
 /*!************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/ExportIcon/ExportIcon.tsx ***!
   \************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ExportIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./export-icon.scss */ "./extension/app/components/atoms/icons/ExportIcon/export-icon.scss");
 const ExportIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 18 18", xmlns: "http://www.w3.org/2000/svg", className: "export-icon icon" },
-        react_1.default.createElement("g", { clipPath: "url(#clip0_569_412)" },
-            react_1.default.createElement("path", { d: "M13.2995 3.69093L10.9768 1.36693C10.5444 0.932352 10.0301 0.587813 9.46365 0.353232C8.89722 0.118651 8.28991 -0.00131844 7.67683 0.000259506H4.66683C3.7831 0.00131808 2.93587 0.352847 2.31098 0.977739C1.68608 1.60263 1.33455 2.44986 1.3335 3.33359V12.6669C1.33455 13.5507 1.68608 14.3979 2.31098 15.0228C2.93587 15.6477 3.7831 15.9992 4.66683 16.0003H11.3335C12.2172 15.9992 13.0645 15.6477 13.6894 15.0228C14.3142 14.3979 14.6658 13.5507 14.6668 12.6669V6.99026C14.6685 6.37721 14.5485 5.76992 14.3138 5.20358C14.0791 4.63723 13.7343 4.12309 13.2995 3.69093ZM12.3568 4.63359C12.5604 4.84302 12.7355 5.07839 12.8775 5.33359H10.0002C9.82335 5.33359 9.65378 5.26335 9.52876 5.13833C9.40373 5.01331 9.3335 4.84374 9.3335 4.66693V1.78959C9.58879 1.93154 9.82435 2.10637 10.0342 2.30959L12.3568 4.63359ZM13.3335 12.6669C13.3335 13.1974 13.1228 13.7061 12.7477 14.0811C12.3726 14.4562 11.8639 14.6669 11.3335 14.6669H4.66683C4.1364 14.6669 3.62769 14.4562 3.25262 14.0811C2.87754 13.7061 2.66683 13.1974 2.66683 12.6669V3.33359C2.66683 2.80316 2.87754 2.29445 3.25262 1.91938C3.62769 1.54431 4.1364 1.33359 4.66683 1.33359H7.67683C7.78616 1.33359 7.89216 1.35493 8.00016 1.36493V4.66693C8.00016 5.19736 8.21088 5.70607 8.58595 6.08114C8.96102 6.45621 9.46973 6.66693 10.0002 6.66693H13.3022C13.3122 6.77493 13.3335 6.88026 13.3335 6.99026V12.6669Z" }),
-            react_1.default.createElement("path", { d: "M5.50068 11.3329C5.44687 11.276 5.40442 11.2087 5.37574 11.1348C5.34706 11.0609 5.33271 10.9819 5.33353 10.9023C5.33434 10.8227 5.3503 10.744 5.38049 10.6708C5.41067 10.5975 5.4545 10.5311 5.50946 10.4754C5.56442 10.4197 5.62945 10.3758 5.70082 10.3461C5.77219 10.3164 5.84851 10.3016 5.92542 10.3024C6.00234 10.3032 6.07833 10.3198 6.14908 10.351C6.21983 10.3823 6.28394 10.4276 6.33774 10.4845L7.4148 11.6244V7.27275C7.4148 7.11203 7.47648 6.95789 7.58625 6.84424C7.69603 6.73059 7.84492 6.66675 8.00016 6.66675C8.15541 6.66675 8.3043 6.73059 8.41407 6.84424C8.52385 6.95789 8.58552 7.11203 8.58552 7.27275V11.6244L9.66258 10.4845C9.77125 10.3696 9.91957 10.3041 10.0749 10.3024C10.2302 10.3007 10.3799 10.3629 10.4909 10.4754C10.6019 10.5879 10.6652 10.7415 10.6668 10.9023C10.6684 11.0631 10.6083 11.218 10.4996 11.3329L9.02747 12.8903C8.75717 13.1715 8.39037 13.3306 8.00719 13.3327C8.00353 13.3336 7.99972 13.3336 7.99607 13.3327C7.80683 13.3328 7.61945 13.2942 7.44467 13.2191C7.26989 13.144 7.11114 13.0339 6.97754 12.8952L5.50068 11.3329Z" })),
-        react_1.default.createElement("defs", null,
-            react_1.default.createElement("clipPath", { id: "clip0_569_412" },
-                react_1.default.createElement("rect", null)))));
+    return ((0, jsx_runtime_1.jsxs)("svg", Object.assign({ viewBox: "0 0 18 18", xmlns: "http://www.w3.org/2000/svg", className: "export-icon icon" }, { children: [(0, jsx_runtime_1.jsxs)("g", Object.assign({ clipPath: "url(#clip0_569_412)" }, { children: [(0, jsx_runtime_1.jsx)("path", { d: "M13.2995 3.69093L10.9768 1.36693C10.5444 0.932352 10.0301 0.587813 9.46365 0.353232C8.89722 0.118651 8.28991 -0.00131844 7.67683 0.000259506H4.66683C3.7831 0.00131808 2.93587 0.352847 2.31098 0.977739C1.68608 1.60263 1.33455 2.44986 1.3335 3.33359V12.6669C1.33455 13.5507 1.68608 14.3979 2.31098 15.0228C2.93587 15.6477 3.7831 15.9992 4.66683 16.0003H11.3335C12.2172 15.9992 13.0645 15.6477 13.6894 15.0228C14.3142 14.3979 14.6658 13.5507 14.6668 12.6669V6.99026C14.6685 6.37721 14.5485 5.76992 14.3138 5.20358C14.0791 4.63723 13.7343 4.12309 13.2995 3.69093ZM12.3568 4.63359C12.5604 4.84302 12.7355 5.07839 12.8775 5.33359H10.0002C9.82335 5.33359 9.65378 5.26335 9.52876 5.13833C9.40373 5.01331 9.3335 4.84374 9.3335 4.66693V1.78959C9.58879 1.93154 9.82435 2.10637 10.0342 2.30959L12.3568 4.63359ZM13.3335 12.6669C13.3335 13.1974 13.1228 13.7061 12.7477 14.0811C12.3726 14.4562 11.8639 14.6669 11.3335 14.6669H4.66683C4.1364 14.6669 3.62769 14.4562 3.25262 14.0811C2.87754 13.7061 2.66683 13.1974 2.66683 12.6669V3.33359C2.66683 2.80316 2.87754 2.29445 3.25262 1.91938C3.62769 1.54431 4.1364 1.33359 4.66683 1.33359H7.67683C7.78616 1.33359 7.89216 1.35493 8.00016 1.36493V4.66693C8.00016 5.19736 8.21088 5.70607 8.58595 6.08114C8.96102 6.45621 9.46973 6.66693 10.0002 6.66693H13.3022C13.3122 6.77493 13.3335 6.88026 13.3335 6.99026V12.6669Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M5.50068 11.3329C5.44687 11.276 5.40442 11.2087 5.37574 11.1348C5.34706 11.0609 5.33271 10.9819 5.33353 10.9023C5.33434 10.8227 5.3503 10.744 5.38049 10.6708C5.41067 10.5975 5.4545 10.5311 5.50946 10.4754C5.56442 10.4197 5.62945 10.3758 5.70082 10.3461C5.77219 10.3164 5.84851 10.3016 5.92542 10.3024C6.00234 10.3032 6.07833 10.3198 6.14908 10.351C6.21983 10.3823 6.28394 10.4276 6.33774 10.4845L7.4148 11.6244V7.27275C7.4148 7.11203 7.47648 6.95789 7.58625 6.84424C7.69603 6.73059 7.84492 6.66675 8.00016 6.66675C8.15541 6.66675 8.3043 6.73059 8.41407 6.84424C8.52385 6.95789 8.58552 7.11203 8.58552 7.27275V11.6244L9.66258 10.4845C9.77125 10.3696 9.91957 10.3041 10.0749 10.3024C10.2302 10.3007 10.3799 10.3629 10.4909 10.4754C10.6019 10.5879 10.6652 10.7415 10.6668 10.9023C10.6684 11.0631 10.6083 11.218 10.4996 11.3329L9.02747 12.8903C8.75717 13.1715 8.39037 13.3306 8.00719 13.3327C8.00353 13.3336 7.99972 13.3336 7.99607 13.3327C7.80683 13.3328 7.61945 13.2942 7.44467 13.2191C7.26989 13.144 7.11114 13.0339 6.97754 12.8952L5.50068 11.3329Z" })] })), (0, jsx_runtime_1.jsx)("defs", { children: (0, jsx_runtime_1.jsx)("clipPath", Object.assign({ id: "clip0_569_412" }, { children: (0, jsx_runtime_1.jsx)("rect", {}) })) })] })));
 };
 exports.ExportIcon = ExportIcon;
 
@@ -52680,24 +53806,15 @@ exports.ExportIcon = ExportIcon;
 /*!******************************************************************!*\
   !*** ./extension/app/components/atoms/icons/EyeIcon/EyeIcon.tsx ***!
   \******************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.EyeIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const EyeIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 17 16", xmlns: "http://www.w3.org/2000/svg", className: "eye-icon icon" },
-        react_1.default.createElement("g", { clipPath: "url(#clip0_860_1081)" },
-            react_1.default.createElement("path", { d: "M16.0139 6.27923C14.9799 4.59523 12.6279 1.7699 8.49991 1.7699C4.37191 1.7699 2.01991 4.59523 0.985912 6.27923C0.666264 6.79624 0.496948 7.39206 0.496948 7.9999C0.496948 8.60774 0.666264 9.20356 0.985912 9.72056C2.01991 11.4046 4.37191 14.2299 8.49991 14.2299C12.6279 14.2299 14.9799 11.4046 16.0139 9.72056C16.3336 9.20356 16.5029 8.60774 16.5029 7.9999C16.5029 7.39206 16.3336 6.79624 16.0139 6.27923ZM14.8772 9.02256C13.9892 10.4666 11.9792 12.8966 8.49991 12.8966C5.02058 12.8966 3.01058 10.4666 2.12258 9.02256C1.93267 8.71526 1.83208 8.36115 1.83208 7.9999C1.83208 7.63865 1.93267 7.28453 2.12258 6.97723C3.01058 5.53323 5.02058 3.10323 8.49991 3.10323C11.9792 3.10323 13.9892 5.53056 14.8772 6.97723C15.0672 7.28453 15.1677 7.63865 15.1677 7.9999C15.1677 8.36115 15.0672 8.71526 14.8772 9.02256Z" }),
-            react_1.default.createElement("path", { d: "M8.49984 4.6665C7.84057 4.6665 7.1961 4.862 6.64794 5.22827C6.09977 5.59454 5.67253 6.11514 5.42024 6.72423C5.16795 7.33331 5.10194 8.00354 5.23055 8.65014C5.35917 9.29674 5.67664 9.89069 6.14282 10.3569C6.60899 10.823 7.20293 11.1405 7.84954 11.2691C8.49614 11.3977 9.16636 11.3317 9.77545 11.0794C10.3845 10.8271 10.9051 10.3999 11.2714 9.85174C11.6377 9.30357 11.8332 8.65911 11.8332 7.99984C11.8321 7.11611 11.4806 6.26888 10.8557 5.64398C10.2308 5.01909 9.38357 4.66756 8.49984 4.6665ZM8.49984 9.99984C8.10428 9.99984 7.7176 9.88254 7.3887 9.66278C7.0598 9.44301 6.80345 9.13066 6.65208 8.7652C6.5007 8.39975 6.4611 7.99762 6.53827 7.60966C6.61544 7.22169 6.80592 6.86533 7.08562 6.58562C7.36533 6.30592 7.7217 6.11544 8.10966 6.03827C8.49762 5.9611 8.89975 6.0007 9.26521 6.15208C9.63066 6.30345 9.94302 6.5598 10.1628 6.8887C10.3825 7.2176 10.4998 7.60427 10.4998 7.99984C10.4998 8.53027 10.2891 9.03898 9.91405 9.41405C9.53898 9.78912 9.03027 9.99984 8.49984 9.99984Z" })),
-        react_1.default.createElement("defs", null,
-            react_1.default.createElement("clipPath", { id: "clip0_860_1081" },
-                react_1.default.createElement("rect", { width: "16", height: "16", transform: "translate(0.5)" })))));
+    return ((0, jsx_runtime_1.jsxs)("svg", Object.assign({ viewBox: "0 0 17 16", xmlns: "http://www.w3.org/2000/svg", className: "eye-icon icon" }, { children: [(0, jsx_runtime_1.jsxs)("g", Object.assign({ clipPath: "url(#clip0_860_1081)" }, { children: [(0, jsx_runtime_1.jsx)("path", { d: "M16.0139 6.27923C14.9799 4.59523 12.6279 1.7699 8.49991 1.7699C4.37191 1.7699 2.01991 4.59523 0.985912 6.27923C0.666264 6.79624 0.496948 7.39206 0.496948 7.9999C0.496948 8.60774 0.666264 9.20356 0.985912 9.72056C2.01991 11.4046 4.37191 14.2299 8.49991 14.2299C12.6279 14.2299 14.9799 11.4046 16.0139 9.72056C16.3336 9.20356 16.5029 8.60774 16.5029 7.9999C16.5029 7.39206 16.3336 6.79624 16.0139 6.27923ZM14.8772 9.02256C13.9892 10.4666 11.9792 12.8966 8.49991 12.8966C5.02058 12.8966 3.01058 10.4666 2.12258 9.02256C1.93267 8.71526 1.83208 8.36115 1.83208 7.9999C1.83208 7.63865 1.93267 7.28453 2.12258 6.97723C3.01058 5.53323 5.02058 3.10323 8.49991 3.10323C11.9792 3.10323 13.9892 5.53056 14.8772 6.97723C15.0672 7.28453 15.1677 7.63865 15.1677 7.9999C15.1677 8.36115 15.0672 8.71526 14.8772 9.02256Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M8.49984 4.6665C7.84057 4.6665 7.1961 4.862 6.64794 5.22827C6.09977 5.59454 5.67253 6.11514 5.42024 6.72423C5.16795 7.33331 5.10194 8.00354 5.23055 8.65014C5.35917 9.29674 5.67664 9.89069 6.14282 10.3569C6.60899 10.823 7.20293 11.1405 7.84954 11.2691C8.49614 11.3977 9.16636 11.3317 9.77545 11.0794C10.3845 10.8271 10.9051 10.3999 11.2714 9.85174C11.6377 9.30357 11.8332 8.65911 11.8332 7.99984C11.8321 7.11611 11.4806 6.26888 10.8557 5.64398C10.2308 5.01909 9.38357 4.66756 8.49984 4.6665ZM8.49984 9.99984C8.10428 9.99984 7.7176 9.88254 7.3887 9.66278C7.0598 9.44301 6.80345 9.13066 6.65208 8.7652C6.5007 8.39975 6.4611 7.99762 6.53827 7.60966C6.61544 7.22169 6.80592 6.86533 7.08562 6.58562C7.36533 6.30592 7.7217 6.11544 8.10966 6.03827C8.49762 5.9611 8.89975 6.0007 9.26521 6.15208C9.63066 6.30345 9.94302 6.5598 10.1628 6.8887C10.3825 7.2176 10.4998 7.60427 10.4998 7.99984C10.4998 8.53027 10.2891 9.03898 9.91405 9.41405C9.53898 9.78912 9.03027 9.99984 8.49984 9.99984Z" })] })), (0, jsx_runtime_1.jsx)("defs", { children: (0, jsx_runtime_1.jsx)("clipPath", Object.assign({ id: "clip0_860_1081" }, { children: (0, jsx_runtime_1.jsx)("rect", { width: "16", height: "16", transform: "translate(0.5)" }) })) })] })));
 };
 exports.EyeIcon = EyeIcon;
 
@@ -52708,19 +53825,15 @@ exports.EyeIcon = EyeIcon;
 /*!******************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/GoOutsideIcon/GoOutsideIcon.tsx ***!
   \******************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.GoOutsideIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const GoOutsideIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg", className: "go-outside-icon icon" },
-        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M9.49559 0.0405541C9.2958 0.102542 9.05721 0.324067 8.96879 0.529703C8.81693 0.882835 8.90585 1.28091 9.19459 1.54062C9.45666 1.77631 9.4409 1.77456 11.3111 1.77456H12.9545L9.22767 5.50417C5.10555 9.62938 5.3422 9.36889 5.3422 9.7811C5.3422 10.4239 6.00686 10.847 6.59222 10.5768C6.74145 10.508 7.25697 10.0048 10.4927 6.76955L14.2211 3.04157V4.6855C14.2211 6.55625 14.2194 6.54048 14.455 6.80264C14.8145 7.20262 15.4101 7.20237 15.7699 6.8021C16.0168 6.52744 16.0057 6.69026 15.9962 3.47667L15.9877 0.633006L15.9188 0.504276C15.813 0.306427 15.7112 0.20081 15.5291 0.0998838L15.3624 0.00749589L12.5015 0.00152226C10.0883 -0.0035131 9.61796 0.00258563 9.49559 0.0405541ZM2.19933 1.81041C1.36456 1.96453 0.652723 2.50041 0.265555 3.26619C0.220376 3.35548 0.144587 3.55251 0.0970621 3.70404L0.0107051 3.97949L0.00195059 8.74901C-0.0040525 12.0173 0.00370149 13.5868 0.0265883 13.7355C0.116228 14.3179 0.347472 14.7624 0.792358 15.2074C1.23724 15.6524 1.68157 15.8837 2.26383 15.9734C2.41247 15.9963 3.98147 16.0041 7.24881 15.998L12.0169 15.9893L12.2922 15.9029C13.3073 15.5845 14.0063 14.7984 14.1883 13.7708C14.209 13.6541 14.2211 12.851 14.2211 11.6062C14.2211 9.70682 14.2186 9.62037 14.1589 9.46068C14.0346 9.12835 13.6925 8.89744 13.3275 8.89954C12.9818 8.90154 12.7069 9.07233 12.5378 9.39015L12.4546 9.54653L12.439 11.5638L12.4233 13.5811L12.3504 13.7293C12.3103 13.8108 12.2145 13.9329 12.1376 14.0006C11.8672 14.2387 12.2405 14.2222 7.12384 14.2222C1.91966 14.2222 2.3354 14.2435 2.04869 13.963C1.75295 13.6738 1.77724 14.1276 1.77724 8.88975C1.77724 3.75396 1.7607 4.1293 1.99879 3.85873C2.06648 3.78183 2.18854 3.68603 2.27002 3.6459L2.41819 3.57291L4.41922 3.55727L6.42026 3.54163L6.58415 3.46751C7.0139 3.27319 7.21985 2.74486 7.03194 2.31863C6.93833 2.10633 6.73923 1.91239 6.53735 1.8368C6.37723 1.77688 6.29588 1.77469 4.36332 1.77807C3.25913 1.77997 2.28531 1.79455 2.19933 1.81041Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg", className: "go-outside-icon icon" }, { children: (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M9.49559 0.0405541C9.2958 0.102542 9.05721 0.324067 8.96879 0.529703C8.81693 0.882835 8.90585 1.28091 9.19459 1.54062C9.45666 1.77631 9.4409 1.77456 11.3111 1.77456H12.9545L9.22767 5.50417C5.10555 9.62938 5.3422 9.36889 5.3422 9.7811C5.3422 10.4239 6.00686 10.847 6.59222 10.5768C6.74145 10.508 7.25697 10.0048 10.4927 6.76955L14.2211 3.04157V4.6855C14.2211 6.55625 14.2194 6.54048 14.455 6.80264C14.8145 7.20262 15.4101 7.20237 15.7699 6.8021C16.0168 6.52744 16.0057 6.69026 15.9962 3.47667L15.9877 0.633006L15.9188 0.504276C15.813 0.306427 15.7112 0.20081 15.5291 0.0998838L15.3624 0.00749589L12.5015 0.00152226C10.0883 -0.0035131 9.61796 0.00258563 9.49559 0.0405541ZM2.19933 1.81041C1.36456 1.96453 0.652723 2.50041 0.265555 3.26619C0.220376 3.35548 0.144587 3.55251 0.0970621 3.70404L0.0107051 3.97949L0.00195059 8.74901C-0.0040525 12.0173 0.00370149 13.5868 0.0265883 13.7355C0.116228 14.3179 0.347472 14.7624 0.792358 15.2074C1.23724 15.6524 1.68157 15.8837 2.26383 15.9734C2.41247 15.9963 3.98147 16.0041 7.24881 15.998L12.0169 15.9893L12.2922 15.9029C13.3073 15.5845 14.0063 14.7984 14.1883 13.7708C14.209 13.6541 14.2211 12.851 14.2211 11.6062C14.2211 9.70682 14.2186 9.62037 14.1589 9.46068C14.0346 9.12835 13.6925 8.89744 13.3275 8.89954C12.9818 8.90154 12.7069 9.07233 12.5378 9.39015L12.4546 9.54653L12.439 11.5638L12.4233 13.5811L12.3504 13.7293C12.3103 13.8108 12.2145 13.9329 12.1376 14.0006C11.8672 14.2387 12.2405 14.2222 7.12384 14.2222C1.91966 14.2222 2.3354 14.2435 2.04869 13.963C1.75295 13.6738 1.77724 14.1276 1.77724 8.88975C1.77724 3.75396 1.7607 4.1293 1.99879 3.85873C2.06648 3.78183 2.18854 3.68603 2.27002 3.6459L2.41819 3.57291L4.41922 3.55727L6.42026 3.54163L6.58415 3.46751C7.0139 3.27319 7.21985 2.74486 7.03194 2.31863C6.93833 2.10633 6.73923 1.91239 6.53735 1.8368C6.37723 1.77688 6.29588 1.77469 4.36332 1.77807C3.25913 1.77997 2.28531 1.79455 2.19933 1.81041Z" }) })));
 };
 exports.GoOutsideIcon = GoOutsideIcon;
 
@@ -52731,19 +53844,15 @@ exports.GoOutsideIcon = GoOutsideIcon;
 /*!********************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/MagnifyingIcon/MagnifyingIcon.tsx ***!
   \********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MagnifyingIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const MagnifyingIcon = () => {
-    return (react_1.default.createElement("svg", { className: "magnifying-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M15.8045 14.8626L11.8252 10.8833C12.9096 9.55698 13.4428 7.86465 13.3144 6.15629C13.1861 4.44794 12.406 2.85427 11.1356 1.70493C9.86516 0.555594 8.20158 -0.0614848 6.48895 -0.0186636C4.77632 0.0241577 3.14566 0.723603 1.93426 1.935C0.72287 3.14639 0.0234252 4.77705 -0.019396 6.48968C-0.0622172 8.20232 0.554862 9.86589 1.7042 11.1363C2.85354 12.4067 4.44721 13.1868 6.15556 13.3152C7.86392 13.4435 9.55625 12.9103 10.8825 11.8259L14.8619 15.8053C14.9876 15.9267 15.156 15.9939 15.3308 15.9924C15.5056 15.9909 15.6728 15.9207 15.7964 15.7971C15.92 15.6735 15.9901 15.5063 15.9916 15.3315C15.9932 15.1567 15.926 14.9883 15.8045 14.8626ZM6.66652 12.0006C5.61169 12.0006 4.58054 11.6878 3.70348 11.1018C2.82642 10.5157 2.14283 9.68277 1.73916 8.70823C1.3355 7.73369 1.22988 6.66134 1.43567 5.62677C1.64145 4.59221 2.14941 3.6419 2.89529 2.89602C3.64117 2.15014 4.59147 1.64219 5.62604 1.4364C6.6606 1.23061 7.73296 1.33623 8.7075 1.7399C9.68204 2.14356 10.515 2.82715 11.101 3.70421C11.6871 4.58127 11.9999 5.61242 11.9999 6.66725C11.9983 8.08125 11.4359 9.43689 10.436 10.4367C9.43615 11.4366 8.08052 11.999 6.66652 12.0006Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "magnifying-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M15.8045 14.8626L11.8252 10.8833C12.9096 9.55698 13.4428 7.86465 13.3144 6.15629C13.1861 4.44794 12.406 2.85427 11.1356 1.70493C9.86516 0.555594 8.20158 -0.0614848 6.48895 -0.0186636C4.77632 0.0241577 3.14566 0.723603 1.93426 1.935C0.72287 3.14639 0.0234252 4.77705 -0.019396 6.48968C-0.0622172 8.20232 0.554862 9.86589 1.7042 11.1363C2.85354 12.4067 4.44721 13.1868 6.15556 13.3152C7.86392 13.4435 9.55625 12.9103 10.8825 11.8259L14.8619 15.8053C14.9876 15.9267 15.156 15.9939 15.3308 15.9924C15.5056 15.9909 15.6728 15.9207 15.7964 15.7971C15.92 15.6735 15.9901 15.5063 15.9916 15.3315C15.9932 15.1567 15.926 14.9883 15.8045 14.8626ZM6.66652 12.0006C5.61169 12.0006 4.58054 11.6878 3.70348 11.1018C2.82642 10.5157 2.14283 9.68277 1.73916 8.70823C1.3355 7.73369 1.22988 6.66134 1.43567 5.62677C1.64145 4.59221 2.14941 3.6419 2.89529 2.89602C3.64117 2.15014 4.59147 1.64219 5.62604 1.4364C6.6606 1.23061 7.73296 1.33623 8.7075 1.7399C9.68204 2.14356 10.515 2.82715 11.101 3.70421C11.6871 4.58127 11.9999 5.61242 11.9999 6.66725C11.9983 8.08125 11.4359 9.43689 10.436 10.4367C9.43615 11.4366 8.08052 11.999 6.66652 12.0006Z" }) })));
 };
 exports.MagnifyingIcon = MagnifyingIcon;
 
@@ -52754,20 +53863,16 @@ exports.MagnifyingIcon = MagnifyingIcon;
 /*!**********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx ***!
   \**********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MinusIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const MinusIcon = ({ onClick, className = '' }) => {
-    return (react_1.default.createElement("svg", { className: (0, common_helpers_1.createClassName)(['minus-icon', 'icon', className]), onClick: onClick, viewBox: "0 0 16 3", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M15.3333 0.83313H0.666667C0.298477 0.83313 0 1.13161 0 1.4998C0 1.86799 0.298477 2.16647 0.666667 2.16647H15.3333C15.7015 2.16647 16 1.86799 16 1.4998C16 1.13161 15.7015 0.83313 15.3333 0.83313Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: (0, common_helpers_1.createClassName)(['minus-icon', 'icon', className]), onClick: onClick, viewBox: "0 0 16 3", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M15.3333 0.83313H0.666667C0.298477 0.83313 0 1.13161 0 1.4998C0 1.86799 0.298477 2.16647 0.666667 2.16647H15.3333C15.7015 2.16647 16 1.86799 16 1.4998C16 1.13161 15.7015 0.83313 15.3333 0.83313Z" }) })));
 };
 exports.MinusIcon = MinusIcon;
 
@@ -52778,19 +53883,15 @@ exports.MinusIcon = MinusIcon;
 /*!********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx ***!
   \********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PlusIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const PlusIcon = ({ onClick }) => {
-    return (react_1.default.createElement("svg", { className: "plus-icon icon", onClick: onClick, viewBox: "0 0 14 15", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M13.0002 6.83337H7.66683V1.50004C7.66683 1.32323 7.59659 1.15366 7.47157 1.02864C7.34654 0.903612 7.17697 0.833374 7.00016 0.833374C6.82335 0.833374 6.65378 0.903612 6.52876 1.02864C6.40373 1.15366 6.3335 1.32323 6.3335 1.50004V6.83337H1.00016C0.823352 6.83337 0.653782 6.90361 0.528758 7.02864C0.403734 7.15366 0.333496 7.32323 0.333496 7.50004C0.333496 7.67685 0.403734 7.84642 0.528758 7.97145C0.653782 8.09647 0.823352 8.16671 1.00016 8.16671H6.3335V13.5C6.3335 13.6769 6.40373 13.8464 6.52876 13.9714C6.65378 14.0965 6.82335 14.1667 7.00016 14.1667C7.17697 14.1667 7.34654 14.0965 7.47157 13.9714C7.59659 13.8464 7.66683 13.6769 7.66683 13.5V8.16671H13.0002C13.177 8.16671 13.3465 8.09647 13.4716 7.97145C13.5966 7.84642 13.6668 7.67685 13.6668 7.50004C13.6668 7.32323 13.5966 7.15366 13.4716 7.02864C13.3465 6.90361 13.177 6.83337 13.0002 6.83337Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "plus-icon icon", onClick: onClick, viewBox: "0 0 14 15", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M13.0002 6.83337H7.66683V1.50004C7.66683 1.32323 7.59659 1.15366 7.47157 1.02864C7.34654 0.903612 7.17697 0.833374 7.00016 0.833374C6.82335 0.833374 6.65378 0.903612 6.52876 1.02864C6.40373 1.15366 6.3335 1.32323 6.3335 1.50004V6.83337H1.00016C0.823352 6.83337 0.653782 6.90361 0.528758 7.02864C0.403734 7.15366 0.333496 7.32323 0.333496 7.50004C0.333496 7.67685 0.403734 7.84642 0.528758 7.97145C0.653782 8.09647 0.823352 8.16671 1.00016 8.16671H6.3335V13.5C6.3335 13.6769 6.40373 13.8464 6.52876 13.9714C6.65378 14.0965 6.82335 14.1667 7.00016 14.1667C7.17697 14.1667 7.34654 14.0965 7.47157 13.9714C7.59659 13.8464 7.66683 13.6769 7.66683 13.5V8.16671H13.0002C13.177 8.16671 13.3465 8.09647 13.4716 7.97145C13.5966 7.84642 13.6668 7.67685 13.6668 7.50004C13.6668 7.32323 13.5966 7.15366 13.4716 7.02864C13.3465 6.90361 13.177 6.83337 13.0002 6.83337Z" }) })));
 };
 exports.PlusIcon = PlusIcon;
 
@@ -52801,24 +53902,15 @@ exports.PlusIcon = PlusIcon;
 /*!**************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx ***!
   \**************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RefreshIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const RefreshIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 16 17", xmlns: "http://www.w3.org/2000/svg", className: "refresh-icon icon" },
-        react_1.default.createElement("g", { clipPath: "url(#clip0_699_138)" },
-            react_1.default.createElement("path", { d: "M8.0003 1.66653C8.88464 1.66943 9.75962 1.84768 10.5746 2.19098C11.3896 2.53428 12.1284 3.0358 12.7483 3.66653H10.667C10.4902 3.66653 10.3206 3.73676 10.1956 3.86179C10.0705 3.98681 10.0003 4.15638 10.0003 4.33319C10.0003 4.51 10.0705 4.67957 10.1956 4.8046C10.3206 4.92962 10.4902 4.99986 10.667 4.99986H13.429C13.7572 4.99968 14.072 4.86919 14.3042 4.63706C14.5363 4.40493 14.6668 4.09014 14.667 3.76186V0.999859C14.667 0.823048 14.5967 0.653478 14.4717 0.528454C14.3467 0.40343 14.1771 0.333192 14.0003 0.333192C13.8235 0.333192 13.6539 0.40343 13.5289 0.528454C13.4039 0.653478 13.3336 0.823048 13.3336 0.999859V2.38519C12.2317 1.39283 10.8754 0.726798 9.41636 0.461691C7.95737 0.196584 6.45338 0.342866 5.07282 0.884157C3.69226 1.42545 2.48964 2.34037 1.59964 3.52647C0.709636 4.71258 0.167392 6.12302 0.0336311 7.59986C0.02502 7.6927 0.0358416 7.78631 0.0654064 7.87474C0.0949712 7.96316 0.142631 8.04446 0.205349 8.11345C0.268067 8.18244 0.344467 8.23761 0.429683 8.27544C0.514899 8.31327 0.607061 8.33294 0.700298 8.33319C0.863356 8.33527 1.02132 8.27642 1.14327 8.16816C1.26522 8.05989 1.34237 7.91002 1.35963 7.74786C1.50804 6.08836 2.27161 4.54433 3.50035 3.41908C4.72909 2.29384 6.33418 1.66872 8.0003 1.66653Z" }),
-            react_1.default.createElement("path", { d: "M15.3008 8.33331C15.1378 8.33123 14.9798 8.39008 14.8579 8.49834C14.7359 8.6066 14.6588 8.75648 14.6415 8.91864C14.5313 10.1875 14.0594 11.3981 13.2819 12.4068C12.5044 13.4155 11.4539 14.18 10.2549 14.6097C9.05598 15.0393 7.75896 15.116 6.51773 14.8307C5.2765 14.5454 4.14316 13.91 3.25216 13H5.3335C5.51031 13 5.67988 12.9297 5.8049 12.8047C5.92992 12.6797 6.00016 12.5101 6.00016 12.3333C6.00016 12.1565 5.92992 11.9869 5.8049 11.8619C5.67988 11.7369 5.51031 11.6666 5.3335 11.6666H2.5715C2.4089 11.6666 2.24787 11.6985 2.09763 11.7607C1.94739 11.8229 1.81088 11.9141 1.6959 12.0291C1.58093 12.144 1.48974 12.2805 1.42755 12.4308C1.36537 12.581 1.33341 12.742 1.3335 12.9046V15.6667C1.3335 15.8435 1.40373 16.013 1.52876 16.1381C1.65378 16.2631 1.82335 16.3333 2.00016 16.3333C2.17697 16.3333 2.34654 16.2631 2.47157 16.1381C2.59659 16.013 2.66683 15.8435 2.66683 15.6667V14.2813C3.76872 15.2737 5.1251 15.9397 6.5841 16.2048C8.04309 16.4699 9.54708 16.3236 10.9276 15.7824C12.3082 15.2411 13.5108 14.3261 14.4008 13.14C15.2908 11.9539 15.8331 10.5435 15.9668 9.06664C15.9754 8.9738 15.9646 8.88019 15.9351 8.79176C15.9055 8.70334 15.8578 8.62204 15.7951 8.55305C15.7324 8.48406 15.656 8.42889 15.5708 8.39106C15.4856 8.35322 15.3934 8.33355 15.3002 8.33331H15.3008Z" })),
-        react_1.default.createElement("defs", null,
-            react_1.default.createElement("clipPath", { id: "clip0_699_138" },
-                react_1.default.createElement("rect", { width: "16", height: "16", transform: "translate(0 0.333252)" })))));
+    return ((0, jsx_runtime_1.jsxs)("svg", Object.assign({ viewBox: "0 0 16 17", xmlns: "http://www.w3.org/2000/svg", className: "refresh-icon icon" }, { children: [(0, jsx_runtime_1.jsxs)("g", Object.assign({ clipPath: "url(#clip0_699_138)" }, { children: [(0, jsx_runtime_1.jsx)("path", { d: "M8.0003 1.66653C8.88464 1.66943 9.75962 1.84768 10.5746 2.19098C11.3896 2.53428 12.1284 3.0358 12.7483 3.66653H10.667C10.4902 3.66653 10.3206 3.73676 10.1956 3.86179C10.0705 3.98681 10.0003 4.15638 10.0003 4.33319C10.0003 4.51 10.0705 4.67957 10.1956 4.8046C10.3206 4.92962 10.4902 4.99986 10.667 4.99986H13.429C13.7572 4.99968 14.072 4.86919 14.3042 4.63706C14.5363 4.40493 14.6668 4.09014 14.667 3.76186V0.999859C14.667 0.823048 14.5967 0.653478 14.4717 0.528454C14.3467 0.40343 14.1771 0.333192 14.0003 0.333192C13.8235 0.333192 13.6539 0.40343 13.5289 0.528454C13.4039 0.653478 13.3336 0.823048 13.3336 0.999859V2.38519C12.2317 1.39283 10.8754 0.726798 9.41636 0.461691C7.95737 0.196584 6.45338 0.342866 5.07282 0.884157C3.69226 1.42545 2.48964 2.34037 1.59964 3.52647C0.709636 4.71258 0.167392 6.12302 0.0336311 7.59986C0.02502 7.6927 0.0358416 7.78631 0.0654064 7.87474C0.0949712 7.96316 0.142631 8.04446 0.205349 8.11345C0.268067 8.18244 0.344467 8.23761 0.429683 8.27544C0.514899 8.31327 0.607061 8.33294 0.700298 8.33319C0.863356 8.33527 1.02132 8.27642 1.14327 8.16816C1.26522 8.05989 1.34237 7.91002 1.35963 7.74786C1.50804 6.08836 2.27161 4.54433 3.50035 3.41908C4.72909 2.29384 6.33418 1.66872 8.0003 1.66653Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M15.3008 8.33331C15.1378 8.33123 14.9798 8.39008 14.8579 8.49834C14.7359 8.6066 14.6588 8.75648 14.6415 8.91864C14.5313 10.1875 14.0594 11.3981 13.2819 12.4068C12.5044 13.4155 11.4539 14.18 10.2549 14.6097C9.05598 15.0393 7.75896 15.116 6.51773 14.8307C5.2765 14.5454 4.14316 13.91 3.25216 13H5.3335C5.51031 13 5.67988 12.9297 5.8049 12.8047C5.92992 12.6797 6.00016 12.5101 6.00016 12.3333C6.00016 12.1565 5.92992 11.9869 5.8049 11.8619C5.67988 11.7369 5.51031 11.6666 5.3335 11.6666H2.5715C2.4089 11.6666 2.24787 11.6985 2.09763 11.7607C1.94739 11.8229 1.81088 11.9141 1.6959 12.0291C1.58093 12.144 1.48974 12.2805 1.42755 12.4308C1.36537 12.581 1.33341 12.742 1.3335 12.9046V15.6667C1.3335 15.8435 1.40373 16.013 1.52876 16.1381C1.65378 16.2631 1.82335 16.3333 2.00016 16.3333C2.17697 16.3333 2.34654 16.2631 2.47157 16.1381C2.59659 16.013 2.66683 15.8435 2.66683 15.6667V14.2813C3.76872 15.2737 5.1251 15.9397 6.5841 16.2048C8.04309 16.4699 9.54708 16.3236 10.9276 15.7824C12.3082 15.2411 13.5108 14.3261 14.4008 13.14C15.2908 11.9539 15.8331 10.5435 15.9668 9.06664C15.9754 8.9738 15.9646 8.88019 15.9351 8.79176C15.9055 8.70334 15.8578 8.62204 15.7951 8.55305C15.7324 8.48406 15.656 8.42889 15.5708 8.39106C15.4856 8.35322 15.3934 8.33355 15.3002 8.33331H15.3008Z" })] })), (0, jsx_runtime_1.jsx)("defs", { children: (0, jsx_runtime_1.jsx)("clipPath", Object.assign({ id: "clip0_699_138" }, { children: (0, jsx_runtime_1.jsx)("rect", { width: "16", height: "16", transform: "translate(0 0.333252)" }) })) })] })));
 };
 exports.RefreshIcon = RefreshIcon;
 
@@ -52829,19 +53921,15 @@ exports.RefreshIcon = RefreshIcon;
 /*!**************************************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon.tsx ***!
   \**************************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RoundedQuestionMarkIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const RoundedQuestionMarkIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg", className: "rounded-question-mark-icon icon" },
-        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M7.2354 0.0191545C5.36822 0.210967 3.66912 1.01651 2.34831 2.33616C-0.782771 5.46443 -0.782771 10.5394 2.34831 13.6677C3.61944 14.9377 5.16479 15.6968 7.01655 15.9608C7.38793 16.0137 8.61617 16.0129 9.00181 15.9594C10.8147 15.7081 12.4072 14.9236 13.6561 13.6668C15.1088 12.2049 15.9168 10.3446 15.9943 8.28373C16.0779 6.05891 15.2379 3.92351 13.6536 2.33346C12.4251 1.10055 10.8687 0.32206 9.11123 0.061456C8.72891 0.00475134 7.61919 -0.0202664 7.2354 0.0191545ZM9.15813 1.20382C10.61 1.46868 11.845 2.11156 12.8629 3.1325C14.173 4.44641 14.8794 6.15231 14.8794 8.00193C14.8794 9.85171 14.172 11.5597 12.8629 12.8708C11.5538 14.1819 9.84834 14.8904 8.00136 14.8904C6.1557 14.8904 4.44803 14.181 3.13982 12.8708C2.10614 11.8356 1.46417 10.584 1.19655 9.08217C1.11695 8.63542 1.11695 7.36844 1.19655 6.92169C1.46417 5.41988 2.10614 4.16827 3.13982 3.13303C4.25582 2.01534 5.60539 1.36065 7.2354 1.1462C7.62079 1.09551 8.74982 1.12933 9.15813 1.20382ZM7.58521 3.99722C7.04844 4.04253 6.55941 4.25147 6.22748 4.57729C5.75711 5.03907 5.69778 5.63195 6.09711 5.88019C6.41269 6.07635 6.66449 6.02046 6.89043 5.70412C7.16168 5.32435 7.35358 5.21307 7.77692 5.18999C8.43756 5.15401 8.84627 5.45454 8.80679 5.94729C8.77918 6.29165 8.64834 6.47194 8.11091 6.90594C7.55939 7.35135 7.37127 7.60941 7.249 8.08823C7.1653 8.41593 7.16543 8.96566 7.24925 9.15055C7.33275 9.33473 7.45346 9.39074 7.76857 9.39153C8.22384 9.39265 8.37641 9.2479 8.37647 8.81477C8.37659 8.2842 8.51888 8.01972 9.03389 7.59282C9.85203 6.91465 10.2237 6.20992 10.1263 5.52158C9.98156 4.49817 8.95391 3.88168 7.58521 3.99722ZM7.51677 10.1675C6.95771 10.375 6.79033 11.0769 7.1981 11.5037C7.5158 11.8363 8.00443 11.8339 8.33029 11.4983C8.82367 10.9901 8.50375 10.1743 7.79815 10.1415C7.69498 10.1367 7.56836 10.1484 7.51677 10.1675Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg", className: "rounded-question-mark-icon icon" }, { children: (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M7.2354 0.0191545C5.36822 0.210967 3.66912 1.01651 2.34831 2.33616C-0.782771 5.46443 -0.782771 10.5394 2.34831 13.6677C3.61944 14.9377 5.16479 15.6968 7.01655 15.9608C7.38793 16.0137 8.61617 16.0129 9.00181 15.9594C10.8147 15.7081 12.4072 14.9236 13.6561 13.6668C15.1088 12.2049 15.9168 10.3446 15.9943 8.28373C16.0779 6.05891 15.2379 3.92351 13.6536 2.33346C12.4251 1.10055 10.8687 0.32206 9.11123 0.061456C8.72891 0.00475134 7.61919 -0.0202664 7.2354 0.0191545ZM9.15813 1.20382C10.61 1.46868 11.845 2.11156 12.8629 3.1325C14.173 4.44641 14.8794 6.15231 14.8794 8.00193C14.8794 9.85171 14.172 11.5597 12.8629 12.8708C11.5538 14.1819 9.84834 14.8904 8.00136 14.8904C6.1557 14.8904 4.44803 14.181 3.13982 12.8708C2.10614 11.8356 1.46417 10.584 1.19655 9.08217C1.11695 8.63542 1.11695 7.36844 1.19655 6.92169C1.46417 5.41988 2.10614 4.16827 3.13982 3.13303C4.25582 2.01534 5.60539 1.36065 7.2354 1.1462C7.62079 1.09551 8.74982 1.12933 9.15813 1.20382ZM7.58521 3.99722C7.04844 4.04253 6.55941 4.25147 6.22748 4.57729C5.75711 5.03907 5.69778 5.63195 6.09711 5.88019C6.41269 6.07635 6.66449 6.02046 6.89043 5.70412C7.16168 5.32435 7.35358 5.21307 7.77692 5.18999C8.43756 5.15401 8.84627 5.45454 8.80679 5.94729C8.77918 6.29165 8.64834 6.47194 8.11091 6.90594C7.55939 7.35135 7.37127 7.60941 7.249 8.08823C7.1653 8.41593 7.16543 8.96566 7.24925 9.15055C7.33275 9.33473 7.45346 9.39074 7.76857 9.39153C8.22384 9.39265 8.37641 9.2479 8.37647 8.81477C8.37659 8.2842 8.51888 8.01972 9.03389 7.59282C9.85203 6.91465 10.2237 6.20992 10.1263 5.52158C9.98156 4.49817 8.95391 3.88168 7.58521 3.99722ZM7.51677 10.1675C6.95771 10.375 6.79033 11.0769 7.1981 11.5037C7.5158 11.8363 8.00443 11.8339 8.33029 11.4983C8.82367 10.9901 8.50375 10.1743 7.79815 10.1415C7.69498 10.1367 7.56836 10.1484 7.51677 10.1675Z" }) })));
 };
 exports.RoundedQuestionMarkIcon = RoundedQuestionMarkIcon;
 
@@ -52852,19 +53940,15 @@ exports.RoundedQuestionMarkIcon = RoundedQuestionMarkIcon;
 /*!****************************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx ***!
   \****************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SearchDocumentIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const SearchDocumentIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 12 14", xmlns: "http://www.w3.org/2000/svg", className: "search-document-icon icon" },
-        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M2.30331 0.19681C1.88834 0.511773 1.75551 0.912832 1.78648 1.75762L1.81392 2.50467H2.37206H2.93019L2.9767 1.8897L3.02321 1.27472L6.90761 1.25003L10.7921 1.22533L10.768 6.45367L10.744 11.682L6.98742 11.7067C4.29175 11.7245 3.19502 11.7012 3.10376 11.6242C3.02274 11.5558 2.9767 11.3155 2.9767 10.9609V10.4048H2.37206H1.76741V11.2237C1.76741 11.9558 1.79253 12.0762 2.00481 12.3591C2.46508 12.9729 2.35299 12.9593 6.94296 12.9593C11.0807 12.9593 11.1063 12.958 11.4038 12.7507C12.0279 12.3158 11.9998 12.6116 11.9998 6.48272C11.9998 0.412998 12.0164 0.602884 11.452 0.194161C11.1862 0.00162617 11.0882 -0.00244218 6.86929 0.000490789C2.67503 0.00342375 2.55122 0.00872204 2.30331 0.19681ZM6.06697 3.32581C6.00363 3.39024 5.95339 3.6842 5.95339 3.99008V4.53883H7.86462H9.77575L9.74831 3.9002L9.72078 3.26157L7.95066 3.23593C6.65227 3.2172 6.15023 3.24113 6.06697 3.32581ZM2.39503 4.17959C1.90537 4.31185 1.16566 5.01605 0.970589 5.53547C0.814778 5.95034 0.819894 6.69616 0.98231 7.25532C1.03087 7.4224 0.937753 7.577 0.521573 8.02082C0.234694 8.3267 0 8.61763 0 8.6674C0 8.78264 0.676733 9.45864 0.79208 9.45864C0.839707 9.45864 1.13849 9.19675 1.45598 8.87668L2.03327 8.29482L2.3422 8.42557C2.73093 8.5901 3.64394 8.58338 3.97854 8.41356C4.11817 8.34269 4.42607 8.08506 4.66262 7.84115C6.25469 6.19983 4.62969 3.57606 2.39503 4.17959ZM3.52134 5.43054C4.09454 5.73198 4.15938 6.65794 3.63594 7.06666C3.42832 7.22873 2.68489 7.21568 2.44638 7.04575C1.86481 6.63145 2.05894 5.53547 2.74414 5.36422C3.08404 5.27916 3.26255 5.2944 3.52134 5.43054ZM6.06697 5.88033C5.94865 6.00067 5.91191 6.68415 6.00986 6.94367C6.05869 7.07319 6.31562 7.09334 7.92108 7.09334H9.77575L9.74831 6.45471L9.72078 5.81608L7.95066 5.79044C6.65227 5.77171 6.15023 5.79565 6.06697 5.88033ZM6.01544 8.57563C5.9813 8.61025 5.95339 8.86495 5.95339 9.1415C5.95339 9.58428 5.97832 9.65051 6.16269 9.69659C6.27776 9.72544 7.12547 9.73689 8.04638 9.72213L9.72078 9.69517L9.7485 9.10384L9.77612 8.51252H7.92676C6.90966 8.51252 6.04948 8.5409 6.01544 8.57563ZM10.0464 13.8181C10.0464 13.9645 10.1129 14 10.3875 14C10.7708 14 10.7695 13.993 10.3487 13.7853C10.0615 13.6435 10.0464 13.6452 10.0464 13.8181Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ viewBox: "0 0 12 14", xmlns: "http://www.w3.org/2000/svg", className: "search-document-icon icon" }, { children: (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M2.30331 0.19681C1.88834 0.511773 1.75551 0.912832 1.78648 1.75762L1.81392 2.50467H2.37206H2.93019L2.9767 1.8897L3.02321 1.27472L6.90761 1.25003L10.7921 1.22533L10.768 6.45367L10.744 11.682L6.98742 11.7067C4.29175 11.7245 3.19502 11.7012 3.10376 11.6242C3.02274 11.5558 2.9767 11.3155 2.9767 10.9609V10.4048H2.37206H1.76741V11.2237C1.76741 11.9558 1.79253 12.0762 2.00481 12.3591C2.46508 12.9729 2.35299 12.9593 6.94296 12.9593C11.0807 12.9593 11.1063 12.958 11.4038 12.7507C12.0279 12.3158 11.9998 12.6116 11.9998 6.48272C11.9998 0.412998 12.0164 0.602884 11.452 0.194161C11.1862 0.00162617 11.0882 -0.00244218 6.86929 0.000490789C2.67503 0.00342375 2.55122 0.00872204 2.30331 0.19681ZM6.06697 3.32581C6.00363 3.39024 5.95339 3.6842 5.95339 3.99008V4.53883H7.86462H9.77575L9.74831 3.9002L9.72078 3.26157L7.95066 3.23593C6.65227 3.2172 6.15023 3.24113 6.06697 3.32581ZM2.39503 4.17959C1.90537 4.31185 1.16566 5.01605 0.970589 5.53547C0.814778 5.95034 0.819894 6.69616 0.98231 7.25532C1.03087 7.4224 0.937753 7.577 0.521573 8.02082C0.234694 8.3267 0 8.61763 0 8.6674C0 8.78264 0.676733 9.45864 0.79208 9.45864C0.839707 9.45864 1.13849 9.19675 1.45598 8.87668L2.03327 8.29482L2.3422 8.42557C2.73093 8.5901 3.64394 8.58338 3.97854 8.41356C4.11817 8.34269 4.42607 8.08506 4.66262 7.84115C6.25469 6.19983 4.62969 3.57606 2.39503 4.17959ZM3.52134 5.43054C4.09454 5.73198 4.15938 6.65794 3.63594 7.06666C3.42832 7.22873 2.68489 7.21568 2.44638 7.04575C1.86481 6.63145 2.05894 5.53547 2.74414 5.36422C3.08404 5.27916 3.26255 5.2944 3.52134 5.43054ZM6.06697 5.88033C5.94865 6.00067 5.91191 6.68415 6.00986 6.94367C6.05869 7.07319 6.31562 7.09334 7.92108 7.09334H9.77575L9.74831 6.45471L9.72078 5.81608L7.95066 5.79044C6.65227 5.77171 6.15023 5.79565 6.06697 5.88033ZM6.01544 8.57563C5.9813 8.61025 5.95339 8.86495 5.95339 9.1415C5.95339 9.58428 5.97832 9.65051 6.16269 9.69659C6.27776 9.72544 7.12547 9.73689 8.04638 9.72213L9.72078 9.69517L9.7485 9.10384L9.77612 8.51252H7.92676C6.90966 8.51252 6.04948 8.5409 6.01544 8.57563ZM10.0464 13.8181C10.0464 13.9645 10.1129 14 10.3875 14C10.7708 14 10.7695 13.993 10.3487 13.7853C10.0615 13.6435 10.0464 13.6452 10.0464 13.8181Z" }) })));
 };
 exports.SearchDocumentIcon = SearchDocumentIcon;
 
@@ -52875,19 +53959,15 @@ exports.SearchDocumentIcon = SearchDocumentIcon;
 /*!**********************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx ***!
   \**********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SeeDocumentIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const SeeDocumentIcon = ({ onClick }) => {
-    return (react_1.default.createElement("svg", { className: "see-document-icon icon", viewBox: "0 0 16 15", xmlns: "http://www.w3.org/2000/svg", onClick: onClick },
-        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M14.6338 0.0429838C15.2692 0.206713 15.7781 0.689358 15.9478 1.28913C16.0181 1.53782 16.017 12.3153 15.9466 12.5743C15.8145 13.0607 15.4369 13.4914 14.9588 13.701C14.8152 13.764 14.6143 13.8298 14.5124 13.8473C14.3885 13.8686 13.4321 13.8791 11.6279 13.8791H8.92871L9.02867 13.7544C9.23285 13.4996 9.48423 13.1244 9.58851 12.9187L9.69604 12.7067L11.9938 12.6986L14.2916 12.6906L14.4244 12.6239C14.4974 12.5873 14.5958 12.5024 14.6431 12.4353L14.729 12.3133L14.7371 7.31481L14.7451 2.31629H8.60638H2.46759L2.46687 5.39042L2.46615 8.46455L2.193 8.5746C2.04277 8.63512 1.76624 8.7705 1.57849 8.87541C1.39074 8.98033 1.23283 9.06617 1.22758 9.06617C1.22233 9.06617 1.21802 7.3782 1.21802 5.31511C1.21802 2.74702 1.2287 1.50912 1.25188 1.38991C1.37384 0.762874 1.93661 0.203279 2.60691 0.0425143C2.77051 0.0032769 3.50164 -0.00182953 8.63609 0.000459562C13.4565 0.00263126 14.5062 0.0100855 14.6338 0.0429838ZM12.9327 5.19232V5.77927H12.3079H11.6832V5.19232V4.60538H12.3079H12.9327V5.19232ZM10.4648 5.19232V5.77927H7.37215H4.27946V5.19232V4.60538H7.37215H10.4648V5.19232ZM12.9327 7.51076V8.09771H12.3079H11.6832V7.51076V6.92382H12.3079H12.9327V7.51076ZM10.4648 7.51076V8.09771H7.37215H4.27946V7.51076V6.92382H7.37215H10.4648V7.51076ZM12.9327 9.8292V10.4161H12.3079H11.6832V9.8292V9.24225H12.3079H12.9327V9.8292ZM10.4648 9.8292V10.4161H9.71184H8.95888L8.60013 10.0644C8.40279 9.87087 8.12661 9.62424 7.98637 9.51627C7.84614 9.4083 7.71081 9.30247 7.68567 9.28111C7.64762 9.2488 7.87807 9.24225 9.05238 9.24225H10.4648V9.8292ZM4.63871 9.27495C5.75111 9.35991 6.99615 10.029 7.95398 11.0565C8.35178 11.4832 8.62172 11.9205 8.62172 12.1381C8.62172 12.5789 7.62997 13.6759 6.71275 14.2495C5.88607 14.7665 5.12873 15.0016 4.29508 15C3.41054 14.9983 2.54594 14.6999 1.69389 14.1022C0.805973 13.4794 0.00103283 12.542 1.90735e-06 12.1296C-0.000904083 11.7739 0.71338 10.902 1.48215 10.3205C2.52079 9.53479 3.55518 9.19216 4.63871 9.27495ZM4.30449 11.1032L4.29508 11.7902L4.19955 11.9029C4.14701 11.9649 4.04211 12.0453 3.96645 12.0816C3.83618 12.1441 3.79257 12.1476 3.14632 12.1476H2.46375L2.48374 12.287C2.56646 12.8638 2.86005 13.2899 3.38424 13.5939C3.65765 13.7525 3.92574 13.8239 4.26384 13.8281C4.80319 13.8349 5.21355 13.6786 5.59173 13.3224C5.95685 12.9784 6.12258 12.6071 6.12258 12.133C6.12258 11.2839 5.44275 10.5572 4.545 10.4467C4.44191 10.434 4.34775 10.4219 4.33573 10.4199C4.32373 10.4178 4.30967 10.7253 4.30449 11.1032Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "see-document-icon icon", viewBox: "0 0 16 15", xmlns: "http://www.w3.org/2000/svg", onClick: onClick }, { children: (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M14.6338 0.0429838C15.2692 0.206713 15.7781 0.689358 15.9478 1.28913C16.0181 1.53782 16.017 12.3153 15.9466 12.5743C15.8145 13.0607 15.4369 13.4914 14.9588 13.701C14.8152 13.764 14.6143 13.8298 14.5124 13.8473C14.3885 13.8686 13.4321 13.8791 11.6279 13.8791H8.92871L9.02867 13.7544C9.23285 13.4996 9.48423 13.1244 9.58851 12.9187L9.69604 12.7067L11.9938 12.6986L14.2916 12.6906L14.4244 12.6239C14.4974 12.5873 14.5958 12.5024 14.6431 12.4353L14.729 12.3133L14.7371 7.31481L14.7451 2.31629H8.60638H2.46759L2.46687 5.39042L2.46615 8.46455L2.193 8.5746C2.04277 8.63512 1.76624 8.7705 1.57849 8.87541C1.39074 8.98033 1.23283 9.06617 1.22758 9.06617C1.22233 9.06617 1.21802 7.3782 1.21802 5.31511C1.21802 2.74702 1.2287 1.50912 1.25188 1.38991C1.37384 0.762874 1.93661 0.203279 2.60691 0.0425143C2.77051 0.0032769 3.50164 -0.00182953 8.63609 0.000459562C13.4565 0.00263126 14.5062 0.0100855 14.6338 0.0429838ZM12.9327 5.19232V5.77927H12.3079H11.6832V5.19232V4.60538H12.3079H12.9327V5.19232ZM10.4648 5.19232V5.77927H7.37215H4.27946V5.19232V4.60538H7.37215H10.4648V5.19232ZM12.9327 7.51076V8.09771H12.3079H11.6832V7.51076V6.92382H12.3079H12.9327V7.51076ZM10.4648 7.51076V8.09771H7.37215H4.27946V7.51076V6.92382H7.37215H10.4648V7.51076ZM12.9327 9.8292V10.4161H12.3079H11.6832V9.8292V9.24225H12.3079H12.9327V9.8292ZM10.4648 9.8292V10.4161H9.71184H8.95888L8.60013 10.0644C8.40279 9.87087 8.12661 9.62424 7.98637 9.51627C7.84614 9.4083 7.71081 9.30247 7.68567 9.28111C7.64762 9.2488 7.87807 9.24225 9.05238 9.24225H10.4648V9.8292ZM4.63871 9.27495C5.75111 9.35991 6.99615 10.029 7.95398 11.0565C8.35178 11.4832 8.62172 11.9205 8.62172 12.1381C8.62172 12.5789 7.62997 13.6759 6.71275 14.2495C5.88607 14.7665 5.12873 15.0016 4.29508 15C3.41054 14.9983 2.54594 14.6999 1.69389 14.1022C0.805973 13.4794 0.00103283 12.542 1.90735e-06 12.1296C-0.000904083 11.7739 0.71338 10.902 1.48215 10.3205C2.52079 9.53479 3.55518 9.19216 4.63871 9.27495ZM4.30449 11.1032L4.29508 11.7902L4.19955 11.9029C4.14701 11.9649 4.04211 12.0453 3.96645 12.0816C3.83618 12.1441 3.79257 12.1476 3.14632 12.1476H2.46375L2.48374 12.287C2.56646 12.8638 2.86005 13.2899 3.38424 13.5939C3.65765 13.7525 3.92574 13.8239 4.26384 13.8281C4.80319 13.8349 5.21355 13.6786 5.59173 13.3224C5.95685 12.9784 6.12258 12.6071 6.12258 12.133C6.12258 11.2839 5.44275 10.5572 4.545 10.4467C4.44191 10.434 4.34775 10.4219 4.33573 10.4199C4.32373 10.4178 4.30967 10.7253 4.30449 11.1032Z" }) })));
 };
 exports.SeeDocumentIcon = SeeDocumentIcon;
 
@@ -52898,26 +53978,15 @@ exports.SeeDocumentIcon = SeeDocumentIcon;
 /*!****************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx ***!
   \****************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SettingsIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const SettingsIcon = () => {
-    return (react_1.default.createElement("span", { className: "settings-icon icon" },
-        react_1.default.createElement("svg", { viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
-            react_1.default.createElement("g", { clipPath: "url(#clip0_13_322)" },
-                react_1.default.createElement("path", { d: "M0.666667 3.1669H2.49067C2.63376 3.69339 2.94612 4.15816 3.37955 4.48952C3.81299 4.82088 4.34341 5.00041 4.889 5.00041C5.43459 5.00041 5.96501 4.82088 6.39845 4.48952C6.83188 4.15816 7.14424 3.69339 7.28733 3.1669H15.3333C15.5101 3.1669 15.6797 3.09666 15.8047 2.97164C15.9298 2.84661 16 2.67704 16 2.50023C16 2.32342 15.9298 2.15385 15.8047 2.02883C15.6797 1.9038 15.5101 1.83357 15.3333 1.83357H7.28733C7.14424 1.30708 6.83188 0.842304 6.39845 0.510946C5.96501 0.179588 5.43459 6.10352e-05 4.889 6.10352e-05C4.34341 6.10352e-05 3.81299 0.179588 3.37955 0.510946C2.94612 0.842304 2.63376 1.30708 2.49067 1.83357H0.666667C0.489856 1.83357 0.320286 1.9038 0.195262 2.02883C0.0702379 2.15385 0 2.32342 0 2.50023C0 2.67704 0.0702379 2.84661 0.195262 2.97164C0.320286 3.09666 0.489856 3.1669 0.666667 3.1669ZM4.88867 1.33357C5.11941 1.33357 5.34497 1.40199 5.53683 1.53019C5.72869 1.65838 5.87822 1.84059 5.96653 2.05377C6.05483 2.26695 6.07793 2.50153 6.03292 2.72784C5.9879 2.95415 5.87679 3.16203 5.71362 3.32519C5.55046 3.48835 5.34258 3.59947 5.11627 3.64448C4.88996 3.6895 4.65538 3.6664 4.4422 3.57809C4.22902 3.48979 4.04681 3.34026 3.91862 3.1484C3.79042 2.95654 3.722 2.73098 3.722 2.50023C3.72235 2.19092 3.84538 1.89438 4.0641 1.67567C4.28281 1.45695 4.57936 1.33392 4.88867 1.33357Z" }),
-                react_1.default.createElement("path", { d: "M15.3333 7.33275H13.5093C13.3665 6.80614 13.0542 6.3412 12.6208 6.0097C12.1874 5.67821 11.657 5.4986 11.1113 5.4986C10.5657 5.4986 10.0352 5.67821 9.60182 6.0097C9.16842 6.3412 8.85619 6.80614 8.71333 7.33275H0.666667C0.489856 7.33275 0.320286 7.40299 0.195262 7.52801C0.0702379 7.65303 0 7.8226 0 7.99941C0 8.17622 0.0702379 8.34579 0.195262 8.47082C0.320286 8.59584 0.489856 8.66608 0.666667 8.66608H8.71333C8.85619 9.19269 9.16842 9.65763 9.60182 9.98913C10.0352 10.3206 10.5657 10.5002 11.1113 10.5002C11.657 10.5002 12.1874 10.3206 12.6208 9.98913C13.0542 9.65763 13.3665 9.19269 13.5093 8.66608H15.3333C15.5101 8.66608 15.6797 8.59584 15.8047 8.47082C15.9298 8.34579 16 8.17622 16 7.99941C16 7.8226 15.9298 7.65303 15.8047 7.52801C15.6797 7.40299 15.5101 7.33275 15.3333 7.33275ZM11.1113 9.16608C10.8806 9.16608 10.655 9.09765 10.4632 8.96946C10.2713 8.84127 10.1218 8.65906 10.0335 8.44588C9.94517 8.2327 9.92207 7.99812 9.96708 7.77181C10.0121 7.5455 10.1232 7.33762 10.2864 7.17446C10.4495 7.0113 10.6574 6.90018 10.8837 6.85517C11.11 6.81015 11.3446 6.83325 11.5578 6.92156C11.771 7.00986 11.9532 7.15939 12.0814 7.35125C12.2096 7.54311 12.278 7.76867 12.278 7.99941C12.2776 8.30872 12.1546 8.60527 11.9359 8.82398C11.7172 9.0427 11.4206 9.16573 11.1113 9.16608Z" }),
-                react_1.default.createElement("path", { d: "M15.3333 12.8335H7.28733C7.14424 12.307 6.83188 11.8423 6.39845 11.5109C5.96501 11.1796 5.43459 11 4.889 11C4.34341 11 3.81299 11.1796 3.37955 11.5109C2.94612 11.8423 2.63376 12.307 2.49067 12.8335H0.666667C0.489856 12.8335 0.320286 12.9038 0.195262 13.0288C0.0702379 13.1538 0 13.3234 0 13.5002C0 13.677 0.0702379 13.8466 0.195262 13.9716C0.320286 14.0966 0.489856 14.1669 0.666667 14.1669H2.49067C2.63376 14.6933 2.94612 15.1581 3.37955 15.4895C3.81299 15.8208 4.34341 16.0004 4.889 16.0004C5.43459 16.0004 5.96501 15.8208 6.39845 15.4895C6.83188 15.1581 7.14424 14.6933 7.28733 14.1669H15.3333C15.5101 14.1669 15.6797 14.0966 15.8047 13.9716C15.9298 13.8466 16 13.677 16 13.5002C16 13.3234 15.9298 13.1538 15.8047 13.0288C15.6797 12.9038 15.5101 12.8335 15.3333 12.8335ZM4.88867 14.6669C4.65792 14.6669 4.43236 14.5984 4.2405 14.4702C4.04864 14.342 3.89911 14.1598 3.81081 13.9467C3.72251 13.7335 3.6994 13.4989 3.74442 13.2726C3.78943 13.0463 3.90055 12.8384 4.06371 12.6752C4.22687 12.5121 4.43475 12.401 4.66106 12.3559C4.88737 12.3109 5.12195 12.334 5.33513 12.4223C5.54831 12.5106 5.73052 12.6602 5.85871 12.852C5.98691 13.0439 6.05533 13.2695 6.05533 13.5002C6.0548 13.8094 5.93172 14.1059 5.71304 14.3246C5.49436 14.5432 5.19792 14.6663 4.88867 14.6669Z" })),
-            react_1.default.createElement("defs", null,
-                react_1.default.createElement("clipPath", { id: "clip0_13_322" },
-                    react_1.default.createElement("rect", { width: "16", height: "16" }))))));
+    return ((0, jsx_runtime_1.jsx)("span", Object.assign({ className: "settings-icon icon" }, { children: (0, jsx_runtime_1.jsxs)("svg", Object.assign({ viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" }, { children: [(0, jsx_runtime_1.jsxs)("g", Object.assign({ clipPath: "url(#clip0_13_322)" }, { children: [(0, jsx_runtime_1.jsx)("path", { d: "M0.666667 3.1669H2.49067C2.63376 3.69339 2.94612 4.15816 3.37955 4.48952C3.81299 4.82088 4.34341 5.00041 4.889 5.00041C5.43459 5.00041 5.96501 4.82088 6.39845 4.48952C6.83188 4.15816 7.14424 3.69339 7.28733 3.1669H15.3333C15.5101 3.1669 15.6797 3.09666 15.8047 2.97164C15.9298 2.84661 16 2.67704 16 2.50023C16 2.32342 15.9298 2.15385 15.8047 2.02883C15.6797 1.9038 15.5101 1.83357 15.3333 1.83357H7.28733C7.14424 1.30708 6.83188 0.842304 6.39845 0.510946C5.96501 0.179588 5.43459 6.10352e-05 4.889 6.10352e-05C4.34341 6.10352e-05 3.81299 0.179588 3.37955 0.510946C2.94612 0.842304 2.63376 1.30708 2.49067 1.83357H0.666667C0.489856 1.83357 0.320286 1.9038 0.195262 2.02883C0.0702379 2.15385 0 2.32342 0 2.50023C0 2.67704 0.0702379 2.84661 0.195262 2.97164C0.320286 3.09666 0.489856 3.1669 0.666667 3.1669ZM4.88867 1.33357C5.11941 1.33357 5.34497 1.40199 5.53683 1.53019C5.72869 1.65838 5.87822 1.84059 5.96653 2.05377C6.05483 2.26695 6.07793 2.50153 6.03292 2.72784C5.9879 2.95415 5.87679 3.16203 5.71362 3.32519C5.55046 3.48835 5.34258 3.59947 5.11627 3.64448C4.88996 3.6895 4.65538 3.6664 4.4422 3.57809C4.22902 3.48979 4.04681 3.34026 3.91862 3.1484C3.79042 2.95654 3.722 2.73098 3.722 2.50023C3.72235 2.19092 3.84538 1.89438 4.0641 1.67567C4.28281 1.45695 4.57936 1.33392 4.88867 1.33357Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M15.3333 7.33275H13.5093C13.3665 6.80614 13.0542 6.3412 12.6208 6.0097C12.1874 5.67821 11.657 5.4986 11.1113 5.4986C10.5657 5.4986 10.0352 5.67821 9.60182 6.0097C9.16842 6.3412 8.85619 6.80614 8.71333 7.33275H0.666667C0.489856 7.33275 0.320286 7.40299 0.195262 7.52801C0.0702379 7.65303 0 7.8226 0 7.99941C0 8.17622 0.0702379 8.34579 0.195262 8.47082C0.320286 8.59584 0.489856 8.66608 0.666667 8.66608H8.71333C8.85619 9.19269 9.16842 9.65763 9.60182 9.98913C10.0352 10.3206 10.5657 10.5002 11.1113 10.5002C11.657 10.5002 12.1874 10.3206 12.6208 9.98913C13.0542 9.65763 13.3665 9.19269 13.5093 8.66608H15.3333C15.5101 8.66608 15.6797 8.59584 15.8047 8.47082C15.9298 8.34579 16 8.17622 16 7.99941C16 7.8226 15.9298 7.65303 15.8047 7.52801C15.6797 7.40299 15.5101 7.33275 15.3333 7.33275ZM11.1113 9.16608C10.8806 9.16608 10.655 9.09765 10.4632 8.96946C10.2713 8.84127 10.1218 8.65906 10.0335 8.44588C9.94517 8.2327 9.92207 7.99812 9.96708 7.77181C10.0121 7.5455 10.1232 7.33762 10.2864 7.17446C10.4495 7.0113 10.6574 6.90018 10.8837 6.85517C11.11 6.81015 11.3446 6.83325 11.5578 6.92156C11.771 7.00986 11.9532 7.15939 12.0814 7.35125C12.2096 7.54311 12.278 7.76867 12.278 7.99941C12.2776 8.30872 12.1546 8.60527 11.9359 8.82398C11.7172 9.0427 11.4206 9.16573 11.1113 9.16608Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M15.3333 12.8335H7.28733C7.14424 12.307 6.83188 11.8423 6.39845 11.5109C5.96501 11.1796 5.43459 11 4.889 11C4.34341 11 3.81299 11.1796 3.37955 11.5109C2.94612 11.8423 2.63376 12.307 2.49067 12.8335H0.666667C0.489856 12.8335 0.320286 12.9038 0.195262 13.0288C0.0702379 13.1538 0 13.3234 0 13.5002C0 13.677 0.0702379 13.8466 0.195262 13.9716C0.320286 14.0966 0.489856 14.1669 0.666667 14.1669H2.49067C2.63376 14.6933 2.94612 15.1581 3.37955 15.4895C3.81299 15.8208 4.34341 16.0004 4.889 16.0004C5.43459 16.0004 5.96501 15.8208 6.39845 15.4895C6.83188 15.1581 7.14424 14.6933 7.28733 14.1669H15.3333C15.5101 14.1669 15.6797 14.0966 15.8047 13.9716C15.9298 13.8466 16 13.677 16 13.5002C16 13.3234 15.9298 13.1538 15.8047 13.0288C15.6797 12.9038 15.5101 12.8335 15.3333 12.8335ZM4.88867 14.6669C4.65792 14.6669 4.43236 14.5984 4.2405 14.4702C4.04864 14.342 3.89911 14.1598 3.81081 13.9467C3.72251 13.7335 3.6994 13.4989 3.74442 13.2726C3.78943 13.0463 3.90055 12.8384 4.06371 12.6752C4.22687 12.5121 4.43475 12.401 4.66106 12.3559C4.88737 12.3109 5.12195 12.334 5.33513 12.4223C5.54831 12.5106 5.73052 12.6602 5.85871 12.852C5.98691 13.0439 6.05533 13.2695 6.05533 13.5002C6.0548 13.8094 5.93172 14.1059 5.71304 14.3246C5.49436 14.5432 5.19792 14.6663 4.88867 14.6669Z" })] })), (0, jsx_runtime_1.jsx)("defs", { children: (0, jsx_runtime_1.jsx)("clipPath", Object.assign({ id: "clip0_13_322" }, { children: (0, jsx_runtime_1.jsx)("rect", { width: "16", height: "16" }) })) })] })) })));
 };
 exports.SettingsIcon = SettingsIcon;
 
@@ -52928,20 +53997,16 @@ exports.SettingsIcon = SettingsIcon;
 /*!********************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx ***!
   \********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SmallArrowIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const SmallArrowIcon = ({ className = '' }) => {
-    return (react_1.default.createElement("svg", { className: (0, common_helpers_1.createClassName)(['small-arrow-icon', 'icon', className]), viewBox: "0 0 10 7", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M9.70711 6.20711C10.0976 5.81658 10.0976 5.18342 9.70711 4.79289L5.70711 0.792893C5.31658 0.402369 4.68342 0.402369 4.29289 0.792893L0.292893 4.79289C-0.0976315 5.18342 -0.0976315 5.81658 0.292893 6.20711C0.683417 6.59763 1.31658 6.59763 1.70711 6.20711L5 2.91421L8.29289 6.20711C8.68342 6.59763 9.31658 6.59763 9.70711 6.20711Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: (0, common_helpers_1.createClassName)(['small-arrow-icon', 'icon', className]), viewBox: "0 0 10 7", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M9.70711 6.20711C10.0976 5.81658 10.0976 5.18342 9.70711 4.79289L5.70711 0.792893C5.31658 0.402369 4.68342 0.402369 4.29289 0.792893L0.292893 4.79289C-0.0976315 5.18342 -0.0976315 5.81658 0.292893 6.20711C0.683417 6.59763 1.31658 6.59763 1.70711 6.20711L5 2.91421L8.29289 6.20711C8.68342 6.59763 9.31658 6.59763 9.70711 6.20711Z" }) })));
 };
 exports.SmallArrowIcon = SmallArrowIcon;
 
@@ -52952,20 +54017,15 @@ exports.SmallArrowIcon = SmallArrowIcon;
 /*!********************************************************************!*\
   !*** ./extension/app/components/atoms/icons/UserIcon/UserIcon.tsx ***!
   \********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const UserIcon = () => {
-    return (react_1.default.createElement("svg", { className: "user-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M8.14456 7.75608C9.02692 7.75608 9.79098 7.43961 10.4153 6.81523C11.0395 6.19094 11.356 5.42709 11.356 4.54462C11.356 3.66247 11.0395 2.89851 10.4152 2.27402C9.79077 1.64984 9.02682 1.33337 8.14456 1.33337C7.2621 1.33337 6.49824 1.64984 5.87396 2.27413C5.24967 2.89841 4.93311 3.66236 4.93311 4.54462C4.93311 5.42709 5.24967 6.19104 5.87406 6.81533C6.49845 7.43951 7.2624 7.75608 8.14456 7.75608Z" }),
-        react_1.default.createElement("path", { d: "M13.7638 11.5861C13.7458 11.3263 13.7094 11.0429 13.6558 10.7436C13.6017 10.4421 13.532 10.157 13.4486 9.89652C13.3624 9.62725 13.2452 9.36134 13.1004 9.10652C12.95 8.84204 12.7734 8.61173 12.5753 8.42222C12.368 8.22396 12.1143 8.06455 11.821 7.94828C11.5286 7.83262 11.2046 7.77403 10.858 7.77403C10.7219 7.77403 10.5903 7.82987 10.3361 7.99538C10.1796 8.09741 9.99663 8.21541 9.79237 8.34592C9.61771 8.45721 9.3811 8.56148 9.08884 8.65588C8.80371 8.74814 8.5142 8.79494 8.22845 8.79494C7.94271 8.79494 7.6533 8.74814 7.36786 8.65588C7.07591 8.56158 6.8393 8.45731 6.66484 8.34603C6.46251 8.21673 6.2794 8.09873 6.12061 7.99528C5.86671 7.82977 5.73497 7.77393 5.59887 7.77393C5.25219 7.77393 4.92829 7.83262 4.63604 7.94838C4.34287 8.06445 4.08906 8.22385 3.88165 8.42232C3.68359 8.61194 3.50689 8.84214 3.35675 9.10652C3.21199 9.36134 3.09481 9.62715 3.00854 9.89662C2.92523 10.1571 2.85555 10.4421 2.80143 10.7436C2.74782 11.0424 2.71141 11.326 2.6934 11.5864C2.6757 11.8415 2.66675 12.1063 2.66675 12.3737C2.66675 13.0697 2.888 13.6332 3.3243 14.0487C3.7552 14.4588 4.32537 14.6668 5.01873 14.6668H11.4388C12.1321 14.6668 12.7021 14.4589 13.1331 14.0487C13.5695 13.6335 13.7908 13.0699 13.7908 12.3736C13.7907 12.105 13.7816 11.84 13.7638 11.5861Z" })));
+    return ((0, jsx_runtime_1.jsxs)("svg", Object.assign({ className: "user-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" }, { children: [(0, jsx_runtime_1.jsx)("path", { d: "M8.14456 7.75608C9.02692 7.75608 9.79098 7.43961 10.4153 6.81523C11.0395 6.19094 11.356 5.42709 11.356 4.54462C11.356 3.66247 11.0395 2.89851 10.4152 2.27402C9.79077 1.64984 9.02682 1.33337 8.14456 1.33337C7.2621 1.33337 6.49824 1.64984 5.87396 2.27413C5.24967 2.89841 4.93311 3.66236 4.93311 4.54462C4.93311 5.42709 5.24967 6.19104 5.87406 6.81533C6.49845 7.43951 7.2624 7.75608 8.14456 7.75608Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M13.7638 11.5861C13.7458 11.3263 13.7094 11.0429 13.6558 10.7436C13.6017 10.4421 13.532 10.157 13.4486 9.89652C13.3624 9.62725 13.2452 9.36134 13.1004 9.10652C12.95 8.84204 12.7734 8.61173 12.5753 8.42222C12.368 8.22396 12.1143 8.06455 11.821 7.94828C11.5286 7.83262 11.2046 7.77403 10.858 7.77403C10.7219 7.77403 10.5903 7.82987 10.3361 7.99538C10.1796 8.09741 9.99663 8.21541 9.79237 8.34592C9.61771 8.45721 9.3811 8.56148 9.08884 8.65588C8.80371 8.74814 8.5142 8.79494 8.22845 8.79494C7.94271 8.79494 7.6533 8.74814 7.36786 8.65588C7.07591 8.56158 6.8393 8.45731 6.66484 8.34603C6.46251 8.21673 6.2794 8.09873 6.12061 7.99528C5.86671 7.82977 5.73497 7.77393 5.59887 7.77393C5.25219 7.77393 4.92829 7.83262 4.63604 7.94838C4.34287 8.06445 4.08906 8.22385 3.88165 8.42232C3.68359 8.61194 3.50689 8.84214 3.35675 9.10652C3.21199 9.36134 3.09481 9.62715 3.00854 9.89662C2.92523 10.1571 2.85555 10.4421 2.80143 10.7436C2.74782 11.0424 2.71141 11.326 2.6934 11.5864C2.6757 11.8415 2.66675 12.1063 2.66675 12.3737C2.66675 13.0697 2.888 13.6332 3.3243 14.0487C3.7552 14.4588 4.32537 14.6668 5.01873 14.6668H11.4388C12.1321 14.6668 12.7021 14.4589 13.1331 14.0487C13.5695 13.6335 13.7908 13.0699 13.7908 12.3736C13.7907 12.105 13.7816 11.84 13.7638 11.5861Z" })] })));
 };
 exports.UserIcon = UserIcon;
 
@@ -52976,19 +54036,15 @@ exports.UserIcon = UserIcon;
 /*!**************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx ***!
   \**************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.WarningIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const WarningIcon = () => {
-    return (react_1.default.createElement("svg", { className: "warning-icon icon", viewBox: "0 0 20 18", xmlns: "http://www.w3.org/2000/svg" },
-        react_1.default.createElement("path", { d: "M19.5845 13.7734L12.5194 1.36973C11.3843 -0.455365 8.61723 -0.45779 7.48058 1.36973L0.415894 13.7734C-0.744497 15.6384 0.660386 18 2.93472 18H17.065C19.3375 18 20.7448 15.6403 19.5845 13.7734ZM10 15.7616C9.35398 15.7616 8.82812 15.2593 8.82812 14.6424C8.82812 14.0254 9.35398 13.5232 10 13.5232C10.646 13.5232 11.1719 14.0254 11.1719 14.6424C11.1719 15.2593 10.646 15.7616 10 15.7616ZM11.1719 11.2847C11.1719 11.9017 10.646 12.4039 10 12.4039C9.35398 12.4039 8.82812 11.9017 8.82812 11.2847V5.68866C8.82812 5.07168 9.35398 4.56945 10 4.56945C10.646 4.56945 11.1719 5.07168 11.1719 5.68866V11.2847Z" })));
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "warning-icon icon", viewBox: "0 0 20 18", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M19.5845 13.7734L12.5194 1.36973C11.3843 -0.455365 8.61723 -0.45779 7.48058 1.36973L0.415894 13.7734C-0.744497 15.6384 0.660386 18 2.93472 18H17.065C19.3375 18 20.7448 15.6403 19.5845 13.7734ZM10 15.7616C9.35398 15.7616 8.82812 15.2593 8.82812 14.6424C8.82812 14.0254 9.35398 13.5232 10 13.5232C10.646 13.5232 11.1719 14.0254 11.1719 14.6424C11.1719 15.2593 10.646 15.7616 10 15.7616ZM11.1719 11.2847C11.1719 11.9017 10.646 12.4039 10 12.4039C9.35398 12.4039 8.82812 11.9017 8.82812 11.2847V5.68866C8.82812 5.07168 9.35398 4.56945 10 4.56945C10.646 4.56945 11.1719 5.07168 11.1719 5.68866V11.2847Z" }) })));
 };
 exports.WarningIcon = WarningIcon;
 
@@ -52999,26 +54055,16 @@ exports.WarningIcon = WarningIcon;
 /*!**********************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx ***!
   \**********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.WasteBasketIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./waste-basket-icon.scss */ "./extension/app/components/atoms/icons/WasteBasketIcon/waste-basket-icon.scss");
 const WasteBasketIcon = ({ onClick, }) => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", className: "waste-basket-icon icon", onClick: onClick },
-        react_1.default.createElement("g", { clipPath: "url(#clip0_575_522)" },
-            react_1.default.createElement("path", { d: "M18.0002 6.66667H15.9335C15.7788 5.91428 15.3694 5.23823 14.7743 4.75248C14.1793 4.26673 13.435 4.00097 12.6668 4L11.3335 4C10.5654 4.00097 9.82104 4.26673 9.226 4.75248C8.63095 5.23823 8.22156 5.91428 8.06683 6.66667H6.00016C5.82335 6.66667 5.65378 6.7369 5.52876 6.86193C5.40373 6.98695 5.3335 7.15652 5.3335 7.33333C5.3335 7.51014 5.40373 7.67971 5.52876 7.80474C5.65378 7.92976 5.82335 8 6.00016 8H6.66683V16.6667C6.66789 17.5504 7.01942 18.3976 7.64431 19.0225C8.2692 19.6474 9.11643 19.9989 10.0002 20H14.0002C14.8839 19.9989 15.7311 19.6474 16.356 19.0225C16.9809 18.3976 17.3324 17.5504 17.3335 16.6667V8H18.0002C18.177 8 18.3465 7.92976 18.4716 7.80474C18.5966 7.67971 18.6668 7.51014 18.6668 7.33333C18.6668 7.15652 18.5966 6.98695 18.4716 6.86193C18.3465 6.7369 18.177 6.66667 18.0002 6.66667ZM11.3335 5.33333H12.6668C13.0803 5.33384 13.4836 5.46225 13.8212 5.70096C14.1589 5.93967 14.4144 6.27699 14.5528 6.66667H9.4475C9.58588 6.27699 9.84143 5.93967 10.1791 5.70096C10.5167 5.46225 10.92 5.33384 11.3335 5.33333ZM16.0002 16.6667C16.0002 17.1971 15.7894 17.7058 15.4144 18.0809C15.0393 18.456 14.5306 18.6667 14.0002 18.6667H10.0002C9.46973 18.6667 8.96102 18.456 8.58595 18.0809C8.21088 17.7058 8.00016 17.1971 8.00016 16.6667V8H16.0002V16.6667Z" }),
-            react_1.default.createElement("path", { d: "M10.6667 15.9996C10.8435 15.9996 11.013 15.9293 11.1381 15.8043C11.2631 15.6793 11.3333 15.5097 11.3333 15.3329V11.3329C11.3333 11.1561 11.2631 10.9865 11.1381 10.8615C11.013 10.7365 10.8435 10.6663 10.6667 10.6663C10.4899 10.6663 10.3203 10.7365 10.1953 10.8615C10.0702 10.9865 10 11.1561 10 11.3329V15.3329C10 15.5097 10.0702 15.6793 10.1953 15.8043C10.3203 15.9293 10.4899 15.9996 10.6667 15.9996Z" }),
-            react_1.default.createElement("path", { d: "M13.3332 15.9996C13.51 15.9996 13.6796 15.9293 13.8046 15.8043C13.9296 15.6793 13.9998 15.5097 13.9998 15.3329V11.3329C13.9998 11.1561 13.9296 10.9865 13.8046 10.8615C13.6796 10.7365 13.51 10.6663 13.3332 10.6663C13.1564 10.6663 12.9868 10.7365 12.8618 10.8615C12.7367 10.9865 12.6665 11.1561 12.6665 11.3329V15.3329C12.6665 15.5097 12.7367 15.6793 12.8618 15.8043C12.9868 15.9293 13.1564 15.9996 13.3332 15.9996Z" })),
-        react_1.default.createElement("defs", null,
-            react_1.default.createElement("clipPath", { id: "clip0_575_522" },
-                react_1.default.createElement("rect", { transform: "translate(4 4)" })))));
+    return ((0, jsx_runtime_1.jsxs)("svg", Object.assign({ viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", className: "waste-basket-icon icon", onClick: onClick }, { children: [(0, jsx_runtime_1.jsxs)("g", Object.assign({ clipPath: "url(#clip0_575_522)" }, { children: [(0, jsx_runtime_1.jsx)("path", { d: "M18.0002 6.66667H15.9335C15.7788 5.91428 15.3694 5.23823 14.7743 4.75248C14.1793 4.26673 13.435 4.00097 12.6668 4L11.3335 4C10.5654 4.00097 9.82104 4.26673 9.226 4.75248C8.63095 5.23823 8.22156 5.91428 8.06683 6.66667H6.00016C5.82335 6.66667 5.65378 6.7369 5.52876 6.86193C5.40373 6.98695 5.3335 7.15652 5.3335 7.33333C5.3335 7.51014 5.40373 7.67971 5.52876 7.80474C5.65378 7.92976 5.82335 8 6.00016 8H6.66683V16.6667C6.66789 17.5504 7.01942 18.3976 7.64431 19.0225C8.2692 19.6474 9.11643 19.9989 10.0002 20H14.0002C14.8839 19.9989 15.7311 19.6474 16.356 19.0225C16.9809 18.3976 17.3324 17.5504 17.3335 16.6667V8H18.0002C18.177 8 18.3465 7.92976 18.4716 7.80474C18.5966 7.67971 18.6668 7.51014 18.6668 7.33333C18.6668 7.15652 18.5966 6.98695 18.4716 6.86193C18.3465 6.7369 18.177 6.66667 18.0002 6.66667ZM11.3335 5.33333H12.6668C13.0803 5.33384 13.4836 5.46225 13.8212 5.70096C14.1589 5.93967 14.4144 6.27699 14.5528 6.66667H9.4475C9.58588 6.27699 9.84143 5.93967 10.1791 5.70096C10.5167 5.46225 10.92 5.33384 11.3335 5.33333ZM16.0002 16.6667C16.0002 17.1971 15.7894 17.7058 15.4144 18.0809C15.0393 18.456 14.5306 18.6667 14.0002 18.6667H10.0002C9.46973 18.6667 8.96102 18.456 8.58595 18.0809C8.21088 17.7058 8.00016 17.1971 8.00016 16.6667V8H16.0002V16.6667Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M10.6667 15.9996C10.8435 15.9996 11.013 15.9293 11.1381 15.8043C11.2631 15.6793 11.3333 15.5097 11.3333 15.3329V11.3329C11.3333 11.1561 11.2631 10.9865 11.1381 10.8615C11.013 10.7365 10.8435 10.6663 10.6667 10.6663C10.4899 10.6663 10.3203 10.7365 10.1953 10.8615C10.0702 10.9865 10 11.1561 10 11.3329V15.3329C10 15.5097 10.0702 15.6793 10.1953 15.8043C10.3203 15.9293 10.4899 15.9996 10.6667 15.9996Z" }), (0, jsx_runtime_1.jsx)("path", { d: "M13.3332 15.9996C13.51 15.9996 13.6796 15.9293 13.8046 15.8043C13.9296 15.6793 13.9998 15.5097 13.9998 15.3329V11.3329C13.9998 11.1561 13.9296 10.9865 13.8046 10.8615C13.6796 10.7365 13.51 10.6663 13.3332 10.6663C13.1564 10.6663 12.9868 10.7365 12.8618 10.8615C12.7367 10.9865 12.6665 11.1561 12.6665 11.3329V15.3329C12.6665 15.5097 12.7367 15.6793 12.8618 15.8043C12.9868 15.9293 13.1564 15.9996 13.3332 15.9996Z" })] })), (0, jsx_runtime_1.jsx)("defs", { children: (0, jsx_runtime_1.jsx)("clipPath", Object.assign({ id: "clip0_575_522" }, { children: (0, jsx_runtime_1.jsx)("rect", { transform: "translate(4 4)" }) })) })] })));
 };
 exports.WasteBasketIcon = WasteBasketIcon;
 
@@ -53069,6 +54115,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppButton = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const Button_1 = __webpack_require__(/*! ../../atoms/Button/Button */ "./extension/app/components/atoms/Button/Button.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
@@ -53091,7 +54138,7 @@ const AppButton = (_a) => {
                 }, ref: iconRef })
             : icon;
     }, [animatedIcon, disabled, icon, onClick]);
-    return (react_1.default.createElement(Button_1.Button, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-button', className]), disabled: disabled, onClick: (e) => {
+    return ((0, jsx_runtime_1.jsx)(Button_1.Button, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-button', className]), disabled: disabled, onClick: (e) => {
             var _a, _b, _c, _d;
             if (disabled) {
                 return;
@@ -53102,7 +54149,7 @@ const AppButton = (_a) => {
             }
             (_b = (_a = iconRef === null || iconRef === void 0 ? void 0 : iconRef.current) === null || _a === void 0 ? void 0 : _a.click) === null || _b === void 0 ? void 0 : _b.call(_a);
             (_d = (_c = iconRef === null || iconRef === void 0 ? void 0 : iconRef.current) === null || _c === void 0 ? void 0 : _c.focus) === null || _d === void 0 ? void 0 : _d.call(_c);
-        }, icon: clonedIcon }, restProps), children));
+        }, icon: clonedIcon }, restProps, { children: children })));
 };
 exports.AppButton = AppButton;
 
@@ -53128,18 +54175,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BigStaticButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const StaticButton_1 = __webpack_require__(/*! ../StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/buttons/BigStaticButton/styles.scss");
 const BigStaticButton = (_a) => {
     var { className = '', children } = _a, restProps = __rest(_a, ["className", "children"]);
-    return (react_1.default.createElement(StaticButton_1.StaticButton, Object.assign({ className: (0, common_helpers_1.createClassName)(['big-static-button', className]) }, restProps), children));
+    return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: (0, common_helpers_1.createClassName)(['big-static-button', className]) }, restProps, { children: children })));
 };
 exports.BigStaticButton = BigStaticButton;
 
@@ -53165,18 +54209,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.HoverButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const AppButton_1 = __webpack_require__(/*! ../AppButton/AppButton */ "./extension/app/components/buttons/AppButton/AppButton.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/buttons/HoverButton/styles.scss");
 const HoverButton = (_a) => {
     var { children, hovered, className = '' } = _a, restProps = __rest(_a, ["children", "hovered", "className"]);
-    return (react_1.default.createElement(AppButton_1.AppButton, Object.assign({ className: (0, common_helpers_1.createClassName)(['hover-button', className, hovered ? 'hovered' : '']) }, restProps), children));
+    return ((0, jsx_runtime_1.jsx)(AppButton_1.AppButton, Object.assign({ className: (0, common_helpers_1.createClassName)(['hover-button', className, hovered ? 'hovered' : '']) }, restProps, { children: children })));
 };
 exports.HoverButton = HoverButton;
 
@@ -53202,21 +54243,18 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StaticButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const AppButton_1 = __webpack_require__(/*! ../AppButton/AppButton */ "./extension/app/components/buttons/AppButton/AppButton.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/buttons/StaticButton/styles.scss");
 const StaticButton = (_a) => {
     var { className = '', children } = _a, restProps = __rest(_a, ["className", "children"]);
-    return (react_1.default.createElement(AppButton_1.AppButton, Object.assign({ className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)(AppButton_1.AppButton, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'static-button',
             className,
-        ]) }, restProps), children));
+        ]) }, restProps, { children: children })));
 };
 exports.StaticButton = StaticButton;
 
@@ -53242,17 +54280,14 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppCheckbox = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const Checkbox_1 = __webpack_require__(/*! ../../atoms/Checkbox/Checkbox */ "./extension/app/components/atoms/Checkbox/Checkbox.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/checkboxes/AppCheckbox/styles.scss");
 const AppCheckbox = (_a) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement(Checkbox_1.Checkbox, Object.assign({ className: className }, restProps)));
+    return ((0, jsx_runtime_1.jsx)(Checkbox_1.Checkbox, Object.assign({ className: className }, restProps)));
 };
 exports.AppCheckbox = AppCheckbox;
 
@@ -53278,19 +54313,16 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NestedItemsCheckbox = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const AppCheckbox_1 = __webpack_require__(/*! ../AppCheckbox/AppCheckbox */ "./extension/app/components/checkboxes/AppCheckbox/AppCheckbox.tsx");
 const SuccessCheckIcon_1 = __webpack_require__(/*! ../../icons/SuccessCheckIcon/SuccessCheckIcon */ "./extension/app/components/icons/SuccessCheckIcon/SuccessCheckIcon.tsx");
 const SuccessMinusIcon_1 = __webpack_require__(/*! ../../icons/SuccessMinusIcon/SuccessMinusIcon */ "./extension/app/components/icons/SuccessMinusIcon/SuccessMinusIcon.tsx");
 const NestedItemsCheckbox = (_a) => {
     var { state, className = '' } = _a, restProps = __rest(_a, ["state", "className"]);
-    return (react_1.default.createElement(AppCheckbox_1.AppCheckbox, Object.assign({ checkIcon: state === 'all' ? react_1.default.createElement(SuccessCheckIcon_1.SuccessCheckIcon, null) : null, uncheckIcon: state === 'some' ? react_1.default.createElement(SuccessMinusIcon_1.SuccessMinusIcon, null) : null, checked: state === 'all', className: (0, common_helpers_1.createClassName)(['nested-items-checkbox', className, state]) }, restProps)));
+    return ((0, jsx_runtime_1.jsx)(AppCheckbox_1.AppCheckbox, Object.assign({ checkIcon: state === 'all' ? (0, jsx_runtime_1.jsx)(SuccessCheckIcon_1.SuccessCheckIcon, {}) : null, uncheckIcon: state === 'some' ? (0, jsx_runtime_1.jsx)(SuccessMinusIcon_1.SuccessMinusIcon, {}) : null, checked: state === 'all', className: (0, common_helpers_1.createClassName)(['nested-items-checkbox', className, state]) }, restProps)));
 };
 exports.NestedItemsCheckbox = NestedItemsCheckbox;
 
@@ -53316,18 +54348,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SuccessCheckbox = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const AppCheckbox_1 = __webpack_require__(/*! ../AppCheckbox/AppCheckbox */ "./extension/app/components/checkboxes/AppCheckbox/AppCheckbox.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const SuccessCheckIcon_1 = __webpack_require__(/*! ../../icons/SuccessCheckIcon/SuccessCheckIcon */ "./extension/app/components/icons/SuccessCheckIcon/SuccessCheckIcon.tsx");
 const SuccessCheckbox = (_a) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement(AppCheckbox_1.AppCheckbox, Object.assign({ checkIcon: react_1.default.createElement(SuccessCheckIcon_1.SuccessCheckIcon, null), uncheckIcon: null, className: (0, common_helpers_1.createClassName)(['success-checkbox', className]) }, restProps)));
+    return ((0, jsx_runtime_1.jsx)(AppCheckbox_1.AppCheckbox, Object.assign({ checkIcon: (0, jsx_runtime_1.jsx)(SuccessCheckIcon_1.SuccessCheckIcon, {}), uncheckIcon: null, className: (0, common_helpers_1.createClassName)(['success-checkbox', className]) }, restProps)));
 };
 exports.SuccessCheckbox = SuccessCheckbox;
 
@@ -53353,27 +54382,19 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppCollapsible = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const Collapsible_1 = __webpack_require__(/*! ../../atoms/Collapsible/Collapsible */ "./extension/app/components/atoms/Collapsible/Collapsible.tsx");
 const SmallArrowIcon_1 = __webpack_require__(/*! ../../atoms/icons/SmallArrowIcon/SmallArrowIcon */ "./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/collapsibles/AppCollapsible/styles.scss");
 const AppCollapsible = (_a) => {
     var { className = '', header, children, group } = _a, restProps = __rest(_a, ["className", "header", "children", "group"]);
-    return (react_1.default.createElement(Collapsible_1.Collapsible, Object.assign({ className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)(Collapsible_1.Collapsible, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'app-collapsible',
             className,
-        ]), header: react_1.default.createElement(react_1.default.Fragment, null,
-            header,
-            react_1.default.createElement("div", { className: "app-collapsible-header-group" },
-                group,
-                react_1.default.createElement("span", { className: "icon-wrapper" },
-                    react_1.default.createElement(SmallArrowIcon_1.SmallArrowIcon, null)))) }, restProps), children));
+        ]), header: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [header, (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-collapsible-header-group" }, { children: [group, (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "icon-wrapper" }, { children: (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {}) }))] }))] }) }, restProps, { children: children })));
 };
 exports.AppCollapsible = AppCollapsible;
 
@@ -53388,29 +54409,6 @@ exports.AppCollapsible = AppCollapsible;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -53424,23 +54422,31 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppDropdown = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Dropdown_1 = __webpack_require__(/*! ../../atoms/Dropdown/Dropdown */ "./extension/app/components/atoms/Dropdown/Dropdown.tsx");
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/dropdowns/AppDropdown/styles.scss");
-exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
-    var _b, _c;
+exports.AppDropdown = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_a, ref) => {
     var { className = '', classNameMenu = '', children, mountElement, direction, onStateChange, getMenuStyles } = _a, restProps = __rest(_a, ["className", "classNameMenu", "children", "mountElement", "direction", "onStateChange", "getMenuStyles"]);
     const { isResizing, rootElement } = (0, stores_1.useAppStore)();
     const [calculatedDirection, setCalculatedDirection] = (0, react_1.useState)(direction || 'down');
     const [forceClose, setForceClose] = (0, react_1.useState)(false);
-    const ref = (0, react_1.useRef)(null);
+    const dropdownRef = (0, react_1.useRef)(null);
+    const dropdownMenuRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(ref, () => ({
+        get dropdown() {
+            return dropdownRef;
+        },
+        get dropdownMenu() {
+            return dropdownMenuRef;
+        },
+    }));
     (0, react_1.useEffect)(() => {
-        var _a, _b;
-        const dropdownMenu = (_b = (_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.dropdownMenu) === null || _b === void 0 ? void 0 : _b.current;
+        const dropdownMenu = dropdownMenuRef === null || dropdownMenuRef === void 0 ? void 0 : dropdownMenuRef.current;
         if (dropdownMenu) {
             dropdownMenu.classList.remove('hide');
         }
@@ -53455,7 +54461,7 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
     }, [isResizing]);
     (0, app_hooks_1.useOnClickOutside)(() => {
         setForceClose(true);
-    }, (_b = ref === null || ref === void 0 ? void 0 : ref.current) === null || _b === void 0 ? void 0 : _b.dropdown, (_c = ref === null || ref === void 0 ? void 0 : ref.current) === null || _c === void 0 ? void 0 : _c.dropdownMenu);
+    }, dropdownRef, dropdownMenuRef);
     const calculatedMountElement = typeof mountElement === 'undefined' ? rootElement : mountElement;
     const normalizedStyles = (0, react_1.useMemo)(() => {
         const styles = (getMenuStyles === null || getMenuStyles === void 0 ? void 0 : getMenuStyles()) || {};
@@ -53465,16 +54471,16 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
         return styles;
     }, [getMenuStyles]);
     const getMenuStylesCallback = (0, react_1.useCallback)(() => {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c;
         const width = undefined;
         if (!calculatedMountElement) {
             return Object.assign({ width }, normalizedStyles);
         }
-        const dropdownElem = (_b = (_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.dropdown) === null || _b === void 0 ? void 0 : _b.current;
-        const dropdownMenuElem = (_d = (_c = ref === null || ref === void 0 ? void 0 : ref.current) === null || _c === void 0 ? void 0 : _c.dropdownMenu) === null || _d === void 0 ? void 0 : _d.current;
-        const dropdownRect = (_e = dropdownElem === null || dropdownElem === void 0 ? void 0 : dropdownElem.getBoundingClientRect) === null || _e === void 0 ? void 0 : _e.call(dropdownElem);
-        const dropdownMenuRect = (_f = dropdownMenuElem === null || dropdownMenuElem === void 0 ? void 0 : dropdownMenuElem.getBoundingClientRect) === null || _f === void 0 ? void 0 : _f.call(dropdownMenuElem);
-        const rootElementRect = (_g = rootElement === null || rootElement === void 0 ? void 0 : rootElement.getBoundingClientRect) === null || _g === void 0 ? void 0 : _g.call(rootElement);
+        const dropdownElem = dropdownRef === null || dropdownRef === void 0 ? void 0 : dropdownRef.current;
+        const dropdownMenuElem = dropdownMenuRef === null || dropdownMenuRef === void 0 ? void 0 : dropdownMenuRef.current;
+        const dropdownRect = (_a = dropdownElem === null || dropdownElem === void 0 ? void 0 : dropdownElem.getBoundingClientRect) === null || _a === void 0 ? void 0 : _a.call(dropdownElem);
+        const dropdownMenuRect = (_b = dropdownMenuElem === null || dropdownMenuElem === void 0 ? void 0 : dropdownMenuElem.getBoundingClientRect) === null || _b === void 0 ? void 0 : _b.call(dropdownMenuElem);
+        const rootElementRect = (_c = rootElement === null || rootElement === void 0 ? void 0 : rootElement.getBoundingClientRect) === null || _c === void 0 ? void 0 : _c.call(rootElement);
         let top = 'unset';
         if ((calculatedDirection === 'down' || !calculatedDirection) && dropdownRect && rootElementRect) {
             top = dropdownRect.top + dropdownRect.height - rootElementRect.top + 12;
@@ -53485,15 +54491,22 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
         return Object.assign({ top,
             width, left: (dropdownRect && rootElementRect) ? dropdownRect.left - rootElementRect.left : 'unset' }, normalizedStyles);
     }, [calculatedDirection, calculatedMountElement, normalizedStyles, rootElement]);
-    return (react_1.default.createElement(Dropdown_1.Dropdown, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)(Dropdown_1.Dropdown, Object.assign({ ref: (refs) => {
+            var _a, _b;
+            if ((_a = refs === null || refs === void 0 ? void 0 : refs.dropdown) === null || _a === void 0 ? void 0 : _a.current) {
+                dropdownRef.current = refs.dropdown.current;
+            }
+            if ((_b = refs === null || refs === void 0 ? void 0 : refs.dropdownMenu) === null || _b === void 0 ? void 0 : _b.current) {
+                dropdownMenuRef.current = refs.dropdownMenu.current;
+            }
+        }, className: (0, common_helpers_1.createClassName)([
             'app-dropdown',
             className,
         ]), classNameMenu: (0, common_helpers_1.createClassName)([
             'app-dropdown-menu',
             classNameMenu,
         ]), closed: forceClose, direction: calculatedDirection, mountElement: calculatedMountElement, getMenuStyles: getMenuStylesCallback, onStateChange: (isOpen) => {
-            var _a, _b;
-            const dropdownMenu = (_b = (_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.dropdownMenu) === null || _b === void 0 ? void 0 : _b.current;
+            const dropdownMenu = dropdownMenuRef === null || dropdownMenuRef === void 0 ? void 0 : dropdownMenuRef.current;
             if (!direction && dropdownMenu && rootElement) {
                 if (dropdownMenu.getBoundingClientRect().bottom >
                     rootElement.getBoundingClientRect().bottom) {
@@ -53502,8 +54515,8 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((_a) => {
                 }
                 onStateChange === null || onStateChange === void 0 ? void 0 : onStateChange(isOpen);
             }
-        } }, restProps), children));
-});
+        } }, restProps, { children: children })));
+}));
 
 
 /***/ }),
@@ -53527,18 +54540,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppHeader = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const Header_1 = __webpack_require__(/*! ../../atoms/Header/Header */ "./extension/app/components/atoms/Header/Header.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/headers/AppHeader/styles.scss");
 const AppHeader = (_a) => {
     var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
-    return (react_1.default.createElement(Header_1.Header, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-header', className]) }, restProps), children));
+    return ((0, jsx_runtime_1.jsx)(Header_1.Header, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-header', className]) }, restProps, { children: children })));
 };
 exports.AppHeader = AppHeader;
 
@@ -53558,16 +54568,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AnimatedCopyIcon = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const CopyIcon_1 = __webpack_require__(/*! ../../atoms/icons/CopyIcon/CopyIcon */ "./extension/app/components/atoms/icons/CopyIcon/CopyIcon.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/icons/AnimatedCopyIcon/styles.scss");
 exports.AnimatedCopyIcon = react_1.default.forwardRef(({ disabled, onClick, }, ref) => {
-    return (react_1.default.createElement("span", { ref: ref, tabIndex: 0, className: (0, common_helpers_1.createClassName)(['animated-copy-icon', 'icon', disabled ? 'disabled' : '']), onClick: (e) => {
+    return ((0, jsx_runtime_1.jsxs)("span", Object.assign({ ref: ref, tabIndex: 0, className: (0, common_helpers_1.createClassName)(['animated-copy-icon', 'icon', disabled ? 'disabled' : '']), onClick: (e) => {
             onClick === null || onClick === void 0 ? void 0 : onClick(e);
-        } },
-        react_1.default.createElement(CopyIcon_1.CopyIcon, null),
-        react_1.default.createElement(CopyIcon_1.CopyIcon, { className: "animated" })));
+        } }, { children: [(0, jsx_runtime_1.jsx)(CopyIcon_1.CopyIcon, {}), (0, jsx_runtime_1.jsx)(CopyIcon_1.CopyIcon, { className: "animated" })] })));
 });
 
 
@@ -53577,30 +54586,15 @@ exports.AnimatedCopyIcon = react_1.default.forwardRef(({ disabled, onClick, }, r
 /*!**************************************************************!*\
   !*** ./extension/app/components/icons/LogoIcon/LogoIcon.tsx ***!
   \**************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LogoIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const LogoIcon = () => {
-    return (react_1.default.createElement("svg", { viewBox: "0 0 356 156", fill: "none", xmlns: "http://www.w3.org/2000/svg", className: "logo-icon icon" },
-        react_1.default.createElement("g", { clipPath: "url(#clip0_575_446)" },
-            react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M352.917 149.781H352.951C353.595 149.781 354.171 149.949 354.639 150.292C354.863 150.456 355.025 150.633 355.142 150.788C355.214 150.883 355.274 150.98 355.304 151.03L355.747 151.684L355.5 152.418C355.383 152.846 355.148 153.181 355.006 153.366C354.814 153.616 354.586 153.851 354.358 154.054C353.94 154.429 353.326 154.875 352.683 155.084L352.558 155.124L352.429 155.145C352.133 155.191 351.535 155.217 350.861 155.239C350.127 155.262 349.148 155.284 347.985 155.304C345.656 155.344 342.565 155.377 339.165 155.403C332.363 155.455 324.308 155.481 318.613 155.481C309.642 155.481 302.565 155.43 295.675 155.327C294.597 155.325 293.44 155.133 292.56 154.364C291.624 153.544 291.362 152.4 291.362 151.336V120.837C291.362 119.698 291.969 118.8 292.847 118.269C293.645 117.785 294.627 117.614 295.6 117.612C302.044 117.509 308.638 117.509 317.742 117.509H317.753C323.231 117.509 331.533 117.509 338.635 117.535C342.185 117.548 345.439 117.567 347.892 117.596C349.118 117.611 350.15 117.628 350.92 117.648C351.626 117.666 352.251 117.689 352.549 117.734L352.579 117.739L352.608 117.744C353.332 117.881 353.998 118.338 354.398 118.666C354.627 118.854 354.857 119.073 355.051 119.306C355.199 119.482 355.506 119.873 355.613 120.393L355.647 120.558V120.727C355.647 121.446 355.318 122.11 354.72 122.535C354.192 122.909 353.594 123.003 353.123 123.003H353.113L350.578 122.973C344.603 122.907 325.991 122.797 317.985 122.797C317.412 122.797 316.793 122.795 316.141 122.793L316.02 122.793C315.323 122.791 314.589 122.789 313.829 122.789H313.822C312.055 122.782 310.137 122.782 308.223 122.782C303.819 122.782 300.747 122.804 298.559 122.848C298.313 122.854 298.122 122.866 297.974 122.882V133.637C298.217 133.644 298.518 133.645 298.902 133.645H343.966C344.542 133.645 345.114 133.766 345.602 134.06C346.026 134.317 346.648 134.893 346.648 135.81C346.648 136.423 346.343 136.896 346.227 137.07C346.057 137.322 345.85 137.556 345.643 137.756C345.257 138.128 344.668 138.58 344 138.795L343.897 138.828L343.792 138.847C343.035 138.985 341.77 138.985 340.468 138.984C340.403 138.984 340.339 138.984 340.274 138.984H298.984C298.554 138.984 298.226 138.992 297.974 139.006V150.012C297.983 150.014 297.993 150.015 298.004 150.017C298.218 150.049 298.499 150.071 298.869 150.083C304.185 150.135 310.577 150.135 318.687 150.135C329.124 150.135 347.759 149.994 352.883 149.783L352.917 149.781Z", fill: "#FFD501" }),
-            react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M261.978 117.672L261.976 117.673C261.651 117.757 261.277 117.931 260.97 118.083C260.621 118.255 260.2 118.48 259.725 118.744C258.773 119.273 257.554 119.989 256.17 120.821C253.401 122.488 249.928 124.65 246.535 126.788C243.14 128.928 239.817 131.049 237.343 132.634C236.106 133.427 235.081 134.086 234.365 134.547L234.138 134.694L233.91 134.547C233.194 134.086 232.169 133.426 230.932 132.633C228.458 131.047 225.135 128.926 221.74 126.786C218.347 124.647 214.874 122.484 212.104 120.818C210.721 119.986 209.501 119.27 208.549 118.741C208.074 118.478 207.653 118.253 207.303 118.081C206.997 117.93 206.624 117.757 206.297 117.672C205.819 117.549 204.902 117.388 204 117.681C203.507 117.842 202.977 118.155 202.585 118.709C202.196 119.259 202.044 119.903 202.044 120.551V153.154L202.043 153.18C202.041 153.33 202.029 153.92 202.289 154.452C202.463 154.809 202.751 155.148 203.174 155.377C203.571 155.592 203.98 155.651 204.322 155.651H205.652C206.062 155.651 206.493 155.627 206.887 155.524C207.308 155.414 207.85 155.167 208.216 154.6C208.543 154.092 208.559 153.569 208.562 153.351C208.564 153.234 208.559 153.115 208.556 153.035L208.556 153.022C208.553 152.93 208.55 152.862 208.55 152.793L208.5 125.943C209.019 126.272 209.603 126.64 210.238 127.04C212.798 128.653 216.21 130.786 219.62 132.912C223.03 135.038 226.44 137.159 228.998 138.748C230.276 139.542 231.342 140.204 232.088 140.667L233.26 141.394L234.13 141.934L235 141.394L236.172 140.667C236.918 140.204 237.984 139.542 239.262 138.748C241.82 137.159 245.23 135.038 248.64 132.912C252.05 130.786 255.462 128.653 258.022 127.04C258.657 126.64 259.241 126.272 259.759 125.943L259.71 152.79V152.793C259.71 152.861 259.707 152.928 259.704 153.02L259.703 153.033C259.701 153.112 259.696 153.23 259.698 153.348C259.701 153.567 259.718 154.087 260.042 154.594C260.405 155.16 260.945 155.41 261.369 155.522C261.764 155.627 262.196 155.651 262.608 155.651H263.938C264.28 155.651 264.688 155.592 265.086 155.377C265.509 155.148 265.797 154.809 265.971 154.452C266.23 153.92 266.219 153.33 266.217 153.18L266.216 153.154V120.557C266.221 119.914 266.075 119.27 265.69 118.718C265.3 118.159 264.769 117.844 264.274 117.682C263.373 117.387 262.454 117.549 261.978 117.672Z", fill: "#FFD501" }),
-            react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M56.7073 125.509C57.3243 126.266 57.8437 127.379 57.844 129.088C57.8375 131.897 55.8113 134.163 52.8198 135.042C51.3393 135.412 48.6392 135.589 42.8707 135.589H7.97959C7.49112 135.589 7.14477 135.576 6.89395 135.552L6.89391 135.531V122.946C11.5095 122.802 31.1432 122.76 36.9135 122.76C43.102 122.76 47.1212 122.83 49.8304 123.023C52.578 123.217 53.7638 123.529 54.4357 123.874L54.4813 123.897L54.5283 123.917C55.2424 124.229 56.0668 124.724 56.7073 125.509ZM44.1264 140.987C50.0612 140.987 53.6429 140.704 56.0997 139.881C59.8544 138.673 63.9246 135.206 63.9246 128.964C63.9246 124.588 62.0616 120.9 58.3377 119.247C56.7258 118.498 54.7682 118.082 51.6148 117.837C48.4522 117.591 43.9397 117.509 37.1452 117.509C29.7459 117.509 8.55782 117.612 3.67653 117.76L3.65755 117.761L3.6386 117.762C2.96475 117.798 2.14241 117.907 1.47133 118.362C0.62803 118.935 0.349963 119.801 0.349963 120.587V153.073L0.349826 153.096C0.348159 153.296 0.341508 154.093 0.964615 154.717C1.58102 155.334 2.40367 155.385 2.87448 155.385H4.28717C4.67985 155.385 5.36974 155.356 5.96629 154.94C6.73137 154.406 6.88644 153.604 6.88644 153.073V141.199C6.88644 141.126 6.88795 141.063 6.89036 141.009C7.10974 140.992 7.40025 140.987 7.81515 140.987H44.1264Z", fill: "#FFD501" }),
-            react_1.default.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M135.715 122.991C135.713 122.991 135.711 122.991 135.709 122.991C135.64 122.997 135.57 123 135.5 123H92.5V135.5H135.5C135.534 135.5 135.568 135.501 135.602 135.502C135.603 135.502 135.605 135.502 135.607 135.502L135.603 135.502L135.602 135.502C135.602 135.502 135.601 135.502 135.602 135.502C135.603 135.502 135.605 135.502 135.608 135.502C135.619 135.503 135.639 135.503 135.669 135.504C135.729 135.505 135.826 135.505 135.955 135.503C136.215 135.499 136.598 135.484 137.062 135.441C138.006 135.352 139.214 135.15 140.383 134.717C141.556 134.284 142.571 133.664 143.285 132.81C143.964 131.999 144.5 130.827 144.5 129C144.5 127.173 143.965 126.051 143.315 125.303C142.626 124.509 141.638 123.944 140.475 123.564C139.316 123.186 138.114 123.037 137.17 122.989C136.706 122.965 136.323 122.967 136.064 122.975C135.935 122.978 135.837 122.983 135.777 122.987C135.747 122.988 135.727 122.99 135.717 122.991L135.715 122.991ZM129.698 140.5H92.5V153C92.5 154.381 91.3807 155.5 90 155.5C88.6193 155.5 87.5 154.381 87.5 153V120.5C87.5 119.119 88.6193 118 90 118H135.409C135.431 117.999 135.455 117.997 135.481 117.995C135.589 117.989 135.739 117.982 135.924 117.977C136.294 117.966 136.809 117.964 137.424 117.995C138.636 118.057 140.309 118.251 142.025 118.811C143.737 119.369 145.624 120.335 147.091 122.025C148.598 123.761 149.5 126.077 149.5 129C149.5 131.923 148.599 134.251 147.121 136.018C145.679 137.742 143.819 138.778 142.117 139.407C140.411 140.038 138.744 140.304 137.531 140.419C136.918 140.476 136.403 140.497 136.033 140.503C135.95 140.504 135.873 140.504 135.805 140.504L143.548 151.566C144.34 152.697 144.065 154.256 142.934 155.048C141.803 155.84 140.244 155.565 139.452 154.434L129.698 140.5Z", fill: "#FFD501" }),
-            react_1.default.createElement("path", { d: "M95.9324 50.8818C91.799 48.0771 78.4495 46.5165 53.649 44.4553C38.8419 43.2259 20.4397 41.6948 17.7937 39.7587C16.9416 38.8312 16.0446 36.3431 16.0446 32.1029C16.0446 24.7342 17.8609 19.618 21.4412 16.9017C23.8854 14.9804 31.6365 11.7635 56.1156 11.7635C70.1527 11.7635 85.6699 13.0296 94.8262 14.281C94.8561 14.2884 95.6409 14.3841 96.5229 14.3841C97.7487 14.3841 98.5559 14.2001 98.982 13.8246C99.565 13.3093 99.5949 12.2861 99.5501 11.3512C99.5501 11.2923 99.5426 11.2482 99.5426 11.2187C99.5426 8.88517 96.9639 4.80697 93.9591 3.37887C90.1396 1.41338 73.9872 0 55.5475 0C31.2777 0 17.8908 2.54703 10.79 8.50974C5.04213 13.5228 2 22.408 2 34.2009C2 41.1132 5.23647 47.6133 8.35335 49.888C11.9262 52.6779 25.2533 54.2459 50.2107 56.3218C65.5484 57.6027 82.9192 59.0455 86.0959 60.9374C87.5908 62.3581 88.3457 65.1554 88.3457 69.2484C88.3457 76.2269 86.507 81.8437 83.4126 84.2729L83.3154 84.3539C79.8846 87.3058 68.9344 88.7486 49.8444 88.7486C35.1869 88.7486 20.7611 87.6739 6.95561 85.5464L6.82107 85.5317C6.68653 85.517 6.55199 85.5096 6.42492 85.5096C4.60861 85.5096 3.13613 86.9598 3.13613 88.7413C3.13613 90.8908 5.37101 94.726 7.66569 96.5075L7.79276 96.5958C11.3805 99.0692 28.6168 100.792 49.7099 100.792C74.5702 100.792 88.3831 98.3331 94.4973 92.8121C99.9612 87.7843 102.973 78.5237 102.973 66.7308C102.966 59.1633 99.3258 53.2079 95.9324 50.8818Z", fill: "#015BBB" }),
-            react_1.default.createElement("path", { d: "M350.668 85.0899H350.458L350.249 85.1194C343.881 85.9954 328.954 88.0492 310.836 88.0492C286.618 88.0492 275.376 86.1058 269.367 80.8792C263.768 75.903 261.048 65.9946 261.048 50.602C261.048 35.8351 264.62 24.8004 271.101 19.5444C277.723 14.5681 290.864 12.0432 310.148 12.0432C327.885 12.0432 340.756 13.6774 349.27 14.7595L349.741 14.8184C349.987 14.8773 350.234 14.8994 350.481 14.8994C352.29 14.8994 353.71 13.4639 353.71 11.6309C353.71 9.26795 351.109 5.46213 348.358 3.7911L348.208 3.70276L348.096 3.65123C343.679 1.53116 327.369 0 309.318 0C285.699 0 270.047 3.4672 261.466 10.6077C252.168 18.4255 247.25 32.5961 247.25 51.581C247.25 70.2347 250.89 82.6607 258.379 89.5656C266.624 97.1331 280.982 100.225 307.943 100.225C327.197 100.225 343.701 98.6496 348.059 96.397C350.72 95.0867 354.001 90.5521 354.001 88.1744C353.994 86.4739 352.499 85.0899 350.668 85.0899Z", fill: "#015BBB" }),
-            react_1.default.createElement("path", { d: "M175.071 0C142.729 0 116.419 25.7501 116.419 57.3966C116.419 73.7683 123.587 89.3965 136.077 100.284C137.221 101.292 138.7 101.845 140.248 101.845C142.042 101.845 143.761 101.086 144.957 99.7686C146.063 98.554 146.623 96.986 146.526 95.3592C146.429 93.7176 145.682 92.2159 144.426 91.119C134.604 82.5651 128.969 70.2716 128.969 57.3892C128.969 32.5004 149.651 12.2567 175.064 12.2567C200.485 12.2567 221.159 32.5004 221.159 57.3892C221.159 70.2643 215.516 82.5578 205.68 91.1338C204.439 92.2159 203.699 93.7176 203.602 95.3445C203.505 96.9787 204.058 98.5467 205.164 99.7686C206.352 101.079 208.064 101.837 209.858 101.837C211.405 101.837 212.885 101.285 214.036 100.277C226.541 89.3965 233.709 73.7609 233.709 57.3892C233.724 25.7501 207.414 0 175.071 0Z", fill: "#015BBB" }),
-            react_1.default.createElement("path", { d: "M175.071 58.7517C171.573 58.7517 168.733 61.5564 168.733 65.0015V141.096C168.733 144.541 171.573 147.338 175.071 147.338C178.568 147.338 181.408 144.541 181.408 141.096V65.0015C181.408 61.5564 178.568 58.7517 175.071 58.7517Z", fill: "#015BBB" })),
-        react_1.default.createElement("defs", null,
-            react_1.default.createElement("clipPath", { id: "clip0_575_446" },
-                react_1.default.createElement("rect", { width: "356", height: "156", fill: "white" })))));
+    return ((0, jsx_runtime_1.jsxs)("svg", Object.assign({ viewBox: "0 0 356 156", fill: "none", xmlns: "http://www.w3.org/2000/svg", className: "logo-icon icon" }, { children: [(0, jsx_runtime_1.jsxs)("g", Object.assign({ clipPath: "url(#clip0_575_446)" }, { children: [(0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M352.917 149.781H352.951C353.595 149.781 354.171 149.949 354.639 150.292C354.863 150.456 355.025 150.633 355.142 150.788C355.214 150.883 355.274 150.98 355.304 151.03L355.747 151.684L355.5 152.418C355.383 152.846 355.148 153.181 355.006 153.366C354.814 153.616 354.586 153.851 354.358 154.054C353.94 154.429 353.326 154.875 352.683 155.084L352.558 155.124L352.429 155.145C352.133 155.191 351.535 155.217 350.861 155.239C350.127 155.262 349.148 155.284 347.985 155.304C345.656 155.344 342.565 155.377 339.165 155.403C332.363 155.455 324.308 155.481 318.613 155.481C309.642 155.481 302.565 155.43 295.675 155.327C294.597 155.325 293.44 155.133 292.56 154.364C291.624 153.544 291.362 152.4 291.362 151.336V120.837C291.362 119.698 291.969 118.8 292.847 118.269C293.645 117.785 294.627 117.614 295.6 117.612C302.044 117.509 308.638 117.509 317.742 117.509H317.753C323.231 117.509 331.533 117.509 338.635 117.535C342.185 117.548 345.439 117.567 347.892 117.596C349.118 117.611 350.15 117.628 350.92 117.648C351.626 117.666 352.251 117.689 352.549 117.734L352.579 117.739L352.608 117.744C353.332 117.881 353.998 118.338 354.398 118.666C354.627 118.854 354.857 119.073 355.051 119.306C355.199 119.482 355.506 119.873 355.613 120.393L355.647 120.558V120.727C355.647 121.446 355.318 122.11 354.72 122.535C354.192 122.909 353.594 123.003 353.123 123.003H353.113L350.578 122.973C344.603 122.907 325.991 122.797 317.985 122.797C317.412 122.797 316.793 122.795 316.141 122.793L316.02 122.793C315.323 122.791 314.589 122.789 313.829 122.789H313.822C312.055 122.782 310.137 122.782 308.223 122.782C303.819 122.782 300.747 122.804 298.559 122.848C298.313 122.854 298.122 122.866 297.974 122.882V133.637C298.217 133.644 298.518 133.645 298.902 133.645H343.966C344.542 133.645 345.114 133.766 345.602 134.06C346.026 134.317 346.648 134.893 346.648 135.81C346.648 136.423 346.343 136.896 346.227 137.07C346.057 137.322 345.85 137.556 345.643 137.756C345.257 138.128 344.668 138.58 344 138.795L343.897 138.828L343.792 138.847C343.035 138.985 341.77 138.985 340.468 138.984C340.403 138.984 340.339 138.984 340.274 138.984H298.984C298.554 138.984 298.226 138.992 297.974 139.006V150.012C297.983 150.014 297.993 150.015 298.004 150.017C298.218 150.049 298.499 150.071 298.869 150.083C304.185 150.135 310.577 150.135 318.687 150.135C329.124 150.135 347.759 149.994 352.883 149.783L352.917 149.781Z", fill: "#FFD501" }), (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M261.978 117.672L261.976 117.673C261.651 117.757 261.277 117.931 260.97 118.083C260.621 118.255 260.2 118.48 259.725 118.744C258.773 119.273 257.554 119.989 256.17 120.821C253.401 122.488 249.928 124.65 246.535 126.788C243.14 128.928 239.817 131.049 237.343 132.634C236.106 133.427 235.081 134.086 234.365 134.547L234.138 134.694L233.91 134.547C233.194 134.086 232.169 133.426 230.932 132.633C228.458 131.047 225.135 128.926 221.74 126.786C218.347 124.647 214.874 122.484 212.104 120.818C210.721 119.986 209.501 119.27 208.549 118.741C208.074 118.478 207.653 118.253 207.303 118.081C206.997 117.93 206.624 117.757 206.297 117.672C205.819 117.549 204.902 117.388 204 117.681C203.507 117.842 202.977 118.155 202.585 118.709C202.196 119.259 202.044 119.903 202.044 120.551V153.154L202.043 153.18C202.041 153.33 202.029 153.92 202.289 154.452C202.463 154.809 202.751 155.148 203.174 155.377C203.571 155.592 203.98 155.651 204.322 155.651H205.652C206.062 155.651 206.493 155.627 206.887 155.524C207.308 155.414 207.85 155.167 208.216 154.6C208.543 154.092 208.559 153.569 208.562 153.351C208.564 153.234 208.559 153.115 208.556 153.035L208.556 153.022C208.553 152.93 208.55 152.862 208.55 152.793L208.5 125.943C209.019 126.272 209.603 126.64 210.238 127.04C212.798 128.653 216.21 130.786 219.62 132.912C223.03 135.038 226.44 137.159 228.998 138.748C230.276 139.542 231.342 140.204 232.088 140.667L233.26 141.394L234.13 141.934L235 141.394L236.172 140.667C236.918 140.204 237.984 139.542 239.262 138.748C241.82 137.159 245.23 135.038 248.64 132.912C252.05 130.786 255.462 128.653 258.022 127.04C258.657 126.64 259.241 126.272 259.759 125.943L259.71 152.79V152.793C259.71 152.861 259.707 152.928 259.704 153.02L259.703 153.033C259.701 153.112 259.696 153.23 259.698 153.348C259.701 153.567 259.718 154.087 260.042 154.594C260.405 155.16 260.945 155.41 261.369 155.522C261.764 155.627 262.196 155.651 262.608 155.651H263.938C264.28 155.651 264.688 155.592 265.086 155.377C265.509 155.148 265.797 154.809 265.971 154.452C266.23 153.92 266.219 153.33 266.217 153.18L266.216 153.154V120.557C266.221 119.914 266.075 119.27 265.69 118.718C265.3 118.159 264.769 117.844 264.274 117.682C263.373 117.387 262.454 117.549 261.978 117.672Z", fill: "#FFD501" }), (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M56.7073 125.509C57.3243 126.266 57.8437 127.379 57.844 129.088C57.8375 131.897 55.8113 134.163 52.8198 135.042C51.3393 135.412 48.6392 135.589 42.8707 135.589H7.97959C7.49112 135.589 7.14477 135.576 6.89395 135.552L6.89391 135.531V122.946C11.5095 122.802 31.1432 122.76 36.9135 122.76C43.102 122.76 47.1212 122.83 49.8304 123.023C52.578 123.217 53.7638 123.529 54.4357 123.874L54.4813 123.897L54.5283 123.917C55.2424 124.229 56.0668 124.724 56.7073 125.509ZM44.1264 140.987C50.0612 140.987 53.6429 140.704 56.0997 139.881C59.8544 138.673 63.9246 135.206 63.9246 128.964C63.9246 124.588 62.0616 120.9 58.3377 119.247C56.7258 118.498 54.7682 118.082 51.6148 117.837C48.4522 117.591 43.9397 117.509 37.1452 117.509C29.7459 117.509 8.55782 117.612 3.67653 117.76L3.65755 117.761L3.6386 117.762C2.96475 117.798 2.14241 117.907 1.47133 118.362C0.62803 118.935 0.349963 119.801 0.349963 120.587V153.073L0.349826 153.096C0.348159 153.296 0.341508 154.093 0.964615 154.717C1.58102 155.334 2.40367 155.385 2.87448 155.385H4.28717C4.67985 155.385 5.36974 155.356 5.96629 154.94C6.73137 154.406 6.88644 153.604 6.88644 153.073V141.199C6.88644 141.126 6.88795 141.063 6.89036 141.009C7.10974 140.992 7.40025 140.987 7.81515 140.987H44.1264Z", fill: "#FFD501" }), (0, jsx_runtime_1.jsx)("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M135.715 122.991C135.713 122.991 135.711 122.991 135.709 122.991C135.64 122.997 135.57 123 135.5 123H92.5V135.5H135.5C135.534 135.5 135.568 135.501 135.602 135.502C135.603 135.502 135.605 135.502 135.607 135.502L135.603 135.502L135.602 135.502C135.602 135.502 135.601 135.502 135.602 135.502C135.603 135.502 135.605 135.502 135.608 135.502C135.619 135.503 135.639 135.503 135.669 135.504C135.729 135.505 135.826 135.505 135.955 135.503C136.215 135.499 136.598 135.484 137.062 135.441C138.006 135.352 139.214 135.15 140.383 134.717C141.556 134.284 142.571 133.664 143.285 132.81C143.964 131.999 144.5 130.827 144.5 129C144.5 127.173 143.965 126.051 143.315 125.303C142.626 124.509 141.638 123.944 140.475 123.564C139.316 123.186 138.114 123.037 137.17 122.989C136.706 122.965 136.323 122.967 136.064 122.975C135.935 122.978 135.837 122.983 135.777 122.987C135.747 122.988 135.727 122.99 135.717 122.991L135.715 122.991ZM129.698 140.5H92.5V153C92.5 154.381 91.3807 155.5 90 155.5C88.6193 155.5 87.5 154.381 87.5 153V120.5C87.5 119.119 88.6193 118 90 118H135.409C135.431 117.999 135.455 117.997 135.481 117.995C135.589 117.989 135.739 117.982 135.924 117.977C136.294 117.966 136.809 117.964 137.424 117.995C138.636 118.057 140.309 118.251 142.025 118.811C143.737 119.369 145.624 120.335 147.091 122.025C148.598 123.761 149.5 126.077 149.5 129C149.5 131.923 148.599 134.251 147.121 136.018C145.679 137.742 143.819 138.778 142.117 139.407C140.411 140.038 138.744 140.304 137.531 140.419C136.918 140.476 136.403 140.497 136.033 140.503C135.95 140.504 135.873 140.504 135.805 140.504L143.548 151.566C144.34 152.697 144.065 154.256 142.934 155.048C141.803 155.84 140.244 155.565 139.452 154.434L129.698 140.5Z", fill: "#FFD501" }), (0, jsx_runtime_1.jsx)("path", { d: "M95.9324 50.8818C91.799 48.0771 78.4495 46.5165 53.649 44.4553C38.8419 43.2259 20.4397 41.6948 17.7937 39.7587C16.9416 38.8312 16.0446 36.3431 16.0446 32.1029C16.0446 24.7342 17.8609 19.618 21.4412 16.9017C23.8854 14.9804 31.6365 11.7635 56.1156 11.7635C70.1527 11.7635 85.6699 13.0296 94.8262 14.281C94.8561 14.2884 95.6409 14.3841 96.5229 14.3841C97.7487 14.3841 98.5559 14.2001 98.982 13.8246C99.565 13.3093 99.5949 12.2861 99.5501 11.3512C99.5501 11.2923 99.5426 11.2482 99.5426 11.2187C99.5426 8.88517 96.9639 4.80697 93.9591 3.37887C90.1396 1.41338 73.9872 0 55.5475 0C31.2777 0 17.8908 2.54703 10.79 8.50974C5.04213 13.5228 2 22.408 2 34.2009C2 41.1132 5.23647 47.6133 8.35335 49.888C11.9262 52.6779 25.2533 54.2459 50.2107 56.3218C65.5484 57.6027 82.9192 59.0455 86.0959 60.9374C87.5908 62.3581 88.3457 65.1554 88.3457 69.2484C88.3457 76.2269 86.507 81.8437 83.4126 84.2729L83.3154 84.3539C79.8846 87.3058 68.9344 88.7486 49.8444 88.7486C35.1869 88.7486 20.7611 87.6739 6.95561 85.5464L6.82107 85.5317C6.68653 85.517 6.55199 85.5096 6.42492 85.5096C4.60861 85.5096 3.13613 86.9598 3.13613 88.7413C3.13613 90.8908 5.37101 94.726 7.66569 96.5075L7.79276 96.5958C11.3805 99.0692 28.6168 100.792 49.7099 100.792C74.5702 100.792 88.3831 98.3331 94.4973 92.8121C99.9612 87.7843 102.973 78.5237 102.973 66.7308C102.966 59.1633 99.3258 53.2079 95.9324 50.8818Z", fill: "#015BBB" }), (0, jsx_runtime_1.jsx)("path", { d: "M350.668 85.0899H350.458L350.249 85.1194C343.881 85.9954 328.954 88.0492 310.836 88.0492C286.618 88.0492 275.376 86.1058 269.367 80.8792C263.768 75.903 261.048 65.9946 261.048 50.602C261.048 35.8351 264.62 24.8004 271.101 19.5444C277.723 14.5681 290.864 12.0432 310.148 12.0432C327.885 12.0432 340.756 13.6774 349.27 14.7595L349.741 14.8184C349.987 14.8773 350.234 14.8994 350.481 14.8994C352.29 14.8994 353.71 13.4639 353.71 11.6309C353.71 9.26795 351.109 5.46213 348.358 3.7911L348.208 3.70276L348.096 3.65123C343.679 1.53116 327.369 0 309.318 0C285.699 0 270.047 3.4672 261.466 10.6077C252.168 18.4255 247.25 32.5961 247.25 51.581C247.25 70.2347 250.89 82.6607 258.379 89.5656C266.624 97.1331 280.982 100.225 307.943 100.225C327.197 100.225 343.701 98.6496 348.059 96.397C350.72 95.0867 354.001 90.5521 354.001 88.1744C353.994 86.4739 352.499 85.0899 350.668 85.0899Z", fill: "#015BBB" }), (0, jsx_runtime_1.jsx)("path", { d: "M175.071 0C142.729 0 116.419 25.7501 116.419 57.3966C116.419 73.7683 123.587 89.3965 136.077 100.284C137.221 101.292 138.7 101.845 140.248 101.845C142.042 101.845 143.761 101.086 144.957 99.7686C146.063 98.554 146.623 96.986 146.526 95.3592C146.429 93.7176 145.682 92.2159 144.426 91.119C134.604 82.5651 128.969 70.2716 128.969 57.3892C128.969 32.5004 149.651 12.2567 175.064 12.2567C200.485 12.2567 221.159 32.5004 221.159 57.3892C221.159 70.2643 215.516 82.5578 205.68 91.1338C204.439 92.2159 203.699 93.7176 203.602 95.3445C203.505 96.9787 204.058 98.5467 205.164 99.7686C206.352 101.079 208.064 101.837 209.858 101.837C211.405 101.837 212.885 101.285 214.036 100.277C226.541 89.3965 233.709 73.7609 233.709 57.3892C233.724 25.7501 207.414 0 175.071 0Z", fill: "#015BBB" }), (0, jsx_runtime_1.jsx)("path", { d: "M175.071 58.7517C171.573 58.7517 168.733 61.5564 168.733 65.0015V141.096C168.733 144.541 171.573 147.338 175.071 147.338C178.568 147.338 181.408 144.541 181.408 141.096V65.0015C181.408 61.5564 178.568 58.7517 175.071 58.7517Z", fill: "#015BBB" })] })), (0, jsx_runtime_1.jsx)("defs", { children: (0, jsx_runtime_1.jsx)("clipPath", Object.assign({ id: "clip0_575_446" }, { children: (0, jsx_runtime_1.jsx)("rect", { width: "356", height: "156", fill: "white" }) })) })] })));
 };
 exports.LogoIcon = LogoIcon;
 
@@ -53626,19 +54620,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SuccessCheckIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const CheckIcon_1 = __webpack_require__(/*! ../../atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/icons/SuccessCheckIcon/styles.scss");
 const SuccessCheckIcon = (_a) => {
     var { className = '' } = _a, otherProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement("span", { className: (0, common_helpers_1.createClassName)(['success-check-icon', 'icon', className]) },
-        react_1.default.createElement(CheckIcon_1.CheckIcon, Object.assign({}, otherProps))));
+    return ((0, jsx_runtime_1.jsx)("span", Object.assign({ className: (0, common_helpers_1.createClassName)(['success-check-icon', 'icon', className]) }, { children: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, Object.assign({}, otherProps)) })));
 };
 exports.SuccessCheckIcon = SuccessCheckIcon;
 
@@ -53664,19 +54654,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SuccessMinusIcon = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const MinusIcon_1 = __webpack_require__(/*! ../../atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/icons/SuccessMinusIcon/styles.scss");
 const SuccessMinusIcon = (_a) => {
     var { className = '' } = _a, otherProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement("span", { className: (0, common_helpers_1.createClassName)(['success-minus-icon', 'icon', className]) },
-        react_1.default.createElement(MinusIcon_1.MinusIcon, Object.assign({}, otherProps))));
+    return ((0, jsx_runtime_1.jsx)("span", Object.assign({ className: (0, common_helpers_1.createClassName)(['success-minus-icon', 'icon', className]) }, { children: (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, Object.assign({}, otherProps)) })));
 };
 exports.SuccessMinusIcon = SuccessMinusIcon;
 
@@ -53691,29 +54677,6 @@ exports.SuccessMinusIcon = SuccessMinusIcon;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -53727,13 +54690,14 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppControlInput = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const ControlInput_1 = __webpack_require__(/*! ../../atoms/ControlInput/ControlInput */ "./extension/app/components/atoms/ControlInput/ControlInput.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/AppControlInput/styles.scss");
 exports.AppControlInput = (0, react_1.forwardRef)((_a, ref) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement(ControlInput_1.ControlInput, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)(ControlInput_1.ControlInput, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)([
             'app-control-input',
             className,
         ]) }, restProps)));
@@ -53750,29 +54714,6 @@ exports.AppControlInput = (0, react_1.forwardRef)((_a, ref) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -53786,13 +54727,103 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppInput = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Input_1 = __webpack_require__(/*! ../../atoms/Input/Input */ "./extension/app/components/atoms/Input/Input.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/AppInput/styles.scss");
 exports.AppInput = (0, react_1.forwardRef)((_a, ref) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['app-input', className]) }, restProps)));
+    return ((0, jsx_runtime_1.jsx)(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['app-input', className]) }, restProps)));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/inputs/AutocompleteInput/index.tsx":
+/*!*********************************************************************!*\
+  !*** ./extension/app/components/inputs/AutocompleteInput/index.tsx ***!
+  \*********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AutocompleteInput = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const AppDropdown_1 = __webpack_require__(/*! ../../dropdowns/AppDropdown/AppDropdown */ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx");
+exports.AutocompleteInput = (0, react_1.forwardRef)(({ Input, className = '', value = '', onValueSelect, countSymbolsToActivate = 3, list = [], }, ref) => {
+    const [isOpen, setIsOpened] = (0, react_1.useState)(false);
+    const [inputValue, setInputValue] = (0, react_1.useState)(value);
+    const [autocompleteItems, setAutocompleteItems] = (0, react_1.useState)(list);
+    const [activeIndex, setActiveIndex] = (0, react_1.useState)(-1);
+    const onValueSelectHandle = (0, react_1.useCallback)((val) => {
+        setIsOpened(false);
+        setInputValue(val);
+        setActiveIndex(-1);
+        onValueSelect === null || onValueSelect === void 0 ? void 0 : onValueSelect(val);
+    }, [onValueSelect]);
+    const prepareItems = (0, react_1.useCallback)((items, item) => {
+        return items
+            .filter(i => i && item && i.toLowerCase().indexOf(item.toLowerCase()) > -1);
+    }, []);
+    (0, react_1.useEffect)(() => {
+        setAutocompleteItems(prepareItems(list, inputValue));
+        setActiveIndex(-1);
+    }, [inputValue, list, prepareItems]);
+    return ((0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ ref: ref, opener: (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {}), opened: isOpen && (list === null || list === void 0 ? void 0 : list.length) > 0, className: (0, common_helpers_1.createClassName)(['autocomplete-dropdown', className]), classNameMenu: (0, common_helpers_1.createClassName)(['autocomplete-dropdown-menu', className]), header: (0, jsx_runtime_1.jsx)(Input, { value: inputValue, className: (0, common_helpers_1.createClassName)(['autocomplete-input', className]), onKeyDown: (e) => {
+                if (!isOpen) {
+                    if (activeIndex > -1) {
+                        setActiveIndex(-1);
+                    }
+                    return;
+                }
+                if (e.key === 'ArrowDown'
+                    || e.key === 'ArrowUp'
+                    || e.key === 'Enter') {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+                if (e.key === 'ArrowDown' && activeIndex < autocompleteItems.length - 1) {
+                    setActiveIndex(activeIndex + 1);
+                }
+                if (e.key === 'ArrowUp' && activeIndex > 0) {
+                    setActiveIndex(activeIndex - 1);
+                }
+                if (e.key === 'Enter') {
+                    onValueSelectHandle(autocompleteItems[activeIndex]);
+                }
+            }, onType: (v) => {
+                setInputValue(v);
+                setAutocompleteItems(prepareItems(list, v));
+                if (v.length < countSymbolsToActivate && isOpen) {
+                    setActiveIndex(-1);
+                    return setIsOpened(false);
+                }
+                if (v.length >= countSymbolsToActivate && !isOpen) {
+                    setIsOpened(true);
+                }
+            } }) }, { children: (0, jsx_runtime_1.jsx)(simplebar_react_1.default, { children: autocompleteItems
+                .map((item, index) => {
+                return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                        'autocomplete-item',
+                        index === activeIndex ? 'active' : '',
+                    ]), onMouseEnter: () => {
+                        if (activeIndex !== index) {
+                            setActiveIndex(index);
+                        }
+                    }, onMouseLeave: () => {
+                        setActiveIndex(-1);
+                    }, onClick: () => {
+                        onValueSelectHandle(item);
+                    } }, { children: item }), item));
+            }) }) })));
 });
 
 
@@ -53806,29 +54837,6 @@ exports.AppInput = (0, react_1.forwardRef)((_a, ref) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -53842,7 +54850,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ValidationInput = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const AppInput_1 = __webpack_require__(/*! ../AppInput/AppInput */ "./extension/app/components/inputs/AppInput/AppInput.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const validators_1 = __webpack_require__(/*! ../../../../../common/validators */ "./common/validators.ts");
@@ -53876,16 +54885,14 @@ const ValidationInput = (_a) => {
             return true;
         });
     }, [finishValidation, validators]);
-    return (react_1.default.createElement("span", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("span", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'validation-input-wrapper',
             (0, checkers_1.isNotEmpty)(message.current) ? 'validation-error' : '',
             className,
-        ]) },
-        react_1.default.createElement(AppInput_1.AppInput, Object.assign({ className: "validation-input" }, otherProps, { onChange: value => {
-                validate(value);
-                onChange === null || onChange === void 0 ? void 0 : onChange(value);
-            }, onBlur: value => validate(value) })),
-        react_1.default.createElement("span", { className: "validation-message" }, message.current)));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(AppInput_1.AppInput, Object.assign({ className: "validation-input" }, otherProps, { onChange: value => {
+                    validate(value);
+                    onChange === null || onChange === void 0 ? void 0 : onChange(value);
+                }, onBlur: value => validate(value) })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "validation-message" }, { children: message.current }))] })));
 };
 exports.ValidationInput = ValidationInput;
 
@@ -53911,18 +54918,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppLink = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const Link_1 = __webpack_require__(/*! ../../atoms/Link/Link */ "./extension/app/components/atoms/Link/Link.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/links/AppLink/styles.scss");
 const AppLink = (_a) => {
     var { children, className = '' } = _a, restProps = __rest(_a, ["children", "className"]);
-    return (react_1.default.createElement(Link_1.Link, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-link', className]) }, restProps), children));
+    return ((0, jsx_runtime_1.jsx)(Link_1.Link, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-link', className]) }, restProps, { children: children })));
 };
 exports.AppLink = AppLink;
 
@@ -53948,12 +54952,9 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppTooltip = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const Tooltip_1 = __webpack_require__(/*! ../../atoms/Tooltip/Tooltip */ "./extension/app/components/atoms/Tooltip/Tooltip.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
@@ -53962,10 +54963,10 @@ __webpack_require__(/*! ./styles.scss */ "./extension/app/components/tooltips/Ap
 exports.AppTooltip = (0, mobx_react_lite_1.observer)((_a) => {
     var { className = '', children } = _a, restProps = __rest(_a, ["className", "children"]);
     const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement(Tooltip_1.Tooltip, Object.assign({ className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)(Tooltip_1.Tooltip, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'app-tooltip',
             className,
-        ]), delayShowMs: 600, mountElem: appStore.rootElement }, restProps), children));
+        ]), delayShowMs: 600, mountElem: appStore.rootElement }, restProps, { children: children })));
 });
 
 
@@ -53975,16 +54976,13 @@ exports.AppTooltip = (0, mobx_react_lite_1.observer)((_a) => {
 /*!***************************************************!*\
   !*** ./extension/app/faq/FaqButton/FaqButton.tsx ***!
   \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FaqButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const RoundedQuestionMarkIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon */ "./extension/app/components/atoms/icons/RoundedQuestionMarkIcon/RoundedQuestionMarkIcon.tsx");
@@ -53992,11 +54990,9 @@ const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppToolti
 __webpack_require__(/*! ./styles.scss */ "./extension/app/faq/FaqButton/styles.scss");
 const FaqButton = () => {
     const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "faq-button", onClick: () => {
+    return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: "faq-button", onClick: () => {
             appStore.view = 'faq';
-        } },
-        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "FAQ", className: "small" },
-            react_1.default.createElement(RoundedQuestionMarkIcon_1.RoundedQuestionMarkIcon, null))));
+        } }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "FAQ", className: "small" }, { children: (0, jsx_runtime_1.jsx)(RoundedQuestionMarkIcon_1.RoundedQuestionMarkIcon, {}) })) })));
 };
 exports.FaqButton = FaqButton;
 
@@ -54011,35 +55007,13 @@ exports.FaqButton = FaqButton;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FaqContentView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const AppCollapsible_1 = __webpack_require__(/*! ../../../components/collapsibles/AppCollapsible/AppCollapsible */ "./extension/app/components/collapsibles/AppCollapsible/AppCollapsible.tsx");
 const List_1 = __webpack_require__(/*! ../../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
@@ -54053,14 +55027,14 @@ const FaqContentView = () => {
                 title: 'What security platforms are supported?',
                 content: [
                     'We are hard at work adding support for other platforms. Current list of supporting platforms you can see on our Readme page at requirements section: ',
-                    react_1.default.createElement(AppLink_1.AppLink, { key: "readme", target: "_blank", href: "https://github.com/socprime/the-prime-hunt/blob/master/README.md" }, "github/readme"),
+                    (0, jsx_runtime_1.jsx)(AppLink_1.AppLink, Object.assign({ target: "_blank", href: "https://github.com/socprime/the-prime-hunt/blob/master/README.md" }, { children: "github/readme" }), "readme"),
                 ],
             },
             {
                 title: 'How can I give feedback or get help?',
                 content: [
                     'If you have any questions, would like to give feedback, or need help, contact us at ',
-                    react_1.default.createElement(AppLink_1.AppLink, { key: "email", href: "mailto:support@socprime.com" }, "support@socprime.com"),
+                    (0, jsx_runtime_1.jsx)(AppLink_1.AppLink, Object.assign({ href: "mailto:support@socprime.com" }, { children: "support@socprime.com" }), "email"),
                 ],
             },
             {
@@ -54071,42 +55045,38 @@ const FaqContentView = () => {
                 title: 'Can I add custom fields to the results?',
                 content: [
                     'Yes, you can add any fields to the results in the extension. To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR, and click the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. You can also get more information about it from our Readme page: ',
-                    react_1.default.createElement(AppLink_1.AppLink, { key: "readme", target: "_blank", href: "https://github.com/socprime/the-prime-hunt/blob/master/README.md" }, "github/readme"),
+                    (0, jsx_runtime_1.jsx)(AppLink_1.AppLink, Object.assign({ target: "_blank", href: "https://github.com/socprime/the-prime-hunt/blob/master/README.md" }, { children: "github/readme" }), "readme"),
                 ],
             },
             {
                 title: 'Can I customize Search At integrations?',
-                content: (react_1.default.createElement("div", null,
-                    "Yes, you can, just click on Integration settings button placed on header of the extension. On the following page you can:",
-                    react_1.default.createElement(List_1.List, { items: [
-                            {
-                                id: '1',
-                                content: 'Customize the name and URL for any existing integration',
-                            },
-                            {
-                                id: '2',
-                                content: (react_1.default.createElement("div", null,
-                                    "Define behavior for opening multiple results:",
-                                    react_1.default.createElement(List_1.List, { items: [
-                                            {
-                                                id: '1',
-                                                content: '$VALUE$: each result is opened in a separate new tab',
-                                            },
-                                            {
-                                                id: '2',
-                                                content: '$VALUES$: all results are opened in a single new tab',
-                                            },
-                                        ] }))),
-                            },
-                            {
-                                id: '3',
-                                content: 'Replace the HOSTNAME:PORT placeholder in the OpenCTI integration URL with the hostname and port of your account to use the OpenCTI integration',
-                            },
-                            {
-                                id: '4',
-                                content: 'Add a new integration or remove an existing one',
-                            },
-                        ] }))),
+                content: ((0, jsx_runtime_1.jsxs)("div", { children: ["Yes, you can, just click on Integration settings button placed on header of the extension. On the following page you can:", (0, jsx_runtime_1.jsx)(List_1.List, { items: [
+                                {
+                                    id: '1',
+                                    content: 'Customize the name and URL for any existing integration',
+                                },
+                                {
+                                    id: '2',
+                                    content: ((0, jsx_runtime_1.jsxs)("div", { children: ["Define behavior for opening multiple results:", (0, jsx_runtime_1.jsx)(List_1.List, { items: [
+                                                    {
+                                                        id: '1',
+                                                        content: '$VALUE$: each result is opened in a separate new tab',
+                                                    },
+                                                    {
+                                                        id: '2',
+                                                        content: '$VALUES$: all results are opened in a single new tab',
+                                                    },
+                                                ] })] })),
+                                },
+                                {
+                                    id: '3',
+                                    content: 'Replace the HOSTNAME:PORT placeholder in the OpenCTI integration URL with the hostname and port of your account to use the OpenCTI integration',
+                                },
+                                {
+                                    id: '4',
+                                    content: 'Add a new integration or remove an existing one',
+                                },
+                            ] })] })),
             },
             {
                 title: 'Can I reset the extension position to default?',
@@ -54118,13 +55088,9 @@ const FaqContentView = () => {
             },
         ];
     }, []);
-    return (react_1.default.createElement(simplebar_react_1.default, { className: "faq-content-view" }, items.map(({ content, title }, index) => {
-        return (react_1.default.createElement(AppCollapsible_1.AppCollapsible, { header: title, key: title, open: index === 0 },
-            react_1.default.createElement("div", null,
-                react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
-                content,
-                react_1.default.createElement(Spacer_1.Spacer, { height: 14 }))));
-    })));
+    return ((0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "faq-content-view" }, { children: items.map(({ content, title }, index) => {
+            return ((0, jsx_runtime_1.jsx)(AppCollapsible_1.AppCollapsible, Object.assign({ header: title, open: index === 0 }, { children: (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 4 }), content, (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 14 })] }) }), title));
+        }) })));
 };
 exports.FaqContentView = FaqContentView;
 
@@ -54135,36 +55101,14 @@ exports.FaqContentView = FaqContentView;
 /*!*****************************************************************!*\
   !*** ./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx ***!
   \*****************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FaqFooterView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
@@ -54182,12 +55126,9 @@ const FaqFooterView = () => {
         document.addEventListener('keydown', onKeyDown);
         return () => document.removeEventListener('keydown', onKeyDown);
     }, [appStore]);
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 32 }),
-        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Close (Esc)", className: "small" },
-            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { onClick: () => {
-                    appStore.view = 'resources';
-                } }, "Close"))));
+    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 32 }), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "Close (Esc)", className: "small" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ onClick: () => {
+                        appStore.view = 'resources';
+                    } }, { children: "Close" })) }))] }));
 };
 exports.FaqFooterView = FaqFooterView;
 
@@ -54198,23 +55139,17 @@ exports.FaqFooterView = FaqFooterView;
 /*!*****************************************************************!*\
   !*** ./extension/app/faq/views/FaqHeaderView/FaqHeaderView.tsx ***!
   \*****************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FaqHeaderView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const FaqHeaderView = () => {
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
-        react_1.default.createElement(AppHeader_1.AppHeader, null, "FAQ"),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 8 })));
+    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "FAQ" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 8 })] }));
 };
 exports.FaqHeaderView = FaqHeaderView;
 
@@ -54233,7 +55168,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const client_1 = __importDefault(__webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js"));
 const stores_1 = __webpack_require__(/*! ./stores */ "./extension/app/stores/index.ts");
 const types_1 = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
@@ -54292,7 +55227,7 @@ const overlay = (0, common_helpers_1.mountHTMLElement)('div', host, {
 });
 stores_1.rootStore.appStore.overlay = overlay;
 client_1.default.createRoot(overlay)
-    .render(react_1.default.createElement(root_1.RootApp, { rootStore: stores_1.rootStore }));
+    .render((0, jsx_runtime_1.jsx)(root_1.RootApp, { rootStore: stores_1.rootStore }));
 stores_1.rootStore.appStore.mounted = true;
 setTimeout(() => {
     if (Array.from(document.querySelectorAll('div[style^="all:initial"]')).length > 1) {
@@ -54307,16 +55242,13 @@ setTimeout(() => {
 /*!****************************************************************!*\
   !*** ./extension/app/integrations/Integration/Integration.tsx ***!
   \****************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Integration = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const IntegrationInput_1 = __webpack_require__(/*! ../IntegrationInput/IntegrationInput */ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx");
 const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
@@ -54324,21 +55256,17 @@ const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/W
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/Integration/styles.scss");
 const Integration = ({ id, name, url, }) => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement("div", { className: "integration" },
-        react_1.default.createElement(IntegrationInput_1.IntegrationInput, { label: [
-                'Display Name',
-                react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { key: id, onClick: () => {
-                        integrationsStore.integrations =
-                            integrationsStore.integrations.filter(i => i.id !== id);
-                    } }),
-            ], value: name, placeholder: "ex Open CTI", onChange: value => {
-                integrationsStore.integrations.find(i => i.id === id).name = value;
-            } }),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
-        react_1.default.createElement(IntegrationInput_1.IntegrationInput, { label: "Integration URL", value: url, placeholder: "ex https://my-host/search=$VALUE$", onChange: value => {
-                integrationsStore.integrations.find(i => i.id === id).url = value;
-            } }),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 16 })));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration" }, { children: [(0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: [
+                    'Display Name',
+                    (0, jsx_runtime_1.jsx)(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
+                            integrationsStore.integrations =
+                                integrationsStore.integrations.filter(i => i.id !== id);
+                        } }, id),
+                ], value: name, placeholder: "ex Open CTI", onChange: value => {
+                    integrationsStore.integrations.find(i => i.id === id).name = value;
+                } }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Integration URL", value: url, placeholder: "ex https://my-host/search=$VALUE$", onChange: value => {
+                    integrationsStore.integrations.find(i => i.id === id).url = value;
+                } }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 })] })));
 };
 exports.Integration = Integration;
 
@@ -54364,19 +55292,16 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.IntegrationInput = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
 const ValidationInput_1 = __webpack_require__(/*! ../../components/inputs/ValidationInput/ValidationInput */ "./extension/app/components/inputs/ValidationInput/ValidationInput.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/IntegrationInput/styles.scss");
 const validateMessage = 'This field is required';
 const IntegrationInput = (_a) => {
     var { label, value, onChange } = _a, restProps = __rest(_a, ["label", "value", "onChange"]);
-    return (react_1.default.createElement(ValidationInput_1.ValidationInput, Object.assign({ label: label, className: "integration-input", validators: [
+    return ((0, jsx_runtime_1.jsx)(ValidationInput_1.ValidationInput, Object.assign({ label: label, className: "integration-input", validators: [
             (v) => (0, validators_1.isNotEmptyString)(v, validateMessage),
         ], value: value, onChange: onChange }, restProps)));
 };
@@ -54389,16 +55314,13 @@ exports.IntegrationInput = IntegrationInput;
 /*!**********************************************************************!*\
   !*** ./extension/app/integrations/SettingsButton/SettingsButton.tsx ***!
   \**********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SettingsButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const SettingsIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SettingsIcon/SettingsIcon */ "./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx");
@@ -54406,11 +55328,9 @@ const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppToolti
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/SettingsButton/styles.scss");
 const SettingsButton = () => {
     const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "settings-button", onClick: () => {
+    return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: "settings-button", onClick: () => {
             appStore.view = 'integrations';
-        } },
-        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Integrations settings", className: "small" },
-            react_1.default.createElement(SettingsIcon_1.SettingsIcon, null))));
+        } }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "Integrations settings", className: "small" }, { children: (0, jsx_runtime_1.jsx)(SettingsIcon_1.SettingsIcon, {}) })) })));
 };
 exports.SettingsButton = SettingsButton;
 
@@ -54560,7 +55480,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.IntegrationContentView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const Integration_1 = __webpack_require__(/*! ../../Integration/Integration */ "./extension/app/integrations/Integration/Integration.tsx");
@@ -54568,9 +55488,9 @@ const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-reac
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationContentView/styles.scss");
 exports.IntegrationContentView = (0, mobx_react_lite_1.observer)(() => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement(simplebar_react_1.default, { className: "integration-content-view" }, integrationsStore.integrations.map(({ url, name, id }) => {
-        return (react_1.default.createElement(Integration_1.Integration, { key: id, name: name, url: url, id: id }));
-    })));
+    return ((0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "integration-content-view" }, { children: integrationsStore.integrations.map(({ url, name, id }) => {
+            return ((0, jsx_runtime_1.jsx)(Integration_1.Integration, { name: name, url: url, id: id }, id));
+        }) })));
 });
 
 
@@ -54580,36 +55500,14 @@ exports.IntegrationContentView = (0, mobx_react_lite_1.observer)(() => {
 /*!******************************************************************************************!*\
   !*** ./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx ***!
   \******************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.IntegrationFooterView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const PlusIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 const CheckIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
@@ -54648,23 +55546,18 @@ exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
         document.addEventListener('keydown', onKeyDown);
         return () => document.removeEventListener('keydown', onKeyDown);
     }, [onSaveAndCloseClick]);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(Spacer_1.Spacer, { height: 20 }),
-        react_1.default.createElement("div", { className: "integration-footer-view" },
-            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null), onClick: () => {
-                    integrationsStore.integrations.push({ id: (0, helpers_1.uuid)(), url: '', name: '' });
-                    setTimeout(() => {
-                        var _a;
-                        (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.integration:last-child').scrollIntoView({
-                            block: 'end',
-                            behavior: 'smooth',
-                        });
-                    }, 0);
-                } }, "Add New Integration"),
-            react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Save and close (Esc)" },
-                react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(CheckIcon_1.CheckIcon, null), className: (0, common_helpers_1.createClassName)([
-                        integrationsStore.emptyIntegration ? 'error' : 'success-btn',
-                    ]), onClick: onSaveAndCloseClick }, "Save & Close")))));
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 20 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-footer-view" }, { children: [(0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}), onClick: () => {
+                            integrationsStore.integrations.push({ id: (0, helpers_1.uuid)(), url: '', name: '' });
+                            setTimeout(() => {
+                                var _a;
+                                (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.integration:last-child').scrollIntoView({
+                                    block: 'end',
+                                    behavior: 'smooth',
+                                });
+                            }, 0);
+                        } }, { children: "Add New Integration" })), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Save and close (Esc)" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, {}), className: (0, common_helpers_1.createClassName)([
+                                integrationsStore.emptyIntegration ? 'error' : 'success-btn',
+                            ]), onClick: onSaveAndCloseClick }, { children: "Save & Close" })) }))] }))] }));
 });
 
 
@@ -54674,16 +55567,13 @@ exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
 /*!******************************************************************************************!*\
   !*** ./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx ***!
   \******************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.IntegrationHeaderView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
 const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
@@ -54693,18 +55583,9 @@ const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/Wa
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationHeaderView/styles.scss");
 const IntegrationHeaderView = () => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return (react_1.default.createElement("div", { className: "integration-header-view" },
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
-        react_1.default.createElement("div", { className: "warning-message" },
-            react_1.default.createElement(WarningIcon_1.WarningIcon, null),
-            react_1.default.createElement("p", null, "When using integrations with third-party services, do not send to them any sensitive information")),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 }),
-        react_1.default.createElement("div", { className: "group" },
-            react_1.default.createElement(AppHeader_1.AppHeader, null, "Integration Settings"),
-            react_1.default.createElement(BigStaticButton_1.BigStaticButton, { icon: react_1.default.createElement(RefreshIcon_1.RefreshIcon, null), onClick: () => {
-                    integrationsStore.restoreIntegrations();
-                } }, "Restore Defaults")),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 24 })));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "warning-message" }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), (0, jsx_runtime_1.jsx)("p", { children: "When using integrations with third-party services, do not send to them any sensitive information" })] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "group" }, { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "Integration Settings" }), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(RefreshIcon_1.RefreshIcon, {}), onClick: () => {
+                            integrationsStore.restoreIntegrations();
+                        } }, { children: "Restore Defaults" }))] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 })] })));
 };
 exports.IntegrationHeaderView = IntegrationHeaderView;
 
@@ -54715,27 +55596,16 @@ exports.IntegrationHeaderView = IntegrationHeaderView;
 /*!***********************************************************************************!*\
   !*** ./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx ***!
   \***********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotFoundContentView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/not-found/views/NotFoundContentView/styles.scss");
 const NotFoundContentView = () => {
-    return (react_1.default.createElement("div", { className: "not-found-content-view" },
-        react_1.default.createElement("div", null,
-            "No supported platform detected.",
-            react_1.default.createElement("br", null),
-            "You can use this extension with",
-            react_1.default.createElement("br", null),
-            "Microsoft Sentinel, Microsoft Defender for Endpoint",
-            react_1.default.createElement("br", null),
-            "Amazon Athena, Splunk, Elastic, OpenSearch, QRadar, ArcSight")));
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "not-found-content-view" }, { children: (0, jsx_runtime_1.jsxs)("div", { children: ["No supported platform detected.", (0, jsx_runtime_1.jsx)("br", {}), "You can use this extension with", (0, jsx_runtime_1.jsx)("br", {}), "Microsoft Sentinel, Microsoft Defender for Endpoint", (0, jsx_runtime_1.jsx)("br", {}), "Amazon Athena, Splunk, Elastic, OpenSearch, QRadar, ArcSight"] }) })));
 };
 exports.NotFoundContentView = NotFoundContentView;
 
@@ -54750,29 +55620,6 @@ exports.NotFoundContentView = NotFoundContentView;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -54786,7 +55633,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AddFieldInput = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const AppControlInput_1 = __webpack_require__(/*! ../../components/inputs/AppControlInput/AppControlInput */ "./extension/app/components/inputs/AppControlInput/AppControlInput.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const CheckIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
@@ -54794,16 +55642,30 @@ const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/W
 const SearchDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon */ "./extension/app/components/atoms/icons/SearchDocumentIcon/SearchDocumentIcon.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/AddFieldInput/styles.scss");
 exports.AddFieldInput = (0, react_1.forwardRef)((_a, ref) => {
-    var { className = '', onApply, onRemove } = _a, restProps = __rest(_a, ["className", "onApply", "onRemove"]);
-    const [inputValue, setInputValue] = (0, react_1.useState)('');
+    var { className = '', onApply, onRemove, onType, value = '' } = _a, restProps = __rest(_a, ["className", "onApply", "onRemove", "onType", "value"]);
+    const [inputValue, setInputValue] = (0, react_1.useState)(value);
     const inputRef = (0, react_1.useRef)(null);
+    const wrapperRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(ref, () => ({
+        get inputRef() {
+            return inputRef;
+        },
+        get wrapperRef() {
+            return wrapperRef;
+        },
+    }));
+    (0, react_1.useEffect)(() => {
+        if (value !== inputValue) {
+            setInputValue(value);
+        }
+    }, [value, inputValue]);
     (0, react_1.useEffect)(() => {
         inputRef.current.focus();
     }, []);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'add-field-input-wrapper',
             className,
-        ]), ref: ref, onKeyDown: e => {
+        ]), ref: wrapperRef, onKeyDown: e => {
             var _a, _b;
             const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
             if (code === 'enter') {
@@ -54812,21 +55674,17 @@ exports.AddFieldInput = (0, react_1.forwardRef)((_a, ref) => {
             if (code === 'escape') {
                 onRemove();
             }
-        } },
-        react_1.default.createElement("span", null,
-            react_1.default.createElement(SearchDocumentIcon_1.SearchDocumentIcon, null)),
-        react_1.default.createElement(AppControlInput_1.AppControlInput, Object.assign({ edit: true, ref: inputRef, className: (0, common_helpers_1.createClassName)([
-                'add-field-input',
-                className,
-            ]), onType: v => setInputValue(v.trim()) }, restProps, { placeholder: "Enter Field Name", controls: react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement("span", { className: "control" },
-                    react_1.default.createElement(CheckIcon_1.CheckIcon, { onClick: () => {
-                            onApply(inputValue);
-                        } })),
-                react_1.default.createElement("span", { className: "control" },
-                    react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
-                            onRemove();
-                        } }))), value: inputValue }))));
+        } }, { children: [(0, jsx_runtime_1.jsx)("span", { children: (0, jsx_runtime_1.jsx)(SearchDocumentIcon_1.SearchDocumentIcon, {}) }), (0, jsx_runtime_1.jsx)(AppControlInput_1.AppControlInput, Object.assign({}, restProps, { edit: true, ref: inputRef, className: (0, common_helpers_1.createClassName)([
+                    'add-field-input',
+                    className,
+                ]), onType: v => {
+                    setInputValue(v.trim());
+                    onType === null || onType === void 0 ? void 0 : onType(v);
+                }, placeholder: "Enter Field Name", controls: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", Object.assign({ className: "control" }, { children: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, { onClick: () => {
+                                    onApply(inputValue);
+                                } }) })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "control" }, { children: (0, jsx_runtime_1.jsx)(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
+                                    onRemove();
+                                } }) }))] }), value: inputValue }))] })));
 });
 
 
@@ -54851,23 +55709,19 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AddNewButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/AddNewButton/styles.scss");
 const AddNewButton = (_a) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return (react_1.default.createElement(StaticButton_1.StaticButton, Object.assign({ className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'add-new-button',
             className,
-        ]) }, restProps),
-        react_1.default.createElement(PlusIcon_1.PlusIcon, null)));
+        ]) }, restProps, { children: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}) })));
 };
 exports.AddNewButton = AddNewButton;
 
@@ -54878,36 +55732,14 @@ exports.AddNewButton = AddNewButton;
 /*!***************************************************************************!*\
   !*** ./extension/app/resources/BulkResourcesPanel/BulkResourcesPanel.tsx ***!
   \***************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BulkResourcesPanel = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
@@ -54934,9 +55766,7 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
         integrationsStore.integrations.forEach(({ name, id, url }) => {
             result.push({
                 id,
-                content: react_1.default.createElement("span", null,
-                    react_1.default.createElement(GoOutsideIcon_1.GoOutsideIcon, null),
-                    name),
+                content: (0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsx)(GoOutsideIcon_1.GoOutsideIcon, {}), name] }),
                 onClick: () => {
                     integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
                         window.open(u, '_blank');
@@ -54960,32 +55790,12 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
         if (count <= MAX_COUNT_SELECTED) {
             return count;
         }
-        return (react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "error max-selected-tooltip", content: react_1.default.createElement(react_1.default.Fragment, null,
-                "The total number of selected items can\u2019t be more than",
-                react_1.default.createElement("span", { className: "strong" },
-                    " ",
-                    MAX_COUNT_SELECTED,
-                    " "),
-                "to avoid overloading your browser") }, count));
+        return ((0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "error max-selected-tooltip", content: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: ["The total number of selected items can\u2019t be more than", (0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: [" ", MAX_COUNT_SELECTED, " "] })), "to avoid overloading your browser"] }) }, { children: count })));
     }, []);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'bulk-resources-panel',
             disabled ? 'empty' : '',
-        ]) },
-        react_1.default.createElement(Spacer_1.Spacer, { height: 12 }),
-        react_1.default.createElement("div", { className: "count-selected" },
-            react_1.default.createElement("span", { className: "strong" },
-                "\u2014 ",
-                getCountSelected(countSelected),
-                " item(s)"),
-            "selected"),
-        react_1.default.createElement("div", { className: "buttons-area" },
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, animatedIcon: true, onClick: onCopyIconClick, icon: react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) }, "Copy"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('include'), icon: react_1.default.createElement(PlusIcon_1.PlusIcon, null) }, "Include"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('exclude'), icon: react_1.default.createElement(MinusIcon_1.MinusIcon, null) }, "Exclude"),
-            react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, onClick: () => onActionsClick('show all'), icon: react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, null) }, "Show All Events"),
-            react_1.default.createElement(AppDropdown_1.AppDropdown, { disabled: disabled, opener: react_1.default.createElement(StaticButton_1.StaticButton, { disabled: disabled, icon: react_1.default.createElement(MagnifyingIcon_1.MagnifyingIcon, null) }, "Search at"), classNameMenu: "dropdown-search-sites-menu" },
-                react_1.default.createElement(List_1.List, { className: "search-sites-list", items: items })))));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "count-selected" }, { children: [(0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: ["\u2014 ", getCountSelected(countSelected), " item(s)"] })), "selected"] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-area" }, { children: [(0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, animatedIcon: true, onClick: onCopyIconClick, icon: (0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) }, { children: "Copy" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('include'), icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}) }, { children: "Include" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('exclude'), icon: (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, {}) }, { children: "Exclude" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('show all'), icon: (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, {}) }, { children: "Show All Events" })), (0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ disabled: disabled, opener: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, icon: (0, jsx_runtime_1.jsx)(MagnifyingIcon_1.MagnifyingIcon, {}) }, { children: "Search at" })), classNameMenu: "dropdown-search-sites-menu" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, { className: "search-sites-list", items: items }) }))] }))] })));
 });
 
 
@@ -54995,36 +55805,14 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
 /*!*****************************************************************************!*\
   !*** ./extension/app/resources/CollapsibleResource/CollapsibleResource.tsx ***!
   \*****************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CollapsibleResource = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const ResourceList_1 = __webpack_require__(/*! ../ResourceList/ResourceList */ "./extension/app/resources/ResourceList/ResourceList.tsx");
 const AppCollapsible_1 = __webpack_require__(/*! ../../components/collapsibles/AppCollapsible/AppCollapsible */ "./extension/app/components/collapsibles/AppCollapsible/AppCollapsible.tsx");
 const ResourceFieldName_1 = __webpack_require__(/*! ../ResourceFieldName/ResourceFieldName */ "./extension/app/resources/ResourceFieldName/ResourceFieldName.tsx");
@@ -55038,7 +55826,7 @@ const CollapsibleResource = ({ icon, fieldName, values, selectedValues, }) => {
     const resourceStore = (0, stores_1.useResourceStore)();
     const selectionStore = (0, stores_1.useResourcesSelectionStore)();
     const getGroup = (0, react_1.useCallback)((fieldNameToRemove) => {
-        return (react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: (e) => {
+        return ((0, jsx_runtime_1.jsx)(WasteBasketIcon_1.WasteBasketIcon, { onClick: (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 appStore.startLoading(types_app_common_1.LoadingKey.watchersChanging);
@@ -55056,7 +55844,7 @@ const CollapsibleResource = ({ icon, fieldName, values, selectedValues, }) => {
             : selectedValues.length > 0
                 ? 'some'
                 : 'nothing';
-    return (react_1.default.createElement(AppCollapsible_1.AppCollapsible, { disabled: isDisabled, className: "collapsible-resource", header: react_1.default.createElement(NestedItemsCheckbox_1.NestedItemsCheckbox, { disabled: isDisabled, content: react_1.default.createElement(ResourceFieldName_1.ResourceFieldName, { icon: icon, fieldName: fieldName, count: values.length, disabled: isDisabled }), state: checkboxState, onClick: isChecked => {
+    return ((0, jsx_runtime_1.jsx)(AppCollapsible_1.AppCollapsible, Object.assign({ disabled: isDisabled, className: "collapsible-resource", header: (0, jsx_runtime_1.jsx)(NestedItemsCheckbox_1.NestedItemsCheckbox, { disabled: isDisabled, content: (0, jsx_runtime_1.jsx)(ResourceFieldName_1.ResourceFieldName, { icon: icon, fieldName: fieldName, count: values.length, disabled: isDisabled }), state: checkboxState, onClick: isChecked => {
                 if (isDisabled) {
                     return;
                 }
@@ -55066,8 +55854,8 @@ const CollapsibleResource = ({ icon, fieldName, values, selectedValues, }) => {
                 else {
                     selectionStore.select(fieldName);
                 }
-            } }), group: getGroup(fieldName) }, !isDisabled &&
-        react_1.default.createElement(ResourceList_1.ResourceList, { items: values.slice(0, 100), selectedItems: selectedValues, fieldName: fieldName })));
+            } }), group: getGroup(fieldName) }, { children: !isDisabled &&
+            (0, jsx_runtime_1.jsx)(ResourceList_1.ResourceList, { items: values.slice(0, 100), selectedItems: selectedValues, fieldName: fieldName }) })));
 };
 exports.CollapsibleResource = CollapsibleResource;
 
@@ -55078,36 +55866,14 @@ exports.CollapsibleResource = CollapsibleResource;
 /*!*******************************************************************************!*\
   !*** ./extension/app/resources/CollapsibleResources/CollapsibleResources.tsx ***!
   \*******************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CollapsibleResources = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const CollapsibleResource_1 = __webpack_require__(/*! ../CollapsibleResource/CollapsibleResource */ "./extension/app/resources/CollapsibleResource/CollapsibleResource.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
@@ -55152,29 +55918,12 @@ exports.CollapsibleResources = (0, mobx_react_lite_1.observer)(({ className = ''
         return { emptyResources, notEmptyResources };
     }, []);
     const getCollapsible = (0, react_1.useCallback)((fieldName, collapsibleIcon, values, selectedValues) => {
-        return (react_1.default.createElement(CollapsibleResource_1.CollapsibleResource, { key: fieldName, fieldName: fieldName, icon: collapsibleIcon, values: values, selectedValues: selectedValues }));
+        return ((0, jsx_runtime_1.jsx)(CollapsibleResource_1.CollapsibleResource, { fieldName: fieldName, icon: collapsibleIcon, values: values, selectedValues: selectedValues }, fieldName));
     }, []);
     const { emptyResources, notEmptyResources } = getResources(resources);
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)(['collapsible-resources', className]) },
-        notEmptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || []))),
-        emptyResources.length > 0 && (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
-            react_1.default.createElement("div", { className: "fields-separator", onClick: () => {
-                    setShowEmpty(!showEmpty);
-                } },
-                react_1.default.createElement(Spacer_1.Spacer, { height: 3 }),
-                react_1.default.createElement("span", null,
-                    react_1.default.createElement("span", null,
-                        showEmpty ? react_1.default.createElement(CrossedEye_1.CrossedEye, null) : react_1.default.createElement(EyeIcon_1.EyeIcon, null),
-                        showEmpty ? 'Hide empty' : 'Show empty',
-                        "\u00A0"),
-                    "(",
-                    emptyResources.length,
-                    ")"),
-                react_1.default.createElement(Spacer_1.Spacer, { height: 3 }),
-                react_1.default.createElement("hr", null)),
-            react_1.default.createElement(Spacer_1.Spacer, { height: 2 }),
-            showEmpty && emptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])))))));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)(['collapsible-resources', className]) }, { children: [notEmptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || []))), emptyResources.length > 0 && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 4 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "fields-separator", onClick: () => {
+                            setShowEmpty(!showEmpty);
+                        } }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 }), (0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsxs)("span", { children: [showEmpty ? (0, jsx_runtime_1.jsx)(CrossedEye_1.CrossedEye, {}) : (0, jsx_runtime_1.jsx)(EyeIcon_1.EyeIcon, {}), showEmpty ? 'Hide empty' : 'Show empty', "\u00A0"] }), "(", emptyResources.length, ")"] }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 }), (0, jsx_runtime_1.jsx)("hr", {})] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 2 }), showEmpty && emptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])))] }))] })));
 });
 
 
@@ -55184,36 +55933,14 @@ exports.CollapsibleResources = (0, mobx_react_lite_1.observer)(({ className = ''
 /*!***************************************************************!*\
   !*** ./extension/app/resources/ExportButton/ExportButton.tsx ***!
   \***************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ExportButton = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
@@ -55240,11 +55967,7 @@ exports.ExportButton = (0, mobx_react_lite_1.observer)(() => {
         });
         (0, common_helpers_1.downloadFile)('csv', rows.join('\n'), `the-prime-hunt-results_${(0, helpers_1.formatDate)('%Y-%M-%d_%h-%m', new Date())}`);
     }, [countAllSelected, selectedResources, selectedResourcesFields]);
-    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "export-button", onClick: onExportClick },
-        react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: react_1.default.createElement(react_1.default.Fragment, null,
-                "Export selected to CSV ",
-                react_1.default.createElement("span", { className: "strong" }, countAllSelected)) },
-            react_1.default.createElement(ExportIcon_1.ExportIcon, null))));
+    return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: "export-button", onClick: onExportClick }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: ["Export selected to CSV ", (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "strong" }, { children: countAllSelected }))] }) }, { children: (0, jsx_runtime_1.jsx)(ExportIcon_1.ExportIcon, {}) })) })));
 });
 
 
@@ -55254,36 +55977,14 @@ exports.ExportButton = (0, mobx_react_lite_1.observer)(() => {
 /*!*************************************************************************!*\
   !*** ./extension/app/resources/PlatformResources/PlatformResources.tsx ***!
   \*************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PlatformResources = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const CollapsibleResources_1 = __webpack_require__(/*! ../CollapsibleResources/CollapsibleResources */ "./extension/app/resources/CollapsibleResources/CollapsibleResources.tsx");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const UserIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/UserIcon/UserIcon */ "./extension/app/components/atoms/icons/UserIcon/UserIcon.tsx");
@@ -55296,18 +55997,18 @@ exports.PlatformResources = (0, mobx_react_lite_1.observer)(() => {
     const { resources, activeTabID } = (0, stores_1.useResourceStore)();
     const getIcon = (0, react_1.useCallback)((typeID) => {
         if (typeID === resources_types_1.BoundedResourceTypeID.Accounts) {
-            return react_1.default.createElement(UserIcon_1.UserIcon, null);
+            return (0, jsx_runtime_1.jsx)(UserIcon_1.UserIcon, {});
         }
         if (typeID === resources_types_1.BoundedResourceTypeID.Assets) {
-            return react_1.default.createElement(AssetIcon_1.AssetIcon, null);
+            return (0, jsx_runtime_1.jsx)(AssetIcon_1.AssetIcon, {});
         }
-        return react_1.default.createElement(SearchDocumentIcon_1.SearchDocumentIcon, null);
+        return (0, jsx_runtime_1.jsx)(SearchDocumentIcon_1.SearchDocumentIcon, {});
     }, []);
-    return (react_1.default.createElement("div", { className: "platform-resources" }, Object.keys(resources)
-        .filter(typeID => activeTabID === typeID)
-        .map(typeID => {
-        return (react_1.default.createElement(CollapsibleResources_1.CollapsibleResources, { key: typeID, resources: resources[typeID], icon: getIcon(typeID) }));
-    })));
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "platform-resources" }, { children: Object.keys(resources)
+            .filter(typeID => activeTabID === typeID)
+            .map(typeID => {
+            return ((0, jsx_runtime_1.jsx)(CollapsibleResources_1.CollapsibleResources, { resources: resources[typeID], icon: getIcon(typeID) }, typeID));
+        }) })));
 });
 
 
@@ -55317,31 +56018,21 @@ exports.PlatformResources = (0, mobx_react_lite_1.observer)(() => {
 /*!*************************************************************************!*\
   !*** ./extension/app/resources/ResourceFieldName/ResourceFieldName.tsx ***!
   \*************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourceFieldName = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceFieldName/styles.scss");
 const ResourceFieldName = ({ disabled, icon, fieldName, count }) => {
-    return (react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'resource-field-name',
             disabled ? 'disabled' : '',
-        ]) },
-        icon,
-        react_1.default.createElement("span", { className: "field-name strong" }, fieldName),
-        "\u00A0",
-        count > 100 ? (react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "error resource-count-values-tooltip", content: react_1.default.createElement(react_1.default.Fragment, null,
-                "Maximum",
-                react_1.default.createElement("span", { className: "strong" }, " 100 "),
-                "values will be displayed to avoid overloading your browser") }, count)) : (react_1.default.createElement(react_1.default.Fragment, null, count))));
+        ]) }, { children: [icon, (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "field-name strong" }, { children: fieldName })), "\u00A0", count > 100 ? ((0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "error resource-count-values-tooltip", content: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: ["Maximum", (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "strong" }, { children: " 100 " })), "values will be displayed to avoid overloading your browser"] }) }, { children: count }))) : ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: count }))] })));
 };
 exports.ResourceFieldName = ResourceFieldName;
 
@@ -55352,36 +56043,14 @@ exports.ResourceFieldName = ResourceFieldName;
 /*!***************************************************************!*\
   !*** ./extension/app/resources/ResourceList/ResourceList.tsx ***!
   \***************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourceList = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const List_1 = __webpack_require__(/*! ../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
 const ResourceListItem_1 = __webpack_require__(/*! ../ResourceListItem/ResourceListItem */ "./extension/app/resources/ResourceListItem/ResourceListItem.tsx");
 const SuccessCheckbox_1 = __webpack_require__(/*! ../../components/checkboxes/SucessCheckbox/SuccessCheckbox */ "./extension/app/components/checkboxes/SucessCheckbox/SuccessCheckbox.tsx");
@@ -55397,24 +56066,21 @@ exports.ResourceList = (0, react_1.memo)(({ fieldName, items, selectedItems, }) 
             left: coords.left,
         };
     }, []);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(List_1.List, { className: "resource-list", items: items.map(item => {
-                return {
-                    id: item,
-                    content: (react_1.default.createElement(ResourceListItem_1.ResourceListItem, { resourceName: item, fieldName: fieldName },
-                        react_1.default.createElement(SuccessCheckbox_1.SuccessCheckbox, { content: item.length > 20
-                                ? react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "resource-value-tooltip small", content: item, getPosition: getTooltipPosition, delayShowMs: 1200 }, item)
-                                : item, checked: selectedItems.includes(item), onStateChanged: isChecked => {
-                                if (isChecked) {
-                                    selectionStore.select(fieldName, item);
-                                }
-                                else {
-                                    selectionStore.unselect(fieldName, item);
-                                }
-                            } }))),
-                };
-            }) }),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 12 })));
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(List_1.List, { className: "resource-list", items: items.map(item => {
+                    return {
+                        id: item,
+                        content: ((0, jsx_runtime_1.jsx)(ResourceListItem_1.ResourceListItem, Object.assign({ resourceName: item, fieldName: fieldName }, { children: (0, jsx_runtime_1.jsx)(SuccessCheckbox_1.SuccessCheckbox, { content: item.length > 20
+                                    ? (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "resource-value-tooltip small", content: item, getPosition: getTooltipPosition, delayShowMs: 1200 }, { children: item }))
+                                    : item, checked: selectedItems.includes(item), onStateChanged: isChecked => {
+                                    if (isChecked) {
+                                        selectionStore.select(fieldName, item);
+                                    }
+                                    else {
+                                        selectionStore.unselect(fieldName, item);
+                                    }
+                                } }) }))),
+                    };
+                }) }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 })] }));
 });
 
 
@@ -55428,29 +56094,6 @@ exports.ResourceList = (0, react_1.memo)(({ fieldName, items, selectedItems, }) 
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -55462,7 +56105,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourceListItem = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
 const SeeDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
@@ -55480,18 +56124,11 @@ exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceNam
         platformStore.modifyQuery(actionType, { [fieldName]: [resourceName] });
         return;
     }), [platformStore, fieldName, resourceName]);
-    return (react_1.default.createElement("div", { className: "resource-list-item", onMouseEnter: () => {
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "resource-list-item", onMouseEnter: () => {
             setIsActionMenu(true);
         }, onMouseLeave: () => {
             setIsActionMenu(false);
-        } },
-        react_1.default.createElement("div", { className: "resource-list-item-wrapper" },
-            children,
-            isActionMenu && (react_1.default.createElement("div", { className: "action-menu" },
-                react_1.default.createElement(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }),
-                react_1.default.createElement(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }),
-                react_1.default.createElement(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }),
-                react_1.default.createElement(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') }))))));
+        } }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-list-item-wrapper" }, { children: [children, isActionMenu && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "action-menu" }, { children: [(0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }), (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }), (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }), (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') })] })))] })) })));
 });
 
 
@@ -55505,29 +56142,6 @@ exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceNam
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -55541,7 +56155,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourceTabInput = exports.newTabName = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const CheckIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
 const app_hooks_1 = __webpack_require__(/*! ../../app-hooks */ "./extension/app/app-hooks.ts");
@@ -55617,20 +56232,14 @@ const ResourceTabInput = (_a) => {
         }
     }, [inputValue, editMode, focusInput, prevEditMode]);
     const getControls = (0, react_1.useCallback)((inputVal, prevInputVal) => {
-        return (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Apply changes (Enter/Esc)" },
-                react_1.default.createElement("span", { className: "control" },
-                    react_1.default.createElement(CheckIcon_1.CheckIcon, { onClick: () => {
-                            finishEdit(inputVal, prevInputVal);
-                        } }))),
-            react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Delete tab" },
-                react_1.default.createElement("span", { className: "control" },
-                    react_1.default.createElement(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
-                            setEditMode(false);
-                            onRemove();
-                        } })))));
+        return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Apply changes (Enter/Esc)" }, { children: (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "control" }, { children: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, { onClick: () => {
+                                finishEdit(inputVal, prevInputVal);
+                            } }) })) })), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Delete tab" }, { children: (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "control" }, { children: (0, jsx_runtime_1.jsx)(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
+                                setEditMode(false);
+                                onRemove();
+                            } }) })) }))] }));
     }, [finishEdit, onRemove]);
-    return (react_1.default.createElement("div", { ref: inputWrapperRef, className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ ref: inputWrapperRef, className: (0, common_helpers_1.createClassName)([
             'resource-tab-input-wrapper',
             editMode ? 'edit' : '',
             className,
@@ -55644,22 +56253,20 @@ const ResourceTabInput = (_a) => {
             if (code === 'enter' || code === 'escape') {
                 finishEdit(inputValue, prevInputValue);
             }
-        } },
-        react_1.default.createElement(AppControlInput_1.AppControlInput, Object.assign({ ref: inputRef, className: (0, common_helpers_1.createClassName)([
-                'resource-tab-input',
-                className,
-            ]), onType: (v) => {
-                setInputValue(v);
-            }, edit: editMode, disabled: !editMode, controls: getControls(inputValue, prevInputValue), value: inputValue }, restProps)),
-        react_1.default.createElement("span", { className: "virtual-input", style: {
-                position: 'absolute',
-                opacity: 0,
-                boxSizing: 'border-box',
-                pointerEvents: 'none',
-                top: -99999,
-                left: -99999,
-                whiteSpace: 'pre',
-            }, ref: virtualInputRef }, inputValue || '1')));
+        } }, { children: [(0, jsx_runtime_1.jsx)(AppControlInput_1.AppControlInput, Object.assign({ ref: inputRef, className: (0, common_helpers_1.createClassName)([
+                    'resource-tab-input',
+                    className,
+                ]), onType: (v) => {
+                    setInputValue(v);
+                }, edit: editMode, disabled: !editMode, controls: getControls(inputValue, prevInputValue), value: inputValue }, restProps)), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "virtual-input", style: {
+                    position: 'absolute',
+                    opacity: 0,
+                    boxSizing: 'border-box',
+                    pointerEvents: 'none',
+                    top: -99999,
+                    left: -99999,
+                    whiteSpace: 'pre',
+                }, ref: virtualInputRef }, { children: inputValue || '1' }))] })));
 };
 exports.ResourceTabInput = ResourceTabInput;
 
@@ -55670,36 +56277,14 @@ exports.ResourceTabInput = ResourceTabInput;
 /*!*********************************************************************************!*\
   !*** ./extension/app/resources/TabsPlatformResources/TabsPlatformResources.tsx ***!
   \*********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TabsPlatformResources = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const TabsPanel_1 = __webpack_require__(/*! ../../components/atoms/TabsPanel/TabsPanel */ "./extension/app/components/atoms/TabsPanel/TabsPanel.tsx");
@@ -55722,23 +56307,20 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
         }, 0);
     }, []);
     const getTab = (0, react_1.useCallback)((id, icon, name, size, isHovered) => {
-        return (react_1.default.createElement(HoverButton_1.HoverButton, { icon: icon, hovered: isHovered, key: id },
-            react_1.default.createElement(ResourceTabInput_1.ResourceTabInput, { typeID: id, value: name, onApply: value => {
-                    resourceStore.renameTab(id, value, true);
-                    resourceStore.activeTabID = value;
-                }, onRemove: () => {
-                    resourceStore.removeTab(id, true);
-                } }),
-            react_1.default.createElement("span", { className: "resources-count strong" }, size)));
+        return ((0, jsx_runtime_1.jsxs)(HoverButton_1.HoverButton, Object.assign({ icon: icon, hovered: isHovered }, { children: [(0, jsx_runtime_1.jsx)(ResourceTabInput_1.ResourceTabInput, { typeID: id, value: name, onApply: value => {
+                        resourceStore.renameTab(id, value, true);
+                        resourceStore.activeTabID = value;
+                    }, onRemove: () => {
+                        resourceStore.removeTab(id, true);
+                    } }), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "resources-count strong" }, { children: size }))] }), id));
     }, [resourceStore]);
     const addNewTab = (0, react_1.useMemo)(() => {
         return {
             id: '$$add-new-tab$$',
-            component: react_1.default.createElement(AppTooltip_1.AppTooltip, { className: "small", content: "Add custom tab" },
-                react_1.default.createElement(AddNewButton_1.AddNewButton, { className: "add-new-tab-button", onClick: () => {
+            component: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Add custom tab" }, { children: (0, jsx_runtime_1.jsx)(AddNewButton_1.AddNewButton, { className: "add-new-tab-button", onClick: () => {
                         resourceStore.addTab(ResourceTabInput_1.newTabName, true);
                         resourceStore.activeTabID = ResourceTabInput_1.newTabName;
-                    } })),
+                    } }) })),
             isDisabled: true,
         };
     }, [resourceStore]);
@@ -55748,8 +56330,8 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
             result.push({
                 id: typeID,
                 component: getTab(typeID, typeID === resources_types_1.BoundedResourceTypeID.Accounts
-                    ? react_1.default.createElement(UserIcon_1.UserIcon, null)
-                    : react_1.default.createElement(AssetIcon_1.AssetIcon, null), typeID, countResources(typeID, resources), typeID === activeTabID),
+                    ? (0, jsx_runtime_1.jsx)(UserIcon_1.UserIcon, {})
+                    : (0, jsx_runtime_1.jsx)(AssetIcon_1.AssetIcon, {}), typeID, countResources(typeID, resources), typeID === activeTabID),
             });
         });
         Object.keys(resources).forEach(typeID => {
@@ -55758,17 +56340,16 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
             }
             result.push({
                 id: typeID,
-                component: getTab(typeID, react_1.default.createElement(SearchDocumentIcon_1.SearchDocumentIcon, null), typeID, countResources(typeID, resources), typeID === activeTabID),
+                component: getTab(typeID, (0, jsx_runtime_1.jsx)(SearchDocumentIcon_1.SearchDocumentIcon, {}), typeID, countResources(typeID, resources), typeID === activeTabID),
             });
         });
         return result;
     }, [activeTabID, countResources, getTab, resources]);
-    return (react_1.default.createElement("div", { className: "tabs-platform-resources-wrapper" },
-        react_1.default.createElement(TabsPanel_1.TabsPanel, { className: "tabs-platform-resources", tabs: [...tabs, addNewTab], onActiveTabChanged: id => {
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "tabs-platform-resources-wrapper" }, { children: (0, jsx_runtime_1.jsx)(TabsPanel_1.TabsPanel, Object.assign({ className: "tabs-platform-resources", tabs: [...tabs, addNewTab], onActiveTabChanged: id => {
                 if (resourceStore.isTabExist(id)) {
                     resourceStore.activeTabID = id;
                 }
-            }, activeTab: activeTabID }, children)));
+            }, activeTab: activeTabID }, { children: children })) })));
 });
 
 
@@ -55778,16 +56359,13 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
 /*!****************************************************************************************************************!*\
   !*** ./extension/app/resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage.tsx ***!
   \****************************************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RemoveFieldsSpecificationMessage = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
 const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
@@ -55798,21 +56376,17 @@ const types_inline_messages_1 = __webpack_require__(/*! ../../../../inline/types
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/RemoveFieldsSpecificationMessage/styles.scss");
 exports.RemoveFieldsSpecificationMessage = (0, mobx_react_lite_1.observer)(() => {
     const platformStore = (0, stores_1.usePlatformStore)();
-    return (react_1.default.createElement("div", { className: "remove-fields-specification-message" },
-        react_1.default.createElement(WarningIcon_1.WarningIcon, null),
-        react_1.default.createElement("p", null, "The query contains a select statement that limits the fields in the results. Do you want to select all the fields available in the table?"),
-        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
-                (0, content_services_1.sendMessageFromApp)({
-                    type: types_background_messages_1.MessageToBackground.BGDirectMessageToInline,
-                    payload: {
-                        type: types_inline_messages_1.MessageToInline.ISRemoveFieldSpecification,
-                    },
-                });
-                platformStore.setMessage(null);
-            } }, "Yes"),
-        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
-                platformStore.setMessage(null);
-            } }, "No")));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "remove-fields-specification-message" }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), (0, jsx_runtime_1.jsx)("p", { children: "The query contains a select statement that limits the fields in the results. Do you want to select all the fields available in the table?" }), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    (0, content_services_1.sendMessageFromApp)({
+                        type: types_background_messages_1.MessageToBackground.BGDirectMessageToInline,
+                        payload: {
+                            type: types_inline_messages_1.MessageToInline.ISRemoveFieldSpecification,
+                        },
+                    });
+                    platformStore.setMessage(null);
+                } }, { children: "Yes" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    platformStore.setMessage(null);
+                } }, { children: "No" }))] })));
 });
 
 
@@ -55822,16 +56396,13 @@ exports.RemoveFieldsSpecificationMessage = (0, mobx_react_lite_1.observer)(() =>
 /*!**********************************************************************************!*\
   !*** ./extension/app/resources/messages/RemoveHashMessage/RemoveHashMessage.tsx ***!
   \**********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RemoveHashMessage = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
 const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const content_services_1 = __webpack_require__(/*! ../../../../content/services/content-services */ "./extension/content/services/content-services.ts");
@@ -55842,21 +56413,17 @@ const types_inline_messages_1 = __webpack_require__(/*! ../../../../inline/types
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/RemoveHashMessage/styles.scss");
 exports.RemoveHashMessage = (0, mobx_react_lite_1.observer)(() => {
     const platformStore = (0, stores_1.usePlatformStore)();
-    return (react_1.default.createElement("div", { className: "remove-hash-message" },
-        react_1.default.createElement(WarningIcon_1.WarningIcon, null),
-        react_1.default.createElement("p", null, "A hash function has been detected in your query. Do you want to remove it to see the data without hashing?"),
-        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
-                (0, content_services_1.sendMessageFromApp)({
-                    type: types_background_messages_1.MessageToBackground.BGDirectMessageToInline,
-                    payload: {
-                        type: types_inline_messages_1.MessageToInline.ISRemoveHash,
-                    },
-                });
-                platformStore.setMessage(null);
-            } }, "Yes"),
-        react_1.default.createElement(StaticButton_1.StaticButton, { onClick: () => {
-                platformStore.setMessage(null);
-            } }, "No")));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "remove-hash-message" }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), (0, jsx_runtime_1.jsx)("p", { children: "A hash function has been detected in your query. Do you want to remove it to see the data without hashing?" }), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    (0, content_services_1.sendMessageFromApp)({
+                        type: types_background_messages_1.MessageToBackground.BGDirectMessageToInline,
+                        payload: {
+                            type: types_inline_messages_1.MessageToInline.ISRemoveHash,
+                        },
+                    });
+                    platformStore.setMessage(null);
+                } }, { children: "Yes" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    platformStore.setMessage(null);
+                } }, { children: "No" }))] })));
 });
 
 
@@ -55909,21 +56476,31 @@ class PlatformStore {
         this.rootStore = rootStore;
         (0, mobx_1.makeObservable)(this);
     }
+    getFieldsNames() {
+        var _a;
+        return [...(((_a = this.platform) === null || _a === void 0 ? void 0 : _a.fields) || [])];
+    }
+    setFieldsNames(fields) {
+        fields.forEach((f) => { var _a, _b, _c; return (_c = (_b = (_a = this.platform) === null || _a === void 0 ? void 0 : _a.fields) === null || _b === void 0 ? void 0 : _b.add) === null || _c === void 0 ? void 0 : _c.call(_b, f); });
+    }
+    saveFieldsNames(fields) {
+        (0, local_storage_1.setFieldsNames)([
+            ...(new Set([
+                ...(fields || []),
+                ...(this.getFieldsNames() || []),
+            ])),
+        ]);
+    }
     setPlatform(platform) {
         if (!platform) {
             return;
         }
         platform.connect();
         this.platform = platform;
+        this.setFieldsNames((0, local_storage_1.getFieldsNames)());
         this.rootStore.appStore.view = 'resources';
         this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
         const watchers = (0, local_storage_1.getWatchers)(platform.getID());
-        Object.keys((0, local_storage_1.getWatchers)(platform.getID())).forEach(typeID => {
-            this.rootStore.resourceStore.addTab(typeID);
-            watchers[typeID].forEach(fieldName => {
-                this.rootStore.resourceStore.addField(fieldName, false, typeID);
-            });
-        });
         const message = (0, content_services_1.sendMessageFromApp)({
             id: 'platform-set',
             type: types_background_messages_1.MessageToBackground.BGRegisterPlatformTab,
@@ -55931,6 +56508,7 @@ class PlatformStore {
                 platformID: platform.getID(),
             },
         });
+        this.rootStore.resourceStore.setWatchers(watchers);
         this.rootStore.resourceStore.saveWatchers(message.id);
     }
     copyToClipboard(resources, timeout = 300) {
@@ -56147,6 +56725,19 @@ class ResourceStore {
         }
         this.refreshResources();
     }
+    setWatchers(watchers) {
+        Object.keys(watchers).forEach(typeID => {
+            this.addTab(typeID);
+            let currentFieldsNames = Object.keys(this.resources[typeID] || {});
+            watchers[typeID].forEach(fieldName => {
+                this.addField(fieldName, false, typeID);
+                currentFieldsNames = currentFieldsNames.filter(fn => fn !== fieldName);
+            });
+            currentFieldsNames.forEach(fn => {
+                this.removeField(fn, false, typeID);
+            });
+        });
+    }
     saveWatchers(messageId) {
         const platformID = this.rootStore.platformStore.getID();
         if (!platformID) {
@@ -56157,6 +56748,7 @@ class ResourceStore {
             type: types_background_messages_1.MessageToBackground.BGSetWatchers,
             payload: {
                 platformID,
+                cacheID: this.cacheID,
                 watchers: (0, local_storage_1.setWatchers)(Object.keys(this.resources).reduce((watchingResources, typeID) => {
                     watchingResources[typeID] = Object.keys(this.resources[typeID]);
                     return watchingResources;
@@ -56165,6 +56757,9 @@ class ResourceStore {
         });
     }
 }
+__decorate([
+    mobx_1.observable
+], ResourceStore.prototype, "cacheID", void 0);
 __decorate([
     mobx_1.observable
 ], ResourceStore.prototype, "resources", void 0);
@@ -56343,35 +56938,13 @@ exports.ResourcesSelectionStore = ResourcesSelectionStore;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourcesContentView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const PlatformResources_1 = __webpack_require__(/*! ../../PlatformResources/PlatformResources */ "./extension/app/resources/PlatformResources/PlatformResources.tsx");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
@@ -56394,12 +56967,7 @@ exports.ResourcesContentView = (0, mobx_react_lite_1.observer)(({ className = ''
     if (!platformStore.getID()) {
         return null;
     }
-    return (react_1.default.createElement(simplebar_react_1.default, { ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) },
-        countAllResources < 1 && (react_1.default.createElement("div", { className: "resource-content-view platform-detected" },
-            react_1.default.createElement(Spacer_1.Spacer, { height: 8 }),
-            platformStore.getName(),
-            " detected. Run a query to see results.")),
-        react_1.default.createElement(PlatformResources_1.PlatformResources, null)));
+    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) }, { children: [countAllResources < 1 && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-content-view platform-detected" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 8 }), platformStore.getName(), " detected. Run a query to see results."] }))), (0, jsx_runtime_1.jsx)(PlatformResources_1.PlatformResources, {})] })));
 });
 
 
@@ -56409,19 +56977,16 @@ exports.ResourcesContentView = (0, mobx_react_lite_1.observer)(({ className = ''
 /*!***********************************************************************************!*\
   !*** ./extension/app/resources/views/ResourcesFooterView/ResourcesFooterView.tsx ***!
   \***********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourcesFooterView = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const BulkResourcesPanel_1 = __webpack_require__(/*! ../../BulkResourcesPanel/BulkResourcesPanel */ "./extension/app/resources/BulkResourcesPanel/BulkResourcesPanel.tsx");
 const ResourcesFooterView = () => {
-    return (react_1.default.createElement(BulkResourcesPanel_1.BulkResourcesPanel, null));
+    return ((0, jsx_runtime_1.jsx)(BulkResourcesPanel_1.BulkResourcesPanel, {}));
 };
 exports.ResourcesFooterView = ResourcesFooterView;
 
@@ -56432,36 +56997,14 @@ exports.ResourcesFooterView = ResourcesFooterView;
 /*!***********************************************************************************!*\
   !*** ./extension/app/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx ***!
   \***********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourcesHeaderView = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const TabsPlatformResources_1 = __webpack_require__(/*! ../../TabsPlatformResources/TabsPlatformResources */ "./extension/app/resources/TabsPlatformResources/TabsPlatformResources.tsx");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
@@ -56471,51 +57014,52 @@ const AddFieldInput_1 = __webpack_require__(/*! ../../AddFieldInput/AddFieldInpu
 const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const AutocompleteInput_1 = __webpack_require__(/*! ../../../components/inputs/AutocompleteInput */ "./extension/app/components/inputs/AutocompleteInput/index.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/views/ResourcesHeaderView/styles.scss");
 exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
     const [addNewFieldMode, setAddNewFieldMode] = (0, react_1.useState)(false);
     const platformStore = (0, stores_1.usePlatformStore)();
     const resourceStore = (0, stores_1.useResourceStore)();
+    const inputRef = (0, react_1.useRef)(null);
     const inputWrapperRef = (0, react_1.useRef)(null);
+    const autocompleteDropdownRef = (0, react_1.useRef)(null);
     (0, app_hooks_1.useOnClickOutside)(() => {
         if (addNewFieldMode) {
             setAddNewFieldMode(false);
         }
-    }, inputWrapperRef);
+    }, inputWrapperRef, autocompleteDropdownRef);
     if (!platformStore.getID()) {
         return null;
     }
     const Message = platformStore.getMessage();
-    return (react_1.default.createElement("div", { className: "resources-header-view" },
-        react_1.default.createElement(Spacer_1.Spacer, { height: 6 }),
-        Message && (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(Spacer_1.Spacer, { height: 6 }),
-            react_1.default.createElement(Message, null),
-            react_1.default.createElement(Spacer_1.Spacer, { height: 6 }))),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 6 }),
-        react_1.default.createElement(TabsPlatformResources_1.TabsPlatformResources, null),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 16 }),
-        react_1.default.createElement("div", { className: "fields" },
-            react_1.default.createElement("span", null, "Fields"),
-            react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Add custom field", className: "small" },
-                react_1.default.createElement(AddNewButton_1.AddNewButton, { className: "add-new-field", onClick: () => {
-                        setAddNewFieldMode(true);
-                    } })),
-            react_1.default.createElement(Spacer_1.Spacer, { height: 8 })),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
-        addNewFieldMode && (react_1.default.createElement("div", null,
-            react_1.default.createElement(Spacer_1.Spacer, { height: 4 }),
-            react_1.default.createElement(AddFieldInput_1.AddFieldInput, { ref: inputWrapperRef, onApply: value => {
-                    setAddNewFieldMode(false);
-                    const nValue = value.trim();
-                    if (!nValue) {
-                        return;
-                    }
-                    resourceStore.addField((0, helpers_1.createNonDuplicateValue)(nValue, resourceStore.getFieldsNames()), true);
-                }, onRemove: () => {
-                    setAddNewFieldMode(false);
-                } }))),
-        react_1.default.createElement(Spacer_1.Spacer, { height: 4 })));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resources-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 }), Message && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 }), (0, jsx_runtime_1.jsx)(Message, {}), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 })] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 }), (0, jsx_runtime_1.jsx)(TabsPlatformResources_1.TabsPlatformResources, {}), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "fields" }, { children: [(0, jsx_runtime_1.jsx)("span", { children: "Fields" }), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "Add custom field", className: "small" }, { children: (0, jsx_runtime_1.jsx)(AddNewButton_1.AddNewButton, { className: "add-new-field", onClick: () => {
+                                setAddNewFieldMode(true);
+                            } }) })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 8 })] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 4 }), addNewFieldMode && ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 4 }), (0, jsx_runtime_1.jsx)(AutocompleteInput_1.AutocompleteInput, { ref: (refs) => {
+                            var _a;
+                            if ((_a = refs === null || refs === void 0 ? void 0 : refs.dropdownMenu) === null || _a === void 0 ? void 0 : _a.current) {
+                                autocompleteDropdownRef.current = refs.dropdownMenu.current;
+                            }
+                        }, onValueSelect: () => {
+                            var _a, _b;
+                            (_b = (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.focus) === null || _b === void 0 ? void 0 : _b.call(_a);
+                        }, countSymbolsToActivate: 2, className: "add-field", list: platformStore.getFieldsNames(), Input: (props) => (0, jsx_runtime_1.jsx)(AddFieldInput_1.AddFieldInput, Object.assign({}, props, { ref: (refs) => {
+                                var _a, _b;
+                                if ((_a = refs === null || refs === void 0 ? void 0 : refs.wrapperRef) === null || _a === void 0 ? void 0 : _a.current) {
+                                    inputWrapperRef.current = refs.wrapperRef.current;
+                                }
+                                if ((_b = refs === null || refs === void 0 ? void 0 : refs.inputRef) === null || _b === void 0 ? void 0 : _b.current) {
+                                    inputRef.current = refs.inputRef.current;
+                                }
+                            }, onApply: value => {
+                                setAddNewFieldMode(false);
+                                const nValue = value.trim();
+                                if (!nValue) {
+                                    return;
+                                }
+                                resourceStore.addField((0, helpers_1.createNonDuplicateValue)(nValue, resourceStore.getFieldsNames()), true);
+                            }, onRemove: () => {
+                                setAddNewFieldMode(false);
+                            } })) })] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 4 })] })));
 });
 
 
@@ -56525,36 +57069,14 @@ exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
 /*!****************************************!*\
   !*** ./extension/app/root/App/App.tsx ***!
   \****************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.App = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const DraggableResizable_1 = __webpack_require__(/*! ../../components/atoms/DragableResizable/DraggableResizable */ "./extension/app/components/atoms/DragableResizable/DraggableResizable.tsx");
@@ -56630,12 +57152,9 @@ exports.App = (0, mobx_react_lite_1.observer)(() => {
         };
     }, [appStore, calculateContentHeight, setContentHeightToElement]);
     const content = (0, react_1.useMemo)(() => {
-        return (react_1.default.createElement("div", { className: "app-wrapper", ref: wrapperRef, style: {
+        return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-wrapper", ref: wrapperRef, style: {
                 padding: APP_PADDING,
-            } },
-            react_1.default.createElement(AppHeader_1.AppHeader, { ref: headerRef }),
-            react_1.default.createElement(AppContent_1.AppContent, { ref: contentRef }),
-            react_1.default.createElement(AppFooter_1.AppFooter, { ref: footerRef })));
+            } }, { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { ref: headerRef }), (0, jsx_runtime_1.jsx)(AppContent_1.AppContent, { ref: contentRef }), (0, jsx_runtime_1.jsx)(AppFooter_1.AppFooter, { ref: footerRef })] })));
     }, []);
     const position = {
         top: appStore.topPosition,
@@ -56643,7 +57162,7 @@ exports.App = (0, mobx_react_lite_1.observer)(() => {
         width: appStore.widthApp,
         height: appStore.heightApp,
     };
-    return (react_1.default.createElement(DraggableResizable_1.DraggableResizable, { className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)(DraggableResizable_1.DraggableResizable, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'the-prime-hunt--extension--root',
             appStore.isExtensionOpen ? '' : 'invisible',
         ]), position: position, dragElementsRefs: [
@@ -56675,12 +57194,7 @@ exports.App = (0, mobx_react_lite_1.observer)(() => {
             appStore.widthApp = newPosition.width;
             appStore.heightApp = newPosition.height;
             appStore.savePosition();
-        } },
-        react_1.default.createElement("div", { ref: dragTopRef, className: "draggable draggable-top drag-activator" }),
-        react_1.default.createElement("div", { ref: dragBottomRef, className: "draggable draggable-bottom drag-activator" }),
-        react_1.default.createElement("div", { ref: dragLeftRef, className: "draggable draggable-left drag-activator" }),
-        react_1.default.createElement("div", { ref: dragRightRef, className: "draggable draggable-right drag-activator" }),
-        content));
+        } }, { children: [(0, jsx_runtime_1.jsx)("div", { ref: dragTopRef, className: "draggable draggable-top drag-activator" }), (0, jsx_runtime_1.jsx)("div", { ref: dragBottomRef, className: "draggable draggable-bottom drag-activator" }), (0, jsx_runtime_1.jsx)("div", { ref: dragLeftRef, className: "draggable draggable-left drag-activator" }), (0, jsx_runtime_1.jsx)("div", { ref: dragRightRef, className: "draggable draggable-right drag-activator" }), content] })));
 });
 
 
@@ -56880,36 +57394,14 @@ exports.calculateScreen = calculateScreen;
 /*!******************************************************!*\
   !*** ./extension/app/root/AppContent/AppContent.tsx ***!
   \******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppContent = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const NotFoundContentView_1 = __webpack_require__(/*! ../../not-found/views/NotFoundContentView/NotFoundContentView */ "./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx");
@@ -56918,11 +57410,7 @@ const ResourcesContentView_1 = __webpack_require__(/*! ../../resources/views/Res
 const FaqContentView_1 = __webpack_require__(/*! ../../faq/views/FaqContentView/FaqContentView */ "./extension/app/faq/views/FaqContentView/FaqContentView.tsx");
 exports.AppContent = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
     const { view } = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement("div", { className: "app-content", ref: ref },
-        react_1.default.createElement(ResourcesContentView_1.ResourcesContentView, { className: view === 'resources' ? '' : 'invisible' }),
-        view === 'not-found' && react_1.default.createElement(NotFoundContentView_1.NotFoundContentView, null),
-        view === 'integrations' && react_1.default.createElement(IntegrationContentView_1.IntegrationContentView, null),
-        view === 'faq' && react_1.default.createElement(FaqContentView_1.FaqContentView, null)));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-content", ref: ref }, { children: [(0, jsx_runtime_1.jsx)(ResourcesContentView_1.ResourcesContentView, { className: view === 'resources' ? '' : 'invisible' }), view === 'not-found' && (0, jsx_runtime_1.jsx)(NotFoundContentView_1.NotFoundContentView, {}), view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationContentView_1.IntegrationContentView, {}), view === 'faq' && (0, jsx_runtime_1.jsx)(FaqContentView_1.FaqContentView, {})] })));
 }));
 
 
@@ -56932,36 +57420,14 @@ exports.AppContent = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_,
 /*!****************************************************!*\
   !*** ./extension/app/root/AppFooter/AppFooter.tsx ***!
   \****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppFooter = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const IntegrationFooterView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationFooterView/IntegrationFooterView */ "./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx");
@@ -56969,10 +57435,7 @@ const ResourcesFooterView_1 = __webpack_require__(/*! ../../resources/views/Reso
 const FaqFooterView_1 = __webpack_require__(/*! ../../faq/views/FaqFooterView/FaqFooterView */ "./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx");
 exports.AppFooter = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
     const { view } = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement("div", { className: "app-footer", ref: ref },
-        view === 'resources' && react_1.default.createElement(ResourcesFooterView_1.ResourcesFooterView, null),
-        view === 'integrations' && react_1.default.createElement(IntegrationFooterView_1.IntegrationFooterView, null),
-        view === 'faq' && react_1.default.createElement(FaqFooterView_1.FaqFooterView, null)));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-footer", ref: ref }, { children: [view === 'resources' && (0, jsx_runtime_1.jsx)(ResourcesFooterView_1.ResourcesFooterView, {}), view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationFooterView_1.IntegrationFooterView, {}), view === 'faq' && (0, jsx_runtime_1.jsx)(FaqFooterView_1.FaqFooterView, {})] })));
 }));
 
 
@@ -56982,36 +57445,14 @@ exports.AppFooter = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, 
 /*!****************************************************!*\
   !*** ./extension/app/root/AppHeader/AppHeader.tsx ***!
   \****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppHeader = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const CloseAppButton_1 = __webpack_require__(/*! ../CloseAppButton/CloseAppButton */ "./extension/app/root/CloseAppButton/CloseAppButton.tsx");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/es/index.js");
@@ -57032,30 +57473,15 @@ exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, 
     (0, react_1.useEffect)(() => {
         appStore.dragElementRef = dragElementRef;
     }, [appStore]);
-    return (react_1.default.createElement("div", { className: "app-header", ref: ref },
-        react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                'app-header-wrapper',
-            ]) },
-            react_1.default.createElement("span", { className: "group" },
-                react_1.default.createElement(AppLink_1.AppLink, { href: "https://socprime.com/?utm_source=addon-logo", target: "_blank" },
-                    react_1.default.createElement(LogoIcon_1.LogoIcon, null)),
-                react_1.default.createElement("span", { className: "name strong drag-activator", ref: dragElementRef }, "The Prime Hunt"),
-                react_1.default.createElement("div", { className: (0, common_helpers_1.createClassName)([
-                        'spinner',
-                        appStore.loadingKeys.length > 0 ? '' : 'invisible',
-                    ]) })),
-            react_1.default.createElement("span", { className: "group" },
-                react_1.default.createElement("div", { className: "buttons-wrapper" },
-                    isPlatform
-                        && appStore.view !== 'integrations'
-                        && appStore.view !== 'faq' && react_1.default.createElement(ExportButton_1.ExportButton, null),
-                    appStore.view === 'resources' && react_1.default.createElement(SettingsButton_1.SettingsButton, null),
-                    appStore.view === 'resources' && react_1.default.createElement(FaqButton_1.FaqButton, null),
-                    (appStore.view === 'resources'
-                        || appStore.view === 'not-found') && react_1.default.createElement(CloseAppButton_1.CloseAppButton, null)))),
-        appStore.view === 'resources' && (react_1.default.createElement(ResourcesHeaderView_1.ResourcesHeaderView, null)),
-        appStore.view === 'integrations' && (react_1.default.createElement(IntegrationHeaderView_1.IntegrationHeaderView, null)),
-        appStore.view === 'faq' && (react_1.default.createElement(FaqHeaderView_1.FaqHeaderView, null))));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-header", ref: ref }, { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                    'app-header-wrapper',
+                ]) }, { children: [(0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "group" }, { children: [(0, jsx_runtime_1.jsx)(AppLink_1.AppLink, Object.assign({ href: "https://socprime.com/?utm_source=addon-logo", target: "_blank" }, { children: (0, jsx_runtime_1.jsx)(LogoIcon_1.LogoIcon, {}) })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "name strong drag-activator", ref: dragElementRef }, { children: "The Prime Hunt" })), (0, jsx_runtime_1.jsx)("div", { className: (0, common_helpers_1.createClassName)([
+                                    'spinner',
+                                    appStore.loadingKeys.length > 0 ? '' : 'invisible',
+                                ]) })] })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "group" }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-wrapper" }, { children: [isPlatform
+                                    && appStore.view !== 'integrations'
+                                    && appStore.view !== 'faq' && (0, jsx_runtime_1.jsx)(ExportButton_1.ExportButton, {}), appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(SettingsButton_1.SettingsButton, {}), appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(FaqButton_1.FaqButton, {}), (appStore.view === 'resources'
+                                    || appStore.view === 'not-found') && (0, jsx_runtime_1.jsx)(CloseAppButton_1.CloseAppButton, {})] })) }))] })), appStore.view === 'resources' && ((0, jsx_runtime_1.jsx)(ResourcesHeaderView_1.ResourcesHeaderView, {})), appStore.view === 'integrations' && ((0, jsx_runtime_1.jsx)(IntegrationHeaderView_1.IntegrationHeaderView, {})), appStore.view === 'faq' && ((0, jsx_runtime_1.jsx)(FaqHeaderView_1.FaqHeaderView, {}))] })));
 }));
 
 
@@ -57065,16 +57491,13 @@ exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, 
 /*!**************************************************************!*\
   !*** ./extension/app/root/CloseAppButton/CloseAppButton.tsx ***!
   \**************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CloseAppButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const StaticButton_1 = __webpack_require__(/*! ../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
 const CrossIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/CrossIcon/CrossIcon */ "./extension/app/components/atoms/icons/CrossIcon/CrossIcon.tsx");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
@@ -57082,11 +57505,9 @@ const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppToolti
 __webpack_require__(/*! ./styles.scss */ "./extension/app/root/CloseAppButton/styles.scss");
 const CloseAppButton = () => {
     const appStore = (0, stores_1.useAppStore)();
-    return (react_1.default.createElement(StaticButton_1.StaticButton, { className: "close-app-button", onClick: () => {
+    return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: "close-app-button", onClick: () => {
             appStore.isExtensionOpen = false;
-        } },
-        react_1.default.createElement(AppTooltip_1.AppTooltip, { content: "Hide/Show extension (Ctrl+Q)", className: "small" },
-            react_1.default.createElement(CrossIcon_1.CrossIcon, null))));
+        } }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "Hide/Show extension (Ctrl+Q)", className: "small" }, { children: (0, jsx_runtime_1.jsx)(CrossIcon_1.CrossIcon, {}) })) })));
 };
 exports.CloseAppButton = CloseAppButton;
 
@@ -57097,21 +57518,17 @@ exports.CloseAppButton = CloseAppButton;
 /*!**************************************!*\
   !*** ./extension/app/root/index.tsx ***!
   \**************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RootApp = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 const stores_1 = __webpack_require__(/*! ../stores */ "./extension/app/stores/index.ts");
 const App_1 = __webpack_require__(/*! ./App/App */ "./extension/app/root/App/App.tsx");
 const RootApp = ({ rootStore }) => {
-    return (react_1.default.createElement(stores_1.RootStoreContext.Provider, { value: rootStore },
-        react_1.default.createElement(App_1.App, null)));
+    return ((0, jsx_runtime_1.jsx)(stores_1.RootStoreContext.Provider, Object.assign({ value: rootStore }, { children: (0, jsx_runtime_1.jsx)(App_1.App, {}) })));
 };
 exports.RootApp = RootApp;
 
@@ -57232,6 +57649,7 @@ var MessageToApp;
 (function (MessageToApp) {
     MessageToApp["AppShowExtension"] = "AppShowExtension";
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
+    MessageToApp["AppSyncWatchers"] = "AppSyncWatchers";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
     MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
     MessageToApp["AppQueryHasSpecifyFields"] = "AppQueryHasSpecifyFields";
@@ -57722,7 +58140,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.5";
+exports.version = "1.3.0";
 
 
 /***/ }),
@@ -57736,12 +58154,36 @@ exports.version = "1.2.5";
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.setVersion = exports.getVersion = exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.versionStorageKey = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
+exports.setVersion = exports.getVersion = exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.getFieldsNames = exports.setFieldsNames = exports.fieldsNamesStorageKey = exports.versionStorageKey = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
 const integrations_1 = __webpack_require__(/*! ../app/integrations/integrations */ "./extension/app/integrations/integrations.ts");
 exports.watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 exports.positionStorageKey = 'the-prime-hunt--extension--position';
 exports.integrationsStorageKey = 'the-prime-hunt--extension--integrations';
 exports.versionStorageKey = 'the-prime-hunt--extension--version';
+exports.fieldsNamesStorageKey = 'the-prime-hunt--extension--fields';
+const setFieldsNames = (fields) => {
+    localStorage.setItem(exports.fieldsNamesStorageKey, JSON.stringify({
+        fields,
+        time: new Date().toString(),
+    }));
+    return fields;
+};
+exports.setFieldsNames = setFieldsNames;
+const oneDay = 1000 * 60 * 60 * 24;
+const getFieldsNames = () => {
+    try {
+        const data = JSON.parse(localStorage.getItem(exports.fieldsNamesStorageKey) || '');
+        data.time = new Date(data.time);
+        if ((new Date()).getTime() - data.time.getTime() >= oneDay) {
+            return (0, exports.setFieldsNames)([]);
+        }
+        return data.fields;
+    }
+    catch (e) {
+        return (0, exports.setFieldsNames)([]);
+    }
+};
+exports.getFieldsNames = getFieldsNames;
 const setWatchers = (watchers) => {
     localStorage.setItem(exports.watchersLocalStorageKey, JSON.stringify(watchers));
     return watchers;
@@ -58034,6 +58476,9 @@ const content_services_1 = __webpack_require__(/*! ../services/content-services 
 const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 class AbstractContentPlatform {
+    constructor() {
+        this.fields = new Set();
+    }
     static processInlineListeners(message) {
         if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
             (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);

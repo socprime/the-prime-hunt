@@ -1,5 +1,5 @@
-import { BGListenerType, WatchingResources } from '../types/types-background-common';
-import { PlatformID, PlatformName } from '../../common/types/types-common';
+import { BGListenerType } from '../types/types-background-common';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
 import { setBGInterceptor } from '../services/background-services-listeners';
 import { Url } from '../../../common/types';
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
@@ -9,6 +9,7 @@ import { http } from '../../../common/Http';
 import { uuid } from '../../../common/helpers';
 import { ParsedResult } from '../../app/resources/resources-types';
 import { Loggers } from '../../common/loggers';
+import { normalizeParsedResources } from '../services/background-services';
 
 let loggers: Loggers;
 
@@ -19,7 +20,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as WatchingResources;
+    this.watchingResources = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',
@@ -100,9 +101,12 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
 
           AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
+          const url = details.url;
+          const cacheID = url;
+
           http.post(
             {
-              url: details.url,
+              url,
               body: bodyBytes,
               headers: details.requestHeaders!.reduce((res: any, header: any) => {
                 res[header.name] = header.value;
@@ -111,19 +115,29 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
             },
             {
               onJSONSuccess: async (response: any) => {
+                const resources = normalizeParsedResources(
+                  await this.parseResponse(response, {
+                    origin: new URL(details.url).origin,
+                    id: details.tabId,
+                  }),
+                );
                 AbstractBackgroundPlatform.sendParsedData(
                   details.tabId,
-                  await this.parseResponse(response),
+                  {
+                    cacheID,
+                    resources,
+                    fieldsNames: [...this.fields],
+                  },
                   true,
                 );
-                this.lastResponse = response;
+                this.lastResponse.set(cacheID, response);
                 removeAttached();
               },
               onError: (e: Error) => {
                 loggers
                   .error()
                   .addPrefix('failed webRequest post')
-                  .log(e, details.method, details.url, bodyStr);
+                  .log(e, details.method, url, bodyStr);
                 removeAttached();
               },
             },
@@ -148,17 +162,23 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
       }[]
       rows: [];
     }];
-  }) {
+  }, tabInfo: BrowserTabInfo) {
     const id = uuid();
-    loggers.debug().log('started parse response...', id, this.watchingResources);
+    const watchingResources = this.getWatchers(tabInfo);
+
+    const { fields } = this;
+    fields.clear();
+
+    loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
     const result: ParsedResult = {};
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     const mappedFieldNamesToIndex = (response?.tables?.[0]?.columns || [])
       .reduce((map, d, index) => {
         map.set(d.name, index);
+        fields.add(d.name);
         return map;
       }, new Map()) || new Map();
 
@@ -180,7 +200,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
       });
     });
 
-    loggers.debug().log('finished parse response', id, result);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
 
     return result;
   }

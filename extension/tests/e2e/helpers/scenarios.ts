@@ -5,6 +5,7 @@ import { debugID } from '../../../common/loggers/loggers-helpers';
 import { watchersLocalStorageKey } from '../../../common/local-storage';
 import { WatchingResources } from '../../../background/types/types-background-common';
 import { sleep } from '../../../../common/helpers';
+import { NormalizedResources } from '../../../app/resources/resources-types';
 
 const addScenarioToWindow = (
   scenarioName: string,
@@ -38,7 +39,7 @@ export const setWatchers = (watchers: WatchingResources) => {
   localStorage.setItem(watchersLocalStorageKey, JSON.stringify(watchers));
 };
 
-export const getTestData = (): ParsedDataPayload => {
+export const getTestData = (): NormalizedResources => {
   addScenarioToWindow('getTestData', getTestData);
 
   return {
@@ -49,7 +50,7 @@ export const getTestData = (): ParsedDataPayload => {
       'test4': ['account4', '2', 'test2', '4'],
       'field': ['2'],
     },
-  } as ParsedDataPayload;
+  } as NormalizedResources;
 };
 
 export const addNewTestResources = async () => {
@@ -58,7 +59,10 @@ export const addNewTestResources = async () => {
   window.postMessage({
     type: MessageToApp.AppTakeNewResourceData,
     externalType: debugID,
-    payload: getTestData(),
+    payload: {
+      resources: getTestData(),
+      cacheID: 'test-cache-id',
+    } as ParsedDataPayload,
   });
 
   await sleep(1);

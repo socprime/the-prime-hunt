@@ -1,4 +1,3 @@
-import { describe, test, expect } from '@jest/globals';
 import { setLoggers } from '../../common/loggers';
 import { getMockedLoggers } from '../../tests/mocks';
 import { ExtensionMessage } from '../../common/types/types-common';

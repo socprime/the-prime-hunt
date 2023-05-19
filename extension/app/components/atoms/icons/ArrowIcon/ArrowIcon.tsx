@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ArrowIcon: React.FC = () => {
   return (
     <svg

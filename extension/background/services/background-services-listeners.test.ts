@@ -1,6 +1,5 @@
 import { getMockedLoggers } from '../../tests/mocks';
 import { interceptors, removeBGInterceptor, setBGInterceptor } from './background-services-listeners';
-import { describe, test, expect } from '@jest/globals';
 import { setLoggers } from '../../common/loggers';
 import { UniqueHash } from '../../../common/types';
 import { BGListenerType } from '../types/types-background-common';

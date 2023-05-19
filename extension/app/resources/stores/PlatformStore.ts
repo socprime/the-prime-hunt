@@ -9,7 +9,7 @@ import {
 } from '../../../common/types/types-common-payloads';
 import { MessageToBackground } from '../../../background/types/types-background-messages';
 import { RootStore } from '../../stores/RootStore';
-import { getWatchers } from '../../../common/local-storage';
+import { getWatchers, getFieldsNames, setFieldsNames } from '../../../common/local-storage';
 import { NormalizedParsedResources } from '../resources-types';
 import { copyToClipboard } from '../../../common/common-helpers';
 
@@ -27,22 +27,33 @@ export class PlatformStore {
     makeObservable(this);
   }
 
+  getFieldsNames(): string[] {
+    return [...(this.platform?.fields || [])];
+  }
+
+  setFieldsNames(fields: string[]) {
+    fields.forEach((f) => this.platform?.fields?.add?.(f));
+  }
+
+  saveFieldsNames(fields?: string[]) {
+    setFieldsNames([
+      ...(new Set([
+        ...(fields || []),
+        ...(this.getFieldsNames() || []),
+      ])),
+    ]);
+  }
+
   setPlatform(platform?: ContentPlatform) {
     if (!platform) {
       return;
     }
     platform.connect();
     this.platform = platform;
+    this.setFieldsNames(getFieldsNames());
     this.rootStore.appStore.view = 'resources';
     this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
     const watchers = getWatchers(platform.getID());
-
-    Object.keys(getWatchers(platform.getID())).forEach(typeID => {
-      this.rootStore.resourceStore.addTab(typeID);
-      watchers[typeID].forEach(fieldName => {
-        this.rootStore.resourceStore.addField(fieldName, false, typeID);
-      });
-    });
 
     const message = sendMessageFromApp<PlatformIDPayload>({
       id: 'platform-set',
@@ -52,6 +63,7 @@ export class PlatformStore {
       },
     });
 
+    this.rootStore.resourceStore.setWatchers(watchers);
     this.rootStore.resourceStore.saveWatchers(message.id);
   }
 

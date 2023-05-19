@@ -1,3 +1,5 @@
+@import "../../../scss/palette";
+
 .resources-header-view {
   .fields {
     display: flex;
@@ -11,6 +13,39 @@
     > span {
       vertical-align: middle;
       margin-right: 10px;
+    }
+  }
+
+  .autocomplete-dropdown {
+    width: 100%;
+
+    .dropdown-header {
+      width: 100%;
+    }
+  }
+}
+
+.add-field.autocomplete-dropdown-menu.app-dropdown-menu {
+  padding: 0;
+  overflow-x: hidden;
+  width: calc(100% - 20px * 2);
+  max-height: 120px;
+
+  .autocomplete-item {
+    overflow-x: hidden;
+    font-size: 12px ;
+    padding: 7px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    &.active {
+      background-color: $base-selection-color;
+    }
+    &:first-child {
+      padding-top: 12px;
+    }
+    &:last-child {
+      padding-bottom: 12px;
     }
   }
 }

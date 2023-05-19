@@ -1,4 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  PropsWithChildren,
+  useRef,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  MutableRefObject,
+} from 'react';
 import { Dropdown, DropdownProps, DropdownForwardRef } from '../../atoms/Dropdown/Dropdown';
 import { useOnClickOutside } from '../../../app-hooks';
 import { useAppStore } from '../../../stores';
@@ -8,7 +18,9 @@ import './styles.scss';
 
 export type AppDropdownProps = DropdownProps;
 
-export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = observer(({
+export type AppDropdownRefs = DropdownForwardRef;
+
+export const AppDropdown = observer(forwardRef<DropdownForwardRef, PropsWithChildren<AppDropdownProps>>(({
   className = '',
   classNameMenu = '',
   children,
@@ -17,7 +29,7 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
   onStateChange,
   getMenuStyles,
   ...restProps
-}) => {
+}, ref) => {
   const { isResizing, rootElement } = useAppStore();
 
   const [calculatedDirection, setCalculatedDirection] = useState<DropdownProps['direction']>(
@@ -26,10 +38,21 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
 
   const [forceClose, setForceClose] = useState<boolean>(false);
 
-  const ref = useRef<DropdownForwardRef>(null);
+  const dropdownRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const dropdownMenuRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    get dropdown() {
+      return dropdownRef;
+    },
+    get dropdownMenu() {
+      return dropdownMenuRef;
+    },
+  }));
+
 
   useEffect(() => {
-    const dropdownMenu = ref?.current?.dropdownMenu?.current;
+    const dropdownMenu = dropdownMenuRef?.current;
     if (dropdownMenu) {
       dropdownMenu.classList.remove('hide');
     }
@@ -47,7 +70,7 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
 
   useOnClickOutside(() => {
     setForceClose(true);
-  }, ref?.current?.dropdown, ref?.current?.dropdownMenu);
+  }, dropdownRef, dropdownMenuRef);
 
   const calculatedMountElement = typeof mountElement === 'undefined' ? rootElement : mountElement;
 
@@ -68,8 +91,8 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
         ...normalizedStyles,
       };
     }
-    const dropdownElem = ref?.current?.dropdown?.current;
-    const dropdownMenuElem = ref?.current?.dropdownMenu?.current;
+    const dropdownElem = dropdownRef?.current;
+    const dropdownMenuElem = dropdownMenuRef?.current;
     const dropdownRect = dropdownElem?.getBoundingClientRect?.();
     const dropdownMenuRect = dropdownMenuElem?.getBoundingClientRect?.();
     const rootElementRect = rootElement?.getBoundingClientRect?.();
@@ -92,7 +115,14 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
 
   return (
     <Dropdown
-      ref={ref}
+      ref={(refs) => {
+        if (refs?.dropdown?.current) {
+          dropdownRef.current = refs.dropdown.current;
+        }
+        if (refs?.dropdownMenu?.current) {
+          dropdownMenuRef.current = refs.dropdownMenu.current;
+        }
+      }}
       className={createClassName([
         'app-dropdown',
         className,
@@ -106,7 +136,7 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
       mountElement={calculatedMountElement}
       getMenuStyles={getMenuStylesCallback}
       onStateChange={(isOpen) => {
-        const dropdownMenu = ref?.current?.dropdownMenu?.current;
+        const dropdownMenu = dropdownMenuRef?.current;
         if (!direction && dropdownMenu && rootElement) {
           if (
             dropdownMenu.getBoundingClientRect().bottom >
@@ -123,4 +153,4 @@ export const AppDropdown: React.FC<React.PropsWithChildren<AppDropdownProps>> = 
       {children}
     </Dropdown>
   );
-});
+}));

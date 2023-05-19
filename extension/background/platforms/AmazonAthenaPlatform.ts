@@ -1,15 +1,16 @@
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
 import { Loggers } from '../../common/loggers';
-import { ParsedResult } from '../../app/resources/resources-types';
-import { PlatformID, PlatformName } from '../../common/types/types-common';
-import { parseJSONSafe, uuid } from '../../../common/helpers';
-import { BGListenerType, WatchingResources } from '../types/types-background-common';
+import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
+import { iterateObjectsRecursively, parseJSONSafe, uuid } from '../../../common/helpers';
+import { BGListenerType } from '../types/types-background-common';
 import { SHA256, Url } from '../../../common/types';
 import { setBGInterceptor } from '../services/background-services-listeners';
 import { sha256 } from 'js-sha256';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { http } from '../../../common/Http';
+import { normalizeParsedResources } from '../services/background-services';
 
 let loggers: Loggers;
 
@@ -17,15 +18,6 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
   private static postUrls: Url[] = [
     '.amazonaws.com',
   ];
-
-  private static normalizeFieldName(fieldName: string): [string, string[]] {
-    const parts = fieldName.split('.').filter(Boolean);
-    const nFieldName = parts.shift()!;
-    return [
-      nFieldName,
-      parts,
-    ];
-  }
 
   private static replacements = new Map();
 
@@ -194,61 +186,56 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
     return AmazonAthenaPlatform.parseObj(nValue);
   }
 
-  private static parse(
-    str: string,
-    fieldName: string,
-  ): string[] {
-    const fieldsNames = fieldName.split('.').map(v => v.trim());
+  private fieldsNames: Set<FieldName>;
 
-    let pointers: any = [
-      AmazonAthenaPlatform.parseStruct(str),
-    ];
+  private mapFieldNameToTypes: Map<FieldName, ResourceTypeID[]>;
 
-    const arrayParse = (arr: ParsedStruct[], key: string): ParsedStruct[] => {
-      return arr.map(a => {
-        if (typeof a?.[key] === 'undefined' && a?.$$array$$) {
-          return arrayParse(a.$$array$$ as ParsedStruct[], key);
-        }
-        return a[key];
-      }).flat(20) as ParsedStruct[];
-    };
+  private result: ParsedResult = {};
 
-    fieldsNames.forEach((key) => {
-      let newPointers: any = [];
-      pointers.forEach((pointer: any) => {
-        if (!pointer) {
-          return;
+  private parse(
+    obj: Record<string, unknown>,
+    kp = '',
+  ) {
+    let result: string[] = [];
+    const nonArrayResult = iterateObjectsRecursively(obj, kp, {
+      onIteration: (keyPath, key, value, prevKeyPath) => {
+        if (this.fieldsNames.has(keyPath)) {
+          const types = this.mapFieldNameToTypes.get(keyPath)!;
+          types.forEach(t => {
+            if (typeof this.result[t] === 'undefined') {
+              this.result[t] = {};
+            }
+            this.addValueToResource(this.result[t], keyPath, (value as any).$$value$$);
+          });
         }
-        if (!pointer.$$array$$) {
-          return newPointers.push(pointer[key]);
+        if (key === '$$array$$') {
+          (value as Record<string, unknown>[]).forEach((o) => {
+            result = [
+              ...result,
+              ...this.parse(o, prevKeyPath),
+            ];
+          });
         }
-        newPointers = [
-          ...newPointers,
-          ...arrayParse(pointer.$$array$$, key),
-        ];
-      });
-      pointers = newPointers;
+        return key !== '$$value$$' && key !== '$$array$$';
+      },
     });
-
-    return Array.from(
-      new Set(
-        pointers.reduce((result: string[], current: ParsedStruct) => {
-          if (typeof current?.$$value$$ === 'string') {
-            result.push(AmazonAthenaPlatform.repairStrWithReplacements(current.$$value$$));
-          }
-          return result;
-        }, [] as string[]),
-      ),
-    );
+    return [
+      ...result,
+      ...nonArrayResult,
+    ];
   }
 
-  async parseResponse(response: AthenaQueryResults): Promise<ParsedResult> {
+  async parseResponse(response: AthenaQueryResults, tabInfo: BrowserTabInfo): Promise<ParsedResult> {
     const id = uuid();
-    loggers.debug().log('started parse response...', id, this.watchingResources);
+    const watchingResources = this.getWatchers(tabInfo);
+    const { fields } = this;
+    loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
-    const result: ParsedResult = {};
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    this.result = {};
+    this.mapFieldNameToTypes = mapFieldNameToTypes;
+    this.fieldsNames = fieldsNames;
 
     (response?.ResultSet?.Rows || []).slice(1).forEach((row) => {
       ((row || {}).Data || []).forEach((data, index) => {
@@ -256,35 +243,30 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
         if (!label) {
           return;
         }
+        fields.add(label);
         const value = Object.values(data || {})[0];
         if (!value) {
           return;
         }
 
-        Array.from(fieldsNames).forEach(fn => {
-          const [fieldName, parts] = AmazonAthenaPlatform.normalizeFieldName(fn);
-          if (label === fieldName) {
-            const types = mapFieldNameToTypes.get(fn)!;
-            types.forEach(t => {
-              if (typeof result[t] === 'undefined') {
-                result[t] = {};
-              }
-              if (parts.length > 0) {
-                AmazonAthenaPlatform.parse(value, parts.join('.')).forEach(v => {
-                  this.addValueToResource(result[t], fn, v);
-                });
-              } else {
-                this.addValueToResource(result[t], fieldName, value);
-              }
-            });
-          }
-        });
+        if (fieldsNames.has(label)) {
+          const types = mapFieldNameToTypes.get(label)!;
+          types.forEach(t => {
+            if (typeof this.result[t] === 'undefined') {
+              this.result[t] = {};
+            }
+            this.addValueToResource(this.result[t], label, value);
+          });
+        }
+
+        this.parse(AmazonAthenaPlatform.parseStruct(value), label)
+          .forEach(fn => fields.add(fn));
       });
     });
 
-    loggers.debug().log('finished parse response', id, result);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, this.result);
 
-    return result;
+    return this.result;
   }
 
   static id = PlatformID.Athena;
@@ -372,27 +354,40 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
 
             AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
+            const url = details.url;
+            const cacheID = url;
+
             http.post(
               {
-                url: details.url,
+                url,
                 body: bodyStr,
                 headers,
               },
               {
                 onJSONSuccess: async (response: any) => {
+                  const resources = normalizeParsedResources(
+                    await this.parseResponse(response, {
+                      origin: new URL(details.url).origin,
+                      id: details.tabId,
+                    }),
+                  );
                   AbstractBackgroundPlatform.sendParsedData(
                     details.tabId,
-                    await this.parseResponse(response),
+                    {
+                      cacheID,
+                      resources,
+                      fieldsNames: [...this.fields],
+                    },
                     true,
                   );
-                  this.lastResponse = response;
+                  this.lastResponse.set(cacheID, response);
                   removeAttached();
                 },
                 onError: e => {
                   loggers
                     .error()
                     .addPrefix('failed webRequest post')
-                    .log(e, details.method, details.url, bodyStr);
+                    .log(e, details.method, url, bodyStr);
                   removeAttached();
                 },
               },
@@ -405,7 +400,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as WatchingResources;
+    this.watchingResources = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',

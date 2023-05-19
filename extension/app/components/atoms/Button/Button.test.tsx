@@ -1,6 +1,4 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { describe, test } from '@jest/globals';
 import { Button } from './Button';
 import { fireEvent, render, screen } from '@testing-library/react';
 

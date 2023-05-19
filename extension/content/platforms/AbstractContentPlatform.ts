@@ -26,6 +26,8 @@ export abstract class AbstractContentPlatform implements ContentPlatform {
 
   abstract getName(): PlatformName;
 
+  fields = new Set<string>();
+
   protected static processInlineListeners(message: ExtensionMessage) {
     if (isMessageMatched(
       () => MessageToContent.CSModifyQuery === message.type,

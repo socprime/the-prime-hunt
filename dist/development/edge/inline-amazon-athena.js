@@ -10,7 +10,7 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
@@ -53,6 +53,13 @@ const isDate = (value) => {
         : value).getTime() > 567982800000;
 };
 exports.isDate = isDate;
+const isObject = (obj) => {
+    return typeof obj === 'object'
+        && !Array.isArray(obj)
+        && obj !== null
+        && typeof obj !== 'function';
+};
+exports.isObject = isObject;
 
 
 /***/ }),
@@ -61,7 +68,7 @@ exports.isDate = isDate;
 /*!***************************!*\
   !*** ./common/helpers.ts ***!
   \***************************/
-/***/ (function(__unused_webpack_module, exports) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -74,7 +81,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -209,6 +217,32 @@ const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.sleep = sleep;
+const iterateObjectsRecursively = (obj, keyPath, settings) => {
+    const { separator = '.', onIteration } = settings || {};
+    return Object.keys(obj || {}).reduce((result, key) => {
+        const path = keyPath.length ? `${keyPath}${separator}${key}` : key;
+        const value = obj[key];
+        if (typeof onIteration === 'function' && !(onIteration === null || onIteration === void 0 ? void 0 : onIteration(path, key, value, keyPath))) {
+            return keyPath.length ? [...result, keyPath] : result;
+        }
+        return [
+            ...result,
+            ...((0, checkers_1.isObject)(value)
+                ? (0, exports.iterateObjectsRecursively)(value, path, settings)
+                : [path]),
+        ];
+    }, []);
+};
+exports.iterateObjectsRecursively = iterateObjectsRecursively;
+const getUrlParamsSafe = (url, paramName) => {
+    try {
+        return new URL(url)[paramName] || '';
+    }
+    catch (e) {
+        return '';
+    }
+};
+exports.getUrlParamsSafe = getUrlParamsSafe;
 
 
 /***/ }),
@@ -273,6 +307,7 @@ var MessageToApp;
 (function (MessageToApp) {
     MessageToApp["AppShowExtension"] = "AppShowExtension";
     MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
+    MessageToApp["AppSyncWatchers"] = "AppSyncWatchers";
     MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
     MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
     MessageToApp["AppQueryHasSpecifyFields"] = "AppQueryHasSpecifyFields";
@@ -757,7 +792,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.2.5";
+exports.version = "1.3.0";
 
 
 /***/ }),
@@ -947,6 +982,9 @@ const content_services_1 = __webpack_require__(/*! ../services/content-services 
 const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 const types_background_messages_1 = __webpack_require__(/*! ../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 class AbstractContentPlatform {
+    constructor() {
+        this.fields = new Set();
+    }
     static processInlineListeners(message) {
         if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
             (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
@@ -1561,8 +1599,7 @@ window.addEventListener('message', (event) => {
         if (!editor) {
             return;
         }
-        const matchedValues = Array.from(editor
-            .getValue()
+        const matchedValues = Array.from((editor.getValue() || '')
             .matchAll(hasFieldSpecificationRegExp) || []);
         const prefix = matchedValues[0][0];
         let value = editor.getValue();
@@ -1573,6 +1610,7 @@ window.addEventListener('message', (event) => {
     }
 });
 const checkFieldSpecification = () => {
+    var _a;
     const editor = getEditor();
     if (!editor) {
         return;
@@ -1580,7 +1618,7 @@ const checkFieldSpecification = () => {
     const matchedValues = Array.from(editor
         .getValue()
         .matchAll(hasFieldSpecificationRegExp) || []);
-    const matched = (matchedValues[0][0] || '')
+    const matched = (((_a = matchedValues === null || matchedValues === void 0 ? void 0 : matchedValues[0]) === null || _a === void 0 ? void 0 : _a[0]) || '')
         .replace(/SELECT/i, '')
         .replace(/FROM/i, '')
         .replace(/ +/i, '')

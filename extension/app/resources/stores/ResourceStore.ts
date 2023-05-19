@@ -16,6 +16,7 @@ import {
   TabName,
 } from '../resources-types';
 import { WatchingResources } from '../../../background/types/types-background-common';
+import { Url } from '../../../../common/types';
 
 export class ResourceStore {
   private readonly rootStore: RootStore;
@@ -28,6 +29,9 @@ export class ResourceStore {
     this.rootStore = rootStore;
     makeObservable(this);
   }
+
+  @observable
+  public cacheID: Url;
 
   @observable
   public resources: Resources = {
@@ -203,6 +207,20 @@ export class ResourceStore {
     this.refreshResources();
   }
 
+  setWatchers(watchers: WatchingResources) {
+    Object.keys(watchers).forEach(typeID => {
+      this.addTab(typeID);
+      let currentFieldsNames = Object.keys(this.resources[typeID] || {});
+      watchers[typeID].forEach(fieldName => {
+        this.addField(fieldName, false, typeID);
+        currentFieldsNames = currentFieldsNames.filter(fn => fn !== fieldName);
+      });
+      currentFieldsNames.forEach(fn => {
+        this.removeField(fn, false, typeID);
+      });
+    });
+  }
+
   saveWatchers(
     messageId?: string,
   ) {
@@ -216,6 +234,7 @@ export class ResourceStore {
       type: MessageToBackground.BGSetWatchers,
       payload: {
         platformID,
+        cacheID: this.cacheID,
         watchers: setWatchers(
           Object.keys(this.resources).reduce((watchingResources, typeID) => {
             watchingResources[typeID] = Object.keys(this.resources[typeID]);

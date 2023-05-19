@@ -12,6 +12,34 @@ export const integrationsStorageKey = 'the-prime-hunt--extension--integrations';
 
 export const versionStorageKey = 'the-prime-hunt--extension--version';
 
+export const fieldsNamesStorageKey = 'the-prime-hunt--extension--fields';
+
+export const setFieldsNames = (fields: string[]): string[] => {
+  localStorage.setItem(
+    fieldsNamesStorageKey,
+    JSON.stringify({
+      fields,
+      time: new Date().toString(),
+    }),
+  );
+  return fields;
+};
+
+const oneDay = 1000 * 60 * 60 * 24;
+
+export const getFieldsNames = () => {
+  try {
+    const data = JSON.parse(localStorage.getItem(fieldsNamesStorageKey) || '');
+    data.time = new Date(data.time);
+    if ((new Date()).getTime() - data.time.getTime() >= oneDay) {
+      return setFieldsNames([]);
+    }
+    return data.fields;
+  } catch (e) {
+    return setFieldsNames([]);
+  }
+};
+
 export const setWatchers = (watchers: WatchingResources): WatchingResources => {
   localStorage.setItem(
     watchersLocalStorageKey,

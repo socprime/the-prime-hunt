@@ -1,5 +1,5 @@
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
-import { PlatformID, PlatformName } from '../../common/types/types-common';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
 import { setBGInterceptor } from '../services/background-services-listeners';
 import { BGListenerType, WatchingResources } from '../types/types-background-common';
 import { http } from '../../../common/Http';
@@ -10,6 +10,7 @@ import { FieldName, ParsedResult } from '../../app/resources/resources-types';
 import { isAllowedProtocol } from '../../../common/checkers';
 import { mode } from '../../common/envs';
 import { Loggers } from '../../common/loggers';
+import { normalizeParsedResources } from '../services/background-services';
 
 let loggers: Loggers;
 
@@ -32,7 +33,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as WatchingResources;
+    this.watchingResources = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',
@@ -49,14 +50,19 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return PlatformName.Splunk;
   }
 
-  private parseSummary(response: SummaryResponse): ParsedResult {
+  private parseSummary(response: SummaryResponse, watchingResources: WatchingResources): ParsedResult {
     const result: ParsedResult = {};
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     const fields = response?.fields || {} as SummaryFields;
 
-    if (Object.keys(fields).length > 0) {
+    const watchingFieldsNames = this.fields;
+
+    const receivedFieldsNames = Object.keys(fields) || [];
+    receivedFieldsNames.forEach((fn) => watchingFieldsNames.add(fn));
+
+    if (receivedFieldsNames.length > 0) {
       Array.from(fieldsNames).forEach(fieldName => {
         if (fields?.[fieldName]) {
           const distinctValues = fields[fieldName]?.modes?.map(m => m?.value) || [];
@@ -79,10 +85,14 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  private parseStatistic(response: StatisticResponse): ParsedResult {
+  private parseStatistic(response: StatisticResponse, watchingResources: WatchingResources): ParsedResult {
     const result: ParsedResult = {};
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const watchingFieldsNames = this.fields;
+    (response?.fields || []).forEach(({ name }) => {
+      watchingFieldsNames.add(name);
+    });
 
     (response?.rows || []).forEach(row => {
       row.forEach((fieldsValues, index) => {
@@ -109,15 +119,16 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  async parseResponse(response: SummaryResponse | StatisticResponse) {
+  async parseResponse(response: SummaryResponse | StatisticResponse, tabInfo: BrowserTabInfo) {
     const id = uuid();
-    loggers.debug().log('started parse response...', id, this.watchingResources);
+    const watchingResources = this.getWatchers(tabInfo);
+    loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
     const parsedResult = (response as StatisticResponse)?.rows
-      ? this.parseStatistic(response as StatisticResponse)
-      : this.parseSummary(response as SummaryResponse);
+      ? this.parseStatistic(response as StatisticResponse, watchingResources)
+      : this.parseSummary(response as SummaryResponse, watchingResources);
 
-    loggers.debug().log('finished parse response', id, parsedResult);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, parsedResult);
 
     return parsedResult;
   }
@@ -167,12 +178,15 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
               urlsProcessing.delete(urlDetails.href);
             };
 
+            const url = urlDetails.href;
+            const cacheID = url;
+
             const getData = (isFirst = false) => {
               SplunkPlatform.sendLoading(details.tabId, true);
               const totalRequests = countRequests;
               http.get(
                 {
-                  url: urlDetails.href,
+                  url,
                   headers: details.requestHeaders!.reduce((res: any, header: any) => {
                     res[header.name] = header.value;
                     return res;
@@ -180,12 +194,22 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                 },
                 {
                   onJSONSuccess: async (response: any) => {
+                    const resources = normalizeParsedResources(
+                      await this.parseResponse(response, {
+                        origin: new URL(details.url).origin,
+                        id: details.tabId,
+                      }),
+                    );
                     SplunkPlatform.sendParsedData(
                       details.tabId,
-                      await this.parseResponse(response),
+                      {
+                        cacheID,
+                        fieldsNames: [...this.fields],
+                        resources,
+                      },
                       isFirst,
                     );
-                    this.lastResponse = response;
+                    this.lastResponse.set(cacheID, response);
                     timeoutID = setTimeout(() => {
                       if (countRequests > totalRequests) {
                         getData();
@@ -195,7 +219,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                     }, 3000);
                   },
                   onError: (e) => {
-                    loggers.error().log(e, details.url);
+                    loggers.error().log(e, url);
                     clearTimeout(timeoutID);
                     cleanArtifacts();
                     SplunkPlatform.sendLoading(details.tabId, false);
@@ -256,12 +280,15 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
               urlsProcessing.delete(urlDetails.href);
             };
 
+            const url = urlDetails.href;
+            const cacheID = url;
+
             const getData = (isFirst = false) => {
               AbstractBackgroundPlatform.sendLoading(details.tabId, true);
               const totalRequests = countRequests;
               http.get(
                 {
-                  url: urlDetails.href,
+                  url,
                   headers: details.requestHeaders!.reduce((res: any, header: any) => {
                     res[header.name] = header.value;
                     return res;
@@ -269,12 +296,22 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                 },
                 {
                   onJSONSuccess: async (response: any) => {
+                    const resources = normalizeParsedResources(
+                      await this.parseResponse(response, {
+                        origin: new URL(details.url).origin,
+                        id: details.tabId,
+                      }),
+                    );
                     SplunkPlatform.sendParsedData(
                       details.tabId,
-                      await this.parseResponse(response),
+                      {
+                        cacheID,
+                        fieldsNames: [...this.fields],
+                        resources,
+                      },
                       isFirst,
                     );
-                    this.lastResponse = response;
+                    this.lastResponse.set(cacheID, response);
                     timeoutID = setTimeout(() => {
                       if (countRequests > totalRequests) {
                         getData();
@@ -284,7 +321,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                     }, 3000);
                   },
                   onError: (e) => {
-                    loggers.error().log(e, details.url);
+                    loggers.error().log(e, url);
                     clearTimeout(timeoutID);
                     cleanArtifacts();
                     AbstractBackgroundPlatform.sendLoading(details.tabId, false);

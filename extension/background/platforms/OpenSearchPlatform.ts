@@ -1,15 +1,21 @@
-import getValue from 'get-value';
 import { Loggers } from '../../common/loggers';
 import { AbstractBackgroundPlatform } from './AbstractBackgroundPlatform';
-import { BGListenerType, WatchingResources } from '../types/types-background-common';
+import { BGListenerType } from '../types/types-background-common';
 import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
-import { PlatformID, PlatformName } from '../../common/types/types-common';
+import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/types-common';
 import { Url } from '../../../common/types';
 import { setBGInterceptor } from '../services/background-services-listeners';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { http } from '../../../common/Http';
-import { clearExtraSpaces, parseJSONSafe, splitByLines, uuid } from '../../../common/helpers';
+import {
+  clearExtraSpaces,
+  iterateObjectsRecursively,
+  parseJSONSafe,
+  splitByLines,
+  uuid,
+} from '../../../common/helpers';
+import { normalizeParsedResources } from '../services/background-services';
 
 let loggers: Loggers;
 
@@ -27,7 +33,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
 
   constructor() {
     super();
-    this.watchingResources = {} as WatchingResources;
+    this.watchingResources = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',
@@ -65,18 +71,27 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
       }, 3500);
     }
 
+    const watchingFieldsNames = this.fields;
+
     // TODO DRY with elastic
     (response?.rawResponse?.hits?.hits || []).forEach(({ fields, _source }) => {
       Array.from(fieldsNames).forEach(fieldName => {
         let fieldValue: string | number | (number | string)[] = undefined as any;
 
         if (fields && typeof fields[fieldName] !== 'undefined') {
+          Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
           fieldValue = fields[fieldName];
         }
 
-        const valueFormSource = getValue(_source || {}, fieldName);
-        if (typeof valueFormSource !== 'undefined') {
-          fieldValue = valueFormSource;
+        if (!fieldValue && _source) {
+          iterateObjectsRecursively(_source, '', {
+            onIteration: (keyPath, key, value) => {
+              if (keyPath === fieldName) {
+                fieldValue = value as string;
+              }
+              return true;
+            },
+          }).forEach((fn) => watchingFieldsNames.add(fn));
         }
 
         if (typeof fieldValue === 'undefined') {
@@ -101,7 +116,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  async parseResponse(response: object | string): Promise<ParsedResult> {
+  async parseResponse(response: object | string, tabInfo: BrowserTabInfo): Promise<ParsedResult> {
     const decompressedResponse = OpenSearchPlatform.decompress(response as string);
 
     const lines = splitByLines(decompressedResponse, true);
@@ -113,9 +128,10 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
     }
 
     const id = uuid();
-    loggers.debug().log('started parse response...', id, this.watchingResources, this.isRunningResponse);
+    const watchingResources = this.getWatchers(tabInfo);
+    loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(this.watchingResources);
+    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     const results = await Promise.all(
       lines.map(line => this.parseResponseStringObject(
@@ -144,7 +160,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
       });
     });
 
-    loggers.debug().log('finished parse response', id, result, this.isRunningResponse);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
 
     return result;
   }
@@ -219,9 +235,12 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
 
             AbstractBackgroundPlatform.sendLoading(tabID, true);
 
+            const url = urlDetails.href;
+            const cacheID = url;
+
             http.post(
               {
-                url: urlDetails.href,
+                url,
                 body: bodyBytes,
                 headers: details.requestHeaders!.reduce((res: any, header: any) => {
                   res[header.name] = header.value;
@@ -230,19 +249,29 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
               },
               {
                 onTextSuccess: async (response: string) => {
+                  const resources = normalizeParsedResources(
+                    await this.parseResponse(response, {
+                      origin: new URL(details.url).origin,
+                      id: details.tabId,
+                    }),
+                  );
                   AbstractBackgroundPlatform.sendParsedData(
                     tabID,
-                    await this.parseResponse(response),
+                    {
+                      resources,
+                      cacheID,
+                      fieldsNames: [...this.fields],
+                    },
                     !this.isRunningResponse,
                   );
-                  this.lastResponse = response;
+                  this.lastResponse.set(cacheID, response);
                   removeAttached();
                 },
                 onError: (e: Error) => {
                   loggers
                     .error()
                     .addPrefix('failed webRequest post')
-                    .log(e, details.method, details.url, bodyStr);
+                    .log(e, details.method, url, bodyStr);
                   removeAttached();
                 },
               },
