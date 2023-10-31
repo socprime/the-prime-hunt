@@ -5,7 +5,14 @@ type IntegrationID = 'virus-total'
 | '$echo-trail'
 | '$ultimate-windows-security'
 | '$cyber-chef$'
-| '$cyber-chef-magic$';
+| '$cyber-chef-magic$'
+| 'abuse-ipdb'
+| 'url-haus'
+| 'malware-bazaar-md5'
+| 'malware-bazaar-sha256'
+| 'threat-fox-iocs'
+| 'feodo-tracker-c&c'
+| 'shodan';
 
 export type Integration = {
   id: IntegrationID;

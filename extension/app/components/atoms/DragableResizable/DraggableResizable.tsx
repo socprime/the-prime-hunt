@@ -4,7 +4,16 @@ import { createClassName } from '../../../../common/common-helpers';
 import { Position } from '../../../../content/types/types-content-common';
 import './draggable-resizable.scss';
 
-export type ChangesType = 'move' | 'resize-top' | 'resize-bottom' | 'resize-left' | 'resize-right';
+export type ChangesType =
+  | 'move'
+  | 'resize-top'
+  | 'resize-top-left'
+  | 'resize-top-right'
+  | 'resize-bottom'
+  | 'resize-bottom-left'
+  | 'resize-bottom-right'
+  | 'resize-left'
+  | 'resize-right';
 
 export type DraggableResizableProps = {
   position: Position;
@@ -121,7 +130,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
 
   const getCheckedWidth = useCallback((width: number) => (minWidth && width < minWidth) ? minWidth : width, [minWidth]);
   const getCheckedHeight = useCallback((height: number) => (minHeight && height < minHeight) ? minHeight : height, [minHeight]);
-  
+
   const calculateOnMove = useCallback((
     e: React.MouseEvent | MouseEvent,
     oldPosition: Position,
@@ -237,6 +246,138 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ref={ref}
       style={elementPosition}
     >
+      <div
+        className="resizer resizer-top-left"
+        onMouseDown={e => {
+          const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
+            const x = calculateOnResizeLeft(event, pos);
+            const y = calculateOnResizeTop(event, pos);
+            return {
+              top: y.top,
+              left: x.left,
+              width: x.width,
+              height: y.height,
+            };
+          };
+
+          onResizeHandler(
+            e,
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onChangedPositionCallback('resize-top-left', newPosition, prev);
+                return newPosition;
+              });
+            },
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onMouseUpCallback(newPosition);
+                return newPosition;
+              });
+            },
+          );
+        }}
+      ></div>
+      <div
+        className="resizer resizer-top-right"
+        onMouseDown={e => {
+          const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
+            const x = calculateOnResizeRight(event, pos);
+            const y = calculateOnResizeTop(event, pos);
+            return {
+              top: y.top,
+              left: x.left,
+              width: x.width,
+              height: y.height,
+            };
+          };
+
+          onResizeHandler(
+            e,
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onChangedPositionCallback('resize-top-right', newPosition, prev);
+                return newPosition;
+              });
+            },
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onMouseUpCallback(newPosition);
+                return newPosition;
+              });
+            },
+          );
+        }}
+      ></div>
+      <div
+        className="resizer resizer-bottom-right"
+        onMouseDown={e => {
+          const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
+            const x = calculateOnResizeRight(event, pos);
+            const y = calculateOnResizeBottom(event, pos);
+            return {
+              top: y.top,
+              left: x.left,
+              width: x.width,
+              height: y.height,
+            };
+          };
+
+          onResizeHandler(
+            e,
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onChangedPositionCallback('resize-bottom-right', newPosition, prev);
+                return newPosition;
+              });
+            },
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onMouseUpCallback(newPosition);
+                return newPosition;
+              });
+            },
+          );
+        }}
+      ></div>
+      <div
+        className="resizer resizer-bottom-left"
+        onMouseDown={e => {
+          const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
+            const x = calculateOnResizeLeft(event, pos);
+            const y = calculateOnResizeBottom(event, pos);
+            return {
+              top: y.top,
+              left: x.left,
+              width: x.width,
+              height: y.height,
+            };
+          };
+
+          onResizeHandler(
+            e,
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onChangedPositionCallback('resize-bottom-left', newPosition, prev);
+                return newPosition;
+              });
+            },
+            (event) => {
+              setElementPosition(prev => {
+                const newPosition = calcNewPosition(event, prev);
+                onMouseUpCallback(newPosition);
+                return newPosition;
+              });
+            },
+          );
+        }}
+      ></div>
       <div
         className="resizer resizer-top"
         onMouseDown={e => {

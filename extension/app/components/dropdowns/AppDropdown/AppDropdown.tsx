@@ -20,7 +20,9 @@ export type AppDropdownProps = DropdownProps;
 
 export type AppDropdownRefs = DropdownForwardRef;
 
-export const AppDropdown = observer(forwardRef<DropdownForwardRef, PropsWithChildren<AppDropdownProps>>(({
+export const AppDropdown = observer(forwardRef<
+  DropdownForwardRef, PropsWithChildren<AppDropdownProps>
+>(({
   className = '',
   classNameMenu = '',
   children,
@@ -49,7 +51,6 @@ export const AppDropdown = observer(forwardRef<DropdownForwardRef, PropsWithChil
       return dropdownMenuRef;
     },
   }));
-
 
   useEffect(() => {
     const dropdownMenu = dropdownMenuRef?.current;
@@ -81,7 +82,6 @@ export const AppDropdown = observer(forwardRef<DropdownForwardRef, PropsWithChil
     }
     return styles;
   }, [getMenuStyles]);
-
 
   const getMenuStylesCallback = useCallback(() => {
     const width = undefined;
@@ -139,8 +139,8 @@ export const AppDropdown = observer(forwardRef<DropdownForwardRef, PropsWithChil
         const dropdownMenu = dropdownMenuRef?.current;
         if (!direction && dropdownMenu && rootElement) {
           if (
-            dropdownMenu.getBoundingClientRect().bottom >
-              rootElement.getBoundingClientRect().bottom
+            dropdownMenu.getBoundingClientRect().bottom
+              > rootElement.getBoundingClientRect().bottom
           ) {
             dropdownMenu.classList.add('hide');
             setCalculatedDirection(calculatedDirection === 'up' ? 'down' : 'up');

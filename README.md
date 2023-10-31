@@ -84,7 +84,7 @@ yarn extension --mode=development|production
 ```
 
 ## How to Use
-1. Go to your SIEM/EDR/XDR environment and start the extension from the Extensions panel next to the address bar. You can resize the extension's window by dragging its edges. To move the window, hover over the extension's name or the window's edge and drag it.
+1. Go to your SIEM/EDR/XDR environment and start the extension from the Extensions panel next to the address bar. You can resize the extension window both horizontally and vertically by dragging its edges. To move the window, hover over the extension's name or the window's edge and drag it.
 
 **Note:**  
 The position and size of the extension's window are stored as the `the-prime-hunt--extension--position` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), the default position and size are used.
@@ -119,7 +119,7 @@ In Amazon Athena, if the extension detects that your query includes a select sta
 - Click the **Include** button to include the selected accounts/assets in the search
 - Click the **Exclude** button to exclude the selected accounts/assets from the search
 - Click the **Show All Events** button to search for all events that involve the selected accounts/assets
-- Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, and Ultimate Windows Security
+- Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include: VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, Ultimate Windows Security, AbuseIPDB, URLhaus (by Abuse.ch), MalwareBazaar MD5 (by Abuse.ch), MalwareBazaar SHA256 (by Abuse.ch), ThreatFox IOCs (by Abuse.ch), FeodoTracker C&C (by Abuse.ch), Shodan
 
 ![Bulk action buttons](.readme/bulk-action_buttons.png)
 
@@ -190,9 +190,9 @@ The Prime Hunt browser extension is licensed as [LGPL v3](LICENSE.md).
 ## TODO List
 1. Add more SIEM/EDR/XDR technologies supported by Sigma.
 2. Add more integrations:
-- Uncoder.IO, CTI.uncoder.io, tdm.socprime.com, and SigmaHQ
+- Uncoder.IO, tdm.socprime.com, and SigmaHQ
 - Sigma Rules Bot for Threat Bounty (Slackbot) API for Sigma rules quality check, easy code updates, spell check, collaboration, false-positives, and filters sharing
 - socprime.com search engine for Sigma rule source, context, and timeline overview
 - Qualys, Tenable, NVD for CVE lookup
-- Shodan, GreyNoise, PolySwarm
+- GreyNoise, PolySwarm
 - Jira, SNOW

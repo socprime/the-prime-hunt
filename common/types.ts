@@ -3,6 +3,8 @@ export enum Mode {
   development = 'development',
 }
 
+export type SortOrder = 'ascending' | 'descending';
+
 export type Url = string;
 export type SHA256 = string;
 export type UniqueHash = string;

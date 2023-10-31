@@ -1,4 +1,5 @@
 import { isObject } from './checkers';
+import { SortOrder } from './types';
 
 export const isFlatObjectsEqual = (
   obj1: Record<string, unknown>,
@@ -9,7 +10,7 @@ export const isFlatObjectsEqual = (
   if (keysObj1.length !== keysObj2.length) {
     return false;
   }
-  return !keysObj1.some(key => obj1[key] !== obj2[key]);
+  return !keysObj1.some((key) => obj1[key] !== obj2[key]);
 };
 
 export const uuid = (): string => {
@@ -30,7 +31,7 @@ export const splitByLines = (str: string, removeEmpty = false): string[] => {
   let res = str.split(regexp);
 
   if (removeEmpty) {
-    res = res.filter(r => r && r !== '\r\n' && r !== '\n' && r !== '\r');
+    res = res.filter((r) => r && r !== '\r\n' && r !== '\n' && r !== '\r');
   }
 
   return res;
@@ -62,14 +63,12 @@ export const formatString = (
   keyFormat?: (v: string) => string,
 ) :string => {
   return Object.keys(parts || {})
-    .map(name => ({
+    .map((name) => ({
       value: parts![name],
       key: keyFormat ? keyFormat(name) : `%${name}`,
     }))
     .reduce((result, d) => {
-      return result.replace(
-        new RegExp(d.key, 'g'), d.value,
-      );
+      return result.replace(new RegExp(d.key, 'g'), d.value);
     }, pattern) || pattern;
 };
 
@@ -114,13 +113,13 @@ export const formatDate = (
   data: Date,
 ): string => {
   return formatString(pattern, {
-    'Y': String(data.getFullYear()),
-    'M': formatBinaryDate(data.getMonth() + 1),
-    'm': formatBinaryDate(data.getMinutes()),
-    's': formatBinaryDate(data.getSeconds()),
-    'ms': formatBinaryDate(data.getMilliseconds()),
-    'd': formatBinaryDate(data.getDate()),
-    'h': formatBinaryDate(data.getHours()),
+    Y: String(data.getFullYear()),
+    M: formatBinaryDate(data.getMonth() + 1),
+    m: formatBinaryDate(data.getMinutes()),
+    s: formatBinaryDate(data.getSeconds()),
+    ms: formatBinaryDate(data.getMilliseconds()),
+    d: formatBinaryDate(data.getDate()),
+    h: formatBinaryDate(data.getHours()),
   });
 };
 
@@ -144,17 +143,25 @@ export const sortNumbers = (a: number, b: number) => {
   return 0;
 };
 
+export const sortStrings = (a: string, b: string, order: SortOrder = 'ascending'): number => {
+  const result = a.localeCompare(b);
+  if (result === 0 || order === 'ascending') {
+    return result;
+  }
+  return result === 1 ? -1 : 1;
+};
+
 export const indexOfAll = (str: string, search: string): number[] => {
   const indexes: number[] = [];
   let i = -1;
-  while ((i = str.indexOf(search, i + 1 )) >= 0) {
+  while ((i = str.indexOf(search, i + 1)) >= 0) {
     indexes.push(i);
   }
   return indexes;
 };
 
 export const sleep = async (sec: number) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(null);
     }, sec * 1000);
@@ -179,7 +186,7 @@ export const iterateObjectsRecursively = (
     const path = keyPath.length ? `${keyPath}${separator}${key}` : key;
     const value = obj[key];
     if (typeof onIteration === 'function' && !onIteration?.(path, key, value, keyPath)) {
-      return keyPath.length ? [ ...result, keyPath ] : result;
+      return keyPath.length ? [...result, keyPath] : result;
     }
     return [
       ...result,
@@ -198,4 +205,4 @@ export const getUrlParamsSafe = (url: unknown, paramName: string): string => {
   } catch (e) {
     return '';
   }
-}
+};

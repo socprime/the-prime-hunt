@@ -11,6 +11,39 @@
     background-color: transparent;
   }
 
+  > .resizer-top-left,
+  .resizer-top-right,
+  .resizer-bottom-left,
+  .resizer-bottom-right {
+    width: 8px;
+    height: 8px;
+    z-index: 3;
+  }
+
+  > .resizer-top-left {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+  }
+
+  > .resizer-top-right {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+  }
+
+  > .resizer-bottom-right {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+  }
+
+  > .resizer-bottom-left {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+  }
+
   > .resizer-top,
   > .resizer-bottom {
     height: 3px;

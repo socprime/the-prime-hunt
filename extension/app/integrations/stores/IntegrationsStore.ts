@@ -9,7 +9,7 @@ export class IntegrationsStore {
 
   @computed
   public get emptyIntegration() {
-    return this.integrations.some(i => !i.name || !i.url);
+    return this.integrations.some((i) => !i.name || !i.url);
   }
 
   private set() {
@@ -36,7 +36,7 @@ export class IntegrationsStore {
     const formatValue = (v: string) => `\\$${v}\\$`;
 
     if (url.indexOf('$BASE64-VALUE$') > -1) {
-      return values.map(value => {
+      return values.map((value) => {
         const hash = btoa(value)
           .replace(/=+/g, '');
 
@@ -61,7 +61,7 @@ export class IntegrationsStore {
       ];
     }
 
-    return values.map(value => {
+    return values.map((value) => {
       return encodeURI(formatString(url, { VALUE: value }, formatValue));
     });
   }

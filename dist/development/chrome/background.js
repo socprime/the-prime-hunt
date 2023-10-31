@@ -1,10 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/boolbase/index.js":
-/*!****************************************!*\
-  !*** ./node_modules/boolbase/index.js ***!
-  \****************************************/
+/***/ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js ***!
+  \**************************************************************************/
 /***/ ((module) => {
 
 module.exports = {
@@ -18,17 +18,17 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/cheerio-select/lib/helpers.js":
-/*!****************************************************!*\
-  !*** ./node_modules/cheerio-select/lib/helpers.js ***!
-  \****************************************************/
+/***/ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/helpers.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/helpers.js ***!
+  \********************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.groupSelectors = exports.getDocumentRoot = void 0;
-var positionals_js_1 = __webpack_require__(/*! ./positionals.js */ "./node_modules/cheerio-select/lib/positionals.js");
+var positionals_js_1 = __webpack_require__(/*! ./positionals.js */ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/positionals.js");
 function getDocumentRoot(node) {
     while (node.parent)
         node = node.parent;
@@ -54,10 +54,10 @@ exports.groupSelectors = groupSelectors;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio-select/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/cheerio-select/lib/index.js ***!
-  \**************************************************/
+/***/ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/index.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/index.js ***!
+  \******************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -107,14 +107,14 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.select = exports.filter = exports.some = exports.is = exports.aliases = exports.pseudos = exports.filters = void 0;
-var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/css-what/lib/es/index.js");
-var css_select_1 = __webpack_require__(/*! css-select */ "./node_modules/css-select/lib/index.js");
-var DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js"));
-var boolbase = __importStar(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
-var helpers_js_1 = __webpack_require__(/*! ./helpers.js */ "./node_modules/cheerio-select/lib/helpers.js");
-var positionals_js_1 = __webpack_require__(/*! ./positionals.js */ "./node_modules/cheerio-select/lib/positionals.js");
+var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js");
+var css_select_1 = __webpack_require__(/*! css-select */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/index.js");
+var DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js"));
+var boolbase = __importStar(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
+var helpers_js_1 = __webpack_require__(/*! ./helpers.js */ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/helpers.js");
+var positionals_js_1 = __webpack_require__(/*! ./positionals.js */ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/positionals.js");
 // Re-export pseudo extension points
-var css_select_2 = __webpack_require__(/*! css-select */ "./node_modules/css-select/lib/index.js");
+var css_select_2 = __webpack_require__(/*! css-select */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/index.js");
 Object.defineProperty(exports, "filters", ({ enumerable: true, get: function () { return css_select_2.filters; } }));
 Object.defineProperty(exports, "pseudos", ({ enumerable: true, get: function () { return css_select_2.pseudos; } }));
 Object.defineProperty(exports, "aliases", ({ enumerable: true, get: function () { return css_select_2.aliases; } }));
@@ -366,10 +366,10 @@ function filterElements(elements, sel, options) {
 
 /***/ }),
 
-/***/ "./node_modules/cheerio-select/lib/positionals.js":
-/*!********************************************************!*\
-  !*** ./node_modules/cheerio-select/lib/positionals.js ***!
-  \********************************************************/
+/***/ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/positionals.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/positionals.js ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -428,10 +428,10 @@ exports.getLimit = getLimit;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/api/attributes.js":
-/*!****************************************************!*\
-  !*** ./node_modules/cheerio/lib/api/attributes.js ***!
-  \****************************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/attributes.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/attributes.js ***!
+  \*******************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -443,9 +443,9 @@ exports.getLimit = getLimit;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toggleClass = exports.removeClass = exports.addClass = exports.hasClass = exports.removeAttr = exports.val = exports.data = exports.prop = exports.attr = void 0;
-var static_js_1 = __webpack_require__(/*! ../static.js */ "./node_modules/cheerio/lib/static.js");
-var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/cheerio/lib/utils.js");
-var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js");
+var static_js_1 = __webpack_require__(/*! ../static.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js");
+var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js");
+var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
 var hasOwn = Object.prototype.hasOwnProperty;
 var rspace = /\s+/;
 var dataAttrPrefix = 'data-';
@@ -1060,17 +1060,17 @@ exports.toggleClass = toggleClass;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/api/css.js":
-/*!*********************************************!*\
-  !*** ./node_modules/cheerio/lib/api/css.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/css.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/css.js ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.css = void 0;
-var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/cheerio/lib/utils.js");
+var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js");
 /**
  * Set multiple CSS properties for every matched element.
  *
@@ -1188,17 +1188,17 @@ function parse(styles) {
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/api/forms.js":
-/*!***********************************************!*\
-  !*** ./node_modules/cheerio/lib/api/forms.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/forms.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/forms.js ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.serializeArray = exports.serialize = void 0;
-var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/cheerio/lib/utils.js");
+var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js");
 /*
  * https://github.com/jquery/jquery/blob/2.1.3/src/manipulation/var/rcheckableType.js
  * https://github.com/jquery/jquery/blob/2.1.3/src/serialize.js
@@ -1290,10 +1290,10 @@ exports.serializeArray = serializeArray;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/api/manipulation.js":
-/*!******************************************************!*\
-  !*** ./node_modules/cheerio/lib/api/manipulation.js ***!
-  \******************************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/manipulation.js":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/manipulation.js ***!
+  \*********************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1314,11 +1314,11 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.clone = exports.text = exports.toString = exports.html = exports.empty = exports.replaceWith = exports.remove = exports.insertBefore = exports.before = exports.insertAfter = exports.after = exports.wrapAll = exports.unwrap = exports.wrapInner = exports.wrap = exports.prepend = exports.append = exports.prependTo = exports.appendTo = exports._makeDomArray = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
-var parse_js_1 = __webpack_require__(/*! ../parse.js */ "./node_modules/cheerio/lib/parse.js");
-var static_js_1 = __webpack_require__(/*! ../static.js */ "./node_modules/cheerio/lib/static.js");
-var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/cheerio/lib/utils.js");
-var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+var parse_js_1 = __webpack_require__(/*! ../parse.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parse.js");
+var static_js_1 = __webpack_require__(/*! ../static.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js");
+var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js");
+var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
 /**
  * Create an array of nodes, recursing into arrays and parsing strings if necessary.
  *
@@ -2161,10 +2161,10 @@ exports.clone = clone;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/api/traversing.js":
-/*!****************************************************!*\
-  !*** ./node_modules/cheerio/lib/api/traversing.js ***!
-  \****************************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/traversing.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/traversing.js ***!
+  \*******************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -2208,11 +2208,11 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.addBack = exports.add = exports.end = exports.slice = exports.index = exports.toArray = exports.get = exports.eq = exports.last = exports.first = exports.has = exports.not = exports.is = exports.filterArray = exports.filter = exports.map = exports.each = exports.contents = exports.children = exports.siblings = exports.prevUntil = exports.prevAll = exports.prev = exports.nextUntil = exports.nextAll = exports.next = exports.closest = exports.parentsUntil = exports.parents = exports.parent = exports.find = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
-var select = __importStar(__webpack_require__(/*! cheerio-select */ "./node_modules/cheerio-select/lib/index.js"));
-var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/cheerio/lib/utils.js");
-var static_js_1 = __webpack_require__(/*! ../static.js */ "./node_modules/cheerio/lib/static.js");
-var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+var select = __importStar(__webpack_require__(/*! cheerio-select */ "./node_modules/.pnpm/cheerio-select@2.1.0/node_modules/cheerio-select/lib/index.js"));
+var utils_js_1 = __webpack_require__(/*! ../utils.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js");
+var static_js_1 = __webpack_require__(/*! ../static.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js");
+var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
 var reSiblingSelector = /^\s*[~+]/;
 /**
  * Get the descendants of each element in the current set of matched elements,
@@ -3078,10 +3078,10 @@ exports.addBack = addBack;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/cheerio.js":
-/*!*********************************************!*\
-  !*** ./node_modules/cheerio/lib/cheerio.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/cheerio.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/cheerio.js ***!
+  \************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -3111,11 +3111,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Cheerio = void 0;
-var Attributes = __importStar(__webpack_require__(/*! ./api/attributes.js */ "./node_modules/cheerio/lib/api/attributes.js"));
-var Traversing = __importStar(__webpack_require__(/*! ./api/traversing.js */ "./node_modules/cheerio/lib/api/traversing.js"));
-var Manipulation = __importStar(__webpack_require__(/*! ./api/manipulation.js */ "./node_modules/cheerio/lib/api/manipulation.js"));
-var Css = __importStar(__webpack_require__(/*! ./api/css.js */ "./node_modules/cheerio/lib/api/css.js"));
-var Forms = __importStar(__webpack_require__(/*! ./api/forms.js */ "./node_modules/cheerio/lib/api/forms.js"));
+var Attributes = __importStar(__webpack_require__(/*! ./api/attributes.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/attributes.js"));
+var Traversing = __importStar(__webpack_require__(/*! ./api/traversing.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/traversing.js"));
+var Manipulation = __importStar(__webpack_require__(/*! ./api/manipulation.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/manipulation.js"));
+var Css = __importStar(__webpack_require__(/*! ./api/css.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/css.js"));
+var Forms = __importStar(__webpack_require__(/*! ./api/forms.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/api/forms.js"));
 var Cheerio = /** @class */ (function () {
     /**
      * Instance of cheerio. Methods are specified in the modules. Usage of this
@@ -3154,10 +3154,10 @@ Object.assign(Cheerio.prototype, Attributes, Traversing, Manipulation, Css, Form
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/cheerio/lib/index.js ***!
-  \*******************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js ***!
+  \**********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -3198,12 +3198,12 @@ exports.root = exports.parseHTML = exports.merge = exports.contains = exports.te
  *
  * @category Cheerio
  */
-__exportStar(__webpack_require__(/*! ./types.js */ "./node_modules/cheerio/lib/types.js"), exports);
-var load_js_1 = __webpack_require__(/*! ./load.js */ "./node_modules/cheerio/lib/load.js");
-var parse_js_1 = __webpack_require__(/*! ./parse.js */ "./node_modules/cheerio/lib/parse.js");
-var parse5_adapter_js_1 = __webpack_require__(/*! ./parsers/parse5-adapter.js */ "./node_modules/cheerio/lib/parsers/parse5-adapter.js");
-var dom_serializer_1 = __importDefault(__webpack_require__(/*! dom-serializer */ "./node_modules/dom-serializer/lib/index.js"));
-var htmlparser2_1 = __webpack_require__(/*! htmlparser2 */ "./node_modules/htmlparser2/lib/index.js");
+__exportStar(__webpack_require__(/*! ./types.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/types.js"), exports);
+var load_js_1 = __webpack_require__(/*! ./load.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/load.js");
+var parse_js_1 = __webpack_require__(/*! ./parse.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parse.js");
+var parse5_adapter_js_1 = __webpack_require__(/*! ./parsers/parse5-adapter.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parsers/parse5-adapter.js");
+var dom_serializer_1 = __importDefault(__webpack_require__(/*! dom-serializer */ "./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/index.js"));
+var htmlparser2_1 = __webpack_require__(/*! htmlparser2 */ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/index.js");
 var parse = (0, parse_js_1.getParse)(function (content, options, isDocument, context) {
     return options.xmlMode || options._useHtmlParser2
         ? (0, htmlparser2_1.parseDocument)(content, options)
@@ -3234,11 +3234,11 @@ exports.load = (0, load_js_1.getLoad)(parse, function (dom, options) {
  * @deprecated Use the function returned by `load` instead.
  */
 exports["default"] = (0, exports.load)([]);
-var static_js_1 = __webpack_require__(/*! ./static.js */ "./node_modules/cheerio/lib/static.js");
+var static_js_1 = __webpack_require__(/*! ./static.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js");
 Object.defineProperty(exports, "html", ({ enumerable: true, get: function () { return static_js_1.html; } }));
 Object.defineProperty(exports, "xml", ({ enumerable: true, get: function () { return static_js_1.xml; } }));
 Object.defineProperty(exports, "text", ({ enumerable: true, get: function () { return static_js_1.text; } }));
-var staticMethods = __importStar(__webpack_require__(/*! ./static.js */ "./node_modules/cheerio/lib/static.js"));
+var staticMethods = __importStar(__webpack_require__(/*! ./static.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js"));
 /**
  * In order to promote consistency with the jQuery library, users are encouraged
  * to instead use the static method of the same name.
@@ -3305,10 +3305,10 @@ exports.root = staticMethods.root;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/load.js":
-/*!******************************************!*\
-  !*** ./node_modules/cheerio/lib/load.js ***!
-  \******************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/load.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/load.js ***!
+  \*********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -3364,10 +3364,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getLoad = void 0;
-var options_js_1 = __importStar(__webpack_require__(/*! ./options.js */ "./node_modules/cheerio/lib/options.js"));
-var staticMethods = __importStar(__webpack_require__(/*! ./static.js */ "./node_modules/cheerio/lib/static.js"));
-var cheerio_js_1 = __webpack_require__(/*! ./cheerio.js */ "./node_modules/cheerio/lib/cheerio.js");
-var utils_js_1 = __webpack_require__(/*! ./utils.js */ "./node_modules/cheerio/lib/utils.js");
+var options_js_1 = __importStar(__webpack_require__(/*! ./options.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/options.js"));
+var staticMethods = __importStar(__webpack_require__(/*! ./static.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js"));
+var cheerio_js_1 = __webpack_require__(/*! ./cheerio.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/cheerio.js");
+var utils_js_1 = __webpack_require__(/*! ./utils.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js");
 function getLoad(parse, render) {
     /**
      * Create a querying function, bound to a document created from the provided markup.
@@ -3494,10 +3494,10 @@ function isNode(obj) {
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/options.js":
-/*!*********************************************!*\
-  !*** ./node_modules/cheerio/lib/options.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/options.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/options.js ***!
+  \************************************************************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -3545,18 +3545,18 @@ exports.flatten = flatten;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/parse.js":
-/*!*******************************************!*\
-  !*** ./node_modules/cheerio/lib/parse.js ***!
-  \*******************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parse.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parse.js ***!
+  \**********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.update = exports.getParse = void 0;
-var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js");
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 /**
  * Get the parse function with options.
  *
@@ -3633,10 +3633,10 @@ exports.update = update;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/parsers/parse5-adapter.js":
-/*!************************************************************!*\
-  !*** ./node_modules/cheerio/lib/parsers/parse5-adapter.js ***!
-  \************************************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parsers/parse5-adapter.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/parsers/parse5-adapter.js ***!
+  \***************************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -3652,9 +3652,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.renderWithParse5 = exports.parseWithParse5 = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
-var parse5_1 = __webpack_require__(/*! parse5 */ "./node_modules/parse5/dist/cjs/index.js");
-var parse5_htmlparser2_tree_adapter_1 = __webpack_require__(/*! parse5-htmlparser2-tree-adapter */ "./node_modules/parse5-htmlparser2-tree-adapter/dist/cjs/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+var parse5_1 = __webpack_require__(/*! parse5 */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/index.js");
+var parse5_htmlparser2_tree_adapter_1 = __webpack_require__(/*! parse5-htmlparser2-tree-adapter */ "./node_modules/.pnpm/parse5-htmlparser2-tree-adapter@7.0.0/node_modules/parse5-htmlparser2-tree-adapter/dist/cjs/index.js");
 /**
  * Parse the content with `parse5` in the context of the given `ParentNode`.
  *
@@ -3710,10 +3710,10 @@ exports.renderWithParse5 = renderWithParse5;
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/static.js":
-/*!********************************************!*\
-  !*** ./node_modules/cheerio/lib/static.js ***!
-  \********************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/static.js ***!
+  \***********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -3754,8 +3754,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.merge = exports.contains = exports.root = exports.parseHTML = exports.text = exports.xml = exports.html = void 0;
-var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js");
-var options_js_1 = __importStar(__webpack_require__(/*! ./options.js */ "./node_modules/cheerio/lib/options.js"));
+var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
+var options_js_1 = __importStar(__webpack_require__(/*! ./options.js */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/options.js"));
 /**
  * Helper function to render a DOM.
  *
@@ -3946,10 +3946,10 @@ function isArrayLike(item) {
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/types.js":
-/*!*******************************************!*\
-  !*** ./node_modules/cheerio/lib/types.js ***!
-  \*******************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/types.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/types.js ***!
+  \**********************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3959,17 +3959,17 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 /***/ }),
 
-/***/ "./node_modules/cheerio/lib/utils.js":
-/*!*******************************************!*\
-  !*** ./node_modules/cheerio/lib/utils.js ***!
-  \*******************************************/
+/***/ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/utils.js ***!
+  \**********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isHtml = exports.cloneDom = exports.domEach = exports.cssCase = exports.camelCase = exports.isCheerio = exports.isTag = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 /**
  * Check if the DOM element is a tag.
  *
@@ -3980,7 +3980,7 @@ var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhand
  * @param type - The DOM node to check.
  * @returns Whether the node is a tag.
  */
-var domhandler_2 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domhandler_2 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 Object.defineProperty(exports, "isTag", ({ enumerable: true, get: function () { return domhandler_2.isTag; } }));
 /**
  * Checks if an object is a Cheerio instance.
@@ -4091,10 +4091,10 @@ exports.isHtml = isHtml;
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/attributes.js":
-/*!***************************************************!*\
-  !*** ./node_modules/css-select/lib/attributes.js ***!
-  \***************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/attributes.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/attributes.js ***!
+  \***************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -4104,7 +4104,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.attributeRules = void 0;
-var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
+var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
 /**
  * All reserved characters in a regex, used for escaping.
  *
@@ -4337,10 +4337,10 @@ exports.attributeRules = {
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/compile.js":
-/*!************************************************!*\
-  !*** ./node_modules/css-select/lib/compile.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/compile.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/compile.js ***!
+  \************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -4373,11 +4373,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.compileToken = exports.compileUnsafe = exports.compile = void 0;
-var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/css-what/lib/es/index.js");
-var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
-var sort_js_1 = __importStar(__webpack_require__(/*! ./sort.js */ "./node_modules/css-select/lib/sort.js"));
-var general_js_1 = __webpack_require__(/*! ./general.js */ "./node_modules/css-select/lib/general.js");
-var subselects_js_1 = __webpack_require__(/*! ./pseudo-selectors/subselects.js */ "./node_modules/css-select/lib/pseudo-selectors/subselects.js");
+var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js");
+var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
+var sort_js_1 = __importStar(__webpack_require__(/*! ./sort.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/sort.js"));
+var general_js_1 = __webpack_require__(/*! ./general.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/general.js");
+var subselects_js_1 = __webpack_require__(/*! ./pseudo-selectors/subselects.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/subselects.js");
 /**
  * Compiles a selector to an executable function.
  *
@@ -4498,19 +4498,19 @@ function reduceRules(a, b) {
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/general.js":
-/*!************************************************!*\
-  !*** ./node_modules/css-select/lib/general.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/general.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/general.js ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.compileGeneralSelector = void 0;
-var attributes_js_1 = __webpack_require__(/*! ./attributes.js */ "./node_modules/css-select/lib/attributes.js");
-var index_js_1 = __webpack_require__(/*! ./pseudo-selectors/index.js */ "./node_modules/css-select/lib/pseudo-selectors/index.js");
-var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/css-what/lib/es/index.js");
+var attributes_js_1 = __webpack_require__(/*! ./attributes.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/attributes.js");
+var index_js_1 = __webpack_require__(/*! ./pseudo-selectors/index.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/index.js");
+var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js");
 function getElementParent(node, adapter) {
     var parent = adapter.getParent(node);
     if (parent && adapter.isTag(parent)) {
@@ -4656,10 +4656,10 @@ exports.compileGeneralSelector = compileGeneralSelector;
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/css-select/lib/index.js ***!
-  \**********************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/index.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/index.js ***!
+  \**********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -4692,10 +4692,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.aliases = exports.pseudos = exports.filters = exports.is = exports.selectOne = exports.selectAll = exports.prepareContext = exports._compileToken = exports._compileUnsafe = exports.compile = void 0;
-var DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js"));
-var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
-var compile_js_1 = __webpack_require__(/*! ./compile.js */ "./node_modules/css-select/lib/compile.js");
-var subselects_js_1 = __webpack_require__(/*! ./pseudo-selectors/subselects.js */ "./node_modules/css-select/lib/pseudo-selectors/subselects.js");
+var DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js"));
+var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
+var compile_js_1 = __webpack_require__(/*! ./compile.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/compile.js");
+var subselects_js_1 = __webpack_require__(/*! ./pseudo-selectors/subselects.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/subselects.js");
 var defaultEquals = function (a, b) { return a === b; };
 var defaultOptions = {
     adapter: DomUtils,
@@ -4812,7 +4812,7 @@ exports.is = is;
 exports["default"] = exports.selectAll;
 // Export filters, pseudos and aliases to allow users to supply their own.
 /** @deprecated Use the `pseudos` option instead. */
-var index_js_1 = __webpack_require__(/*! ./pseudo-selectors/index.js */ "./node_modules/css-select/lib/pseudo-selectors/index.js");
+var index_js_1 = __webpack_require__(/*! ./pseudo-selectors/index.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/index.js");
 Object.defineProperty(exports, "filters", ({ enumerable: true, get: function () { return index_js_1.filters; } }));
 Object.defineProperty(exports, "pseudos", ({ enumerable: true, get: function () { return index_js_1.pseudos; } }));
 Object.defineProperty(exports, "aliases", ({ enumerable: true, get: function () { return index_js_1.aliases; } }));
@@ -4820,10 +4820,10 @@ Object.defineProperty(exports, "aliases", ({ enumerable: true, get: function () 
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/pseudo-selectors/aliases.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/css-select/lib/pseudo-selectors/aliases.js ***!
-  \*****************************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/aliases.js":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/aliases.js ***!
+  \*****************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -4864,10 +4864,10 @@ exports.aliases = {
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/pseudo-selectors/filters.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/css-select/lib/pseudo-selectors/filters.js ***!
-  \*****************************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/filters.js":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/filters.js ***!
+  \*****************************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -4877,8 +4877,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.filters = void 0;
-var nth_check_1 = __importDefault(__webpack_require__(/*! nth-check */ "./node_modules/nth-check/lib/index.js"));
-var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
+var nth_check_1 = __importDefault(__webpack_require__(/*! nth-check */ "./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/index.js"));
+var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
 function getChildFunc(next, adapter) {
     return function (elem) {
         var parent = adapter.getParent(elem);
@@ -5031,24 +5031,24 @@ function dynamicStatePseudo(name) {
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/pseudo-selectors/index.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/css-select/lib/pseudo-selectors/index.js ***!
-  \***************************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/index.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/index.js ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.compilePseudoSelector = exports.aliases = exports.pseudos = exports.filters = void 0;
-var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/css-what/lib/es/index.js");
-var filters_js_1 = __webpack_require__(/*! ./filters.js */ "./node_modules/css-select/lib/pseudo-selectors/filters.js");
+var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js");
+var filters_js_1 = __webpack_require__(/*! ./filters.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/filters.js");
 Object.defineProperty(exports, "filters", ({ enumerable: true, get: function () { return filters_js_1.filters; } }));
-var pseudos_js_1 = __webpack_require__(/*! ./pseudos.js */ "./node_modules/css-select/lib/pseudo-selectors/pseudos.js");
+var pseudos_js_1 = __webpack_require__(/*! ./pseudos.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/pseudos.js");
 Object.defineProperty(exports, "pseudos", ({ enumerable: true, get: function () { return pseudos_js_1.pseudos; } }));
-var aliases_js_1 = __webpack_require__(/*! ./aliases.js */ "./node_modules/css-select/lib/pseudo-selectors/aliases.js");
+var aliases_js_1 = __webpack_require__(/*! ./aliases.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/aliases.js");
 Object.defineProperty(exports, "aliases", ({ enumerable: true, get: function () { return aliases_js_1.aliases; } }));
-var subselects_js_1 = __webpack_require__(/*! ./subselects.js */ "./node_modules/css-select/lib/pseudo-selectors/subselects.js");
+var subselects_js_1 = __webpack_require__(/*! ./subselects.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/subselects.js");
 function compilePseudoSelector(next, selector, options, context, compileToken) {
     var _a;
     var name = selector.name, data = selector.data;
@@ -5087,10 +5087,10 @@ exports.compilePseudoSelector = compilePseudoSelector;
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/pseudo-selectors/pseudos.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/css-select/lib/pseudo-selectors/pseudos.js ***!
-  \*****************************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/pseudos.js":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/pseudos.js ***!
+  \*****************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -5190,10 +5190,10 @@ exports.verifyPseudoArgs = verifyPseudoArgs;
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/pseudo-selectors/subselects.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/css-select/lib/pseudo-selectors/subselects.js ***!
-  \********************************************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/subselects.js":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/pseudo-selectors/subselects.js ***!
+  \********************************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5212,8 +5212,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.subselects = exports.getNextSiblings = exports.ensureIsTag = exports.PLACEHOLDER_ELEMENT = void 0;
-var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
-var sort_js_1 = __webpack_require__(/*! ../sort.js */ "./node_modules/css-select/lib/sort.js");
+var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
+var sort_js_1 = __webpack_require__(/*! ../sort.js */ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/sort.js");
 /** Used as a placeholder for :has. Will be replaced with the actual element. */
 exports.PLACEHOLDER_ELEMENT = {};
 function ensureIsTag(next, adapter) {
@@ -5312,17 +5312,17 @@ exports.subselects = {
 
 /***/ }),
 
-/***/ "./node_modules/css-select/lib/sort.js":
-/*!*********************************************!*\
-  !*** ./node_modules/css-select/lib/sort.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/sort.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-select@5.1.0/node_modules/css-select/lib/sort.js ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isTraversal = void 0;
-var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/css-what/lib/es/index.js");
+var css_what_1 = __webpack_require__(/*! css-what */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js");
 var procedure = new Map([
     [css_what_1.SelectorType.Universal, 50],
     [css_what_1.SelectorType.Tag, 30],
@@ -5406,10 +5406,10 @@ function getProcedure(token) {
 
 /***/ }),
 
-/***/ "./node_modules/css-what/lib/es/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/css-what/lib/es/index.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/index.js ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5422,9 +5422,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "parse": () => (/* reexport safe */ _parse__WEBPACK_IMPORTED_MODULE_1__.parse),
 /* harmony export */   "stringify": () => (/* reexport safe */ _stringify__WEBPACK_IMPORTED_MODULE_2__.stringify)
 /* harmony export */ });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./node_modules/css-what/lib/es/types.js");
-/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parse */ "./node_modules/css-what/lib/es/parse.js");
-/* harmony import */ var _stringify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stringify */ "./node_modules/css-what/lib/es/stringify.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/types.js");
+/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parse */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/parse.js");
+/* harmony import */ var _stringify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stringify */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/stringify.js");
 
 
 
@@ -5432,10 +5432,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-what/lib/es/parse.js":
-/*!***********************************************!*\
-  !*** ./node_modules/css-what/lib/es/parse.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/parse.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/parse.js ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5444,7 +5444,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isTraversal": () => (/* binding */ isTraversal),
 /* harmony export */   "parse": () => (/* binding */ parse)
 /* harmony export */ });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./node_modules/css-what/lib/es/types.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/types.js");
 
 const reName = /^[^\\#]?(?:\\(?:[\da-f]{1,6}\s?|.)|[\w\-\u00b0-\uFFFF])+/;
 const reEscape = /\\([\da-f]{1,6}\s?|(\s)|.)/gi;
@@ -5869,10 +5869,10 @@ function parseSelector(subselects, selector, selectorIndex) {
 
 /***/ }),
 
-/***/ "./node_modules/css-what/lib/es/stringify.js":
-/*!***************************************************!*\
-  !*** ./node_modules/css-what/lib/es/stringify.js ***!
-  \***************************************************/
+/***/ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/stringify.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/stringify.js ***!
+  \*************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5880,7 +5880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "stringify": () => (/* binding */ stringify)
 /* harmony export */ });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./node_modules/css-what/lib/es/types.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/types.js");
 
 const attribValChars = ["\\", '"'];
 const pseudoValChars = [...attribValChars, "(", ")"];
@@ -6011,10 +6011,10 @@ function escapeName(str, charsToEscape) {
 
 /***/ }),
 
-/***/ "./node_modules/css-what/lib/es/types.js":
-/*!***********************************************!*\
-  !*** ./node_modules/css-what/lib/es/types.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/types.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/css-what@6.1.0/node_modules/css-what/lib/es/types.js ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6067,10 +6067,10 @@ var AttributeAction;
 
 /***/ }),
 
-/***/ "./node_modules/dom-serializer/lib/foreignNames.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/dom-serializer/lib/foreignNames.js ***!
-  \*********************************************************/
+/***/ "./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/foreignNames.js":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/foreignNames.js ***!
+  \*************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -6181,10 +6181,10 @@ exports.attributeNames = new Map([
 
 /***/ }),
 
-/***/ "./node_modules/dom-serializer/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/dom-serializer/lib/index.js ***!
-  \**************************************************/
+/***/ "./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/index.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/index.js ***!
+  \******************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6228,15 +6228,15 @@ exports.render = void 0;
 /*
  * Module dependencies
  */
-var ElementType = __importStar(__webpack_require__(/*! domelementtype */ "./node_modules/domelementtype/lib/index.js"));
-var entities_1 = __webpack_require__(/*! entities */ "./node_modules/entities/lib/index.js");
+var ElementType = __importStar(__webpack_require__(/*! domelementtype */ "./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js"));
+var entities_1 = __webpack_require__(/*! entities */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/index.js");
 /**
  * Mixed-case SVG and MathML tags & attributes
  * recognized by the HTML parser.
  *
  * @see https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inforeign
  */
-var foreignNames_js_1 = __webpack_require__(/*! ./foreignNames.js */ "./node_modules/dom-serializer/lib/foreignNames.js");
+var foreignNames_js_1 = __webpack_require__(/*! ./foreignNames.js */ "./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/foreignNames.js");
 var unencodedElements = new Set([
     "style",
     "script",
@@ -6421,10 +6421,10 @@ function renderComment(elem) {
 
 /***/ }),
 
-/***/ "./node_modules/domelementtype/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/domelementtype/lib/index.js ***!
-  \**************************************************/
+/***/ "./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js ***!
+  \******************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -6487,10 +6487,10 @@ exports.Doctype = ElementType.Doctype;
 
 /***/ }),
 
-/***/ "./node_modules/domhandler/lib/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/domhandler/lib/index.js ***!
-  \**********************************************/
+/***/ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js ***!
+  \**********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6511,9 +6511,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DomHandler = void 0;
-var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/domelementtype/lib/index.js");
-var node_js_1 = __webpack_require__(/*! ./node.js */ "./node_modules/domhandler/lib/node.js");
-__exportStar(__webpack_require__(/*! ./node.js */ "./node_modules/domhandler/lib/node.js"), exports);
+var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js");
+var node_js_1 = __webpack_require__(/*! ./node.js */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/node.js");
+__exportStar(__webpack_require__(/*! ./node.js */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/node.js"), exports);
 // Default options
 var defaultOpts = {
     withStartIndices: false,
@@ -6663,10 +6663,10 @@ exports["default"] = DomHandler;
 
 /***/ }),
 
-/***/ "./node_modules/domhandler/lib/node.js":
-/*!*********************************************!*\
-  !*** ./node_modules/domhandler/lib/node.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/node.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/node.js ***!
+  \*********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6699,7 +6699,7 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.cloneNode = exports.hasChildren = exports.isDocument = exports.isDirective = exports.isComment = exports.isText = exports.isCDATA = exports.isTag = exports.Element = exports.Document = exports.CDATA = exports.NodeWithChildren = exports.ProcessingInstruction = exports.Comment = exports.Text = exports.DataNode = exports.Node = void 0;
-var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/domelementtype/lib/index.js");
+var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js");
 /**
  * This object will be used as the prototype for Nodes when creating a
  * DOM-Level-1-compliant structure.
@@ -7148,18 +7148,18 @@ function cloneChildren(childs) {
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/feeds.js":
-/*!********************************************!*\
-  !*** ./node_modules/domutils/lib/feeds.js ***!
-  \********************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/feeds.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/feeds.js ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getFeed = void 0;
-var stringify_js_1 = __webpack_require__(/*! ./stringify.js */ "./node_modules/domutils/lib/stringify.js");
-var legacy_js_1 = __webpack_require__(/*! ./legacy.js */ "./node_modules/domutils/lib/legacy.js");
+var stringify_js_1 = __webpack_require__(/*! ./stringify.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/stringify.js");
+var legacy_js_1 = __webpack_require__(/*! ./legacy.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/legacy.js");
 /**
  * Get the feed object from the root of a DOM tree.
  *
@@ -7241,7 +7241,7 @@ function getRssFeed(feedRoot) {
             addConditionally(entry, "title", "title", children);
             addConditionally(entry, "link", "link", children);
             addConditionally(entry, "description", "description", children);
-            var pubDate = fetch("pubDate", children);
+            var pubDate = fetch("pubDate", children) || fetch("dc:date", children);
             if (pubDate)
                 entry.pubDate = new Date(pubDate);
             return entry;
@@ -7349,23 +7349,24 @@ function isValidFeed(value) {
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/helpers.js":
-/*!**********************************************!*\
-  !*** ./node_modules/domutils/lib/helpers.js ***!
-  \**********************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/helpers.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/helpers.js ***!
+  \********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.uniqueSort = exports.compareDocumentPosition = exports.DocumentPosition = exports.removeSubsets = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 /**
- * Given an array of nodes, remove any member that is contained by another.
+ * Given an array of nodes, remove any member that is contained by another
+ * member.
  *
  * @category Helpers
  * @param nodes Nodes to filter.
- * @returns Remaining nodes that aren't subtrees of each other.
+ * @returns Remaining nodes that aren't contained by other nodes.
  */
 function removeSubsets(nodes) {
     var idx = nodes.length;
@@ -7407,8 +7408,8 @@ var DocumentPosition;
     DocumentPosition[DocumentPosition["CONTAINED_BY"] = 16] = "CONTAINED_BY";
 })(DocumentPosition = exports.DocumentPosition || (exports.DocumentPosition = {}));
 /**
- * Compare the position of one node against another node in any other document.
- * The return value is a bitmask with the values from {@link DocumentPosition}.
+ * Compare the position of one node against another node in any other document,
+ * returning a bitmask with the values from {@link DocumentPosition}.
  *
  * Document order:
  * > There is an ordering, document order, defined on all the nodes in the
@@ -7473,9 +7474,9 @@ function compareDocumentPosition(nodeA, nodeB) {
 }
 exports.compareDocumentPosition = compareDocumentPosition;
 /**
- * Sort an array of nodes based on their relative position in the document and
- * remove any duplicate nodes. If the array contains nodes that do not belong to
- * the same document, sort order is unspecified.
+ * Sort an array of nodes based on their relative position in the document,
+ * removing any duplicate nodes. If the array contains nodes that do not belong
+ * to the same document, sort order is unspecified.
  *
  * @category Helpers
  * @param nodes Array of DOM nodes.
@@ -7500,10 +7501,10 @@ exports.uniqueSort = uniqueSort;
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/index.js":
-/*!********************************************!*\
-  !*** ./node_modules/domutils/lib/index.js ***!
-  \********************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js ***!
+  \******************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7524,15 +7525,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hasChildren = exports.isDocument = exports.isComment = exports.isText = exports.isCDATA = exports.isTag = void 0;
-__exportStar(__webpack_require__(/*! ./stringify.js */ "./node_modules/domutils/lib/stringify.js"), exports);
-__exportStar(__webpack_require__(/*! ./traversal.js */ "./node_modules/domutils/lib/traversal.js"), exports);
-__exportStar(__webpack_require__(/*! ./manipulation.js */ "./node_modules/domutils/lib/manipulation.js"), exports);
-__exportStar(__webpack_require__(/*! ./querying.js */ "./node_modules/domutils/lib/querying.js"), exports);
-__exportStar(__webpack_require__(/*! ./legacy.js */ "./node_modules/domutils/lib/legacy.js"), exports);
-__exportStar(__webpack_require__(/*! ./helpers.js */ "./node_modules/domutils/lib/helpers.js"), exports);
-__exportStar(__webpack_require__(/*! ./feeds.js */ "./node_modules/domutils/lib/feeds.js"), exports);
+__exportStar(__webpack_require__(/*! ./stringify.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/stringify.js"), exports);
+__exportStar(__webpack_require__(/*! ./traversal.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/traversal.js"), exports);
+__exportStar(__webpack_require__(/*! ./manipulation.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/manipulation.js"), exports);
+__exportStar(__webpack_require__(/*! ./querying.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/querying.js"), exports);
+__exportStar(__webpack_require__(/*! ./legacy.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/legacy.js"), exports);
+__exportStar(__webpack_require__(/*! ./helpers.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/helpers.js"), exports);
+__exportStar(__webpack_require__(/*! ./feeds.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/feeds.js"), exports);
 /** @deprecated Use these methods from `domhandler` directly. */
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 Object.defineProperty(exports, "isTag", ({ enumerable: true, get: function () { return domhandler_1.isTag; } }));
 Object.defineProperty(exports, "isCDATA", ({ enumerable: true, get: function () { return domhandler_1.isCDATA; } }));
 Object.defineProperty(exports, "isText", ({ enumerable: true, get: function () { return domhandler_1.isText; } }));
@@ -7543,18 +7544,21 @@ Object.defineProperty(exports, "hasChildren", ({ enumerable: true, get: function
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/legacy.js":
-/*!*********************************************!*\
-  !*** ./node_modules/domutils/lib/legacy.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/legacy.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/legacy.js ***!
+  \*******************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getElementsByTagType = exports.getElementsByTagName = exports.getElementById = exports.getElements = exports.testElement = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
-var querying_js_1 = __webpack_require__(/*! ./querying.js */ "./node_modules/domutils/lib/querying.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+var querying_js_1 = __webpack_require__(/*! ./querying.js */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/querying.js");
+/**
+ * A map of functions to check nodes against.
+ */
 var Checks = {
     tag_name: function (name) {
         if (typeof name === "function") {
@@ -7579,6 +7583,9 @@ var Checks = {
     },
 };
 /**
+ * Returns a function to check whether a node has an attribute with a particular
+ * value.
+ *
  * @param attrib Attribute to check.
  * @param value Attribute value to look for.
  * @returns A function to check whether the a node has an attribute with a
@@ -7591,6 +7598,9 @@ function getAttribCheck(attrib, value) {
     return function (elem) { return (0, domhandler_1.isTag)(elem) && elem.attribs[attrib] === value; };
 }
 /**
+ * Returns a function that returns `true` if either of the input functions
+ * returns `true` for a node.
+ *
  * @param a First function to combine.
  * @param b Second function to combine.
  * @returns A function taking a node and returning `true` if either of the input
@@ -7600,9 +7610,12 @@ function combineFuncs(a, b) {
     return function (elem) { return a(elem) || b(elem); };
 }
 /**
+ * Returns a function that executes all checks in `options` and returns `true`
+ * if any of them match a node.
+ *
  * @param options An object describing nodes to look for.
- * @returns A function executing all checks in `options` and returning `true` if
- *   any of them match a node.
+ * @returns A function that executes all checks in `options` and returns `true`
+ *   if any of them match a node.
  */
 function compileTest(options) {
     var funcs = Object.keys(options).map(function (key) {
@@ -7614,6 +7627,8 @@ function compileTest(options) {
     return funcs.length === 0 ? null : funcs.reduce(combineFuncs);
 }
 /**
+ * Checks whether a node matches the description in `options`.
+ *
  * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param node The element to test.
@@ -7625,6 +7640,8 @@ function testElement(options, node) {
 }
 exports.testElement = testElement;
 /**
+ * Returns all nodes that match `options`.
+ *
  * @category Legacy Query Functions
  * @param options An object describing nodes to look for.
  * @param nodes Nodes to search through.
@@ -7639,6 +7656,8 @@ function getElements(options, nodes, recurse, limit) {
 }
 exports.getElements = getElements;
 /**
+ * Returns the node with the supplied ID.
+ *
  * @category Legacy Query Functions
  * @param id The unique ID attribute value to look for.
  * @param nodes Nodes to search through.
@@ -7653,6 +7672,8 @@ function getElementById(id, nodes, recurse) {
 }
 exports.getElementById = getElementById;
 /**
+ * Returns all nodes with the supplied `tagName`.
+ *
  * @category Legacy Query Functions
  * @param tagName Tag name to search for.
  * @param nodes Nodes to search through.
@@ -7667,6 +7688,8 @@ function getElementsByTagName(tagName, nodes, recurse, limit) {
 }
 exports.getElementsByTagName = getElementsByTagName;
 /**
+ * Returns all nodes with the supplied `type`.
+ *
  * @category Legacy Query Functions
  * @param type Element type to look for.
  * @param nodes Nodes to search through.
@@ -7684,10 +7707,10 @@ exports.getElementsByTagType = getElementsByTagType;
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/manipulation.js":
-/*!***************************************************!*\
-  !*** ./node_modules/domutils/lib/manipulation.js ***!
-  \***************************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/manipulation.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/manipulation.js ***!
+  \*************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7707,8 +7730,14 @@ function removeElement(elem) {
         elem.next.prev = elem.prev;
     if (elem.parent) {
         var childs = elem.parent.children;
-        childs.splice(childs.lastIndexOf(elem), 1);
+        var childsIndex = childs.lastIndexOf(elem);
+        if (childsIndex >= 0) {
+            childs.splice(childsIndex, 1);
+        }
     }
+    elem.next = null;
+    elem.prev = null;
+    elem.parent = null;
 }
 exports.removeElement = removeElement;
 /**
@@ -7739,15 +7768,15 @@ exports.replaceElement = replaceElement;
  * Append a child to an element.
  *
  * @category Manipulation
- * @param elem The element to append to.
+ * @param parent The element to append to.
  * @param child The element to be added as a child.
  */
-function appendChild(elem, child) {
+function appendChild(parent, child) {
     removeElement(child);
     child.next = null;
-    child.parent = elem;
-    if (elem.children.push(child) > 1) {
-        var sibling = elem.children[elem.children.length - 2];
+    child.parent = parent;
+    if (parent.children.push(child) > 1) {
+        var sibling = parent.children[parent.children.length - 2];
         sibling.next = child;
         child.prev = sibling;
     }
@@ -7787,15 +7816,15 @@ exports.append = append;
  * Prepend a child to an element.
  *
  * @category Manipulation
- * @param elem The element to prepend before.
+ * @param parent The element to prepend before.
  * @param child The element to be added as a child.
  */
-function prependChild(elem, child) {
+function prependChild(parent, child) {
     removeElement(child);
-    child.parent = elem;
+    child.parent = parent;
     child.prev = null;
-    if (elem.children.unshift(child) !== 1) {
-        var sibling = elem.children[1];
+    if (parent.children.unshift(child) !== 1) {
+        var sibling = parent.children[1];
         sibling.prev = child;
         child.next = sibling;
     }
@@ -7831,19 +7860,19 @@ exports.prepend = prepend;
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/querying.js":
-/*!***********************************************!*\
-  !*** ./node_modules/domutils/lib/querying.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/querying.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/querying.js ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.findAll = exports.existsOne = exports.findOne = exports.findOneChild = exports.find = exports.filter = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 /**
- * Search a node and its children for nodes passing a test function.
+ * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
  *
  * @category Querying
  * @param test Function to test nodes on.
@@ -7855,13 +7884,11 @@ var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhand
 function filter(test, node, recurse, limit) {
     if (recurse === void 0) { recurse = true; }
     if (limit === void 0) { limit = Infinity; }
-    if (!Array.isArray(node))
-        node = [node];
-    return find(test, node, recurse, limit);
+    return find(test, Array.isArray(node) ? node : [node], recurse, limit);
 }
 exports.filter = filter;
 /**
- * Search an array of node and its children for nodes passing a test function.
+ * Search an array of nodes and their children for nodes passing a test function.
  *
  * @category Querying
  * @param test Function to test nodes on.
@@ -7872,26 +7899,42 @@ exports.filter = filter;
  */
 function find(test, nodes, recurse, limit) {
     var result = [];
-    for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
-        var elem = nodes_1[_i];
+    /** Stack of the arrays we are looking at. */
+    var nodeStack = [nodes];
+    /** Stack of the indices within the arrays. */
+    var indexStack = [0];
+    for (;;) {
+        // First, check if the current array has any more elements to look at.
+        if (indexStack[0] >= nodeStack[0].length) {
+            // If we have no more arrays to look at, we are done.
+            if (indexStack.length === 1) {
+                return result;
+            }
+            // Otherwise, remove the current array from the stack.
+            nodeStack.shift();
+            indexStack.shift();
+            // Loop back to the start to continue with the next array.
+            continue;
+        }
+        var elem = nodeStack[0][indexStack[0]++];
         if (test(elem)) {
             result.push(elem);
             if (--limit <= 0)
-                break;
+                return result;
         }
         if (recurse && (0, domhandler_1.hasChildren)(elem) && elem.children.length > 0) {
-            var children = find(test, elem.children, recurse, limit);
-            result.push.apply(result, children);
-            limit -= children.length;
-            if (limit <= 0)
-                break;
+            /*
+             * Add the children to the stack. We are depth-first, so this is
+             * the next array we look at.
+             */
+            indexStack.unshift(0);
+            nodeStack.unshift(elem.children);
         }
     }
-    return result;
 }
 exports.find = find;
 /**
- * Finds the first element inside of an array that matches a test function.
+ * Finds the first element inside of an array that matches a test function. This is an alias for `Array.prototype.find`.
  *
  * @category Querying
  * @param test Function to test nodes on.
@@ -7908,29 +7951,31 @@ exports.findOneChild = findOneChild;
  *
  * @category Querying
  * @param test Function to test nodes on.
- * @param nodes Array of nodes to search.
+ * @param nodes Node or array of nodes to search.
  * @param recurse Also consider child nodes.
- * @returns The first child node that passes `test`.
+ * @returns The first node that passes `test`.
  */
 function findOne(test, nodes, recurse) {
     if (recurse === void 0) { recurse = true; }
     var elem = null;
     for (var i = 0; i < nodes.length && !elem; i++) {
-        var checked = nodes[i];
-        if (!(0, domhandler_1.isTag)(checked)) {
+        var node = nodes[i];
+        if (!(0, domhandler_1.isTag)(node)) {
             continue;
         }
-        else if (test(checked)) {
-            elem = checked;
+        else if (test(node)) {
+            elem = node;
         }
-        else if (recurse && checked.children.length > 0) {
-            elem = findOne(test, checked.children, true);
+        else if (recurse && node.children.length > 0) {
+            elem = findOne(test, node.children, true);
         }
     }
     return elem;
 }
 exports.findOne = findOne;
 /**
+ * Checks if a tree of nodes contains at least one node passing a test.
+ *
  * @category Querying
  * @param test Function to test nodes on.
  * @param nodes Array of nodes to search.
@@ -7939,14 +7984,12 @@ exports.findOne = findOne;
 function existsOne(test, nodes) {
     return nodes.some(function (checked) {
         return (0, domhandler_1.isTag)(checked) &&
-            (test(checked) ||
-                (checked.children.length > 0 &&
-                    existsOne(test, checked.children)));
+            (test(checked) || existsOne(test, checked.children));
     });
 }
 exports.existsOne = existsOne;
 /**
- * Search and array of nodes and its children for elements passing a test function.
+ * Search an array of nodes and their children for elements passing a test function.
  *
  * Same as `find`, but limited to elements and with less options, leading to reduced complexity.
  *
@@ -7956,29 +7999,40 @@ exports.existsOne = existsOne;
  * @returns All nodes passing `test`.
  */
 function findAll(test, nodes) {
-    var _a;
     var result = [];
-    var stack = nodes.filter(domhandler_1.isTag);
-    var elem;
-    while ((elem = stack.shift())) {
-        var children = (_a = elem.children) === null || _a === void 0 ? void 0 : _a.filter(domhandler_1.isTag);
-        if (children && children.length > 0) {
-            stack.unshift.apply(stack, children);
+    var nodeStack = [nodes];
+    var indexStack = [0];
+    for (;;) {
+        if (indexStack[0] >= nodeStack[0].length) {
+            if (nodeStack.length === 1) {
+                return result;
+            }
+            // Otherwise, remove the current array from the stack.
+            nodeStack.shift();
+            indexStack.shift();
+            // Loop back to the start to continue with the next array.
+            continue;
         }
+        var elem = nodeStack[0][indexStack[0]++];
+        if (!(0, domhandler_1.isTag)(elem))
+            continue;
         if (test(elem))
             result.push(elem);
+        if (elem.children.length > 0) {
+            indexStack.unshift(0);
+            nodeStack.unshift(elem.children);
+        }
     }
-    return result;
 }
 exports.findAll = findAll;
 //# sourceMappingURL=querying.js.map
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/stringify.js":
-/*!************************************************!*\
-  !*** ./node_modules/domutils/lib/stringify.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/stringify.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/stringify.js ***!
+  \**********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7988,9 +8042,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.innerText = exports.textContent = exports.getText = exports.getInnerHTML = exports.getOuterHTML = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
-var dom_serializer_1 = __importDefault(__webpack_require__(/*! dom-serializer */ "./node_modules/dom-serializer/lib/index.js"));
-var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/domelementtype/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+var dom_serializer_1 = __importDefault(__webpack_require__(/*! dom-serializer */ "./node_modules/.pnpm/dom-serializer@2.0.0/node_modules/dom-serializer/lib/index.js"));
+var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js");
 /**
  * @category Stringify
  * @deprecated Use the `dom-serializer` module directly.
@@ -8016,7 +8070,7 @@ function getInnerHTML(node, options) {
 }
 exports.getInnerHTML = getInnerHTML;
 /**
- * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags.
+ * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags. Ignores comments.
  *
  * @category Stringify
  * @deprecated Use `textContent` instead.
@@ -8036,7 +8090,7 @@ function getText(node) {
 }
 exports.getText = getText;
 /**
- * Get a node's text content.
+ * Get a node's text content. Ignores comments.
  *
  * @category Stringify
  * @param node Node to get the text content of.
@@ -8055,7 +8109,7 @@ function textContent(node) {
 }
 exports.textContent = textContent;
 /**
- * Get a node's inner text.
+ * Get a node's inner text, ignoring `<script>` and `<style>` tags. Ignores comments.
  *
  * @category Stringify
  * @param node Node to get the inner text of.
@@ -8077,17 +8131,17 @@ exports.innerText = innerText;
 
 /***/ }),
 
-/***/ "./node_modules/domutils/lib/traversal.js":
-/*!************************************************!*\
-  !*** ./node_modules/domutils/lib/traversal.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/traversal.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/traversal.js ***!
+  \**********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.prevElementSibling = exports.nextElementSibling = exports.getName = exports.hasAttrib = exports.getAttributeValue = exports.getSiblings = exports.getParent = exports.getChildren = void 0;
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 /**
  * Get a node's children.
  *
@@ -8104,7 +8158,7 @@ exports.getChildren = getChildren;
  *
  * @category Traversal
  * @param elem Node to get the parent of.
- * @returns `elem`'s parent node.
+ * @returns `elem`'s parent node, or `null` if `elem` is a root node.
  */
 function getParent(elem) {
     return elem.parent || null;
@@ -8119,7 +8173,7 @@ exports.getParent = getParent;
  *
  * @category Traversal
  * @param elem Element to get the siblings of.
- * @returns `elem`'s siblings.
+ * @returns `elem`'s siblings, including `elem`.
  */
 function getSiblings(elem) {
     var _a, _b;
@@ -8182,7 +8236,8 @@ exports.getName = getName;
  *
  * @category Traversal
  * @param elem The element to get the next sibling of.
- * @returns `elem`'s next sibling that is a tag.
+ * @returns `elem`'s next sibling that is a tag, or `null` if there is no next
+ * sibling.
  */
 function nextElementSibling(elem) {
     var _a;
@@ -8197,7 +8252,8 @@ exports.nextElementSibling = nextElementSibling;
  *
  * @category Traversal
  * @param elem The element to get the previous sibling of.
- * @returns `elem`'s previous sibling that is a tag.
+ * @returns `elem`'s previous sibling that is a tag, or `null` if there is no
+ * previous sibling.
  */
 function prevElementSibling(elem) {
     var _a;
@@ -8211,125 +8267,470 @@ exports.prevElementSibling = prevElementSibling;
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/decode.js":
-/*!*********************************************!*\
-  !*** ./node_modules/entities/lib/decode.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js ***!
+  \*******************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.decodeXML = exports.decodeHTMLStrict = exports.decodeHTML = exports.determineBranch = exports.BinTrieFlags = exports.fromCodePoint = exports.replaceCodePoint = exports.decodeCodePoint = exports.xmlDecodeTree = exports.htmlDecodeTree = void 0;
-var decode_data_html_js_1 = __importDefault(__webpack_require__(/*! ./generated/decode-data-html.js */ "./node_modules/entities/lib/generated/decode-data-html.js"));
+exports.decodeXML = exports.decodeHTMLStrict = exports.decodeHTMLAttribute = exports.decodeHTML = exports.determineBranch = exports.EntityDecoder = exports.DecodingMode = exports.BinTrieFlags = exports.fromCodePoint = exports.replaceCodePoint = exports.decodeCodePoint = exports.xmlDecodeTree = exports.htmlDecodeTree = void 0;
+var decode_data_html_js_1 = __importDefault(__webpack_require__(/*! ./generated/decode-data-html.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/decode-data-html.js"));
 exports.htmlDecodeTree = decode_data_html_js_1.default;
-var decode_data_xml_js_1 = __importDefault(__webpack_require__(/*! ./generated/decode-data-xml.js */ "./node_modules/entities/lib/generated/decode-data-xml.js"));
+var decode_data_xml_js_1 = __importDefault(__webpack_require__(/*! ./generated/decode-data-xml.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/decode-data-xml.js"));
 exports.xmlDecodeTree = decode_data_xml_js_1.default;
-var decode_codepoint_js_1 = __importDefault(__webpack_require__(/*! ./decode_codepoint.js */ "./node_modules/entities/lib/decode_codepoint.js"));
+var decode_codepoint_js_1 = __importStar(__webpack_require__(/*! ./decode_codepoint.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode_codepoint.js"));
 exports.decodeCodePoint = decode_codepoint_js_1.default;
-var decode_codepoint_js_2 = __webpack_require__(/*! ./decode_codepoint.js */ "./node_modules/entities/lib/decode_codepoint.js");
+var decode_codepoint_js_2 = __webpack_require__(/*! ./decode_codepoint.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode_codepoint.js");
 Object.defineProperty(exports, "replaceCodePoint", ({ enumerable: true, get: function () { return decode_codepoint_js_2.replaceCodePoint; } }));
 Object.defineProperty(exports, "fromCodePoint", ({ enumerable: true, get: function () { return decode_codepoint_js_2.fromCodePoint; } }));
 var CharCodes;
 (function (CharCodes) {
     CharCodes[CharCodes["NUM"] = 35] = "NUM";
     CharCodes[CharCodes["SEMI"] = 59] = "SEMI";
+    CharCodes[CharCodes["EQUALS"] = 61] = "EQUALS";
     CharCodes[CharCodes["ZERO"] = 48] = "ZERO";
     CharCodes[CharCodes["NINE"] = 57] = "NINE";
     CharCodes[CharCodes["LOWER_A"] = 97] = "LOWER_A";
     CharCodes[CharCodes["LOWER_F"] = 102] = "LOWER_F";
     CharCodes[CharCodes["LOWER_X"] = 120] = "LOWER_X";
-    /** Bit that needs to be set to convert an upper case ASCII character to lower case */
-    CharCodes[CharCodes["To_LOWER_BIT"] = 32] = "To_LOWER_BIT";
+    CharCodes[CharCodes["LOWER_Z"] = 122] = "LOWER_Z";
+    CharCodes[CharCodes["UPPER_A"] = 65] = "UPPER_A";
+    CharCodes[CharCodes["UPPER_F"] = 70] = "UPPER_F";
+    CharCodes[CharCodes["UPPER_Z"] = 90] = "UPPER_Z";
 })(CharCodes || (CharCodes = {}));
+/** Bit that needs to be set to convert an upper case ASCII character to lower case */
+var TO_LOWER_BIT = 32;
 var BinTrieFlags;
 (function (BinTrieFlags) {
     BinTrieFlags[BinTrieFlags["VALUE_LENGTH"] = 49152] = "VALUE_LENGTH";
     BinTrieFlags[BinTrieFlags["BRANCH_LENGTH"] = 16256] = "BRANCH_LENGTH";
     BinTrieFlags[BinTrieFlags["JUMP_TABLE"] = 127] = "JUMP_TABLE";
 })(BinTrieFlags = exports.BinTrieFlags || (exports.BinTrieFlags = {}));
-function getDecoder(decodeTree) {
-    return function decodeHTMLBinary(str, strict) {
-        var ret = "";
-        var lastIdx = 0;
-        var strIdx = 0;
-        while ((strIdx = str.indexOf("&", strIdx)) >= 0) {
-            ret += str.slice(lastIdx, strIdx);
-            lastIdx = strIdx;
-            // Skip the "&"
-            strIdx += 1;
-            // If we have a numeric entity, handle this separately.
-            if (str.charCodeAt(strIdx) === CharCodes.NUM) {
-                // Skip the leading "&#". For hex entities, also skip the leading "x".
-                var start = strIdx + 1;
-                var base = 10;
-                var cp = str.charCodeAt(start);
-                if ((cp | CharCodes.To_LOWER_BIT) === CharCodes.LOWER_X) {
-                    base = 16;
-                    strIdx += 1;
-                    start += 1;
+function isNumber(code) {
+    return code >= CharCodes.ZERO && code <= CharCodes.NINE;
+}
+function isHexadecimalCharacter(code) {
+    return ((code >= CharCodes.UPPER_A && code <= CharCodes.UPPER_F) ||
+        (code >= CharCodes.LOWER_A && code <= CharCodes.LOWER_F));
+}
+function isAsciiAlphaNumeric(code) {
+    return ((code >= CharCodes.UPPER_A && code <= CharCodes.UPPER_Z) ||
+        (code >= CharCodes.LOWER_A && code <= CharCodes.LOWER_Z) ||
+        isNumber(code));
+}
+/**
+ * Checks if the given character is a valid end character for an entity in an attribute.
+ *
+ * Attribute values that aren't terminated properly aren't parsed, and shouldn't lead to a parser error.
+ * See the example in https://html.spec.whatwg.org/multipage/parsing.html#named-character-reference-state
+ */
+function isEntityInAttributeInvalidEnd(code) {
+    return code === CharCodes.EQUALS || isAsciiAlphaNumeric(code);
+}
+var EntityDecoderState;
+(function (EntityDecoderState) {
+    EntityDecoderState[EntityDecoderState["EntityStart"] = 0] = "EntityStart";
+    EntityDecoderState[EntityDecoderState["NumericStart"] = 1] = "NumericStart";
+    EntityDecoderState[EntityDecoderState["NumericDecimal"] = 2] = "NumericDecimal";
+    EntityDecoderState[EntityDecoderState["NumericHex"] = 3] = "NumericHex";
+    EntityDecoderState[EntityDecoderState["NamedEntity"] = 4] = "NamedEntity";
+})(EntityDecoderState || (EntityDecoderState = {}));
+var DecodingMode;
+(function (DecodingMode) {
+    /** Entities in text nodes that can end with any character. */
+    DecodingMode[DecodingMode["Legacy"] = 0] = "Legacy";
+    /** Only allow entities terminated with a semicolon. */
+    DecodingMode[DecodingMode["Strict"] = 1] = "Strict";
+    /** Entities in attributes have limitations on ending characters. */
+    DecodingMode[DecodingMode["Attribute"] = 2] = "Attribute";
+})(DecodingMode = exports.DecodingMode || (exports.DecodingMode = {}));
+/**
+ * Token decoder with support of writing partial entities.
+ */
+var EntityDecoder = /** @class */ (function () {
+    function EntityDecoder(
+    /** The tree used to decode entities. */
+    decodeTree, 
+    /**
+     * The function that is called when a codepoint is decoded.
+     *
+     * For multi-byte named entities, this will be called multiple times,
+     * with the second codepoint, and the same `consumed` value.
+     *
+     * @param codepoint The decoded codepoint.
+     * @param consumed The number of bytes consumed by the decoder.
+     */
+    emitCodePoint, 
+    /** An object that is used to produce errors. */
+    errors) {
+        this.decodeTree = decodeTree;
+        this.emitCodePoint = emitCodePoint;
+        this.errors = errors;
+        /** The current state of the decoder. */
+        this.state = EntityDecoderState.EntityStart;
+        /** Characters that were consumed while parsing an entity. */
+        this.consumed = 1;
+        /**
+         * The result of the entity.
+         *
+         * Either the result index of a numeric entity, or the codepoint of a
+         * numeric entity.
+         */
+        this.result = 0;
+        /** The current index in the decode tree. */
+        this.treeIndex = 0;
+        /** The number of characters that were consumed in excess. */
+        this.excess = 1;
+        /** The mode in which the decoder is operating. */
+        this.decodeMode = DecodingMode.Strict;
+    }
+    /** Resets the instance to make it reusable. */
+    EntityDecoder.prototype.startEntity = function (decodeMode) {
+        this.decodeMode = decodeMode;
+        this.state = EntityDecoderState.EntityStart;
+        this.result = 0;
+        this.treeIndex = 0;
+        this.excess = 1;
+        this.consumed = 1;
+    };
+    /**
+     * Write an entity to the decoder. This can be called multiple times with partial entities.
+     * If the entity is incomplete, the decoder will return -1.
+     *
+     * Mirrors the implementation of `getDecoder`, but with the ability to stop decoding if the
+     * entity is incomplete, and resume when the next string is written.
+     *
+     * @param string The string containing the entity (or a continuation of the entity).
+     * @param offset The offset at which the entity begins. Should be 0 if this is not the first call.
+     * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
+     */
+    EntityDecoder.prototype.write = function (str, offset) {
+        switch (this.state) {
+            case EntityDecoderState.EntityStart: {
+                if (str.charCodeAt(offset) === CharCodes.NUM) {
+                    this.state = EntityDecoderState.NumericStart;
+                    this.consumed += 1;
+                    return this.stateNumericStart(str, offset + 1);
                 }
-                do
-                    cp = str.charCodeAt(++strIdx);
-                while ((cp >= CharCodes.ZERO && cp <= CharCodes.NINE) ||
-                    (base === 16 &&
-                        (cp | CharCodes.To_LOWER_BIT) >= CharCodes.LOWER_A &&
-                        (cp | CharCodes.To_LOWER_BIT) <= CharCodes.LOWER_F));
-                if (start !== strIdx) {
-                    var entity = str.substring(start, strIdx);
-                    var parsed = parseInt(entity, base);
-                    if (str.charCodeAt(strIdx) === CharCodes.SEMI) {
-                        strIdx += 1;
-                    }
-                    else if (strict) {
-                        continue;
-                    }
-                    ret += (0, decode_codepoint_js_1.default)(parsed);
-                    lastIdx = strIdx;
-                }
-                continue;
+                this.state = EntityDecoderState.NamedEntity;
+                return this.stateNamedEntity(str, offset);
             }
-            var resultIdx = 0;
-            var excess = 1;
-            var treeIdx = 0;
-            var current = decodeTree[treeIdx];
-            for (; strIdx < str.length; strIdx++, excess++) {
-                treeIdx = determineBranch(decodeTree, current, treeIdx + 1, str.charCodeAt(strIdx));
-                if (treeIdx < 0)
-                    break;
-                current = decodeTree[treeIdx];
-                var masked = current & BinTrieFlags.VALUE_LENGTH;
-                // If the branch is a value, store it and continue
-                if (masked) {
-                    // If we have a legacy entity while parsing strictly, just skip the number of bytes
-                    if (!strict || str.charCodeAt(strIdx) === CharCodes.SEMI) {
-                        resultIdx = treeIdx;
-                        excess = 0;
-                    }
-                    // The mask is the number of bytes of the value, including the current byte.
-                    var valueLength = (masked >> 14) - 1;
-                    if (valueLength === 0)
-                        break;
-                    treeIdx += valueLength;
-                }
+            case EntityDecoderState.NumericStart: {
+                return this.stateNumericStart(str, offset);
             }
-            if (resultIdx !== 0) {
-                var valueLength = (decodeTree[resultIdx] & BinTrieFlags.VALUE_LENGTH) >> 14;
-                ret +=
-                    valueLength === 1
-                        ? String.fromCharCode(decodeTree[resultIdx] & ~BinTrieFlags.VALUE_LENGTH)
-                        : valueLength === 2
-                            ? String.fromCharCode(decodeTree[resultIdx + 1])
-                            : String.fromCharCode(decodeTree[resultIdx + 1], decodeTree[resultIdx + 2]);
-                lastIdx = strIdx - excess + 1;
+            case EntityDecoderState.NumericDecimal: {
+                return this.stateNumericDecimal(str, offset);
+            }
+            case EntityDecoderState.NumericHex: {
+                return this.stateNumericHex(str, offset);
+            }
+            case EntityDecoderState.NamedEntity: {
+                return this.stateNamedEntity(str, offset);
             }
         }
-        return ret + str.slice(lastIdx);
+    };
+    /**
+     * Switches between the numeric decimal and hexadecimal states.
+     *
+     * Equivalent to the `Numeric character reference state` in the HTML spec.
+     *
+     * @param str The string containing the entity (or a continuation of the entity).
+     * @param offset The current offset.
+     * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
+     */
+    EntityDecoder.prototype.stateNumericStart = function (str, offset) {
+        if (offset >= str.length) {
+            return -1;
+        }
+        if ((str.charCodeAt(offset) | TO_LOWER_BIT) === CharCodes.LOWER_X) {
+            this.state = EntityDecoderState.NumericHex;
+            this.consumed += 1;
+            return this.stateNumericHex(str, offset + 1);
+        }
+        this.state = EntityDecoderState.NumericDecimal;
+        return this.stateNumericDecimal(str, offset);
+    };
+    EntityDecoder.prototype.addToNumericResult = function (str, start, end, base) {
+        if (start !== end) {
+            var digitCount = end - start;
+            this.result =
+                this.result * Math.pow(base, digitCount) +
+                    parseInt(str.substr(start, digitCount), base);
+            this.consumed += digitCount;
+        }
+    };
+    /**
+     * Parses a hexadecimal numeric entity.
+     *
+     * Equivalent to the `Hexademical character reference state` in the HTML spec.
+     *
+     * @param str The string containing the entity (or a continuation of the entity).
+     * @param offset The current offset.
+     * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
+     */
+    EntityDecoder.prototype.stateNumericHex = function (str, offset) {
+        var startIdx = offset;
+        while (offset < str.length) {
+            var char = str.charCodeAt(offset);
+            if (isNumber(char) || isHexadecimalCharacter(char)) {
+                offset += 1;
+            }
+            else {
+                this.addToNumericResult(str, startIdx, offset, 16);
+                return this.emitNumericEntity(char, 3);
+            }
+        }
+        this.addToNumericResult(str, startIdx, offset, 16);
+        return -1;
+    };
+    /**
+     * Parses a decimal numeric entity.
+     *
+     * Equivalent to the `Decimal character reference state` in the HTML spec.
+     *
+     * @param str The string containing the entity (or a continuation of the entity).
+     * @param offset The current offset.
+     * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
+     */
+    EntityDecoder.prototype.stateNumericDecimal = function (str, offset) {
+        var startIdx = offset;
+        while (offset < str.length) {
+            var char = str.charCodeAt(offset);
+            if (isNumber(char)) {
+                offset += 1;
+            }
+            else {
+                this.addToNumericResult(str, startIdx, offset, 10);
+                return this.emitNumericEntity(char, 2);
+            }
+        }
+        this.addToNumericResult(str, startIdx, offset, 10);
+        return -1;
+    };
+    /**
+     * Validate and emit a numeric entity.
+     *
+     * Implements the logic from the `Hexademical character reference start
+     * state` and `Numeric character reference end state` in the HTML spec.
+     *
+     * @param lastCp The last code point of the entity. Used to see if the
+     *               entity was terminated with a semicolon.
+     * @param expectedLength The minimum number of characters that should be
+     *                       consumed. Used to validate that at least one digit
+     *                       was consumed.
+     * @returns The number of characters that were consumed.
+     */
+    EntityDecoder.prototype.emitNumericEntity = function (lastCp, expectedLength) {
+        var _a;
+        // Ensure we consumed at least one digit.
+        if (this.consumed <= expectedLength) {
+            (_a = this.errors) === null || _a === void 0 ? void 0 : _a.absenceOfDigitsInNumericCharacterReference(this.consumed);
+            return 0;
+        }
+        // Figure out if this is a legit end of the entity
+        if (lastCp === CharCodes.SEMI) {
+            this.consumed += 1;
+        }
+        else if (this.decodeMode === DecodingMode.Strict) {
+            return 0;
+        }
+        this.emitCodePoint((0, decode_codepoint_js_1.replaceCodePoint)(this.result), this.consumed);
+        if (this.errors) {
+            if (lastCp !== CharCodes.SEMI) {
+                this.errors.missingSemicolonAfterCharacterReference();
+            }
+            this.errors.validateNumericCharacterReference(this.result);
+        }
+        return this.consumed;
+    };
+    /**
+     * Parses a named entity.
+     *
+     * Equivalent to the `Named character reference state` in the HTML spec.
+     *
+     * @param str The string containing the entity (or a continuation of the entity).
+     * @param offset The current offset.
+     * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
+     */
+    EntityDecoder.prototype.stateNamedEntity = function (str, offset) {
+        var decodeTree = this.decodeTree;
+        var current = decodeTree[this.treeIndex];
+        // The mask is the number of bytes of the value, including the current byte.
+        var valueLength = (current & BinTrieFlags.VALUE_LENGTH) >> 14;
+        for (; offset < str.length; offset++, this.excess++) {
+            var char = str.charCodeAt(offset);
+            this.treeIndex = determineBranch(decodeTree, current, this.treeIndex + Math.max(1, valueLength), char);
+            if (this.treeIndex < 0) {
+                return this.result === 0 ||
+                    // If we are parsing an attribute
+                    (this.decodeMode === DecodingMode.Attribute &&
+                        // We shouldn't have consumed any characters after the entity,
+                        (valueLength === 0 ||
+                            // And there should be no invalid characters.
+                            isEntityInAttributeInvalidEnd(char)))
+                    ? 0
+                    : this.emitNotTerminatedNamedEntity();
+            }
+            current = decodeTree[this.treeIndex];
+            valueLength = (current & BinTrieFlags.VALUE_LENGTH) >> 14;
+            // If the branch is a value, store it and continue
+            if (valueLength !== 0) {
+                // If the entity is terminated by a semicolon, we are done.
+                if (char === CharCodes.SEMI) {
+                    return this.emitNamedEntityData(this.treeIndex, valueLength, this.consumed + this.excess);
+                }
+                // If we encounter a non-terminated (legacy) entity while parsing strictly, then ignore it.
+                if (this.decodeMode !== DecodingMode.Strict) {
+                    this.result = this.treeIndex;
+                    this.consumed += this.excess;
+                    this.excess = 0;
+                }
+            }
+        }
+        return -1;
+    };
+    /**
+     * Emit a named entity that was not terminated with a semicolon.
+     *
+     * @returns The number of characters consumed.
+     */
+    EntityDecoder.prototype.emitNotTerminatedNamedEntity = function () {
+        var _a;
+        var _b = this, result = _b.result, decodeTree = _b.decodeTree;
+        var valueLength = (decodeTree[result] & BinTrieFlags.VALUE_LENGTH) >> 14;
+        this.emitNamedEntityData(result, valueLength, this.consumed);
+        (_a = this.errors) === null || _a === void 0 ? void 0 : _a.missingSemicolonAfterCharacterReference();
+        return this.consumed;
+    };
+    /**
+     * Emit a named entity.
+     *
+     * @param result The index of the entity in the decode tree.
+     * @param valueLength The number of bytes in the entity.
+     * @param consumed The number of characters consumed.
+     *
+     * @returns The number of characters consumed.
+     */
+    EntityDecoder.prototype.emitNamedEntityData = function (result, valueLength, consumed) {
+        var decodeTree = this.decodeTree;
+        this.emitCodePoint(valueLength === 1
+            ? decodeTree[result] & ~BinTrieFlags.VALUE_LENGTH
+            : decodeTree[result + 1], consumed);
+        if (valueLength === 3) {
+            // For multi-byte values, we need to emit the second byte.
+            this.emitCodePoint(decodeTree[result + 2], consumed);
+        }
+        return consumed;
+    };
+    /**
+     * Signal to the parser that the end of the input was reached.
+     *
+     * Remaining data will be emitted and relevant errors will be produced.
+     *
+     * @returns The number of characters consumed.
+     */
+    EntityDecoder.prototype.end = function () {
+        var _a;
+        switch (this.state) {
+            case EntityDecoderState.NamedEntity: {
+                // Emit a named entity if we have one.
+                return this.result !== 0 &&
+                    (this.decodeMode !== DecodingMode.Attribute ||
+                        this.result === this.treeIndex)
+                    ? this.emitNotTerminatedNamedEntity()
+                    : 0;
+            }
+            // Otherwise, emit a numeric entity if we have one.
+            case EntityDecoderState.NumericDecimal: {
+                return this.emitNumericEntity(0, 2);
+            }
+            case EntityDecoderState.NumericHex: {
+                return this.emitNumericEntity(0, 3);
+            }
+            case EntityDecoderState.NumericStart: {
+                (_a = this.errors) === null || _a === void 0 ? void 0 : _a.absenceOfDigitsInNumericCharacterReference(this.consumed);
+                return 0;
+            }
+            case EntityDecoderState.EntityStart: {
+                // Return 0 if we have no entity.
+                return 0;
+            }
+        }
+    };
+    return EntityDecoder;
+}());
+exports.EntityDecoder = EntityDecoder;
+/**
+ * Creates a function that decodes entities in a string.
+ *
+ * @param decodeTree The decode tree.
+ * @returns A function that decodes entities in a string.
+ */
+function getDecoder(decodeTree) {
+    var ret = "";
+    var decoder = new EntityDecoder(decodeTree, function (str) { return (ret += (0, decode_codepoint_js_1.fromCodePoint)(str)); });
+    return function decodeWithTrie(str, decodeMode) {
+        var lastIndex = 0;
+        var offset = 0;
+        while ((offset = str.indexOf("&", offset)) >= 0) {
+            ret += str.slice(lastIndex, offset);
+            decoder.startEntity(decodeMode);
+            var len = decoder.write(str, 
+            // Skip the "&"
+            offset + 1);
+            if (len < 0) {
+                lastIndex = offset + decoder.end();
+                break;
+            }
+            lastIndex = offset + len;
+            // If `len` is 0, skip the current `&` and continue.
+            offset = len === 0 ? lastIndex + 1 : lastIndex;
+        }
+        var result = ret + str.slice(lastIndex);
+        // Make sure we don't keep a reference to the final string.
+        ret = "";
+        return result;
     };
 }
+/**
+ * Determines the branch of the current node that is taken given the current
+ * character. This function is used to traverse the trie.
+ *
+ * @param decodeTree The trie.
+ * @param current The current node.
+ * @param nodeIdx The index right after the current node and its value.
+ * @param char The current character.
+ * @returns The index of the next node, or -1 if no branch is taken.
+ */
 function determineBranch(decodeTree, current, nodeIdx, char) {
     var branchCount = (current & BinTrieFlags.BRANCH_LENGTH) >> 7;
     var jumpOffset = current & BinTrieFlags.JUMP_TABLE;
@@ -8367,43 +8768,55 @@ exports.determineBranch = determineBranch;
 var htmlDecoder = getDecoder(decode_data_html_js_1.default);
 var xmlDecoder = getDecoder(decode_data_xml_js_1.default);
 /**
- * Decodes an HTML string, allowing for entities not terminated by a semi-colon.
+ * Decodes an HTML string.
+ *
+ * @param str The string to decode.
+ * @param mode The decoding mode.
+ * @returns The decoded string.
+ */
+function decodeHTML(str, mode) {
+    if (mode === void 0) { mode = DecodingMode.Legacy; }
+    return htmlDecoder(str, mode);
+}
+exports.decodeHTML = decodeHTML;
+/**
+ * Decodes an HTML string in an attribute.
  *
  * @param str The string to decode.
  * @returns The decoded string.
  */
-function decodeHTML(str) {
-    return htmlDecoder(str, false);
+function decodeHTMLAttribute(str) {
+    return htmlDecoder(str, DecodingMode.Attribute);
 }
-exports.decodeHTML = decodeHTML;
+exports.decodeHTMLAttribute = decodeHTMLAttribute;
 /**
- * Decodes an HTML string, requiring all entities to be terminated by a semi-colon.
+ * Decodes an HTML string, requiring all entities to be terminated by a semicolon.
  *
  * @param str The string to decode.
  * @returns The decoded string.
  */
 function decodeHTMLStrict(str) {
-    return htmlDecoder(str, true);
+    return htmlDecoder(str, DecodingMode.Strict);
 }
 exports.decodeHTMLStrict = decodeHTMLStrict;
 /**
- * Decodes an XML string, requiring all entities to be terminated by a semi-colon.
+ * Decodes an XML string, requiring all entities to be terminated by a semicolon.
  *
  * @param str The string to decode.
  * @returns The decoded string.
  */
 function decodeXML(str) {
-    return xmlDecoder(str, true);
+    return xmlDecoder(str, DecodingMode.Strict);
 }
 exports.decodeXML = decodeXML;
 //# sourceMappingURL=decode.js.map
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/decode_codepoint.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/entities/lib/decode_codepoint.js ***!
-  \*******************************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode_codepoint.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode_codepoint.js ***!
+  \*****************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -8414,6 +8827,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.replaceCodePoint = exports.fromCodePoint = void 0;
 var decodeMap = new Map([
     [0, 65533],
+    // C1 Unicode control character reference replacements
     [128, 8364],
     [130, 8218],
     [131, 402],
@@ -8442,6 +8856,9 @@ var decodeMap = new Map([
     [158, 382],
     [159, 376],
 ]);
+/**
+ * Polyfill for `String.fromCodePoint`. It is used to create a string from a Unicode code point.
+ */
 exports.fromCodePoint = 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, node/no-unsupported-features/es-builtins
 (_a = String.fromCodePoint) !== null && _a !== void 0 ? _a : function (codePoint) {
@@ -8454,6 +8871,11 @@ exports.fromCodePoint =
     output += String.fromCharCode(codePoint);
     return output;
 };
+/**
+ * Replace the given code point with a replacement character if it is a
+ * surrogate or is outside the valid range. Otherwise return the code
+ * point unchanged.
+ */
 function replaceCodePoint(codePoint) {
     var _a;
     if ((codePoint >= 0xd800 && codePoint <= 0xdfff) || codePoint > 0x10ffff) {
@@ -8462,6 +8884,13 @@ function replaceCodePoint(codePoint) {
     return (_a = decodeMap.get(codePoint)) !== null && _a !== void 0 ? _a : codePoint;
 }
 exports.replaceCodePoint = replaceCodePoint;
+/**
+ * Replace the code point if relevant, then convert it to a string.
+ *
+ * @deprecated Use `fromCodePoint(replaceCodePoint(codePoint))` instead.
+ * @param codePoint The code point to decode.
+ * @returns The decoded code point.
+ */
 function decodeCodePoint(codePoint) {
     return (0, exports.fromCodePoint)(replaceCodePoint(codePoint));
 }
@@ -8470,10 +8899,10 @@ exports["default"] = decodeCodePoint;
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/encode.js":
-/*!*********************************************!*\
-  !*** ./node_modules/entities/lib/encode.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/encode.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/encode.js ***!
+  \*******************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8483,8 +8912,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.encodeNonAsciiHTML = exports.encodeHTML = void 0;
-var encode_html_js_1 = __importDefault(__webpack_require__(/*! ./generated/encode-html.js */ "./node_modules/entities/lib/generated/encode-html.js"));
-var escape_js_1 = __webpack_require__(/*! ./escape.js */ "./node_modules/entities/lib/escape.js");
+var encode_html_js_1 = __importDefault(__webpack_require__(/*! ./generated/encode-html.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/encode-html.js"));
+var escape_js_1 = __webpack_require__(/*! ./escape.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/escape.js");
 var htmlReplacer = /[\t\n!-,./:-@[-`\f{-}$\x80-\uFFFF]/g;
 /**
  * Encodes all characters in the input using HTML entities. This includes
@@ -8539,7 +8968,7 @@ function encodeHTMLTrieRe(regExp, str) {
             }
             next = next.v;
         }
-        // We might have a tree node without a value; skip and use a numeric entitiy.
+        // We might have a tree node without a value; skip and use a numeric entity.
         if (next !== undefined) {
             ret += next;
             lastIdx = i + 1;
@@ -8557,10 +8986,10 @@ function encodeHTMLTrieRe(regExp, str) {
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/escape.js":
-/*!*********************************************!*\
-  !*** ./node_modules/entities/lib/escape.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/escape.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/escape.js ***!
+  \*******************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -8627,6 +9056,16 @@ exports.encodeXML = encodeXML;
  * @param data String to escape.
  */
 exports.escape = encodeXML;
+/**
+ * Creates a function that escapes all characters matched by the given regular
+ * expression using the given map of characters to escape to their entities.
+ *
+ * @param regex Regular expression to match characters to escape.
+ * @param map Map of characters to escape to their entities.
+ *
+ * @returns Function that escapes all characters matched by the given regular
+ * expression using the given map of characters to escape to their entities.
+ */
 function getEscaper(regex, map) {
     return function escape(data) {
         var match;
@@ -8636,7 +9075,7 @@ function getEscaper(regex, map) {
             if (lastIdx !== match.index) {
                 result += data.substring(lastIdx, match.index);
             }
-            // We know that this chararcter will be in the map.
+            // We know that this character will be in the map.
             result += map.get(match[0].charCodeAt(0));
             // Every match will be of length 1
             lastIdx = match.index + 1;
@@ -8679,10 +9118,10 @@ exports.escapeText = getEscaper(/[&<>\u00A0]/g, new Map([
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/generated/decode-data-html.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/entities/lib/generated/decode-data-html.js ***!
-  \*****************************************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/decode-data-html.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/decode-data-html.js ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -8698,10 +9137,10 @@ exports["default"] = new Uint16Array(
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/generated/decode-data-xml.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/entities/lib/generated/decode-data-xml.js ***!
-  \****************************************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/decode-data-xml.js":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/decode-data-xml.js ***!
+  \**************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -8717,10 +9156,10 @@ exports["default"] = new Uint16Array(
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/generated/encode-html.js":
-/*!************************************************************!*\
-  !*** ./node_modules/entities/lib/generated/encode-html.js ***!
-  \************************************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/encode-html.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/generated/encode-html.js ***!
+  \**********************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -8739,19 +9178,19 @@ exports["default"] = new Map(/* #__PURE__ */ restoreDiff([[9, "&Tab;"], [0, "&Ne
 
 /***/ }),
 
-/***/ "./node_modules/entities/lib/index.js":
-/*!********************************************!*\
-  !*** ./node_modules/entities/lib/index.js ***!
-  \********************************************/
+/***/ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/index.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/index.js ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.decodeXMLStrict = exports.decodeHTML5Strict = exports.decodeHTML4Strict = exports.decodeHTML5 = exports.decodeHTML4 = exports.decodeHTMLStrict = exports.decodeHTML = exports.decodeXML = exports.encodeHTML5 = exports.encodeHTML4 = exports.encodeNonAsciiHTML = exports.encodeHTML = exports.escapeText = exports.escapeAttribute = exports.escapeUTF8 = exports.escape = exports.encodeXML = exports.encode = exports.decodeStrict = exports.decode = exports.EncodingMode = exports.DecodingMode = exports.EntityLevel = void 0;
-var decode_js_1 = __webpack_require__(/*! ./decode.js */ "./node_modules/entities/lib/decode.js");
-var encode_js_1 = __webpack_require__(/*! ./encode.js */ "./node_modules/entities/lib/encode.js");
-var escape_js_1 = __webpack_require__(/*! ./escape.js */ "./node_modules/entities/lib/escape.js");
+exports.decodeXMLStrict = exports.decodeHTML5Strict = exports.decodeHTML4Strict = exports.decodeHTML5 = exports.decodeHTML4 = exports.decodeHTMLAttribute = exports.decodeHTMLStrict = exports.decodeHTML = exports.decodeXML = exports.DecodingMode = exports.EntityDecoder = exports.encodeHTML5 = exports.encodeHTML4 = exports.encodeNonAsciiHTML = exports.encodeHTML = exports.escapeText = exports.escapeAttribute = exports.escapeUTF8 = exports.escape = exports.encodeXML = exports.encode = exports.decodeStrict = exports.decode = exports.EncodingMode = exports.EntityLevel = void 0;
+var decode_js_1 = __webpack_require__(/*! ./decode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js");
+var encode_js_1 = __webpack_require__(/*! ./encode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/encode.js");
+var escape_js_1 = __webpack_require__(/*! ./escape.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/escape.js");
 /** The level of entities to support. */
 var EntityLevel;
 (function (EntityLevel) {
@@ -8760,14 +9199,6 @@ var EntityLevel;
     /** Support HTML entities, which are a superset of XML entities. */
     EntityLevel[EntityLevel["HTML"] = 1] = "HTML";
 })(EntityLevel = exports.EntityLevel || (exports.EntityLevel = {}));
-/** Determines whether some entities are allowed to be written without a trailing `;`. */
-var DecodingMode;
-(function (DecodingMode) {
-    /** Support legacy HTML entities. */
-    DecodingMode[DecodingMode["Legacy"] = 0] = "Legacy";
-    /** Do not support legacy HTML entities. */
-    DecodingMode[DecodingMode["Strict"] = 1] = "Strict";
-})(DecodingMode = exports.DecodingMode || (exports.DecodingMode = {}));
 var EncodingMode;
 (function (EncodingMode) {
     /**
@@ -8805,12 +9236,10 @@ var EncodingMode;
  */
 function decode(data, options) {
     if (options === void 0) { options = EntityLevel.XML; }
-    var opts = typeof options === "number" ? { level: options } : options;
-    if (opts.level === EntityLevel.HTML) {
-        if (opts.mode === DecodingMode.Strict) {
-            return (0, decode_js_1.decodeHTMLStrict)(data);
-        }
-        return (0, decode_js_1.decodeHTML)(data);
+    var level = typeof options === "number" ? options : options.level;
+    if (level === EntityLevel.HTML) {
+        var mode = typeof options === "object" ? options.mode : undefined;
+        return (0, decode_js_1.decodeHTML)(data, mode);
     }
     return (0, decode_js_1.decodeXML)(data);
 }
@@ -8823,15 +9252,11 @@ exports.decode = decode;
  * @deprecated Use `decode` with the `mode` set to `Strict`.
  */
 function decodeStrict(data, options) {
+    var _a;
     if (options === void 0) { options = EntityLevel.XML; }
     var opts = typeof options === "number" ? { level: options } : options;
-    if (opts.level === EntityLevel.HTML) {
-        if (opts.mode === DecodingMode.Legacy) {
-            return (0, decode_js_1.decodeHTML)(data);
-        }
-        return (0, decode_js_1.decodeHTMLStrict)(data);
-    }
-    return (0, decode_js_1.decodeXML)(data);
+    (_a = opts.mode) !== null && _a !== void 0 ? _a : (opts.mode = decode_js_1.DecodingMode.Strict);
+    return decode(data, opts);
 }
 exports.decodeStrict = decodeStrict;
 /**
@@ -8860,22 +9285,25 @@ function encode(data, options) {
     return (0, escape_js_1.encodeXML)(data);
 }
 exports.encode = encode;
-var escape_js_2 = __webpack_require__(/*! ./escape.js */ "./node_modules/entities/lib/escape.js");
+var escape_js_2 = __webpack_require__(/*! ./escape.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/escape.js");
 Object.defineProperty(exports, "encodeXML", ({ enumerable: true, get: function () { return escape_js_2.encodeXML; } }));
 Object.defineProperty(exports, "escape", ({ enumerable: true, get: function () { return escape_js_2.escape; } }));
 Object.defineProperty(exports, "escapeUTF8", ({ enumerable: true, get: function () { return escape_js_2.escapeUTF8; } }));
 Object.defineProperty(exports, "escapeAttribute", ({ enumerable: true, get: function () { return escape_js_2.escapeAttribute; } }));
 Object.defineProperty(exports, "escapeText", ({ enumerable: true, get: function () { return escape_js_2.escapeText; } }));
-var encode_js_2 = __webpack_require__(/*! ./encode.js */ "./node_modules/entities/lib/encode.js");
+var encode_js_2 = __webpack_require__(/*! ./encode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/encode.js");
 Object.defineProperty(exports, "encodeHTML", ({ enumerable: true, get: function () { return encode_js_2.encodeHTML; } }));
 Object.defineProperty(exports, "encodeNonAsciiHTML", ({ enumerable: true, get: function () { return encode_js_2.encodeNonAsciiHTML; } }));
 // Legacy aliases (deprecated)
 Object.defineProperty(exports, "encodeHTML4", ({ enumerable: true, get: function () { return encode_js_2.encodeHTML; } }));
 Object.defineProperty(exports, "encodeHTML5", ({ enumerable: true, get: function () { return encode_js_2.encodeHTML; } }));
-var decode_js_2 = __webpack_require__(/*! ./decode.js */ "./node_modules/entities/lib/decode.js");
+var decode_js_2 = __webpack_require__(/*! ./decode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js");
+Object.defineProperty(exports, "EntityDecoder", ({ enumerable: true, get: function () { return decode_js_2.EntityDecoder; } }));
+Object.defineProperty(exports, "DecodingMode", ({ enumerable: true, get: function () { return decode_js_2.DecodingMode; } }));
 Object.defineProperty(exports, "decodeXML", ({ enumerable: true, get: function () { return decode_js_2.decodeXML; } }));
 Object.defineProperty(exports, "decodeHTML", ({ enumerable: true, get: function () { return decode_js_2.decodeHTML; } }));
 Object.defineProperty(exports, "decodeHTMLStrict", ({ enumerable: true, get: function () { return decode_js_2.decodeHTMLStrict; } }));
+Object.defineProperty(exports, "decodeHTMLAttribute", ({ enumerable: true, get: function () { return decode_js_2.decodeHTMLAttribute; } }));
 // Legacy aliases (deprecated)
 Object.defineProperty(exports, "decodeHTML4", ({ enumerable: true, get: function () { return decode_js_2.decodeHTML; } }));
 Object.defineProperty(exports, "decodeHTML5", ({ enumerable: true, get: function () { return decode_js_2.decodeHTML; } }));
@@ -8886,10 +9314,10 @@ Object.defineProperty(exports, "decodeXMLStrict", ({ enumerable: true, get: func
 
 /***/ }),
 
-/***/ "./node_modules/htmlparser2/lib/Parser.js":
-/*!************************************************!*\
-  !*** ./node_modules/htmlparser2/lib/Parser.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Parser.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Parser.js ***!
+  \*************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8919,8 +9347,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Parser = void 0;
-var Tokenizer_js_1 = __importStar(__webpack_require__(/*! ./Tokenizer.js */ "./node_modules/htmlparser2/lib/Tokenizer.js"));
-var decode_js_1 = __webpack_require__(/*! entities/lib/decode.js */ "./node_modules/entities/lib/decode.js");
+var Tokenizer_js_1 = __importStar(__webpack_require__(/*! ./Tokenizer.js */ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Tokenizer.js"));
+var decode_js_1 = __webpack_require__(/*! entities/lib/decode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js");
 var formTags = new Set([
     "input",
     "option",
@@ -9066,10 +9494,10 @@ var Parser = /** @class */ (function () {
          * Entities can be emitted on the character, or directly after.
          * We use the section start here to get accurate indices.
          */
-        var idx = this.tokenizer.getSectionStart();
-        this.endIndex = idx - 1;
+        var index = this.tokenizer.getSectionStart();
+        this.endIndex = index - 1;
         (_b = (_a = this.cbs).ontext) === null || _b === void 0 ? void 0 : _b.call(_a, (0, decode_js_1.fromCodePoint)(cp));
-        this.startIndex = idx;
+        this.startIndex = index;
     };
     Parser.prototype.isVoidElement = function (name) {
         return !this.options.xmlMode && voidElements.has(name);
@@ -9091,8 +9519,8 @@ var Parser = /** @class */ (function () {
         if (impliesClose) {
             while (this.stack.length > 0 &&
                 impliesClose.has(this.stack[this.stack.length - 1])) {
-                var el = this.stack.pop();
-                (_b = (_a = this.cbs).onclosetag) === null || _b === void 0 ? void 0 : _b.call(_a, el, true);
+                var element = this.stack.pop();
+                (_b = (_a = this.cbs).onclosetag) === null || _b === void 0 ? void 0 : _b.call(_a, element, true);
             }
         }
         if (!this.isVoidElement(name)) {
@@ -9227,8 +9655,8 @@ var Parser = /** @class */ (function () {
         this.attribvalue = "";
     };
     Parser.prototype.getInstructionName = function (value) {
-        var idx = value.search(reNameEnd);
-        var name = idx < 0 ? value : value.substr(0, idx);
+        var index = value.search(reNameEnd);
+        var name = index < 0 ? value : value.substr(0, index);
         if (this.lowerCaseTagNames) {
             name = name.toLowerCase();
         }
@@ -9288,7 +9716,7 @@ var Parser = /** @class */ (function () {
         if (this.cbs.onclosetag) {
             // Set the end index for all remaining tags
             this.endIndex = this.startIndex;
-            for (var i = this.stack.length; i > 0; this.cbs.onclosetag(this.stack[--i], true))
+            for (var index = this.stack.length; index > 0; this.cbs.onclosetag(this.stack[--index], true))
                 ;
         }
         (_b = (_a = this.cbs).onend) === null || _b === void 0 ? void 0 : _b.call(_a);
@@ -9326,12 +9754,12 @@ var Parser = /** @class */ (function () {
         while (start - this.bufferOffset >= this.buffers[0].length) {
             this.shiftBuffer();
         }
-        var str = this.buffers[0].slice(start - this.bufferOffset, end - this.bufferOffset);
+        var slice = this.buffers[0].slice(start - this.bufferOffset, end - this.bufferOffset);
         while (end - this.bufferOffset > this.buffers[0].length) {
             this.shiftBuffer();
-            str += this.buffers[0].slice(0, end - this.bufferOffset);
+            slice += this.buffers[0].slice(0, end - this.bufferOffset);
         }
-        return str;
+        return slice;
     };
     Parser.prototype.shiftBuffer = function () {
         this.bufferOffset += this.buffers[0].length;
@@ -9363,7 +9791,7 @@ var Parser = /** @class */ (function () {
     Parser.prototype.end = function (chunk) {
         var _a, _b;
         if (this.ended) {
-            (_b = (_a = this.cbs).onerror) === null || _b === void 0 ? void 0 : _b.call(_a, Error(".end() after done!"));
+            (_b = (_a = this.cbs).onerror) === null || _b === void 0 ? void 0 : _b.call(_a, new Error(".end() after done!"));
             return;
         }
         if (chunk)
@@ -9414,17 +9842,17 @@ exports.Parser = Parser;
 
 /***/ }),
 
-/***/ "./node_modules/htmlparser2/lib/Tokenizer.js":
-/*!***************************************************!*\
-  !*** ./node_modules/htmlparser2/lib/Tokenizer.js ***!
-  \***************************************************/
+/***/ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Tokenizer.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Tokenizer.js ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.QuoteType = void 0;
-var decode_js_1 = __webpack_require__(/*! entities/lib/decode.js */ "./node_modules/entities/lib/decode.js");
+var decode_js_1 = __webpack_require__(/*! entities/lib/decode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js");
 var CharCodes;
 (function (CharCodes) {
     CharCodes[CharCodes["Tab"] = 9] = "Tab";
@@ -9433,7 +9861,7 @@ var CharCodes;
     CharCodes[CharCodes["CarriageReturn"] = 13] = "CarriageReturn";
     CharCodes[CharCodes["Space"] = 32] = "Space";
     CharCodes[CharCodes["ExclamationMark"] = 33] = "ExclamationMark";
-    CharCodes[CharCodes["Num"] = 35] = "Num";
+    CharCodes[CharCodes["Number"] = 35] = "Number";
     CharCodes[CharCodes["Amp"] = 38] = "Amp";
     CharCodes[CharCodes["SingleQuote"] = 39] = "SingleQuote";
     CharCodes[CharCodes["DoubleQuote"] = 34] = "DoubleQuote";
@@ -9555,6 +9983,7 @@ var Tokenizer = /** @class */ (function () {
         this.running = true;
         /** The offset of the current buffer. */
         this.offset = 0;
+        this.currentSequence = undefined;
         this.sequenceIndex = 0;
         this.trieIndex = 0;
         this.trieCurrent = 0;
@@ -9823,6 +10252,7 @@ var Tokenizer = /** @class */ (function () {
         // Skip everything until ">"
         if (c === CharCodes.Gt || this.fastForwardTo(CharCodes.Gt)) {
             this.state = State.Text;
+            this.baseState = State.Text;
             this.sectionStart = this.index + 1;
         }
     };
@@ -9994,7 +10424,7 @@ var Tokenizer = /** @class */ (function () {
         // Start excess with 1 to include the '&'
         this.entityExcess = 1;
         this.entityResult = 0;
-        if (c === CharCodes.Num) {
+        if (c === CharCodes.Number) {
             this.state = State.BeforeNumericEntity;
         }
         else if (c === CharCodes.Amp) {
@@ -10050,13 +10480,15 @@ var Tokenizer = /** @class */ (function () {
         var valueLength = (this.entityTrie[this.entityResult] & decode_js_1.BinTrieFlags.VALUE_LENGTH) >>
             14;
         switch (valueLength) {
-            case 1:
+            case 1: {
                 this.emitCodePoint(this.entityTrie[this.entityResult] &
                     ~decode_js_1.BinTrieFlags.VALUE_LENGTH);
                 break;
-            case 2:
+            }
+            case 2: {
                 this.emitCodePoint(this.entityTrie[this.entityResult + 1]);
                 break;
+            }
             case 3: {
                 this.emitCodePoint(this.entityTrie[this.entityResult + 1]);
                 this.emitCodePoint(this.entityTrie[this.entityResult + 2]);
@@ -10162,93 +10594,123 @@ var Tokenizer = /** @class */ (function () {
     Tokenizer.prototype.parse = function () {
         while (this.shouldContinue()) {
             var c = this.buffer.charCodeAt(this.index - this.offset);
-            if (this.state === State.Text) {
-                this.stateText(c);
-            }
-            else if (this.state === State.SpecialStartSequence) {
-                this.stateSpecialStartSequence(c);
-            }
-            else if (this.state === State.InSpecialTag) {
-                this.stateInSpecialTag(c);
-            }
-            else if (this.state === State.CDATASequence) {
-                this.stateCDATASequence(c);
-            }
-            else if (this.state === State.InAttributeValueDq) {
-                this.stateInAttributeValueDoubleQuotes(c);
-            }
-            else if (this.state === State.InAttributeName) {
-                this.stateInAttributeName(c);
-            }
-            else if (this.state === State.InCommentLike) {
-                this.stateInCommentLike(c);
-            }
-            else if (this.state === State.InSpecialComment) {
-                this.stateInSpecialComment(c);
-            }
-            else if (this.state === State.BeforeAttributeName) {
-                this.stateBeforeAttributeName(c);
-            }
-            else if (this.state === State.InTagName) {
-                this.stateInTagName(c);
-            }
-            else if (this.state === State.InClosingTagName) {
-                this.stateInClosingTagName(c);
-            }
-            else if (this.state === State.BeforeTagName) {
-                this.stateBeforeTagName(c);
-            }
-            else if (this.state === State.AfterAttributeName) {
-                this.stateAfterAttributeName(c);
-            }
-            else if (this.state === State.InAttributeValueSq) {
-                this.stateInAttributeValueSingleQuotes(c);
-            }
-            else if (this.state === State.BeforeAttributeValue) {
-                this.stateBeforeAttributeValue(c);
-            }
-            else if (this.state === State.BeforeClosingTagName) {
-                this.stateBeforeClosingTagName(c);
-            }
-            else if (this.state === State.AfterClosingTagName) {
-                this.stateAfterClosingTagName(c);
-            }
-            else if (this.state === State.BeforeSpecialS) {
-                this.stateBeforeSpecialS(c);
-            }
-            else if (this.state === State.InAttributeValueNq) {
-                this.stateInAttributeValueNoQuotes(c);
-            }
-            else if (this.state === State.InSelfClosingTag) {
-                this.stateInSelfClosingTag(c);
-            }
-            else if (this.state === State.InDeclaration) {
-                this.stateInDeclaration(c);
-            }
-            else if (this.state === State.BeforeDeclaration) {
-                this.stateBeforeDeclaration(c);
-            }
-            else if (this.state === State.BeforeComment) {
-                this.stateBeforeComment(c);
-            }
-            else if (this.state === State.InProcessingInstruction) {
-                this.stateInProcessingInstruction(c);
-            }
-            else if (this.state === State.InNamedEntity) {
-                this.stateInNamedEntity(c);
-            }
-            else if (this.state === State.BeforeEntity) {
-                this.stateBeforeEntity(c);
-            }
-            else if (this.state === State.InHexEntity) {
-                this.stateInHexEntity(c);
-            }
-            else if (this.state === State.InNumericEntity) {
-                this.stateInNumericEntity(c);
-            }
-            else {
-                // `this._state === State.BeforeNumericEntity`
-                this.stateBeforeNumericEntity(c);
+            switch (this.state) {
+                case State.Text: {
+                    this.stateText(c);
+                    break;
+                }
+                case State.SpecialStartSequence: {
+                    this.stateSpecialStartSequence(c);
+                    break;
+                }
+                case State.InSpecialTag: {
+                    this.stateInSpecialTag(c);
+                    break;
+                }
+                case State.CDATASequence: {
+                    this.stateCDATASequence(c);
+                    break;
+                }
+                case State.InAttributeValueDq: {
+                    this.stateInAttributeValueDoubleQuotes(c);
+                    break;
+                }
+                case State.InAttributeName: {
+                    this.stateInAttributeName(c);
+                    break;
+                }
+                case State.InCommentLike: {
+                    this.stateInCommentLike(c);
+                    break;
+                }
+                case State.InSpecialComment: {
+                    this.stateInSpecialComment(c);
+                    break;
+                }
+                case State.BeforeAttributeName: {
+                    this.stateBeforeAttributeName(c);
+                    break;
+                }
+                case State.InTagName: {
+                    this.stateInTagName(c);
+                    break;
+                }
+                case State.InClosingTagName: {
+                    this.stateInClosingTagName(c);
+                    break;
+                }
+                case State.BeforeTagName: {
+                    this.stateBeforeTagName(c);
+                    break;
+                }
+                case State.AfterAttributeName: {
+                    this.stateAfterAttributeName(c);
+                    break;
+                }
+                case State.InAttributeValueSq: {
+                    this.stateInAttributeValueSingleQuotes(c);
+                    break;
+                }
+                case State.BeforeAttributeValue: {
+                    this.stateBeforeAttributeValue(c);
+                    break;
+                }
+                case State.BeforeClosingTagName: {
+                    this.stateBeforeClosingTagName(c);
+                    break;
+                }
+                case State.AfterClosingTagName: {
+                    this.stateAfterClosingTagName(c);
+                    break;
+                }
+                case State.BeforeSpecialS: {
+                    this.stateBeforeSpecialS(c);
+                    break;
+                }
+                case State.InAttributeValueNq: {
+                    this.stateInAttributeValueNoQuotes(c);
+                    break;
+                }
+                case State.InSelfClosingTag: {
+                    this.stateInSelfClosingTag(c);
+                    break;
+                }
+                case State.InDeclaration: {
+                    this.stateInDeclaration(c);
+                    break;
+                }
+                case State.BeforeDeclaration: {
+                    this.stateBeforeDeclaration(c);
+                    break;
+                }
+                case State.BeforeComment: {
+                    this.stateBeforeComment(c);
+                    break;
+                }
+                case State.InProcessingInstruction: {
+                    this.stateInProcessingInstruction(c);
+                    break;
+                }
+                case State.InNamedEntity: {
+                    this.stateInNamedEntity(c);
+                    break;
+                }
+                case State.BeforeEntity: {
+                    this.stateBeforeEntity(c);
+                    break;
+                }
+                case State.InHexEntity: {
+                    this.stateInHexEntity(c);
+                    break;
+                }
+                case State.InNumericEntity: {
+                    this.stateInNumericEntity(c);
+                    break;
+                }
+                default: {
+                    // `this._state === State.BeforeNumericEntity`
+                    this.stateBeforeNumericEntity(c);
+                }
             }
             this.index++;
         }
@@ -10328,10 +10790,10 @@ exports["default"] = Tokenizer;
 
 /***/ }),
 
-/***/ "./node_modules/htmlparser2/lib/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/htmlparser2/lib/index.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/index.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/index.js ***!
+  \************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10363,12 +10825,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DefaultHandler = exports.DomUtils = exports.parseFeed = exports.getFeed = exports.ElementType = exports.Tokenizer = exports.createDomStream = exports.parseDOM = exports.parseDocument = exports.DomHandler = exports.Parser = void 0;
-var Parser_js_1 = __webpack_require__(/*! ./Parser.js */ "./node_modules/htmlparser2/lib/Parser.js");
-Object.defineProperty(exports, "Parser", ({ enumerable: true, get: function () { return Parser_js_1.Parser; } }));
-var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
-Object.defineProperty(exports, "DomHandler", ({ enumerable: true, get: function () { return domhandler_1.DomHandler; } }));
-Object.defineProperty(exports, "DefaultHandler", ({ enumerable: true, get: function () { return domhandler_1.DomHandler; } }));
+exports.DomUtils = exports.parseFeed = exports.getFeed = exports.ElementType = exports.Tokenizer = exports.createDomStream = exports.parseDOM = exports.parseDocument = exports.DefaultHandler = exports.DomHandler = exports.Parser = void 0;
+var Parser_js_1 = __webpack_require__(/*! ./Parser.js */ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Parser.js");
+var Parser_js_2 = __webpack_require__(/*! ./Parser.js */ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Parser.js");
+Object.defineProperty(exports, "Parser", ({ enumerable: true, get: function () { return Parser_js_2.Parser; } }));
+var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+var domhandler_2 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
+Object.defineProperty(exports, "DomHandler", ({ enumerable: true, get: function () { return domhandler_2.DomHandler; } }));
+// Old name for DomHandler
+Object.defineProperty(exports, "DefaultHandler", ({ enumerable: true, get: function () { return domhandler_2.DomHandler; } }));
 // Helper methods
 /**
  * Parses the data, returns the resulting document.
@@ -10399,25 +10864,26 @@ exports.parseDOM = parseDOM;
 /**
  * Creates a parser instance, with an attached DOM handler.
  *
- * @param cb A callback that will be called once parsing has been completed.
+ * @param callback A callback that will be called once parsing has been completed.
  * @param options Optional options for the parser and DOM builder.
- * @param elementCb An optional callback that will be called every time a tag has been completed inside of the DOM.
+ * @param elementCallback An optional callback that will be called every time a tag has been completed inside of the DOM.
  */
-function createDomStream(cb, options, elementCb) {
-    var handler = new domhandler_1.DomHandler(cb, options, elementCb);
+function createDomStream(callback, options, elementCallback) {
+    var handler = new domhandler_1.DomHandler(callback, options, elementCallback);
     return new Parser_js_1.Parser(handler, options);
 }
 exports.createDomStream = createDomStream;
-var Tokenizer_js_1 = __webpack_require__(/*! ./Tokenizer.js */ "./node_modules/htmlparser2/lib/Tokenizer.js");
+var Tokenizer_js_1 = __webpack_require__(/*! ./Tokenizer.js */ "./node_modules/.pnpm/htmlparser2@8.0.2/node_modules/htmlparser2/lib/Tokenizer.js");
 Object.defineProperty(exports, "Tokenizer", ({ enumerable: true, get: function () { return __importDefault(Tokenizer_js_1).default; } }));
 /*
  * All of the following exports exist for backwards-compatibility.
  * They should probably be removed eventually.
  */
-var ElementType = __importStar(__webpack_require__(/*! domelementtype */ "./node_modules/domelementtype/lib/index.js"));
-exports.ElementType = ElementType;
-var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js");
-Object.defineProperty(exports, "getFeed", ({ enumerable: true, get: function () { return domutils_1.getFeed; } }));
+exports.ElementType = __importStar(__webpack_require__(/*! domelementtype */ "./node_modules/.pnpm/domelementtype@2.3.0/node_modules/domelementtype/lib/index.js"));
+var domutils_1 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
+var domutils_2 = __webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js");
+Object.defineProperty(exports, "getFeed", ({ enumerable: true, get: function () { return domutils_2.getFeed; } }));
+var parseFeedDefaultOptions = { xmlMode: true };
 /**
  * Parse a feed.
  *
@@ -10425,19 +10891,19 @@ Object.defineProperty(exports, "getFeed", ({ enumerable: true, get: function () 
  * @param options Optionally, options for parsing. When using this, you should set `xmlMode` to `true`.
  */
 function parseFeed(feed, options) {
-    if (options === void 0) { options = { xmlMode: true }; }
+    if (options === void 0) { options = parseFeedDefaultOptions; }
     return (0, domutils_1.getFeed)(parseDOM(feed, options));
 }
 exports.parseFeed = parseFeed;
-exports.DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/domutils/lib/index.js"));
+exports.DomUtils = __importStar(__webpack_require__(/*! domutils */ "./node_modules/.pnpm/domutils@3.1.0/node_modules/domutils/lib/index.js"));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ "./node_modules/js-sha256/src/sha256.js":
-/*!**********************************************!*\
-  !*** ./node_modules/js-sha256/src/sha256.js ***!
-  \**********************************************/
+/***/ "./node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js ***!
+  \*********************************************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -10963,10 +11429,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./node_modules/nth-check/lib/compile.js":
-/*!***********************************************!*\
-  !*** ./node_modules/nth-check/lib/compile.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/compile.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/compile.js ***!
+  \**********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10976,7 +11442,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.generate = exports.compile = void 0;
-var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/boolbase/index.js"));
+var boolbase_1 = __importDefault(__webpack_require__(/*! boolbase */ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js"));
 /**
  * Returns a function that checks if an elements index matches the given rule
  * highly optimized to return the fastest solution.
@@ -11094,19 +11560,19 @@ exports.generate = generate;
 
 /***/ }),
 
-/***/ "./node_modules/nth-check/lib/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/nth-check/lib/index.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/index.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/index.js ***!
+  \********************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sequence = exports.generate = exports.compile = exports.parse = void 0;
-var parse_js_1 = __webpack_require__(/*! ./parse.js */ "./node_modules/nth-check/lib/parse.js");
+var parse_js_1 = __webpack_require__(/*! ./parse.js */ "./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/parse.js");
 Object.defineProperty(exports, "parse", ({ enumerable: true, get: function () { return parse_js_1.parse; } }));
-var compile_js_1 = __webpack_require__(/*! ./compile.js */ "./node_modules/nth-check/lib/compile.js");
+var compile_js_1 = __webpack_require__(/*! ./compile.js */ "./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/compile.js");
 Object.defineProperty(exports, "compile", ({ enumerable: true, get: function () { return compile_js_1.compile; } }));
 Object.defineProperty(exports, "generate", ({ enumerable: true, get: function () { return compile_js_1.generate; } }));
 /**
@@ -11174,10 +11640,10 @@ exports.sequence = sequence;
 
 /***/ }),
 
-/***/ "./node_modules/nth-check/lib/parse.js":
-/*!*********************************************!*\
-  !*** ./node_modules/nth-check/lib/parse.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/parse.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/.pnpm/nth-check@2.1.1/node_modules/nth-check/lib/parse.js ***!
+  \********************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -11261,21 +11727,21 @@ exports.parse = parse;
 
 /***/ }),
 
-/***/ "./node_modules/pako/index.js":
-/*!************************************!*\
-  !*** ./node_modules/pako/index.js ***!
-  \************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/index.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/index.js ***!
+  \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 // Top level file is just a mixin of submodules & constants
 
 
-const { Deflate, deflate, deflateRaw, gzip } = __webpack_require__(/*! ./lib/deflate */ "./node_modules/pako/lib/deflate.js");
+const { Deflate, deflate, deflateRaw, gzip } = __webpack_require__(/*! ./lib/deflate */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/deflate.js");
 
-const { Inflate, inflate, inflateRaw, ungzip } = __webpack_require__(/*! ./lib/inflate */ "./node_modules/pako/lib/inflate.js");
+const { Inflate, inflate, inflateRaw, ungzip } = __webpack_require__(/*! ./lib/inflate */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/inflate.js");
 
-const constants = __webpack_require__(/*! ./lib/zlib/constants */ "./node_modules/pako/lib/zlib/constants.js");
+const constants = __webpack_require__(/*! ./lib/zlib/constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 module.exports.Deflate = Deflate;
 module.exports.deflate = deflate;
@@ -11290,21 +11756,21 @@ module.exports.constants = constants;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/deflate.js":
-/*!******************************************!*\
-  !*** ./node_modules/pako/lib/deflate.js ***!
-  \******************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/deflate.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/deflate.js ***!
+  \************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 
-const zlib_deflate = __webpack_require__(/*! ./zlib/deflate */ "./node_modules/pako/lib/zlib/deflate.js");
-const utils        = __webpack_require__(/*! ./utils/common */ "./node_modules/pako/lib/utils/common.js");
-const strings      = __webpack_require__(/*! ./utils/strings */ "./node_modules/pako/lib/utils/strings.js");
-const msg          = __webpack_require__(/*! ./zlib/messages */ "./node_modules/pako/lib/zlib/messages.js");
-const ZStream      = __webpack_require__(/*! ./zlib/zstream */ "./node_modules/pako/lib/zlib/zstream.js");
+const zlib_deflate = __webpack_require__(/*! ./zlib/deflate */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/deflate.js");
+const utils        = __webpack_require__(/*! ./utils/common */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/common.js");
+const strings      = __webpack_require__(/*! ./utils/strings */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/strings.js");
+const msg          = __webpack_require__(/*! ./zlib/messages */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/messages.js");
+const ZStream      = __webpack_require__(/*! ./zlib/zstream */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/zstream.js");
 
 const toString = Object.prototype.toString;
 
@@ -11317,7 +11783,7 @@ const {
   Z_DEFAULT_COMPRESSION,
   Z_DEFAULT_STRATEGY,
   Z_DEFLATED
-} = __webpack_require__(/*! ./zlib/constants */ "./node_modules/pako/lib/zlib/constants.js");
+} = __webpack_require__(/*! ./zlib/constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 /* ===========================================================================*/
 
@@ -11676,27 +12142,27 @@ module.exports.Deflate = Deflate;
 module.exports.deflate = deflate;
 module.exports.deflateRaw = deflateRaw;
 module.exports.gzip = gzip;
-module.exports.constants = __webpack_require__(/*! ./zlib/constants */ "./node_modules/pako/lib/zlib/constants.js");
+module.exports.constants = __webpack_require__(/*! ./zlib/constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/inflate.js":
-/*!******************************************!*\
-  !*** ./node_modules/pako/lib/inflate.js ***!
-  \******************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/inflate.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/inflate.js ***!
+  \************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 
-const zlib_inflate = __webpack_require__(/*! ./zlib/inflate */ "./node_modules/pako/lib/zlib/inflate.js");
-const utils        = __webpack_require__(/*! ./utils/common */ "./node_modules/pako/lib/utils/common.js");
-const strings      = __webpack_require__(/*! ./utils/strings */ "./node_modules/pako/lib/utils/strings.js");
-const msg          = __webpack_require__(/*! ./zlib/messages */ "./node_modules/pako/lib/zlib/messages.js");
-const ZStream      = __webpack_require__(/*! ./zlib/zstream */ "./node_modules/pako/lib/zlib/zstream.js");
-const GZheader     = __webpack_require__(/*! ./zlib/gzheader */ "./node_modules/pako/lib/zlib/gzheader.js");
+const zlib_inflate = __webpack_require__(/*! ./zlib/inflate */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inflate.js");
+const utils        = __webpack_require__(/*! ./utils/common */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/common.js");
+const strings      = __webpack_require__(/*! ./utils/strings */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/strings.js");
+const msg          = __webpack_require__(/*! ./zlib/messages */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/messages.js");
+const ZStream      = __webpack_require__(/*! ./zlib/zstream */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/zstream.js");
+const GZheader     = __webpack_require__(/*! ./zlib/gzheader */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/gzheader.js");
 
 const toString = Object.prototype.toString;
 
@@ -11706,7 +12172,7 @@ const toString = Object.prototype.toString;
 const {
   Z_NO_FLUSH, Z_FINISH,
   Z_OK, Z_STREAM_END, Z_NEED_DICT, Z_STREAM_ERROR, Z_DATA_ERROR, Z_MEM_ERROR
-} = __webpack_require__(/*! ./zlib/constants */ "./node_modules/pako/lib/zlib/constants.js");
+} = __webpack_require__(/*! ./zlib/constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 /* ===========================================================================*/
 
@@ -12106,15 +12572,15 @@ module.exports.Inflate = Inflate;
 module.exports.inflate = inflate;
 module.exports.inflateRaw = inflateRaw;
 module.exports.ungzip = inflate;
-module.exports.constants = __webpack_require__(/*! ./zlib/constants */ "./node_modules/pako/lib/zlib/constants.js");
+module.exports.constants = __webpack_require__(/*! ./zlib/constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/utils/common.js":
-/*!***********************************************!*\
-  !*** ./node_modules/pako/lib/utils/common.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/common.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/common.js ***!
+  \*****************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -12170,10 +12636,10 @@ module.exports.flattenChunks = (chunks) => {
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/utils/strings.js":
-/*!************************************************!*\
-  !*** ./node_modules/pako/lib/utils/strings.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/strings.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/utils/strings.js ***!
+  \******************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -12355,10 +12821,10 @@ module.exports.utf8border = (buf, max) => {
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/adler32.js":
-/*!***********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/adler32.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/adler32.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/adler32.js ***!
+  \*****************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -12417,10 +12883,10 @@ module.exports = adler32;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/constants.js":
-/*!*************************************************!*\
-  !*** ./node_modules/pako/lib/zlib/constants.js ***!
-  \*************************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js ***!
+  \*******************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -12496,10 +12962,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/crc32.js":
-/*!*********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/crc32.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/crc32.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/crc32.js ***!
+  \***************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -12566,10 +13032,10 @@ module.exports = crc32;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/deflate.js":
-/*!***********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/deflate.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/deflate.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/deflate.js ***!
+  \*****************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -12594,10 +13060,10 @@ module.exports = crc32;
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-const { _tr_init, _tr_stored_block, _tr_flush_block, _tr_tally, _tr_align } = __webpack_require__(/*! ./trees */ "./node_modules/pako/lib/zlib/trees.js");
-const adler32 = __webpack_require__(/*! ./adler32 */ "./node_modules/pako/lib/zlib/adler32.js");
-const crc32   = __webpack_require__(/*! ./crc32 */ "./node_modules/pako/lib/zlib/crc32.js");
-const msg     = __webpack_require__(/*! ./messages */ "./node_modules/pako/lib/zlib/messages.js");
+const { _tr_init, _tr_stored_block, _tr_flush_block, _tr_tally, _tr_align } = __webpack_require__(/*! ./trees */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/trees.js");
+const adler32 = __webpack_require__(/*! ./adler32 */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/adler32.js");
+const crc32   = __webpack_require__(/*! ./crc32 */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/crc32.js");
+const msg     = __webpack_require__(/*! ./messages */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/messages.js");
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -12609,7 +13075,7 @@ const {
   Z_FILTERED, Z_HUFFMAN_ONLY, Z_RLE, Z_FIXED, Z_DEFAULT_STRATEGY,
   Z_UNKNOWN,
   Z_DEFLATED
-} = __webpack_require__(/*! ./constants */ "./node_modules/pako/lib/zlib/constants.js");
+} = __webpack_require__(/*! ./constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 /*============================================================================*/
 
@@ -14625,10 +15091,10 @@ module.exports.deflateTune = deflateTune;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/gzheader.js":
-/*!************************************************!*\
-  !*** ./node_modules/pako/lib/zlib/gzheader.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/gzheader.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/gzheader.js ***!
+  \******************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -14694,10 +15160,10 @@ module.exports = GZheader;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/inffast.js":
-/*!***********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/inffast.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inffast.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inffast.js ***!
+  \*****************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -15049,10 +15515,10 @@ module.exports = function inflate_fast(strm, start) {
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/inflate.js":
-/*!***********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/inflate.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inflate.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inflate.js ***!
+  \*****************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -15077,10 +15543,10 @@ module.exports = function inflate_fast(strm, start) {
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-const adler32       = __webpack_require__(/*! ./adler32 */ "./node_modules/pako/lib/zlib/adler32.js");
-const crc32         = __webpack_require__(/*! ./crc32 */ "./node_modules/pako/lib/zlib/crc32.js");
-const inflate_fast  = __webpack_require__(/*! ./inffast */ "./node_modules/pako/lib/zlib/inffast.js");
-const inflate_table = __webpack_require__(/*! ./inftrees */ "./node_modules/pako/lib/zlib/inftrees.js");
+const adler32       = __webpack_require__(/*! ./adler32 */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/adler32.js");
+const crc32         = __webpack_require__(/*! ./crc32 */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/crc32.js");
+const inflate_fast  = __webpack_require__(/*! ./inffast */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inffast.js");
+const inflate_table = __webpack_require__(/*! ./inftrees */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inftrees.js");
 
 const CODES = 0;
 const LENS = 1;
@@ -15093,7 +15559,7 @@ const {
   Z_FINISH, Z_BLOCK, Z_TREES,
   Z_OK, Z_STREAM_END, Z_NEED_DICT, Z_STREAM_ERROR, Z_DATA_ERROR, Z_MEM_ERROR, Z_BUF_ERROR,
   Z_DEFLATED
-} = __webpack_require__(/*! ./constants */ "./node_modules/pako/lib/zlib/constants.js");
+} = __webpack_require__(/*! ./constants */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/constants.js");
 
 
 /* STATES ====================================================================*/
@@ -16632,10 +17098,10 @@ module.exports.inflateValidate = inflateValidate;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/inftrees.js":
-/*!************************************************!*\
-  !*** ./node_modules/pako/lib/zlib/inftrees.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inftrees.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/inftrees.js ***!
+  \******************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -16983,10 +17449,10 @@ module.exports = inflate_table;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/messages.js":
-/*!************************************************!*\
-  !*** ./node_modules/pako/lib/zlib/messages.js ***!
-  \************************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/messages.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/messages.js ***!
+  \******************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -17026,10 +17492,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/trees.js":
-/*!*********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/trees.js ***!
-  \*********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/trees.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/trees.js ***!
+  \***************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -18216,10 +18682,10 @@ module.exports._tr_align = _tr_align;
 
 /***/ }),
 
-/***/ "./node_modules/pako/lib/zlib/zstream.js":
-/*!***********************************************!*\
-  !*** ./node_modules/pako/lib/zlib/zstream.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/zstream.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/.pnpm/pako@2.1.0/node_modules/pako/lib/zlib/zstream.js ***!
+  \*****************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -18442,7 +18908,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -18450,7 +18916,7 @@ const isFlatObjectsEqual = (obj1, obj2) => {
     if (keysObj1.length !== keysObj2.length) {
         return false;
     }
-    return !keysObj1.some(key => obj1[key] !== obj2[key]);
+    return !keysObj1.some((key) => obj1[key] !== obj2[key]);
 };
 exports.isFlatObjectsEqual = isFlatObjectsEqual;
 const uuid = () => {
@@ -18469,7 +18935,7 @@ const splitByLines = (str, removeEmpty = false) => {
     const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
     let res = str.split(regexp);
     if (removeEmpty) {
-        res = res.filter(r => r && r !== '\r\n' && r !== '\n' && r !== '\r');
+        res = res.filter((r) => r && r !== '\r\n' && r !== '\n' && r !== '\r');
     }
     return res;
 };
@@ -18493,7 +18959,7 @@ const deduplicateArray = (arr) => {
 exports.deduplicateArray = deduplicateArray;
 const formatString = (pattern, parts, keyFormat) => {
     return Object.keys(parts || {})
-        .map(name => ({
+        .map((name) => ({
         value: parts[name],
         key: keyFormat ? keyFormat(name) : `%${name}`,
     }))
@@ -18532,13 +18998,13 @@ const formatBinaryDate = (value) => {
 exports.formatBinaryDate = formatBinaryDate;
 const formatDate = (pattern, data) => {
     return (0, exports.formatString)(pattern, {
-        'Y': String(data.getFullYear()),
-        'M': (0, exports.formatBinaryDate)(data.getMonth() + 1),
-        'm': (0, exports.formatBinaryDate)(data.getMinutes()),
-        's': (0, exports.formatBinaryDate)(data.getSeconds()),
-        'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
-        'd': (0, exports.formatBinaryDate)(data.getDate()),
-        'h': (0, exports.formatBinaryDate)(data.getHours()),
+        Y: String(data.getFullYear()),
+        M: (0, exports.formatBinaryDate)(data.getMonth() + 1),
+        m: (0, exports.formatBinaryDate)(data.getMinutes()),
+        s: (0, exports.formatBinaryDate)(data.getSeconds()),
+        ms: (0, exports.formatBinaryDate)(data.getMilliseconds()),
+        d: (0, exports.formatBinaryDate)(data.getDate()),
+        h: (0, exports.formatBinaryDate)(data.getHours()),
     });
 };
 exports.formatDate = formatDate;
@@ -18561,6 +19027,14 @@ const sortNumbers = (a, b) => {
     return 0;
 };
 exports.sortNumbers = sortNumbers;
+const sortStrings = (a, b, order = 'ascending') => {
+    const result = a.localeCompare(b);
+    if (result === 0 || order === 'ascending') {
+        return result;
+    }
+    return result === 1 ? -1 : 1;
+};
+exports.sortStrings = sortStrings;
 const indexOfAll = (str, search) => {
     const indexes = [];
     let i = -1;
@@ -18571,7 +19045,7 @@ const indexOfAll = (str, search) => {
 };
 exports.indexOfAll = indexOfAll;
 const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => {
             resolve(null);
         }, sec * 1000);
@@ -18863,7 +19337,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AbstractBackgroundPlatform = void 0;
-const pako_1 = __importDefault(__webpack_require__(/*! pako */ "./node_modules/pako/index.js"));
+const pako_1 = __importDefault(__webpack_require__(/*! pako */ "./node_modules/.pnpm/pako@2.1.0/node_modules/pako/index.js"));
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 const types_app_messages_1 = __webpack_require__(/*! ../../app/types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
@@ -19003,7 +19477,7 @@ const types_common_1 = __webpack_require__(/*! ../../common/types/types-common *
 const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
-const js_sha256_1 = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+const js_sha256_1 = __webpack_require__(/*! js-sha256 */ "./node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js");
 const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
 let loggers;
@@ -19364,7 +19838,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
     }
     parseHTMLString(htmlString) {
         const mappedFields = new Map();
-        const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body>${htmlString}</body>`);
+        const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(`<body>${htmlString}</body>`);
         const classStr = $('body > *').attr().class;
         if (!classStr || classStr.indexOf('-Raw-') > -1) {
             return mappedFields;
@@ -19391,7 +19865,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                     if (sv[0] !== '<') {
                         return;
                     }
-                    const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body>${sv}</body>`);
+                    const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(`<body>${sv}</body>`);
                     const str = $('body').text();
                     const fields = str.substring(0, 6).toLowerCase() === 'cef:0|'
                         ? this.parseCEFString(str)
@@ -20532,7 +21006,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         const result = {};
         const { fields } = this;
         (_b = (_a = response.result) === null || _a === void 0 ? void 0 : _a.rows) === null || _b === void 0 ? void 0 : _b.forEach((r) => {
-            const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(`<body><table>${r}</table></body>`);
+            const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(`<body><table>${r}</table></body>`);
             $('td').each((i, e) => {
                 var _a, _b;
                 const elem = $(e);
@@ -20558,7 +21032,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const result = {};
         const { fields } = this;
-        const $ = (__webpack_require__(/*! cheerio */ "./node_modules/cheerio/lib/index.js").load)(response);
+        const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(response);
         $('td').each((i, e) => {
             var _a, _b, _c;
             const elem = $(e);
@@ -21789,7 +22263,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.3.0";
+exports.version = "1.3.1";
 
 
 /***/ }),
@@ -21999,18 +22473,18 @@ Object.values(MessageToContent).forEach(type => {
 
 /***/ }),
 
-/***/ "./node_modules/parse5-htmlparser2-tree-adapter/dist/cjs/index.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/parse5-htmlparser2-tree-adapter/dist/cjs/index.js ***!
-  \************************************************************************/
+/***/ "./node_modules/.pnpm/parse5-htmlparser2-tree-adapter@7.0.0/node_modules/parse5-htmlparser2-tree-adapter/dist/cjs/index.js":
+/*!*********************************************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5-htmlparser2-tree-adapter@7.0.0/node_modules/parse5-htmlparser2-tree-adapter/dist/cjs/index.js ***!
+  \*********************************************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.adapter = exports.serializeDoctypeContent = void 0;
-const parse5_1 = __webpack_require__(/*! parse5 */ "./node_modules/parse5/dist/cjs/index.js");
-const domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/domhandler/lib/index.js");
+const parse5_1 = __webpack_require__(/*! parse5 */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/index.js");
+const domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/.pnpm/domhandler@5.0.3/node_modules/domhandler/lib/index.js");
 function createTextNode(value) {
     return new domhandler_1.Text(value);
 }
@@ -22224,17 +22698,17 @@ exports.adapter = {
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/common/doctype.js":
-/*!********************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/common/doctype.js ***!
-  \********************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/doctype.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/doctype.js ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getDocumentMode = exports.isConforming = void 0;
-const html_js_1 = __webpack_require__(/*! ./html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
+const html_js_1 = __webpack_require__(/*! ./html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
 //Const
 const VALID_DOCTYPE_NAME = 'html';
 const VALID_SYSTEM_ID = 'about:legacy-compat';
@@ -22354,10 +22828,10 @@ exports.getDocumentMode = getDocumentMode;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/common/error-codes.js":
-/*!************************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/common/error-codes.js ***!
-  \************************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/error-codes.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/error-codes.js ***!
+  \********************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -22431,17 +22905,17 @@ var ERR;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/common/foreign-content.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/common/foreign-content.js ***!
-  \****************************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/foreign-content.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/foreign-content.js ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isIntegrationPoint = exports.adjustTokenSVGTagName = exports.adjustTokenXMLAttrs = exports.adjustTokenSVGAttrs = exports.adjustTokenMathMLAttrs = exports.causesExit = exports.SVG_TAG_NAMES_ADJUSTMENT_MAP = void 0;
-const html_js_1 = __webpack_require__(/*! ./html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
+const html_js_1 = __webpack_require__(/*! ./html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
 //MIME types
 const MIME_TYPES = {
     TEXT_HTML: 'text/html',
@@ -22680,10 +23154,10 @@ exports.isIntegrationPoint = isIntegrationPoint;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/common/html.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/common/html.js ***!
-  \*****************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js ***!
+  \*************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -23219,10 +23693,10 @@ exports.hasUnescapedText = hasUnescapedText;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/common/token.js":
-/*!******************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/common/token.js ***!
-  \******************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/token.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/token.js ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -23254,10 +23728,10 @@ exports.getTokenAttr = getTokenAttr;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/common/unicode.js":
-/*!********************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/common/unicode.js ***!
-  \********************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/unicode.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/unicode.js ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -23341,32 +23815,34 @@ exports.isUndefinedCodePoint = isUndefinedCodePoint;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/index.js ***!
-  \***********************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/index.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/index.js ***!
+  \*******************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseFragment = exports.parse = exports.TokenizerMode = exports.Tokenizer = exports.Token = exports.html = exports.foreignContent = exports.serializeOuter = exports.serialize = exports.Parser = exports.defaultTreeAdapter = void 0;
-const index_js_1 = __webpack_require__(/*! ./parser/index.js */ "./node_modules/parse5/dist/cjs/parser/index.js");
-var default_js_1 = __webpack_require__(/*! ./tree-adapters/default.js */ "./node_modules/parse5/dist/cjs/tree-adapters/default.js");
+exports.parseFragment = exports.parse = exports.TokenizerMode = exports.Tokenizer = exports.Token = exports.html = exports.foreignContent = exports.ErrorCodes = exports.serializeOuter = exports.serialize = exports.Parser = exports.defaultTreeAdapter = void 0;
+const index_js_1 = __webpack_require__(/*! ./parser/index.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/index.js");
+var default_js_1 = __webpack_require__(/*! ./tree-adapters/default.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tree-adapters/default.js");
 Object.defineProperty(exports, "defaultTreeAdapter", ({ enumerable: true, get: function () { return default_js_1.defaultTreeAdapter; } }));
-var index_js_2 = __webpack_require__(/*! ./parser/index.js */ "./node_modules/parse5/dist/cjs/parser/index.js");
+var index_js_2 = __webpack_require__(/*! ./parser/index.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/index.js");
 Object.defineProperty(exports, "Parser", ({ enumerable: true, get: function () { return index_js_2.Parser; } }));
-var index_js_3 = __webpack_require__(/*! ./serializer/index.js */ "./node_modules/parse5/dist/cjs/serializer/index.js");
+var index_js_3 = __webpack_require__(/*! ./serializer/index.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/serializer/index.js");
 Object.defineProperty(exports, "serialize", ({ enumerable: true, get: function () { return index_js_3.serialize; } }));
 Object.defineProperty(exports, "serializeOuter", ({ enumerable: true, get: function () { return index_js_3.serializeOuter; } }));
+var error_codes_js_1 = __webpack_require__(/*! ./common/error-codes.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/error-codes.js");
+Object.defineProperty(exports, "ErrorCodes", ({ enumerable: true, get: function () { return error_codes_js_1.ERR; } }));
 /** @internal */
-exports.foreignContent = __webpack_require__(/*! ./common/foreign-content.js */ "./node_modules/parse5/dist/cjs/common/foreign-content.js");
+exports.foreignContent = __webpack_require__(/*! ./common/foreign-content.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/foreign-content.js");
 /** @internal */
-exports.html = __webpack_require__(/*! ./common/html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
+exports.html = __webpack_require__(/*! ./common/html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
 /** @internal */
-exports.Token = __webpack_require__(/*! ./common/token.js */ "./node_modules/parse5/dist/cjs/common/token.js");
+exports.Token = __webpack_require__(/*! ./common/token.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/token.js");
 /** @internal */
-var index_js_4 = __webpack_require__(/*! ./tokenizer/index.js */ "./node_modules/parse5/dist/cjs/tokenizer/index.js");
+var index_js_4 = __webpack_require__(/*! ./tokenizer/index.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/index.js");
 Object.defineProperty(exports, "Tokenizer", ({ enumerable: true, get: function () { return index_js_4.Tokenizer; } }));
 Object.defineProperty(exports, "TokenizerMode", ({ enumerable: true, get: function () { return index_js_4.TokenizerMode; } }));
 // Shorthands
@@ -23406,10 +23882,10 @@ exports.parseFragment = parseFragment;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/parser/formatting-element-list.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/parser/formatting-element-list.js ***!
-  \************************************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/formatting-element-list.js":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/formatting-element-list.js ***!
+  \********************************************************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -23531,26 +24007,26 @@ exports.FormattingElementList = FormattingElementList;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/parser/index.js":
-/*!******************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/parser/index.js ***!
-  \******************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/index.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/index.js ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Parser = void 0;
-const index_js_1 = __webpack_require__(/*! ../tokenizer/index.js */ "./node_modules/parse5/dist/cjs/tokenizer/index.js");
-const open_element_stack_js_1 = __webpack_require__(/*! ./open-element-stack.js */ "./node_modules/parse5/dist/cjs/parser/open-element-stack.js");
-const formatting_element_list_js_1 = __webpack_require__(/*! ./formatting-element-list.js */ "./node_modules/parse5/dist/cjs/parser/formatting-element-list.js");
-const default_js_1 = __webpack_require__(/*! ../tree-adapters/default.js */ "./node_modules/parse5/dist/cjs/tree-adapters/default.js");
-const doctype = __webpack_require__(/*! ../common/doctype.js */ "./node_modules/parse5/dist/cjs/common/doctype.js");
-const foreignContent = __webpack_require__(/*! ../common/foreign-content.js */ "./node_modules/parse5/dist/cjs/common/foreign-content.js");
-const error_codes_js_1 = __webpack_require__(/*! ../common/error-codes.js */ "./node_modules/parse5/dist/cjs/common/error-codes.js");
-const unicode = __webpack_require__(/*! ../common/unicode.js */ "./node_modules/parse5/dist/cjs/common/unicode.js");
-const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
-const token_js_1 = __webpack_require__(/*! ../common/token.js */ "./node_modules/parse5/dist/cjs/common/token.js");
+const index_js_1 = __webpack_require__(/*! ../tokenizer/index.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/index.js");
+const open_element_stack_js_1 = __webpack_require__(/*! ./open-element-stack.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/open-element-stack.js");
+const formatting_element_list_js_1 = __webpack_require__(/*! ./formatting-element-list.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/formatting-element-list.js");
+const default_js_1 = __webpack_require__(/*! ../tree-adapters/default.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tree-adapters/default.js");
+const doctype = __webpack_require__(/*! ../common/doctype.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/doctype.js");
+const foreignContent = __webpack_require__(/*! ../common/foreign-content.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/foreign-content.js");
+const error_codes_js_1 = __webpack_require__(/*! ../common/error-codes.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/error-codes.js");
+const unicode = __webpack_require__(/*! ../common/unicode.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/unicode.js");
+const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
+const token_js_1 = __webpack_require__(/*! ../common/token.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/token.js");
 //Misc constants
 const HIDDEN_INPUT_TYPE = 'hidden';
 //Adoption agency loops iteration count
@@ -23993,51 +24469,63 @@ class Parser {
         for (let i = this.openElements.stackTop; i >= 0; i--) {
             //Insertion mode reset map
             switch (i === 0 && this.fragmentContext ? this.fragmentContextID : this.openElements.tagIDs[i]) {
-                case html_js_1.TAG_ID.TR:
+                case html_js_1.TAG_ID.TR: {
                     this.insertionMode = InsertionMode.IN_ROW;
                     return;
+                }
                 case html_js_1.TAG_ID.TBODY:
                 case html_js_1.TAG_ID.THEAD:
-                case html_js_1.TAG_ID.TFOOT:
+                case html_js_1.TAG_ID.TFOOT: {
                     this.insertionMode = InsertionMode.IN_TABLE_BODY;
                     return;
-                case html_js_1.TAG_ID.CAPTION:
+                }
+                case html_js_1.TAG_ID.CAPTION: {
                     this.insertionMode = InsertionMode.IN_CAPTION;
                     return;
-                case html_js_1.TAG_ID.COLGROUP:
+                }
+                case html_js_1.TAG_ID.COLGROUP: {
                     this.insertionMode = InsertionMode.IN_COLUMN_GROUP;
                     return;
-                case html_js_1.TAG_ID.TABLE:
+                }
+                case html_js_1.TAG_ID.TABLE: {
                     this.insertionMode = InsertionMode.IN_TABLE;
                     return;
-                case html_js_1.TAG_ID.BODY:
+                }
+                case html_js_1.TAG_ID.BODY: {
                     this.insertionMode = InsertionMode.IN_BODY;
                     return;
-                case html_js_1.TAG_ID.FRAMESET:
+                }
+                case html_js_1.TAG_ID.FRAMESET: {
                     this.insertionMode = InsertionMode.IN_FRAMESET;
                     return;
-                case html_js_1.TAG_ID.SELECT:
+                }
+                case html_js_1.TAG_ID.SELECT: {
                     this._resetInsertionModeForSelect(i);
                     return;
-                case html_js_1.TAG_ID.TEMPLATE:
+                }
+                case html_js_1.TAG_ID.TEMPLATE: {
                     this.insertionMode = this.tmplInsertionModeStack[0];
                     return;
-                case html_js_1.TAG_ID.HTML:
+                }
+                case html_js_1.TAG_ID.HTML: {
                     this.insertionMode = this.headElement ? InsertionMode.AFTER_HEAD : InsertionMode.BEFORE_HEAD;
                     return;
+                }
                 case html_js_1.TAG_ID.TD:
-                case html_js_1.TAG_ID.TH:
+                case html_js_1.TAG_ID.TH: {
                     if (i > 0) {
                         this.insertionMode = InsertionMode.IN_CELL;
                         return;
                     }
                     break;
-                case html_js_1.TAG_ID.HEAD:
+                }
+                case html_js_1.TAG_ID.HEAD: {
                     if (i > 0) {
                         this.insertionMode = InsertionMode.IN_HEAD;
                         return;
                     }
                     break;
+                }
             }
         }
         this.insertionMode = InsertionMode.IN_BODY;
@@ -24068,11 +24556,12 @@ class Parser {
         for (let i = this.openElements.stackTop; i >= 0; i--) {
             const openElement = this.openElements.items[i];
             switch (this.openElements.tagIDs[i]) {
-                case html_js_1.TAG_ID.TEMPLATE:
+                case html_js_1.TAG_ID.TEMPLATE: {
                     if (this.treeAdapter.getNamespaceURI(openElement) === html_js_1.NS.HTML) {
                         return { parent: this.treeAdapter.getTemplateContent(openElement), beforeElement: null };
                     }
                     break;
+                }
                 case html_js_1.TAG_ID.TABLE: {
                     const parent = this.treeAdapter.getParentNode(openElement);
                     if (parent) {
@@ -24107,52 +24596,65 @@ class Parser {
             return;
         }
         switch (this.insertionMode) {
-            case InsertionMode.INITIAL:
+            case InsertionMode.INITIAL: {
                 tokenInInitialMode(this, token);
                 break;
-            case InsertionMode.BEFORE_HTML:
+            }
+            case InsertionMode.BEFORE_HTML: {
                 tokenBeforeHtml(this, token);
                 break;
-            case InsertionMode.BEFORE_HEAD:
+            }
+            case InsertionMode.BEFORE_HEAD: {
                 tokenBeforeHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD:
+            }
+            case InsertionMode.IN_HEAD: {
                 tokenInHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD_NO_SCRIPT:
+            }
+            case InsertionMode.IN_HEAD_NO_SCRIPT: {
                 tokenInHeadNoScript(this, token);
                 break;
-            case InsertionMode.AFTER_HEAD:
+            }
+            case InsertionMode.AFTER_HEAD: {
                 tokenAfterHead(this, token);
                 break;
+            }
             case InsertionMode.IN_BODY:
             case InsertionMode.IN_CAPTION:
             case InsertionMode.IN_CELL:
-            case InsertionMode.IN_TEMPLATE:
+            case InsertionMode.IN_TEMPLATE: {
                 characterInBody(this, token);
                 break;
+            }
             case InsertionMode.TEXT:
             case InsertionMode.IN_SELECT:
-            case InsertionMode.IN_SELECT_IN_TABLE:
+            case InsertionMode.IN_SELECT_IN_TABLE: {
                 this._insertCharacters(token);
                 break;
+            }
             case InsertionMode.IN_TABLE:
             case InsertionMode.IN_TABLE_BODY:
-            case InsertionMode.IN_ROW:
+            case InsertionMode.IN_ROW: {
                 characterInTable(this, token);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 characterInTableText(this, token);
                 break;
-            case InsertionMode.IN_COLUMN_GROUP:
+            }
+            case InsertionMode.IN_COLUMN_GROUP: {
                 tokenInColumnGroup(this, token);
                 break;
-            case InsertionMode.AFTER_BODY:
+            }
+            case InsertionMode.AFTER_BODY: {
                 tokenAfterBody(this, token);
                 break;
-            case InsertionMode.AFTER_AFTER_BODY:
+            }
+            case InsertionMode.AFTER_AFTER_BODY: {
                 tokenAfterAfterBody(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -24164,41 +24666,52 @@ class Parser {
             return;
         }
         switch (this.insertionMode) {
-            case InsertionMode.INITIAL:
+            case InsertionMode.INITIAL: {
                 tokenInInitialMode(this, token);
                 break;
-            case InsertionMode.BEFORE_HTML:
+            }
+            case InsertionMode.BEFORE_HTML: {
                 tokenBeforeHtml(this, token);
                 break;
-            case InsertionMode.BEFORE_HEAD:
+            }
+            case InsertionMode.BEFORE_HEAD: {
                 tokenBeforeHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD:
+            }
+            case InsertionMode.IN_HEAD: {
                 tokenInHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD_NO_SCRIPT:
+            }
+            case InsertionMode.IN_HEAD_NO_SCRIPT: {
                 tokenInHeadNoScript(this, token);
                 break;
-            case InsertionMode.AFTER_HEAD:
+            }
+            case InsertionMode.AFTER_HEAD: {
                 tokenAfterHead(this, token);
                 break;
-            case InsertionMode.TEXT:
+            }
+            case InsertionMode.TEXT: {
                 this._insertCharacters(token);
                 break;
+            }
             case InsertionMode.IN_TABLE:
             case InsertionMode.IN_TABLE_BODY:
-            case InsertionMode.IN_ROW:
+            case InsertionMode.IN_ROW: {
                 characterInTable(this, token);
                 break;
-            case InsertionMode.IN_COLUMN_GROUP:
+            }
+            case InsertionMode.IN_COLUMN_GROUP: {
                 tokenInColumnGroup(this, token);
                 break;
-            case InsertionMode.AFTER_BODY:
+            }
+            case InsertionMode.AFTER_BODY: {
                 tokenAfterBody(this, token);
                 break;
-            case InsertionMode.AFTER_AFTER_BODY:
+            }
+            case InsertionMode.AFTER_AFTER_BODY: {
                 tokenAfterAfterBody(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -24227,19 +24740,23 @@ class Parser {
             case InsertionMode.IN_SELECT_IN_TABLE:
             case InsertionMode.IN_TEMPLATE:
             case InsertionMode.IN_FRAMESET:
-            case InsertionMode.AFTER_FRAMESET:
+            case InsertionMode.AFTER_FRAMESET: {
                 appendComment(this, token);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 tokenInTableText(this, token);
                 break;
-            case InsertionMode.AFTER_BODY:
+            }
+            case InsertionMode.AFTER_BODY: {
                 appendCommentToRootHtmlElement(this, token);
                 break;
+            }
             case InsertionMode.AFTER_AFTER_BODY:
-            case InsertionMode.AFTER_AFTER_FRAMESET:
+            case InsertionMode.AFTER_AFTER_FRAMESET: {
                 appendCommentToDocument(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -24247,18 +24764,21 @@ class Parser {
     onDoctype(token) {
         this.skipNextNewLine = false;
         switch (this.insertionMode) {
-            case InsertionMode.INITIAL:
+            case InsertionMode.INITIAL: {
                 doctypeInInitialMode(this, token);
                 break;
+            }
             case InsertionMode.BEFORE_HEAD:
             case InsertionMode.IN_HEAD:
             case InsertionMode.IN_HEAD_NO_SCRIPT:
-            case InsertionMode.AFTER_HEAD:
+            case InsertionMode.AFTER_HEAD: {
                 this._err(token, error_codes_js_1.ERR.misplacedDoctype);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 tokenInTableText(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -24291,72 +24811,94 @@ class Parser {
     }
     _startTagOutsideForeignContent(token) {
         switch (this.insertionMode) {
-            case InsertionMode.INITIAL:
+            case InsertionMode.INITIAL: {
                 tokenInInitialMode(this, token);
                 break;
-            case InsertionMode.BEFORE_HTML:
+            }
+            case InsertionMode.BEFORE_HTML: {
                 startTagBeforeHtml(this, token);
                 break;
-            case InsertionMode.BEFORE_HEAD:
+            }
+            case InsertionMode.BEFORE_HEAD: {
                 startTagBeforeHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD:
+            }
+            case InsertionMode.IN_HEAD: {
                 startTagInHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD_NO_SCRIPT:
+            }
+            case InsertionMode.IN_HEAD_NO_SCRIPT: {
                 startTagInHeadNoScript(this, token);
                 break;
-            case InsertionMode.AFTER_HEAD:
+            }
+            case InsertionMode.AFTER_HEAD: {
                 startTagAfterHead(this, token);
                 break;
-            case InsertionMode.IN_BODY:
+            }
+            case InsertionMode.IN_BODY: {
                 startTagInBody(this, token);
                 break;
-            case InsertionMode.IN_TABLE:
+            }
+            case InsertionMode.IN_TABLE: {
                 startTagInTable(this, token);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 tokenInTableText(this, token);
                 break;
-            case InsertionMode.IN_CAPTION:
+            }
+            case InsertionMode.IN_CAPTION: {
                 startTagInCaption(this, token);
                 break;
-            case InsertionMode.IN_COLUMN_GROUP:
+            }
+            case InsertionMode.IN_COLUMN_GROUP: {
                 startTagInColumnGroup(this, token);
                 break;
-            case InsertionMode.IN_TABLE_BODY:
+            }
+            case InsertionMode.IN_TABLE_BODY: {
                 startTagInTableBody(this, token);
                 break;
-            case InsertionMode.IN_ROW:
+            }
+            case InsertionMode.IN_ROW: {
                 startTagInRow(this, token);
                 break;
-            case InsertionMode.IN_CELL:
+            }
+            case InsertionMode.IN_CELL: {
                 startTagInCell(this, token);
                 break;
-            case InsertionMode.IN_SELECT:
+            }
+            case InsertionMode.IN_SELECT: {
                 startTagInSelect(this, token);
                 break;
-            case InsertionMode.IN_SELECT_IN_TABLE:
+            }
+            case InsertionMode.IN_SELECT_IN_TABLE: {
                 startTagInSelectInTable(this, token);
                 break;
-            case InsertionMode.IN_TEMPLATE:
+            }
+            case InsertionMode.IN_TEMPLATE: {
                 startTagInTemplate(this, token);
                 break;
-            case InsertionMode.AFTER_BODY:
+            }
+            case InsertionMode.AFTER_BODY: {
                 startTagAfterBody(this, token);
                 break;
-            case InsertionMode.IN_FRAMESET:
+            }
+            case InsertionMode.IN_FRAMESET: {
                 startTagInFrameset(this, token);
                 break;
-            case InsertionMode.AFTER_FRAMESET:
+            }
+            case InsertionMode.AFTER_FRAMESET: {
                 startTagAfterFrameset(this, token);
                 break;
-            case InsertionMode.AFTER_AFTER_BODY:
+            }
+            case InsertionMode.AFTER_AFTER_BODY: {
                 startTagAfterAfterBody(this, token);
                 break;
-            case InsertionMode.AFTER_AFTER_FRAMESET:
+            }
+            case InsertionMode.AFTER_AFTER_FRAMESET: {
                 startTagAfterAfterFrameset(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -24373,96 +24915,124 @@ class Parser {
     }
     _endTagOutsideForeignContent(token) {
         switch (this.insertionMode) {
-            case InsertionMode.INITIAL:
+            case InsertionMode.INITIAL: {
                 tokenInInitialMode(this, token);
                 break;
-            case InsertionMode.BEFORE_HTML:
+            }
+            case InsertionMode.BEFORE_HTML: {
                 endTagBeforeHtml(this, token);
                 break;
-            case InsertionMode.BEFORE_HEAD:
+            }
+            case InsertionMode.BEFORE_HEAD: {
                 endTagBeforeHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD:
+            }
+            case InsertionMode.IN_HEAD: {
                 endTagInHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD_NO_SCRIPT:
+            }
+            case InsertionMode.IN_HEAD_NO_SCRIPT: {
                 endTagInHeadNoScript(this, token);
                 break;
-            case InsertionMode.AFTER_HEAD:
+            }
+            case InsertionMode.AFTER_HEAD: {
                 endTagAfterHead(this, token);
                 break;
-            case InsertionMode.IN_BODY:
+            }
+            case InsertionMode.IN_BODY: {
                 endTagInBody(this, token);
                 break;
-            case InsertionMode.TEXT:
+            }
+            case InsertionMode.TEXT: {
                 endTagInText(this, token);
                 break;
-            case InsertionMode.IN_TABLE:
+            }
+            case InsertionMode.IN_TABLE: {
                 endTagInTable(this, token);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 tokenInTableText(this, token);
                 break;
-            case InsertionMode.IN_CAPTION:
+            }
+            case InsertionMode.IN_CAPTION: {
                 endTagInCaption(this, token);
                 break;
-            case InsertionMode.IN_COLUMN_GROUP:
+            }
+            case InsertionMode.IN_COLUMN_GROUP: {
                 endTagInColumnGroup(this, token);
                 break;
-            case InsertionMode.IN_TABLE_BODY:
+            }
+            case InsertionMode.IN_TABLE_BODY: {
                 endTagInTableBody(this, token);
                 break;
-            case InsertionMode.IN_ROW:
+            }
+            case InsertionMode.IN_ROW: {
                 endTagInRow(this, token);
                 break;
-            case InsertionMode.IN_CELL:
+            }
+            case InsertionMode.IN_CELL: {
                 endTagInCell(this, token);
                 break;
-            case InsertionMode.IN_SELECT:
+            }
+            case InsertionMode.IN_SELECT: {
                 endTagInSelect(this, token);
                 break;
-            case InsertionMode.IN_SELECT_IN_TABLE:
+            }
+            case InsertionMode.IN_SELECT_IN_TABLE: {
                 endTagInSelectInTable(this, token);
                 break;
-            case InsertionMode.IN_TEMPLATE:
+            }
+            case InsertionMode.IN_TEMPLATE: {
                 endTagInTemplate(this, token);
                 break;
-            case InsertionMode.AFTER_BODY:
+            }
+            case InsertionMode.AFTER_BODY: {
                 endTagAfterBody(this, token);
                 break;
-            case InsertionMode.IN_FRAMESET:
+            }
+            case InsertionMode.IN_FRAMESET: {
                 endTagInFrameset(this, token);
                 break;
-            case InsertionMode.AFTER_FRAMESET:
+            }
+            case InsertionMode.AFTER_FRAMESET: {
                 endTagAfterFrameset(this, token);
                 break;
-            case InsertionMode.AFTER_AFTER_BODY:
+            }
+            case InsertionMode.AFTER_AFTER_BODY: {
                 tokenAfterAfterBody(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
     }
     onEof(token) {
         switch (this.insertionMode) {
-            case InsertionMode.INITIAL:
+            case InsertionMode.INITIAL: {
                 tokenInInitialMode(this, token);
                 break;
-            case InsertionMode.BEFORE_HTML:
+            }
+            case InsertionMode.BEFORE_HTML: {
                 tokenBeforeHtml(this, token);
                 break;
-            case InsertionMode.BEFORE_HEAD:
+            }
+            case InsertionMode.BEFORE_HEAD: {
                 tokenBeforeHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD:
+            }
+            case InsertionMode.IN_HEAD: {
                 tokenInHead(this, token);
                 break;
-            case InsertionMode.IN_HEAD_NO_SCRIPT:
+            }
+            case InsertionMode.IN_HEAD_NO_SCRIPT: {
                 tokenInHeadNoScript(this, token);
                 break;
-            case InsertionMode.AFTER_HEAD:
+            }
+            case InsertionMode.AFTER_HEAD: {
                 tokenAfterHead(this, token);
                 break;
+            }
             case InsertionMode.IN_BODY:
             case InsertionMode.IN_TABLE:
             case InsertionMode.IN_CAPTION:
@@ -24471,25 +25041,30 @@ class Parser {
             case InsertionMode.IN_ROW:
             case InsertionMode.IN_CELL:
             case InsertionMode.IN_SELECT:
-            case InsertionMode.IN_SELECT_IN_TABLE:
+            case InsertionMode.IN_SELECT_IN_TABLE: {
                 eofInBody(this, token);
                 break;
-            case InsertionMode.TEXT:
+            }
+            case InsertionMode.TEXT: {
                 eofInText(this, token);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 tokenInTableText(this, token);
                 break;
-            case InsertionMode.IN_TEMPLATE:
+            }
+            case InsertionMode.IN_TEMPLATE: {
                 eofInTemplate(this, token);
                 break;
+            }
             case InsertionMode.AFTER_BODY:
             case InsertionMode.IN_FRAMESET:
             case InsertionMode.AFTER_FRAMESET:
             case InsertionMode.AFTER_AFTER_BODY:
-            case InsertionMode.AFTER_AFTER_FRAMESET:
+            case InsertionMode.AFTER_AFTER_FRAMESET: {
                 stopParsing(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -24517,26 +25092,30 @@ class Parser {
             case InsertionMode.IN_SELECT:
             case InsertionMode.IN_SELECT_IN_TABLE:
             case InsertionMode.IN_FRAMESET:
-            case InsertionMode.AFTER_FRAMESET:
+            case InsertionMode.AFTER_FRAMESET: {
                 this._insertCharacters(token);
                 break;
+            }
             case InsertionMode.IN_BODY:
             case InsertionMode.IN_CAPTION:
             case InsertionMode.IN_CELL:
             case InsertionMode.IN_TEMPLATE:
             case InsertionMode.AFTER_BODY:
             case InsertionMode.AFTER_AFTER_BODY:
-            case InsertionMode.AFTER_AFTER_FRAMESET:
+            case InsertionMode.AFTER_AFTER_FRAMESET: {
                 whitespaceCharacterInBody(this, token);
                 break;
+            }
             case InsertionMode.IN_TABLE:
             case InsertionMode.IN_TABLE_BODY:
-            case InsertionMode.IN_ROW:
+            case InsertionMode.IN_ROW: {
                 characterInTable(this, token);
                 break;
-            case InsertionMode.IN_TABLE_TEXT:
+            }
+            case InsertionMode.IN_TABLE_TEXT: {
                 whitespaceCharacterInTableText(this, token);
                 break;
+            }
             default:
             // Do nothing
         }
@@ -26167,8 +26746,9 @@ function endTagInRow(p, token) {
             // Ignore end tag
             break;
         }
-        default:
+        default: {
             endTagInTable(p, token);
+        }
     }
 }
 // The "in cell" insertion mode
@@ -26357,39 +26937,45 @@ function startTagInTemplate(p, token) {
         case html_js_1.TAG_ID.SCRIPT:
         case html_js_1.TAG_ID.STYLE:
         case html_js_1.TAG_ID.TEMPLATE:
-        case html_js_1.TAG_ID.TITLE:
+        case html_js_1.TAG_ID.TITLE: {
             startTagInHead(p, token);
             break;
+        }
         // Re-process the token in the appropriate mode
         case html_js_1.TAG_ID.CAPTION:
         case html_js_1.TAG_ID.COLGROUP:
         case html_js_1.TAG_ID.TBODY:
         case html_js_1.TAG_ID.TFOOT:
-        case html_js_1.TAG_ID.THEAD:
+        case html_js_1.TAG_ID.THEAD: {
             p.tmplInsertionModeStack[0] = InsertionMode.IN_TABLE;
             p.insertionMode = InsertionMode.IN_TABLE;
             startTagInTable(p, token);
             break;
-        case html_js_1.TAG_ID.COL:
+        }
+        case html_js_1.TAG_ID.COL: {
             p.tmplInsertionModeStack[0] = InsertionMode.IN_COLUMN_GROUP;
             p.insertionMode = InsertionMode.IN_COLUMN_GROUP;
             startTagInColumnGroup(p, token);
             break;
-        case html_js_1.TAG_ID.TR:
+        }
+        case html_js_1.TAG_ID.TR: {
             p.tmplInsertionModeStack[0] = InsertionMode.IN_TABLE_BODY;
             p.insertionMode = InsertionMode.IN_TABLE_BODY;
             startTagInTableBody(p, token);
             break;
+        }
         case html_js_1.TAG_ID.TD:
-        case html_js_1.TAG_ID.TH:
+        case html_js_1.TAG_ID.TH: {
             p.tmplInsertionModeStack[0] = InsertionMode.IN_ROW;
             p.insertionMode = InsertionMode.IN_ROW;
             startTagInRow(p, token);
             break;
-        default:
+        }
+        default: {
             p.tmplInsertionModeStack[0] = InsertionMode.IN_BODY;
             p.insertionMode = InsertionMode.IN_BODY;
             startTagInBody(p, token);
+        }
     }
 }
 function endTagInTemplate(p, token) {
@@ -26594,17 +27180,17 @@ function endTagInForeignContent(p, token) {
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/parser/open-element-stack.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/parser/open-element-stack.js ***!
-  \*******************************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/open-element-stack.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/parser/open-element-stack.js ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OpenElementStack = void 0;
-const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
+const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
 //Element utils
 const IMPLICIT_END_TAG_REQUIRED = new Set([html_js_1.TAG_ID.DD, html_js_1.TAG_ID.DT, html_js_1.TAG_ID.LI, html_js_1.TAG_ID.OPTGROUP, html_js_1.TAG_ID.OPTION, html_js_1.TAG_ID.P, html_js_1.TAG_ID.RB, html_js_1.TAG_ID.RP, html_js_1.TAG_ID.RT, html_js_1.TAG_ID.RTC]);
 const IMPLICIT_END_TAG_REQUIRED_THOROUGHLY = new Set([
@@ -26645,6 +27231,9 @@ const TABLE_CONTEXT = [html_js_1.TAG_ID.TABLE, html_js_1.TAG_ID.TEMPLATE, html_j
 const TABLE_CELLS = [html_js_1.TAG_ID.TD, html_js_1.TAG_ID.TH];
 //Stack of open elements
 class OpenElementStack {
+    get currentTmplContentOrNode() {
+        return this._isInTemplate() ? this.treeAdapter.getTemplateContent(this.current) : this.current;
+    }
     constructor(document, treeAdapter, handler) {
         this.treeAdapter = treeAdapter;
         this.handler = handler;
@@ -26654,9 +27243,6 @@ class OpenElementStack {
         this.tmplCount = 0;
         this.currentTagId = html_js_1.TAG_ID.UNKNOWN;
         this.current = document;
-    }
-    get currentTmplContentOrNode() {
-        return this._isInTemplate() ? this.treeAdapter.getTemplateContent(this.current) : this.current;
     }
     //Index of element
     _indexOf(element) {
@@ -26920,19 +27506,19 @@ exports.OpenElementStack = OpenElementStack;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/serializer/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/serializer/index.js ***!
-  \**********************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/serializer/index.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/serializer/index.js ***!
+  \******************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.serializeOuter = exports.serialize = void 0;
-const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
-const escape_js_1 = __webpack_require__(/*! entities/lib/escape.js */ "./node_modules/entities/lib/escape.js");
-const default_js_1 = __webpack_require__(/*! ../tree-adapters/default.js */ "./node_modules/parse5/dist/cjs/tree-adapters/default.js");
+const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
+const escape_js_1 = __webpack_require__(/*! entities/lib/escape.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/escape.js");
+const default_js_1 = __webpack_require__(/*! ../tree-adapters/default.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tree-adapters/default.js");
 // Sets
 const VOID_ELEMENTS = new Set([
     html_js_1.TAG_NAMES.AREA,
@@ -27103,22 +27689,22 @@ function serializeDocumentTypeNode(node, { treeAdapter }) {
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/tokenizer/index.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/tokenizer/index.js ***!
-  \*********************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/index.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/index.js ***!
+  \*****************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Tokenizer = exports.TokenizerMode = void 0;
-const preprocessor_js_1 = __webpack_require__(/*! ./preprocessor.js */ "./node_modules/parse5/dist/cjs/tokenizer/preprocessor.js");
-const unicode_js_1 = __webpack_require__(/*! ../common/unicode.js */ "./node_modules/parse5/dist/cjs/common/unicode.js");
-const token_js_1 = __webpack_require__(/*! ../common/token.js */ "./node_modules/parse5/dist/cjs/common/token.js");
-const decode_js_1 = __webpack_require__(/*! entities/lib/decode.js */ "./node_modules/entities/lib/decode.js");
-const error_codes_js_1 = __webpack_require__(/*! ../common/error-codes.js */ "./node_modules/parse5/dist/cjs/common/error-codes.js");
-const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
+const preprocessor_js_1 = __webpack_require__(/*! ./preprocessor.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/preprocessor.js");
+const unicode_js_1 = __webpack_require__(/*! ../common/unicode.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/unicode.js");
+const token_js_1 = __webpack_require__(/*! ../common/token.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/token.js");
+const decode_js_1 = __webpack_require__(/*! entities/lib/decode.js */ "./node_modules/.pnpm/entities@4.5.0/node_modules/entities/lib/decode.js");
+const error_codes_js_1 = __webpack_require__(/*! ../common/error-codes.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/error-codes.js");
+const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
 //C1 Unicode control character reference replacements
 const C1_CONTROLS_REFERENCE_REPLACEMENTS = new Map([
     [0x80, 8364],
@@ -29350,7 +29936,7 @@ class Tokenizer {
                 this._emitEOFToken();
                 break;
             }
-            default:
+            default: {
                 if (this._consumeSequenceIfMatch(unicode_js_1.SEQUENCES.PUBLIC, false)) {
                     this.state = State.AFTER_DOCTYPE_PUBLIC_KEYWORD;
                 }
@@ -29365,6 +29951,7 @@ class Tokenizer {
                     this.state = State.BOGUS_DOCTYPE;
                     this._stateBogusDoctype(cp);
                 }
+            }
         }
     }
     // After DOCTYPE public keyword state
@@ -30020,18 +30607,18 @@ exports.Tokenizer = Tokenizer;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/tokenizer/preprocessor.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/tokenizer/preprocessor.js ***!
-  \****************************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/preprocessor.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tokenizer/preprocessor.js ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Preprocessor = void 0;
-const unicode_js_1 = __webpack_require__(/*! ../common/unicode.js */ "./node_modules/parse5/dist/cjs/common/unicode.js");
-const error_codes_js_1 = __webpack_require__(/*! ../common/error-codes.js */ "./node_modules/parse5/dist/cjs/common/error-codes.js");
+const unicode_js_1 = __webpack_require__(/*! ../common/unicode.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/unicode.js");
+const error_codes_js_1 = __webpack_require__(/*! ../common/error-codes.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/error-codes.js");
 //Const
 const DEFAULT_BUFFER_WATERLINE = 1 << 16;
 //Preprocessor
@@ -30156,7 +30743,8 @@ class Preprocessor {
             this.endOfChunkHit = !this.lastChunkWritten;
             return unicode_js_1.CODE_POINTS.EOF;
         }
-        return this.html.charCodeAt(pos);
+        const code = this.html.charCodeAt(pos);
+        return code === unicode_js_1.CODE_POINTS.CARRIAGE_RETURN ? unicode_js_1.CODE_POINTS.LINE_FEED : code;
     }
     advance() {
         this.pos++;
@@ -30228,17 +30816,17 @@ exports.Preprocessor = Preprocessor;
 
 /***/ }),
 
-/***/ "./node_modules/parse5/dist/cjs/tree-adapters/default.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/parse5/dist/cjs/tree-adapters/default.js ***!
-  \***************************************************************/
+/***/ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tree-adapters/default.js":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/tree-adapters/default.js ***!
+  \***********************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultTreeAdapter = void 0;
-const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/parse5/dist/cjs/common/html.js");
+const html_js_1 = __webpack_require__(/*! ../common/html.js */ "./node_modules/.pnpm/parse5@7.1.2/node_modules/parse5/dist/cjs/common/html.js");
 function createTextNode(value) {
     return {
         nodeName: '#text',

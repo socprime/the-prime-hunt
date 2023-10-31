@@ -81,7 +81,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -89,7 +89,7 @@ const isFlatObjectsEqual = (obj1, obj2) => {
     if (keysObj1.length !== keysObj2.length) {
         return false;
     }
-    return !keysObj1.some(key => obj1[key] !== obj2[key]);
+    return !keysObj1.some((key) => obj1[key] !== obj2[key]);
 };
 exports.isFlatObjectsEqual = isFlatObjectsEqual;
 const uuid = () => {
@@ -108,7 +108,7 @@ const splitByLines = (str, removeEmpty = false) => {
     const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
     let res = str.split(regexp);
     if (removeEmpty) {
-        res = res.filter(r => r && r !== '\r\n' && r !== '\n' && r !== '\r');
+        res = res.filter((r) => r && r !== '\r\n' && r !== '\n' && r !== '\r');
     }
     return res;
 };
@@ -132,7 +132,7 @@ const deduplicateArray = (arr) => {
 exports.deduplicateArray = deduplicateArray;
 const formatString = (pattern, parts, keyFormat) => {
     return Object.keys(parts || {})
-        .map(name => ({
+        .map((name) => ({
         value: parts[name],
         key: keyFormat ? keyFormat(name) : `%${name}`,
     }))
@@ -171,13 +171,13 @@ const formatBinaryDate = (value) => {
 exports.formatBinaryDate = formatBinaryDate;
 const formatDate = (pattern, data) => {
     return (0, exports.formatString)(pattern, {
-        'Y': String(data.getFullYear()),
-        'M': (0, exports.formatBinaryDate)(data.getMonth() + 1),
-        'm': (0, exports.formatBinaryDate)(data.getMinutes()),
-        's': (0, exports.formatBinaryDate)(data.getSeconds()),
-        'ms': (0, exports.formatBinaryDate)(data.getMilliseconds()),
-        'd': (0, exports.formatBinaryDate)(data.getDate()),
-        'h': (0, exports.formatBinaryDate)(data.getHours()),
+        Y: String(data.getFullYear()),
+        M: (0, exports.formatBinaryDate)(data.getMonth() + 1),
+        m: (0, exports.formatBinaryDate)(data.getMinutes()),
+        s: (0, exports.formatBinaryDate)(data.getSeconds()),
+        ms: (0, exports.formatBinaryDate)(data.getMilliseconds()),
+        d: (0, exports.formatBinaryDate)(data.getDate()),
+        h: (0, exports.formatBinaryDate)(data.getHours()),
     });
 };
 exports.formatDate = formatDate;
@@ -200,6 +200,14 @@ const sortNumbers = (a, b) => {
     return 0;
 };
 exports.sortNumbers = sortNumbers;
+const sortStrings = (a, b, order = 'ascending') => {
+    const result = a.localeCompare(b);
+    if (result === 0 || order === 'ascending') {
+        return result;
+    }
+    return result === 1 ? -1 : 1;
+};
+exports.sortStrings = sortStrings;
 const indexOfAll = (str, search) => {
     const indexes = [];
     let i = -1;
@@ -210,7 +218,7 @@ const indexOfAll = (str, search) => {
 };
 exports.indexOfAll = indexOfAll;
 const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => {
             resolve(null);
         }, sec * 1000);
@@ -792,7 +800,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.3.0";
+exports.version = "1.3.1";
 
 
 /***/ }),

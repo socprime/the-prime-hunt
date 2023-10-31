@@ -15,12 +15,12 @@ import { createClassName } from '../../../common/common-helpers';
 import { AppTooltip } from '../../components/tooltips/AppTooltip/AppTooltip';
 import { NormalizedParsedResources } from '../resources-types';
 import { GoOutsideIcon } from '../../components/atoms/icons/GoOutsideIcon/GoOutsideIcon';
+import { sortStrings } from '../../../../common/helpers';
 import './styles.scss';
 
 const MAX_COUNT_SELECTED = 30;
 
 export const BulkResourcesPanel: React.FC = observer(() => {
-
   const selectionStore = useResourcesSelectionStore();
   const platformStore = usePlatformStore();
   const integrationsStore = useIntegrationsStore();
@@ -29,17 +29,22 @@ export const BulkResourcesPanel: React.FC = observer(() => {
 
   const items = useMemo(() => {
     const result: ListProps['items'] = [];
-    integrationsStore.integrations.forEach(({ name, id, url }) => {
-      result.push({
-        id,
-        content: <span><GoOutsideIcon />{name}</span>,
-        onClick: () => {
-          integrationsStore.getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url).forEach(u => {
-            window.open(u, '_blank');
-          });
-        },
+    integrationsStore.integrations
+      .slice()
+      .sort((a, b) => sortStrings(b.name, a.name, 'descending'))
+      .forEach(({ name, id, url }) => {
+        result.push({
+          id,
+          content: <span><GoOutsideIcon />{name}</span>,
+          onClick: () => {
+            integrationsStore
+              .getReadyUrls(uniqueSelected.slice(0, MAX_COUNT_SELECTED), url)
+              .forEach((u) => {
+                window.open(u, '_blank');
+              });
+          },
+        });
       });
-    });
     return result;
   }, [integrationsStore, uniqueSelected]);
 
@@ -48,10 +53,14 @@ export const BulkResourcesPanel: React.FC = observer(() => {
   }, [platformStore, normalisedSelected]);
 
   const onActionsClick = useCallback((type: ModifyQueryPayload['modifyType']) => {
-    platformStore.modifyQuery(type, Object.keys(normalisedSelected).reduce((normalizedParsedResources, fieldName) => {
-      normalizedParsedResources[fieldName] = normalisedSelected[fieldName].slice(0, MAX_COUNT_SELECTED);
-      return normalizedParsedResources;
-    }, {} as NormalizedParsedResources));
+    platformStore.modifyQuery(
+      type,
+      Object.keys(normalisedSelected).reduce((normalizedParsedResources, fieldName) => {
+        normalizedParsedResources[fieldName] = normalisedSelected[fieldName]
+          .slice(0, MAX_COUNT_SELECTED);
+        return normalizedParsedResources;
+      }, {} as NormalizedParsedResources),
+    );
   }, [normalisedSelected, platformStore]);
 
   const disabled = countSelected < 1;
@@ -86,7 +95,12 @@ export const BulkResourcesPanel: React.FC = observer(() => {
         <span className="strong">— {getCountSelected(countSelected)} item(s)</span>selected
       </div>
       <div className="buttons-area">
-        <StaticButton disabled={disabled} animatedIcon onClick={onCopyIconClick} icon={<AnimatedCopyIcon disabled={disabled} />}>
+        <StaticButton
+          disabled={disabled}
+          animatedIcon
+          onClick={onCopyIconClick}
+          icon={<AnimatedCopyIcon disabled={disabled} />}
+        >
           Copy
         </StaticButton>
         <StaticButton disabled={disabled} onClick={() => onActionsClick('include')} icon={<PlusIcon />}>

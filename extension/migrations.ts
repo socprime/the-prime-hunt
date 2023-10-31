@@ -1,27 +1,46 @@
+/* eslint-disable camelcase */
 import {
   setVersion,
   getVersion,
   getIntegrations,
   setIntegrations,
 } from './common/local-storage';
-import { integrations } from './app/integrations/integrations';
+import {
+  version__1_3_1,
+  version__1_2_5,
+} from './app/integrations/integrations';
 import { compareVersions } from './common/common-helpers';
 import { version } from './common/envs';
+import { Integration } from './app/integrations/integrations-types';
+
+let needStoreIntegrations = false;
+const storedIntegrations = getIntegrations();
+const integrationsIDs = storedIntegrations.map((i) => i.id);
+
+const updateIntegrations = (integrations: Integration[]) => {
+  integrations.forEach((integration) => {
+    if (!integrationsIDs.includes(integration.id)) {
+      storedIntegrations.push(integration);
+      needStoreIntegrations = true;
+    }
+  });
+};
 
 if (compareVersions(
   getVersion(),
   '1.2.5',
 ) === 'less') {
-  const storedIntegrations = getIntegrations();
-  const ids = storedIntegrations.map(i => i.id);
+  updateIntegrations(version__1_2_5);
+}
 
-  if (!ids.includes('$cyber-chef$')) {
-    storedIntegrations.push(integrations.find(i => i.id === '$cyber-chef$')!);
-  }
-  if (!ids.includes('$cyber-chef-magic$')) {
-    storedIntegrations.push(integrations.find(i => i.id === '$cyber-chef-magic$')!);
-  }
+if (compareVersions(
+  getVersion(),
+  '1.3.1',
+) === 'less') {
+  updateIntegrations(version__1_3_1);
+}
 
+if (needStoreIntegrations) {
   setIntegrations(storedIntegrations);
 }
 
