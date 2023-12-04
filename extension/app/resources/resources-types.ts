@@ -46,3 +46,5 @@ export type IResourceSelectionStore = {
   select(resourceName: ResourceName, fieldName: FieldName): void;
   unselect(resourceName: ResourceName, fieldName: FieldName): void;
 };
+
+export type ResourceType = 'unknown' | 'email' | 'md5' | 'sha1' | 'sha256' | 'sha512' | 'url' | 'ipv4' | 'ipv6' | 'mac-address' | 'domain-name';

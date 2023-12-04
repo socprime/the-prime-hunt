@@ -10,13 +10,17 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isUrl = exports.isDomainName = exports.isMacAddress = exports.isIpV6 = exports.isIpV4 = exports.isSHA512 = exports.isSHA256 = exports.isSHA1 = exports.isMD5 = exports.isEmail = exports.isNotEmpty = exports.isNotEmptyArray = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
 exports.isString = isString;
+const isNotEmptyArray = (arr) => {
+    return arr.length > 0;
+};
+exports.isNotEmptyArray = isNotEmptyArray;
 const isNotEmpty = (str) => {
     if (!(0, exports.isString)(str)) {
         return false;
@@ -24,6 +28,46 @@ const isNotEmpty = (str) => {
     return str.trim() !== '';
 };
 exports.isNotEmpty = isNotEmpty;
+const isEmail = (email) => {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+};
+exports.isEmail = isEmail;
+const isMD5 = (md5) => {
+    return /^[a-f0-9]{32}$/.test(md5);
+};
+exports.isMD5 = isMD5;
+const isSHA1 = (sha1) => {
+    return /^[a-fA-F0-9]{40}$/.test(sha1);
+};
+exports.isSHA1 = isSHA1;
+const isSHA256 = (sha256) => {
+    return /^[a-fA-F0-9]{64}$/.test(sha256);
+};
+exports.isSHA256 = isSHA256;
+const isSHA512 = (sha512) => {
+    return /^[a-fA-F0-9]{128}$/.test(sha512);
+};
+exports.isSHA512 = isSHA512;
+const isIpV4 = (ip) => {
+    return /(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/.test(ip);
+};
+exports.isIpV4 = isIpV4;
+const isIpV6 = (ip) => {
+    return /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/.test(ip);
+};
+exports.isIpV6 = isIpV6;
+const isMacAddress = (address) => {
+    return /^[a-fA-F0-9]{2}([:|-][a-fA-F0-9]{2}){5}$/.test(address);
+};
+exports.isMacAddress = isMacAddress;
+const isDomainName = (domainName) => {
+    return /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/.test(domainName);
+};
+exports.isDomainName = isDomainName;
+const isUrl = (url) => {
+    return /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(url);
+};
+exports.isUrl = isUrl;
 const isNumberInString = (str) => {
     if (typeof str === 'number') {
         return true;
@@ -49,7 +93,7 @@ const isAllowedProtocol = (protocol, mode) => {
 exports.isAllowedProtocol = isAllowedProtocol;
 const isDate = (value) => {
     return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
-        ? parseInt(value)
+        ? parseInt(value, 10)
         : value).getTime() > 567982800000;
 };
 exports.isDate = isDate;
@@ -81,7 +125,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -251,6 +295,13 @@ const getUrlParamsSafe = (url, paramName) => {
     }
 };
 exports.getUrlParamsSafe = getUrlParamsSafe;
+const serializeDataInResult = (result) => {
+    if (result.error && typeof result.error !== 'string') {
+        result.error = result.error.message;
+    }
+    return result;
+};
+exports.serializeDataInResult = serializeDataInResult;
 
 
 /***/ }),
@@ -325,8 +376,9 @@ var MessageToApp;
     MessageToApp["AppSendToBackground"] = "AppSendToBackground";
     MessageToApp["AppSendMessageOutside"] = "AppSendMessageOutside";
     MessageToApp["AppSetDebugMode"] = "AppSetDebugMode";
+    MessageToApp["AppGetIntegrationWorkResult"] = "AppGetIntegrationWorkResult";
 })(MessageToApp = exports.MessageToApp || (exports.MessageToApp = {}));
-Object.values(MessageToApp).forEach(type => {
+Object.values(MessageToApp).forEach((type) => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
         throw new Error(`Wrong app message type "${type}"`);
     }
@@ -358,8 +410,9 @@ var MessageToBackground;
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
     MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
+    MessageToBackground["BGIntegrationWork"] = "BGIntegrationWork";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
-Object.values(MessageToBackground).forEach(type => {
+Object.values(MessageToBackground).forEach((type) => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
         throw new Error(`Wrong background message type "${type}"`);
     }
@@ -800,7 +853,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.3.1";
+exports.version = "1.4.0";
 
 
 /***/ }),

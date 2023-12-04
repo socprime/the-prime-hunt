@@ -1,0 +1,14 @@
+@import '../../../scss/palette';
+
+.error-message {
+  border: 1px solid $error;
+  border-radius: 4px;
+
+  .warning-icon {
+    height: 18px;
+    width: 20px;
+    fill: $error;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+}

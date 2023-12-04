@@ -34,6 +34,21 @@
       display: inline-flex;
       padding: 0 10px;
       background-color: $base-background-area-color;
+      align-items: center;
+
+      .tooltip.app-tooltip {
+        width: 16px;
+        height: 16px;
+        top: -1px;
+        position: relative;
+        margin: 0 6px;
+
+        &:hover {
+          .icon {
+            fill: $success;
+          }
+        }
+      }
 
       > .icon {
         height: 15px;

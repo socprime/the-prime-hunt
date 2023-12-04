@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AppInputProps } from '../../components/inputs/AppInput/AppInput';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
+import { AppInputProps } from '../../components/inputs/AppInput/types';
 import { createClassName } from '../../../common/common-helpers';
 import { CheckIcon } from '../../components/atoms/icons/CheckIcon/CheckIcon';
 import { useOnClickOutside, usePrevious } from '../../app-hooks';
@@ -45,7 +47,7 @@ export const ResourceTabInput: React.FC<ResourceTabInputProps> = ({
     id: ResourceTypeID,
     name: string,
   ) => {
-    const values = resourceStore.tabsNames.filter(tn => tn !== id);
+    const values = resourceStore.tabsNames.filter((tn) => tn !== id);
     if (!values.includes(name)) {
       return name;
     }
@@ -55,7 +57,7 @@ export const ResourceTabInput: React.FC<ResourceTabInputProps> = ({
 
   const finishEdit = useCallback((currentValue: string, prevValue: string | undefined) => {
     const normalizedValue = currentValue.trim();
-    const newValue = normalizedValue ? normalizedValue : prevValue?.trim() || 'New Tab';
+    const newValue = normalizedValue || prevValue?.trim() || 'New Tab';
     const newName = normalizeTabName(typeID, newValue);
     inputRef.current!.setSelectionRange(0, 0);
     inputRef.current!.focus();
@@ -155,7 +157,7 @@ export const ResourceTabInput: React.FC<ResourceTabInputProps> = ({
           setEditMode(true);
         }
       }}
-      onKeyDown={e => {
+      onKeyDown={(e) => {
         const code = e.code?.toLowerCase?.() || '';
         if (code === 'enter' || code === 'escape') {
           finishEdit(inputValue, prevInputValue);

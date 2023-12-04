@@ -23,17 +23,23 @@ export const AppButton: React.FC<React.PropsWithChildren<AppButtonProps>> = ({
       return icon;
     }
     return icon && typeof icon === 'object'
-      ? React.cloneElement(icon as React.ReactElement, { onClick: (e: React.MouseEvent<Element, MouseEvent>) => {
-        if (disabled) {
-          e.stopPropagation();
-          e.preventDefault();
-          return;
-        }
-        onClick?.(e as any);
-      }, ref: iconRef })
+      ? React.cloneElement(
+        icon as React.ReactElement,
+        {
+          onClick: (e: React.MouseEvent<Element, MouseEvent>) => {
+            if (disabled) {
+              e.stopPropagation();
+              e.preventDefault();
+              return;
+            }
+            onClick?.(e as any);
+          },
+          ref: iconRef,
+        },
+      )
       : icon;
   }, [animatedIcon, disabled, icon, onClick]);
-  
+
   return (
     <Button
       className={createClassName(['app-button', className])}

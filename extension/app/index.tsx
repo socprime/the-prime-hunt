@@ -7,8 +7,8 @@ import { appStyles } from '../manifest/public-resources';
 import { getWebAccessibleUrl } from '../common/common-extension-helpers';
 import { RootApp } from './root';
 
-require('../app/scss/reset.scss');
-require('../app/scss/scroll.scss');
+require('./scss/reset.scss');
+require('./scss/scroll.scss');
 
 const rootElement = mountHTMLElement('div', document.body, {
   attributes: {
@@ -50,8 +50,8 @@ mountHTMLElement('link', host, {
 const overlay = mountHTMLElement('div', host, {
   attributes: {
     'data-type': 'overlay',
-    'class': 'overlay',
-    'style': {
+    class: 'overlay',
+    style: {
       top: 0,
       left: 0,
       width: '100%',
@@ -78,3 +78,4 @@ setTimeout(() => {
     alert('Warning! The Prime Hunt Extension is already installed! Please remove previous version first to avoid conflicts.');
   }
 }, 2000);
+

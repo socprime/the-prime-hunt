@@ -1,0 +1,13 @@
+.integration-header-view {
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .remove-integration {
+    margin-left: 8px;
+    white-space: nowrap;
+  }
+}

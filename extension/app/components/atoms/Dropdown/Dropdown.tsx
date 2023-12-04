@@ -1,10 +1,14 @@
-import {
+import React, {
   useRef,
   useState,
   forwardRef,
   PropsWithChildren,
   useEffect,
-  useImperativeHandle, useMemo, useCallback,
+  useImperativeHandle,
+  useMemo,
+  useCallback,
+  CSSProperties,
+  ReactNode,
 } from 'react';
 import { usePrevious } from '../../../app-hooks';
 import { createPortal } from 'react-dom';
@@ -12,25 +16,27 @@ import { createClassName } from '../../../../common/common-helpers';
 import './dropdown.scss';
 
 export type MenuStyles = {
-  top?: React.CSSProperties['top'],
-  left?: React.CSSProperties['left'],
-  right?: React.CSSProperties['right'],
-  bottom?: React.CSSProperties['bottom'],
-  height?: React.CSSProperties['height'],
-  width?: React.CSSProperties['width'],
+  top?: CSSProperties['top'],
+  left?: CSSProperties['left'],
+  right?: CSSProperties['right'],
+  bottom?: CSSProperties['bottom'],
+  height?: CSSProperties['height'],
+  width?: CSSProperties['width'],
 };
 
 export type DropdownProps = {
-  opener: React.ReactNode;
+  opener: ReactNode;
   disabled?: boolean;
   opened?: boolean;
   closed?: boolean;
   mountElement?: HTMLElement | null;
-  header?: React.ReactNode;
+  header?: ReactNode;
+  onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void;
   direction?: 'up' | 'down';
   className?: string;
   classNameMenu?: string;
   onStateChange?: (isOpen: boolean) => void;
+  onMenuClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   getMenuStyles?: () => MenuStyles;
 };
 
@@ -52,7 +58,9 @@ export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<Dropdow
     onStateChange,
     className = '',
     classNameMenu = '',
+    onMenuClick,
     getMenuStyles,
+    onBlur,
   },
   ref,
 ) => {
@@ -98,13 +106,14 @@ export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<Dropdow
           classNameMenu,
           isOpen ? 'show' : 'hide',
         ])}
+        onClick={onMenuClick}
         style={styles}
         ref={dropdownMenuRef}
       >
         {children}
       </div>
     );
-  }, [children, classNameMenu, isOpen]);
+  }, [onMenuClick, children, classNameMenu, isOpen]);
 
   const menu = useMemo(() => {
     if (!mountElement && !isOpen) {
@@ -137,6 +146,7 @@ export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<Dropdow
 
   return (
     <div
+      onBlur={onBlur}
       className={createClassName([
         'dropdown',
         direction,
@@ -149,7 +159,7 @@ export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<Dropdow
       <div className="dropdown-header">{header}</div>
       <div
         className="dropdown-opener"
-         onClick={e => {
+         onClick={(e) => {
            if (disabled) {
              e.preventDefault();
              e.stopPropagation();

@@ -1,17 +1,24 @@
-import React from 'react';
-import { Checkbox, CheckboxProps } from '../../atoms/Checkbox/Checkbox';
+import { forwardRef } from 'react';
+import { Checkbox, CheckboxProps, CheckboxRefs } from '../../atoms/Checkbox/Checkbox';
+import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';
 
 export type AppCheckboxProps = CheckboxProps;
 
-export const AppCheckbox: React.FC<AppCheckboxProps> = ({
+export type AppCheckboxRefs = CheckboxRefs;
+
+export const AppCheckbox = forwardRef<AppCheckboxRefs, AppCheckboxProps>(({
   className = '',
   ...restProps
-}) => {
+}, refs) => {
   return (
     <Checkbox
-      className={className}
+      ref={refs}
+      className={createClassName([
+        'app-checkbox',
+        className,
+      ])}
       {...restProps}
     />
   );
-};
+});

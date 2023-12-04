@@ -15,7 +15,6 @@ export const AnimatedCopyIcon = React.forwardRef<HTMLSpanElement, AnimatedCopyIc
   },
   ref,
 ) => {
-
   return (
     <span
       ref={ref}

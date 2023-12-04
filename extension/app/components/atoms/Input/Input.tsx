@@ -1,10 +1,13 @@
 // TODO legacy
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef, useCallback, useEffect, useRef, useState,
+} from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 import './input.scss';
 
 export type InputProps = {
   value?: string;
+  name?: string;
   className?: string;
   placeholder?: string;
   label?: React.ReactNode;
@@ -14,12 +17,13 @@ export type InputProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onDoubleClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
-  onFocus?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+  onFocus?: (e: React.FocusEvent) => void;
   debounceMs?: number;
   disabled?: boolean;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({
+  name,
   className = '',
   onChange,
   onClick,
@@ -58,11 +62,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   return (
     <label className={createClassName([
       'input-label',
+      disabled ? 'disabled' : '',
       className,
     ])}>
       {label && <span>{label}</span>}
       <input
         ref={ref}
+        name={name}
         placeholder={placeholder}
         className={createClassName([
           'input',
@@ -74,10 +80,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
           onKeyDown?.(e);
         }}
         onClick={onClick}
-        onMouseOut={onFocus}
         onBlur={() => {
           onBlur?.(inputValue);
         }}
+        onFocus={onFocus}
         disabled={disabled}
         type="text"
         value={inputValue}

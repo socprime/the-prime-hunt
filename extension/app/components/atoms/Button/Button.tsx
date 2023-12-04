@@ -31,14 +31,15 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         onClick?.(e);
       }}
     >
-      {icon && <span className="button-icon" onClick={e => {
+      {icon && <span className="button-icon" onClick={(e) => {
         if (disabled) {
           e.stopPropagation();
           e.preventDefault();
-          return;
         }
-      }}>{icon}</span>}
-      <div className="button-content">{children}</div>
+      }}>
+        {icon}
+      </span>}
+      {children && <div className="button-content">{children}</div>}
     </button>
   );
 };

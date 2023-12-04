@@ -15,10 +15,10 @@ export const StaticButton: React.FC<React.PropsWithChildren<StaticButtonProps>> 
       className={createClassName([
         'static-button',
         className,
-      ])} 
+      ])}
       {...restProps}
     >
-      {children}
+      {!!children && children}
     </AppButton>
   );
 };

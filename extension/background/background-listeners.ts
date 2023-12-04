@@ -21,9 +21,12 @@ import { isMessageMatched } from '../common/common-listeners';
 import { MessageToBackground } from './types/types-background-messages';
 import { MessageToContent } from '../content/types/types-content-messages';
 import {
+  AsyncProcessPayload,
   DirectMessagePayload,
   ParsedDataPayload,
   PlatformIDPayload,
+  ResultProcessPayload,
+  IntegrationWorkPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
   SetWatchersPayload,
@@ -31,6 +34,8 @@ import {
 } from '../common/types/types-common-payloads';
 import { platformResolver } from './platforms/PlatformResolver';
 import { LoadingKey } from '../app/types/types-app-common';
+import { getIntegrationModel } from '../integrations';
+import { serializeDataInResult } from '../../common/helpers';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -39,10 +44,12 @@ const loggers = require('../common/loggers').loggers
   BGListenerType.OnExtensionIconClicked,
   (tab) => {
     if (!tab.id) {
-      return loggers
+      loggers
         .error()
         .log(`${BGListenerType.OnExtensionIconClicked}: there is no tab id`, tab);
+      return;
     }
+
     sendMessageFromBackground(tab.id, {
       type: MessageToApp.AppShowExtension,
     });
@@ -81,9 +88,10 @@ const loggers = require('../common/loggers').loggers
   BGListenerType.OnMessage,
   (message : ExtensionMessage, sender) => {
     if (!sender.tab?.id) {
-      return loggers
+      loggers
         .error()
         .log(`${BGListenerType.OnMessage} ${message.type}: there is no tab id`, sender, message);
+      return;
     }
 
     if (isMessageMatched(
@@ -211,7 +219,7 @@ const loggers = require('../common/loggers').loggers
         origin: getOriginFromSender(sender),
       });
     }
-    
+
     if (isMessageMatched(
       () => MessageToBackground.BGToggleShowExtension === message.type,
       message,
@@ -264,6 +272,59 @@ const loggers = require('../common/loggers').loggers
         type: MessageToContent.CSDirectMessageToInline,
         payload: message.payload,
       });
+    }
+
+    if (isMessageMatched(
+      () => MessageToBackground.BGIntegrationWork === message.type,
+      message,
+      sender,
+    )) {
+      const {
+        processID,
+        work,
+        modelType,
+        data,
+      } = message.payload as AsyncProcessPayload & IntegrationWorkPayload;
+      const tabID = sender.tab.id;
+      const model = getIntegrationModel(modelType);
+
+      const response: ExtensionMessage<AsyncProcessPayload & ResultProcessPayload> = {
+        id: `${message.id}--${message.type}`,
+        type: MessageToApp.AppGetIntegrationWorkResult,
+        payload: {
+          processID,
+          result: { error: new Error('Model not found') },
+        },
+      };
+
+      if (!model) {
+        sendMessageFromBackground(tabID, response);
+        return;
+      }
+
+      if (work === 'check-connection') {
+        model.checkConnection()
+          .then((result) => {
+            response.payload!.result = serializeDataInResult(result);
+            sendMessageFromBackground(tabID, response);
+          });
+      }
+
+      if (work === 'export-data') {
+        model.exportData(data || {})
+          .then((result) => {
+            response.payload!.result = serializeDataInResult(result);
+            sendMessageFromBackground(tabID, response);
+          });
+      }
+
+      if (work === 'import-data') {
+        model.importData()
+          .then((result) => {
+            response.payload!.result = serializeDataInResult(result);
+            sendMessageFromBackground(tabID, response);
+          });
+      }
     }
   },
 );

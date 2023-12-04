@@ -1,0 +1,33 @@
+@import '../../../scss/palette';
+
+.message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding: 8px 16px;
+
+  .button.static-button {
+    font-size: 14px;
+    margin-left: 10px;
+    height: 28px;
+    justify-content: center;
+
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+
+  &.warning-message {
+    border: 1px solid $warning;
+    border-radius: 4px;
+
+    .warning-icon {
+      height: 18px;
+      width: 20px;
+      fill: $warning;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+  }
+}

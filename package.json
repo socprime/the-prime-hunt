@@ -1,6 +1,6 @@
 {
   "name": "the-prime-hunt",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "The Prime Hunt is a browser extension for threat hunting. It introduces a One UI idea to simplify and speed up the investigation process regardless of the SIEMs or EDR in use. This is useful both for threat hunters starting off their careers and for seasoned professionals. With The Prime Hunt, you can easily see what accounts and assets are affected by the suspicious activity your query detects. Filter for or filter out query results by any field values with one click or look for all events related to them. Easily drill down to any CTI or any other sources that can help you in the investigation.If you have any questions, would like to give feedback, or need help, contact us at support@socprime.com",
   "author": "Pavel Nedzelskiy <pavlo.nedzelskyi@socprime.com>",
   "main": "index.js",
@@ -13,6 +13,7 @@
     "eslint": "npx eslint --quiet . --ext .ts --ext .tsx --fix"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.23.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/ace": "^0.0.48",
@@ -34,6 +35,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-react-app": "^7.0.1",
+    "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-jsonc": "^2.10.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "fs-extra": "^10.1.0",
@@ -58,6 +60,7 @@
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^4.7.4",
     "webpack": "^5.74.0",
     "webpack-bundle-analyzer": "^4.6.0",

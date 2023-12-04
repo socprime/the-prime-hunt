@@ -22,25 +22,25 @@ export const getMockedLoggers = (
     log: (...params: any) => {
       logsStack.push(params);
     },
-    setLevel: function () {
+    setLevel() {
       return this;
     },
-    addPrefix: function () {
+    addPrefix() {
       return this;
     },
-    setPrefix: function () {
+    setPrefix() {
       return this;
     },
-    debug: function () {
+    debug() {
       return this;
     },
-    error: function () {
+    error() {
       return this;
     },
-    info: function () {
+    info() {
       return this;
     },
-    warn: function () {
+    warn() {
       return this;
     },
   };
@@ -48,15 +48,15 @@ export const getMockedLoggers = (
 
 export const getMockedResourcesData = (): NormalizedResources => ({
   Accounts: {
-    'test0': ['account1', '2', 'test2', '4', 'test\\domain.com', '"process.exe" -a -g https://some.site/some-page'],
-    'test2': ['account2', '2', '4'],
-    'test3': ['account3', 'test2', '4'],
-    'test4': ['account4', '2', 'test2', '4'],
-    'field': ['2'],
+    test0: ['account1', '2', 'test2', '4', 'test\\domain.com', '"process.exe" -a -g https://some.site/some-page'],
+    test2: ['account2', '2', '4'],
+    test3: ['account3', 'test2', '4'],
+    test4: ['account4', '2', 'test2', '4'],
+    field: ['2'],
   },
   Assets: {
-    'test5': ['asset1', '2', 'test2', '4'],
-    'test2': ['asset2'],
+    test5: ['asset1', '2', 'test2', '4'],
+    test2: ['asset2'],
   },
 });
 

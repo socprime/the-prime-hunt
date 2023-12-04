@@ -6,13 +6,13 @@ import ManifestV3 = chrome.runtime.ManifestV3;
 import ManifestV2 = chrome.runtime.ManifestV2;
 
 const generateIconSet = () => ({
-  '16': 'icons/16.png',
-  '48': 'icons/48.png',
-  '64': 'icons/64.png',
-  '96': 'icons/96.png',
-  '128': 'icons/128.png',
-  '256': 'icons/256.png',
-  '512': 'icons/512.png',
+  16: 'icons/16.png',
+  48: 'icons/48.png',
+  64: 'icons/64.png',
+  96: 'icons/96.png',
+  128: 'icons/128.png',
+  256: 'icons/256.png',
+  512: 'icons/512.png',
 });
 
 const getDebugUrls = (mode: Mode) => {
@@ -48,13 +48,14 @@ const getCommonManifest = (mode: Mode): ManifestBase => {
           'https://*/*',
           ...getDebugUrls(mode),
         ],
-        'all_frames': true,
+        all_frames: true,
         js: ['content.js'],
         run_at: 'document_end',
       },
     ],
     permissions: [
       'webRequest',
+      'storage',
     ],
   };
 };
@@ -90,7 +91,6 @@ const buildBackgroundV2 = () => {
     },
   };
 };
-
 
 const buildAccessibleResourcesV3 = () => {
   return {
@@ -166,4 +166,3 @@ export const buildManifest = (browser: Browser, mode: Mode) => {
 
   return getManifestV3(mode);
 };
-

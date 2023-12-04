@@ -49,7 +49,7 @@ export const TabsPlatformResources: React.FC<React.PropsWithChildren> = observer
         <ResourceTabInput
           typeID={id}
           value={name}
-          onApply={value => {
+          onApply={(value) => {
             resourceStore.renameTab(id, value, true);
             resourceStore.activeTabID = value;
           }}
@@ -84,7 +84,7 @@ export const TabsPlatformResources: React.FC<React.PropsWithChildren> = observer
   const tabs = useMemo(() => {
     const result = [] as TabsPanelProps['tabs'];
 
-    boundedResourcesTypeIDs.forEach(typeID => {
+    boundedResourcesTypeIDs.forEach((typeID) => {
       result.push({
         id: typeID,
         component: getTab(
@@ -99,7 +99,7 @@ export const TabsPlatformResources: React.FC<React.PropsWithChildren> = observer
       });
     });
 
-    Object.keys(resources).forEach(typeID => {
+    Object.keys(resources).forEach((typeID) => {
       if (boundedResourcesTypeIDs.includes(typeID)) {
         return;
       }
@@ -123,8 +123,8 @@ export const TabsPlatformResources: React.FC<React.PropsWithChildren> = observer
     <div className="tabs-platform-resources-wrapper">
       <TabsPanel
         className="tabs-platform-resources"
-        tabs={[ ...tabs, addNewTab ]}
-        onActiveTabChanged={id => {
+        tabs={[...tabs, addNewTab]}
+        onActiveTabChanged={(id) => {
           if (resourceStore.isTabExist(id)) {
             resourceStore.activeTabID = id;
           }

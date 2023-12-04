@@ -1,6 +1,8 @@
 @import "../../../scss/palette";
 
 .app-dropdown.dropdown {
+  font-size: 14px;
+
   &.down .app-dropdown-menu {
     margin-top: 13px;
   }
@@ -21,4 +23,5 @@
   padding: 6px 12px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   margin-bottom: 12px;
+  font-size: 13px;
 }

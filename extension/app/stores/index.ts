@@ -17,6 +17,26 @@ export const useAppStore = () => {
   return rootStore.appStore;
 };
 
+export const useAppRouterStore = () => {
+  const rootStore = useRootStore();
+  return rootStore.appRouterStore;
+};
+
+export const useAppStorageStore = () => {
+  const rootStore = useRootStore();
+  return rootStore.appStorageStore;
+};
+
+export const useAppMessageStore = () => {
+  const rootStore = useRootStore();
+  return rootStore.appMessageStore;
+};
+
+export const useFormStore = () => {
+  const rootStore = useRootStore();
+  return rootStore.formStore;
+};
+
 export const useResourceStore = () => {
   const rootStore = useRootStore();
   return rootStore.resourceStore;
@@ -35,6 +55,11 @@ export const useResourcesSelectionStore = () => {
 export const useIntegrationsStore = () => {
   const rootStore = useRootStore();
   return rootStore.integrationsStore;
+};
+
+export const useIntegrationStore = () => {
+  const rootStore = useRootStore();
+  return rootStore.integrationStore;
 };
 
 export const rootStore = new RootStore();

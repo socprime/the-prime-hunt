@@ -17,6 +17,10 @@
 
   &.success-btn {
     background-color: $success;
+
+    &.disabled {
+      background-color: $base-background-area-color;
+    }
   }
 
   &:not(.disabled) {

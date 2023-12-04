@@ -1,4 +1,6 @@
-import { MutableRefObject, useRef, useState } from 'react';
+import {
+  MutableRefObject, useRef, useState, FC,
+} from 'react';
 import { Spacer } from '../../../components/atoms/Spacer/Spacer';
 import { TabsPlatformResources } from '../../TabsPlatformResources/TabsPlatformResources';
 import { usePlatformStore, useResourceStore } from '../../../stores';
@@ -11,7 +13,7 @@ import { AppTooltip } from '../../../components/tooltips/AppTooltip/AppTooltip';
 import { AutocompleteInput } from '../../../components/inputs/AutocompleteInput';
 import './styles.scss';
 
-export const ResourcesHeaderView: React.FC = observer(() => {
+export const ResourcesHeaderView: FC = observer(() => {
   const [addNewFieldMode, setAddNewFieldMode] = useState(false);
 
   const platformStore = usePlatformStore();
@@ -79,8 +81,7 @@ export const ResourcesHeaderView: React.FC = observer(() => {
          countSymbolsToActivate={2}
          className="add-field"
          list={platformStore.getFieldsNames()}
-         Input={(props) =>
-           <AddFieldInput
+         Input={(props) => <AddFieldInput
              {...props}
              ref={(refs) => {
                if (refs?.wrapperRef?.current) {
@@ -90,7 +91,7 @@ export const ResourcesHeaderView: React.FC = observer(() => {
                  inputRef.current = refs.inputRef.current;
                }
              }}
-             onApply={value => {
+             onApply={(value) => {
                setAddNewFieldMode(false);
                const nValue = value.trim();
 

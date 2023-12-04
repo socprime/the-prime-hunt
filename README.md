@@ -99,11 +99,13 @@ The position and size of the extension's window are stored as the `the-prime-hun
 - Click the plus icon to include the account/asset in the search
 - Click the minus icon to exclude the account/asset from the search
 - Click the eye-and-list icon to search for all events that involve the account/asset
-- To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR using the relevant suggester option, and click on the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. **Note**: field names for the suggester are stored as the `the-prime-hunt--extension--fields` key in the browser's local storage.
+- Click the plane icon to send the result to OpenCTI as an IOC (see **Setting up OpenCTI Integration**)
+
+To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR using the relevant suggester option, and click on the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. **Note**: field names for the suggester are stored as the `the-prime-hunt--extension--fields` key in the browser's local storage.
 
 ![Remove icon](.readme/remove_icon.png)
 
-- To add a custom tab, click the plus icon on the right of the existing tabs, enter an arbitrary title, and click the checkmark. Double-click the created custom tab title to rename or delete the tab.
+To add a custom tab, click the plus icon on the right of the existing tabs, enter an arbitrary title, and click the checkmark. Double-click the created custom tab title to rename or delete the tab.
 
 ![Custom tab](.readme/custom_tab.png)
 
@@ -156,10 +158,47 @@ Here is the list of markers you can use in the integration URL:
 
 Customize this marker to change the behavior.
 
-To use the OpenCTI integration, replace the `HOSTNAME:PORT` placeholder in the OpenCTI integration URL with the hostname and port of your account.
+### Setting up OpenCTI Integration
+
+To use the OpenCTI integration for search, replace the `HOSTNAME:PORT` placeholder in the OpenCTI integration URL with the hostname and port of your account.
 
 ![Setting hostname and port](.readme/opencti.png)
 
+You can also configure the integration to support sending the selected results as Indicators of Compromise (IOCs) to your OpenCTI account. To do this:
+
+1. Set the **Send the IOCs to OpenCTI** checkbox.
+2. Enter your **GraphQL Server URL**.
+3. Enter your **API Key**.
+4. Save the changes. Before saving, the extension will validate the entered credentials by establishing a connection to your OpenCTI account.
+
+![Settings to send IOCs](.readme/opencti_send_settings.png)
+
+To send a result to OpenCTI:
+1. Select the result you want to send and click the **Send to OpenCTI** icon.
+
+![Select IOCs](.readme/opencti_select_result.png)
+
+2. Set the IOC parameters:
+    - Name: pre-filled with the selected result (required)
+    - Main Observable Type: automatically defined but can be changed (required)
+    - Pattern: automatically defined but can be edited (required)
+    - Indicator Type: select one or multiple options defined in your OpenCTI account
+    - Labels: select one or multiple options defined in your OpenCTI account
+    - Markings: select one or multiple options defined in your OpenCTI account
+3. Optionally, set the following checkboxes:
+    - Detection
+    - Create observable from indicator
+
+![IOC settings](.readme/opencti_ioc_settings.png)
+
+4. Click **Send**.
+
+If the result has been successfully sent, a confirmation message is shown.
+
+![IOC sent successfully sent](.readme/opencti_success.png)
+
+
+### Adding Integrations
 You can add an integration with any service. To create a new integration:
 1. Click **Add New Integration**.
 2. Enter the display name that will be shown in the **Search At** menu.

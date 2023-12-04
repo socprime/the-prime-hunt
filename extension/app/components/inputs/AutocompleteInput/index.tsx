@@ -1,6 +1,8 @@
-import { FC, forwardRef, useCallback, useEffect, useState } from 'react';
+import {
+  FC, forwardRef, useCallback, useEffect, useState,
+} from 'react';
 import SimpleBar from 'simplebar-react';
-import { AppInputProps } from '../AppInput/AppInput';
+import { AppInputProps } from '../AppInput/types';
 import { createClassName } from '../../../../common/common-helpers';
 import { AppDropdown, AppDropdownRefs } from '../../dropdowns/AppDropdown/AppDropdown';
 
@@ -35,7 +37,7 @@ export const AutocompleteInput = forwardRef<AppDropdownRefs, AutocompleteInputPr
 
   const prepareItems = useCallback((items: string[], item: string) => {
     return items
-      .filter(i => i && item && i.toLowerCase().indexOf(item.toLowerCase()) > -1);
+      .filter((i) => i && item && i.toLowerCase().indexOf(item.toLowerCase()) > -1);
   }, []);
 
   useEffect(() => {
@@ -89,7 +91,8 @@ export const AutocompleteInput = forwardRef<AppDropdownRefs, AutocompleteInputPr
             setAutocompleteItems(prepareItems(list, v));
             if (v.length < countSymbolsToActivate && isOpen) {
               setActiveIndex(-1);
-              return setIsOpened(false);
+              setIsOpened(false);
+              return;
             }
             if (v.length >= countSymbolsToActivate && !isOpen) {
               setIsOpened(true);

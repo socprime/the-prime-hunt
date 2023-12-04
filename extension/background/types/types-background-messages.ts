@@ -12,9 +12,10 @@ export enum MessageToBackground {
   BGToggleShowExtension = 'BGToggleShowExtension',
   BGSetDebugMode = 'BGSetDebugMode',
   BGDirectMessageToInline = 'BGDirectMessageToInline',
+  BGIntegrationWork = 'BGIntegrationWork',
 }
 
-Object.values(MessageToBackground).forEach(type => {
+Object.values(MessageToBackground).forEach((type) => {
   if (getExecutingContextByMessageType(type) !== 'background') {
     throw new Error(`Wrong background message type "${type}"`);
   }

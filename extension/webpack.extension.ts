@@ -5,7 +5,9 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { WebpackCompiler, WebpackConfiguration } from 'webpack-cli';
 import { copySync, emptyDirSync, outputFileSync } from 'fs-extra';
-import { AbsFilePath, HTMLTextContent, LogLevel, Mode } from '../common/types';
+import {
+  AbsFilePath, HTMLTextContent, LogLevel, Mode,
+} from '../common/types';
 import { buildManifest, getVersion } from './manifest/manifest-utils';
 import { Browser, PlatformID } from './common/types/types-common';
 import { DefinePlugin, EntryObject } from 'webpack';
@@ -20,6 +22,7 @@ import {
   elasticInline,
   arcSightInline,
 } from './manifest/public-resources';
+// import { webpackAliases } from '../install';
 
 const args = minimist<{
   mode?: Mode;
@@ -34,20 +37,20 @@ const args = minimist<{
 }>(process.argv.slice(2));
 [args.env]
   .flat(1)
-  .forEach(arg => String(arg).split('=')
-    .forEach((part, _, arr) => args[arr[0]] = arr.length === 2 ? arr[1] : undefined,
-    ),
-  );
+  .forEach((arg) => String(arg).split('=')
+    .forEach((part, _, arr) => args[arr[0]] = arr.length === 2 ? arr[1] : undefined));
 
 const allowedBrowsers = Object.keys(Browser);
 
 let browsers = String(args?.browser)
   .split(',')
-  .map(b => b.toLowerCase())
-  .filter(b => allowedBrowsers.includes(b));
+  .map((b) => b.toLowerCase())
+  .filter((b) => allowedBrowsers.includes(b));
 browsers = browsers.length ? browsers : allowedBrowsers;
 
-const mode = String(args?.mode).toLowerCase() === Mode.production ? Mode.production : Mode.development;
+const mode = String(args?.mode).toLowerCase() === Mode.production
+  ? Mode.production
+  : Mode.development;
 const absDistDirPath = join(__dirname, '../dist');
 
 emptyDirSync(join(absDistDirPath, mode));
@@ -89,7 +92,7 @@ const inlineEntries = [
   arcSightInline,
   amazonAthenaInline,
 ].reduce((entry, inline) => {
-  const name = parse(inline).name;
+  const { name } = parse(inline);
   entry[name] = [
     join(__dirname, 'inline.ts'),
     join(__dirname, 'inline', name.split('inline-')!.pop()!, `${name}.ts`),
@@ -119,6 +122,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    // alias: webpackAliases,
   },
   module: {
     rules: [
@@ -170,7 +174,7 @@ module.exports = {
                 return res;
               }, []).join('\n'),
             );
-            browsers.forEach(b => {
+            browsers.forEach((b) => {
               copySync(join(output, browser), join(output, b), { overwrite: true });
               buildBrowserAssets(b as Browser);
             });
@@ -197,4 +201,4 @@ module.exports = {
   ],
 } as WebpackConfiguration;
 
-// yarn extension --watch --env=content-platform=MicrosoftSentinel
+// pnpm extension --watch --env=content-platform=MicrosoftSentinel

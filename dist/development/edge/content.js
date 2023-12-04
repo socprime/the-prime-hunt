@@ -1,6 +1,16 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./extension/app/components/areas/AppArea/styles.scss":
+/*!************************************************************!*\
+  !*** ./extension/app/components/areas/AppArea/styles.scss ***!
+  \************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/Button/button.scss":
 /*!***********************************************************!*\
   !*** ./extension/app/components/atoms/Button/button.scss ***!
@@ -65,6 +75,16 @@
 /*!******************************************************************!*\
   !*** ./extension/app/components/atoms/TabsPanel/tabs-panel.scss ***!
   \******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/Tag/styles.scss":
+/*!********************************************************!*\
+  !*** ./extension/app/components/atoms/Tag/styles.scss ***!
+  \********************************************************/
 /***/ (() => {
 
 
@@ -171,6 +191,36 @@
 
 /***/ }),
 
+/***/ "./extension/app/components/dropdowns/FormDropdown/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/components/dropdowns/FormDropdown/styles.scss ***!
+  \*********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/components/extends/WithValidation/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/components/extends/WithValidation/styles.scss ***!
+  \*********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/components/headers/AppGroupHeader/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/components/headers/AppGroupHeader/styles.scss ***!
+  \*********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/headers/AppHeader/styles.scss":
 /*!****************************************************************!*\
   !*** ./extension/app/components/headers/AppHeader/styles.scss ***!
@@ -231,16 +281,6 @@
 
 /***/ }),
 
-/***/ "./extension/app/components/inputs/ValidationInput/styles.scss":
-/*!*********************************************************************!*\
-  !*** ./extension/app/components/inputs/ValidationInput/styles.scss ***!
-  \*********************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
 /***/ "./extension/app/components/links/AppLink/styles.scss":
 /*!************************************************************!*\
   !*** ./extension/app/components/links/AppLink/styles.scss ***!
@@ -251,10 +291,60 @@
 
 /***/ }),
 
+/***/ "./extension/app/components/tags/AppTag/styles.scss":
+/*!**********************************************************!*\
+  !*** ./extension/app/components/tags/AppTag/styles.scss ***!
+  \**********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/tooltips/AppTooltip/styles.scss":
 /*!******************************************************************!*\
   !*** ./extension/app/components/tooltips/AppTooltip/styles.scss ***!
   \******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/export/OpenCTIExport/styles.scss":
+/*!********************************************************!*\
+  !*** ./extension/app/export/OpenCTIExport/styles.scss ***!
+  \********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/export/views/ExportContentView/styles.scss":
+/*!******************************************************************!*\
+  !*** ./extension/app/export/views/ExportContentView/styles.scss ***!
+  \******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/export/views/ExportFooterView/styles.scss":
+/*!*****************************************************************!*\
+  !*** ./extension/app/export/views/ExportFooterView/styles.scss ***!
+  \*****************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/export/views/ExportHeaderView/styles.scss":
+/*!*****************************************************************!*\
+  !*** ./extension/app/export/views/ExportHeaderView/styles.scss ***!
+  \*****************************************************************/
 /***/ (() => {
 
 
@@ -281,10 +371,60 @@
 
 /***/ }),
 
-/***/ "./extension/app/integrations/Integration/styles.scss":
-/*!************************************************************!*\
-  !*** ./extension/app/integrations/Integration/styles.scss ***!
-  \************************************************************/
+/***/ "./extension/app/integration/Integration/styles.scss":
+/*!***********************************************************!*\
+  !*** ./extension/app/integration/Integration/styles.scss ***!
+  \***********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/OpenCTIIntegration/styles.scss":
+/*!******************************************************************!*\
+  !*** ./extension/app/integration/OpenCTIIntegration/styles.scss ***!
+  \******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/messages/SensitiveInfoWarningMessage/styles.scss":
+/*!************************************************************************************!*\
+  !*** ./extension/app/integration/messages/SensitiveInfoWarningMessage/styles.scss ***!
+  \************************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/views/IntegrationContentView/styles.scss":
+/*!****************************************************************************!*\
+  !*** ./extension/app/integration/views/IntegrationContentView/styles.scss ***!
+  \****************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/views/IntegrationFooterView/styles.scss":
+/*!***************************************************************************!*\
+  !*** ./extension/app/integration/views/IntegrationFooterView/styles.scss ***!
+  \***************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/views/IntegrationHeaderView/styles.scss":
+/*!***************************************************************************!*\
+  !*** ./extension/app/integration/views/IntegrationHeaderView/styles.scss ***!
+  \***************************************************************************/
 /***/ (() => {
 
 
@@ -311,9 +451,19 @@
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationContentView/styles.scss":
+/***/ "./extension/app/integrations/views/IntegrationsContentView/styles.scss":
+/*!******************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationsContentView/styles.scss ***!
+  \******************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/views/IntegrationsFooterView/styles.scss":
 /*!*****************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationContentView/styles.scss ***!
+  !*** ./extension/app/integrations/views/IntegrationsFooterView/styles.scss ***!
   \*****************************************************************************/
 /***/ (() => {
 
@@ -321,20 +471,10 @@
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationFooterView/styles.scss":
-/*!****************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationFooterView/styles.scss ***!
-  \****************************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./extension/app/integrations/views/IntegrationHeaderView/styles.scss":
-/*!****************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationHeaderView/styles.scss ***!
-  \****************************************************************************/
+/***/ "./extension/app/integrations/views/IntegrationsHeaderView/styles.scss":
+/*!*****************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationsHeaderView/styles.scss ***!
+  \*****************************************************************************/
 /***/ (() => {
 
 
@@ -471,6 +611,26 @@
 
 /***/ }),
 
+/***/ "./extension/app/resources/messages/ErrorMessage/styles.scss":
+/*!*******************************************************************!*\
+  !*** ./extension/app/resources/messages/ErrorMessage/styles.scss ***!
+  \*******************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/NoOpenCTIProfileMessage/styles.scss":
+/*!******************************************************************************!*\
+  !*** ./extension/app/resources/messages/NoOpenCTIProfileMessage/styles.scss ***!
+  \******************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/resources/messages/RemoveFieldsSpecificationMessage/styles.scss":
 /*!***************************************************************************************!*\
   !*** ./extension/app/resources/messages/RemoveFieldsSpecificationMessage/styles.scss ***!
@@ -485,6 +645,36 @@
 /*!************************************************************************!*\
   !*** ./extension/app/resources/messages/RemoveHashMessage/styles.scss ***!
   \************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/SuccessMessage/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/resources/messages/SuccessMessage/styles.scss ***!
+  \*********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/SuccessOpenCTIExportMessage/styles.scss":
+/*!**********************************************************************************!*\
+  !*** ./extension/app/resources/messages/SuccessOpenCTIExportMessage/styles.scss ***!
+  \**********************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/WarningMessage/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/resources/messages/WarningMessage/styles.scss ***!
+  \*********************************************************************/
 /***/ (() => {
 
 
@@ -52479,6 +52669,56 @@ SimpleBar.instances = new WeakMap();
 
 /***/ }),
 
+/***/ "./common/Http.ts":
+/*!************************!*\
+  !*** ./common/Http.ts ***!
+  \************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.http = exports.Http = void 0;
+class Http {
+    static request(url, params, callbacks) {
+        const responseType = (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onJSONSuccess) ? 'json' : 'text';
+        fetch(url, params)
+            .then((response) => {
+            return responseType === 'json'
+                ? response.json()
+                : response.text();
+        })
+            .then((response) => {
+            var _a, _b;
+            return responseType === 'json'
+                ? (_a = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onJSONSuccess) === null || _a === void 0 ? void 0 : _a.call(callbacks, response)
+                : (_b = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onTextSuccess) === null || _b === void 0 ? void 0 : _b.call(callbacks, response);
+        })
+            .catch((e) => {
+            var _a;
+            (_a = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onError) === null || _a === void 0 ? void 0 : _a.call(callbacks, e);
+        });
+    }
+    get(params, callbacks) {
+        return Http.request(params.url, {
+            headers: (params === null || params === void 0 ? void 0 : params.headers) || {},
+            method: 'GET',
+        }, callbacks);
+    }
+    post(params, callbacks) {
+        return Http.request(params.url, {
+            headers: (params === null || params === void 0 ? void 0 : params.headers) || {},
+            method: 'POST',
+            body: params.body || '',
+        }, callbacks);
+    }
+}
+exports.Http = Http;
+exports.http = new Http();
+
+
+/***/ }),
+
 /***/ "./common/Register.ts":
 /*!****************************!*\
   !*** ./common/Register.ts ***!
@@ -52525,13 +52765,17 @@ exports.Register = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isUrl = exports.isDomainName = exports.isMacAddress = exports.isIpV6 = exports.isIpV4 = exports.isSHA512 = exports.isSHA256 = exports.isSHA1 = exports.isMD5 = exports.isEmail = exports.isNotEmpty = exports.isNotEmptyArray = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
 exports.isString = isString;
+const isNotEmptyArray = (arr) => {
+    return arr.length > 0;
+};
+exports.isNotEmptyArray = isNotEmptyArray;
 const isNotEmpty = (str) => {
     if (!(0, exports.isString)(str)) {
         return false;
@@ -52539,6 +52783,46 @@ const isNotEmpty = (str) => {
     return str.trim() !== '';
 };
 exports.isNotEmpty = isNotEmpty;
+const isEmail = (email) => {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+};
+exports.isEmail = isEmail;
+const isMD5 = (md5) => {
+    return /^[a-f0-9]{32}$/.test(md5);
+};
+exports.isMD5 = isMD5;
+const isSHA1 = (sha1) => {
+    return /^[a-fA-F0-9]{40}$/.test(sha1);
+};
+exports.isSHA1 = isSHA1;
+const isSHA256 = (sha256) => {
+    return /^[a-fA-F0-9]{64}$/.test(sha256);
+};
+exports.isSHA256 = isSHA256;
+const isSHA512 = (sha512) => {
+    return /^[a-fA-F0-9]{128}$/.test(sha512);
+};
+exports.isSHA512 = isSHA512;
+const isIpV4 = (ip) => {
+    return /(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/.test(ip);
+};
+exports.isIpV4 = isIpV4;
+const isIpV6 = (ip) => {
+    return /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/.test(ip);
+};
+exports.isIpV6 = isIpV6;
+const isMacAddress = (address) => {
+    return /^[a-fA-F0-9]{2}([:|-][a-fA-F0-9]{2}){5}$/.test(address);
+};
+exports.isMacAddress = isMacAddress;
+const isDomainName = (domainName) => {
+    return /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/.test(domainName);
+};
+exports.isDomainName = isDomainName;
+const isUrl = (url) => {
+    return /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(url);
+};
+exports.isUrl = isUrl;
 const isNumberInString = (str) => {
     if (typeof str === 'number') {
         return true;
@@ -52564,7 +52848,7 @@ const isAllowedProtocol = (protocol, mode) => {
 exports.isAllowedProtocol = isAllowedProtocol;
 const isDate = (value) => {
     return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
-        ? parseInt(value)
+        ? parseInt(value, 10)
         : value).getTime() > 567982800000;
 };
 exports.isDate = isDate;
@@ -52597,7 +52881,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -52767,6 +53051,13 @@ const getUrlParamsSafe = (url, paramName) => {
     }
 };
 exports.getUrlParamsSafe = getUrlParamsSafe;
+const serializeDataInResult = (result) => {
+    if (result.error && typeof result.error !== 'string') {
+        result.error = result.error.message;
+    }
+    return result;
+};
+exports.serializeDataInResult = serializeDataInResult;
 
 
 /***/ }),
@@ -52808,9 +53099,22 @@ exports.mapType = mapType;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getValidResult = exports.isNotEmptyString = void 0;
-const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
+exports.getValidResult = exports.isUrl = exports.isNotEmptyString = exports.isNotEmptyArray = void 0;
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
+const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
+const isNotEmptyArray = (value, pattern) => {
+    const isValid = (0, checkers_1.isNotEmptyArray)(value);
+    return {
+        isValid,
+        reasons: new Set(isValid
+            ? []
+            : [(0, helpers_1.formatString)(pattern || '%prefix %message', {
+                    prefix: `${(0, helpers_1.capitalizeFirstLetter)(exports.isNotEmptyArray.name)}:`,
+                    message: 'Passed array is empty',
+                })]),
+    };
+};
+exports.isNotEmptyArray = isNotEmptyArray;
 const isNotEmptyString = (value, pattern) => {
     const isValid = (0, checkers_1.isNotEmpty)(value);
     return {
@@ -52824,6 +53128,19 @@ const isNotEmptyString = (value, pattern) => {
     };
 };
 exports.isNotEmptyString = isNotEmptyString;
+const isUrl = (url, pattern) => {
+    const isValid = (0, checkers_1.isUrl)(url);
+    return {
+        isValid,
+        reasons: new Set(isValid
+            ? []
+            : [(0, helpers_1.formatString)(pattern || '%prefix %message', {
+                    prefix: `${(0, helpers_1.capitalizeFirstLetter)(exports.isUrl.name)}:`,
+                    message: 'Passed string is not an url',
+                })]),
+    };
+};
+exports.isUrl = isUrl;
 const getValidResult = () => {
     return {
         isValid: true,
@@ -52863,16 +53180,16 @@ exports.usePrevious = usePrevious;
 const useOnClickOutside = (cb, ...refs) => {
     (0, react_1.useEffect)(() => {
         const listener = (event) => {
-            const isInside = refs.some(ref => {
+            const isInside = refs.some((ref) => {
                 const element = ref instanceof HTMLElement ? ref : ref === null || ref === void 0 ? void 0 : ref.current;
                 if (!(element === null || element === void 0 ? void 0 : element.getBoundingClientRect)) {
                     return false;
                 }
                 const rect = element.getBoundingClientRect();
-                return (event.x >= rect.left &&
-                    event.x <= rect.right &&
-                    event.y >= rect.top &&
-                    event.y <= rect.bottom);
+                return (event.x >= rect.left
+                    && event.x <= rect.right
+                    && event.y >= rect.top
+                    && event.y <= rect.bottom);
             });
             if (!isInside) {
                 cb(event);
@@ -52885,7 +53202,7 @@ const useOnClickOutside = (cb, ...refs) => {
 exports.useOnClickOutside = useOnClickOutside;
 const useForceUpdate = () => {
     const [value, setValue] = (0, react_1.useState)(0);
-    return () => setValue(prev => prev > 9999 ? 0 : value + 1);
+    return () => setValue((prev) => (prev > 9999 ? 0 : value + 1));
 };
 exports.useForceUpdate = useForceUpdate;
 
@@ -52993,8 +53310,61 @@ content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnM
         stores_1.rootStore.resourceStore.setWatchers(watchers);
         (0, local_storage_1.setWatchers)(watchers);
     }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_app_messages_1.MessageToApp.AppGetIntegrationWorkResult === message.type, message)) {
+        const { processID, result, } = message.payload;
+        stores_1.rootStore.appMessageStore.resolve(processID, result);
+    }
 });
 loggers.debug().log('mounted');
+
+
+/***/ }),
+
+/***/ "./extension/app/components/areas/AppArea/index.tsx":
+/*!**********************************************************!*\
+  !*** ./extension/app/components/areas/AppArea/index.tsx ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppArea = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const Area_1 = __webpack_require__(/*! ../../atoms/Area */ "./extension/app/components/atoms/Area/index.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/areas/AppArea/styles.scss");
+const AppArea = ({ children, native = {}, }) => {
+    return ((0, jsx_runtime_1.jsx)(Area_1.Area, Object.assign({ native: Object.assign(Object.assign({}, native), { className: (0, common_helpers_1.createClassName)([
+                native.className || '',
+                'app-area',
+            ]) }) }, { children: children })));
+};
+exports.AppArea = AppArea;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/Area/index.tsx":
+/*!*******************************************************!*\
+  !*** ./extension/app/components/atoms/Area/index.tsx ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Area = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const Area = ({ disabled, children, native = {}, }) => {
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({}, native, { className: (0, common_helpers_1.createClassName)([
+            'area',
+            native.className || '',
+            disabled ? 'disabled' : '',
+        ]) }, { children: children })));
+};
+exports.Area = Area;
 
 
 /***/ }),
@@ -53022,13 +53392,12 @@ const Button = ({ onClick, icon, children, disabled, className = '', }) => {
                 return;
             }
             onClick === null || onClick === void 0 ? void 0 : onClick(e);
-        } }, { children: [icon && (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "button-icon", onClick: e => {
+        } }, { children: [icon && (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "button-icon", onClick: (e) => {
                     if (disabled) {
                         e.stopPropagation();
                         e.preventDefault();
-                        return;
                     }
-                } }, { children: icon })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "button-content" }, { children: children }))] })));
+                } }, { children: icon })), children && (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "button-content" }, { children: children }))] })));
 };
 exports.Button = Button;
 
@@ -53050,12 +53419,16 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.
 const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./checkbox.scss */ "./extension/app/components/atoms/Checkbox/checkbox.scss");
-const Checkbox = ({ onStateChanged, content, disabled, checked, onClick, checkIcon, uncheckIcon, title = '', className = '', }) => {
+exports.Checkbox = (0, react_1.forwardRef)(({ onStateChanged, content, disabled, checked, onClick, checkIcon, uncheckIcon, title = '', className = '', }, refs) => {
     const [isChecked, setIsChecked] = (0, react_1.useState)(!!checked);
     const prevState = (0, app_hooks_1.usePrevious)(isChecked);
+    const elementRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return { elementRef };
+    });
     (0, react_1.useEffect)(() => {
-        if (typeof prevState !== 'undefined' &&
-            prevState !== isChecked) {
+        if (typeof prevState !== 'undefined'
+            && prevState !== isChecked) {
             onStateChanged === null || onStateChanged === void 0 ? void 0 : onStateChanged(isChecked);
         }
     }, [isChecked, onStateChanged, prevState]);
@@ -53064,7 +53437,10 @@ const Checkbox = ({ onStateChanged, content, disabled, checked, onClick, checkIc
             setIsChecked(checked);
         }
     }, [checked]);
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+    if (elementRef.current) {
+        elementRef.current.checked = isChecked;
+    }
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ ref: elementRef, className: (0, common_helpers_1.createClassName)([
             'checkbox',
             isChecked ? 'checked' : 'not-checked',
             disabled ? 'disabled' : '',
@@ -53084,8 +53460,7 @@ const Checkbox = ({ onStateChanged, content, disabled, checked, onClick, checkIc
                     setIsChecked(newValue);
                     onClick === null || onClick === void 0 ? void 0 : onClick(newValue);
                 } }, { children: isChecked ? checkIcon : uncheckIcon })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "content", title: title }, { children: content }))] })));
-};
-exports.Checkbox = Checkbox;
+});
 
 
 /***/ }),
@@ -53111,14 +53486,16 @@ const Collapsible = ({ className = '', disabled, children, header, onClick, open
     const getNewHeight = (0, react_1.useCallback)(() => {
         var _a;
         return Array.from(((_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.children) || [])
-            .reduce((res, e) => res += e.offsetHeight, 0);
+            .reduce((res, e) => {
+            return res + e.offsetHeight;
+        }, 0);
     }, []);
     (0, react_1.useEffect)(() => {
         setHeight(getNewHeight());
     }, [getNewHeight, isOpen]);
     (0, react_1.useEffect)(() => {
         if (!contentRef.current) {
-            return;
+            return () => { };
         }
         const oldWidth = contentRef.current.offsetWidth;
         const contentObserver = new MutationObserver(() => {
@@ -53149,7 +53526,7 @@ const Collapsible = ({ className = '', disabled, children, header, onClick, open
                     isOpen ? 'open' : 'closed',
                     disabled ? 'disabled' : '',
                     className,
-                ]), onClick: e => {
+                ]), onClick: (e) => {
                     if (!children || disabled) {
                         return;
                     }
@@ -53515,7 +53892,7 @@ const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/a
 const react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/.pnpm/react-dom@18.2.0_react@18.2.0/node_modules/react-dom/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./dropdown.scss */ "./extension/app/components/atoms/Dropdown/dropdown.scss");
-exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, mountElement, children, header, direction = 'down', onStateChange, className = '', classNameMenu = '', getMenuStyles, }, ref) => {
+exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, mountElement, children, header, direction = 'down', onStateChange, className = '', classNameMenu = '', onMenuClick, getMenuStyles, onBlur, }, ref) => {
     const [isOpen, setIsOpen] = (0, react_1.useState)(!!opened);
     const prevValueOpen = (0, app_hooks_1.usePrevious)(isOpen);
     const dropdownRef = (0, react_1.useRef)(null);
@@ -53548,8 +53925,8 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
                 'dropdown-menu',
                 classNameMenu,
                 isOpen ? 'show' : 'hide',
-            ]), style: styles, ref: dropdownMenuRef }, { children: children })));
-    }, [children, classNameMenu, isOpen]);
+            ]), onClick: onMenuClick, style: styles, ref: dropdownMenuRef }, { children: children })));
+    }, [onMenuClick, children, classNameMenu, isOpen]);
     const menu = (0, react_1.useMemo)(() => {
         var _a, _b, _c, _d;
         if (!mountElement && !isOpen) {
@@ -53575,13 +53952,13 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
             ? null
             : (0, react_dom_1.createPortal)(getMenuElement(styles || {}), mountElement);
     }, [direction, getMenuElement, getMenuStyles, isOpen, mountElement]);
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ onBlur: onBlur, className: (0, common_helpers_1.createClassName)([
             'dropdown',
             direction,
             className,
             isOpen ? 'open' : '',
             disabled ? 'disabled' : '',
-        ]), ref: dropdownRef }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dropdown-header" }, { children: header })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dropdown-opener", onClick: e => {
+        ]), ref: dropdownRef }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dropdown-header" }, { children: header })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dropdown-opener", onClick: (e) => {
                     if (disabled) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -53628,7 +54005,7 @@ const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modul
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./input.scss */ "./extension/app/components/atoms/Input/input.scss");
-exports.Input = (0, react_1.forwardRef)(({ className = '', onChange, onClick, onType, onKeyDown, onDoubleClick, onFocus, onBlur, label, placeholder = '', debounceMs, disabled, value = '', }, ref) => {
+exports.Input = (0, react_1.forwardRef)(({ name, className = '', onChange, onClick, onType, onKeyDown, onDoubleClick, onFocus, onBlur, label, placeholder = '', debounceMs, disabled, value = '', }, ref) => {
     const [inputValue, setInputValue] = (0, react_1.useState)(value);
     const timeoutID = (0, react_1.useRef)();
     (0, react_1.useEffect)(() => {
@@ -53646,17 +54023,18 @@ exports.Input = (0, react_1.forwardRef)(({ className = '', onChange, onClick, on
     }, [debounceMs, onChange, onType]);
     return ((0, jsx_runtime_1.jsxs)("label", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'input-label',
+            disabled ? 'disabled' : '',
             className,
-        ]) }, { children: [label && (0, jsx_runtime_1.jsx)("span", { children: label }), (0, jsx_runtime_1.jsx)("input", { ref: ref, placeholder: placeholder, className: (0, common_helpers_1.createClassName)([
+        ]) }, { children: [label && (0, jsx_runtime_1.jsx)("span", { children: label }), (0, jsx_runtime_1.jsx)("input", { ref: ref, name: name, placeholder: placeholder, className: (0, common_helpers_1.createClassName)([
                     'input',
                     disabled ? 'disabled' : '',
                     !inputValue ? 'empty' : '',
                     className,
                 ]), onKeyDown: (e) => {
                     onKeyDown === null || onKeyDown === void 0 ? void 0 : onKeyDown(e);
-                }, onClick: onClick, onMouseOut: onFocus, onBlur: () => {
+                }, onClick: onClick, onBlur: () => {
                     onBlur === null || onBlur === void 0 ? void 0 : onBlur(inputValue);
-                }, disabled: disabled, type: "text", value: inputValue, onChange: onChangeCallback, onDoubleClick: onDoubleClick })] })));
+                }, onFocus: onFocus, disabled: disabled, type: "text", value: inputValue, onChange: onChangeCallback, onDoubleClick: onDoubleClick })] })));
 });
 
 
@@ -53707,12 +54085,19 @@ exports.List = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-exports.List = (0, react_1.forwardRef)(({ className = '', items, }, ref) => {
+exports.List = (0, react_1.forwardRef)(({ noItemsMessage, className = '', items, }, ref) => {
+    if (items.length < 1 && noItemsMessage) {
+        return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: noItemsMessage });
+    }
     return ((0, jsx_runtime_1.jsx)("ul", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'list',
             className,
-        ]), ref: ref }, { children: items.map(({ id, content, onClick }) => {
-            return ((0, jsx_runtime_1.jsx)("li", Object.assign({ className: "list-item", onClick: onClick }, { children: content }), id));
+        ]), ref: ref }, { children: items.map(({ id, content, onClick, isSelected, }) => {
+            return ((0, jsx_runtime_1.jsx)("li", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                    'list-item',
+                    className,
+                    isSelected ? 'selected' : '',
+                ]), onClick: onClick }, { children: content }), id));
         }) })));
 });
 
@@ -53777,6 +54162,53 @@ const TabsPanel = ({ activeTab, tabs, children, onActiveTabChanged, className = 
                     } }, { children: component }), id))) })), children] })));
 };
 exports.TabsPanel = TabsPanel;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/Tag/index.tsx":
+/*!******************************************************!*\
+  !*** ./extension/app/components/atoms/Tag/index.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Tag = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const CrossIcon_1 = __webpack_require__(/*! ../icons/CrossIcon/CrossIcon */ "./extension/app/components/atoms/icons/CrossIcon/CrossIcon.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/atoms/Tag/styles.scss");
+exports.Tag = (0, react_1.forwardRef)((_a, refs) => {
+    var { children, native = {} } = _a, restProps = __rest(_a, ["children", "native"]);
+    const elementRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return {
+            elementRef,
+        };
+    });
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({}, restProps, native, { ref: (ref) => {
+            if (ref) {
+                elementRef.current = ref;
+            }
+        }, className: (0, common_helpers_1.createClassName)([
+            'tag',
+            native.className || '',
+        ]) }, { children: [children, (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "tag--remove" }, { children: (0, jsx_runtime_1.jsx)(CrossIcon_1.CrossIcon, {}) }))] })));
+});
 
 
 /***/ }),
@@ -54169,6 +54601,25 @@ exports.SeeDocumentIcon = SeeDocumentIcon;
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/icons/SendToIcon/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/SendToIcon/index.tsx ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SendToIcon = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const SendToIcon = ({ onClick }) => {
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "send-to-icon icon", onClick: onClick, viewBox: "0 0 22 22", fill: "currentColor", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M21.426 11.095l-17-8A.999.999 0 003.03 4.242L4.969 12 3.03 19.758a.998.998 0 001.396 1.147l17-8a1 1 0 000-1.81zM5.481 18.197l.839-3.357L12 12 6.32 9.16l-.839-3.357L18.651 12l-13.17 6.197z" }) })));
+};
+exports.SendToIcon = SendToIcon;
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx":
 /*!****************************************************************************!*\
   !*** ./extension/app/components/atoms/icons/SettingsIcon/SettingsIcon.tsx ***!
@@ -54323,14 +54774,17 @@ const AppButton = (_a) => {
             return icon;
         }
         return icon && typeof icon === 'object'
-            ? react_1.default.cloneElement(icon, { onClick: (e) => {
+            ? react_1.default.cloneElement(icon, {
+                onClick: (e) => {
                     if (disabled) {
                         e.stopPropagation();
                         e.preventDefault();
                         return;
                     }
                     onClick === null || onClick === void 0 ? void 0 : onClick(e);
-                }, ref: iconRef })
+                },
+                ref: iconRef,
+            })
             : icon;
     }, [animatedIcon, disabled, icon, onClick]);
     return ((0, jsx_runtime_1.jsx)(Button_1.Button, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-button', className]), disabled: disabled, onClick: (e) => {
@@ -54449,7 +54903,7 @@ const StaticButton = (_a) => {
     return ((0, jsx_runtime_1.jsx)(AppButton_1.AppButton, Object.assign({ className: (0, common_helpers_1.createClassName)([
             'static-button',
             className,
-        ]) }, restProps, { children: children })));
+        ]) }, restProps, { children: !!children && children })));
 };
 exports.StaticButton = StaticButton;
 
@@ -54478,13 +54932,17 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppCheckbox = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const Checkbox_1 = __webpack_require__(/*! ../../atoms/Checkbox/Checkbox */ "./extension/app/components/atoms/Checkbox/Checkbox.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/checkboxes/AppCheckbox/styles.scss");
-const AppCheckbox = (_a) => {
+exports.AppCheckbox = (0, react_1.forwardRef)((_a, refs) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return ((0, jsx_runtime_1.jsx)(Checkbox_1.Checkbox, Object.assign({ className: className }, restProps)));
-};
-exports.AppCheckbox = AppCheckbox;
+    return ((0, jsx_runtime_1.jsx)(Checkbox_1.Checkbox, Object.assign({ ref: refs, className: (0, common_helpers_1.createClassName)([
+            'app-checkbox',
+            className,
+        ]) }, restProps)));
+});
 
 
 /***/ }),
@@ -54546,14 +55004,14 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SuccessCheckbox = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const AppCheckbox_1 = __webpack_require__(/*! ../AppCheckbox/AppCheckbox */ "./extension/app/components/checkboxes/AppCheckbox/AppCheckbox.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const SuccessCheckIcon_1 = __webpack_require__(/*! ../../icons/SuccessCheckIcon/SuccessCheckIcon */ "./extension/app/components/icons/SuccessCheckIcon/SuccessCheckIcon.tsx");
-const SuccessCheckbox = (_a) => {
+exports.SuccessCheckbox = (0, react_1.forwardRef)((_a, refs) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return ((0, jsx_runtime_1.jsx)(AppCheckbox_1.AppCheckbox, Object.assign({ checkIcon: (0, jsx_runtime_1.jsx)(SuccessCheckIcon_1.SuccessCheckIcon, {}), uncheckIcon: null, className: (0, common_helpers_1.createClassName)(['success-checkbox', className]) }, restProps)));
-};
-exports.SuccessCheckbox = SuccessCheckbox;
+    return ((0, jsx_runtime_1.jsx)(AppCheckbox_1.AppCheckbox, Object.assign({ ref: refs, checkIcon: (0, jsx_runtime_1.jsx)(SuccessCheckIcon_1.SuccessCheckIcon, {}), uncheckIcon: null, className: (0, common_helpers_1.createClassName)(['success-checkbox', className]) }, restProps)));
+});
 
 
 /***/ }),
@@ -54712,6 +55170,457 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_
             }
         } }, restProps, { children: children })));
 }));
+
+
+/***/ }),
+
+/***/ "./extension/app/components/dropdowns/FormDropdown/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/components/dropdowns/FormDropdown/index.tsx ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FormDropdown = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const AppArea_1 = __webpack_require__(/*! ../../areas/AppArea */ "./extension/app/components/areas/AppArea/index.tsx");
+const AppDropdown_1 = __webpack_require__(/*! ../AppDropdown/AppDropdown */ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const WithValidation_1 = __webpack_require__(/*! ../../extends/WithValidation */ "./extension/app/components/extends/WithValidation/index.tsx");
+const WithForm_1 = __webpack_require__(/*! ../../extends/WithForm */ "./extension/app/components/extends/WithForm/index.tsx");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
+const SmallArrowIcon_1 = __webpack_require__(/*! ../../atoms/icons/SmallArrowIcon/SmallArrowIcon */ "./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx");
+const AppTag_1 = __webpack_require__(/*! ../../tags/AppTag */ "./extension/app/components/tags/AppTag/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/dropdowns/FormDropdown/styles.scss");
+const FormDropdown = (_a) => {
+    var { multi, name, items, selectedItem, label, children, disabled, validators, className = '', classNameMenu = '', onChange } = _a, restProps = __rest(_a, ["multi", "name", "items", "selectedItem", "label", "children", "disabled", "validators", "className", "classNameMenu", "onChange"]);
+    const dropdownRef = (0, react_1.useRef)(null);
+    const dropdownMenuRef = (0, react_1.useRef)(null);
+    const multiRef = (0, react_1.useRef)(!!multi);
+    multiRef.current = !!multi;
+    const prevSelectedItemID = (0, app_hooks_1.usePrevious)(selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.id);
+    const update = (0, app_hooks_1.useForceUpdate)();
+    const currentItemsRef = (0, react_1.useRef)([
+        ...(selectedItem ? [selectedItem] : []),
+    ]);
+    const addItem = (0, react_1.useCallback)((item, ifNew = false) => {
+        let ifAlreadyExists = false;
+        currentItemsRef.current = [
+            ...currentItemsRef.current.filter((i) => {
+                if (!multiRef.current) {
+                    i.isSelected = false;
+                }
+                const { id } = i;
+                if (id === item.id) {
+                    ifAlreadyExists = true;
+                    return false;
+                }
+                return true;
+            }),
+            ...(ifNew && ifAlreadyExists ? [] : [item]),
+        ];
+        const isSelected = !ifNew || !ifAlreadyExists;
+        if (!multiRef.current) {
+            currentItemsRef.current = !ifAlreadyExists ? [item] : [];
+        }
+        item.isSelected = isSelected;
+        onChange === null || onChange === void 0 ? void 0 : onChange(currentItemsRef.current);
+        update();
+    }, [onChange, update]);
+    (0, react_1.useEffect)(() => {
+        if (selectedItem
+            && selectedItem.id !== prevSelectedItemID
+            && !currentItemsRef.current.find(({ id }) => id === selectedItem.id)) {
+            selectedItem.isSelected = true;
+            currentItemsRef.current.push(selectedItem);
+            update();
+        }
+    }, [update, prevSelectedItemID, selectedItem]);
+    const [isClosed, setIsClosed] = (0, react_1.useState)(true);
+    const normalizedItems = (0, react_1.useMemo)(() => {
+        return (items || []).map((i) => {
+            return Object.assign(Object.assign({}, i), { onClick: () => {
+                    addItem(i, true);
+                    setTimeout(() => {
+                        var _a, _b;
+                        (_b = (_a = formDropdownRefs.current).validate) === null || _b === void 0 ? void 0 : _b.call(_a, ['blur']);
+                    }, 0);
+                } });
+        });
+    }, [addItem, items]);
+    const formDropdownRefs = (0, react_1.useRef)({});
+    (0, app_hooks_1.useOnClickOutside)(() => {
+        setIsClosed(true);
+    }, dropdownRef, dropdownMenuRef);
+    return ((0, jsx_runtime_1.jsx)(WithValidation_1.WithValidation, Object.assign({ getValue: () => {
+            const item = currentItemsRef.current[0];
+            if (multi) {
+                return currentItemsRef.current || [];
+            }
+            return !item ? [] : [item];
+        }, disabled: !!disabled, validators: [
+            ...(validators || []),
+        ] }, { children: (withValidationProps) => {
+            formDropdownRefs.current.validate = withValidationProps.validate;
+            return ((0, jsx_runtime_1.jsx)(WithForm_1.WithForm, Object.assign({}, withValidationProps, { children: (withFormProps) => {
+                    var _a;
+                    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ onClick: () => {
+                            setIsClosed(!isClosed);
+                        } }, { children: (0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({}, withFormProps, restProps, { ref: (refs) => {
+                                var _a, _b;
+                                if ((_a = refs === null || refs === void 0 ? void 0 : refs.dropdown) === null || _a === void 0 ? void 0 : _a.current) {
+                                    refs.dropdown.current.name = name;
+                                    dropdownRef.current = refs.dropdown.current;
+                                    withValidationProps.elementRef.current = dropdownRef.current;
+                                    withFormProps.elementRef.current = dropdownRef.current;
+                                }
+                                if ((_b = refs === null || refs === void 0 ? void 0 : refs.dropdownMenu) === null || _b === void 0 ? void 0 : _b.current) {
+                                    dropdownMenuRef.current = refs.dropdownMenu.current;
+                                }
+                            }, closed: isClosed, header: label, className: (0, common_helpers_1.createClassName)([
+                                'form-dropdown',
+                                className,
+                            ]), opener: (0, jsx_runtime_1.jsxs)(AppArea_1.AppArea, Object.assign({ native: {
+                                    tabIndex: 0,
+                                    className: (0, common_helpers_1.createClassName)([
+                                        'form-area',
+                                        multi ? 'multi' : '',
+                                    ]),
+                                    onBlur: withFormProps.onBlur,
+                                } }, { children: [multi && (currentItemsRef.current || []).map((item) => {
+                                        const { content, id } = item;
+                                        return ((0, jsx_runtime_1.jsx)(AppTag_1.AppTag, Object.assign({ native: {
+                                                onClick: (e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    if (e.target.classList.contains('tag')) {
+                                                        return;
+                                                    }
+                                                    addItem(item, true);
+                                                },
+                                            } }, { children: content || '' }), id));
+                                    }), !multi && (((_a = currentItemsRef.current[0]) === null || _a === void 0 ? void 0 : _a.content) || ''), (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {})] })), classNameMenu: (0, common_helpers_1.createClassName)([
+                                'form-dropdown-menu',
+                                classNameMenu,
+                            ]) }, { children: children({
+                                items: normalizedItems,
+                                noItemsMessage: (0, jsx_runtime_1.jsx)("p", Object.assign({ style: {
+                                        padding: '8px 12px',
+                                        cursor: 'default',
+                                    } }, { children: "No items" })),
+                            }) })) })));
+                } })));
+        } })));
+};
+exports.FormDropdown = FormDropdown;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/extends/WithForm/index.tsx":
+/*!*************************************************************!*\
+  !*** ./extension/app/components/extends/WithForm/index.tsx ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.WithForm = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+exports.WithForm = (0, react_1.forwardRef)((_a, refs) => {
+    var { disabled, getValue, children } = _a, restProps = __rest(_a, ["disabled", "getValue", "children"]);
+    const formStore = (0, stores_1.useFormStore)();
+    const elementID = (0, react_1.useId)();
+    const elementRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return {
+            elementRef,
+        };
+    });
+    (0, react_1.useEffect)(() => {
+        formStore.add(elementID, {
+            elementRef,
+            getValue,
+            validate: restProps.validate,
+        });
+        return () => formStore.remove(elementID);
+    }, []);
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: children(Object.assign(Object.assign({}, restProps), { getValue,
+            disabled,
+            elementRef })) }));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/extends/WithForm/store.ts":
+/*!************************************************************!*\
+  !*** ./extension/app/components/extends/WithForm/store.ts ***!
+  \************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.WithFormStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
+const validators_1 = __webpack_require__(/*! ../../../../../common/validators */ "./common/validators.ts");
+class WithFormStore {
+    constructor() {
+        this.refs = new Map();
+        this.validating = false;
+        this.error = null;
+        (0, mobx_1.makeObservable)(this);
+    }
+    add(id, refs) {
+        this.refs.set(id, refs);
+    }
+    remove(id) {
+        this.refs.delete(id);
+    }
+    validate(types) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.validating = true;
+            const validators = [];
+            this.refs.forEach((refs) => {
+                validators.push(refs.validate || (() => {
+                    return Promise.resolve((0, validators_1.getValidResult)());
+                }));
+            });
+            const results = yield Promise.all(validators.map((validate) => validate(types)));
+            const failed = results.filter((r) => !r.isValid);
+            this.validating = false;
+            this.error = failed.length
+                ? Array.from(failed[0].reasons)[0]
+                : null;
+            return !failed.length;
+        });
+    }
+    getFormData() {
+        const data = {};
+        this.refs.forEach((refs) => {
+            var _a, _b, _c;
+            const name = (_b = (_a = refs.elementRef) === null || _a === void 0 ? void 0 : _a.current) === null || _b === void 0 ? void 0 : _b.name;
+            const value = (_c = refs.getValue) === null || _c === void 0 ? void 0 : _c.call(refs, refs === null || refs === void 0 ? void 0 : refs.elementRef);
+            if (name) {
+                data[name] = value;
+            }
+        });
+        return data;
+    }
+}
+__decorate([
+    mobx_1.observable
+], WithFormStore.prototype, "validating", void 0);
+__decorate([
+    mobx_1.observable
+], WithFormStore.prototype, "error", void 0);
+exports.WithFormStore = WithFormStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/extends/WithValidation/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/components/extends/WithValidation/index.tsx ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.WithValidation = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const checkers_1 = __webpack_require__(/*! ../../../../../common/checkers */ "./common/checkers.ts");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
+const validators_1 = __webpack_require__(/*! ../../../../../common/validators */ "./common/validators.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/extends/WithValidation/styles.scss");
+exports.WithValidation = (0, react_1.forwardRef)((_a, refs) => {
+    var { disabled, getValue, children, validators, onValidationEnd } = _a, restProps = __rest(_a, ["disabled", "getValue", "children", "validators", "onValidationEnd"]);
+    const [isValidating, setIsValidating] = (0, react_1.useState)(false);
+    const message = (0, react_1.useRef)('');
+    const elementRef = (0, react_1.useRef)(null);
+    const disabledRef = (0, react_1.useRef)(disabled);
+    disabledRef.current = disabled;
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return { elementRef };
+    });
+    const [validatorsOnBlur, validatorsOnChange, validatorsOnFinish,] = (0, react_1.useMemo)(() => {
+        const validatorsOnChange = [];
+        const validatorsOnBlur = [];
+        const validatorsOnFinish = [];
+        validators === null || validators === void 0 ? void 0 : validators.forEach(({ validator, validateOnChange = false, validateOnBlur = false, validateOnFinish = false, }) => {
+            if (validateOnChange) {
+                validatorsOnChange.push(validator);
+            }
+            if (validateOnBlur) {
+                validatorsOnBlur.push(validator);
+            }
+            if (validateOnFinish) {
+                validatorsOnFinish.push(validator);
+            }
+        });
+        return [validatorsOnBlur, validatorsOnChange, validatorsOnFinish];
+    }, [validators]);
+    const forceUpdate = (0, app_hooks_1.useForceUpdate)();
+    const finishValidation = (0, react_1.useCallback)((validationResult) => {
+        setIsValidating(false);
+        const reason = Array.from(validationResult.reasons).pop() || '';
+        if (message.current === reason) {
+            return;
+        }
+        message.current = reason;
+        onValidationEnd === null || onValidationEnd === void 0 ? void 0 : onValidationEnd(validationResult);
+        forceUpdate();
+    }, [forceUpdate, onValidationEnd]);
+    const validate = (0, react_1.useCallback)((types) => __awaiter(void 0, void 0, void 0, function* () {
+        if (disabledRef.current) {
+            return (0, validators_1.getValidResult)();
+        }
+        const validators = [];
+        if (types.includes('change') && validatorsOnChange.length) {
+            validators.push(...validatorsOnChange);
+        }
+        if (types.includes('blur') && validatorsOnBlur.length) {
+            validators.push(...validatorsOnBlur);
+        }
+        if (types.includes('finish') && validatorsOnFinish.length) {
+            validators.push(...validatorsOnFinish);
+        }
+        if (validators.length < 1) {
+            return (0, validators_1.getValidResult)();
+        }
+        setIsValidating(true);
+        const results = yield Promise.all(validators.map((validate) => validate(getValue(elementRef))));
+        const failed = results.filter(({ isValid }) => !isValid);
+        const result = failed.length
+            ? failed[0]
+            : (0, validators_1.getValidResult)();
+        finishValidation(result);
+        return result;
+    }), [
+        finishValidation,
+        getValue,
+        validatorsOnBlur,
+        validatorsOnChange,
+        validatorsOnFinish,
+    ]);
+    const isError = (0, checkers_1.isNotEmpty)(message.current) && !disabled;
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'with-validation',
+            isError ? 'validation-error' : '',
+        ]) }, { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "validation-component" }, { children: [children(Object.assign(Object.assign({}, restProps), { validate,
+                        getValue,
+                        elementRef,
+                        disabled, className: (0, common_helpers_1.createClassName)([
+                            isError ? 'validation-error' : '',
+                        ]), onBlur: () => {
+                            validate(['blur']);
+                        }, onChange: () => {
+                            validate(['change']);
+                        } })), isValidating && ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "spinner-wrapper" }, { children: (0, jsx_runtime_1.jsx)("div", { className: "spinner" }) })))] })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "validation-message" }, { children: disabled ? '' : message.current }))] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/headers/AppGroupHeader/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/components/headers/AppGroupHeader/index.tsx ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppGroupHeader = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/headers/AppGroupHeader/styles.scss");
+const AppGroupHeader = (_a) => {
+    var { children, native = {} } = _a, restProps = __rest(_a, ["children", "native"]);
+    return ((0, jsx_runtime_1.jsx)("h3", Object.assign({}, restProps, { className: (0, common_helpers_1.createClassName)([
+            'app-group-header',
+            native.className || '',
+        ]) }, { children: children })));
+};
+exports.AppGroupHeader = AppGroupHeader;
 
 
 /***/ }),
@@ -54966,7 +55875,7 @@ exports.AutocompleteInput = (0, react_1.forwardRef)(({ Input, className = '', va
     }, [onValueSelect]);
     const prepareItems = (0, react_1.useCallback)((items, item) => {
         return items
-            .filter(i => i && item && i.toLowerCase().indexOf(item.toLowerCase()) > -1);
+            .filter((i) => i && item && i.toLowerCase().indexOf(item.toLowerCase()) > -1);
     }, []);
     (0, react_1.useEffect)(() => {
         setAutocompleteItems(prepareItems(list, inputValue));
@@ -54999,7 +55908,8 @@ exports.AutocompleteInput = (0, react_1.forwardRef)(({ Input, className = '', va
                 setAutocompleteItems(prepareItems(list, v));
                 if (v.length < countSymbolsToActivate && isOpen) {
                     setActiveIndex(-1);
-                    return setIsOpened(false);
+                    setIsOpened(false);
+                    return;
                 }
                 if (v.length >= countSymbolsToActivate && !isOpen) {
                     setIsOpened(true);
@@ -55020,76 +55930,6 @@ exports.AutocompleteInput = (0, react_1.forwardRef)(({ Input, className = '', va
                     } }, { children: item }), item));
             }) }) })));
 });
-
-
-/***/ }),
-
-/***/ "./extension/app/components/inputs/ValidationInput/ValidationInput.tsx":
-/*!*****************************************************************************!*\
-  !*** ./extension/app/components/inputs/ValidationInput/ValidationInput.tsx ***!
-  \*****************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ValidationInput = void 0;
-const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
-const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
-const AppInput_1 = __webpack_require__(/*! ../AppInput/AppInput */ "./extension/app/components/inputs/AppInput/AppInput.tsx");
-const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const validators_1 = __webpack_require__(/*! ../../../../../common/validators */ "./common/validators.ts");
-const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
-const checkers_1 = __webpack_require__(/*! ../../../../../common/checkers */ "./common/checkers.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/ValidationInput/styles.scss");
-const ValidationInput = (_a) => {
-    var { className = '', onValidationEnd, onChange, validators } = _a, otherProps = __rest(_a, ["className", "onValidationEnd", "onChange", "validators"]);
-    const message = (0, react_1.useRef)('');
-    const forceUpdate = (0, app_hooks_1.useForceUpdate)();
-    const finishValidation = (0, react_1.useCallback)((validationResult) => {
-        const value = Array.from(validationResult.reasons).pop() || '';
-        if (message.current === value) {
-            return;
-        }
-        message.current = value;
-        onValidationEnd === null || onValidationEnd === void 0 ? void 0 : onValidationEnd(validationResult);
-        return forceUpdate();
-    }, [forceUpdate, onValidationEnd]);
-    const validate = (0, react_1.useCallback)((value) => {
-        if (!validators || validators.length < 1) {
-            return finishValidation((0, validators_1.getValidResult)());
-        }
-        validators.some(v => {
-            const result = v(value);
-            if (result.isValid) {
-                finishValidation((0, validators_1.getValidResult)());
-                return false;
-            }
-            finishValidation(result);
-            return true;
-        });
-    }, [finishValidation, validators]);
-    return ((0, jsx_runtime_1.jsxs)("span", Object.assign({ className: (0, common_helpers_1.createClassName)([
-            'validation-input-wrapper',
-            (0, checkers_1.isNotEmpty)(message.current) ? 'validation-error' : '',
-            className,
-        ]) }, { children: [(0, jsx_runtime_1.jsx)(AppInput_1.AppInput, Object.assign({ className: "validation-input" }, otherProps, { onChange: value => {
-                    validate(value);
-                    onChange === null || onChange === void 0 ? void 0 : onChange(value);
-                }, onBlur: value => validate(value) })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "validation-message" }, { children: message.current }))] })));
-};
-exports.ValidationInput = ValidationInput;
 
 
 /***/ }),
@@ -55128,6 +55968,43 @@ exports.AppLink = AppLink;
 
 /***/ }),
 
+/***/ "./extension/app/components/tags/AppTag/index.tsx":
+/*!********************************************************!*\
+  !*** ./extension/app/components/tags/AppTag/index.tsx ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppTag = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const Tag_1 = __webpack_require__(/*! ../../atoms/Tag */ "./extension/app/components/atoms/Tag/index.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/tags/AppTag/styles.scss");
+exports.AppTag = (0, react_1.forwardRef)((_a, refs) => {
+    var { children, native = {} } = _a, restProps = __rest(_a, ["children", "native"]);
+    return ((0, jsx_runtime_1.jsx)(Tag_1.Tag, Object.assign({}, restProps, { ref: refs, native: Object.assign(Object.assign({}, native), { className: (0, common_helpers_1.createClassName)([
+                'app-tag',
+                native.className || '',
+            ]) }) }, { children: children })));
+});
+
+
+/***/ }),
+
 /***/ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx":
 /*!*********************************************************************!*\
   !*** ./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx ***!
@@ -55162,6 +56039,211 @@ exports.AppTooltip = (0, mobx_react_lite_1.observer)((_a) => {
             'app-tooltip',
             className,
         ]), delayShowMs: 600, mountElem: appStore.rootElement }, restProps, { children: children })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/export/OpenCTIExport/index.tsx":
+/*!******************************************************!*\
+  !*** ./extension/app/export/OpenCTIExport/index.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OpenCTIExport = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/.pnpm/simplebar-react@2.4.3_react-dom@18.2.0_react@18.2.0/node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const IntegrationInput_1 = __webpack_require__(/*! ../../integrations/IntegrationInput/IntegrationInput */ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx");
+const List_1 = __webpack_require__(/*! ../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
+const FormDropdown_1 = __webpack_require__(/*! ../../components/dropdowns/FormDropdown */ "./extension/app/components/dropdowns/FormDropdown/index.tsx");
+const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const integrations_1 = __webpack_require__(/*! ../../../integrations */ "./extension/integrations/index.ts");
+const IntegrationCheckbox_1 = __webpack_require__(/*! ../../integrations/IntegrationCheckbox */ "./extension/app/integrations/IntegrationCheckbox/index.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/export/OpenCTIExport/styles.scss");
+const model = (0, integrations_1.getIntegrationModel)('openCTI');
+const validateMessage = 'This field is required';
+exports.OpenCTIExport = (0, mobx_react_lite_1.observer)(({ labelsItems, observableTypesItems, indicatorTypesItems, allowedMarkersItems, resourceName, }) => {
+    const resourceStore = (0, stores_1.useResourceStore)();
+    const [resourceType, setResourceType] = (0, react_1.useState)(resourceStore.getType(resourceName));
+    const messageStore = (0, stores_1.useAppMessageStore)();
+    const formStore = (0, stores_1.useFormStore)();
+    const pattern = model.getPattern(resourceName, resourceType);
+    (0, react_1.useEffect)(() => {
+        messageStore.error.error = null;
+    }, []);
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "open-cti-export" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Name", name: "name", value: resourceName, disabled: formStore.validating || messageStore.inProgress, validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "observable-type-list-menu open-cti-menu", items: observableTypesItems, onChange: (items = []) => {
+                    var _a;
+                    setResourceType(model.getTypeById((_a = items[0]) === null || _a === void 0 ? void 0 : _a.id));
+                }, selectedItem: resourceType !== 'unknown' ? observableTypesItems.find(({ id }) => {
+                    return model.getTypeById(id) === resourceType;
+                }) : undefined, label: "Main Observable Type", name: "x_opencti_main_observable_type", validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyArray)(v, validateMessage)),
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "observable-type-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Pattern", name: "pattern", disabled: formStore.validating || messageStore.inProgress, value: pattern === resourceName ? '' : pattern, validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "indicator-type-list-menu open-cti-menu", items: indicatorTypesItems, label: "Indicator Type", name: "indicator_types", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "indicator-type-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "labels-list-menu open-cti-menu", items: labelsItems, label: "Labels", name: "objectLabel", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "labels-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "markers-list-menu open-cti-menu", items: allowedMarkersItems, label: "Markings", name: "objectMarking", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "markers-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(IntegrationCheckbox_1.IntegrationCheckbox, { disabled: formStore.validating || messageStore.inProgress, content: "Detection", name: "x_opencti_detection" }), (0, jsx_runtime_1.jsx)(IntegrationCheckbox_1.IntegrationCheckbox, { disabled: formStore.validating || messageStore.inProgress, content: "Create observable from indicator", name: "createObservables" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 })] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/export/views/ExportContentView/index.tsx":
+/*!****************************************************************!*\
+  !*** ./extension/app/export/views/ExportContentView/index.tsx ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ExportContentView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/.pnpm/simplebar-react@2.4.3_react-dom@18.2.0_react@18.2.0/node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const OpenCTIExport_1 = __webpack_require__(/*! ../../OpenCTIExport */ "./extension/app/export/OpenCTIExport/index.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/export/views/ExportContentView/styles.scss");
+const ExportContentView = ({ resourceName }) => {
+    const [fieldsData, setFieldsData] = (0, react_1.useState)({
+        observableTypesItems: [],
+        labelsItems: [],
+        indicatorTypesItems: [],
+        allowedMarkersItems: [],
+    });
+    const messageStorage = (0, stores_1.useAppMessageStore)();
+    (0, react_1.useEffect)(() => {
+        messageStorage
+            .sendMessageWithCallback({
+            type: types_background_messages_1.MessageToBackground.BGIntegrationWork,
+            payload: {
+                work: 'import-data',
+                modelType: 'openCTI',
+            },
+        })
+            .then((result) => {
+            var _a, _b, _c, _d;
+            setFieldsData({
+                observableTypesItems: ((_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.observableTypesItems) || [],
+                labelsItems: ((_b = result === null || result === void 0 ? void 0 : result.data) === null || _b === void 0 ? void 0 : _b.labelsItems) || [],
+                indicatorTypesItems: ((_c = result === null || result === void 0 ? void 0 : result.data) === null || _c === void 0 ? void 0 : _c.vocabulariesItems) || [],
+                allowedMarkersItems: ((_d = result === null || result === void 0 ? void 0 : result.data) === null || _d === void 0 ? void 0 : _d.allowedMarkersItems) || [],
+            });
+        });
+    }, [messageStorage]);
+    return ((0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "export-content-view" }, { children: (0, jsx_runtime_1.jsx)(OpenCTIExport_1.OpenCTIExport, { indicatorTypesItems: fieldsData.indicatorTypesItems, allowedMarkersItems: fieldsData.allowedMarkersItems, observableTypesItems: fieldsData.observableTypesItems, labelsItems: fieldsData.labelsItems, resourceName: resourceName }) })));
+};
+exports.ExportContentView = ExportContentView;
+
+
+/***/ }),
+
+/***/ "./extension/app/export/views/ExportFooterView/index.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/export/views/ExportFooterView/index.tsx ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ExportFooterView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const CheckIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const types_background_messages_1 = __webpack_require__(/*! ../../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/export/views/ExportFooterView/styles.scss");
+const SuccessOpenCTIExportMessage_1 = __webpack_require__(/*! ../../../resources/messages/SuccessOpenCTIExportMessage */ "./extension/app/resources/messages/SuccessOpenCTIExportMessage/index.tsx");
+exports.ExportFooterView = (0, mobx_react_lite_1.observer)(() => {
+    const routerStore = (0, stores_1.useAppRouterStore)();
+    const messageStore = (0, stores_1.useAppMessageStore)();
+    const formStore = (0, stores_1.useFormStore)();
+    const platformStore = (0, stores_1.usePlatformStore)();
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "export-footer-view" }, { children: [(0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ disabled: formStore.validating || messageStore.inProgress, onClick: () => {
+                    routerStore.goToResourcesPage();
+                } }, { children: "Cancel" })), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ className: "success-btn", icon: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, {}), disabled: formStore.validating || messageStore.inProgress, onClick: () => {
+                    messageStore.error.error = null;
+                    formStore.validate(['blur', 'finish'])
+                        .then((isSuccess) => {
+                        if (!isSuccess) {
+                            return null;
+                        }
+                        const formData = formStore.getFormData();
+                        return messageStore.sendMessageWithCallback({
+                            type: types_background_messages_1.MessageToBackground.BGIntegrationWork,
+                            payload: {
+                                modelType: 'openCTI',
+                                work: 'export-data',
+                                data: formData,
+                            },
+                        });
+                    })
+                        .then((result) => {
+                        if (!result || result.error) {
+                            return;
+                        }
+                        platformStore.setMessage(SuccessOpenCTIExportMessage_1.SuccessOpenCTIExportMessage);
+                        routerStore.goToResourcesPage();
+                    });
+                } }, { children: "Send" }))] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/export/views/ExportHeaderView/index.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/export/views/ExportHeaderView/index.tsx ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ExportHeaderView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const ErrorMessage_1 = __webpack_require__(/*! ../../../resources/messages/ErrorMessage */ "./extension/app/resources/messages/ErrorMessage/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/export/views/ExportHeaderView/styles.scss");
+exports.ExportHeaderView = (0, mobx_react_lite_1.observer)(() => {
+    const messageStore = (0, stores_1.useAppMessageStore)();
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "export-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "Send To OpenCTI" }), messageStore.error.error && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsxs)(ErrorMessage_1.ErrorMessage, { children: [(0, jsx_runtime_1.jsx)("p", { children: messageStore.error.error.message }), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                                    messageStore.error.error = null;
+                                } }, { children: "Close" }))] }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 })] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 })] })));
 });
 
 
@@ -55372,8 +56454,8 @@ const envs_1 = __webpack_require__(/*! ../common/envs */ "./extension/common/env
 const public_resources_1 = __webpack_require__(/*! ../manifest/public-resources */ "./extension/manifest/public-resources.ts");
 const common_extension_helpers_1 = __webpack_require__(/*! ../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const root_1 = __webpack_require__(/*! ./root */ "./extension/app/root/index.tsx");
-__webpack_require__(/*! ../app/scss/reset.scss */ "./extension/app/scss/reset.scss");
-__webpack_require__(/*! ../app/scss/scroll.scss */ "./extension/app/scss/scroll.scss");
+__webpack_require__(/*! ./scss/reset.scss */ "./extension/app/scss/reset.scss");
+__webpack_require__(/*! ./scss/scroll.scss */ "./extension/app/scss/scroll.scss");
 const rootElement = (0, common_helpers_1.mountHTMLElement)('div', document.body, {
     attributes: {
         style: {
@@ -55409,8 +56491,8 @@ const host = rootElement.attachShadow({
 const overlay = (0, common_helpers_1.mountHTMLElement)('div', host, {
     attributes: {
         'data-type': 'overlay',
-        'class': 'overlay',
-        'style': {
+        class: 'overlay',
+        style: {
             top: 0,
             left: 0,
             width: '100%',
@@ -55433,10 +56515,10 @@ setTimeout(() => {
 
 /***/ }),
 
-/***/ "./extension/app/integrations/Integration/Integration.tsx":
-/*!****************************************************************!*\
-  !*** ./extension/app/integrations/Integration/Integration.tsx ***!
-  \****************************************************************/
+/***/ "./extension/app/integration/Integration/Integration.tsx":
+/*!***************************************************************!*\
+  !*** ./extension/app/integration/Integration/Integration.tsx ***!
+  \***************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -55444,26 +56526,487 @@ setTimeout(() => {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Integration = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
-const IntegrationInput_1 = __webpack_require__(/*! ../IntegrationInput/IntegrationInput */ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const WasteBasketIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/Integration/styles.scss");
-const Integration = ({ id, name, url, }) => {
+const IntegrationInput_1 = __webpack_require__(/*! ../../integrations/IntegrationInput/IntegrationInput */ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx");
+const OpenCTIIntegration_1 = __webpack_require__(/*! ../OpenCTIIntegration */ "./extension/app/integration/OpenCTIIntegration/index.tsx");
+const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
+const AppGroupHeader_1 = __webpack_require__(/*! ../../components/headers/AppGroupHeader */ "./extension/app/components/headers/AppGroupHeader/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integration/Integration/styles.scss");
+const validateMessage = 'This field is required';
+exports.Integration = (0, mobx_react_lite_1.observer)(() => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration" }, { children: [(0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: [
-                    'Display Name',
-                    (0, jsx_runtime_1.jsx)(WasteBasketIcon_1.WasteBasketIcon, { onClick: () => {
-                            integrationsStore.integrations =
-                                integrationsStore.integrations.filter(i => i.id !== id);
-                        } }, id),
-                ], value: name, placeholder: "ex Open CTI", onChange: value => {
-                    integrationsStore.integrations.find(i => i.id === id).name = value;
-                } }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Integration URL", value: url, placeholder: "ex https://my-host/search=$VALUE$", onChange: value => {
-                    integrationsStore.integrations.find(i => i.id === id).url = value;
-                } }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 })] })));
+    const integrationStore = (0, stores_1.useIntegrationStore)();
+    const integration = integrationStore.getIntegration();
+    const { id = '', url = '', name = '' } = integration || {};
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration" }, { children: [id === '$open-cti$' && (0, jsx_runtime_1.jsx)(AppGroupHeader_1.AppGroupHeader, { children: "SEARCH AT OPENCTI" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 18 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Display Name", value: name, placeholder: "ex OpenCTI", onChange: (value) => {
+                    integrationStore.setIntegration(Object.assign(Object.assign({}, (integrationStore.getIntegration() || {})), { name: value }));
+                    integrationsStore.integrations.find((i) => i.id === id).name = value;
+                }, validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Integration URL", value: url, placeholder: "ex https://my-host/search=$VALUE$", onChange: (value) => {
+                    integrationStore.setIntegration(Object.assign(Object.assign({}, (integrationStore.getIntegration() || {})), { url: value }));
+                    integrationsStore.integrations.find((i) => i.id === id).url = value;
+                }, validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }), id === '$open-cti$' && (0, jsx_runtime_1.jsx)(OpenCTIIntegration_1.OpenCTIIntegration, {}), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 })] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/OpenCTIIntegration/index.tsx":
+/*!****************************************************************!*\
+  !*** ./extension/app/integration/OpenCTIIntegration/index.tsx ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
-exports.Integration = Integration;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OpenCTIIntegration = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const IntegrationInput_1 = __webpack_require__(/*! ../../integrations/IntegrationInput/IntegrationInput */ "./extension/app/integrations/IntegrationInput/IntegrationInput.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const SuccessCheckbox_1 = __webpack_require__(/*! ../../components/checkboxes/SucessCheckbox/SuccessCheckbox */ "./extension/app/components/checkboxes/SucessCheckbox/SuccessCheckbox.tsx");
+const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+const AppGroupHeader_1 = __webpack_require__(/*! ../../components/headers/AppGroupHeader */ "./extension/app/components/headers/AppGroupHeader/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integration/OpenCTIIntegration/styles.scss");
+const validateMessage = 'This field is required';
+const validateUrlMessage = 'Passed string is not an Url';
+exports.OpenCTIIntegration = (0, mobx_react_lite_1.observer)(() => {
+    var _a, _b, _c, _d, _e, _f;
+    const messageStore = (0, stores_1.useAppMessageStore)();
+    const integrationStore = (0, stores_1.useIntegrationStore)();
+    const validateServerUrlRef = (0, react_1.useRef)({});
+    const validateApiKeyRef = (0, react_1.useRef)({});
+    (0, react_1.useEffect)(() => {
+        integrationStore.setStorage(Object.assign(Object.assign({}, integrationStore.storage), { isValid: false }));
+    }, [integrationStore]);
+    (0, react_1.useEffect)(() => {
+        var _a;
+        if (!((_a = integrationStore.storage) === null || _a === void 0 ? void 0 : _a.isActive)) {
+            integrationStore.setStorage(integrationStore.storage);
+            return;
+        }
+        setTimeout(() => {
+            var _a, _b, _c, _d;
+            (_b = (_a = validateServerUrlRef.current) === null || _a === void 0 ? void 0 : _a.validate) === null || _b === void 0 ? void 0 : _b.call(_a, ['blur']);
+            (_d = (_c = validateApiKeyRef.current) === null || _c === void 0 ? void 0 : _c.validate) === null || _d === void 0 ? void 0 : _d.call(_c, ['blur']);
+        }, 0);
+    }, [(_a = integrationStore.storage) === null || _a === void 0 ? void 0 : _a.isActive]);
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "open-cti-integration" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 28 }), (0, jsx_runtime_1.jsx)(AppGroupHeader_1.AppGroupHeader, { children: "INTEGRATION SEND TO OPENCTI" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 18 }), (0, jsx_runtime_1.jsx)(SuccessCheckbox_1.SuccessCheckbox, { content: (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: "Send the IOCs to OpenCTI" }), checked: (_b = integrationStore.storage) === null || _b === void 0 ? void 0 : _b.isActive, onStateChanged: (isChecked) => {
+                    integrationStore.setStorage(Object.assign(Object.assign({}, integrationStore.storage), { isActive: isChecked }));
+                } }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { ref: (refs) => {
+                    if (refs === null || refs === void 0 ? void 0 : refs.validate) {
+                        validateServerUrlRef.current.validate = refs.validate;
+                    }
+                }, label: "GraphQL Server URL", value: ((_c = integrationStore.storage) === null || _c === void 0 ? void 0 : _c.server) || '', placeholder: "ex https://my-site.com/opencti/graphql", disabled: !((_d = integrationStore.storage) === null || _d === void 0 ? void 0 : _d.isActive), validators: [
+                    {
+                        validator: (v) => {
+                            return Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage));
+                        },
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                    {
+                        validator: (value) => Promise.resolve((0, validators_1.isUrl)(value, validateUrlMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ], onChange: (value) => {
+                    integrationStore.setStorage(Object.assign(Object.assign({}, integrationStore.storage), { server: value }));
+                } }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { ref: (refs) => {
+                    if (refs === null || refs === void 0 ? void 0 : refs.validate) {
+                        validateApiKeyRef.current.validate = refs.validate;
+                    }
+                }, label: "API Key", value: ((_e = integrationStore.storage) === null || _e === void 0 ? void 0 : _e.key) || '', disabled: !((_f = integrationStore.storage) === null || _f === void 0 ? void 0 : _f.isActive), placeholder: "ex 12334412-12331233-123-a123123", validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                    {
+                        validator: (value) => __awaiter(void 0, void 0, void 0, function* () {
+                            yield integrationStore.setStorage(Object.assign(Object.assign({}, integrationStore.storage), { key: value === null || value === void 0 ? void 0 : value.trim(), isValid: false }));
+                            const { error } = yield messageStore.sendMessageWithCallback({
+                                type: types_background_messages_1.MessageToBackground.BGIntegrationWork,
+                                payload: {
+                                    modelType: 'openCTI',
+                                    work: 'check-connection',
+                                },
+                            });
+                            if (typeof error !== 'undefined') {
+                                return Promise.resolve({
+                                    isValid: false,
+                                    reasons: new Set([
+                                        'Wrong OpenCTI Server URL or API Key',
+                                    ]),
+                                });
+                            }
+                            return Promise.resolve((0, validators_1.getValidResult)());
+                        }),
+                        validateOnFinish: true,
+                    },
+                ], onChange: (value) => {
+                    integrationStore.setStorage(Object.assign(Object.assign({}, integrationStore.storage), { key: value }));
+                } })] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/messages/SensitiveInfoWarningMessage/index.tsx":
+/*!**********************************************************************************!*\
+  !*** ./extension/app/integration/messages/SensitiveInfoWarningMessage/index.tsx ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SensitiveInfoWarningMessage = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const WarningMessage_1 = __webpack_require__(/*! ../../../resources/messages/WarningMessage */ "./extension/app/resources/messages/WarningMessage/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integration/messages/SensitiveInfoWarningMessage/styles.scss");
+const SensitiveInfoWarningMessage = () => {
+    return ((0, jsx_runtime_1.jsx)(WarningMessage_1.WarningMessage, Object.assign({ className: "sensitive-info-warning-message" }, { children: (0, jsx_runtime_1.jsx)("p", { children: "When using integrations with third-party services, do not send to them any sensitive information" }) })));
+};
+exports.SensitiveInfoWarningMessage = SensitiveInfoWarningMessage;
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/stores/IntegrationStore.ts":
+/*!**************************************************************!*\
+  !*** ./extension/app/integration/stores/IntegrationStore.ts ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
+const integrations_1 = __webpack_require__(/*! ../../../integrations */ "./extension/integrations/index.ts");
+const integrations_2 = __webpack_require__(/*! ../../integrations/integrations */ "./extension/app/integrations/integrations.ts");
+const integrations_store_1 = __webpack_require__(/*! ../../integrations/integrations-store */ "./extension/app/integrations/integrations-store.ts");
+const SensitiveInfoWarningMessage_1 = __webpack_require__(/*! ../messages/SensitiveInfoWarningMessage */ "./extension/app/integration/messages/SensitiveInfoWarningMessage/index.tsx");
+class IntegrationStore {
+    constructor(rootStore) {
+        this.message = SensitiveInfoWarningMessage_1.SensitiveInfoWarningMessage;
+        this.integration = null;
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    setIntegration(integration) {
+        this.integration = integration;
+    }
+    getIntegration() {
+        return this.integration;
+    }
+    get integrationIndex() {
+        return this.rootStore.integrationsStore
+            .integrations.findIndex(({ id }) => { var _a; return id === ((_a = this.integration) === null || _a === void 0 ? void 0 : _a.id); });
+    }
+    get storage() {
+        var _a, _b;
+        return ((_a = this.rootStore.appStorageStore.storage[integrations_store_1.integrationGroupName]) === null || _a === void 0 ? void 0 : _a[this.mapIdToName((_b = this.integration) === null || _b === void 0 ? void 0 : _b.id)]) || {};
+    }
+    get model() {
+        const { id } = this.integration || {};
+        return (0, integrations_1.getIntegrationModel)(this.mapIdToName(id));
+    }
+    mapIdToName(id) {
+        const mappings = {
+            '$open-cti$': 'openCTI',
+        };
+        return (id ? mappings[id] : '');
+    }
+    setMessage(Message) {
+        if (Message && !this.message) {
+            this.message = Message;
+        }
+        if (!Message && this.message) {
+            this.message = Message;
+        }
+    }
+    getMessage() {
+        return this.message;
+    }
+    isNotDeletable() {
+        var _a, _b;
+        return ((_b = (_a = this.integration) === null || _a === void 0 ? void 0 : _a.id) === null || _b === void 0 ? void 0 : _b[0]) === '$';
+    }
+    clearStorage() {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            return (_a = this.model) === null || _a === void 0 ? void 0 : _a.clearStorage();
+        });
+    }
+    getStorage() {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            return ((_a = this.model) === null || _a === void 0 ? void 0 : _a.getStorage()) || { error: new Error('Storage not found') };
+        });
+    }
+    setStorage(data) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            return ((_a = this.model) === null || _a === void 0 ? void 0 : _a.setStorage(data)) || { error: new Error('Storage not found') };
+        });
+    }
+    setDefaults() {
+        var _a;
+        this.clearStorage();
+        if (!this.integration) {
+            return;
+        }
+        const defaultIntegration = integrations_2.mappedIntegrations.get((_a = this.integration) === null || _a === void 0 ? void 0 : _a.id);
+        if (!defaultIntegration) {
+            return;
+        }
+        this.integration = Object.assign({}, defaultIntegration);
+        if (this.rootStore.integrationsStore.integrations[this.integrationIndex]) {
+            this.rootStore.integrationsStore.integrations[this.integrationIndex] = this.integration;
+        }
+    }
+    remove() {
+        if (this.isNotDeletable()) {
+            return;
+        }
+        this.clearStorage();
+        this.rootStore.integrationsStore.integrations = this.rootStore.integrationsStore.integrations
+            .filter(({ id }) => { var _a; return id !== ((_a = this.integration) === null || _a === void 0 ? void 0 : _a.id); });
+        this.integration = null;
+        this.rootStore.integrationsStore.save();
+    }
+}
+__decorate([
+    mobx_1.observable
+], IntegrationStore.prototype, "message", void 0);
+__decorate([
+    mobx_1.observable
+], IntegrationStore.prototype, "integration", void 0);
+__decorate([
+    mobx_1.computed
+], IntegrationStore.prototype, "integrationIndex", null);
+__decorate([
+    mobx_1.computed
+], IntegrationStore.prototype, "storage", null);
+__decorate([
+    mobx_1.computed
+], IntegrationStore.prototype, "model", null);
+exports.IntegrationStore = IntegrationStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/views/IntegrationContentView/index.tsx":
+/*!**************************************************************************!*\
+  !*** ./extension/app/integration/views/IntegrationContentView/index.tsx ***!
+  \**************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationContentView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/.pnpm/simplebar-react@2.4.3_react-dom@18.2.0_react@18.2.0/node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const Integration_1 = __webpack_require__(/*! ../../Integration/Integration */ "./extension/app/integration/Integration/Integration.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integration/views/IntegrationContentView/styles.scss");
+const IntegrationContentView = () => {
+    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ className: "integration-content-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsx)(Integration_1.Integration, {})] })));
+};
+exports.IntegrationContentView = IntegrationContentView;
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/views/IntegrationFooterView/index.tsx":
+/*!*************************************************************************!*\
+  !*** ./extension/app/integration/views/IntegrationFooterView/index.tsx ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationFooterView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const CheckIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
+const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
+const integrations_1 = __webpack_require__(/*! ../../../integrations/integrations */ "./extension/app/integrations/integrations.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integration/views/IntegrationFooterView/styles.scss");
+exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
+    const formStore = (0, stores_1.useFormStore)();
+    const routerStore = (0, stores_1.useAppRouterStore)();
+    const integrationStore = (0, stores_1.useIntegrationStore)();
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    const integration = integrationStore.getIntegration();
+    const ifNotCustomIntegration = integrations_1.mappedIntegrations.has(integration === null || integration === void 0 ? void 0 : integration.id);
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-footer-view" }, { children: [ifNotCustomIntegration && ((0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(RefreshIcon_1.RefreshIcon, {}), className: "clear-integration-data", onClick: () => {
+                    integrationStore.setDefaults();
+                }, disabled: formStore.validating }, { children: "Restore Defaults" }))), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ className: "success-btn", icon: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, {}), onClick: () => {
+                    Promise.all([
+                        formStore.validate(['finish', 'blur']),
+                        integrationStore.getStorage(),
+                    ])
+                        .then(([isSuccess, storage]) => {
+                        if (!isSuccess) {
+                            return { error: new Error('Validation failed') };
+                        }
+                        if (!storage || !storage.data) {
+                            return {};
+                        }
+                        return integrationStore.setStorage(Object.assign(Object.assign({}, storage.data), { isValid: storage.data.isActive }));
+                    })
+                        .then((result) => {
+                        if (!result.error) {
+                            integrationsStore.save();
+                            routerStore.goToIntegrationsPage();
+                        }
+                    });
+                }, disabled: formStore.validating }, { children: "Save & Close" }))] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/integration/views/IntegrationHeaderView/index.tsx":
+/*!*************************************************************************!*\
+  !*** ./extension/app/integration/views/IntegrationHeaderView/index.tsx ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationHeaderView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integration/views/IntegrationHeaderView/styles.scss");
+exports.IntegrationHeaderView = (0, mobx_react_lite_1.observer)(() => {
+    const formStore = (0, stores_1.useFormStore)();
+    const integrationStore = (0, stores_1.useIntegrationStore)();
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    const routerStore = (0, stores_1.useAppRouterStore)();
+    const Message = integrationStore.getMessage();
+    const nameRef = (0, react_1.useRef)(integrationStore.getIntegration().name);
+    const getHeaderButton = () => {
+        if (integrationStore.isNotDeletable()) {
+            return null;
+        }
+        return ((0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ className: "remove-integration", onClick: () => {
+                integrationStore.remove();
+                integrationsStore.save();
+                routerStore.goToIntegrationsPage();
+            }, disabled: formStore.validating }, { children: "Delete Integration" })));
+    };
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: nameRef.current }), getHeaderButton()] }), Message && (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 }), (0, jsx_runtime_1.jsx)(Message, {})] })] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/IntegrationCheckbox/index.tsx":
+/*!******************************************************************!*\
+  !*** ./extension/app/integrations/IntegrationCheckbox/index.tsx ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IntegrationCheckbox = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const WithValidation_1 = __webpack_require__(/*! ../../components/extends/WithValidation */ "./extension/app/components/extends/WithValidation/index.tsx");
+const WithForm_1 = __webpack_require__(/*! ../../components/extends/WithForm */ "./extension/app/components/extends/WithForm/index.tsx");
+const SuccessCheckbox_1 = __webpack_require__(/*! ../../components/checkboxes/SucessCheckbox/SuccessCheckbox */ "./extension/app/components/checkboxes/SucessCheckbox/SuccessCheckbox.tsx");
+const IntegrationCheckbox = (_a) => {
+    var { name, disabled, validators, content } = _a, restProps = __rest(_a, ["name", "disabled", "validators", "content"]);
+    return ((0, jsx_runtime_1.jsx)(WithValidation_1.WithValidation, Object.assign({ getValue: (ref) => { var _a; return ((_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.checked) || false; }, disabled: !!disabled, validators: [
+            ...(validators || []),
+        ] }, { children: (withValidationProps) => {
+            return ((0, jsx_runtime_1.jsx)(WithForm_1.WithForm, Object.assign({}, withValidationProps, { children: (withFormProps) => {
+                    return ((0, jsx_runtime_1.jsx)(SuccessCheckbox_1.SuccessCheckbox, Object.assign({}, restProps, withFormProps, { ref: (refs) => {
+                            var _a;
+                            if ((_a = refs === null || refs === void 0 ? void 0 : refs.elementRef) === null || _a === void 0 ? void 0 : _a.current) {
+                                refs.elementRef.current.name = name;
+                                withFormProps.elementRef.current = refs.elementRef.current;
+                                withValidationProps.elementRef.current = refs.elementRef.current;
+                            }
+                        }, content: content })));
+                } })));
+        } })));
+};
+exports.IntegrationCheckbox = IntegrationCheckbox;
 
 
 /***/ }),
@@ -55490,17 +57033,55 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.IntegrationInput = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
-const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
-const ValidationInput_1 = __webpack_require__(/*! ../../components/inputs/ValidationInput/ValidationInput */ "./extension/app/components/inputs/ValidationInput/ValidationInput.tsx");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const AppInput_1 = __webpack_require__(/*! ../../components/inputs/AppInput/AppInput */ "./extension/app/components/inputs/AppInput/AppInput.tsx");
+const WithValidation_1 = __webpack_require__(/*! ../../components/extends/WithValidation */ "./extension/app/components/extends/WithValidation/index.tsx");
+const WithForm_1 = __webpack_require__(/*! ../../components/extends/WithForm */ "./extension/app/components/extends/WithForm/index.tsx");
+const app_hooks_1 = __webpack_require__(/*! ../../app-hooks */ "./extension/app/app-hooks.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/IntegrationInput/styles.scss");
-const validateMessage = 'This field is required';
-const IntegrationInput = (_a) => {
-    var { label, value, onChange } = _a, restProps = __rest(_a, ["label", "value", "onChange"]);
-    return ((0, jsx_runtime_1.jsx)(ValidationInput_1.ValidationInput, Object.assign({ label: label, className: "integration-input", validators: [
-            (v) => (0, validators_1.isNotEmptyString)(v, validateMessage),
-        ], value: value, onChange: onChange }, restProps)));
-};
-exports.IntegrationInput = IntegrationInput;
+exports.IntegrationInput = (0, react_1.forwardRef)((_a, refs) => {
+    var { value, validators, name } = _a, restProps = __rest(_a, ["value", "validators", "name"]);
+    const integrationInputRefs = (0, react_1.useRef)({});
+    const prevValue = (0, app_hooks_1.usePrevious)(value);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return integrationInputRefs.current;
+    });
+    (0, react_1.useEffect)(() => {
+        if (value !== prevValue) {
+            setTimeout(() => {
+                var _a, _b;
+                (_b = (_a = integrationInputRefs === null || integrationInputRefs === void 0 ? void 0 : integrationInputRefs.current) === null || _a === void 0 ? void 0 : _a.validate) === null || _b === void 0 ? void 0 : _b.call(_a, ['change']);
+            }, 0);
+        }
+    }, [value, prevValue]);
+    return ((0, jsx_runtime_1.jsx)(WithValidation_1.WithValidation, Object.assign({ getValue: (ref) => { var _a; return ((_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.value) || null; }, disabled: !!restProps.disabled, validators: [
+            ...(validators || []),
+        ] }, { children: (withValidationProps) => {
+            integrationInputRefs.current.validate = withValidationProps.validate;
+            return ((0, jsx_runtime_1.jsx)(WithForm_1.WithForm, Object.assign({}, withValidationProps, { children: (withFormProps) => {
+                    return ((0, jsx_runtime_1.jsx)(AppInput_1.AppInput, Object.assign({}, restProps, withFormProps, { ref: (ref) => {
+                            if (ref) {
+                                ref.name = name;
+                                withValidationProps.elementRef.current = ref;
+                                withFormProps.elementRef.current = ref;
+                            }
+                        }, value: value, className: (0, common_helpers_1.createClassName)([
+                            'integration-input',
+                            restProps.className || '',
+                            withFormProps.className || '',
+                        ]), onChange: (e) => {
+                            var _a, _b;
+                            (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onChange) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
+                            (_b = restProps === null || restProps === void 0 ? void 0 : restProps.onChange) === null || _b === void 0 ? void 0 : _b.call(restProps, e);
+                        }, onBlur: (e) => {
+                            var _a, _b;
+                            (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onBlur) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
+                            (_b = restProps === null || restProps === void 0 ? void 0 : restProps.onBlur) === null || _b === void 0 ? void 0 : _b.call(restProps, e);
+                        } })));
+                } })));
+        } })));
+});
 
 
 /***/ }),
@@ -55532,6 +57113,51 @@ exports.SettingsButton = SettingsButton;
 
 /***/ }),
 
+/***/ "./extension/app/integrations/integrations-store.ts":
+/*!**********************************************************!*\
+  !*** ./extension/app/integrations/integrations-store.ts ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getIntegrationData = exports.setIntegrationData = exports.integrationGroupName = void 0;
+const extension_storage_1 = __webpack_require__(/*! ../../common/extension-storage */ "./extension/common/extension-storage.ts");
+exports.integrationGroupName = 'integrations';
+const setIntegrationData = (key, value) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    if (result.error) {
+        return result;
+    }
+    const data = result.data;
+    return (0, extension_storage_1.saveData)(Object.assign(Object.assign({}, data), { [exports.integrationGroupName]: Object.assign(Object.assign({}, (data[exports.integrationGroupName] || {})), { [key]: value }) }));
+});
+exports.setIntegrationData = setIntegrationData;
+const getIntegrationData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    if (result.error) {
+        return result;
+    }
+    return {
+        data: ((_b = (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a[exports.integrationGroupName]) === null || _b === void 0 ? void 0 : _b[key]) || {},
+    };
+});
+exports.getIntegrationData = getIntegrationData;
+
+
+/***/ }),
+
 /***/ "./extension/app/integrations/integrations.ts":
 /*!****************************************************!*\
   !*** ./extension/app/integrations/integrations.ts ***!
@@ -55541,7 +57167,14 @@ exports.SettingsButton = SettingsButton;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.integrations = exports.version__1_3_1 = exports.version__1_2_5 = void 0;
+exports.mappedIntegrations = exports.fixed = exports.integrations = exports.version__1_0_2 = exports.version__1_3_1 = exports.version__1_2_5 = exports.version__1_4_0 = void 0;
+exports.version__1_4_0 = [
+    {
+        id: '$open-cti$',
+        name: 'OpenCTI',
+        url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
+    },
+];
 exports.version__1_2_5 = [
     {
         id: '$cyber-chef$',
@@ -55591,6 +57224,18 @@ exports.version__1_3_1 = [
         url: 'https://www.shodan.io/search?query=$VALUE$',
     },
 ];
+exports.version__1_0_2 = [
+    {
+        id: '$echo-trail',
+        name: 'EchoTrail',
+        url: 'https://www.echotrail.io/insights/search/$VALUE$',
+    },
+    {
+        id: '$ultimate-windows-security',
+        name: 'Ultimate Windows Security',
+        url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
+    },
+];
 exports.integrations = [
     {
         id: 'virus-total',
@@ -55607,24 +57252,21 @@ exports.integrations = [
         name: 'Anomali',
         url: 'https://ui.threatstream.com/search?status=active&multiSearchResults=true&value__re=.*$VALUE$.*',
     },
-    {
-        id: 'open-cti',
-        name: 'OpenCTI',
-        url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
-    },
-    {
-        id: '$echo-trail',
-        name: 'EchoTrail',
-        url: 'https://www.echotrail.io/insights/search/$VALUE$',
-    },
-    {
-        id: '$ultimate-windows-security',
-        name: 'Ultimate Windows Security',
-        url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
-    },
+    ...exports.version__1_0_2,
     ...exports.version__1_2_5,
     ...exports.version__1_3_1,
+    ...exports.version__1_4_0,
 ];
+exports.fixed = exports.integrations.reduce((res, integration) => {
+    if (integration.id[0] === '$') {
+        res.set(integration.id, integration);
+    }
+    return res;
+}, new Map());
+exports.mappedIntegrations = exports.integrations.reduce((res, integration) => {
+    res.set(integration.id, integration);
+    return res;
+}, new Map());
 
 
 /***/ }),
@@ -55653,9 +57295,6 @@ class IntegrationsStore {
         this.integrations = [];
         this.set();
         (0, mobx_1.makeObservable)(this);
-    }
-    get emptyIntegration() {
-        return this.integrations.some((i) => !i.name || !i.url);
     }
     set() {
         this.integrations = (0, local_storage_1.getIntegrations)();
@@ -55695,18 +57334,15 @@ class IntegrationsStore {
 __decorate([
     mobx_1.observable
 ], IntegrationsStore.prototype, "integrations", void 0);
-__decorate([
-    mobx_1.computed
-], IntegrationsStore.prototype, "emptyIntegration", null);
 exports.IntegrationsStore = IntegrationsStore;
 
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationContentView/IntegrationContentView.tsx":
-/*!********************************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationContentView/IntegrationContentView.tsx ***!
-  \********************************************************************************************/
+/***/ "./extension/app/integrations/views/IntegrationsContentView/IntegrationsContentView.tsx":
+/*!**********************************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationsContentView/IntegrationsContentView.tsx ***!
+  \**********************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -55715,119 +57351,95 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationContentView = void 0;
+exports.IntegrationsContentView = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-const Integration_1 = __webpack_require__(/*! ../../Integration/Integration */ "./extension/app/integrations/Integration/Integration.tsx");
 const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/.pnpm/simplebar-react@2.4.3_react-dom@18.2.0_react@18.2.0/node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationContentView/styles.scss");
-exports.IntegrationContentView = (0, mobx_react_lite_1.observer)(() => {
+const AppArea_1 = __webpack_require__(/*! ../../../components/areas/AppArea */ "./extension/app/components/areas/AppArea/index.tsx");
+const SmallArrowIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/SmallArrowIcon/SmallArrowIcon */ "./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationsContentView/styles.scss");
+exports.IntegrationsContentView = (0, mobx_react_lite_1.observer)(() => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return ((0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "integration-content-view" }, { children: integrationsStore.integrations
-            .slice()
-            .sort((a, b) => (0, helpers_1.sortStrings)(b.name, a.name, 'descending'))
-            .map(({ url, name, id }) => {
-            return ((0, jsx_runtime_1.jsx)(Integration_1.Integration, { name: name, url: url, id: id }, id));
-        }) })));
+    const routerStore = (0, stores_1.useAppRouterStore)();
+    const openCTIIntegration = integrationsStore.integrations.find((i) => i.id === '$open-cti$');
+    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ className: "integrations-content-view" }, { children: [openCTIIntegration && ((0, jsx_runtime_1.jsx)(AppArea_1.AppArea, { children: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", { children: openCTIIntegration.name }), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "icon-wrapper", onClick: () => {
+                                routerStore.goToIntegrationPage(openCTIIntegration);
+                            } }, { children: (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {}) }))] }) })), integrationsStore
+                .integrations
+                .slice()
+                .filter((i) => i.id !== '$open-cti$')
+                .sort((a, b) => (0, helpers_1.sortStrings)(b.name, a.name, 'descending'))
+                .map((i) => {
+                return ((0, jsx_runtime_1.jsx)(AppArea_1.AppArea, { children: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", { children: i.name }), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "icon-wrapper", onClick: () => {
+                                    routerStore.goToIntegrationPage(i);
+                                } }, { children: (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {}) }))] }) }, i.id));
+            })] })));
 });
 
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx":
-/*!******************************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx ***!
-  \******************************************************************************************/
+/***/ "./extension/app/integrations/views/IntegrationsFooterView/IntegrationsFooterView.tsx":
+/*!********************************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationsFooterView/IntegrationsFooterView.tsx ***!
+  \********************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationFooterView = void 0;
+exports.IntegrationsFooterView = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
-const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
-const PlusIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
-const CheckIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
-const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
 const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
 const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationFooterView/styles.scss");
-exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
-    const appStore = (0, stores_1.useAppStore)();
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    const onSaveAndCloseClick = (0, react_1.useCallback)(() => {
-        var _a;
-        if (integrationsStore.emptyIntegration) {
-            const input = (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.validation-input.empty');
-            input.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                input.focus();
-                input.blur();
-            }, 300);
-            return;
-        }
-        integrationsStore.save();
-        appStore.view = 'resources';
-    }, [appStore, integrationsStore]);
-    (0, react_1.useEffect)(() => {
-        const onKeyDown = (e) => {
-            var _a, _b;
-            const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
-            if (code === 'escape') {
-                onSaveAndCloseClick();
-            }
-        };
-        document.addEventListener('keydown', onKeyDown);
-        return () => document.removeEventListener('keydown', onKeyDown);
-    }, [onSaveAndCloseClick]);
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 20 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-footer-view" }, { children: [(0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}), onClick: () => {
-                            integrationsStore.integrations.push({ id: (0, helpers_1.uuid)(), url: '', name: '' });
-                            setTimeout(() => {
-                                var _a;
-                                (_a = appStore.rootElement) === null || _a === void 0 ? void 0 : _a.querySelector('.integration:last-child').scrollIntoView({
-                                    block: 'end',
-                                    behavior: 'smooth',
-                                });
-                            }, 0);
-                        } }, { children: "Add New Integration" })), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Save and close (Esc)" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, {}), className: (0, common_helpers_1.createClassName)([
-                                integrationsStore.emptyIntegration ? 'error' : 'success-btn',
-                            ]), onClick: onSaveAndCloseClick }, { children: "Save & Close" })) }))] }))] }));
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationsFooterView/styles.scss");
+exports.IntegrationsFooterView = (0, mobx_react_lite_1.observer)(() => {
+    const routerStore = (0, stores_1.useAppRouterStore)();
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 20 }), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "integrations-footer-view" }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Close (Esc)" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ onClick: () => {
+                            routerStore.goToResourcesPage();
+                        } }, { children: "Close" })) })) }))] }));
 });
 
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx":
-/*!******************************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx ***!
-  \******************************************************************************************/
+/***/ "./extension/app/integrations/views/IntegrationsHeaderView/IntegrationsHeaderView.tsx":
+/*!********************************************************************************************!*\
+  !*** ./extension/app/integrations/views/IntegrationsHeaderView/IntegrationsHeaderView.tsx ***!
+  \********************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationHeaderView = void 0;
+exports.IntegrationsHeaderView = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
-const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
-const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationHeaderView/styles.scss");
-const IntegrationHeaderView = () => {
+const PlusIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationsHeaderView/styles.scss");
+const IntegrationsHeaderView = () => {
+    const routerStore = (0, stores_1.useAppRouterStore)();
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "warning-message" }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), (0, jsx_runtime_1.jsx)("p", { children: "When using integrations with third-party services, do not send to them any sensitive information" })] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "group" }, { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "Integration Settings" }), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(RefreshIcon_1.RefreshIcon, {}), onClick: () => {
-                            integrationsStore.restoreIntegrations();
-                        } }, { children: "Restore Defaults" }))] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 })] })));
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integrations-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "group" }, { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "Integration Settings" }), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}), onClick: () => {
+                            const customIntegration = {
+                                id: `@@--${(0, helpers_1.uuid)()}`,
+                                url: '',
+                                name: 'Custom',
+                            };
+                            integrationsStore.integrations.push(customIntegration);
+                            routerStore.goToIntegrationPage(customIntegration);
+                        } }, { children: "Add New Integration" }))] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 })] })));
 };
-exports.IntegrationHeaderView = IntegrationHeaderView;
+exports.IntegrationsHeaderView = IntegrationsHeaderView;
 
 
 /***/ }),
@@ -56042,7 +57654,7 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'bulk-resources-panel',
             disabled ? 'empty' : '',
-        ]) }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "count-selected" }, { children: [(0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: ["\u2014 ", getCountSelected(countSelected), " item(s)"] })), "selected"] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-area" }, { children: [(0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, animatedIcon: true, onClick: onCopyIconClick, icon: (0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) }, { children: "Copy" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('include'), icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}) }, { children: "Include" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('exclude'), icon: (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, {}) }, { children: "Exclude" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('show all'), icon: (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, {}) }, { children: "Show All Events" })), (0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ disabled: disabled, opener: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, icon: (0, jsx_runtime_1.jsx)(MagnifyingIcon_1.MagnifyingIcon, {}) }, { children: "Search at" })), classNameMenu: "dropdown-search-sites-menu" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, { className: "search-sites-list", items: items }) }))] }))] })));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "count-selected" }, { children: [(0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: ["\u2014 ", getCountSelected(countSelected), " item(s)"] })), "selected"] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-area" }, { children: [(0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, animatedIcon: true, onClick: onCopyIconClick }, { children: (0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('include') }, { children: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('exclude') }, { children: (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, {}) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('show all'), icon: (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, {}) }, { children: "Show All Events" })), (0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ disabled: disabled, opener: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, icon: (0, jsx_runtime_1.jsx)(MagnifyingIcon_1.MagnifyingIcon, {}) }, { children: "Search at" })), classNameMenu: "dropdown-search-sites-menu" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, { className: "search-sites-list", items: items }) }))] }))] })));
 });
 
 
@@ -56197,7 +57809,7 @@ const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppToolti
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ExportButton/styles.scss");
 exports.ExportButton = (0, mobx_react_lite_1.observer)(() => {
-    const { selectedResources, selectedResourcesFields, countAllSelected } = (0, stores_1.useResourcesSelectionStore)();
+    const { selectedResources, selectedResourcesFields, countAllSelected, } = (0, stores_1.useResourcesSelectionStore)();
     const onExportClick = (0, react_1.useCallback)(() => {
         if (countAllSelected < 1) {
             return;
@@ -56205,9 +57817,9 @@ exports.ExportButton = (0, mobx_react_lite_1.observer)(() => {
         const rows = [
             'Type,Field,Value',
         ];
-        Object.keys(selectedResourcesFields).forEach(typeID => {
-            Array.from(selectedResourcesFields[typeID]).forEach(fieldName => {
-                Array.from(selectedResources[typeID].get(fieldName)).forEach(value => {
+        Object.keys(selectedResourcesFields).forEach((typeID) => {
+            Array.from(selectedResourcesFields[typeID]).forEach((fieldName) => {
+                Array.from(selectedResources[typeID].get(fieldName)).forEach((value) => {
                     rows.push([typeID, fieldName, value].join(','));
                 });
             });
@@ -56313,12 +57925,12 @@ exports.ResourceList = (0, react_1.memo)(({ fieldName, items, selectedItems, }) 
             left: coords.left,
         };
     }, []);
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(List_1.List, { className: "resource-list", items: items.map(item => {
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(List_1.List, { className: "resource-list", items: items.map((item) => {
                     return {
                         id: item,
                         content: ((0, jsx_runtime_1.jsx)(ResourceListItem_1.ResourceListItem, Object.assign({ resourceName: item, fieldName: fieldName }, { children: (0, jsx_runtime_1.jsx)(SuccessCheckbox_1.SuccessCheckbox, { content: item.length > 20
                                     ? (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "resource-value-tooltip small", content: item, getPosition: getTooltipPosition, delayShowMs: 1200 }, { children: item }))
-                                    : item, checked: selectedItems.includes(item), onStateChanged: isChecked => {
+                                    : item, checked: selectedItems.includes(item), onStateChanged: (isChecked) => {
                                     if (isChecked) {
                                         selectionStore.select(fieldName, item);
                                     }
@@ -56357,25 +57969,39 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.
 const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
 const SeeDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
-const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const SendToIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SendToIcon */ "./extension/app/components/atoms/icons/SendToIcon/index.tsx");
+const integrations_1 = __webpack_require__(/*! ../../../integrations */ "./extension/integrations/index.ts");
+const NoOpenCTIProfileMessage_1 = __webpack_require__(/*! ../messages/NoOpenCTIProfileMessage */ "./extension/app/resources/messages/NoOpenCTIProfileMessage/index.tsx");
+const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceListItem/styles.scss");
 exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceName, }) => {
     const [isActionMenu, setIsActionMenu] = (0, react_1.useState)(false);
     const platformStore = (0, stores_1.usePlatformStore)();
+    const router = (0, stores_1.useAppRouterStore)();
     const onActionClick = (0, react_1.useCallback)((actionType) => __awaiter(void 0, void 0, void 0, function* () {
         if (actionType === 'copy') {
             platformStore.copyToClipboard({ [fieldName]: [resourceName] });
             return;
         }
         platformStore.modifyQuery(actionType, { [fieldName]: [resourceName] });
-        return;
     }), [platformStore, fieldName, resourceName]);
     return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "resource-list-item", onMouseEnter: () => {
             setIsActionMenu(true);
         }, onMouseLeave: () => {
             setIsActionMenu(false);
-        } }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-list-item-wrapper" }, { children: [children, isActionMenu && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "action-menu" }, { children: [(0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }), (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }), (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }), (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') })] })))] })) })));
+        } }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-list-item-wrapper" }, { children: [children, isActionMenu && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "action-menu" }, { children: [(0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }), (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }), (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }), (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') }), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Send to OpenCTI" }, { children: (0, jsx_runtime_1.jsx)(SendToIcon_1.SendToIcon, { onClick: () => {
+                                    var _a;
+                                    (_a = (0, integrations_1.getIntegrationModel)('openCTI')) === null || _a === void 0 ? void 0 : _a.getStorage().then(({ data }) => {
+                                        const { isActive, isValid } = data || {};
+                                        if (!isActive || !isValid) {
+                                            platformStore.setMessage(NoOpenCTIProfileMessage_1.NoOpenCTIProfileMessage);
+                                            return;
+                                        }
+                                        router.goToExportPage(resourceName);
+                                    });
+                                } }) }))] })))] })) })));
 });
 
 
@@ -56427,7 +58053,7 @@ const ResourceTabInput = (_a) => {
     const virtualInputRef = (0, react_1.useRef)(null);
     const inputWrapperRef = (0, react_1.useRef)(null);
     const normalizeTabName = (0, react_1.useCallback)((id, name) => {
-        const values = resourceStore.tabsNames.filter(tn => tn !== id);
+        const values = resourceStore.tabsNames.filter((tn) => tn !== id);
         if (!values.includes(name)) {
             return name;
         }
@@ -56435,7 +58061,7 @@ const ResourceTabInput = (_a) => {
     }, [resourceStore]);
     const finishEdit = (0, react_1.useCallback)((currentValue, prevValue) => {
         const normalizedValue = currentValue.trim();
-        const newValue = normalizedValue ? normalizedValue : (prevValue === null || prevValue === void 0 ? void 0 : prevValue.trim()) || 'New Tab';
+        const newValue = normalizedValue || (prevValue === null || prevValue === void 0 ? void 0 : prevValue.trim()) || 'New Tab';
         const newName = normalizeTabName(typeID, newValue);
         inputRef.current.setSelectionRange(0, 0);
         inputRef.current.focus();
@@ -56494,7 +58120,7 @@ const ResourceTabInput = (_a) => {
             if (!editMode && !resources_types_1.boundedResourcesTypeIDs.includes(typeID)) {
                 setEditMode(true);
             }
-        }, onKeyDown: e => {
+        }, onKeyDown: (e) => {
             var _a, _b;
             const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
             if (code === 'enter' || code === 'escape') {
@@ -56554,7 +58180,7 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
         }, 0);
     }, []);
     const getTab = (0, react_1.useCallback)((id, icon, name, size, isHovered) => {
-        return ((0, jsx_runtime_1.jsxs)(HoverButton_1.HoverButton, Object.assign({ icon: icon, hovered: isHovered }, { children: [(0, jsx_runtime_1.jsx)(ResourceTabInput_1.ResourceTabInput, { typeID: id, value: name, onApply: value => {
+        return ((0, jsx_runtime_1.jsxs)(HoverButton_1.HoverButton, Object.assign({ icon: icon, hovered: isHovered }, { children: [(0, jsx_runtime_1.jsx)(ResourceTabInput_1.ResourceTabInput, { typeID: id, value: name, onApply: (value) => {
                         resourceStore.renameTab(id, value, true);
                         resourceStore.activeTabID = value;
                     }, onRemove: () => {
@@ -56573,7 +58199,7 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
     }, [resourceStore]);
     const tabs = (0, react_1.useMemo)(() => {
         const result = [];
-        resources_types_1.boundedResourcesTypeIDs.forEach(typeID => {
+        resources_types_1.boundedResourcesTypeIDs.forEach((typeID) => {
             result.push({
                 id: typeID,
                 component: getTab(typeID, typeID === resources_types_1.BoundedResourceTypeID.Accounts
@@ -56581,7 +58207,7 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
                     : (0, jsx_runtime_1.jsx)(AssetIcon_1.AssetIcon, {}), typeID, countResources(typeID, resources), typeID === activeTabID),
             });
         });
-        Object.keys(resources).forEach(typeID => {
+        Object.keys(resources).forEach((typeID) => {
             if (resources_types_1.boundedResourcesTypeIDs.includes(typeID)) {
                 return;
             }
@@ -56592,11 +58218,69 @@ exports.TabsPlatformResources = (0, mobx_react_lite_1.observer)(({ children }) =
         });
         return result;
     }, [activeTabID, countResources, getTab, resources]);
-    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "tabs-platform-resources-wrapper" }, { children: (0, jsx_runtime_1.jsx)(TabsPanel_1.TabsPanel, Object.assign({ className: "tabs-platform-resources", tabs: [...tabs, addNewTab], onActiveTabChanged: id => {
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "tabs-platform-resources-wrapper" }, { children: (0, jsx_runtime_1.jsx)(TabsPanel_1.TabsPanel, Object.assign({ className: "tabs-platform-resources", tabs: [...tabs, addNewTab], onActiveTabChanged: (id) => {
                 if (resourceStore.isTabExist(id)) {
                     resourceStore.activeTabID = id;
                 }
             }, activeTab: activeTabID }, { children: children })) })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/ErrorMessage/index.tsx":
+/*!*****************************************************************!*\
+  !*** ./extension/app/resources/messages/ErrorMessage/index.tsx ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ErrorMessage = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/ErrorMessage/styles.scss");
+const ErrorMessage = ({ className = '', children, }) => {
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'message',
+            'error-message',
+            className,
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), children] })));
+};
+exports.ErrorMessage = ErrorMessage;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/NoOpenCTIProfileMessage/index.tsx":
+/*!****************************************************************************!*\
+  !*** ./extension/app/resources/messages/NoOpenCTIProfileMessage/index.tsx ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NoOpenCTIProfileMessage = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const WarningMessage_1 = __webpack_require__(/*! ../WarningMessage */ "./extension/app/resources/messages/WarningMessage/index.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/NoOpenCTIProfileMessage/styles.scss");
+exports.NoOpenCTIProfileMessage = (0, mobx_react_lite_1.observer)(() => {
+    const platformStore = (0, stores_1.usePlatformStore)();
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    const router = (0, stores_1.useAppRouterStore)();
+    return ((0, jsx_runtime_1.jsxs)(WarningMessage_1.WarningMessage, Object.assign({ className: "no-open-cti-profile-message" }, { children: [(0, jsx_runtime_1.jsx)("p", { children: "No profile found for submission to OpenCTI. Please create a new profile to proceed" }), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    platformStore.setMessage(null);
+                } }, { children: "Cancel" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    router.goToIntegrationPage(integrationsStore.integrations
+                        .find((i) => i.id === '$open-cti$'));
+                    platformStore.setMessage(null);
+                } }, { children: "Create Profile" }))] })));
 });
 
 
@@ -56676,6 +58360,84 @@ exports.RemoveHashMessage = (0, mobx_react_lite_1.observer)(() => {
 
 /***/ }),
 
+/***/ "./extension/app/resources/messages/SuccessMessage/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/resources/messages/SuccessMessage/index.tsx ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SuccessMessage = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/SuccessMessage/styles.scss");
+const SuccessMessage = ({ className = '', children, }) => {
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'message',
+            'success-message',
+            className,
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), children] })));
+};
+exports.SuccessMessage = SuccessMessage;
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/SuccessOpenCTIExportMessage/index.tsx":
+/*!********************************************************************************!*\
+  !*** ./extension/app/resources/messages/SuccessOpenCTIExportMessage/index.tsx ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SuccessOpenCTIExportMessage = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const SuccessMessage_1 = __webpack_require__(/*! ../SuccessMessage */ "./extension/app/resources/messages/SuccessMessage/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/SuccessOpenCTIExportMessage/styles.scss");
+exports.SuccessOpenCTIExportMessage = (0, mobx_react_lite_1.observer)(() => {
+    const platformStore = (0, stores_1.usePlatformStore)();
+    return ((0, jsx_runtime_1.jsxs)(SuccessMessage_1.SuccessMessage, Object.assign({ className: "success-opencti-export-message" }, { children: [(0, jsx_runtime_1.jsx)("p", { children: "Data sent to OpenCTI successfully" }), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
+                    platformStore.setMessage(null);
+                } }, { children: "Close" }))] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/resources/messages/WarningMessage/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/resources/messages/WarningMessage/index.tsx ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.WarningMessage = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const WarningIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/WarningIcon/WarningIcon */ "./extension/app/components/atoms/icons/WarningIcon/WarningIcon.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/WarningMessage/styles.scss");
+const WarningMessage = ({ className = '', children, }) => {
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'message',
+            'warning-message',
+            className,
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(WarningIcon_1.WarningIcon, {}), children] })));
+};
+exports.WarningMessage = WarningMessage;
+
+
+/***/ }),
+
 /***/ "./extension/app/resources/resources-types.ts":
 /*!****************************************************!*\
   !*** ./extension/app/resources/resources-types.ts ***!
@@ -56728,7 +58490,7 @@ class PlatformStore {
         return [...(((_a = this.platform) === null || _a === void 0 ? void 0 : _a.fields) || [])];
     }
     setFieldsNames(fields) {
-        fields.forEach((f) => { var _a, _b, _c; return (_c = (_b = (_a = this.platform) === null || _a === void 0 ? void 0 : _a.fields) === null || _b === void 0 ? void 0 : _b.add) === null || _c === void 0 ? void 0 : _c.call(_b, f); });
+        fields === null || fields === void 0 ? void 0 : fields.forEach((f) => { var _a, _b, _c; return (_c = (_b = (_a = this.platform) === null || _a === void 0 ? void 0 : _a.fields) === null || _b === void 0 ? void 0 : _b.add) === null || _c === void 0 ? void 0 : _c.call(_b, f); });
     }
     saveFieldsNames(fields) {
         (0, local_storage_1.setFieldsNames)([
@@ -56835,6 +58597,7 @@ const content_services_1 = __webpack_require__(/*! ../../../content/services/con
 const types_background_messages_1 = __webpack_require__(/*! ../../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */ "./extension/common/local-storage.ts");
 const resources_types_1 = __webpack_require__(/*! ../resources-types */ "./extension/app/resources/resources-types.ts");
+const checkers_1 = __webpack_require__(/*! ../../../../common/checkers */ "./common/checkers.ts");
 class ResourceStore {
     constructor(rootStore) {
         this.resources = {
@@ -56853,8 +58616,8 @@ class ResourceStore {
     }
     get countAllResources() {
         let result = 0;
-        Object.keys(this.resources).forEach(typeID => {
-            Object.keys(this.resources[typeID]).forEach(fieldName => {
+        Object.keys(this.resources).forEach((typeID) => {
+            Object.keys(this.resources[typeID]).forEach((fieldName) => {
                 var _a;
                 result += ((_a = this.resources[typeID][fieldName]) === null || _a === void 0 ? void 0 : _a.size) || 0;
             });
@@ -56872,18 +58635,18 @@ class ResourceStore {
     }
     addResources(resources) {
         let needSaveWatchers = false;
-        Object.keys(resources || {}).forEach(tabID => {
+        Object.keys(resources || {}).forEach((tabID) => {
             if (!this.isTabExist(tabID)) {
                 this.addTab(tabID);
                 needSaveWatchers = true;
             }
-            Object.keys(resources[tabID]).forEach(fieldName => {
+            Object.keys(resources[tabID]).forEach((fieldName) => {
                 if (!this.isFieldExist(tabID, fieldName)) {
                     needSaveWatchers = true;
                     this.addField(fieldName, false, tabID);
                 }
-                let set = this.resources[tabID][fieldName];
-                resources[tabID][fieldName].forEach(resourceName => {
+                const set = this.resources[tabID][fieldName];
+                resources[tabID][fieldName].forEach((resourceName) => {
                     if (!set.has(resourceName)) {
                         set.add(resourceName);
                     }
@@ -56898,9 +58661,9 @@ class ResourceStore {
     }
     clearResources() {
         const newResources = {};
-        Object.keys(this.resources).forEach(typeID => {
+        Object.keys(this.resources).forEach((typeID) => {
             newResources[typeID] = {};
-            Object.keys(this.resources[typeID]).forEach(fieldName => {
+            Object.keys(this.resources[typeID]).forEach((fieldName) => {
                 newResources[typeID][fieldName] = new Set();
             });
         });
@@ -56958,7 +58721,7 @@ class ResourceStore {
         const selectionStore = this.rootStore.resourcesSelectionStore;
         selectionStore.selectedFields.delete(fieldName);
         selectionStore.selected.delete(fieldName);
-        let resource = this.resources[tabID];
+        const resource = this.resources[tabID];
         this.resources[tabID] = Object
             .keys(resource)
             .reduce((r, name) => {
@@ -56973,17 +58736,55 @@ class ResourceStore {
         this.refreshResources();
     }
     setWatchers(watchers) {
-        Object.keys(watchers).forEach(typeID => {
+        Object.keys(watchers).forEach((typeID) => {
             this.addTab(typeID);
             let currentFieldsNames = Object.keys(this.resources[typeID] || {});
-            watchers[typeID].forEach(fieldName => {
+            watchers[typeID].forEach((fieldName) => {
                 this.addField(fieldName, false, typeID);
-                currentFieldsNames = currentFieldsNames.filter(fn => fn !== fieldName);
+                currentFieldsNames = currentFieldsNames.filter((fn) => fn !== fieldName);
             });
-            currentFieldsNames.forEach(fn => {
+            currentFieldsNames.forEach((fn) => {
                 this.removeField(fn, false, typeID);
             });
         });
+    }
+    getType(resource) {
+        if ((0, checkers_1.isIpV6)(resource)) {
+            return 'ipv6';
+        }
+        if ((0, checkers_1.isIpV4)(resource)) {
+            return 'ipv4';
+        }
+        if ((0, checkers_1.isEmail)(resource)) {
+            return 'email';
+        }
+        if (resource.indexOf('www') > -1
+            && resource.indexOf('http') > -1
+            && (0, checkers_1.isUrl)(resource)) {
+            return 'url';
+        }
+        if ((0, checkers_1.isDomainName)(resource)) {
+            return 'domain-name';
+        }
+        if ((0, checkers_1.isMacAddress)(resource)) {
+            return 'mac-address';
+        }
+        if ((0, checkers_1.isSHA512)(resource)) {
+            return 'sha512';
+        }
+        if ((0, checkers_1.isSHA256)(resource)) {
+            return 'sha256';
+        }
+        if ((0, checkers_1.isSHA1)(resource)) {
+            return 'sha1';
+        }
+        if ((0, checkers_1.isMD5)(resource)) {
+            return 'md5';
+        }
+        if ((0, checkers_1.isUrl)(resource)) {
+            return 'url';
+        }
+        return 'unknown';
     }
     saveWatchers(messageId) {
         const platformID = this.rootStore.platformStore.getID();
@@ -57096,14 +58897,14 @@ class ResourcesSelectionStore {
     }
     get countAllSelected() {
         let result = 0;
-        Object.keys(this.selectedResources).forEach(typeID => {
-            result = result + this.countByTypeID(typeID);
+        Object.keys(this.selectedResources).forEach((typeID) => {
+            result += this.countByTypeID(typeID);
         });
         return result;
     }
     get uniqueSelected() {
         return Array.from(Array.from(this.selectedFields).reduce((res, fieldName) => {
-            Array.from(this.selected.get(fieldName)).forEach(v => res.add(v));
+            Array.from(this.selected.get(fieldName)).forEach((v) => res.add(v));
             return res;
         }, new Set()));
     }
@@ -57139,7 +58940,7 @@ class ResourcesSelectionStore {
         this.refreshSelections();
     }
     unselectAll() {
-        Object.keys(this.selectedResources).forEach(typeID => {
+        Object.keys(this.selectedResources).forEach((typeID) => {
             this.unselectByTypeID(typeID);
         });
         this.refreshSelections();
@@ -57297,7 +59098,7 @@ exports.ResourcesHeaderView = (0, mobx_react_lite_1.observer)(() => {
                                 if ((_b = refs === null || refs === void 0 ? void 0 : refs.inputRef) === null || _b === void 0 ? void 0 : _b.current) {
                                     inputRef.current = refs.inputRef.current;
                                 }
-                            }, onApply: value => {
+                            }, onApply: (value) => {
                                 setAddNewFieldMode(false);
                                 const nValue = value.trim();
                                 if (!nValue) {
@@ -57349,10 +59150,10 @@ exports.App = (0, mobx_react_lite_1.observer)(() => {
         if (!(footerRef === null || footerRef === void 0 ? void 0 : footerRef.current) || !(headerRef === null || headerRef === void 0 ? void 0 : headerRef.current) || !(wrapperRef === null || wrapperRef === void 0 ? void 0 : wrapperRef.current)) {
             return 'unset';
         }
-        return (wrapperRef.current.offsetHeight -
-            APP_PADDING * 2 -
-            headerRef.current.offsetHeight -
-            footerRef.current.offsetHeight);
+        return (wrapperRef.current.offsetHeight
+            - APP_PADDING * 2
+            - headerRef.current.offsetHeight
+            - footerRef.current.offsetHeight);
     }, []);
     const setContentHeightToElement = (0, react_1.useCallback)((value) => {
         if (!(contentRef === null || contentRef === void 0 ? void 0 : contentRef.current)) {
@@ -57382,7 +59183,7 @@ exports.App = (0, mobx_react_lite_1.observer)(() => {
             }
         };
         const [observerHeader, observerFooter, observerWrapper] = ['header', 'footer', 'wrapper']
-            .map(elemName => new ResizeObserver((entries) => {
+            .map((elemName) => new ResizeObserver((entries) => {
             prevValuesHeight[elemName] = onHeightChangeCallback(entries, prevValuesHeight[elemName]);
             if (elemName === 'wrapper') {
                 onWidthChangeCallback(entries);
@@ -57447,6 +59248,183 @@ exports.App = (0, mobx_react_lite_1.observer)(() => {
 
 /***/ }),
 
+/***/ "./extension/app/root/App/AppMessageStore.ts":
+/*!***************************************************!*\
+  !*** ./extension/app/root/App/AppMessageStore.ts ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppMessageStore = void 0;
+const content_services_1 = __webpack_require__(/*! ../../../content/services/content-services */ "./extension/content/services/content-services.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
+class AppMessageStore {
+    constructor() {
+        this.resolvers = new Map();
+        this.timeoutInterval = 3000;
+        this.inProgress = false;
+        this.error = {
+            error: null,
+        };
+        this.test = {};
+        (0, mobx_1.makeObservable)(this);
+    }
+    sendMessageWithCallback(message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.inProgress = true;
+            const id = (0, helpers_1.uuid)();
+            const timeoutID = setTimeout(() => {
+                this.resolve(id, {
+                    error: new Error('timeout'),
+                });
+            }, this.timeoutInterval);
+            return new Promise((resolve) => {
+                this.resolvers.set(id, (result) => {
+                    clearTimeout(timeoutID);
+                    resolve(result);
+                });
+                (0, content_services_1.sendMessageFromApp)(Object.assign(Object.assign({}, message), { payload: Object.assign(Object.assign({}, (message.payload || {})), { processID: id }) }));
+            });
+        });
+    }
+    resolve(id, result) {
+        if (result.error && typeof result.error === 'string') {
+            result.error = new Error(result.error);
+        }
+        if (result.error) {
+            this.error.error = result.error;
+        }
+        this.resolvers.get(id)(result);
+        this.resolvers.delete(id);
+        this.inProgress = false;
+    }
+}
+__decorate([
+    mobx_1.observable
+], AppMessageStore.prototype, "inProgress", void 0);
+__decorate([
+    mobx_1.observable
+], AppMessageStore.prototype, "error", void 0);
+__decorate([
+    mobx_1.observable
+], AppMessageStore.prototype, "test", void 0);
+exports.AppMessageStore = AppMessageStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/root/App/AppRouterStore.ts":
+/*!**************************************************!*\
+  !*** ./extension/app/root/App/AppRouterStore.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppRouterStore = void 0;
+class AppRouterStore {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+    }
+    goToResourcesPage() {
+        const { appStore } = this.rootStore;
+        appStore.view = 'resources';
+    }
+    goToExportPage(resourceName) {
+        const { appStore } = this.rootStore;
+        appStore.pageProps.content = { resourceName };
+        appStore.view = 'export-page';
+    }
+    goToIntegrationsPage() {
+        const { appStore } = this.rootStore;
+        appStore.view = 'integrations';
+    }
+    goToIntegrationPage(integration) {
+        const { appStore, integrationStore } = this.rootStore;
+        integrationStore.setIntegration(integration);
+        appStore.view = 'integration';
+    }
+}
+exports.AppRouterStore = AppRouterStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/root/App/AppStorageStore.tsx":
+/*!****************************************************!*\
+  !*** ./extension/app/root/App/AppStorageStore.tsx ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppStorageStore = void 0;
+const common_extension_helpers_1 = __webpack_require__(/*! ../../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
+class AppStorageStore {
+    constructor() {
+        var _a, _b, _c, _d, _e, _f;
+        this.storage = {};
+        this.listener = () => {
+            this.init();
+        };
+        (_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().storage) === null || _a === void 0 ? void 0 : _a.onChanged) === null || _b === void 0 ? void 0 : _b.removeListener) === null || _c === void 0 ? void 0 : _c.call(_b, this.listener);
+        (_f = (_e = (_d = (0, common_extension_helpers_1.getBrowserContext)().storage) === null || _d === void 0 ? void 0 : _d.onChanged) === null || _e === void 0 ? void 0 : _e.addListener) === null || _f === void 0 ? void 0 : _f.call(_e, this.listener);
+        this.init();
+        (0, mobx_1.makeObservable)(this);
+    }
+    init() {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            (_a = (0, common_extension_helpers_1.getBrowserContext)().storage) === null || _a === void 0 ? void 0 : _a.local.get().then((result) => {
+                this.storage = result || {};
+            });
+        });
+    }
+}
+__decorate([
+    mobx_1.observable
+], AppStorageStore.prototype, "storage", void 0);
+exports.AppStorageStore = AppStorageStore;
+
+
+/***/ }),
+
 /***/ "./extension/app/root/App/AppStore.ts":
 /*!********************************************!*\
   !*** ./extension/app/root/App/AppStore.ts ***!
@@ -57474,6 +59452,11 @@ class AppStore {
         this.isExtensionOpen = false;
         this.rootElement = null;
         this.view = 'not-found';
+        this.pageProps = {
+            header: {},
+            content: {},
+            footer: {},
+        };
         this.setPosition();
         (0, mobx_1.makeObservable)(this);
     }
@@ -57522,7 +59505,7 @@ class AppStore {
         return this.left;
     }
     updatePositionValues(position) {
-        const { height, left, width, top } = position;
+        const { height, left, width, top, } = position;
         this.widthApp = width;
         this.heightApp = height;
         this.topPosition = top;
@@ -57535,7 +59518,7 @@ class AppStore {
         this.loadingKeys.push(key);
     }
     stopLoading(key) {
-        this.loadingKeys = this.loadingKeys.filter(k => k !== key);
+        this.loadingKeys = this.loadingKeys.filter((k) => k !== key);
     }
     isLoading(key) {
         return this.loadingKeys.includes(key);
@@ -57548,7 +59531,7 @@ class AppStore {
         if (!cachedPosition && position) {
             return this.updatePositionValues(position);
         }
-        this.updatePositionValues({
+        return this.updatePositionValues({
             top: 100,
             left: 100,
             width: 100,
@@ -57652,12 +59635,16 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const NotFoundContentView_1 = __webpack_require__(/*! ../../not-found/views/NotFoundContentView/NotFoundContentView */ "./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx");
-const IntegrationContentView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationContentView/IntegrationContentView */ "./extension/app/integrations/views/IntegrationContentView/IntegrationContentView.tsx");
+const IntegrationsContentView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationsContentView/IntegrationsContentView */ "./extension/app/integrations/views/IntegrationsContentView/IntegrationsContentView.tsx");
 const ResourcesContentView_1 = __webpack_require__(/*! ../../resources/views/ResourcesContentView/ResourcesContentView */ "./extension/app/resources/views/ResourcesContentView/ResourcesContentView.tsx");
 const FaqContentView_1 = __webpack_require__(/*! ../../faq/views/FaqContentView/FaqContentView */ "./extension/app/faq/views/FaqContentView/FaqContentView.tsx");
+const IntegrationContentView_1 = __webpack_require__(/*! ../../integration/views/IntegrationContentView */ "./extension/app/integration/views/IntegrationContentView/index.tsx");
+const ExportContentView_1 = __webpack_require__(/*! ../../export/views/ExportContentView */ "./extension/app/export/views/ExportContentView/index.tsx");
 exports.AppContent = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const { view } = (0, stores_1.useAppStore)();
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-content", ref: ref }, { children: [(0, jsx_runtime_1.jsx)(ResourcesContentView_1.ResourcesContentView, { className: view === 'resources' ? '' : 'invisible' }), view === 'not-found' && (0, jsx_runtime_1.jsx)(NotFoundContentView_1.NotFoundContentView, {}), view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationContentView_1.IntegrationContentView, {}), view === 'faq' && (0, jsx_runtime_1.jsx)(FaqContentView_1.FaqContentView, {})] })));
+    const appStore = (0, stores_1.useAppStore)();
+    const pageProps = appStore.pageProps.content;
+    appStore.pageProps.content = {};
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-content", ref: ref }, { children: [(0, jsx_runtime_1.jsx)(ResourcesContentView_1.ResourcesContentView, { className: appStore.view === 'resources' ? '' : 'invisible' }), appStore.view === 'not-found' && (0, jsx_runtime_1.jsx)(NotFoundContentView_1.NotFoundContentView, {}), appStore.view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationsContentView_1.IntegrationsContentView, {}), appStore.view === 'faq' && (0, jsx_runtime_1.jsx)(FaqContentView_1.FaqContentView, {}), appStore.view === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationContentView_1.IntegrationContentView, Object.assign({}, pageProps)), appStore.view === 'export-page' && (0, jsx_runtime_1.jsx)(ExportContentView_1.ExportContentView, Object.assign({}, pageProps))] })));
 }));
 
 
@@ -57677,12 +59664,16 @@ const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modul
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const IntegrationFooterView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationFooterView/IntegrationFooterView */ "./extension/app/integrations/views/IntegrationFooterView/IntegrationFooterView.tsx");
+const IntegrationsFooterView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationsFooterView/IntegrationsFooterView */ "./extension/app/integrations/views/IntegrationsFooterView/IntegrationsFooterView.tsx");
 const ResourcesFooterView_1 = __webpack_require__(/*! ../../resources/views/ResourcesFooterView/ResourcesFooterView */ "./extension/app/resources/views/ResourcesFooterView/ResourcesFooterView.tsx");
 const FaqFooterView_1 = __webpack_require__(/*! ../../faq/views/FaqFooterView/FaqFooterView */ "./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx");
+const IntegrationFooterView_1 = __webpack_require__(/*! ../../integration/views/IntegrationFooterView */ "./extension/app/integration/views/IntegrationFooterView/index.tsx");
+const ExportFooterView_1 = __webpack_require__(/*! ../../export/views/ExportFooterView */ "./extension/app/export/views/ExportFooterView/index.tsx");
 exports.AppFooter = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const { view } = (0, stores_1.useAppStore)();
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-footer", ref: ref }, { children: [view === 'resources' && (0, jsx_runtime_1.jsx)(ResourcesFooterView_1.ResourcesFooterView, {}), view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationFooterView_1.IntegrationFooterView, {}), view === 'faq' && (0, jsx_runtime_1.jsx)(FaqFooterView_1.FaqFooterView, {})] })));
+    const appStore = (0, stores_1.useAppStore)();
+    const pageProps = appStore.pageProps.footer;
+    appStore.pageProps.footer = {};
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-footer", ref: ref }, { children: [appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(ResourcesFooterView_1.ResourcesFooterView, {}), appStore.view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationsFooterView_1.IntegrationsFooterView, {}), appStore.view === 'faq' && (0, jsx_runtime_1.jsx)(FaqFooterView_1.FaqFooterView, {}), appStore.view === 'export-page' && (0, jsx_runtime_1.jsx)(ExportFooterView_1.ExportFooterView, {}), appStore.view === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationFooterView_1.IntegrationFooterView, Object.assign({}, pageProps))] })));
 }));
 
 
@@ -57700,22 +59691,25 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppHeader = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const CloseAppButton_1 = __webpack_require__(/*! ../CloseAppButton/CloseAppButton */ "./extension/app/root/CloseAppButton/CloseAppButton.tsx");
-const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const LogoIcon_1 = __webpack_require__(/*! ../../components/icons/LogoIcon/LogoIcon */ "./extension/app/components/icons/LogoIcon/LogoIcon.tsx");
 const ResourcesHeaderView_1 = __webpack_require__(/*! ../../resources/views/ResourcesHeaderView/ResourcesHeaderView */ "./extension/app/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx");
-const IntegrationHeaderView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationHeaderView/IntegrationHeaderView */ "./extension/app/integrations/views/IntegrationHeaderView/IntegrationHeaderView.tsx");
+const IntegrationsHeaderView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationsHeaderView/IntegrationsHeaderView */ "./extension/app/integrations/views/IntegrationsHeaderView/IntegrationsHeaderView.tsx");
 const FaqButton_1 = __webpack_require__(/*! ../../faq/FaqButton/FaqButton */ "./extension/app/faq/FaqButton/FaqButton.tsx");
 const FaqHeaderView_1 = __webpack_require__(/*! ../../faq/views/FaqHeaderView/FaqHeaderView */ "./extension/app/faq/views/FaqHeaderView/FaqHeaderView.tsx");
 const AppLink_1 = __webpack_require__(/*! ../../components/links/AppLink/AppLink */ "./extension/app/components/links/AppLink/AppLink.tsx");
 const SettingsButton_1 = __webpack_require__(/*! ../../integrations/SettingsButton/SettingsButton */ "./extension/app/integrations/SettingsButton/SettingsButton.tsx");
 const ExportButton_1 = __webpack_require__(/*! ../../resources/ExportButton/ExportButton */ "./extension/app/resources/ExportButton/ExportButton.tsx");
+const IntegrationHeaderView_1 = __webpack_require__(/*! ../../integration/views/IntegrationHeaderView */ "./extension/app/integration/views/IntegrationHeaderView/index.tsx");
+const ExportHeaderView_1 = __webpack_require__(/*! ../../export/views/ExportHeaderView */ "./extension/app/export/views/ExportHeaderView/index.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/root/AppHeader/styles.scss");
 exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
     const isPlatform = !!(0, stores_1.usePlatformStore)().getID();
     const appStore = (0, stores_1.useAppStore)();
+    appStore.pageProps.header = {};
     const dragElementRef = (0, react_1.useRef)(null);
     (0, react_1.useEffect)(() => {
         appStore.dragElementRef = dragElementRef;
@@ -57727,8 +59721,10 @@ exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, 
                                     appStore.loadingKeys.length > 0 ? '' : 'invisible',
                                 ]) })] })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "group" }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-wrapper" }, { children: [isPlatform
                                     && appStore.view !== 'integrations'
+                                    && appStore.view !== 'integration'
+                                    && appStore.view !== 'export-page'
                                     && appStore.view !== 'faq' && (0, jsx_runtime_1.jsx)(ExportButton_1.ExportButton, {}), appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(SettingsButton_1.SettingsButton, {}), appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(FaqButton_1.FaqButton, {}), (appStore.view === 'resources'
-                                    || appStore.view === 'not-found') && (0, jsx_runtime_1.jsx)(CloseAppButton_1.CloseAppButton, {})] })) }))] })), appStore.view === 'resources' && ((0, jsx_runtime_1.jsx)(ResourcesHeaderView_1.ResourcesHeaderView, {})), appStore.view === 'integrations' && ((0, jsx_runtime_1.jsx)(IntegrationHeaderView_1.IntegrationHeaderView, {})), appStore.view === 'faq' && ((0, jsx_runtime_1.jsx)(FaqHeaderView_1.FaqHeaderView, {}))] })));
+                                    || appStore.view === 'not-found') && (0, jsx_runtime_1.jsx)(CloseAppButton_1.CloseAppButton, {})] })) }))] })), appStore.view === 'integration' && ((0, jsx_runtime_1.jsx)(IntegrationHeaderView_1.IntegrationHeaderView, {})), appStore.view === 'resources' && ((0, jsx_runtime_1.jsx)(ResourcesHeaderView_1.ResourcesHeaderView, {})), appStore.view === 'integrations' && ((0, jsx_runtime_1.jsx)(IntegrationsHeaderView_1.IntegrationsHeaderView, {})), appStore.view === 'export-page' && (0, jsx_runtime_1.jsx)(ExportHeaderView_1.ExportHeaderView, {}), appStore.view === 'faq' && ((0, jsx_runtime_1.jsx)(FaqHeaderView_1.FaqHeaderView, {}))] })));
 }));
 
 
@@ -57797,13 +59793,23 @@ const ResourceStore_1 = __webpack_require__(/*! ../resources/stores/ResourceStor
 const PlatformStore_1 = __webpack_require__(/*! ../resources/stores/PlatformStore */ "./extension/app/resources/stores/PlatformStore.ts");
 const IntegrationsStore_1 = __webpack_require__(/*! ../integrations/stores/IntegrationsStore */ "./extension/app/integrations/stores/IntegrationsStore.ts");
 const ResourcesSelectionStore_1 = __webpack_require__(/*! ../resources/stores/ResourcesSelectionStore */ "./extension/app/resources/stores/ResourcesSelectionStore.ts");
+const AppRouterStore_1 = __webpack_require__(/*! ../root/App/AppRouterStore */ "./extension/app/root/App/AppRouterStore.ts");
+const IntegrationStore_1 = __webpack_require__(/*! ../integration/stores/IntegrationStore */ "./extension/app/integration/stores/IntegrationStore.ts");
+const AppMessageStore_1 = __webpack_require__(/*! ../root/App/AppMessageStore */ "./extension/app/root/App/AppMessageStore.ts");
+const store_1 = __webpack_require__(/*! ../components/extends/WithForm/store */ "./extension/app/components/extends/WithForm/store.ts");
+const AppStorageStore_1 = __webpack_require__(/*! ../root/App/AppStorageStore */ "./extension/app/root/App/AppStorageStore.tsx");
 class RootStore {
     constructor() {
         this.appStore = new AppStore_1.AppStore();
+        this.appMessageStore = new AppMessageStore_1.AppMessageStore();
         this.integrationsStore = new IntegrationsStore_1.IntegrationsStore();
+        this.formStore = new store_1.WithFormStore();
+        this.appStorageStore = new AppStorageStore_1.AppStorageStore();
+        this.integrationStore = new IntegrationStore_1.IntegrationStore(this);
         this.resourceStore = new ResourceStore_1.ResourceStore(this);
         this.platformStore = new PlatformStore_1.PlatformStore(this);
         this.resourcesSelectionStore = new ResourcesSelectionStore_1.ResourcesSelectionStore(this);
+        this.appRouterStore = new AppRouterStore_1.AppRouterStore(this);
     }
 }
 exports.RootStore = RootStore;
@@ -57820,7 +59826,7 @@ exports.RootStore = RootStore;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.rootStore = exports.useIntegrationsStore = exports.useResourcesSelectionStore = exports.usePlatformStore = exports.useResourceStore = exports.useAppStore = exports.useRootStore = exports.RootStoreContext = void 0;
+exports.rootStore = exports.useIntegrationStore = exports.useIntegrationsStore = exports.useResourcesSelectionStore = exports.usePlatformStore = exports.useResourceStore = exports.useFormStore = exports.useAppMessageStore = exports.useAppStorageStore = exports.useAppRouterStore = exports.useAppStore = exports.useRootStore = exports.RootStoreContext = void 0;
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
 const RootStore_1 = __webpack_require__(/*! ./RootStore */ "./extension/app/stores/RootStore.ts");
@@ -57837,6 +59843,26 @@ const useAppStore = () => {
     return rootStore.appStore;
 };
 exports.useAppStore = useAppStore;
+const useAppRouterStore = () => {
+    const rootStore = (0, exports.useRootStore)();
+    return rootStore.appRouterStore;
+};
+exports.useAppRouterStore = useAppRouterStore;
+const useAppStorageStore = () => {
+    const rootStore = (0, exports.useRootStore)();
+    return rootStore.appStorageStore;
+};
+exports.useAppStorageStore = useAppStorageStore;
+const useAppMessageStore = () => {
+    const rootStore = (0, exports.useRootStore)();
+    return rootStore.appMessageStore;
+};
+exports.useAppMessageStore = useAppMessageStore;
+const useFormStore = () => {
+    const rootStore = (0, exports.useRootStore)();
+    return rootStore.formStore;
+};
+exports.useFormStore = useFormStore;
 const useResourceStore = () => {
     const rootStore = (0, exports.useRootStore)();
     return rootStore.resourceStore;
@@ -57857,6 +59883,11 @@ const useIntegrationsStore = () => {
     return rootStore.integrationsStore;
 };
 exports.useIntegrationsStore = useIntegrationsStore;
+const useIntegrationStore = () => {
+    const rootStore = (0, exports.useRootStore)();
+    return rootStore.integrationStore;
+};
+exports.useIntegrationStore = useIntegrationStore;
 exports.rootStore = new RootStore_1.RootStore();
 
 
@@ -57906,8 +59937,9 @@ var MessageToApp;
     MessageToApp["AppSendToBackground"] = "AppSendToBackground";
     MessageToApp["AppSendMessageOutside"] = "AppSendMessageOutside";
     MessageToApp["AppSetDebugMode"] = "AppSetDebugMode";
+    MessageToApp["AppGetIntegrationWorkResult"] = "AppGetIntegrationWorkResult";
 })(MessageToApp = exports.MessageToApp || (exports.MessageToApp = {}));
-Object.values(MessageToApp).forEach(type => {
+Object.values(MessageToApp).forEach((type) => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
         throw new Error(`Wrong app message type "${type}"`);
     }
@@ -57940,8 +59972,9 @@ var MessageToBackground;
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
     MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
+    MessageToBackground["BGIntegrationWork"] = "BGIntegrationWork";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
-Object.values(MessageToBackground).forEach(type => {
+Object.values(MessageToBackground).forEach((type) => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
         throw new Error(`Wrong background message type "${type}"`);
     }
@@ -58387,7 +60420,69 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.3.1";
+exports.version = "1.4.0";
+
+
+/***/ }),
+
+/***/ "./extension/common/extension-storage.ts":
+/*!***********************************************!*\
+  !*** ./extension/common/extension-storage.ts ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getData = exports.saveData = void 0;
+const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const saveData = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
+    try {
+        const result = yield new Promise((resolve, reject) => {
+            context.storage.local.set(data, () => {
+                var _a;
+                if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
+                    reject(context.runtime.lastError);
+                }
+                resolve({});
+            });
+        });
+        return { data: result };
+    }
+    catch (e) {
+        return { error: e };
+    }
+});
+exports.saveData = saveData;
+const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
+    try {
+        const result = yield new Promise((resolve, reject) => {
+            context.storage.local.get([key], (r) => {
+                var _a;
+                if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
+                    reject(context.runtime.lastError);
+                }
+                resolve(r);
+            });
+        });
+        return { data: result };
+    }
+    catch (e) {
+        return { error: e };
+    }
+});
+exports.getData = getData;
 
 
 /***/ }),
@@ -58401,7 +60496,7 @@ exports.version = "1.3.1";
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.setVersion = exports.getVersion = exports.restoreIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.getFieldsNames = exports.setFieldsNames = exports.fieldsNamesStorageKey = exports.versionStorageKey = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
+exports.setVersion = exports.getVersion = exports.restoreIntegrations = exports.isStoredIntegrations = exports.getIntegrations = exports.setIntegrations = exports.getPosition = exports.setPosition = exports.getWatchers = exports.setWatchers = exports.getFieldsNames = exports.setFieldsNames = exports.fieldsNamesStorageKey = exports.versionStorageKey = exports.integrationsStorageKey = exports.positionStorageKey = exports.watchersLocalStorageKey = void 0;
 const integrations_1 = __webpack_require__(/*! ../app/integrations/integrations */ "./extension/app/integrations/integrations.ts");
 exports.watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 exports.positionStorageKey = 'the-prime-hunt--extension--position';
@@ -58480,6 +60575,15 @@ const getIntegrations = () => {
     }
 };
 exports.getIntegrations = getIntegrations;
+const isStoredIntegrations = () => {
+    try {
+        return JSON.parse(localStorage.getItem(exports.integrationsStorageKey) || '').length > 0;
+    }
+    catch (e) {
+        return false;
+    }
+};
+exports.isStoredIntegrations = isStoredIntegrations;
 const restoreIntegrations = () => {
     (0, exports.setIntegrations)(integrations_1.integrations);
     return integrations_1.integrations;
@@ -59985,6 +62089,418 @@ Object.values(MessageToInline).forEach(type => {
 
 /***/ }),
 
+/***/ "./extension/integrations/index.ts":
+/*!*****************************************!*\
+  !*** ./extension/integrations/index.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getIntegrationModel = void 0;
+const model_1 = __webpack_require__(/*! ./openCTI/model */ "./extension/integrations/openCTI/model.ts");
+const getIntegrationModel = (type) => {
+    if (type === 'openCTI') {
+        return (0, model_1.getOpenCTIModel)();
+    }
+    return null;
+};
+exports.getIntegrationModel = getIntegrationModel;
+
+
+/***/ }),
+
+/***/ "./extension/integrations/openCTI/model.ts":
+/*!*************************************************!*\
+  !*** ./extension/integrations/openCTI/model.ts ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getOpenCTIModel = exports.OpenCTIModel = void 0;
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const integrations_store_1 = __webpack_require__(/*! ../../app/integrations/integrations-store */ "./extension/app/integrations/integrations-store.ts");
+class OpenCTIModel {
+    request(query, input = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data: storageData } = yield this.getStorage();
+            if (!(storageData === null || storageData === void 0 ? void 0 : storageData.key) || !(storageData === null || storageData === void 0 ? void 0 : storageData.server)) {
+                return Promise.resolve({
+                    error: new Error('api key or server url are not set'),
+                });
+            }
+            const serverUrl = storageData.server;
+            const apiKey = storageData.key;
+            return new Promise((resolve) => {
+                Http_1.http.post({
+                    url: serverUrl,
+                    body: JSON.stringify({ query, variables: { input } }),
+                    headers: {
+                        Authorization: `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                }, {
+                    onJSONSuccess: (response) => {
+                        var _a, _b, _c;
+                        if (response.errors || response.error) {
+                            const messages = (response.errors || [response.error]);
+                            const message = ((_b = (_a = messages === null || messages === void 0 ? void 0 : messages[0]) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.reason)
+                                || ((_c = messages === null || messages === void 0 ? void 0 : messages[0]) === null || _c === void 0 ? void 0 : _c.message)
+                                || 'Something went wrong';
+                            resolve({
+                                error: new Error(message),
+                            });
+                        }
+                        resolve({ data: response === null || response === void 0 ? void 0 : response.data });
+                    },
+                    onError: (e) => {
+                        resolve({ error: e });
+                    },
+                });
+            });
+        });
+    }
+    getTypeById(id) {
+        var _a, _b, _c;
+        const normalizedID = (_c = (_a = id === null || id === void 0 ? void 0 : id.trim) === null || _a === void 0 ? void 0 : (_b = _a.call(id)).toLowerCase) === null || _c === void 0 ? void 0 : _c.call(_b);
+        if (normalizedID === 'email-addr') {
+            return 'email';
+        }
+        if (normalizedID === 'md5') {
+            return 'md5';
+        }
+        if (normalizedID === 'sha1') {
+            return 'sha1';
+        }
+        if (normalizedID === 'sha256') {
+            return 'sha256';
+        }
+        if (normalizedID === 'sha512') {
+            return 'sha512';
+        }
+        if (normalizedID === 'ipv4-addr') {
+            return 'ipv4';
+        }
+        if (normalizedID === 'ipv6-addr') {
+            return 'ipv6';
+        }
+        if (normalizedID === 'mac-addr') {
+            return 'mac-address';
+        }
+        if (normalizedID === 'url') {
+            return 'url';
+        }
+        if (normalizedID === 'domain-name') {
+            return 'domain-name';
+        }
+        return 'unknown';
+    }
+    getPattern(name, type) {
+        if (type === 'email') {
+            return `[email-addr:value = '${name}']`;
+        }
+        if (type === 'md5') {
+            return `[file:hashes.MD5 = '${name}']`;
+        }
+        if (type === 'sha1') {
+            return `[file:hashes.'SHA-1' = '${name}']`;
+        }
+        if (type === 'sha256') {
+            return `[file:hashes.'SHA-256' = '${name}']`;
+        }
+        if (type === 'sha512') {
+            return `[file:hashes.'SHA-512' = '${name}']`;
+        }
+        if (type === 'url') {
+            return `[url:value = '${name}']`;
+        }
+        if (type === 'ipv4') {
+            return `[ipv4-addr:value = '${name}']`;
+        }
+        if (type === 'ipv6') {
+            return `[ipv6-addr:value = '${name}']`;
+        }
+        if (type === 'mac-address') {
+            return `[mac-addr:value = '${name}']`;
+        }
+        if (type === 'domain-name') {
+            return `[domain-name:value = '${name}']`;
+        }
+        return name;
+    }
+    checkConnection() {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.request('{me{api_token}}');
+            if (typeof response.error !== 'undefined') {
+                return response;
+            }
+            const { data } = yield this.getStorage();
+            if (((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.me) === null || _b === void 0 ? void 0 : _b.api_token) !== (data === null || data === void 0 ? void 0 : data.key)) {
+                return Promise.resolve({ error: new Error('Wrong API Key') });
+            }
+            return response;
+        });
+    }
+    exportData(data) {
+        var _a, _b, _c, _d, _e;
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!data.name
+                || !data.pattern) {
+                return Promise.resolve({
+                    error: new Error('Mandatory fields are empty'),
+                });
+            }
+            let type = (_b = (((_a = ((data === null || data === void 0 ? void 0 : data.x_opencti_main_observable_type) || [])) === null || _a === void 0 ? void 0 : _a.map((type) => {
+                return (type === null || type === void 0 ? void 0 : type.id) || undefined;
+            }).filter(Boolean)) || [])) === null || _b === void 0 ? void 0 : _b[0];
+            if (type === 'md5'
+                || type === 'sha1'
+                || type === 'sha256'
+                || type === 'sha512') {
+                type = 'StixFile';
+            }
+            return this.request(`
+        mutation IndicatorCreationMutation($input: IndicatorAddInput!) {
+          indicatorAdd(input: $input) {
+            id
+            name
+            description
+            entity_type
+            parent_types
+            ...IndicatorLine_node
+          }
+        }
+        fragment IndicatorLine_node on Indicator {
+          id
+          entity_type
+          name
+          pattern_type
+          valid_from
+          valid_until
+          x_opencti_score
+          x_opencti_main_observable_type
+          created
+          confidence
+          createdBy {
+            __typename
+            __isIdentity: __typename
+            id
+            name
+            entity_type
+          }
+          objectMarking {
+            edges {
+              node {
+                id
+                definition_type
+                definition
+                x_opencti_order
+                x_opencti_color
+              }
+            }
+          }
+          objectLabel {
+            edges {
+              node {
+                id
+                value
+                color
+              }
+            }
+          }
+          creators {
+            id
+            name
+          }
+        }
+      `, {
+                name: data.name,
+                confidence: 70,
+                indicator_types: ((_c = ((data === null || data === void 0 ? void 0 : data.indicator_types) || [])) === null || _c === void 0 ? void 0 : _c.map((indicator) => {
+                    return (indicator === null || indicator === void 0 ? void 0 : indicator.id) || undefined;
+                }).filter(Boolean)) || [],
+                pattern: data.pattern,
+                pattern_type: 'stix',
+                x_opencti_main_observable_type: type,
+                x_mitre_platforms: [],
+                valid_from: null,
+                valid_until: null,
+                description: '',
+                objectMarking: ((_d = ((data === null || data === void 0 ? void 0 : data.objectMarking) || [])) === null || _d === void 0 ? void 0 : _d.map((markings) => {
+                    return (markings === null || markings === void 0 ? void 0 : markings.id) || undefined;
+                }).filter(Boolean)) || [],
+                killChainPhases: [],
+                objectLabel: ((_e = ((data === null || data === void 0 ? void 0 : data.objectLabel) || [])) === null || _e === void 0 ? void 0 : _e.map((labels) => {
+                    return (labels === null || labels === void 0 ? void 0 : labels.id) || undefined;
+                }).filter(Boolean)) || [],
+                externalReferences: [],
+                x_opencti_detection: !!(data === null || data === void 0 ? void 0 : data.x_opencti_detection),
+                x_opencti_score: 50,
+                createObservables: !!(data === null || data === void 0 ? void 0 : data.createObservables),
+            });
+        });
+    }
+    importData() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = {
+                labelsItems: [],
+                observableTypesItems: [],
+                vocabulariesItems: [],
+                allowedMarkersItems: [],
+            };
+            const result = yield this.request(`
+      {
+        subTypes(type: "Stix-Cyber-Observable") {
+          edges {
+            node {
+              id
+              label
+              workflowEnabled
+            }
+          }
+        }
+        labels {
+          edges {
+            node {
+              id
+              value
+            }
+          }
+        }
+        vocabularies(category: indicator_type_ov) {
+          edges {
+            node {
+              id,
+              name
+            }
+          }
+        }
+        me {
+          allowed_marking {
+            id,
+            definition
+          }
+        }
+      }
+    `);
+            if (result.data && ((_b = (_a = result.data) === null || _a === void 0 ? void 0 : _a.me) === null || _b === void 0 ? void 0 : _b.allowed_marking)) {
+                data.allowedMarkersItems = (((_d = (_c = result.data) === null || _c === void 0 ? void 0 : _c.me) === null || _d === void 0 ? void 0 : _d.allowed_marking) || [])
+                    .reduce((r, item) => {
+                    const { id, definition } = item || {};
+                    r.push({
+                        id, content: definition,
+                    });
+                    return r;
+                }, []);
+            }
+            if (result.data && ((_f = (_e = result.data) === null || _e === void 0 ? void 0 : _e.labels) === null || _f === void 0 ? void 0 : _f.edges)) {
+                data.labelsItems = (((_h = (_g = result.data) === null || _g === void 0 ? void 0 : _g.labels) === null || _h === void 0 ? void 0 : _h.edges) || [])
+                    .reduce((r, item) => {
+                    const { id, value } = (item === null || item === void 0 ? void 0 : item.node) || {};
+                    r.push({
+                        id, content: value,
+                    });
+                    return r;
+                }, []);
+            }
+            if (result.data && ((_k = (_j = result.data) === null || _j === void 0 ? void 0 : _j.vocabularies) === null || _k === void 0 ? void 0 : _k.edges)) {
+                data.vocabulariesItems = (((_m = (_l = result.data) === null || _l === void 0 ? void 0 : _l.vocabularies) === null || _m === void 0 ? void 0 : _m.edges) || [])
+                    .reduce((r, item) => {
+                    const { id, name } = (item === null || item === void 0 ? void 0 : item.node) || {};
+                    r.push({
+                        id, content: name,
+                    });
+                    return r;
+                }, []);
+            }
+            if (result.data && ((_p = (_o = result.data) === null || _o === void 0 ? void 0 : _o.subTypes) === null || _p === void 0 ? void 0 : _p.edges)) {
+                data.observableTypesItems = (((_r = (_q = result.data) === null || _q === void 0 ? void 0 : _q.subTypes) === null || _r === void 0 ? void 0 : _r.edges) || [])
+                    .reduce((r, item) => {
+                    var _a, _b, _c;
+                    const { id, label } = (item === null || item === void 0 ? void 0 : item.node) || {};
+                    const normalizedID = (_c = (_a = id === null || id === void 0 ? void 0 : id.trim) === null || _a === void 0 ? void 0 : (_b = _a.call(id)).toLowerCase) === null || _c === void 0 ? void 0 : _c.call(_b);
+                    if (normalizedID
+                        && (normalizedID === 'email-addr'
+                            || normalizedID === 'ipv4-addr'
+                            || normalizedID === 'ipv6-addr'
+                            || normalizedID === 'mac-addr'
+                            || normalizedID === 'url'
+                            || normalizedID === 'domain-name')) {
+                        r.push({
+                            id, content: label,
+                        });
+                    }
+                    if (normalizedID && normalizedID === 'stixfile') {
+                        return [
+                            ...r,
+                            {
+                                id: 'md5',
+                                content: 'File-MD5',
+                            },
+                            {
+                                id: 'sha1',
+                                content: 'File-SHA1',
+                            },
+                            {
+                                id: 'sha256',
+                                content: 'File-SHA256',
+                            },
+                            {
+                                id: 'sha512',
+                                content: 'File-SHA512',
+                            },
+                        ];
+                    }
+                    return r;
+                }, []);
+            }
+            return Promise.resolve({ data });
+        });
+    }
+    clearStorage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (0, integrations_store_1.setIntegrationData)('openCTI', {
+                key: '',
+                server: '',
+                isActive: false,
+                isValid: false,
+            });
+        });
+    }
+    getStorage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (0, integrations_store_1.getIntegrationData)('openCTI');
+        });
+    }
+    setStorage(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (0, integrations_store_1.setIntegrationData)('openCTI', data);
+        });
+    }
+}
+exports.OpenCTIModel = OpenCTIModel;
+const getOpenCTIModel = () => {
+    return new OpenCTIModel();
+};
+exports.getOpenCTIModel = getOpenCTIModel;
+
+
+/***/ }),
+
 /***/ "./extension/manifest/public-resources.ts":
 /*!************************************************!*\
   !*** ./extension/manifest/public-resources.ts ***!
@@ -60033,8 +62549,12 @@ const local_storage_1 = __webpack_require__(/*! ./common/local-storage */ "./ext
 const integrations_1 = __webpack_require__(/*! ./app/integrations/integrations */ "./extension/app/integrations/integrations.ts");
 const common_helpers_1 = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
 const envs_1 = __webpack_require__(/*! ./common/envs */ "./extension/common/envs.ts");
+const helpers_1 = __webpack_require__(/*! ../common/helpers */ "./common/helpers.ts");
 let needStoreIntegrations = false;
-const storedIntegrations = (0, local_storage_1.getIntegrations)();
+let storedIntegrations = (0, local_storage_1.getIntegrations)();
+if (!(0, local_storage_1.isStoredIntegrations)()) {
+    needStoreIntegrations = true;
+}
 const integrationsIDs = storedIntegrations.map((i) => i.id);
 const updateIntegrations = (integrations) => {
     integrations.forEach((integration) => {
@@ -60044,14 +62564,34 @@ const updateIntegrations = (integrations) => {
         }
     });
 };
+if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.0.2') === 'less') {
+    updateIntegrations(integrations_1.version__1_0_2);
+}
 if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.2.5') === 'less') {
     updateIntegrations(integrations_1.version__1_2_5);
 }
 if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.3.1') === 'less') {
     updateIntegrations(integrations_1.version__1_3_1);
 }
+if ((0, common_helpers_1.compareVersions)((0, local_storage_1.getVersion)(), '1.4.0') === 'less') {
+    const oldOpenCTIIntegration = storedIntegrations
+        .find((i) => i.id === 'open-cti');
+    updateIntegrations(integrations_1.version__1_4_0);
+    if (oldOpenCTIIntegration) {
+        storedIntegrations = storedIntegrations
+            .filter((i) => i.id !== 'open-cti');
+        needStoreIntegrations = true;
+    }
+    const newOpenCTIIntegrationIndex = storedIntegrations
+        .findIndex((i) => i.id === '$open-cti$');
+    if (oldOpenCTIIntegration && newOpenCTIIntegrationIndex > -1) {
+        storedIntegrations[newOpenCTIIntegrationIndex].url = oldOpenCTIIntegration.url;
+        storedIntegrations[newOpenCTIIntegrationIndex].name = oldOpenCTIIntegration.name;
+    }
+}
 if (needStoreIntegrations) {
-    (0, local_storage_1.setIntegrations)(storedIntegrations);
+    (0, local_storage_1.setIntegrations)(storedIntegrations
+        .sort((a, b) => (0, helpers_1.sortStrings)(b.name, a.name, 'ascending')));
 }
 (0, local_storage_1.setVersion)(envs_1.version);
 
@@ -60164,14 +62704,14 @@ const types_background_messages_1 = __webpack_require__(/*! ./background/types/t
 const helpers_1 = __webpack_require__(/*! ../common/helpers */ "./common/helpers.ts");
 const loggers_helpers_1 = __webpack_require__(/*! ./common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 const loggers_1 = __webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts");
-const isInsideIframe = (__webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts").isInsideIframe);
+const { isInsideIframe } = __webpack_require__(/*! ./common/common-helpers */ "./extension/common/common-helpers.ts");
 if (isInsideIframe()) {
     loggers_1.loggers.setPrefix((0, loggers_helpers_1.getDebugPrefix)('content'));
 }
 else {
     loggers_1.loggers.setPrefix((0, loggers_helpers_1.getDebugPrefix)('app'));
 }
-const sendMessageFromApp = (__webpack_require__(/*! ./content/services/content-services */ "./extension/content/services/content-services.ts").sendMessageFromApp);
+const { sendMessageFromApp } = __webpack_require__(/*! ./content/services/content-services */ "./extension/content/services/content-services.ts");
 const toggleShowExtension = (0, helpers_1.debounce)(() => {
     sendMessageFromApp({
         id: 'toggle-show-extension',

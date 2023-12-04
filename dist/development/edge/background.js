@@ -18751,33 +18751,33 @@ module.exports = ZStream;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.http = exports.Http = void 0;
 class Http {
-    request(url, params, callbacks) {
+    static request(url, params, callbacks) {
         const responseType = (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onJSONSuccess) ? 'json' : 'text';
         fetch(url, params)
-            .then(response => {
+            .then((response) => {
             return responseType === 'json'
                 ? response.json()
                 : response.text();
         })
-            .then(response => {
+            .then((response) => {
             var _a, _b;
             return responseType === 'json'
                 ? (_a = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onJSONSuccess) === null || _a === void 0 ? void 0 : _a.call(callbacks, response)
                 : (_b = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onTextSuccess) === null || _b === void 0 ? void 0 : _b.call(callbacks, response);
         })
-            .catch(e => {
+            .catch((e) => {
             var _a;
             (_a = callbacks === null || callbacks === void 0 ? void 0 : callbacks.onError) === null || _a === void 0 ? void 0 : _a.call(callbacks, e);
         });
     }
     get(params, callbacks) {
-        return this.request(params.url, {
+        return Http.request(params.url, {
             headers: (params === null || params === void 0 ? void 0 : params.headers) || {},
             method: 'GET',
         }, callbacks);
     }
     post(params, callbacks) {
-        return this.request(params.url, {
+        return Http.request(params.url, {
             headers: (params === null || params === void 0 ? void 0 : params.headers) || {},
             method: 'POST',
             body: params.body || '',
@@ -18836,13 +18836,17 @@ exports.Register = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isNotEmpty = exports.isString = void 0;
+exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isUrl = exports.isDomainName = exports.isMacAddress = exports.isIpV6 = exports.isIpV4 = exports.isSHA512 = exports.isSHA256 = exports.isSHA1 = exports.isMD5 = exports.isEmail = exports.isNotEmpty = exports.isNotEmptyArray = exports.isString = void 0;
 const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
 exports.isString = isString;
+const isNotEmptyArray = (arr) => {
+    return arr.length > 0;
+};
+exports.isNotEmptyArray = isNotEmptyArray;
 const isNotEmpty = (str) => {
     if (!(0, exports.isString)(str)) {
         return false;
@@ -18850,6 +18854,46 @@ const isNotEmpty = (str) => {
     return str.trim() !== '';
 };
 exports.isNotEmpty = isNotEmpty;
+const isEmail = (email) => {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+};
+exports.isEmail = isEmail;
+const isMD5 = (md5) => {
+    return /^[a-f0-9]{32}$/.test(md5);
+};
+exports.isMD5 = isMD5;
+const isSHA1 = (sha1) => {
+    return /^[a-fA-F0-9]{40}$/.test(sha1);
+};
+exports.isSHA1 = isSHA1;
+const isSHA256 = (sha256) => {
+    return /^[a-fA-F0-9]{64}$/.test(sha256);
+};
+exports.isSHA256 = isSHA256;
+const isSHA512 = (sha512) => {
+    return /^[a-fA-F0-9]{128}$/.test(sha512);
+};
+exports.isSHA512 = isSHA512;
+const isIpV4 = (ip) => {
+    return /(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/.test(ip);
+};
+exports.isIpV4 = isIpV4;
+const isIpV6 = (ip) => {
+    return /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/.test(ip);
+};
+exports.isIpV6 = isIpV6;
+const isMacAddress = (address) => {
+    return /^[a-fA-F0-9]{2}([:|-][a-fA-F0-9]{2}){5}$/.test(address);
+};
+exports.isMacAddress = isMacAddress;
+const isDomainName = (domainName) => {
+    return /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/.test(domainName);
+};
+exports.isDomainName = isDomainName;
+const isUrl = (url) => {
+    return /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(url);
+};
+exports.isUrl = isUrl;
 const isNumberInString = (str) => {
     if (typeof str === 'number') {
         return true;
@@ -18875,7 +18919,7 @@ const isAllowedProtocol = (protocol, mode) => {
 exports.isAllowedProtocol = isAllowedProtocol;
 const isDate = (value) => {
     return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
-        ? parseInt(value)
+        ? parseInt(value, 10)
         : value).getTime() > 567982800000;
 };
 exports.isDate = isDate;
@@ -18908,7 +18952,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -19078,6 +19122,13 @@ const getUrlParamsSafe = (url, paramName) => {
     }
 };
 exports.getUrlParamsSafe = getUrlParamsSafe;
+const serializeDataInResult = (result) => {
+    if (result.error && typeof result.error !== 'string') {
+        result.error = result.error.message;
+    }
+    return result;
+};
+exports.serializeDataInResult = serializeDataInResult;
 
 
 /***/ }),
@@ -19106,6 +19157,51 @@ var LogLevel;
 })(LogLevel = exports.LogLevel || (exports.LogLevel = {}));
 const mapType = (struct) => struct;
 exports.mapType = mapType;
+
+
+/***/ }),
+
+/***/ "./extension/app/integrations/integrations-store.ts":
+/*!**********************************************************!*\
+  !*** ./extension/app/integrations/integrations-store.ts ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getIntegrationData = exports.setIntegrationData = exports.integrationGroupName = void 0;
+const extension_storage_1 = __webpack_require__(/*! ../../common/extension-storage */ "./extension/common/extension-storage.ts");
+exports.integrationGroupName = 'integrations';
+const setIntegrationData = (key, value) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    if (result.error) {
+        return result;
+    }
+    const data = result.data;
+    return (0, extension_storage_1.saveData)(Object.assign(Object.assign({}, data), { [exports.integrationGroupName]: Object.assign(Object.assign({}, (data[exports.integrationGroupName] || {})), { [key]: value }) }));
+});
+exports.setIntegrationData = setIntegrationData;
+const getIntegrationData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    if (result.error) {
+        return result;
+    }
+    return {
+        data: ((_b = (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a[exports.integrationGroupName]) === null || _b === void 0 ? void 0 : _b[key]) || {},
+    };
+});
+exports.getIntegrationData = getIntegrationData;
 
 
 /***/ }),
@@ -19154,8 +19250,9 @@ var MessageToApp;
     MessageToApp["AppSendToBackground"] = "AppSendToBackground";
     MessageToApp["AppSendMessageOutside"] = "AppSendMessageOutside";
     MessageToApp["AppSetDebugMode"] = "AppSetDebugMode";
+    MessageToApp["AppGetIntegrationWorkResult"] = "AppGetIntegrationWorkResult";
 })(MessageToApp = exports.MessageToApp || (exports.MessageToApp = {}));
-Object.values(MessageToApp).forEach(type => {
+Object.values(MessageToApp).forEach((type) => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'app') {
         throw new Error(`Wrong app message type "${type}"`);
     }
@@ -19182,12 +19279,15 @@ const types_background_messages_1 = __webpack_require__(/*! ./types/types-backgr
 const types_content_messages_1 = __webpack_require__(/*! ../content/types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
 const PlatformResolver_1 = __webpack_require__(/*! ./platforms/PlatformResolver */ "./extension/background/platforms/PlatformResolver.ts");
 const types_app_common_1 = __webpack_require__(/*! ../app/types/types-app-common */ "./extension/app/types/types-app-common.ts");
+const integrations_1 = __webpack_require__(/*! ../integrations */ "./extension/integrations/index.ts");
+const helpers_1 = __webpack_require__(/*! ../../common/helpers */ "./common/helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
 background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnExtensionIconClicked, (tab) => {
     if (!tab.id) {
-        return loggers
+        loggers
             .error()
             .log(`${types_background_common_1.BGListenerType.OnExtensionIconClicked}: there is no tab id`, tab);
+        return;
     }
     (0, background_services_1.sendMessageFromBackground)(tab.id, {
         type: types_app_messages_1.MessageToApp.AppShowExtension,
@@ -19208,9 +19308,10 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
 background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnMessage, (message, sender) => {
     var _a;
     if (!((_a = sender.tab) === null || _a === void 0 ? void 0 : _a.id)) {
-        return loggers
+        loggers
             .error()
             .log(`${types_background_common_1.BGListenerType.OnMessage} ${message.type}: there is no tab id`, sender, message);
+        return;
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGRunClearData === message.type, message, sender)) {
         (0, background_services_1.sendMessageFromBackground)(sender.tab.id, {
@@ -19308,6 +19409,44 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
             type: types_content_messages_1.MessageToContent.CSDirectMessageToInline,
             payload: message.payload,
         });
+    }
+    if ((0, common_listeners_1.isMessageMatched)(() => types_background_messages_1.MessageToBackground.BGIntegrationWork === message.type, message, sender)) {
+        const { processID, work, modelType, data, } = message.payload;
+        const tabID = sender.tab.id;
+        const model = (0, integrations_1.getIntegrationModel)(modelType);
+        const response = {
+            id: `${message.id}--${message.type}`,
+            type: types_app_messages_1.MessageToApp.AppGetIntegrationWorkResult,
+            payload: {
+                processID,
+                result: { error: new Error('Model not found') },
+            },
+        };
+        if (!model) {
+            (0, background_services_1.sendMessageFromBackground)(tabID, response);
+            return;
+        }
+        if (work === 'check-connection') {
+            model.checkConnection()
+                .then((result) => {
+                response.payload.result = (0, helpers_1.serializeDataInResult)(result);
+                (0, background_services_1.sendMessageFromBackground)(tabID, response);
+            });
+        }
+        if (work === 'export-data') {
+            model.exportData(data || {})
+                .then((result) => {
+                response.payload.result = (0, helpers_1.serializeDataInResult)(result);
+                (0, background_services_1.sendMessageFromBackground)(tabID, response);
+            });
+        }
+        if (work === 'import-data') {
+            model.importData()
+                .then((result) => {
+                response.payload.result = (0, helpers_1.serializeDataInResult)(result);
+                (0, background_services_1.sendMessageFromBackground)(tabID, response);
+            });
+        }
     }
 });
 loggers.debug().log('mounted');
@@ -19497,7 +19636,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
             return str;
         }
         let newStr = str;
-        (str.match(new RegExp(`${AmazonAthenaPlatform.replacementID}[0-9]+`, 'g')) || []).forEach(id => {
+        (str.match(new RegExp(`${AmazonAthenaPlatform.replacementID}[0-9]+`, 'g')) || []).forEach((id) => {
             newStr = newStr.split(id).join(AmazonAthenaPlatform.replacements.get(id));
         });
         return newStr;
@@ -19532,8 +19671,8 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
         normalizedValue = AmazonAthenaPlatform.replaceScopes(normalizedValue);
         return normalizedValue
             .split(', ')
-            .map(v => AmazonAthenaPlatform.replacements.get(v) || v)
-            .map(v => AmazonAthenaPlatform.repairStrWithReplacements(v.trim()).trim());
+            .map((v) => AmazonAthenaPlatform.replacements.get(v) || v)
+            .map((v) => AmazonAthenaPlatform.repairStrWithReplacements(v.trim()).trim());
     }
     static parseObj(value) {
         let str = AmazonAthenaPlatform.repairStrWithReplacements(value.trim()).trim();
@@ -19574,7 +19713,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
             return {
                 $$value$$: nValue,
                 $$array$$: (AmazonAthenaPlatform.getArrayObj(nValue) || [])
-                    .map(v => AmazonAthenaPlatform.parseObj(v)),
+                    .map((v) => AmazonAthenaPlatform.parseObj(v)),
             };
         }
         return AmazonAthenaPlatform.parseObj(nValue);
@@ -19585,7 +19724,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
             onIteration: (keyPath, key, value, prevKeyPath) => {
                 if (this.fieldsNames.has(keyPath)) {
                     const types = this.mapFieldNameToTypes.get(keyPath);
-                    types.forEach(t => {
+                    types.forEach((t) => {
                         if (typeof this.result[t] === 'undefined') {
                             this.result[t] = {};
                         }
@@ -19615,7 +19754,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
             const watchingResources = this.getWatchers(tabInfo);
             const { fields } = this;
             loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             this.result = {};
             this.mapFieldNameToTypes = mapFieldNameToTypes;
             this.fieldsNames = fieldsNames;
@@ -19633,7 +19772,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                     }
                     if (fieldsNames.has(label)) {
                         const types = mapFieldNameToTypes.get(label);
-                        types.forEach(t => {
+                        types.forEach((t) => {
                             if (typeof this.result[t] === 'undefined') {
                                 this.result[t] = {};
                             }
@@ -19641,7 +19780,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                         });
                     }
                     this.parse(AmazonAthenaPlatform.parseStruct(value), label)
-                        .forEach(fn => fields.add(fn));
+                        .forEach((fn) => fields.add(fn));
                 });
             });
             loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, this.result);
@@ -19665,10 +19804,10 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                     && !urlsProcessing.has(details.url)
                     && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
                     && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
-                    && AmazonAthenaPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && AmazonAthenaPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 const bodyBytes = details.requestBody.raw[0].bytes;
-                let bodyStr = new TextDecoder().decode(bodyBytes);
+                const bodyStr = new TextDecoder().decode(bodyBytes);
                 const parsedBodyData = (0, helpers_1.parseJSONSafe)(bodyStr, null);
                 if (parsedBodyData && !parsedBodyData.QueryExecutionId) {
                     return;
@@ -19681,7 +19820,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
             if (isMatched(() => {
                 return details.method === 'POST'
                     && !urlsProcessing.has(details.url)
-                    && AmazonAthenaPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && AmazonAthenaPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 const headers = details.requestHeaders.reduce((res, header) => {
                     res[header.name] = header.value;
@@ -19702,7 +19841,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                     }
                 };
                 AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
-                const url = details.url;
+                const { url } = details;
                 const cacheID = url;
                 Http_1.http.post({
                     url,
@@ -19722,7 +19861,7 @@ class AmazonAthenaPlatform extends AbstractBackgroundPlatform_1.AbstractBackgrou
                         this.lastResponse.set(cacheID, response);
                         removeAttached();
                     }),
-                    onError: e => {
+                    onError: (e) => {
                         loggers
                             .error()
                             .addPrefix('failed webRequest post')
@@ -21816,8 +21955,9 @@ var MessageToBackground;
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
     MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
+    MessageToBackground["BGIntegrationWork"] = "BGIntegrationWork";
 })(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
-Object.values(MessageToBackground).forEach(type => {
+Object.values(MessageToBackground).forEach((type) => {
     if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
         throw new Error(`Wrong background message type "${type}"`);
     }
@@ -22263,7 +22403,69 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.3.1";
+exports.version = "1.4.0";
+
+
+/***/ }),
+
+/***/ "./extension/common/extension-storage.ts":
+/*!***********************************************!*\
+  !*** ./extension/common/extension-storage.ts ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getData = exports.saveData = void 0;
+const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const saveData = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
+    try {
+        const result = yield new Promise((resolve, reject) => {
+            context.storage.local.set(data, () => {
+                var _a;
+                if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
+                    reject(context.runtime.lastError);
+                }
+                resolve({});
+            });
+        });
+        return { data: result };
+    }
+    catch (e) {
+        return { error: e };
+    }
+});
+exports.saveData = saveData;
+const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
+    try {
+        const result = yield new Promise((resolve, reject) => {
+            context.storage.local.get([key], (r) => {
+                var _a;
+                if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
+                    reject(context.runtime.lastError);
+                }
+                resolve(r);
+            });
+        });
+        return { data: result };
+    }
+    catch (e) {
+        return { error: e };
+    }
+});
+exports.getData = getData;
 
 
 /***/ }),
@@ -22469,6 +22671,418 @@ Object.values(MessageToContent).forEach(type => {
         throw new Error(`Wrong content message type "${type}"`);
     }
 });
+
+
+/***/ }),
+
+/***/ "./extension/integrations/index.ts":
+/*!*****************************************!*\
+  !*** ./extension/integrations/index.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getIntegrationModel = void 0;
+const model_1 = __webpack_require__(/*! ./openCTI/model */ "./extension/integrations/openCTI/model.ts");
+const getIntegrationModel = (type) => {
+    if (type === 'openCTI') {
+        return (0, model_1.getOpenCTIModel)();
+    }
+    return null;
+};
+exports.getIntegrationModel = getIntegrationModel;
+
+
+/***/ }),
+
+/***/ "./extension/integrations/openCTI/model.ts":
+/*!*************************************************!*\
+  !*** ./extension/integrations/openCTI/model.ts ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getOpenCTIModel = exports.OpenCTIModel = void 0;
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const integrations_store_1 = __webpack_require__(/*! ../../app/integrations/integrations-store */ "./extension/app/integrations/integrations-store.ts");
+class OpenCTIModel {
+    request(query, input = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data: storageData } = yield this.getStorage();
+            if (!(storageData === null || storageData === void 0 ? void 0 : storageData.key) || !(storageData === null || storageData === void 0 ? void 0 : storageData.server)) {
+                return Promise.resolve({
+                    error: new Error('api key or server url are not set'),
+                });
+            }
+            const serverUrl = storageData.server;
+            const apiKey = storageData.key;
+            return new Promise((resolve) => {
+                Http_1.http.post({
+                    url: serverUrl,
+                    body: JSON.stringify({ query, variables: { input } }),
+                    headers: {
+                        Authorization: `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                }, {
+                    onJSONSuccess: (response) => {
+                        var _a, _b, _c;
+                        if (response.errors || response.error) {
+                            const messages = (response.errors || [response.error]);
+                            const message = ((_b = (_a = messages === null || messages === void 0 ? void 0 : messages[0]) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.reason)
+                                || ((_c = messages === null || messages === void 0 ? void 0 : messages[0]) === null || _c === void 0 ? void 0 : _c.message)
+                                || 'Something went wrong';
+                            resolve({
+                                error: new Error(message),
+                            });
+                        }
+                        resolve({ data: response === null || response === void 0 ? void 0 : response.data });
+                    },
+                    onError: (e) => {
+                        resolve({ error: e });
+                    },
+                });
+            });
+        });
+    }
+    getTypeById(id) {
+        var _a, _b, _c;
+        const normalizedID = (_c = (_a = id === null || id === void 0 ? void 0 : id.trim) === null || _a === void 0 ? void 0 : (_b = _a.call(id)).toLowerCase) === null || _c === void 0 ? void 0 : _c.call(_b);
+        if (normalizedID === 'email-addr') {
+            return 'email';
+        }
+        if (normalizedID === 'md5') {
+            return 'md5';
+        }
+        if (normalizedID === 'sha1') {
+            return 'sha1';
+        }
+        if (normalizedID === 'sha256') {
+            return 'sha256';
+        }
+        if (normalizedID === 'sha512') {
+            return 'sha512';
+        }
+        if (normalizedID === 'ipv4-addr') {
+            return 'ipv4';
+        }
+        if (normalizedID === 'ipv6-addr') {
+            return 'ipv6';
+        }
+        if (normalizedID === 'mac-addr') {
+            return 'mac-address';
+        }
+        if (normalizedID === 'url') {
+            return 'url';
+        }
+        if (normalizedID === 'domain-name') {
+            return 'domain-name';
+        }
+        return 'unknown';
+    }
+    getPattern(name, type) {
+        if (type === 'email') {
+            return `[email-addr:value = '${name}']`;
+        }
+        if (type === 'md5') {
+            return `[file:hashes.MD5 = '${name}']`;
+        }
+        if (type === 'sha1') {
+            return `[file:hashes.'SHA-1' = '${name}']`;
+        }
+        if (type === 'sha256') {
+            return `[file:hashes.'SHA-256' = '${name}']`;
+        }
+        if (type === 'sha512') {
+            return `[file:hashes.'SHA-512' = '${name}']`;
+        }
+        if (type === 'url') {
+            return `[url:value = '${name}']`;
+        }
+        if (type === 'ipv4') {
+            return `[ipv4-addr:value = '${name}']`;
+        }
+        if (type === 'ipv6') {
+            return `[ipv6-addr:value = '${name}']`;
+        }
+        if (type === 'mac-address') {
+            return `[mac-addr:value = '${name}']`;
+        }
+        if (type === 'domain-name') {
+            return `[domain-name:value = '${name}']`;
+        }
+        return name;
+    }
+    checkConnection() {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.request('{me{api_token}}');
+            if (typeof response.error !== 'undefined') {
+                return response;
+            }
+            const { data } = yield this.getStorage();
+            if (((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.me) === null || _b === void 0 ? void 0 : _b.api_token) !== (data === null || data === void 0 ? void 0 : data.key)) {
+                return Promise.resolve({ error: new Error('Wrong API Key') });
+            }
+            return response;
+        });
+    }
+    exportData(data) {
+        var _a, _b, _c, _d, _e;
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!data.name
+                || !data.pattern) {
+                return Promise.resolve({
+                    error: new Error('Mandatory fields are empty'),
+                });
+            }
+            let type = (_b = (((_a = ((data === null || data === void 0 ? void 0 : data.x_opencti_main_observable_type) || [])) === null || _a === void 0 ? void 0 : _a.map((type) => {
+                return (type === null || type === void 0 ? void 0 : type.id) || undefined;
+            }).filter(Boolean)) || [])) === null || _b === void 0 ? void 0 : _b[0];
+            if (type === 'md5'
+                || type === 'sha1'
+                || type === 'sha256'
+                || type === 'sha512') {
+                type = 'StixFile';
+            }
+            return this.request(`
+        mutation IndicatorCreationMutation($input: IndicatorAddInput!) {
+          indicatorAdd(input: $input) {
+            id
+            name
+            description
+            entity_type
+            parent_types
+            ...IndicatorLine_node
+          }
+        }
+        fragment IndicatorLine_node on Indicator {
+          id
+          entity_type
+          name
+          pattern_type
+          valid_from
+          valid_until
+          x_opencti_score
+          x_opencti_main_observable_type
+          created
+          confidence
+          createdBy {
+            __typename
+            __isIdentity: __typename
+            id
+            name
+            entity_type
+          }
+          objectMarking {
+            edges {
+              node {
+                id
+                definition_type
+                definition
+                x_opencti_order
+                x_opencti_color
+              }
+            }
+          }
+          objectLabel {
+            edges {
+              node {
+                id
+                value
+                color
+              }
+            }
+          }
+          creators {
+            id
+            name
+          }
+        }
+      `, {
+                name: data.name,
+                confidence: 70,
+                indicator_types: ((_c = ((data === null || data === void 0 ? void 0 : data.indicator_types) || [])) === null || _c === void 0 ? void 0 : _c.map((indicator) => {
+                    return (indicator === null || indicator === void 0 ? void 0 : indicator.id) || undefined;
+                }).filter(Boolean)) || [],
+                pattern: data.pattern,
+                pattern_type: 'stix',
+                x_opencti_main_observable_type: type,
+                x_mitre_platforms: [],
+                valid_from: null,
+                valid_until: null,
+                description: '',
+                objectMarking: ((_d = ((data === null || data === void 0 ? void 0 : data.objectMarking) || [])) === null || _d === void 0 ? void 0 : _d.map((markings) => {
+                    return (markings === null || markings === void 0 ? void 0 : markings.id) || undefined;
+                }).filter(Boolean)) || [],
+                killChainPhases: [],
+                objectLabel: ((_e = ((data === null || data === void 0 ? void 0 : data.objectLabel) || [])) === null || _e === void 0 ? void 0 : _e.map((labels) => {
+                    return (labels === null || labels === void 0 ? void 0 : labels.id) || undefined;
+                }).filter(Boolean)) || [],
+                externalReferences: [],
+                x_opencti_detection: !!(data === null || data === void 0 ? void 0 : data.x_opencti_detection),
+                x_opencti_score: 50,
+                createObservables: !!(data === null || data === void 0 ? void 0 : data.createObservables),
+            });
+        });
+    }
+    importData() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = {
+                labelsItems: [],
+                observableTypesItems: [],
+                vocabulariesItems: [],
+                allowedMarkersItems: [],
+            };
+            const result = yield this.request(`
+      {
+        subTypes(type: "Stix-Cyber-Observable") {
+          edges {
+            node {
+              id
+              label
+              workflowEnabled
+            }
+          }
+        }
+        labels {
+          edges {
+            node {
+              id
+              value
+            }
+          }
+        }
+        vocabularies(category: indicator_type_ov) {
+          edges {
+            node {
+              id,
+              name
+            }
+          }
+        }
+        me {
+          allowed_marking {
+            id,
+            definition
+          }
+        }
+      }
+    `);
+            if (result.data && ((_b = (_a = result.data) === null || _a === void 0 ? void 0 : _a.me) === null || _b === void 0 ? void 0 : _b.allowed_marking)) {
+                data.allowedMarkersItems = (((_d = (_c = result.data) === null || _c === void 0 ? void 0 : _c.me) === null || _d === void 0 ? void 0 : _d.allowed_marking) || [])
+                    .reduce((r, item) => {
+                    const { id, definition } = item || {};
+                    r.push({
+                        id, content: definition,
+                    });
+                    return r;
+                }, []);
+            }
+            if (result.data && ((_f = (_e = result.data) === null || _e === void 0 ? void 0 : _e.labels) === null || _f === void 0 ? void 0 : _f.edges)) {
+                data.labelsItems = (((_h = (_g = result.data) === null || _g === void 0 ? void 0 : _g.labels) === null || _h === void 0 ? void 0 : _h.edges) || [])
+                    .reduce((r, item) => {
+                    const { id, value } = (item === null || item === void 0 ? void 0 : item.node) || {};
+                    r.push({
+                        id, content: value,
+                    });
+                    return r;
+                }, []);
+            }
+            if (result.data && ((_k = (_j = result.data) === null || _j === void 0 ? void 0 : _j.vocabularies) === null || _k === void 0 ? void 0 : _k.edges)) {
+                data.vocabulariesItems = (((_m = (_l = result.data) === null || _l === void 0 ? void 0 : _l.vocabularies) === null || _m === void 0 ? void 0 : _m.edges) || [])
+                    .reduce((r, item) => {
+                    const { id, name } = (item === null || item === void 0 ? void 0 : item.node) || {};
+                    r.push({
+                        id, content: name,
+                    });
+                    return r;
+                }, []);
+            }
+            if (result.data && ((_p = (_o = result.data) === null || _o === void 0 ? void 0 : _o.subTypes) === null || _p === void 0 ? void 0 : _p.edges)) {
+                data.observableTypesItems = (((_r = (_q = result.data) === null || _q === void 0 ? void 0 : _q.subTypes) === null || _r === void 0 ? void 0 : _r.edges) || [])
+                    .reduce((r, item) => {
+                    var _a, _b, _c;
+                    const { id, label } = (item === null || item === void 0 ? void 0 : item.node) || {};
+                    const normalizedID = (_c = (_a = id === null || id === void 0 ? void 0 : id.trim) === null || _a === void 0 ? void 0 : (_b = _a.call(id)).toLowerCase) === null || _c === void 0 ? void 0 : _c.call(_b);
+                    if (normalizedID
+                        && (normalizedID === 'email-addr'
+                            || normalizedID === 'ipv4-addr'
+                            || normalizedID === 'ipv6-addr'
+                            || normalizedID === 'mac-addr'
+                            || normalizedID === 'url'
+                            || normalizedID === 'domain-name')) {
+                        r.push({
+                            id, content: label,
+                        });
+                    }
+                    if (normalizedID && normalizedID === 'stixfile') {
+                        return [
+                            ...r,
+                            {
+                                id: 'md5',
+                                content: 'File-MD5',
+                            },
+                            {
+                                id: 'sha1',
+                                content: 'File-SHA1',
+                            },
+                            {
+                                id: 'sha256',
+                                content: 'File-SHA256',
+                            },
+                            {
+                                id: 'sha512',
+                                content: 'File-SHA512',
+                            },
+                        ];
+                    }
+                    return r;
+                }, []);
+            }
+            return Promise.resolve({ data });
+        });
+    }
+    clearStorage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (0, integrations_store_1.setIntegrationData)('openCTI', {
+                key: '',
+                server: '',
+                isActive: false,
+                isValid: false,
+            });
+        });
+    }
+    getStorage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (0, integrations_store_1.getIntegrationData)('openCTI');
+        });
+    }
+    setStorage(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (0, integrations_store_1.setIntegrationData)('openCTI', data);
+        });
+    }
+}
+exports.OpenCTIModel = OpenCTIModel;
+const getOpenCTIModel = () => {
+    return new OpenCTIModel();
+};
+exports.getOpenCTIModel = getOpenCTIModel;
 
 
 /***/ }),

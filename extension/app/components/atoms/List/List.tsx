@@ -1,22 +1,29 @@
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 
 export type ListProps = {
   items: {
     id: string;
-    content: React.ReactNode;
+    content: ReactNode;
+    isSelected?: boolean;
     onClick?: () => void
   }[];
+  noItemsMessage?: ReactNode;
   className?: string;
 };
 
 export const List = forwardRef<HTMLUListElement, ListProps>((
   {
+    noItemsMessage,
     className = '',
     items,
   },
   ref,
 ) => {
+  if (items.length < 1 && noItemsMessage) {
+    return <>{noItemsMessage}</>;
+  }
+
   return (
     <ul
       className={createClassName([
@@ -25,9 +32,19 @@ export const List = forwardRef<HTMLUListElement, ListProps>((
       ])}
       ref={ref}
     >
-      {items.map(({ id, content, onClick }) => {
+      {items.map(({
+        id, content, onClick, isSelected,
+      }) => {
         return (
-          <li className="list-item" key={id} onClick={onClick}>
+          <li
+            className={createClassName([
+              'list-item',
+              className,
+              isSelected ? 'selected' : '',
+            ])}
+            key={id}
+            onClick={onClick}
+          >
             {content}
           </li>
         );

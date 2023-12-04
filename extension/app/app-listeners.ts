@@ -6,7 +6,8 @@ import { rootStore } from './stores';
 import { LoadingKey } from './types/types-app-common';
 import { setWatchers } from '../common/local-storage';
 import {
-  ParsedDataPayload,
+  AsyncProcessPayload,
+  ParsedDataPayload, ResultProcessPayload,
   SendToBackgroundPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
@@ -164,6 +165,17 @@ const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
       rootStore.resourceStore.setWatchers(watchers);
       // TODO should be inside store
       setWatchers(watchers);
+    }
+
+    if (isMessageMatched(
+      () => MessageToApp.AppGetIntegrationWorkResult === message.type,
+      message,
+    )) {
+      const {
+        processID,
+        result,
+      } = message.payload as AsyncProcessPayload & ResultProcessPayload;
+      rootStore.appMessageStore.resolve(processID, result);
     }
   },
 );

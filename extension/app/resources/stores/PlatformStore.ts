@@ -32,7 +32,7 @@ export class PlatformStore {
   }
 
   setFieldsNames(fields: string[]) {
-    fields.forEach((f) => this.platform?.fields?.add?.(f));
+    fields?.forEach((f) => this.platform?.fields?.add?.(f));
   }
 
   saveFieldsNames(fields?: string[]) {

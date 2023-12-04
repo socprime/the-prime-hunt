@@ -1,4 +1,4 @@
-import { computed, makeObservable, observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { Integration } from '../integrations-types';
 import { formatString } from '../../../../common/helpers';
 import { getIntegrations, restoreIntegrations, setIntegrations } from '../../../common/local-storage';
@@ -6,11 +6,6 @@ import { getIntegrations, restoreIntegrations, setIntegrations } from '../../../
 export class IntegrationsStore {
   @observable
   public integrations: Integration[] = [];
-
-  @computed
-  public get emptyIntegration() {
-    return this.integrations.some((i) => !i.name || !i.url);
-  }
 
   private set() {
     this.integrations = getIntegrations();

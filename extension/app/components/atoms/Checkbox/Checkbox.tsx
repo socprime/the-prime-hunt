@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect, useState, forwardRef, MutableRefObject, useRef, useImperativeHandle,
+} from 'react';
 import { usePrevious } from '../../../app-hooks';
 import { createClassName } from '../../../../common/common-helpers';
 import './checkbox.scss';
@@ -15,7 +17,11 @@ export type CheckboxProps = {
   onClick?: (isChecked: boolean) => void;
 };
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+export type CheckboxRefs = {
+  elementRef: MutableRefObject<HTMLDivElement | null>;
+};
+
+export const Checkbox = forwardRef<CheckboxRefs, CheckboxProps>(({
   onStateChanged,
   content,
   disabled,
@@ -25,14 +31,20 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   uncheckIcon,
   title = '',
   className = '',
-}) => {
+}, refs) => {
   const [isChecked, setIsChecked] = useState(!!checked);
   const prevState = usePrevious(isChecked);
 
+  const elementRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+
+  useImperativeHandle(refs, () => {
+    return { elementRef };
+  });
+
   useEffect(() => {
     if (
-      typeof prevState !== 'undefined' &&
-      prevState !== isChecked
+      typeof prevState !== 'undefined'
+      && prevState !== isChecked
     ) {
       onStateChanged?.(isChecked);
     }
@@ -44,14 +56,21 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     }
   }, [checked]);
 
+  if (elementRef.current) {
+    (elementRef.current as any).checked = isChecked;
+  }
+
   return (
-    <div className={
-      createClassName([
-        'checkbox',
-        isChecked ? 'checked' : 'not-checked',
-        disabled ? 'disabled' : '',
-        className,
-      ])}
+    <div
+      ref={elementRef}
+      className={
+        createClassName([
+          'checkbox',
+          isChecked ? 'checked' : 'not-checked',
+          disabled ? 'disabled' : '',
+          className,
+        ])
+      }
     >
       <span
         className={createClassName([
@@ -76,4 +95,4 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       <div className="content" title={title}>{content}</div>
     </div>
   );
-};
+});

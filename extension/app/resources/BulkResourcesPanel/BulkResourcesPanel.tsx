@@ -8,7 +8,9 @@ import { List, ListProps } from '../../components/atoms/List/List';
 import { AppDropdown } from '../../components/dropdowns/AppDropdown/AppDropdown';
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
 import { AnimatedCopyIcon } from '../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon';
-import { useIntegrationsStore, usePlatformStore, useResourcesSelectionStore } from '../../stores';
+import {
+  useIntegrationsStore, usePlatformStore, useResourcesSelectionStore,
+} from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ModifyQueryPayload } from '../../../common/types/types-common-payloads';
 import { createClassName } from '../../../common/common-helpers';
@@ -99,15 +101,20 @@ export const BulkResourcesPanel: React.FC = observer(() => {
           disabled={disabled}
           animatedIcon
           onClick={onCopyIconClick}
-          icon={<AnimatedCopyIcon disabled={disabled} />}
         >
-          Copy
+          <AnimatedCopyIcon disabled={disabled} />
         </StaticButton>
-        <StaticButton disabled={disabled} onClick={() => onActionsClick('include')} icon={<PlusIcon />}>
-          Include
+        <StaticButton
+          disabled={disabled}
+          onClick={() => onActionsClick('include')}
+        >
+          <PlusIcon />
         </StaticButton>
-        <StaticButton disabled={disabled} onClick={() => onActionsClick('exclude')} icon={<MinusIcon />}>
-          Exclude
+        <StaticButton
+          disabled={disabled}
+          onClick={() => onActionsClick('exclude')}
+        >
+          <MinusIcon />
         </StaticButton>
         <StaticButton disabled={disabled} onClick={() => onActionsClick('show all')} icon={<SeeDocumentIcon />}>
           Show All Events

@@ -5,6 +5,8 @@
   color: $base-text-color-strong;
   padding: 8px 12px;
   border-radius: 4px;
+  font-size: 13px;
+  text-overflow: ellipsis;
 
   &.disabled {
     color: $base-disabled-text-color;
@@ -14,5 +16,8 @@
 .input-label {
   span {
     margin-bottom: 3px;
+  }
+  &.disabled {
+    color: $base-disabled-text-color;
   }
 }

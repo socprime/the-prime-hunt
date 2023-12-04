@@ -1,7 +1,24 @@
+import { MutableRefObject, ReactNode } from 'react';
+
 export enum Mode {
   production = 'production',
   development = 'development',
 }
+
+export type Value = string | boolean | unknown[] | Record<string, unknown>;
+export type ExpectedValue = Value | null;
+
+export type WithDependedChildren<I, Props = any> = I & {
+  children: (props: Props) => ReactNode;
+};
+export type ElementRef = MutableRefObject<HTMLElement | null>;
+export type GetValueFromElement = (elementRef?: ElementRef) => ExpectedValue;
+export type Validator = ((
+  value: ExpectedValue,
+  meta?: Meta,
+) => Promise<ValidationResult>);
+export type Validate = (types: ('change' | 'blur' | 'finish')[]) => Promise<ValidationResult>;
+export type Meta<T = unknown> = Record<string, T>;
 
 export type SortOrder = 'ascending' | 'descending';
 
@@ -10,6 +27,11 @@ export type SHA256 = string;
 export type UniqueHash = string;
 export type HTMLTextContent = string;
 export type AbsFilePath = string;
+export type AsyncResult<T = any> = {
+  error?: Error | string;
+  data?: T;
+  meta?: Record<string, any>;
+}
 
 export interface IdentifiedFunction extends Function {
   id: UniqueHash;

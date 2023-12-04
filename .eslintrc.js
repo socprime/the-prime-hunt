@@ -8,6 +8,7 @@ const extendAirBnBRules = [
 ];
 
 const javascriptRules = {
+  'no-continue': 1,
   'no-plusplus': 0,
   'arrow-body-style': 0,
   'no-nested-ternary': 0,
@@ -16,6 +17,7 @@ const javascriptRules = {
   'no-unused-vars': 1,
   'no-undef': 0,
   'no-shadow': 0,
+  'class-methods-use-this': 1,
   'no-use-before-define': 0,
   'global-require': 1,
   'import/order': 0,
@@ -23,6 +25,7 @@ const javascriptRules = {
   'import/extensions': 0,
   'import/no-extraneous-dependencies': 0,
   'import/no-relative-packages': 0,
+  'import/no-dynamic-require': 1,
 };
 
 const json = [
@@ -78,6 +81,7 @@ const typescript = [
       '@typescript-eslint/no-empty-function': 0,
       '@typescript-eslint/ban-ts-comment': 0,
       '@typescript-eslint/no-explicit-any': 1,
+      '@typescript-eslint/no-var-requires': 1,
     },
     plugins: ['@typescript-eslint'],
     settings: {
@@ -113,7 +117,7 @@ module.exports = {
     'package-lock.json',
     'node_modules',
     'storybook-static',
-    'tmp'
+    'tmp',
   ],
   overrides: [
     ...js,

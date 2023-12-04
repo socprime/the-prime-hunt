@@ -13,9 +13,10 @@ export enum MessageToApp {
   AppSendToBackground = 'AppSendToBackground',
   AppSendMessageOutside = 'AppSendMessageOutside',
   AppSetDebugMode = 'AppSetDebugMode',
+  AppGetIntegrationWorkResult = 'AppGetIntegrationWorkResult',
 }
 
-Object.values(MessageToApp).forEach(type => {
+Object.values(MessageToApp).forEach((type) => {
   if (getExecutingContextByMessageType(type) !== 'app') {
     throw new Error(`Wrong app message type "${type}"`);
   }

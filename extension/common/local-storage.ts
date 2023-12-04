@@ -105,6 +105,16 @@ export const getIntegrations = (): Integration[] => {
   }
 };
 
+export const isStoredIntegrations = (): boolean => {
+  try {
+    return JSON.parse(
+      localStorage.getItem(integrationsStorageKey) || '',
+    ).length > 0;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const restoreIntegrations = (): Integration[] => {
   setIntegrations(integrations);
   return integrations;

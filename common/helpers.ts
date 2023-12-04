@@ -1,5 +1,5 @@
 import { isObject } from './checkers';
-import { SortOrder } from './types';
+import { AsyncResult, SortOrder } from './types';
 
 export const isFlatObjectsEqual = (
   obj1: Record<string, unknown>,
@@ -205,4 +205,11 @@ export const getUrlParamsSafe = (url: unknown, paramName: string): string => {
   } catch (e) {
     return '';
   }
+};
+
+export const serializeDataInResult = (result: AsyncResult): AsyncResult => {
+  if (result.error && typeof result.error !== 'string') {
+    result.error = result.error.message;
+  }
+  return result;
 };

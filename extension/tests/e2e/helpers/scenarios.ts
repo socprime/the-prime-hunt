@@ -44,11 +44,11 @@ export const getTestData = (): NormalizedResources => {
 
   return {
     Accounts: {
-      'test0': ['account1', '2', 'test\\domain.com', '4', '"process.exe" -a -g https://some.site/some-page'],
-      'test2': ['account2', '2', '4'],
-      'test3': ['account3', 'test2', '4'],
-      'test4': ['account4', '2', 'test2', '4'],
-      'field': ['2'],
+      test0: ['account1', '2', 'test\\domain.com', '4', '"process.exe" -a -g https://some.site/some-page'],
+      test2: ['account2', '2', '4'],
+      test3: ['account3', 'test2', '4'],
+      test4: ['account4', '2', 'test2', '4'],
+      field: ['2'],
     },
   } as NormalizedResources;
 };

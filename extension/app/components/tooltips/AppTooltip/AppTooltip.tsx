@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { Tooltip, TooltipProps } from '../../atoms/Tooltip/Tooltip';
 import { createClassName } from '../../../../common/common-helpers';
 import { useAppStore } from '../../../stores';

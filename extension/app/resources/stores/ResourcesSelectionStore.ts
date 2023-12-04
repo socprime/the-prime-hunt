@@ -5,7 +5,9 @@ import {
   ResourceName,
   ResourceTypeID,
 } from '../resources-types';
-import { computed, action, makeObservable, observable } from 'mobx';
+import {
+  computed, action, makeObservable, observable,
+} from 'mobx';
 import { RootStore } from '../../stores/RootStore';
 
 export class ResourcesSelectionStore implements IResourceSelectionStore {
@@ -22,7 +24,10 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
 
   private countByTypeID(typeID: ResourceTypeID): number {
     return Array.from(this.selectedResourcesFields[typeID] || [])
-      .reduce((count, fieldName) => count += (this.selectedResources[typeID] || new Map()).get(fieldName)?.size || 0, 0);
+      .reduce((
+        count,
+        fieldName,
+      ) => count += (this.selectedResources[typeID] || new Map()).get(fieldName)?.size || 0, 0);
   }
 
   private unselectByTypeID(typeID: ResourceTypeID) {
@@ -71,7 +76,6 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
     }
   }
 
-
   @computed
   get normalisedSelected(): NormalizedParsedResources {
     return Array.from(this.selectedFields)
@@ -89,8 +93,8 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
   @computed
   get countAllSelected(): number {
     let result = 0;
-    Object.keys(this.selectedResources).forEach(typeID => {
-      result = result + this.countByTypeID(typeID);
+    Object.keys(this.selectedResources).forEach((typeID) => {
+      result += this.countByTypeID(typeID);
     });
     return result;
   }
@@ -99,7 +103,7 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
   get uniqueSelected(): ResourceName[] {
     return Array.from(
       Array.from(this.selectedFields).reduce((res, fieldName) => {
-        Array.from(this.selected.get(fieldName)!).forEach(v => res.add(v));
+        Array.from(this.selected.get(fieldName)!).forEach((v) => res.add(v));
         return res;
       }, new Set<string>()),
     );
@@ -150,7 +154,7 @@ export class ResourcesSelectionStore implements IResourceSelectionStore {
   }
 
   unselectAll() {
-    Object.keys(this.selectedResources).forEach(typeID => {
+    Object.keys(this.selectedResources).forEach((typeID) => {
       this.unselectByTypeID(typeID);
     });
     this.refreshSelections();

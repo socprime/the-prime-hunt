@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 import './collapsible.scss';
 
@@ -24,7 +26,9 @@ export const Collapsible: React.FC<React.PropsWithChildren<CollapsibleProps>> = 
 
   const getNewHeight = useCallback(() => {
     return Array.from(contentRef.current?.children || [])
-      .reduce((res, e) => res += (e as HTMLElement).offsetHeight, 0);
+      .reduce((res, e) => {
+        return res + (e as HTMLElement).offsetHeight;
+      }, 0);
   }, []);
 
   useEffect(() => {
@@ -33,7 +37,7 @@ export const Collapsible: React.FC<React.PropsWithChildren<CollapsibleProps>> = 
 
   useEffect(() => {
     if (!contentRef.current) {
-      return;
+      return () => {};
     }
     const oldWidth = contentRef.current!.offsetWidth;
     const contentObserver = new MutationObserver(() => {
@@ -69,7 +73,7 @@ export const Collapsible: React.FC<React.PropsWithChildren<CollapsibleProps>> = 
           disabled ? 'disabled' : '',
           className,
         ])}
-        onClick={e => {
+        onClick={(e) => {
           if (!children || disabled) {
             return;
           }

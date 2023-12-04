@@ -1,0 +1,27 @@
+.open-cti-export {
+  height: 100%;
+  width: calc(100% - 3px);
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    margin: 6px 0;
+  }
+
+  .dropdown,
+  .dropdown-opener {
+    width: 100%;
+  }
+
+  .observable-type {
+    width: 100%;
+  }
+}
+
+.dropdown-menu.form-dropdown-menu.open-cti-menu {
+  .list-item {
+    padding: 8px 12px;
+  }
+  max-height: 300px;
+  overflow-y: scroll;
+}

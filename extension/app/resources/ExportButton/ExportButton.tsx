@@ -9,7 +9,11 @@ import { useResourcesSelectionStore } from '../../stores';
 import './styles.scss';
 
 export const ExportButton: React.FC = observer(() => {
-  const { selectedResources, selectedResourcesFields, countAllSelected } = useResourcesSelectionStore();
+  const {
+    selectedResources,
+    selectedResourcesFields,
+    countAllSelected,
+  } = useResourcesSelectionStore();
 
   const onExportClick = useCallback(() => {
     if (countAllSelected < 1) {
@@ -18,9 +22,10 @@ export const ExportButton: React.FC = observer(() => {
     const rows: string[] = [
       'Type,Field,Value',
     ];
-    Object.keys(selectedResourcesFields).forEach(typeID => {
-      Array.from(selectedResourcesFields[typeID]).forEach(fieldName => {
-        Array.from(selectedResources[typeID].get(fieldName)!).forEach(value => {
+    Object.keys(selectedResourcesFields).forEach((typeID) => {
+      Array.from(selectedResourcesFields[typeID]).forEach((fieldName) => {
+        // TODO array.from is useless
+        Array.from(selectedResources[typeID].get(fieldName)!).forEach((value) => {
           rows.push([typeID, fieldName, value].join(','));
         });
       });

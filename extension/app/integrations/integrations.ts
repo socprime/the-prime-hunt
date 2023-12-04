@@ -1,6 +1,14 @@
 /* eslint-disable camelcase */
 import { Integration } from './integrations-types';
 
+export const version__1_4_0: Integration[] = [
+  {
+    id: '$open-cti$',
+    name: 'OpenCTI',
+    url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
+  },
+];
+
 export const version__1_2_5: Integration[] = [
   {
     id: '$cyber-chef$',
@@ -52,6 +60,19 @@ export const version__1_3_1: Integration[] = [
   },
 ];
 
+export const version__1_0_2: Integration[] = [
+  {
+    id: '$echo-trail',
+    name: 'EchoTrail',
+    url: 'https://www.echotrail.io/insights/search/$VALUE$',
+  },
+  {
+    id: '$ultimate-windows-security',
+    name: 'Ultimate Windows Security',
+    url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
+  },
+];
+
 export const integrations: Integration[] = [
   {
     id: 'virus-total',
@@ -68,21 +89,20 @@ export const integrations: Integration[] = [
     name: 'Anomali',
     url: 'https://ui.threatstream.com/search?status=active&multiSearchResults=true&value__re=.*$VALUE$.*',
   },
-  {
-    id: 'open-cti',
-    name: 'OpenCTI',
-    url: 'https://HOSTNAME:PORT/dashboard/observations/indicators?sortBy=created&orderAsc=false&searchTerm=$VALUE$',
-  },
-  {
-    id: '$echo-trail',
-    name: 'EchoTrail',
-    url: 'https://www.echotrail.io/insights/search/$VALUE$',
-  },
-  {
-    id: '$ultimate-windows-security',
-    name: 'Ultimate Windows Security',
-    url: 'https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=$VALUE$',
-  },
+  ...version__1_0_2,
   ...version__1_2_5,
   ...version__1_3_1,
+  ...version__1_4_0,
 ];
+
+export const fixed = integrations.reduce((res, integration) => {
+  if (integration.id[0] === '$') {
+    res.set(integration.id, integration);
+  }
+  return res;
+}, new Map<Integration['id'], Integration>());
+
+export const mappedIntegrations = integrations.reduce((res, integration) => {
+  res.set(integration.id, integration);
+  return res;
+}, new Map<Integration['id'], Integration>());

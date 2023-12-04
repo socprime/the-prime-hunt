@@ -33,7 +33,7 @@ export const ResourceList: React.FC<ResourceListProps> = memo(({
     <>
       <List
         className="resource-list"
-        items={items.map(item => {
+        items={items.map((item) => {
           return {
             id: item,
             content: (
@@ -51,7 +51,7 @@ export const ResourceList: React.FC<ResourceListProps> = memo(({
                     : item
                   }
                   checked={selectedItems.includes(item)}
-                  onStateChanged={isChecked => {
+                  onStateChanged={(isChecked) => {
                     if (isChecked) {
                       selectionStore.select(fieldName, item);
                     } else {

@@ -101,10 +101,26 @@ export class AppStore {
   public rootElement: HTMLElement | null = null;
 
   @observable
-  public view: 'resources' | 'not-found' | 'integrations' | 'faq' = 'not-found';
+  public view: 'resources'
+    | 'not-found'
+    | 'integrations'
+    | 'integration'
+    | 'export-page'
+    | 'faq' = 'not-found';
+
+  pageProps = {
+    header: {} as any,
+    content: {} as any,
+    footer: {} as any,
+  };
 
   private updatePositionValues(position: Position) {
-    const { height, left, width, top } = position;
+    const {
+      height,
+      left,
+      width,
+      top,
+    } = position;
     this.widthApp = width;
     this.heightApp = height;
     this.topPosition = top;
@@ -124,7 +140,7 @@ export class AppStore {
   }
 
   stopLoading(key: LoadingKey) {
-    this.loadingKeys = this.loadingKeys.filter(k => k !== key);
+    this.loadingKeys = this.loadingKeys.filter((k) => k !== key);
   }
 
   isLoading(key: LoadingKey) {
@@ -142,7 +158,7 @@ export class AppStore {
       return this.updatePositionValues(position);
     }
 
-    this.updatePositionValues({
+    return this.updatePositionValues({
       top: 100,
       left: 100,
       width: 100,

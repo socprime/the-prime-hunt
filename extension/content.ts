@@ -3,7 +3,7 @@ import { debounce } from '../common/helpers';
 import { getDebugPrefix } from './common/loggers/loggers-helpers';
 import { loggers } from './common/loggers';
 
-const isInsideIframe = require('./common/common-helpers').isInsideIframe;
+const { isInsideIframe } = require('./common/common-helpers');
 
 // TODO content not always inside iframe
 if (isInsideIframe()) {
@@ -12,7 +12,8 @@ if (isInsideIframe()) {
   loggers.setPrefix(getDebugPrefix('app'));
 }
 
-const sendMessageFromApp = require('./content/services/content-services').sendMessageFromApp;
+const { sendMessageFromApp } = require('./content/services/content-services');
+
 const toggleShowExtension = debounce(() => {
   sendMessageFromApp({
     id: 'toggle-show-extension',

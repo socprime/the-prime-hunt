@@ -1,4 +1,6 @@
-import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import React, {
+  useCallback, useLayoutEffect, useMemo, useRef,
+} from 'react';
 import { useAppStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { DraggableResizable } from '../../components/atoms/DragableResizable/DraggableResizable';
@@ -31,10 +33,10 @@ export const App: React.FC = observer(() => {
       return 'unset';
     }
     return (
-      wrapperRef.current.offsetHeight -
-      APP_PADDING * 2 -
-      headerRef.current.offsetHeight -
-      footerRef.current.offsetHeight
+      wrapperRef.current.offsetHeight
+      - APP_PADDING * 2
+      - headerRef.current.offsetHeight
+      - footerRef.current.offsetHeight
     );
   }, []);
 
@@ -72,13 +74,14 @@ export const App: React.FC = observer(() => {
     };
 
     const [observerHeader, observerFooter, observerWrapper] = ['header', 'footer', 'wrapper']
-      .map(elemName => new ResizeObserver(
+      .map((elemName) => new ResizeObserver(
         (entries) => {
           prevValuesHeight[elemName] = onHeightChangeCallback(entries, prevValuesHeight[elemName]);
           if (elemName === 'wrapper') {
             onWidthChangeCallback(entries);
           }
-        }));
+        },
+      ));
 
     observerHeader.observe(headerRef.current!);
     observerFooter.observe(footerRef.current!);

@@ -6,6 +6,7 @@
     "target": "ES6",
     "jsx": "react-jsx",
     "allowJs": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,
@@ -28,11 +29,13 @@
     "paths": {
       "@modules/*": ["@modules/*"],
       "@atoms/*": ["@libraries/atoms/*"],
-      "@libraries/*": ["@libraries/helpers/*"],
+      "@libraries/*": ["@libraries/*"],
       "@hooks/*": ["@libraries/hooks/*"]
     }
   },
   "exclude": [
+    "**/*.js",
+    "**/*.mjs",
     "node_modules",
     "tmp"
   ]

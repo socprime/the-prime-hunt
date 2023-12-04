@@ -1,16 +1,18 @@
 import { forwardRef, useEffect, useRef } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useAppStore, usePlatformStore } from '../../stores';
 import { CloseAppButton } from '../CloseAppButton/CloseAppButton';
-import { observer } from 'mobx-react-lite';
 import { createClassName } from '../../../common/common-helpers';
 import { LogoIcon } from '../../components/icons/LogoIcon/LogoIcon';
 import { ResourcesHeaderView } from '../../resources/views/ResourcesHeaderView/ResourcesHeaderView';
-import { IntegrationHeaderView } from '../../integrations/views/IntegrationHeaderView/IntegrationHeaderView';
+import { IntegrationsHeaderView } from '../../integrations/views/IntegrationsHeaderView/IntegrationsHeaderView';
 import { FaqButton } from '../../faq/FaqButton/FaqButton';
 import { FaqHeaderView } from '../../faq/views/FaqHeaderView/FaqHeaderView';
 import { AppLink } from '../../components/links/AppLink/AppLink';
 import { SettingsButton } from '../../integrations/SettingsButton/SettingsButton';
 import { ExportButton } from '../../resources/ExportButton/ExportButton';
+import { IntegrationHeaderView } from '../../integration/views/IntegrationHeaderView';
+import { ExportHeaderView } from '../../export/views/ExportHeaderView';
 import './styles.scss';
 
 export const AppHeader = observer(forwardRef<HTMLDivElement>((
@@ -19,9 +21,10 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
 ) => {
   const isPlatform = !!usePlatformStore().getID();
   const appStore = useAppStore();
+  appStore.pageProps.header = {};
 
   const dragElementRef = useRef<HTMLSpanElement>(null);
-  
+
   useEffect(() => {
     appStore.dragElementRef = dragElementRef;
   }, [appStore]);
@@ -50,6 +53,8 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
           <div className="buttons-wrapper">
             {isPlatform
               && appStore.view !== 'integrations'
+              && appStore.view !== 'integration'
+              && appStore.view !== 'export-page'
               && appStore.view !== 'faq' && <ExportButton />}
             {appStore.view === 'resources' && <SettingsButton />}
             {appStore.view === 'resources' && <FaqButton />}
@@ -60,12 +65,16 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
           </div>
         </span>
       </div>
+      {appStore.view === 'integration' && (
+        <IntegrationHeaderView />
+      )}
       {appStore.view === 'resources' && (
         <ResourcesHeaderView />
       )}
       {appStore.view === 'integrations' && (
-        <IntegrationHeaderView />
+        <IntegrationsHeaderView />
       )}
+      {appStore.view === 'export-page' && <ExportHeaderView />}
       {appStore.view === 'faq' && (
         <FaqHeaderView />
       )}

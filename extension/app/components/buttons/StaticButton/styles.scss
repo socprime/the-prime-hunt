@@ -8,4 +8,19 @@
   &:hover .icon {
     fill: $base-text-color-strong;
   }
+
+  .button-content {
+    .icon {
+      min-width: 14px;
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+    color: $base-disabled-text-color;
+
+    .icon {
+      fill: $base-disabled-text-color;
+    }
+  }
 }

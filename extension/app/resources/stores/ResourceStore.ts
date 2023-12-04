@@ -1,4 +1,6 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+  action, computed, makeObservable, observable,
+} from 'mobx';
 import { RootStore } from '../../stores/RootStore';
 import { sendMessageFromApp } from '../../../content/services/content-services';
 import { MessageToBackground } from '../../../background/types/types-background-messages';
@@ -10,13 +12,25 @@ import {
   NormalizedResources,
   ParsedResources,
   ResourceName,
-  Resources,
+  Resources, ResourceType,
   ResourceTypeID,
   TabID,
   TabName,
 } from '../resources-types';
 import { WatchingResources } from '../../../background/types/types-background-common';
 import { Url } from '../../../../common/types';
+import {
+  isDomainName,
+  isEmail,
+  isIpV4,
+  isIpV6,
+  isMacAddress,
+  isMD5,
+  isSHA1,
+  isSHA256,
+  isSHA512,
+  isUrl,
+} from '../../../../common/checkers';
 
 export class ResourceStore {
   private readonly rootStore: RootStore;
@@ -50,8 +64,8 @@ export class ResourceStore {
   @computed
   get countAllResources(): number {
     let result = 0;
-    Object.keys(this.resources).forEach(typeID => {
-      Object.keys(this.resources[typeID]).forEach(fieldName => {
+    Object.keys(this.resources).forEach((typeID) => {
+      Object.keys(this.resources[typeID]).forEach((fieldName) => {
         result += this.resources[typeID][fieldName]?.size || 0;
       });
     });
@@ -74,18 +88,18 @@ export class ResourceStore {
   addResources(resources: NormalizedResources) {
     let needSaveWatchers = false;
 
-    Object.keys(resources || {}).forEach(tabID => {
+    Object.keys(resources || {}).forEach((tabID) => {
       if (!this.isTabExist(tabID)) {
         this.addTab(tabID);
         needSaveWatchers = true;
       }
-      Object.keys(resources[tabID]).forEach(fieldName => {
+      Object.keys(resources[tabID]).forEach((fieldName) => {
         if (!this.isFieldExist(tabID, fieldName)) {
           needSaveWatchers = true;
           this.addField(fieldName, false, tabID);
         }
-        let set = this.resources[tabID][fieldName];
-        resources[tabID][fieldName].forEach(resourceName => {
+        const set = this.resources[tabID][fieldName];
+        resources[tabID][fieldName].forEach((resourceName) => {
           if (!set.has(resourceName)) {
             set.add(resourceName);
           }
@@ -103,9 +117,9 @@ export class ResourceStore {
 
   clearResources() {
     const newResources: Resources = {};
-    Object.keys(this.resources).forEach(typeID => {
+    Object.keys(this.resources).forEach((typeID) => {
       newResources[typeID] = {};
-      Object.keys(this.resources[typeID]).forEach(fieldName => {
+      Object.keys(this.resources[typeID]).forEach((fieldName) => {
         newResources[typeID][fieldName] = new Set();
       });
     });
@@ -190,7 +204,7 @@ export class ResourceStore {
     selectionStore.selectedFields.delete(fieldName);
     selectionStore.selected.delete(fieldName);
 
-    let resource = this.resources[tabID];
+    const resource = this.resources[tabID];
     this.resources[tabID] = Object
       .keys(resource)
       .reduce((r, name) => {
@@ -208,17 +222,69 @@ export class ResourceStore {
   }
 
   setWatchers(watchers: WatchingResources) {
-    Object.keys(watchers).forEach(typeID => {
+    Object.keys(watchers).forEach((typeID) => {
       this.addTab(typeID);
       let currentFieldsNames = Object.keys(this.resources[typeID] || {});
-      watchers[typeID].forEach(fieldName => {
+      watchers[typeID].forEach((fieldName) => {
         this.addField(fieldName, false, typeID);
-        currentFieldsNames = currentFieldsNames.filter(fn => fn !== fieldName);
+        currentFieldsNames = currentFieldsNames.filter((fn) => fn !== fieldName);
       });
-      currentFieldsNames.forEach(fn => {
+      currentFieldsNames.forEach((fn) => {
         this.removeField(fn, false, typeID);
       });
     });
+  }
+
+  getType(resource: ResourceName): ResourceType {
+    if (isIpV6(resource)) {
+      return 'ipv6';
+    }
+
+    if (isIpV4(resource)) {
+      return 'ipv4';
+    }
+
+    if (isEmail(resource)) {
+      return 'email';
+    }
+
+    if (
+      resource.indexOf('www') > -1
+      && resource.indexOf('http') > -1
+      && isUrl(resource)
+    ) {
+      return 'url';
+    }
+
+    if (isDomainName(resource)) {
+      return 'domain-name';
+    }
+
+    if (isMacAddress(resource)) {
+      return 'mac-address';
+    }
+
+    if (isSHA512(resource)) {
+      return 'sha512';
+    }
+
+    if (isSHA256(resource)) {
+      return 'sha256';
+    }
+
+    if (isSHA1(resource)) {
+      return 'sha1';
+    }
+
+    if (isMD5(resource)) {
+      return 'md5';
+    }
+
+    if (isUrl(resource)) {
+      return 'url';
+    }
+
+    return 'unknown';
   }
 
   saveWatchers(

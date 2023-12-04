@@ -34,7 +34,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
 
     let newStr = str;
 
-    (str.match(new RegExp(`${AmazonAthenaPlatform.replacementID}[0-9]+`, 'g')) || []).forEach(id => {
+    (str.match(new RegExp(`${AmazonAthenaPlatform.replacementID}[0-9]+`, 'g')) || []).forEach((id) => {
       newStr = newStr.split(id).join(AmazonAthenaPlatform.replacements.get(id));
     });
 
@@ -81,7 +81,11 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
       const openScopeSymbol = firstCurlyBracketIndex > firstBracketIndex ? '{' : '[';
       const closeScopeSymbol = firstCurlyBracketIndex > firstBracketIndex ? '}' : ']';
 
-      const indexes = AmazonAthenaPlatform.getScopeIndexes(result, openScopeSymbol, closeScopeSymbol);
+      const indexes = AmazonAthenaPlatform.getScopeIndexes(
+        result,
+        openScopeSymbol,
+        closeScopeSymbol,
+      );
 
       const replacementStr = result.substring(indexes.start, indexes.end);
 
@@ -116,8 +120,8 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
 
     return normalizedValue
       .split(', ')
-      .map(v => AmazonAthenaPlatform.replacements.get(v) || v)
-      .map(v => AmazonAthenaPlatform.repairStrWithReplacements(v.trim()).trim());
+      .map((v) => AmazonAthenaPlatform.replacements.get(v) || v)
+      .map((v) => AmazonAthenaPlatform.repairStrWithReplacements(v.trim()).trim());
   }
 
   private static parseObj(value: string): ParsedStruct {
@@ -166,7 +170,6 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
       }
 
       result[key.trim()] = AmazonAthenaPlatform.parseObj(v.trim());
-
     } while (separateIndex > -1);
 
     return result;
@@ -179,7 +182,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
       return {
         $$value$$: nValue,
         $$array$$: (AmazonAthenaPlatform.getArrayObj(nValue) || [])
-          .map(v => AmazonAthenaPlatform.parseObj(v)),
+          .map((v) => AmazonAthenaPlatform.parseObj(v)),
       };
     }
 
@@ -201,7 +204,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
       onIteration: (keyPath, key, value, prevKeyPath) => {
         if (this.fieldsNames.has(keyPath)) {
           const types = this.mapFieldNameToTypes.get(keyPath)!;
-          types.forEach(t => {
+          types.forEach((t) => {
             if (typeof this.result[t] === 'undefined') {
               this.result[t] = {};
             }
@@ -225,13 +228,19 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
     ];
   }
 
-  async parseResponse(response: AthenaQueryResults, tabInfo: BrowserTabInfo): Promise<ParsedResult> {
+  async parseResponse(
+    response: AthenaQueryResults,
+    tabInfo: BrowserTabInfo,
+  ): Promise<ParsedResult> {
     const id = uuid();
     const watchingResources = this.getWatchers(tabInfo);
     const { fields } = this;
     loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     this.result = {};
     this.mapFieldNameToTypes = mapFieldNameToTypes;
@@ -251,7 +260,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
 
         if (fieldsNames.has(label)) {
           const types = mapFieldNameToTypes.get(label)!;
-          types.forEach(t => {
+          types.forEach((t) => {
             if (typeof this.result[t] === 'undefined') {
               this.result[t] = {};
             }
@@ -260,7 +269,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
         }
 
         this.parse(AmazonAthenaPlatform.parseStruct(value), label)
-          .forEach(fn => fields.add(fn));
+          .forEach((fn) => fields.add(fn));
       });
     });
 
@@ -295,14 +304,17 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
                 && !urlsProcessing.has(details.url)
                 && !!details.requestBody?.raw?.[0]?.bytes?.byteLength
                 && details.requestBody?.raw?.[0]?.bytes?.byteLength > 5
-                && AmazonAthenaPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                && AmazonAthenaPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             },
             params,
             id,
           )) {
             const bodyBytes = details.requestBody!.raw![0].bytes!;
-            let bodyStr = new TextDecoder().decode(bodyBytes);
-            const parsedBodyData = parseJSONSafe(bodyStr, null) as unknown as Record<string, string>;
+            const bodyStr = new TextDecoder().decode(bodyBytes);
+            const parsedBodyData = parseJSONSafe(
+              bodyStr,
+              null,
+            ) as unknown as Record<string, string>;
             if (parsedBodyData && !parsedBodyData.QueryExecutionId) {
               return;
             }
@@ -321,7 +333,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
             () => {
               return details.method === 'POST'
                 && !urlsProcessing.has(details.url)
-                && AmazonAthenaPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                && AmazonAthenaPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             },
             params,
             id,
@@ -354,7 +366,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
 
             AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
-            const url = details.url;
+            const { url } = details;
             const cacheID = url;
 
             http.post(
@@ -383,7 +395,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
                   this.lastResponse.set(cacheID, response);
                   removeAttached();
                 },
-                onError: e => {
+                onError: (e) => {
                   loggers
                     .error()
                     .addPrefix('failed webRequest post')

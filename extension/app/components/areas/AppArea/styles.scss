@@ -1,0 +1,16 @@
+@import "../../../scss/palette";
+
+.app-area {
+  padding: 12px;
+  border-radius: 4px;
+  background-color: $base-background-area-color;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+
+  &.disabled {
+    color: $base-disabled-text-color;
+  }
+}

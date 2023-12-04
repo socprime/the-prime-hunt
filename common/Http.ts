@@ -1,5 +1,5 @@
 export class Http {
-  private request(
+  private static request(
     url: string,
     params?: RequestInit,
     callbacks?: {
@@ -11,18 +11,17 @@ export class Http {
     const responseType = callbacks?.onJSONSuccess ? 'json' : 'text';
 
     fetch(url, params)
-      .then(response => {
+      .then((response) => {
         return responseType === 'json'
           ? response.json()
           : response.text();
-      },
-      )
-      .then(response => {
+      })
+      .then((response) => {
         return responseType === 'json'
           ? callbacks?.onJSONSuccess?.(response)
           : callbacks?.onTextSuccess?.(response);
       })
-      .catch(e => {
+      .catch((e) => {
         callbacks?.onError?.(e);
       });
   }
@@ -38,7 +37,7 @@ export class Http {
       onTextSuccess?: (response: string) => void,
     },
   ) {
-    return this.request(params.url, {
+    return Http.request(params.url, {
       headers: params?.headers || {},
       method: 'GET',
     }, callbacks);
@@ -56,7 +55,7 @@ export class Http {
       onError?: (e: Error) => void,
     },
   ) {
-    return this.request(params.url, {
+    return Http.request(params.url, {
       headers: params?.headers || {},
       method: 'POST',
       body: params.body || '',
