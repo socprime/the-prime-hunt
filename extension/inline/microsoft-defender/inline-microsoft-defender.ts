@@ -39,14 +39,14 @@ const setIndex = (index: number | null): boolean => {
 };
 
 const getCurrentEditorIndex = (): number | null => {
-  let responseEditors = Array.from(
+  const responseEditors = Array.from(
     document.querySelectorAll('.response-editor .monaco-editor[data-uri^="inmemory:"]'),
-  ).filter(e => e.scrollWidth > 5);
+  ).filter((e) => e.scrollWidth > 5);
   const editorHtml = Array.from(
     document.querySelectorAll('.monaco-editor[data-uri^="inmemory:"]'),
   )
-    .filter(e => e.scrollWidth > 5)
-    .filter(e => !responseEditors.includes(e))[0];
+    .filter((e) => e.scrollWidth > 5)
+    .filter((e) => !responseEditors.includes(e))[0];
   if (!editorHtml) {
     return null;
   }
@@ -79,10 +79,12 @@ window.addEventListener('message', (event) => {
     event,
   )) {
     if (!checkEditorExists()) {
-      return loggers.error().log('editor not found', monaco);
+      loggers.error().log('editor not found', monaco);
+      return;
     }
     if (!setIndex(getCurrentEditorIndex())) {
-      return loggers.info().log('Can not determine the editor index');
+      loggers.info().log('Can not determine the editor index');
+      return;
     }
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
@@ -92,8 +94,8 @@ window.addEventListener('message', (event) => {
 
     const editor = getEditorByIndex(editorIndex);
     const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1
-      ? buildNewQuery(editorIndex, suffix, modifyType)
-      : buildNewJsonQuery(editorIndex, suffix, modifyType);
+      ? buildNewQuery(editor, suffix, modifyType)
+      : buildNewJsonQuery(editor, suffix, modifyType);
 
     editor.setValue(newQuery);
   }
@@ -104,11 +106,10 @@ window.addEventListener('message', (event) => {
     event,
   )) {
     const { editor } = getEditor();
-    if (!editor) {
-      return;
+    if (editor) {
+      const { value } = message.payload as SetQueryPayload;
+      editor.setValue(value);
     }
-    const { value } = message.payload as SetQueryPayload;
-    editor.setValue(value);
   }
 
   if (isMessageMatched(

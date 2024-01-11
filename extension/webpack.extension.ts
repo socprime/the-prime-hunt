@@ -4,7 +4,7 @@ import minimist from 'minimist';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { WebpackCompiler, WebpackConfiguration } from 'webpack-cli';
-import { copySync, emptyDirSync, outputFileSync } from 'fs-extra';
+import { copySync, emptyDirSync, outputFileSync, readFileSync } from 'fs-extra';
 import {
   AbsFilePath, HTMLTextContent, LogLevel, Mode,
 } from '../common/types';
@@ -21,6 +21,7 @@ import {
   splunkInline,
   elasticInline,
   arcSightInline,
+  logScaleInline,
 } from './manifest/public-resources';
 // import { webpackAliases } from '../install';
 
@@ -55,7 +56,8 @@ const absDistDirPath = join(__dirname, '../dist');
 
 emptyDirSync(join(absDistDirPath, mode));
 
-const browser = browsers.splice(0, 1)[0];
+const browser = Browser.chrome;
+browsers = browsers.filter((b) => b !== browser);
 const relativePath = join(mode, args.output || '');
 const output = join(absDistDirPath, relativePath);
 const iconsFolder = join(__dirname, 'manifest', 'icons');
@@ -91,6 +93,7 @@ const inlineEntries = [
   openSearchInline,
   arcSightInline,
   amazonAthenaInline,
+  logScaleInline,
 ].reduce((entry, inline) => {
   const { name } = parse(inline);
   entry[name] = [
@@ -100,7 +103,7 @@ const inlineEntries = [
   return entry;
 }, {} as EntryObject);
 
-module.exports = {
+export default {
   mode,
   entry: {
     content: join(__dirname, './content.ts'),
@@ -176,6 +179,10 @@ module.exports = {
             );
             browsers.forEach((b) => {
               copySync(join(output, browser), join(output, b), { overwrite: true });
+              if (b === Browser.firefox) {
+                const backgroundFile = readFileSync(join(output, browser, 'background.js'), 'utf8');
+                outputFileSync(join(output, b, 'background.js'), `const $browser='firefox';${backgroundFile}`);
+              }
               buildBrowserAssets(b as Browser);
             });
             buildBrowserAssets(browser as Browser);

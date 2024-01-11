@@ -1,4 +1,4 @@
-/******/ (() => { // webpackBootstrap
+const $browser='firefox';/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/.pnpm/boolbase@1.0.0/node_modules/boolbase/index.js":
@@ -19304,7 +19304,10 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
 }, ['requestBody']);
 background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnBeforeSendHeaders, () => { }, {
     urls: ['<all_urls>'],
-}, ['requestHeaders']);
+}, [
+    'requestHeaders',
+    ...((typeof $browser === 'undefined' || $browser !== 'firefox') ? ['extraHeaders'] : []),
+]);
 background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnMessage, (message, sender) => {
     var _a;
     if (!((_a = sender.tab) === null || _a === void 0 ? void 0 : _a.id)) {
@@ -19511,7 +19514,7 @@ class AbstractBackgroundPlatform {
         });
     }
     checkValue(value) {
-        return !this.emptyFieldValues.some(v => v.toLowerCase() === String(value).toLowerCase());
+        return !this.emptyFieldValues.some((v) => v.toLowerCase() === String(value).toLowerCase());
     }
     addValueToResource(parent, key, value) {
         var _a;
@@ -19532,7 +19535,7 @@ class AbstractBackgroundPlatform {
             return response;
         }
         try {
-            const gzipedDataArray = Uint8Array.from(atob(response), c => c.charCodeAt(0));
+            const gzipedDataArray = Uint8Array.from(atob(response), (c) => c.charCodeAt(0));
             return new TextDecoder()
                 .decode(pako_1.default.ungzip(gzipedDataArray));
         }
@@ -19545,7 +19548,7 @@ class AbstractBackgroundPlatform {
         const mapFieldNameToType = new Map();
         Object.keys(watchers).forEach((type) => {
             const names = watchers[type];
-            names.forEach(name => {
+            names.forEach((name) => {
                 fieldsNames.add(name);
                 const types = mapFieldNameToType.get(name) || [];
                 types.push(type);
@@ -19555,7 +19558,7 @@ class AbstractBackgroundPlatform {
         return { fieldsNames, mapFieldNameToTypes: mapFieldNameToType };
     }
     unregister() {
-        Array.from(this.interceptorsIDs).forEach(id => {
+        Array.from(this.interceptorsIDs).forEach((id) => {
             (0, background_services_listeners_1.removeBGInterceptor)(id);
             this.interceptorsIDs.delete(id);
         });
@@ -19567,7 +19570,7 @@ class AbstractBackgroundPlatform {
     }
     getWatchers(tabInfo) {
         const { origin, id } = tabInfo;
-        let watchingResources = this.watchingResources[origin];
+        const watchingResources = this.watchingResources[origin];
         if (watchingResources) {
             return watchingResources;
         }
@@ -19945,12 +19948,12 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
             mappedFields.set('deviceEventClassId', arrayData[4]);
             mappedFields.set('name', arrayData[5]);
             mappedFields.set('severity', arrayData[6]);
-            arrayData[7].split(' ').forEach(pairs => {
+            arrayData[7].split(' ').forEach((pairs) => {
                 if (!pairs) {
                     return;
                 }
                 const [fieldName, resourceName] = pairs.split('=');
-                mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName))) : resourceName);
+                mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName, 10))) : resourceName);
             });
             return mappedFields;
         };
@@ -19970,7 +19973,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
             : cef;
     }
     static toCamelCase(str) {
-        return str.split('_').map((v, i) => i === 0 ? v : (0, helpers_1.capitalizeFirstLetter)(v)).join('');
+        return str.split('_').map((v, i) => (i === 0 ? v : (0, helpers_1.capitalizeFirstLetter)(v))).join('');
     }
     static parseClass(classStr) {
         return ArcSightPlatform.toCamelCase(classStr.split('=').shift().split('-').pop());
@@ -19984,7 +19987,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
         }
         const resourceName = $.text();
         const fieldName = ArcSightPlatform.parseClass(classStr);
-        mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName))) : resourceName);
+        mappedFields.set(ArcSightPlatform.getFieldName(fieldName), (0, checkers_1.isDate)(resourceName) ? (0, helpers_1.formatDate)('%Y/%M/%d %h:%m:%s EET', new Date(parseInt(resourceName, 10))) : resourceName);
         return mappedFields;
     }
     parseResponse(response, tabInfo) {
@@ -19995,12 +19998,12 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
             const id = (0, helpers_1.uuid)();
             const watchingResources = this.getWatchers(tabInfo);
             loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
-            (_a = (response || [])) === null || _a === void 0 ? void 0 : _a.forEach(v => {
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            (_a = (response || [])) === null || _a === void 0 ? void 0 : _a.forEach((v) => {
                 if (!Array.isArray(v)) {
                     return;
                 }
-                (v || []).forEach(sv => {
+                (v || []).forEach((sv) => {
                     if (sv[0] !== '<') {
                         return;
                     }
@@ -20009,11 +20012,11 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                     const fields = str.substring(0, 6).toLowerCase() === 'cef:0|'
                         ? this.parseCEFString(str)
                         : this.parseHTMLString(sv);
-                    Array.from(fields).forEach(av => watchingFieldsNames.add(av[0]));
-                    Array.from(fieldsNames).forEach(fieldNameToParse => {
+                    Array.from(fields).forEach((av) => watchingFieldsNames.add(av[0]));
+                    Array.from(fieldsNames).forEach((fieldNameToParse) => {
                         if (fields.has(fieldNameToParse)) {
                             const types = mapFieldNameToTypes.get(fieldNameToParse);
-                            types.forEach(t => {
+                            types.forEach((t) => {
                                 if (typeof result[t] === 'undefined') {
                                     result[t] = {};
                                 }
@@ -20045,7 +20048,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                     && !bodyData.has(details.url)
                     && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
                     && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
-                    && ArcSightPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && ArcSightPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             })) {
                 bodyData.set(details.url, details.requestBody.raw[0].bytes);
             }
@@ -20056,11 +20059,11 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                 return details.method === 'POST'
                     && !urlsProcessing.has(details.url)
                     && bodyData.has(details.url)
-                    && ArcSightPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && ArcSightPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 let reconnectAttempts = 4;
                 const bodyBytes = bodyData.get(details.url);
-                let bodyStr = new TextDecoder().decode(bodyBytes);
+                const bodyStr = new TextDecoder().decode(bodyBytes);
                 urlsProcessing.add(details.url);
                 const removeAttached = () => {
                     urlsProcessing.delete(details.url);
@@ -20071,7 +20074,7 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                 };
                 const doRequest = () => {
                     AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
-                    const url = details.url;
+                    const { url } = details;
                     const cacheID = url;
                     Http_1.http.post({
                         url,
@@ -20088,7 +20091,8 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                                     .warn()
                                     .addPrefix('failed parse json response')
                                     .log(details.method, url, bodyStr);
-                                return removeAttached();
+                                removeAttached();
+                                return;
                             }
                             const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(data, {
                                 origin: new URL(details.url).origin,
@@ -20102,15 +20106,16 @@ class ArcSightPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                             this.lastResponse.set(cacheID, response);
                             removeAttached();
                         }),
-                        onError: e => {
+                        onError: (e) => {
                             loggers
                                 .warn()
                                 .addPrefix('failed webRequest post')
                                 .log(e, details.method, url, bodyStr);
                             if (reconnectAttempts > 0) {
                                 loggers.info().log('retry request');
-                                reconnectAttempts = reconnectAttempts - 1;
-                                return doRequest();
+                                reconnectAttempts -= 1;
+                                doRequest();
+                                return;
                             }
                             removeAttached();
                         },
@@ -20470,6 +20475,184 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 
 /***/ }),
 
+/***/ "./extension/background/platforms/LogScalePlatform.ts":
+/*!************************************************************!*\
+  !*** ./extension/background/platforms/LogScalePlatform.ts ***!
+  \************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LogScalePlatform = void 0;
+const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
+const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
+let loggers;
+class LogScalePlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
+    constructor() {
+        super();
+        this.watchingResources = {};
+        this.emptyFieldValues = [
+            ...this.emptyFieldValues,
+            '-',
+        ];
+    }
+    getID() {
+        return LogScalePlatform.id;
+    }
+    getName() {
+        return LogScalePlatform.platformName;
+    }
+    parseResponse(response, tabInfo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            const watchingResources = this.getWatchers(tabInfo);
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
+            const result = {};
+            const { fields } = this;
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            ((response === null || response === void 0 ? void 0 : response.events) || []).forEach((item) => {
+                Object.keys(item).forEach((fieldName) => {
+                    if (fieldName) {
+                        fields.add(fieldName);
+                    }
+                    if (fieldsNames.has(fieldName)) {
+                        const types = mapFieldNameToTypes.get(fieldName);
+                        types.forEach((t) => {
+                            if (typeof result[t] === 'undefined') {
+                                result[t] = {};
+                            }
+                            this.addValueToResource(result[t], fieldName, String(item[fieldName]));
+                        });
+                    }
+                });
+            });
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
+            return result;
+        });
+    }
+    obtainData(id, details, headers, attempts) {
+        const readyUrl = `${details.url}/${id}?filterMatches=true`;
+        Http_1.http.get({
+            url: readyUrl,
+            headers,
+        }, {
+            onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                    origin: new URL(details.url).origin,
+                    id: details.tabId,
+                }));
+                AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                    cacheID: readyUrl,
+                    resources,
+                    fieldsNames: [...this.fields],
+                }, false);
+                this.lastResponse.set(readyUrl, response);
+                if (!response.done && attempts > 0) {
+                    this.obtainData(id, details, headers, attempts - 1);
+                }
+            }),
+            onError: (e) => {
+                loggers
+                    .warn()
+                    .addPrefix('failed webRequest get')
+                    .log(e, readyUrl);
+            },
+        });
+    }
+    register() {
+        const bodyRequests = new Set();
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeRequest, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                var _a, _b, _c, _d, _e, _f, _g, _h;
+                return details.method === 'POST'
+                    && LogScalePlatform.postUrls.some((u) => details.url.indexOf(u) > -1)
+                    && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
+                    && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5;
+            })) {
+                const bodyStr = new TextDecoder().decode(details.requestBody.raw[0].bytes);
+                const body = (0, helpers_1.parseJSONSafe)(bodyStr, false);
+                if (!body || !body.queryString || body.queryString.length < 1) {
+                    return;
+                }
+                bodyRequests.add(bodyStr);
+            }
+        }));
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                return details.method === 'POST'
+                    && LogScalePlatform.postUrls.some((u) => details.url.indexOf(u) > -1)
+                    && (details.requestHeaders || []).some(({ name, value }) => {
+                        return bodyRequests.size > 0
+                            && (name.toLowerCase() === 'origin'
+                                && value
+                                && value.indexOf('http') === 0);
+                    });
+            })) {
+                const bodyStr = bodyRequests.values().next().value;
+                bodyRequests.delete(bodyStr);
+                if (!bodyStr) {
+                    return;
+                }
+                const { url } = details;
+                const headers = details.requestHeaders.reduce((res, header) => {
+                    res[header.name] = header.value;
+                    return res;
+                }, {});
+                Http_1.http.post({
+                    url,
+                    body: bodyStr,
+                    headers,
+                }, {
+                    onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                        if (!response.id || response.id.length < 1) {
+                            return;
+                        }
+                        this.obtainData(response.id, details, headers, 10);
+                    }),
+                    onError: (e) => {
+                        loggers
+                            .warn()
+                            .addPrefix('failed webRequest post')
+                            .log(e, details.method, url, bodyStr);
+                    },
+                });
+            }
+        }));
+        loggers.debug().log('register');
+    }
+    unregister() {
+        super.unregister();
+        loggers.debug().log('unregistered');
+    }
+}
+exports.LogScalePlatform = LogScalePlatform;
+LogScalePlatform.id = types_common_1.PlatformID.LogScale;
+LogScalePlatform.platformName = types_common_1.PlatformName.LogScale;
+LogScalePlatform.postUrls = [
+    '/queryjobs',
+];
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(LogScalePlatform.id);
+
+
+/***/ }),
+
 /***/ "./extension/background/platforms/MicrosoftDefenderPlatform.ts":
 /*!*********************************************************************!*\
   !*** ./extension/background/platforms/MicrosoftDefenderPlatform.ts ***!
@@ -20520,13 +20703,13 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
             const result = {};
             const { fields } = this;
             fields.clear();
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
-            ((response === null || response === void 0 ? void 0 : response.Results) || []).forEach(document => {
-                Object.keys(document).forEach(fn => fields.add(fn));
-                Array.from(fieldsNames).forEach(fieldName => {
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            ((response === null || response === void 0 ? void 0 : response.Results) || []).forEach((document) => {
+                Object.keys(document).forEach((fn) => fields.add(fn));
+                Array.from(fieldsNames).forEach((fieldName) => {
                     if (document === null || document === void 0 ? void 0 : document[fieldName]) {
                         const types = mapFieldNameToTypes.get(fieldName);
-                        types.forEach(t => {
+                        types.forEach((t) => {
                             if (typeof result[t] === 'undefined') {
                                 result[t] = {};
                             }
@@ -20549,7 +20732,7 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 var _a, _b, _c, _d;
                 return !(urlsProcessing.has(details.url)
                     || details.method !== 'POST'
-                    || !MicrosoftDefenderPlatform.postUrls.some(p => href.indexOf(p) > -1)
+                    || !MicrosoftDefenderPlatform.postUrls.some((p) => href.indexOf(p) > -1)
                     || !((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
                     || details.requestBody.raw[0].bytes.byteLength < 5);
             }, params, id)) {
@@ -20562,7 +20745,7 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
             const { href } = new URL(details.url);
             if (!isMatched(() => !(urlsProcessing.has(details.url)
                 || details.method !== 'POST'
-                || !MicrosoftDefenderPlatform.postUrls.some(p => href.indexOf(p) > -1)
+                || !MicrosoftDefenderPlatform.postUrls.some((p) => href.indexOf(p) > -1)
                 || !bodyData.has(details.url)
                 || !details.requestHeaders), params, id)) {
                 return;
@@ -20578,7 +20761,7 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 }
             };
             AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
-            const url = details.url;
+            const { url } = details;
             const cacheID = url;
             Http_1.http.post({
                 url,
@@ -20601,7 +20784,7 @@ class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                     this.lastResponse.set(cacheID, response);
                     removeAttached();
                 }),
-                onError: e => {
+                onError: (e) => {
                     loggers
                         .error()
                         .addPrefix('failed webRequest post')
@@ -20680,7 +20863,7 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 var _a, _b, _c, _d, _e;
                 return !(urlsProcessing.has(details.url)
                     || details.method !== 'POST'
-                    || !MicrosoftSentinelPlatform.postUrls.some(p => href.indexOf(p) > -1)
+                    || !MicrosoftSentinelPlatform.postUrls.some((p) => href.indexOf(p) > -1)
                     || !((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
                     || ((_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw[0].bytes.byteLength) < 5);
             }, params, id)) {
@@ -20693,7 +20876,7 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
             const { href } = new URL(details.url);
             if (!isMatched(() => !(urlsProcessing.has(details.url)
                 || details.method !== 'POST'
-                || !MicrosoftSentinelPlatform.postUrls.some(p => href.indexOf(p) > -1)
+                || !MicrosoftSentinelPlatform.postUrls.some((p) => href.indexOf(p) > -1)
                 || !bodyData.has(details.url)
                 || !details.requestHeaders), params, id)) {
                 return;
@@ -20709,7 +20892,7 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
             const bodyBytes = bodyData.get(details.url);
             const bodyStr = new TextDecoder().decode(bodyBytes);
             AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendLoading(details.tabId, true);
-            const url = details.url;
+            const { url } = details;
             const cacheID = url;
             Http_1.http.post({
                 url,
@@ -20756,7 +20939,7 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
             fields.clear();
             loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
             const result = {};
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
             const mappedFieldNamesToIndex = (((_b = (_a = response === null || response === void 0 ? void 0 : response.tables) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.columns) || [])
                 .reduce((map, d, index) => {
                 map.set(d.name, index);
@@ -20764,10 +20947,10 @@ class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform_1.AbstractBac
                 return map;
             }, new Map()) || new Map();
             (((_d = (_c = response === null || response === void 0 ? void 0 : response.tables) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.rows) || []).forEach((row) => {
-                Array.from(fieldsNames).forEach(fieldName => {
+                Array.from(fieldsNames).forEach((fieldName) => {
                     if (mappedFieldNamesToIndex.has(fieldName)) {
                         const types = mapFieldNameToTypes.get(fieldName);
-                        types.forEach(t => {
+                        types.forEach((t) => {
                             if (typeof result[t] === 'undefined') {
                                 result[t] = {};
                             }
@@ -20854,7 +21037,7 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
             }
             const watchingFieldsNames = this.fields;
             (((_b = (_a = response === null || response === void 0 ? void 0 : response.rawResponse) === null || _a === void 0 ? void 0 : _a.hits) === null || _b === void 0 ? void 0 : _b.hits) || []).forEach(({ fields, _source }) => {
-                Array.from(fieldsNames).forEach(fieldName => {
+                Array.from(fieldsNames).forEach((fieldName) => {
                     let fieldValue = undefined;
                     if (fields && typeof fields[fieldName] !== 'undefined') {
                         Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
@@ -20874,7 +21057,7 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                         return;
                     }
                     const types = mapFieldNameToTypes.get(fieldName);
-                    types.forEach(t => {
+                    types.forEach((t) => {
                         if (typeof result[t] === 'undefined') {
                             result[t] = {};
                         }
@@ -20903,22 +21086,22 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
             const id = (0, helpers_1.uuid)();
             const watchingResources = this.getWatchers(tabInfo);
             loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
-            const results = yield Promise.all(lines.map(line => this.parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames)));
-            results.forEach(parsedResult => {
-                Object.keys(parsedResult).forEach(resourceTypeID => {
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            const results = yield Promise.all(lines.map((line) => this.parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames)));
+            results.forEach((parsedResult) => {
+                Object.keys(parsedResult).forEach((resourceTypeID) => {
                     if (!result[resourceTypeID]) {
                         result[resourceTypeID] = {};
                     }
                     const alreadyAppendResources = result[resourceTypeID];
                     const parsedResources = parsedResult[resourceTypeID];
-                    Object.keys(parsedResources).forEach(fieldName => {
+                    Object.keys(parsedResources).forEach((fieldName) => {
                         const values = parsedResources[fieldName];
                         if (!alreadyAppendResources[fieldName]) {
                             alreadyAppendResources[fieldName] = new Set();
                         }
                         Array.from(values)
-                            .forEach(v => alreadyAppendResources[fieldName].add(v));
+                            .forEach((v) => alreadyAppendResources[fieldName].add(v));
                     });
                     result[resourceTypeID] = alreadyAppendResources;
                 });
@@ -20944,7 +21127,7 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                     && !urlsProcessing.has(details.url)
                     && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
                     && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
-                    && OpenSearchPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && OpenSearchPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 bodyData.set(details.url, details.requestBody.raw[0].bytes);
             }
@@ -20955,10 +21138,10 @@ class OpenSearchPlatform extends AbstractBackgroundPlatform_1.AbstractBackground
                 return details.method === 'POST'
                     && !urlsProcessing.has(details.url)
                     && bodyData.has(details.url)
-                    && OpenSearchPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && OpenSearchPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 const bodyBytes = bodyData.get(details.url);
-                let bodyStr = new TextDecoder().decode(bodyBytes);
+                const bodyStr = new TextDecoder().decode(bodyBytes);
                 const urlDetails = new URL(details.url);
                 urlDetails.searchParams.delete('compress');
                 urlsProcessing.add(details.url);
@@ -21071,6 +21254,10 @@ class PlatformResolver {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./ArcSightPlatform */ "./extension/background/platforms/ArcSightPlatform.ts").ArcSightPlatform))());
                     break;
                 }
+                case types_common_1.PlatformID.LogScale: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./LogScalePlatform */ "./extension/background/platforms/LogScalePlatform.ts").LogScalePlatform))());
+                    break;
+                }
                 default:
                     return undefined;
             }
@@ -21141,7 +21328,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
     }
     parseLastHtmlResponse(response, watchingResources) {
         var _a, _b;
-        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+        const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const result = {};
         const { fields } = this;
         (_b = (_a = response.result) === null || _a === void 0 ? void 0 : _a.rows) === null || _b === void 0 ? void 0 : _b.forEach((r) => {
@@ -21156,7 +21343,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                 }
                 if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
                     const types = mapFieldNameToTypes.get(fieldName);
-                    types.forEach(t => {
+                    types.forEach((t) => {
                         if (typeof result[t] === 'undefined') {
                             result[t] = {};
                         }
@@ -21168,7 +21355,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
         return result;
     }
     parseAriaSearchResponse(response, watchingResources) {
-        const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+        const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const result = {};
         const { fields } = this;
         const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(response);
@@ -21183,7 +21370,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
             const value = (_c = elem.find('span[id]').text()) === null || _c === void 0 ? void 0 : _c.trim();
             if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
                 const types = mapFieldNameToTypes.get(fieldName);
-                types.forEach(t => {
+                types.forEach((t) => {
                     if (typeof result[t] === 'undefined') {
                         result[t] = {};
                     }
@@ -21222,7 +21409,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
             if (isMatched(() => {
                 return !urlsProcessing.has(details.url)
                     && details.method === 'POST'
-                    && QRadarPlatform.postUrls.some(u => details.url.indexOf(u) > -1);
+                    && QRadarPlatform.postUrls.some((u) => details.url.indexOf(u) > -1);
             }, params, id)) {
                 const isAreaSearch = QRadarPlatform.isAreaSearchUrl(details.url);
                 if (!isAreaSearch) {
@@ -21249,7 +21436,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                 return !urlsProcessing.has(details.url)
                     && details.method === 'POST'
                     && details.tabId > 0
-                    && QRadarPlatform.postUrls.some(u => href.indexOf(u) > -1);
+                    && QRadarPlatform.postUrls.some((u) => href.indexOf(u) > -1);
             }, params, id)) {
                 urlsProcessing.add(details.url);
                 const isAreaSearch = QRadarPlatform.isAreaSearchUrl(details.url);
@@ -21265,7 +21452,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                     }
                 };
                 QRadarPlatform.sendLoading(details.tabId, true);
-                const url = details.url;
+                const { url } = details;
                 const cacheID = url;
                 Http_1.http.post({
                     url,
@@ -21315,7 +21502,7 @@ class QRadarPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlat
                             removeAttached();
                         })
                         : undefined,
-                    onError: e => {
+                    onError: (e) => {
                         loggers
                             .warn()
                             .addPrefix('failed webRequest post')
@@ -22171,7 +22358,7 @@ exports.cssObjectToString = cssObjectToString;
 const mountHTMLElement = (element, mountElement, options) => {
     const elem = document.createElement(element);
     if (options === null || options === void 0 ? void 0 : options.attributes) {
-        Object.keys(options.attributes).forEach(key => {
+        Object.keys(options.attributes).forEach((key) => {
             var _a;
             elem.setAttribute(key, key === 'style'
                 ? (0, exports.cssObjectToString)(options.attributes[key])
@@ -22200,7 +22387,7 @@ const isInsideIframe = () => {
 };
 exports.isInsideIframe = isInsideIframe;
 const waitHTMLElement = (query, rootElement = document) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         new MutationObserver((_, observer) => {
             const element = rootElement.querySelector(query);
             if (element) {
@@ -22277,9 +22464,9 @@ const getElementsUnderCursor = (e, filter) => {
 exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
     const queryParts = [];
-    Object.keys(resources).forEach(fieldName => {
+    Object.keys(resources).forEach((fieldName) => {
         queryParts.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
+            .map((v) => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
     });
     const queryPartsStr = queryParts.join(fieldsSeparator);
@@ -22326,8 +22513,8 @@ const getVersionFromString = (version) => {
         || !/^[.0-9]+$/.test(version)) {
         return 0;
     }
-    const result = parseInt(version.replace(/\./g, ''));
-    return isNaN(result) ? 0 : result;
+    const result = parseInt(version.replace(/\./g, ''), 10);
+    return Number.isNaN(result) ? 0 : result;
 };
 exports.getVersionFromString = getVersionFromString;
 const compareVersions = (version1, version2) => {
@@ -22403,7 +22590,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.0";
+exports.version = "1.4.1";
 
 
 /***/ }),
@@ -22628,6 +22815,7 @@ var PlatformID;
     PlatformID["OpenSearch"] = "OpenSearch";
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
+    PlatformID["LogScale"] = "LogScale";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -22639,6 +22827,7 @@ var PlatformName;
     PlatformName["OpenSearch"] = "OpenSearch";
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
+    PlatformName["LogScale"] = "Falcon LogScale";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 

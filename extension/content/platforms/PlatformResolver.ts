@@ -75,6 +75,14 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.LogScale: {
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./LogScalePlatform').LogScalePlatform)(),
+          );
+          break;
+        }
+
         default:
           return undefined;
       }
@@ -87,7 +95,7 @@ export class PlatformResolver {
     const { host, protocol, href } = new URL(url);
 
     if (!isAllowedProtocol(protocol, mode)) {
-      return;
+      return undefined;
     }
 
     if (/(aws.amazon.com\/athena\/)/.test(href)) {
@@ -127,6 +135,10 @@ export class PlatformResolver {
 
     if (document.querySelector('#opensearch-dashboards-body')) {
       return this.getPlatformByID(PlatformID.OpenSearch);
+    }
+
+    if (document.querySelector('head > meta[name~="humio-version"]')) {
+      return this.getPlatformByID(PlatformID.LogScale);
     }
 
     return undefined;

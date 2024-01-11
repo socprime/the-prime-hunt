@@ -33,12 +33,12 @@ if (isInsideIframe()) {
 } else {
   require('./migrations');
   require('./app/app-listeners');
-
-  const platform = require('./content/platforms/PlatformResolver')
-    .platformResolver.resolve();
-
-  if (platform) {
-    require('./app');
-    require('./app/stores').rootStore.platformStore.setPlatform(platform);
-  }
+  //
+  // const platform = require('./content/platforms/PlatformResolver')
+  //   .platformResolver.resolve();
+  //
+  // if (platform) {
+  //   require('./app');
+  //   require('./app/stores').rootStore.platformStore.setPlatform(platform);
+  // }
 }

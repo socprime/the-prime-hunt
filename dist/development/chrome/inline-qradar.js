@@ -588,7 +588,7 @@ exports.cssObjectToString = cssObjectToString;
 const mountHTMLElement = (element, mountElement, options) => {
     const elem = document.createElement(element);
     if (options === null || options === void 0 ? void 0 : options.attributes) {
-        Object.keys(options.attributes).forEach(key => {
+        Object.keys(options.attributes).forEach((key) => {
             var _a;
             elem.setAttribute(key, key === 'style'
                 ? (0, exports.cssObjectToString)(options.attributes[key])
@@ -617,7 +617,7 @@ const isInsideIframe = () => {
 };
 exports.isInsideIframe = isInsideIframe;
 const waitHTMLElement = (query, rootElement = document) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         new MutationObserver((_, observer) => {
             const element = rootElement.querySelector(query);
             if (element) {
@@ -694,9 +694,9 @@ const getElementsUnderCursor = (e, filter) => {
 exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
     const queryParts = [];
-    Object.keys(resources).forEach(fieldName => {
+    Object.keys(resources).forEach((fieldName) => {
         queryParts.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
+            .map((v) => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
     });
     const queryPartsStr = queryParts.join(fieldsSeparator);
@@ -743,8 +743,8 @@ const getVersionFromString = (version) => {
         || !/^[.0-9]+$/.test(version)) {
         return 0;
     }
-    const result = parseInt(version.replace(/\./g, ''));
-    return isNaN(result) ? 0 : result;
+    const result = parseInt(version.replace(/\./g, ''), 10);
+    return Number.isNaN(result) ? 0 : result;
 };
 exports.getVersionFromString = getVersionFromString;
 const compareVersions = (version1, version2) => {
@@ -818,7 +818,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.0";
+exports.version = "1.4.1";
 
 
 /***/ }),
@@ -977,6 +977,7 @@ var PlatformID;
     PlatformID["OpenSearch"] = "OpenSearch";
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
+    PlatformID["LogScale"] = "LogScale";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -988,6 +989,7 @@ var PlatformName;
     PlatformName["OpenSearch"] = "OpenSearch";
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
+    PlatformName["LogScale"] = "Falcon LogScale";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -1484,7 +1486,7 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -1495,6 +1497,7 @@ exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
 exports.openSearchInline = 'inline-opensearch.js';
+exports.logScaleInline = 'inline-logscale.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -1504,6 +1507,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
+    [types_common_1.PlatformID.LogScale]: [exports.logScaleInline],
     app: [exports.appStyles],
 };
 

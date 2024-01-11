@@ -73,6 +73,14 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.LogScale: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(
+            platformID,
+            new (require('./LogScalePlatform').LogScalePlatform)(),
+          );
+          break;
+        }
+
         default:
           return undefined;
       }

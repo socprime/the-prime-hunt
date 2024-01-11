@@ -81,7 +81,10 @@ const loggers = require('../common/loggers').loggers
   {
     urls: ['<all_urls>'],
   },
-  ['requestHeaders'],
+  [
+    'requestHeaders',
+    ...((typeof $browser === 'undefined' || $browser !== 'firefox') ? ['extraHeaders'] : []) as any,
+  ],
 );
 
 (addListener as MessageListener)(

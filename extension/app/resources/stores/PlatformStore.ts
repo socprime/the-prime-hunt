@@ -15,7 +15,7 @@ import { copyToClipboard } from '../../../common/common-helpers';
 
 export class PlatformStore {
   @observable
-  private platform: ContentPlatform;
+  public platform: ContentPlatform | null = null;
 
   @observable
   private message: FC | null = null;

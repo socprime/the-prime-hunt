@@ -78,4 +78,3 @@ setTimeout(() => {
     alert('Warning! The Prime Hunt Extension is already installed! Please remove previous version first to avoid conflicts.');
   }
 }, 2000);
-

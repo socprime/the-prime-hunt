@@ -17,7 +17,10 @@ export type BrowserTabInfo = {
   origin: string;
 };
 
-export type ExtensionMessageType = MessageToBackground | MessageToContent | MessageToInline | MessageToApp;
+export type ExtensionMessageType = MessageToBackground
+  | MessageToContent
+  | MessageToInline
+  | MessageToApp;
 
 export type ExecutingContext = 'background' | 'app' | 'content' | 'inline';
 
@@ -36,6 +39,7 @@ export enum PlatformID {
   OpenSearch = 'OpenSearch',
   ArcSight = 'ArcSight',
   Athena = 'Athena',
+  LogScale = 'LogScale'
 }
 
 export enum PlatformName {
@@ -47,6 +51,7 @@ export enum PlatformName {
   OpenSearch = 'OpenSearch',
   ArcSight = 'ArcSight',
   Athena = 'Amazon Athena',
+  LogScale = 'Falcon LogScale',
 }
 
 export type IPlatform = {

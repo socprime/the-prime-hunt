@@ -588,7 +588,7 @@ exports.cssObjectToString = cssObjectToString;
 const mountHTMLElement = (element, mountElement, options) => {
     const elem = document.createElement(element);
     if (options === null || options === void 0 ? void 0 : options.attributes) {
-        Object.keys(options.attributes).forEach(key => {
+        Object.keys(options.attributes).forEach((key) => {
             var _a;
             elem.setAttribute(key, key === 'style'
                 ? (0, exports.cssObjectToString)(options.attributes[key])
@@ -617,7 +617,7 @@ const isInsideIframe = () => {
 };
 exports.isInsideIframe = isInsideIframe;
 const waitHTMLElement = (query, rootElement = document) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         new MutationObserver((_, observer) => {
             const element = rootElement.querySelector(query);
             if (element) {
@@ -694,9 +694,9 @@ const getElementsUnderCursor = (e, filter) => {
 exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
     const queryParts = [];
-    Object.keys(resources).forEach(fieldName => {
+    Object.keys(resources).forEach((fieldName) => {
         queryParts.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
+            .map((v) => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
     });
     const queryPartsStr = queryParts.join(fieldsSeparator);
@@ -743,8 +743,8 @@ const getVersionFromString = (version) => {
         || !/^[.0-9]+$/.test(version)) {
         return 0;
     }
-    const result = parseInt(version.replace(/\./g, ''));
-    return isNaN(result) ? 0 : result;
+    const result = parseInt(version.replace(/\./g, ''), 10);
+    return Number.isNaN(result) ? 0 : result;
 };
 exports.getVersionFromString = getVersionFromString;
 const compareVersions = (version1, version2) => {
@@ -818,7 +818,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.0";
+exports.version = "1.4.1";
 
 
 /***/ }),
@@ -977,6 +977,7 @@ var PlatformID;
     PlatformID["OpenSearch"] = "OpenSearch";
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
+    PlatformID["LogScale"] = "LogScale";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -988,6 +989,7 @@ var PlatformName;
     PlatformName["OpenSearch"] = "OpenSearch";
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
+    PlatformName["LogScale"] = "Falcon LogScale";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -1320,12 +1322,11 @@ const checkEditorExists = () => {
     return !!((_b = (_a = monaco === null || monaco === void 0 ? void 0 : monaco.editor) === null || _a === void 0 ? void 0 : _a.getModels) === null || _b === void 0 ? void 0 : _b.call(_a));
 };
 exports.checkEditorExists = checkEditorExists;
-const getContentFocusedLines = (editorIndex) => {
+const getContentFocusedLines = (editor) => {
     var _a;
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
     const result = [];
     for (let i = 1; i <= editor.getLineCount(); i++) {
-        if (editor.getLineDecorations(i).some(l => l.options.className)
+        if (editor.getLineDecorations(i).some((l) => l.options.className)
             && ((_a = editor.getLineContent(i)) === null || _a === void 0 ? void 0 : _a.trim()) !== '') {
             result.push(i);
         }
@@ -1333,9 +1334,8 @@ const getContentFocusedLines = (editorIndex) => {
     return result;
 };
 exports.getContentFocusedLines = getContentFocusedLines;
-const getLastContentLine = (editorIndex) => {
+const getLastContentLine = (editor) => {
     var _a;
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
     const contentLines = editor.getLinesContent();
     while (((_a = contentLines[contentLines.length - 1]) === null || _a === void 0 ? void 0 : _a.trim()) === '') {
         contentLines.splice(contentLines.length - 1);
@@ -1344,14 +1344,13 @@ const getLastContentLine = (editorIndex) => {
 };
 exports.getLastContentLine = getLastContentLine;
 const getEditorIndexByFormattedUri = (uri) => {
-    return monaco.editor.getModels().findIndex(model => {
+    return monaco.editor.getModels().findIndex((model) => {
         return model.uri._formatted === uri;
     });
 };
 exports.getEditorIndexByFormattedUri = getEditorIndexByFormattedUri;
-const buildNewJsonQuery = (editorIndex, suffix, modifyType) => {
+const buildNewJsonQuery = (editor, suffix, modifyType) => {
     var _a;
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
     const currentEditorValue = (0, helpers_1.parseJSONSafe)(editor.getValue(), null);
     const currentQuery = (!currentEditorValue || !currentEditorValue.Query)
         ? ''
@@ -1365,27 +1364,26 @@ const buildNewJsonQuery = (editorIndex, suffix, modifyType) => {
     }, null, 3);
 };
 exports.buildNewJsonQuery = buildNewJsonQuery;
-const buildNewQuery = (editorIndex, suffix, modifyType) => {
+const buildNewQuery = (editor, suffix, modifyType, withPrefix = true) => {
     let newQuery = '';
-    const editor = (0, exports.getEditorByIndex)(editorIndex);
     const editorLines = editor.getLinesContent();
-    const focusedLines = (0, exports.getContentFocusedLines)(editorIndex);
+    const focusedLines = (0, exports.getContentFocusedLines)(editor);
     if (modifyType === 'show all' && focusedLines.length < 1) {
         const prefix = editorLines
             .map((l) => l.split('|').shift())
             .filter(Boolean).pop()
             || '<unknown>';
-        newQuery = `${prefix} ${suffix}`;
+        newQuery = `${withPrefix ? `${prefix} ` : ''}${suffix}`;
     }
     if (modifyType === 'show all' && focusedLines.length >= 1) {
         const prefix = editorLines[focusedLines[0] - 1].split('|').shift();
-        editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${prefix} ${suffix}`);
+        editorLines.splice(focusedLines[0] - 1, focusedLines.length, `${withPrefix ? `${prefix} ` : ''}${suffix}`);
         newQuery = editorLines.join('\n');
     }
     if (modifyType !== 'show all') {
         const lastEditorLineIndex = focusedLines.length > 0
             ? focusedLines[focusedLines.length - 1]
-            : (0, exports.getLastContentLine)(editorIndex);
+            : (0, exports.getLastContentLine)(editor);
         const lastEditorLine = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
         editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
         newQuery = editorLines.join('\n');
@@ -1433,7 +1431,7 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -1444,6 +1442,7 @@ exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
 exports.openSearchInline = 'inline-opensearch.js';
+exports.logScaleInline = 'inline-logscale.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -1453,6 +1452,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
+    [types_common_1.PlatformID.LogScale]: [exports.logScaleInline],
     app: [exports.appStyles],
 };
 
@@ -1528,10 +1528,10 @@ const setIndex = (index) => {
     return true;
 };
 const getCurrentEditorIndex = () => {
-    let responseEditors = Array.from(document.querySelectorAll('.response-editor .monaco-editor[data-uri^="inmemory:"]')).filter(e => e.scrollWidth > 5);
+    const responseEditors = Array.from(document.querySelectorAll('.response-editor .monaco-editor[data-uri^="inmemory:"]')).filter((e) => e.scrollWidth > 5);
     const editorHtml = Array.from(document.querySelectorAll('.monaco-editor[data-uri^="inmemory:"]'))
-        .filter(e => e.scrollWidth > 5)
-        .filter(e => !responseEditors.includes(e))[0];
+        .filter((e) => e.scrollWidth > 5)
+        .filter((e) => !responseEditors.includes(e))[0];
     if (!editorHtml) {
         return null;
     }
@@ -1557,27 +1557,28 @@ window.addEventListener('message', (event) => {
     const message = event.data;
     if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISModifyQuery === message.type, message, event)) {
         if (!(0, monaco_editor_helpers_1.checkEditorExists)()) {
-            return loggers.error().log('editor not found', monaco);
+            loggers.error().log('editor not found', monaco);
+            return;
         }
         if (!setIndex(getCurrentEditorIndex())) {
-            return loggers.info().log('Can not determine the editor index');
+            loggers.info().log('Can not determine the editor index');
+            return;
         }
         const { resources, modifyType } = message.payload;
         const { href } = window.location;
         const suffix = `| ${platform.buildQueryParts(modifyType, resources, true)}`;
         const editor = (0, monaco_editor_helpers_1.getEditorByIndex)(editorIndex);
         const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1
-            ? (0, monaco_editor_helpers_1.buildNewQuery)(editorIndex, suffix, modifyType)
-            : (0, monaco_editor_helpers_1.buildNewJsonQuery)(editorIndex, suffix, modifyType);
+            ? (0, monaco_editor_helpers_1.buildNewQuery)(editor, suffix, modifyType)
+            : (0, monaco_editor_helpers_1.buildNewJsonQuery)(editor, suffix, modifyType);
         editor.setValue(newQuery);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISSetQuery === message.type, message, event)) {
         const { editor } = getEditor();
-        if (!editor) {
-            return;
+        if (editor) {
+            const { value } = message.payload;
+            editor.setValue(value);
         }
-        const { value } = message.payload;
-        editor.setValue(value);
     }
     if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISGetQuery === message.type, message, event)) {
         const { editor } = getEditor();

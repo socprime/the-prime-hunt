@@ -54,7 +54,7 @@ window.addEventListener('message', (event) => {
     message,
     event,
   )) {
-    const { editor, index } = getEditor();
+    const { editor } = getEditor();
     if (!editor) {
       return;
     }
@@ -62,7 +62,7 @@ window.addEventListener('message', (event) => {
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
 
     const suffix = `| ${platform.buildQueryParts(modifyType, resources, true)}`;
-    editor.setValue(buildNewQuery(index, suffix, modifyType));
+    editor.setValue(buildNewQuery(editor, suffix, modifyType));
   }
 
   if (isMessageMatched(

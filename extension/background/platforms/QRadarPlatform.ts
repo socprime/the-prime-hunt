@@ -50,8 +50,14 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
     return PlatformName.QRadar;
   }
 
-  private parseLastHtmlResponse(response: LastHtmlResponse, watchingResources: WatchingResources): ParsedResult {
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+  private parseLastHtmlResponse(
+    response: LastHtmlResponse,
+    watchingResources: WatchingResources,
+  ): ParsedResult {
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
     const result: ParsedResult = {};
 
     const { fields } = this;
@@ -67,7 +73,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
         }
         if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
           const types = mapFieldNameToTypes.get(fieldName)!;
-          types.forEach(t => {
+          types.forEach((t) => {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
             }
@@ -80,8 +86,14 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  private parseAriaSearchResponse(response: string, watchingResources: WatchingResources): ParsedResult {
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+  private parseAriaSearchResponse(
+    response: string,
+    watchingResources: WatchingResources,
+  ): ParsedResult {
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
     const result: ParsedResult = {};
     const { fields } = this;
 
@@ -93,10 +105,10 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
       if (fieldName) {
         fields.add(fieldName);
       }
-      const value =  elem.find('span[id]').text()?.trim();
+      const value = elem.find('span[id]').text()?.trim();
       if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
         const types = mapFieldNameToTypes.get(fieldName)!;
-        types.forEach(t => {
+        types.forEach((t) => {
           if (typeof result[t] === 'undefined') {
             result[t] = {};
           }
@@ -154,7 +166,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
             () => {
               return !urlsProcessing.has(details.url)
                 && details.method === 'POST'
-                && QRadarPlatform.postUrls.some(u => details.url.indexOf(u) > -1);
+                && QRadarPlatform.postUrls.some((u) => details.url.indexOf(u) > -1);
             },
             params,
             id,
@@ -195,7 +207,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
               return !urlsProcessing.has(details.url)
                 && details.method === 'POST'
                 && details.tabId > 0
-                && QRadarPlatform.postUrls.some(u => href.indexOf(u) > -1);
+                && QRadarPlatform.postUrls.some((u) => href.indexOf(u) > -1);
             },
             params,
             id,
@@ -218,7 +230,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
 
             QRadarPlatform.sendLoading(details.tabId, true);
 
-            const url = details.url;
+            const { url } = details;
             const cacheID = url;
 
             http.post(
@@ -285,7 +297,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
                     removeAttached();
                   }
                   : undefined,
-                onError: e => {
+                onError: (e) => {
                   loggers
                     .warn()
                     .addPrefix('failed webRequest post')

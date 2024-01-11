@@ -29,7 +29,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
       '-',
     ];
   }
-  
+
   getID() {
     return MicrosoftDefenderPlatform.id;
   }
@@ -49,14 +49,17 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
     const { fields } = this;
     fields.clear();
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
-    (response?.Results || []).forEach(document => {
-      Object.keys(document).forEach(fn => fields.add(fn));
-      Array.from(fieldsNames).forEach(fieldName => {
+    (response?.Results || []).forEach((document) => {
+      Object.keys(document).forEach((fn) => fields.add(fn));
+      Array.from(fieldsNames).forEach((fieldName) => {
         if (document?.[fieldName]) {
           const types = mapFieldNameToTypes.get(fieldName)!;
-          types.forEach(t => {
+          types.forEach((t) => {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
             }
@@ -85,7 +88,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !MicrosoftDefenderPlatform.postUrls.some(p => href.indexOf(p) > -1)
+              || !MicrosoftDefenderPlatform.postUrls.some((p) => href.indexOf(p) > -1)
               || !details.requestBody?.raw?.[0]?.bytes?.byteLength
               || details.requestBody.raw[0].bytes.byteLength < 5
             ),
@@ -109,7 +112,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !MicrosoftDefenderPlatform.postUrls.some(p => href.indexOf(p) > -1)
+              || !MicrosoftDefenderPlatform.postUrls.some((p) => href.indexOf(p) > -1)
               || !bodyData.has(details.url)
               || !details.requestHeaders
             ),
@@ -133,7 +136,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
 
           AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
-          const url = details.url;
+          const { url } = details;
           const cacheID = url;
 
           http.post(
@@ -165,7 +168,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
                 this.lastResponse.set(cacheID, response);
                 removeAttached();
               },
-              onError: e => {
+              onError: (e) => {
                 loggers
                   .error()
                   .addPrefix('failed webRequest post')

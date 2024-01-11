@@ -51,7 +51,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !MicrosoftSentinelPlatform.postUrls.some(p => href.indexOf(p) > -1)
+              || !MicrosoftSentinelPlatform.postUrls.some((p) => href.indexOf(p) > -1)
               || !details.requestBody?.raw?.[0]?.bytes?.byteLength
               || details.requestBody?.raw[0].bytes.byteLength < 5
             ),
@@ -76,7 +76,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
             () => !(
               urlsProcessing.has(details.url)
               || details.method !== 'POST'
-              || !MicrosoftSentinelPlatform.postUrls.some(p => href.indexOf(p) > -1)
+              || !MicrosoftSentinelPlatform.postUrls.some((p) => href.indexOf(p) > -1)
               || !bodyData.has(details.url)
               || !details.requestHeaders
             ),
@@ -101,7 +101,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
 
           AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
-          const url = details.url;
+          const { url } = details;
           const cacheID = url;
 
           http.post(
@@ -173,7 +173,10 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
 
     const result: ParsedResult = {};
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     const mappedFieldNamesToIndex = (response?.tables?.[0]?.columns || [])
       .reduce((map, d, index) => {
@@ -183,10 +186,10 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
       }, new Map()) || new Map();
 
     (response?.tables?.[0]?.rows || []).forEach((row: string[]) => {
-      Array.from(fieldsNames).forEach(fieldName => {
+      Array.from(fieldsNames).forEach((fieldName) => {
         if (mappedFieldNamesToIndex.has(fieldName)) {
           const types = mapFieldNameToTypes.get(fieldName)!;
-          types.forEach(t => {
+          types.forEach((t) => {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
             }

@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight, Amazon Athena, Amazon OpenSearch.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight, Amazon Athena, Amazon OpenSearch, Falcon Logscale.
 All default data schemas are supported including OCSF, CEF, ECS, LEEF, CIM, OSSEM.
 
 ## Installation

@@ -8,7 +8,9 @@ import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { http } from '../../../common/Http';
 import { Loggers } from '../../common/loggers';
-import { capitalizeFirstLetter, formatDate, parseJSONSafe, uuid } from '../../../common/helpers';
+import {
+  capitalizeFirstLetter, formatDate, parseJSONSafe, uuid,
+} from '../../../common/helpers';
 import { isDate } from '../../../common/checkers';
 import { normalizeParsedResources } from '../services/background-services';
 
@@ -150,7 +152,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
   }
 
   private static toCamelCase(str: string): string {
-    return str.split('_').map((v, i) => i === 0 ? v : capitalizeFirstLetter(v)).join('');
+    return str.split('_').map((v, i) => (i === 0 ? v : capitalizeFirstLetter(v))).join('');
   }
 
   private static parseClass(classStr: string) {
@@ -167,7 +169,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
     mappedFields.set('deviceEventClassId', arrayData[4]);
     mappedFields.set('name', arrayData[5]);
     mappedFields.set('severity', arrayData[6]);
-    arrayData[7].split(' ').forEach(pairs => {
+    arrayData[7].split(' ').forEach((pairs) => {
       if (!pairs) {
         return;
       }
@@ -176,7 +178,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
         ArcSightPlatform.getFieldName(fieldName),
         isDate(resourceName) ? formatDate(
           '%Y/%M/%d %h:%m:%s EET',
-          new Date(parseInt(resourceName)),
+          new Date(parseInt(resourceName, 10)),
         ) : resourceName,
       );
     });
@@ -201,14 +203,17 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
       ArcSightPlatform.getFieldName(fieldName),
       isDate(resourceName) ? formatDate(
         '%Y/%M/%d %h:%m:%s EET',
-        new Date(parseInt(resourceName)),
+        new Date(parseInt(resourceName, 10)),
       ) : resourceName,
     );
-    
+
     return mappedFields;
   }
 
-  async parseResponse(response: (number | string[])[], tabInfo: BrowserTabInfo): Promise<ParsedResult> {
+  async parseResponse(
+    response: (number | string[])[],
+    tabInfo: BrowserTabInfo,
+  ): Promise<ParsedResult> {
     const result = {} as ParsedResult;
     const watchingFieldsNames = this.fields;
 
@@ -216,14 +221,17 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
     const watchingResources = this.getWatchers(tabInfo);
     loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
-    (response || [])?.forEach(v => {
+    (response || [])?.forEach((v) => {
       if (!Array.isArray(v)) {
         return;
       }
 
-      (v as string[] || []).forEach(sv => {
+      (v as string[] || []).forEach((sv) => {
         if (sv[0] !== '<') {
           return;
         }
@@ -234,12 +242,12 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
           ? this.parseCEFString(str)
           : this.parseHTMLString(sv);
 
-        Array.from(fields).forEach(av => watchingFieldsNames.add(av[0]));
+        Array.from(fields).forEach((av) => watchingFieldsNames.add(av[0]));
 
-        Array.from(fieldsNames).forEach(fieldNameToParse => {
+        Array.from(fieldsNames).forEach((fieldNameToParse) => {
           if (fields.has(fieldNameToParse)) {
             const types = mapFieldNameToTypes.get(fieldNameToParse)!;
-            types.forEach(t => {
+            types.forEach((t) => {
               if (typeof result[t] === 'undefined') {
                 result[t] = {};
               }
@@ -279,7 +287,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                 && !bodyData.has(details.url)
                 && !!details.requestBody?.raw?.[0]?.bytes?.byteLength
                 && details.requestBody?.raw?.[0]?.bytes?.byteLength > 5
-                && ArcSightPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                && ArcSightPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             },
           )) {
             bodyData.set(details.url, details.requestBody!.raw![0].bytes!);
@@ -298,14 +306,14 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
               return details.method === 'POST'
                 && !urlsProcessing.has(details.url)
                 && bodyData.has(details.url)
-                && ArcSightPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                && ArcSightPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             },
             params,
             id,
           )) {
             let reconnectAttempts = 4;
             const bodyBytes = bodyData.get(details.url)!;
-            let bodyStr = new TextDecoder().decode(bodyBytes);
+            const bodyStr = new TextDecoder().decode(bodyBytes);
             urlsProcessing.add(details.url);
 
             const removeAttached = () => {
@@ -319,7 +327,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
             const doRequest = () => {
               AbstractBackgroundPlatform.sendLoading(details.tabId, true);
 
-              const url = details.url;
+              const { url } = details;
               const cacheID = url;
 
               http.post(
@@ -339,7 +347,8 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                         .warn()
                         .addPrefix('failed parse json response')
                         .log(details.method, url, bodyStr);
-                      return removeAttached();
+                      removeAttached();
+                      return;
                     }
                     const resources = normalizeParsedResources(
                       await this.parseResponse(data, {
@@ -359,22 +368,22 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                     this.lastResponse.set(cacheID, response);
                     removeAttached();
                   },
-                  onError: e => {
+                  onError: (e) => {
                     loggers
                       .warn()
                       .addPrefix('failed webRequest post')
                       .log(e, details.method, url, bodyStr);
                     if (reconnectAttempts > 0) {
                       loggers.info().log('retry request');
-                      reconnectAttempts = reconnectAttempts - 1;
-                      return doRequest();
+                      reconnectAttempts -= 1;
+                      doRequest();
+                      return;
                     }
                     removeAttached();
                   },
                 },
               );
             };
-
             doRequest();
           }
         },

@@ -1,4 +1,6 @@
-import { forwardRef, useEffect, useRef, useState, MutableRefObject, useImperativeHandle } from 'react';
+import {
+  forwardRef, useEffect, useRef, useState, MutableRefObject, useImperativeHandle,
+} from 'react';
 import { AppControlInput, AppControlInputProps } from '../../components/inputs/AppControlInput/AppControlInput';
 import { createClassName } from '../../../common/common-helpers';
 import { CheckIcon } from '../../components/atoms/icons/CheckIcon/CheckIcon';
@@ -38,7 +40,6 @@ export const AddFieldInput = forwardRef<AddFieldInputRefs, AddFieldInputProps>((
     },
   }));
 
-
   useEffect(() => {
     if (value !== inputValue) {
       setInputValue(value);
@@ -56,7 +57,7 @@ export const AddFieldInput = forwardRef<AddFieldInputRefs, AddFieldInputProps>((
         className,
       ])}
       ref={wrapperRef}
-      onKeyDown={e => {
+      onKeyDown={(e) => {
         const code = e.code?.toLowerCase?.() || '';
         if (code === 'enter') {
           onApply(inputValue);
@@ -77,7 +78,7 @@ export const AddFieldInput = forwardRef<AddFieldInputRefs, AddFieldInputProps>((
           'add-field-input',
           className,
         ])}
-        onType={v => {
+        onType={(v) => {
           setInputValue(v.trim());
           onType?.(v);
         }}

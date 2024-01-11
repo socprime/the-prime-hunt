@@ -1,9 +1,8 @@
 import { StandardPropertiesHyphen } from 'csstype';
 import { NormalizedParsedResources } from '../app/resources/resources-types';
 
-export const cssObjectToString = (styles: StandardPropertiesHyphen): string =>
-  Object.keys(styles)
-    .reduce((res, key) => res += `${key}:${(styles as Record<string, string>)[key]};`, '');
+export const cssObjectToString = (styles: StandardPropertiesHyphen): string => Object.keys(styles)
+  .reduce((res, key) => res += `${key}:${(styles as Record<string, string>)[key]};`, '');
 
 export const mountHTMLElement = (
   element: 'div' | 'style' | 'script' | 'link',
@@ -16,7 +15,7 @@ export const mountHTMLElement = (
 ): HTMLElement => {
   const elem = document.createElement(element);
   if (options?.attributes) {
-    Object.keys(options.attributes).forEach(key => {
+    Object.keys(options.attributes).forEach((key) => {
       elem.setAttribute(
         key,
         key === 'style'
@@ -49,7 +48,7 @@ export const waitHTMLElement = async (
   query: string,
   rootElement: Document | HTMLElement = document,
 ): Promise<HTMLElement> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     new MutationObserver((_, observer) => {
       const element = rootElement.querySelector(query);
       if (element) {
@@ -157,10 +156,10 @@ export const buildQueryParts = (
 ): string => {
   const queryParts: string[] = [];
 
-  Object.keys(resources).forEach(fieldName => {
+  Object.keys(resources).forEach((fieldName) => {
     queryParts.push(
       resources[fieldName]
-        .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
+        .map((v) => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
         .join(valuesSeparator),
     );
   });
@@ -212,8 +211,8 @@ export const getVersionFromString = (version: unknown): number => {
   ) {
     return 0;
   }
-  const result = parseInt(version.replace(/\./g, ''));
-  return isNaN(result) ? 0 : result;
+  const result = parseInt(version.replace(/\./g, ''), 10);
+  return Number.isNaN(result) ? 0 : result;
 };
 
 export const compareVersions = (

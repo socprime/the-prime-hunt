@@ -40,7 +40,7 @@ export class ElasticPlatform extends AbstractContentPlatform {
   };
 
   static normalizedValue = (value: string | number) => {
-    let nValue = isNumberInString(value)
+    const nValue = isNumberInString(value)
       ? parseFloat(value as string)
       : String(value).trim();
 
@@ -58,7 +58,6 @@ export class ElasticPlatform extends AbstractContentPlatform {
     }"`;
   };
 
-
   static buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,
@@ -70,11 +69,11 @@ export class ElasticPlatform extends AbstractContentPlatform {
 
     const normalizedResources: NormalizedParsedResources = {};
 
-    Object.keys(resources).forEach(fieldName => {
+    Object.keys(resources).forEach((fieldName) => {
       if (resources[fieldName].length > 1) {
         normalizedResources[fieldName] = [
           `(${resources[fieldName]
-            .map(rn => ElasticPlatform.normalizedValue(rn))
+            .map((rn) => ElasticPlatform.normalizedValue(rn))
             .join(' OR ')
           })`,
         ];
@@ -83,10 +82,9 @@ export class ElasticPlatform extends AbstractContentPlatform {
       }
     });
 
-
     return buildQueryParts(
       normalizedResources,
-      () => type === 'exclude' ? ':' : ':',
+      () => (type === 'exclude' ? ':' : ':'),
       type === 'exclude' ? ' AND NOT ' : ' OR ',
       type === 'exclude' ? ' AND NOT ' : ' AND ',
       {

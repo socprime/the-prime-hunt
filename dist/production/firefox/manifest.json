@@ -1,5 +1,5 @@
 {
-   "version": "1.4.0",
+   "version": "1.4.1",
    "description": "__MSG_extension_description__",
    "name": "__MSG_extension_name__",
    "default_locale": "en",
@@ -39,6 +39,7 @@
       "inline-arcsight.js",
       "inline-amazon-athena.js",
       "inline-opensearch.js",
+      "inline-logscale.js",
       "app-styles.css"
    ],
    "browser_action": {

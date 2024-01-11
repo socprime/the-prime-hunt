@@ -28,14 +28,19 @@ export const ResourcesContentView: React.FC<ResourcesContentViewProps> = observe
   }, [activeTabID]);
 
   if (!platformStore.getID()) {
-    return null;
+    return (
+      <div className="resource-content-view platform-detected">
+        <Spacer height={18} />
+        Unknown platform detected
+      </div>
+    );
   }
 
   return (
     <SimpleBar ref={ref} className={createClassName(['resource-content-view', className])}>
       {countAllResources < 1 && (
         <div className="resource-content-view platform-detected">
-          <Spacer height={8} />
+          <Spacer height={12} />
           {platformStore.getName()} detected. Run a query to see results.
         </div>
       )}

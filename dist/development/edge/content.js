@@ -57457,7 +57457,7 @@ exports.NotFoundContentView = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/not-found/views/NotFoundContentView/styles.scss");
 const NotFoundContentView = () => {
-    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "not-found-content-view" }, { children: (0, jsx_runtime_1.jsxs)("div", { children: ["No supported platform detected.", (0, jsx_runtime_1.jsx)("br", {}), "You can use this extension with", (0, jsx_runtime_1.jsx)("br", {}), "Microsoft Sentinel, Microsoft Defender for Endpoint", (0, jsx_runtime_1.jsx)("br", {}), "Amazon Athena, Splunk, Elastic, OpenSearch, QRadar, ArcSight"] }) })));
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "not-found-content-view" }, { children: (0, jsx_runtime_1.jsxs)("div", { children: ["No supported platform detected.", (0, jsx_runtime_1.jsx)("br", {}), "You can use this extension with", (0, jsx_runtime_1.jsx)("br", {}), "Microsoft Sentinel, Microsoft Defender for Endpoint", (0, jsx_runtime_1.jsx)("br", {}), "Amazon Athena, Splunk, Elastic, OpenSearch, QRadar,", (0, jsx_runtime_1.jsx)("br", {}), "ArcSight, LogScale"] }) })));
 };
 exports.NotFoundContentView = NotFoundContentView;
 
@@ -57517,7 +57517,7 @@ exports.AddFieldInput = (0, react_1.forwardRef)((_a, ref) => {
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'add-field-input-wrapper',
             className,
-        ]), ref: wrapperRef, onKeyDown: e => {
+        ]), ref: wrapperRef, onKeyDown: (e) => {
             var _a, _b;
             const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
             if (code === 'enter') {
@@ -57529,7 +57529,7 @@ exports.AddFieldInput = (0, react_1.forwardRef)((_a, ref) => {
         } }, { children: [(0, jsx_runtime_1.jsx)("span", { children: (0, jsx_runtime_1.jsx)(SearchDocumentIcon_1.SearchDocumentIcon, {}) }), (0, jsx_runtime_1.jsx)(AppControlInput_1.AppControlInput, Object.assign({}, restProps, { edit: true, ref: inputRef, className: (0, common_helpers_1.createClassName)([
                     'add-field-input',
                     className,
-                ]), onType: v => {
+                ]), onType: (v) => {
                     setInputValue(v.trim());
                     onType === null || onType === void 0 ? void 0 : onType(v);
                 }, placeholder: "Enter Field Name", controls: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", Object.assign({ className: "control" }, { children: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, { onClick: () => {
@@ -58481,6 +58481,7 @@ const local_storage_1 = __webpack_require__(/*! ../../../common/local-storage */
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 class PlatformStore {
     constructor(rootStore) {
+        this.platform = null;
         this.message = null;
         this.rootStore = rootStore;
         (0, mobx_1.makeObservable)(this);
@@ -59013,9 +59014,9 @@ exports.ResourcesContentView = (0, mobx_react_lite_1.observer)(({ className = ''
             .querySelector('.simplebar-content-wrapper')) === null || _b === void 0 ? void 0 : _b.scrollTo) === null || _c === void 0 ? void 0 : _c.call(_b, { top: 0 });
     }, [activeTabID]);
     if (!platformStore.getID()) {
-        return null;
+        return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-content-view platform-detected" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 18 }), "Unknown platform detected"] })));
     }
-    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) }, { children: [countAllResources < 1 && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-content-view platform-detected" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 8 }), platformStore.getName(), " detected. Run a query to see results."] }))), (0, jsx_runtime_1.jsx)(PlatformResources_1.PlatformResources, {})] })));
+    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) }, { children: [countAllResources < 1 && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-content-view platform-detected" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), platformStore.getName(), " detected. Run a query to see results."] }))), (0, jsx_runtime_1.jsx)(PlatformResources_1.PlatformResources, {})] })));
 });
 
 
@@ -60188,7 +60189,7 @@ exports.cssObjectToString = cssObjectToString;
 const mountHTMLElement = (element, mountElement, options) => {
     const elem = document.createElement(element);
     if (options === null || options === void 0 ? void 0 : options.attributes) {
-        Object.keys(options.attributes).forEach(key => {
+        Object.keys(options.attributes).forEach((key) => {
             var _a;
             elem.setAttribute(key, key === 'style'
                 ? (0, exports.cssObjectToString)(options.attributes[key])
@@ -60217,7 +60218,7 @@ const isInsideIframe = () => {
 };
 exports.isInsideIframe = isInsideIframe;
 const waitHTMLElement = (query, rootElement = document) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         new MutationObserver((_, observer) => {
             const element = rootElement.querySelector(query);
             if (element) {
@@ -60294,9 +60295,9 @@ const getElementsUnderCursor = (e, filter) => {
 exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
     const queryParts = [];
-    Object.keys(resources).forEach(fieldName => {
+    Object.keys(resources).forEach((fieldName) => {
         queryParts.push(resources[fieldName]
-            .map(v => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
+            .map((v) => `${decorators.leftOperand(fieldName)}${getOperator(fieldName, v)}${decorators.rightOperand(v)}`)
             .join(valuesSeparator));
     });
     const queryPartsStr = queryParts.join(fieldsSeparator);
@@ -60343,8 +60344,8 @@ const getVersionFromString = (version) => {
         || !/^[.0-9]+$/.test(version)) {
         return 0;
     }
-    const result = parseInt(version.replace(/\./g, ''));
-    return isNaN(result) ? 0 : result;
+    const result = parseInt(version.replace(/\./g, ''), 10);
+    return Number.isNaN(result) ? 0 : result;
 };
 exports.getVersionFromString = getVersionFromString;
 const compareVersions = (version1, version2) => {
@@ -60420,7 +60421,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.0";
+exports.version = "1.4.1";
 
 
 /***/ }),
@@ -60759,6 +60760,7 @@ var PlatformID;
     PlatformID["OpenSearch"] = "OpenSearch";
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
+    PlatformID["LogScale"] = "LogScale";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -60770,6 +60772,7 @@ var PlatformName;
     PlatformName["OpenSearch"] = "OpenSearch";
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
+    PlatformName["LogScale"] = "Falcon LogScale";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -61141,11 +61144,11 @@ class ElasticPlatform extends AbstractContentPlatform_1.AbstractContentPlatform 
             ? 'AND'
             : 'AND NOT';
         const normalizedResources = {};
-        Object.keys(resources).forEach(fieldName => {
+        Object.keys(resources).forEach((fieldName) => {
             if (resources[fieldName].length > 1) {
                 normalizedResources[fieldName] = [
                     `(${resources[fieldName]
-                        .map(rn => ElasticPlatform.normalizedValue(rn))
+                        .map((rn) => ElasticPlatform.normalizedValue(rn))
                         .join(' OR ')})`,
                 ];
             }
@@ -61153,7 +61156,7 @@ class ElasticPlatform extends AbstractContentPlatform_1.AbstractContentPlatform 
                 normalizedResources[fieldName] = resources[fieldName];
             }
         });
-        return (0, common_helpers_1.buildQueryParts)(normalizedResources, () => type === 'exclude' ? ':' : ':', type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
+        return (0, common_helpers_1.buildQueryParts)(normalizedResources, () => (type === 'exclude' ? ':' : ':'), type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
             leftOperand: (v) => v,
             rightOperand: (v) => ElasticPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -61198,7 +61201,7 @@ ElasticPlatform.extensionDefaultPosition = {
     height: 480,
 };
 ElasticPlatform.normalizedValue = (value) => {
-    let nValue = (0, checkers_1.isNumberInString)(value)
+    const nValue = (0, checkers_1.isNumberInString)(value)
         ? parseFloat(value)
         : String(value).trim();
     if (typeof nValue === 'number') {
@@ -61211,6 +61214,144 @@ ElasticPlatform.normalizedValue = (value) => {
         .replace(/"/g, '\\"')}"`;
 };
 loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ElasticPlatform.id);
+
+
+/***/ }),
+
+/***/ "./extension/content/platforms/LogScalePlatform.ts":
+/*!*********************************************************!*\
+  !*** ./extension/content/platforms/LogScalePlatform.ts ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LogScalePlatform = void 0;
+const AbstractContentPlatform_1 = __webpack_require__(/*! ./AbstractContentPlatform */ "./extension/content/platforms/AbstractContentPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+let loggers;
+class LogScalePlatform extends AbstractContentPlatform_1.AbstractContentPlatform {
+    constructor() {
+        super(...arguments);
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'windows.UserID',
+                'windows.EventData.User',
+                'windows.EventData.SubjectUserName',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                '@collect.host',
+                'windows.Computer',
+                'windows.EventData.DestinationIp',
+                'windows.EventData.DestinationHostname',
+                'windows.EventData.SourceIp',
+                'windows.EventData.SourceHostname',
+            ],
+        };
+        this.extensionDefaultPosition = {
+            top: 0,
+            left: 0,
+            width: 480,
+            height: 480,
+        };
+    }
+    static normalizedValue(value) {
+        const nValue = (0, checkers_1.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `"${nValue
+                .replace(/\\/g, '\\\\')
+                .replace(/"/g, '\\"')}"`;
+    }
+    static buildQueryParts(type, resources, withPrefix = false) {
+        const prefix = type === 'exclude' ? 'NOT' : '';
+        const newResources = Object.keys(resources)
+            .reduce((res, resourceName) => {
+            var _a;
+            if (((_a = resources[resourceName]) === null || _a === void 0 ? void 0 : _a.length) > 1) {
+                res[`$$$${resourceName}`] = [
+                    `$$$in(field="${resourceName}", values=${JSON.stringify(resources[resourceName].map((v) => ((0, checkers_1.isNumberInString)(v) ? parseInt(v, 10) : v)))})`,
+                ];
+            }
+            else {
+                res[resourceName] = resources[resourceName];
+            }
+            return res;
+        }, {});
+        const result = (0, common_helpers_1.buildQueryParts)(newResources, (v) => {
+            if (v[0] === '$' && v[1] === '$' && v[2] === '$') {
+                return '';
+            }
+            return type === 'exclude' ? ' = ' : ' = ';
+        }, type === 'exclude' ? ' | NOT ' : ' | ', type === 'exclude' ? ' | NOT ' : ' | ', {
+            leftOperand: (v) => {
+                if (v[0] === '$' && v[1] === '$' && v[2] === '$') {
+                    return '';
+                }
+                return v;
+            },
+            rightOperand: (v) => {
+                if (typeof v === 'string' && v[0] === '$' && v[1] === '$' && v[2] === '$') {
+                    return v.substring(3, v.length);
+                }
+                return LogScalePlatform.normalizedValue(v);
+            },
+        }, withPrefix ? prefix : undefined);
+        return result;
+    }
+    buildQueryParts(type, resources, withPrefix) {
+        return LogScalePlatform.buildQueryParts(type, resources, withPrefix);
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.logScaleInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            AbstractContentPlatform_1.AbstractContentPlatform.processInlineListeners(message);
+        }));
+        loggers.debug().log('listeners were set');
+    }
+    connect() {
+        LogScalePlatform.setListeners();
+        LogScalePlatform.connectInlineListener();
+        loggers.debug().log('connected');
+    }
+    getID() {
+        return LogScalePlatform.id;
+    }
+    getName() {
+        return LogScalePlatform.platformName;
+    }
+}
+exports.LogScalePlatform = LogScalePlatform;
+LogScalePlatform.id = types_common_1.PlatformID.LogScale;
+LogScalePlatform.platformName = types_common_1.PlatformName.LogScale;
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(LogScalePlatform.id);
 
 
 /***/ }),
@@ -61491,11 +61632,11 @@ class OpenSearchPlatform extends AbstractContentPlatform_1.AbstractContentPlatfo
             ? 'AND'
             : 'AND NOT';
         const normalizedResources = {};
-        Object.keys(resources).forEach(fieldName => {
+        Object.keys(resources).forEach((fieldName) => {
             if (resources[fieldName].length > 1) {
                 normalizedResources[fieldName] = [
                     `(${resources[fieldName]
-                        .map(rn => OpenSearchPlatform.normalizedValue(rn))
+                        .map((rn) => OpenSearchPlatform.normalizedValue(rn))
                         .join(' OR ')})`,
                 ];
             }
@@ -61503,7 +61644,7 @@ class OpenSearchPlatform extends AbstractContentPlatform_1.AbstractContentPlatfo
                 normalizedResources[fieldName] = resources[fieldName];
             }
         });
-        return (0, common_helpers_1.buildQueryParts)(normalizedResources, () => type === 'exclude' ? ':' : ':', type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
+        return (0, common_helpers_1.buildQueryParts)(normalizedResources, () => (type === 'exclude' ? ':' : ':'), type === 'exclude' ? ' AND NOT ' : ' OR ', type === 'exclude' ? ' AND NOT ' : ' AND ', {
             leftOperand: (v) => v,
             rightOperand: (v) => OpenSearchPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
@@ -61548,7 +61689,7 @@ OpenSearchPlatform.extensionDefaultPosition = {
     height: 480,
 };
 OpenSearchPlatform.normalizedValue = (value) => {
-    let nValue = (0, checkers_1.isNumberInString)(value)
+    const nValue = (0, checkers_1.isNumberInString)(value)
         ? parseFloat(value)
         : String(value).trim();
     if (typeof nValue === 'number') {
@@ -61618,6 +61759,10 @@ class PlatformResolver {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./ArcSightPlatform */ "./extension/content/platforms/ArcSightPlatform.ts").ArcSightPlatform))());
                     break;
                 }
+                case types_common_1.PlatformID.LogScale: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./LogScalePlatform */ "./extension/content/platforms/LogScalePlatform.ts").LogScalePlatform))());
+                    break;
+                }
                 default:
                     return undefined;
             }
@@ -61627,7 +61772,7 @@ class PlatformResolver {
     resolveByUrl(url) {
         const { host, protocol, href } = new URL(url);
         if (!(0, checkers_1.isAllowedProtocol)(protocol, envs_1.mode)) {
-            return;
+            return undefined;
         }
         if (/(aws.amazon.com\/athena\/)/.test(href)) {
             return this.getPlatformByID(types_common_1.PlatformID.Athena);
@@ -61656,6 +61801,9 @@ class PlatformResolver {
         }
         if (document.querySelector('#opensearch-dashboards-body')) {
             return this.getPlatformByID(types_common_1.PlatformID.OpenSearch);
+        }
+        if (document.querySelector('head > meta[name~="humio-version"]')) {
+            return this.getPlatformByID(types_common_1.PlatformID.LogScale);
         }
         return undefined;
     }
@@ -62510,7 +62658,7 @@ exports.getOpenCTIModel = getOpenCTIModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -62521,6 +62669,7 @@ exports.qRadarInline = 'inline-qradar.js';
 exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
 exports.openSearchInline = 'inline-opensearch.js';
+exports.logScaleInline = 'inline-logscale.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -62530,6 +62679,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
+    [types_common_1.PlatformID.LogScale]: [exports.logScaleInline],
     app: [exports.appStyles],
 };
 
@@ -62731,11 +62881,6 @@ if (isInsideIframe()) {
 else {
     __webpack_require__(/*! ./migrations */ "./extension/migrations.ts");
     __webpack_require__(/*! ./app/app-listeners */ "./extension/app/app-listeners.ts");
-    const platform = (__webpack_require__(/*! ./content/platforms/PlatformResolver */ "./extension/content/platforms/PlatformResolver.ts").platformResolver.resolve)();
-    if (platform) {
-        __webpack_require__(/*! ./app */ "./extension/app/index.tsx");
-        (__webpack_require__(/*! ./app/stores */ "./extension/app/stores/index.ts").rootStore.platformStore.setPlatform)(platform);
-    }
 }
 
 })();

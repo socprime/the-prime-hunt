@@ -9,12 +9,13 @@ export const checkEditorExists = (): boolean => {
   return !!monaco?.editor?.getModels?.();
 };
 
-export const getContentFocusedLines = (editorIndex: number): number[] => {
-  const editor = getEditorByIndex(editorIndex);
+export const getContentFocusedLines = (
+  editor: monaco.editor.ITextModel,
+): number[] => {
   const result: number[] = [];
   for (let i = 1; i <= editor.getLineCount(); i++) {
     if (
-      editor.getLineDecorations(i).some(l => l.options.className)
+      editor.getLineDecorations(i).some((l) => l.options.className)
       && editor.getLineContent(i)?.trim() !== ''
     ) {
       result.push(i);
@@ -24,9 +25,8 @@ export const getContentFocusedLines = (editorIndex: number): number[] => {
 };
 
 export const getLastContentLine = (
-  editorIndex: number,
+  editor: monaco.editor.ITextModel,
 ): number => {
-  const editor = getEditorByIndex(editorIndex);
   const contentLines = editor.getLinesContent();
   while (contentLines[contentLines.length - 1]?.trim() === '') {
     contentLines.splice(contentLines.length - 1);
@@ -35,17 +35,17 @@ export const getLastContentLine = (
 };
 
 export const getEditorIndexByFormattedUri = (uri: string): number | null => {
-  return monaco.editor.getModels().findIndex(model => {
+  return monaco.editor.getModels().findIndex((model) => {
+    // eslint-disable-next-line no-underscore-dangle
     return (model.uri as any)._formatted === uri;
   });
 };
 
 export const buildNewJsonQuery = (
-  editorIndex: number,
+  editor: monaco.editor.ITextModel,
   suffix: string,
   modifyType: ModifyQueryType,
 ): string => {
-  const editor = getEditorByIndex(editorIndex);
   const currentEditorValue = parseJSONSafe(
     editor.getValue(),
     null,
@@ -69,21 +69,21 @@ export const buildNewJsonQuery = (
 };
 
 export const buildNewQuery = (
-  editorIndex: number,
+  editor: monaco.editor.ITextModel,
   suffix: string,
   modifyType: ModifyQueryType,
+  withPrefix = true,
 ): string => {
   let newQuery = '';
-  const editor = getEditorByIndex(editorIndex);
   const editorLines: string[] = editor.getLinesContent();
-  const focusedLines = getContentFocusedLines(editorIndex);
+  const focusedLines = getContentFocusedLines(editor);
 
   if (modifyType === 'show all' && focusedLines.length < 1) {
     const prefix = editorLines
       .map((l: string) => l.split('|').shift())
       .filter(Boolean).pop()
       || '<unknown>';
-    newQuery = `${prefix} ${suffix}`;
+    newQuery = `${withPrefix ? `${prefix} ` : ''}${suffix}`;
   }
 
   if (modifyType === 'show all' && focusedLines.length >= 1) {
@@ -91,7 +91,7 @@ export const buildNewQuery = (
     editorLines.splice(
       focusedLines[0] - 1,
       focusedLines.length,
-      `${prefix} ${suffix}`,
+      `${withPrefix ? `${prefix} ` : ''}${suffix}`,
     );
     newQuery = editorLines.join('\n');
   }
@@ -99,7 +99,7 @@ export const buildNewQuery = (
   if (modifyType !== 'show all') {
     const lastEditorLineIndex = focusedLines.length > 0
       ? focusedLines[focusedLines.length - 1]
-      : getLastContentLine(editorIndex);
+      : getLastContentLine(editor);
     const lastEditorLine: string = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
     editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
     newQuery = editorLines.join('\n');

@@ -58,7 +58,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
   protected interceptorsIDs = new Set<UniqueHash>();
 
   protected checkValue(value: string): boolean {
-    return !this.emptyFieldValues.some(v => v.toLowerCase() === String(value).toLowerCase());
+    return !this.emptyFieldValues.some((v) => v.toLowerCase() === String(value).toLowerCase());
   }
 
   protected addValueToResource(
@@ -88,7 +88,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
       return response;
     }
     try {
-      const gzipedDataArray = Uint8Array.from(atob(response), c => c.charCodeAt(0));
+      const gzipedDataArray = Uint8Array.from(atob(response), (c) => c.charCodeAt(0));
       return new TextDecoder()
         .decode(pako.ungzip(gzipedDataArray));
     } catch (e) {
@@ -107,7 +107,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
 
     Object.keys(watchers).forEach((type: ResourceTypeID) => {
       const names = watchers[type];
-      names.forEach(name => {
+      names.forEach((name) => {
         fieldsNames.add(name);
         const types = mapFieldNameToType.get(name) || [];
         types.push(type);
@@ -119,7 +119,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
   }
 
   unregister() {
-    Array.from(this.interceptorsIDs).forEach(id => {
+    Array.from(this.interceptorsIDs).forEach((id) => {
       removeBGInterceptor(id);
       this.interceptorsIDs.delete(id);
     });
@@ -144,7 +144,7 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
     tabInfo: BrowserTabInfo,
   ): WatchingResources {
     const { origin, id } = tabInfo;
-    let watchingResources = this.watchingResources[origin] as WatchingResources;
+    const watchingResources = this.watchingResources[origin] as WatchingResources;
     if (watchingResources) {
       return watchingResources;
     }

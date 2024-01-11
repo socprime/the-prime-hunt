@@ -30,7 +30,6 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
 
   private isRunningResponseTimeout: null | NodeJS.Timeout = null;
 
-
   constructor() {
     super();
     this.watchingResources = {};
@@ -75,7 +74,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
 
     // TODO DRY with elastic
     (response?.rawResponse?.hits?.hits || []).forEach(({ fields, _source }) => {
-      Array.from(fieldsNames).forEach(fieldName => {
+      Array.from(fieldsNames).forEach((fieldName) => {
         let fieldValue: string | number | (number | string)[] = undefined as any;
 
         if (fields && typeof fields[fieldName] !== 'undefined') {
@@ -98,7 +97,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
           return;
         }
         const types = mapFieldNameToTypes.get(fieldName)!;
-        types.forEach(t => {
+        types.forEach((t) => {
           if (typeof result[t] === 'undefined') {
             result[t] = {};
           }
@@ -131,30 +130,33 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
     const watchingResources = this.getWatchers(tabInfo);
     loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     const results = await Promise.all(
-      lines.map(line => this.parseResponseStringObject(
+      lines.map((line) => this.parseResponseStringObject(
         line,
         mapFieldNameToTypes,
         fieldsNames,
       )),
     );
 
-    results.forEach(parsedResult => {
-      Object.keys(parsedResult).forEach(resourceTypeID => {
+    results.forEach((parsedResult) => {
+      Object.keys(parsedResult).forEach((resourceTypeID) => {
         if (!result[resourceTypeID]) {
           result[resourceTypeID] = {};
         }
         const alreadyAppendResources = result[resourceTypeID];
         const parsedResources = parsedResult[resourceTypeID];
-        Object.keys(parsedResources).forEach(fieldName => {
+        Object.keys(parsedResources).forEach((fieldName) => {
           const values = parsedResources[fieldName];
           if (!alreadyAppendResources[fieldName]) {
             alreadyAppendResources[fieldName] = new Set();
           }
           Array.from(values)
-            .forEach(v => alreadyAppendResources[fieldName].add(v));
+            .forEach((v) => alreadyAppendResources[fieldName].add(v));
         });
         result[resourceTypeID] = alreadyAppendResources;
       });
@@ -188,7 +190,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
                 && !urlsProcessing.has(details.url)
                 && !!details.requestBody?.raw?.[0]?.bytes?.byteLength
                 && details.requestBody?.raw?.[0]?.bytes?.byteLength > 5
-                && OpenSearchPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                && OpenSearchPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             },
             params,
             id,
@@ -209,13 +211,13 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
               return details.method === 'POST'
                 && !urlsProcessing.has(details.url)
                 && bodyData.has(details.url)
-                && OpenSearchPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                && OpenSearchPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             },
             params,
             id,
           )) {
             const bodyBytes = bodyData.get(details.url)!;
-            let bodyStr = new TextDecoder().decode(bodyBytes);
+            const bodyStr = new TextDecoder().decode(bodyBytes);
 
             const urlDetails = new URL(details.url);
             urlDetails.searchParams.delete('compress');

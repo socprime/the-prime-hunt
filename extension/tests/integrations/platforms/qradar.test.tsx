@@ -10,9 +10,17 @@ import {
 import { ExtensionMessage, PlatformID } from '../../../common/types/types-common';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
-  getBulkCopyButton, getBulkExcludeButton, getBulkIncludeButton, getBulkShowAllButton,
+  getBulkCopyButton,
+  getBulkExcludeButton,
+  getBulkIncludeButton,
+  getBulkShowAllButton,
   getCollapsibleByHeaderText,
-  getCopyButton, getCountSelectedEl, getExcludeButton, getIncludeButton, getShowAllButton, openCollapsible,
+  getCopyButton,
+  getCountSelectedEl,
+  getExcludeButton,
+  getIncludeButton,
+  getShowAllButton,
+  openCollapsible,
   selectAllCollapsibleResources,
 } from '../helpers/scenarios';
 import { sleep } from '../../../../common/helpers';
@@ -39,7 +47,7 @@ describe('QRadar App tests', () => {
 
   let rootStore = getNewRootStore();
   let platform = getPlatformByID(platformID);
-  let RootApp = require('../../../app/root').RootApp;
+  const { RootApp } = require('../../../app/root');
 
   beforeEach(() => {
     rootStore = getNewRootStore();
@@ -50,10 +58,14 @@ describe('QRadar App tests', () => {
     rootStore.platformStore.setPlatform(platform);
     expect(rootStore.platformStore.platform.getID()).toEqual(platformID);
 
-    expect(rootStore.appStore.topPosition).toEqual(rootStore.platformStore.platform.extensionDefaultPosition.top);
-    expect(rootStore.appStore.leftPosition).toEqual(rootStore.platformStore.platform.extensionDefaultPosition.left);
-    expect(rootStore.appStore.widthApp).toEqual(rootStore.platformStore.platform.extensionDefaultPosition.width);
-    expect(rootStore.appStore.heightApp).toEqual(rootStore.platformStore.platform.extensionDefaultPosition.height);
+    expect(rootStore.appStore.topPosition)
+      .toEqual(rootStore.platformStore.platform.extensionDefaultPosition.top);
+    expect(rootStore.appStore.leftPosition)
+      .toEqual(rootStore.platformStore.platform.extensionDefaultPosition.left);
+    expect(rootStore.appStore.widthApp)
+      .toEqual(rootStore.platformStore.platform.extensionDefaultPosition.width);
+    expect(rootStore.appStore.heightApp)
+      .toEqual(rootStore.platformStore.platform.extensionDefaultPosition.height);
   });
 
   test('should be rendered', () => {

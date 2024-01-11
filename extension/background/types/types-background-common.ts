@@ -9,7 +9,7 @@ import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/res
 
 export type TabID = number;
 
-export interface BrowserTab extends chrome.tabs.Tab {}
+export type BrowserTab = chrome.tabs.Tab;
 
 export type MessageInfo = {
   tab: BrowserTab;
@@ -53,7 +53,7 @@ export type BeforeSendHeadersListener = (
   type: BGListenerType.OnBeforeSendHeaders,
   callback: Parameters<WebRequestHeadersSynchronousEvent['addListener']>[0],
   filter: Parameters<WebRequestHeadersSynchronousEvent['addListener']>[1],
-  opt_extraInfoSpec: Parameters<WebRequestHeadersSynchronousEvent['addListener']>[2] & ('requestHeaders')[],
+  opt_extraInfoSpec: Parameters<WebRequestHeadersSynchronousEvent['addListener']>[2] & ('requestHeaders'|'extraHeaders')[],
 ) => void;
 
 export type IconClickedListener = (
