@@ -43,6 +43,7 @@ export type DropdownProps = {
 export type DropdownForwardRef = {
   dropdown: React.MutableRefObject<HTMLDivElement | null>;
   dropdownMenu: React.MutableRefObject<HTMLDivElement | null>;
+  setIsOpen: (isOpen: boolean) => void;
 };
 
 export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<DropdownProps>>((
@@ -88,15 +89,13 @@ export const Dropdown = forwardRef<DropdownForwardRef, PropsWithChildren<Dropdow
     }
   }, [isOpen, closed]);
 
-  useImperativeHandle(ref, () => ({
-    get dropdown() {
-      return dropdownRef;
-    },
-
-    get dropdownMenu() {
-      return dropdownMenuRef;
-    },
-  }));
+  useImperativeHandle(ref, () => {
+    return {
+      setIsOpen,
+      dropdown: dropdownRef,
+      dropdownMenu: dropdownMenuRef,
+    };
+  });
 
   const getMenuElement = useCallback((styles: MenuStyles) => {
     return (

@@ -6,6 +6,7 @@ import {
   BrowserTabRemovedListener,
   IconClickedListener,
   MessageListener,
+  OnInstalledListener,
 } from './types/types-background-common';
 import {
   getOriginFromSender,
@@ -23,10 +24,10 @@ import { MessageToContent } from '../content/types/types-content-messages';
 import {
   AsyncProcessPayload,
   DirectMessagePayload,
+  IntegrationWorkPayload,
   ParsedDataPayload,
   PlatformIDPayload,
   ResultProcessPayload,
-  IntegrationWorkPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
   SetWatchersPayload,
@@ -36,6 +37,9 @@ import { platformResolver } from './platforms/PlatformResolver';
 import { LoadingKey } from '../app/types/types-app-common';
 import { getIntegrationModel } from '../integrations';
 import { serializeDataInResult } from '../../common/helpers';
+import { setMailsData } from '../app/mail/mail-store';
+import { defaultPatterns } from '../app/mail/patterns';
+import { Mail } from '../app/mail/mail-types';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -329,6 +333,16 @@ const loggers = require('../common/loggers').loggers
           });
       }
     }
+  },
+);
+
+(addListener as OnInstalledListener)(
+  BGListenerType.OnInstalled,
+  () => {
+    setMailsData(defaultPatterns.reduce((res, pattern) => {
+      res[pattern.id] = pattern;
+      return res;
+    }, {} as Record<string, Mail>));
   },
 );
 

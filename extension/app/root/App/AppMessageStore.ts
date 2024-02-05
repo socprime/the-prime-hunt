@@ -23,9 +23,6 @@ export class AppMessageStore {
         error: null,
       };
 
-  @observable
-  public test: Record<string, any> = {};
-
   constructor() {
     makeObservable(this);
   }

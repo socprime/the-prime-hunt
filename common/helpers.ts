@@ -19,6 +19,10 @@ export const uuid = (): string => {
     + Math.random().toString(36).substring(5);
 };
 
+export const suuid = (): string => {
+  return `@@--${uuid()}`;
+};
+
 export const clearExtraSpaces = (str: string): string => str.replace(/ +/g, ' ');
 
 export const clearLineBreaks = (str: string): string => str
@@ -58,17 +62,20 @@ export const deduplicateArray = <T = unknown>(arr: T[]) => {
 export const formatString = (
   pattern: string,
   parts?: {
-    [markerName: string]: string;
+    [markerName: string]: string | undefined;
   },
   keyFormat?: (v: string) => string,
 ) :string => {
   return Object.keys(parts || {})
+    .filter((name) => {
+      return typeof parts![name] === 'string';
+    })
     .map((name) => ({
       value: parts![name],
       key: keyFormat ? keyFormat(name) : `%${name}`,
     }))
     .reduce((result, d) => {
-      return result.replace(new RegExp(d.key, 'g'), d.value);
+      return result.replace(new RegExp(d.key, 'g'), d.value as string);
     }, pattern) || pattern;
 };
 
@@ -212,4 +219,36 @@ export const serializeDataInResult = (result: AsyncResult): AsyncResult => {
     result.error = result.error.message;
   }
   return result;
+};
+
+export const buildEmailUrl = (
+  params: {
+    to: string[];
+    subject?: string;
+    cc?: string[];
+    body?: string;
+  },
+) => {
+  const {
+    to, subject, cc, body,
+  } = params;
+
+  const sendTo = to.length ? `${to.join(',')}` : '';
+  const copyTo = `cc=${cc?.length ? cc.join(',') : ''}`;
+  const subj = `subject=${subject || ''}`;
+  const text = `body=${body || ''}`;
+
+  return `${encodeURI(`mailto:${sendTo}?${copyTo}&${subj}`)}&${text}`;
+};
+
+export const initValues = (
+  obj: Record<string, unknown>,
+  values: Record<string, unknown>,
+) => {
+  Object.keys(values).forEach((key) => {
+    if (typeof obj[key] === 'undefined') {
+      obj[key] = values[key];
+    }
+  });
+  return obj;
 };

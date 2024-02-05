@@ -91,6 +91,16 @@
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/TextArea/styles.scss":
+/*!*************************************************************!*\
+  !*** ./extension/app/components/atoms/TextArea/styles.scss ***!
+  \*************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/Tooltip/tooltip.scss":
 /*!*************************************************************!*\
   !*** ./extension/app/components/atoms/Tooltip/tooltip.scss ***!
@@ -175,6 +185,16 @@
 /*!**************************************************************************!*\
   !*** ./extension/app/components/collapsibles/AppCollapsible/styles.scss ***!
   \**************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/components/dropdowns-menus/DropdownMenuList/styles.scss":
+/*!*******************************************************************************!*\
+  !*** ./extension/app/components/dropdowns-menus/DropdownMenuList/styles.scss ***!
+  \*******************************************************************************/
 /***/ (() => {
 
 
@@ -291,10 +311,30 @@
 
 /***/ }),
 
+/***/ "./extension/app/components/lists-items/ListItemContentWithIcons/styles.scss":
+/*!***********************************************************************************!*\
+  !*** ./extension/app/components/lists-items/ListItemContentWithIcons/styles.scss ***!
+  \***********************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
 /***/ "./extension/app/components/tags/AppTag/styles.scss":
 /*!**********************************************************!*\
   !*** ./extension/app/components/tags/AppTag/styles.scss ***!
   \**********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/components/textareas/AppTextArea/styles.scss":
+/*!********************************************************************!*\
+  !*** ./extension/app/components/textareas/AppTextArea/styles.scss ***!
+  \********************************************************************/
 /***/ (() => {
 
 
@@ -461,20 +501,30 @@
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationsFooterView/styles.scss":
-/*!*****************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationsFooterView/styles.scss ***!
-  \*****************************************************************************/
+/***/ "./extension/app/mail/MailPattern/styles.scss":
+/*!****************************************************!*\
+  !*** ./extension/app/mail/MailPattern/styles.scss ***!
+  \****************************************************/
 /***/ (() => {
 
 
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationsHeaderView/styles.scss":
-/*!*****************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationsHeaderView/styles.scss ***!
-  \*****************************************************************************/
+/***/ "./extension/app/mail/views/MailHeaderView/styles.scss":
+/*!*************************************************************!*\
+  !*** ./extension/app/mail/views/MailHeaderView/styles.scss ***!
+  \*************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/views/MailsContentView/styles.scss":
+/*!***************************************************************!*\
+  !*** ./extension/app/mail/views/MailsContentView/styles.scss ***!
+  \***************************************************************/
 /***/ (() => {
 
 
@@ -745,6 +795,36 @@
 /*!****************************************!*\
   !*** ./extension/app/scss/scroll.scss ***!
   \****************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/SettingsArea/styles.scss":
+/*!*********************************************************!*\
+  !*** ./extension/app/settings/SettingsArea/styles.scss ***!
+  \*********************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/views/SettingsFooterView/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/settings/views/SettingsFooterView/styles.scss ***!
+  \*********************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/views/SettingsHeaderView/styles.scss":
+/*!*********************************************************************!*\
+  !*** ./extension/app/settings/views/SettingsHeaderView/styles.scss ***!
+  \*********************************************************************/
 /***/ (() => {
 
 
@@ -52881,7 +52961,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.initValues = exports.buildEmailUrl = exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.suuid = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -52898,6 +52978,10 @@ const uuid = () => {
         + Math.random().toString(36).substring(5);
 };
 exports.uuid = uuid;
+const suuid = () => {
+    return `@@--${(0, exports.uuid)()}`;
+};
+exports.suuid = suuid;
 const clearExtraSpaces = (str) => str.replace(/ +/g, ' ');
 exports.clearExtraSpaces = clearExtraSpaces;
 const clearLineBreaks = (str) => str
@@ -52932,6 +53016,9 @@ const deduplicateArray = (arr) => {
 exports.deduplicateArray = deduplicateArray;
 const formatString = (pattern, parts, keyFormat) => {
     return Object.keys(parts || {})
+        .filter((name) => {
+        return typeof parts[name] === 'string';
+    })
         .map((name) => ({
         value: parts[name],
         key: keyFormat ? keyFormat(name) : `%${name}`,
@@ -53058,6 +53145,24 @@ const serializeDataInResult = (result) => {
     return result;
 };
 exports.serializeDataInResult = serializeDataInResult;
+const buildEmailUrl = (params) => {
+    const { to, subject, cc, body, } = params;
+    const sendTo = to.length ? `${to.join(',')}` : '';
+    const copyTo = `cc=${(cc === null || cc === void 0 ? void 0 : cc.length) ? cc.join(',') : ''}`;
+    const subj = `subject=${subject || ''}`;
+    const text = `body=${body || ''}`;
+    return `${encodeURI(`mailto:${sendTo}?${copyTo}&${subj}`)}&${text}`;
+};
+exports.buildEmailUrl = buildEmailUrl;
+const initValues = (obj, values) => {
+    Object.keys(values).forEach((key) => {
+        if (typeof obj[key] === 'undefined') {
+            obj[key] = values[key];
+        }
+    });
+    return obj;
+};
+exports.initValues = initValues;
 
 
 /***/ }),
@@ -53099,7 +53204,7 @@ exports.mapType = mapType;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getValidResult = exports.isUrl = exports.isNotEmptyString = exports.isNotEmptyArray = void 0;
+exports.getValidResult = exports.isEmail = exports.isUrl = exports.isNotEmptyString = exports.isNotEmptyArray = void 0;
 const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isNotEmptyArray = (value, pattern) => {
@@ -53141,6 +53246,19 @@ const isUrl = (url, pattern) => {
     };
 };
 exports.isUrl = isUrl;
+const isEmail = (email, pattern) => {
+    const isValid = (0, checkers_1.isEmail)(email);
+    return {
+        isValid,
+        reasons: new Set(isValid
+            ? []
+            : [(0, helpers_1.formatString)(pattern || '%prefix %message', {
+                    prefix: `${(0, helpers_1.capitalizeFirstLetter)(exports.isEmail.name)}:`,
+                    message: 'Passed value is not an email',
+                })]),
+    };
+};
+exports.isEmail = isEmail;
 const getValidResult = () => {
     return {
         isValid: true,
@@ -53912,14 +54030,13 @@ exports.Dropdown = (0, react_1.forwardRef)(({ disabled, opened, closed, opener, 
             setIsOpen(!closed);
         }
     }, [isOpen, closed]);
-    (0, react_1.useImperativeHandle)(ref, () => ({
-        get dropdown() {
-            return dropdownRef;
-        },
-        get dropdownMenu() {
-            return dropdownMenuRef;
-        },
-    }));
+    (0, react_1.useImperativeHandle)(ref, () => {
+        return {
+            setIsOpen,
+            dropdown: dropdownRef,
+            dropdownMenu: dropdownMenuRef,
+        };
+    });
     const getMenuElement = (0, react_1.useCallback)((styles) => {
         return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
                 'dropdown-menu',
@@ -54213,6 +54330,58 @@ exports.Tag = (0, react_1.forwardRef)((_a, refs) => {
 
 /***/ }),
 
+/***/ "./extension/app/components/atoms/TextArea/index.tsx":
+/*!***********************************************************!*\
+  !*** ./extension/app/components/atoms/TextArea/index.tsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TextArea = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/atoms/TextArea/styles.scss");
+exports.TextArea = (0, react_1.forwardRef)(({ label = '', debounceMs = 0, native = {}, }, refs) => {
+    const { onChange, value, disabled, } = native;
+    const [textAreaValue, setTextAreaValue] = (0, react_1.useState)(value ? String(value) : '');
+    const previousValue = (0, app_hooks_1.usePrevious)(value);
+    const textAreaRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => ({
+        textAreaRef,
+        setValue: setTextAreaValue,
+    }));
+    (0, react_1.useEffect)(() => {
+        if (typeof previousValue !== 'undefined'
+            && previousValue !== value
+            && String(textAreaValue).trim() !== String(value).trim()) {
+            setTextAreaValue(String(value));
+        }
+    }, [value, disabled, previousValue, textAreaValue]);
+    const isEmpty = textAreaValue.trim().length < 1;
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [label && (0, jsx_runtime_1.jsx)("label", Object.assign({ className: (0, common_helpers_1.createClassName)([
+                    'textarea-label',
+                    (native === null || native === void 0 ? void 0 : native.className) || '',
+                    disabled ? 'disabled' : '',
+                    disabled ? 'textarea-label--disabled' : '',
+                ]) }, { children: label })), (0, jsx_runtime_1.jsx)("textarea", Object.assign({ ref: textAreaRef }, native, { className: (0, common_helpers_1.createClassName)([
+                    'textarea',
+                    native.className || '',
+                    disabled ? 'textarea--disabled' : '',
+                    disabled ? 'disabled' : '',
+                    isEmpty ? 'textarea--empty' : '',
+                ]), onChange: (e) => {
+                    setTextAreaValue(e.target.value);
+                    onChange === null || onChange === void 0 ? void 0 : onChange(e);
+                }, value: textAreaValue, disabled: disabled }))] }));
+});
+
+
+/***/ }),
+
 /***/ "./extension/app/components/atoms/Tooltip/Tooltip.tsx":
 /*!************************************************************!*\
   !*** ./extension/app/components/atoms/Tooltip/Tooltip.tsx ***!
@@ -54482,6 +54651,25 @@ const MagnifyingIcon = () => {
     return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ className: "magnifying-icon icon", viewBox: "0 0 16 16", xmlns: "http://www.w3.org/2000/svg" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M15.8045 14.8626L11.8252 10.8833C12.9096 9.55698 13.4428 7.86465 13.3144 6.15629C13.1861 4.44794 12.406 2.85427 11.1356 1.70493C9.86516 0.555594 8.20158 -0.0614848 6.48895 -0.0186636C4.77632 0.0241577 3.14566 0.723603 1.93426 1.935C0.72287 3.14639 0.0234252 4.77705 -0.019396 6.48968C-0.0622172 8.20232 0.554862 9.86589 1.7042 11.1363C2.85354 12.4067 4.44721 13.1868 6.15556 13.3152C7.86392 13.4435 9.55625 12.9103 10.8825 11.8259L14.8619 15.8053C14.9876 15.9267 15.156 15.9939 15.3308 15.9924C15.5056 15.9909 15.6728 15.9207 15.7964 15.7971C15.92 15.6735 15.9901 15.5063 15.9916 15.3315C15.9932 15.1567 15.926 14.9883 15.8045 14.8626ZM6.66652 12.0006C5.61169 12.0006 4.58054 11.6878 3.70348 11.1018C2.82642 10.5157 2.14283 9.68277 1.73916 8.70823C1.3355 7.73369 1.22988 6.66134 1.43567 5.62677C1.64145 4.59221 2.14941 3.6419 2.89529 2.89602C3.64117 2.15014 4.59147 1.64219 5.62604 1.4364C6.6606 1.23061 7.73296 1.33623 8.7075 1.7399C9.68204 2.14356 10.515 2.82715 11.101 3.70421C11.6871 4.58127 11.9999 5.61242 11.9999 6.66725C11.9983 8.08125 11.4359 9.43689 10.436 10.4367C9.43615 11.4366 8.08052 11.999 6.66652 12.0006Z" }) })));
 };
 exports.MagnifyingIcon = MagnifyingIcon;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/atoms/icons/MailIcon/index.tsx":
+/*!*****************************************************************!*\
+  !*** ./extension/app/components/atoms/icons/MailIcon/index.tsx ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IconMail = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const IconMail = () => {
+    return ((0, jsx_runtime_1.jsx)("svg", Object.assign({ width: "16", height: "12", viewBox: "0 0 16 12", xmlns: "http://www.w3.org/2000/svg", className: "icon-mail icon" }, { children: (0, jsx_runtime_1.jsx)("path", { d: "M14.9492 1.68446L8.6379 6.91217C8.26786 7.21868 7.73214 7.21868 7.3621 6.91217L1.0508 1.68446C1.01784 1.78365 1 1.88974 1 2V10C1 10.5523 1.44772 11 2 11H14C14.5523 11 15 10.5523 15 10V2C15 1.88974 14.9822 1.78365 14.9492 1.68446ZM2 0H14C15.1046 0 16 0.89543 16 2V10C16 11.1046 15.1046 12 14 12H2C0.89543 12 0 11.1046 0 10V2C0 0.89543 0.89543 0 2 0ZM1.78969 1L7.36633 5.6034C7.73459 5.90739 8.2664 5.90859 8.63603 5.60627L14.2679 1H1.78969Z" }) })));
+};
+exports.IconMail = IconMail;
 
 
 /***/ }),
@@ -55054,6 +55242,37 @@ exports.AppCollapsible = AppCollapsible;
 
 /***/ }),
 
+/***/ "./extension/app/components/dropdowns-menus/DropdownMenuList/index.tsx":
+/*!*****************************************************************************!*\
+  !*** ./extension/app/components/dropdowns-menus/DropdownMenuList/index.tsx ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DropdownMenuList = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const AppList_1 = __webpack_require__(/*! ../../lists/AppList */ "./extension/app/components/lists/AppList/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/dropdowns-menus/DropdownMenuList/styles.scss");
+exports.DropdownMenuList = (0, react_1.forwardRef)(({ items, }, refs) => {
+    const elementRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return {
+            elementRef,
+        };
+    });
+    return ((0, jsx_runtime_1.jsx)(AppList_1.AppList, { ref: (ref) => {
+            if (ref === null || ref === void 0 ? void 0 : ref.elementRef.current) {
+                elementRef.current = ref.elementRef.current;
+            }
+        }, items: items, className: "dropdown-menu--list" }));
+});
+
+
+/***/ }),
+
 /***/ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx":
 /*!************************************************************************!*\
   !*** ./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx ***!
@@ -55090,14 +55309,14 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_
     const [forceClose, setForceClose] = (0, react_1.useState)(false);
     const dropdownRef = (0, react_1.useRef)(null);
     const dropdownMenuRef = (0, react_1.useRef)(null);
-    (0, react_1.useImperativeHandle)(ref, () => ({
-        get dropdown() {
-            return dropdownRef;
-        },
-        get dropdownMenu() {
-            return dropdownMenuRef;
-        },
-    }));
+    const isOpenRef = (0, react_1.useRef)((() => { }));
+    (0, react_1.useImperativeHandle)(ref, () => {
+        return {
+            dropdown: dropdownRef,
+            dropdownMenu: dropdownMenuRef,
+            setIsOpen: isOpenRef.current,
+        };
+    });
     (0, react_1.useEffect)(() => {
         const dropdownMenu = dropdownMenuRef === null || dropdownMenuRef === void 0 ? void 0 : dropdownMenuRef.current;
         if (dropdownMenu) {
@@ -55151,6 +55370,9 @@ exports.AppDropdown = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_
             }
             if ((_b = refs === null || refs === void 0 ? void 0 : refs.dropdownMenu) === null || _b === void 0 ? void 0 : _b.current) {
                 dropdownMenuRef.current = refs.dropdownMenu.current;
+            }
+            if (refs === null || refs === void 0 ? void 0 : refs.setIsOpen) {
+                isOpenRef.current = refs.setIsOpen;
             }
         }, className: (0, common_helpers_1.createClassName)([
             'app-dropdown',
@@ -55357,7 +55579,7 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 exports.WithForm = (0, react_1.forwardRef)((_a, refs) => {
     var { disabled, getValue, children } = _a, restProps = __rest(_a, ["disabled", "getValue", "children"]);
-    const formStore = (0, stores_1.useFormStore)();
+    const formStore = (0, stores_1.useForm)();
     const elementID = (0, react_1.useId)();
     const elementRef = (0, react_1.useRef)(null);
     (0, react_1.useImperativeHandle)(refs, () => {
@@ -55836,9 +56058,12 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.
 const Input_1 = __webpack_require__(/*! ../../atoms/Input/Input */ "./extension/app/components/atoms/Input/Input.tsx");
 const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/components/inputs/AppInput/styles.scss");
-exports.AppInput = (0, react_1.forwardRef)((_a, ref) => {
+exports.AppInput = (0, react_1.forwardRef)((_a, refs) => {
     var { className = '' } = _a, restProps = __rest(_a, ["className"]);
-    return ((0, jsx_runtime_1.jsx)(Input_1.Input, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['app-input', className]) }, restProps)));
+    return ((0, jsx_runtime_1.jsx)(Input_1.Input, Object.assign({}, restProps, { ref: refs, className: (0, common_helpers_1.createClassName)([
+            'app-input',
+            className,
+        ]) })));
 });
 
 
@@ -55934,6 +56159,80 @@ exports.AutocompleteInput = (0, react_1.forwardRef)(({ Input, className = '', va
 
 /***/ }),
 
+/***/ "./extension/app/components/inputs/FormValidationInput/index.tsx":
+/*!***********************************************************************!*\
+  !*** ./extension/app/components/inputs/FormValidationInput/index.tsx ***!
+  \***********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FormValidationInput = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
+const WithForm_1 = __webpack_require__(/*! ../../extends/WithForm */ "./extension/app/components/extends/WithForm/index.tsx");
+const AppInput_1 = __webpack_require__(/*! ../AppInput/AppInput */ "./extension/app/components/inputs/AppInput/AppInput.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const WithValidation_1 = __webpack_require__(/*! ../../extends/WithValidation */ "./extension/app/components/extends/WithValidation/index.tsx");
+exports.FormValidationInput = (0, react_1.forwardRef)((_a, refs) => {
+    var { value, validators, name } = _a, restProps = __rest(_a, ["value", "validators", "name"]);
+    const formValidationInputRef = (0, react_1.useRef)({});
+    const prevValue = (0, app_hooks_1.usePrevious)(value);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return formValidationInputRef.current;
+    });
+    (0, react_1.useEffect)(() => {
+        if (value !== prevValue) {
+            setTimeout(() => {
+                var _a, _b;
+                (_b = (_a = formValidationInputRef === null || formValidationInputRef === void 0 ? void 0 : formValidationInputRef.current) === null || _a === void 0 ? void 0 : _a.validate) === null || _b === void 0 ? void 0 : _b.call(_a, ['change']);
+            }, 0);
+        }
+    }, [value, prevValue]);
+    return ((0, jsx_runtime_1.jsx)(WithValidation_1.WithValidation, Object.assign({ getValue: (ref) => { var _a; return ((_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.value) || null; }, disabled: !!restProps.disabled, validators: [
+            ...(validators || []),
+        ] }, { children: (withValidationProps) => {
+            formValidationInputRef.current.validate = withValidationProps.validate;
+            return ((0, jsx_runtime_1.jsx)(WithForm_1.WithForm, Object.assign({}, withValidationProps, { children: (withFormProps) => {
+                    return ((0, jsx_runtime_1.jsx)(AppInput_1.AppInput, Object.assign({}, restProps, withFormProps, { ref: (ref) => {
+                            if (ref) {
+                                ref.name = name;
+                                withValidationProps.elementRef.current = ref;
+                                withFormProps.elementRef.current = ref;
+                            }
+                        }, value: value, className: (0, common_helpers_1.createClassName)([
+                            'form-validation-input',
+                            restProps.className || '',
+                            withFormProps.className || '',
+                        ]), onChange: (e) => {
+                            var _a, _b;
+                            (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onChange) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
+                            (_b = restProps === null || restProps === void 0 ? void 0 : restProps.onChange) === null || _b === void 0 ? void 0 : _b.call(restProps, e);
+                        }, onBlur: (e) => {
+                            var _a, _b;
+                            (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onBlur) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
+                            (_b = restProps === null || restProps === void 0 ? void 0 : restProps.onBlur) === null || _b === void 0 ? void 0 : _b.call(restProps, e);
+                        } })));
+                } })));
+        } })));
+});
+
+
+/***/ }),
+
 /***/ "./extension/app/components/links/AppLink/AppLink.tsx":
 /*!************************************************************!*\
   !*** ./extension/app/components/links/AppLink/AppLink.tsx ***!
@@ -55964,6 +56263,76 @@ const AppLink = (_a) => {
     return ((0, jsx_runtime_1.jsx)(Link_1.Link, Object.assign({ className: (0, common_helpers_1.createClassName)(['app-link', className]) }, restProps, { children: children })));
 };
 exports.AppLink = AppLink;
+
+
+/***/ }),
+
+/***/ "./extension/app/components/lists-items/ListItemContentWithIcons/index.tsx":
+/*!*********************************************************************************!*\
+  !*** ./extension/app/components/lists-items/ListItemContentWithIcons/index.tsx ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ListItemContentWithIcons = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/lists-items/ListItemContentWithIcons/styles.scss");
+exports.ListItemContentWithIcons = (0, react_1.forwardRef)(({ iconsLeft = [], content = '', iconsRight = [], native = {}, }, refs) => {
+    const elementRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return { elementRef };
+    });
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
+            'list-item-content-with-icons',
+            native.className || '',
+        ]), ref: elementRef }, { children: [(iconsLeft === null || iconsLeft === void 0 ? void 0 : iconsLeft.length) > 0
+                && iconsLeft.map((icon, i) => (0, jsx_runtime_1.jsx)("span", { children: icon }, i)), content, (iconsRight === null || iconsRight === void 0 ? void 0 : iconsRight.length) > 0
+                && iconsRight.map((icon, i) => (0, jsx_runtime_1.jsx)("span", { children: icon }, i))] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/lists/AppList/index.tsx":
+/*!**********************************************************!*\
+  !*** ./extension/app/components/lists/AppList/index.tsx ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppList = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const List_1 = __webpack_require__(/*! ../../atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+exports.AppList = (0, react_1.forwardRef)((_a, refs) => {
+    var { className = '' } = _a, restProps = __rest(_a, ["className"]);
+    const elementRef = (0, react_1.useRef)(null);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return { elementRef };
+    });
+    return ((0, jsx_runtime_1.jsx)(List_1.List, Object.assign({}, restProps, { ref: elementRef, className: (0, common_helpers_1.createClassName)([
+            'app-list',
+            className,
+        ]) })));
+});
 
 
 /***/ }),
@@ -56000,6 +56369,119 @@ exports.AppTag = (0, react_1.forwardRef)((_a, refs) => {
                 'app-tag',
                 native.className || '',
             ]) }) }, { children: children })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/textareas/AppTextArea/index.tsx":
+/*!******************************************************************!*\
+  !*** ./extension/app/components/textareas/AppTextArea/index.tsx ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AppTextArea = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const TextArea_1 = __webpack_require__(/*! ../../atoms/TextArea */ "./extension/app/components/atoms/TextArea/index.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/components/textareas/AppTextArea/styles.scss");
+exports.AppTextArea = (0, react_1.forwardRef)((_a, refs) => {
+    var { native = {}, debounceMs = 0 } = _a, restProps = __rest(_a, ["native", "debounceMs"]);
+    return ((0, jsx_runtime_1.jsx)(TextArea_1.TextArea, Object.assign({}, restProps, { ref: refs, native: Object.assign(Object.assign({}, native), { className: (0, common_helpers_1.createClassName)([
+                (native === null || native === void 0 ? void 0 : native.className) || '',
+                'app-textarea',
+            ]) }), debounceMs: debounceMs })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/components/textareas/FormValidationTextArea/index.tsx":
+/*!*****************************************************************************!*\
+  !*** ./extension/app/components/textareas/FormValidationTextArea/index.tsx ***!
+  \*****************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FormValidationTextArea = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
+const app_hooks_1 = __webpack_require__(/*! ../../../app-hooks */ "./extension/app/app-hooks.ts");
+const WithValidation_1 = __webpack_require__(/*! ../../extends/WithValidation */ "./extension/app/components/extends/WithValidation/index.tsx");
+const WithForm_1 = __webpack_require__(/*! ../../extends/WithForm */ "./extension/app/components/extends/WithForm/index.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const AppTextArea_1 = __webpack_require__(/*! ../AppTextArea */ "./extension/app/components/textareas/AppTextArea/index.tsx");
+exports.FormValidationTextArea = (0, react_1.forwardRef)((_a, refs) => {
+    var { native = {}, validators, name } = _a, restProps = __rest(_a, ["native", "validators", "name"]);
+    const { value } = native;
+    const formValidationTextAreaRef = (0, react_1.useRef)({});
+    const prevValue = (0, app_hooks_1.usePrevious)(value);
+    (0, react_1.useImperativeHandle)(refs, () => {
+        return formValidationTextAreaRef;
+    });
+    (0, react_1.useEffect)(() => {
+        if (value !== prevValue) {
+            setTimeout(() => {
+                var _a, _b;
+                (_b = (_a = formValidationTextAreaRef === null || formValidationTextAreaRef === void 0 ? void 0 : formValidationTextAreaRef.current) === null || _a === void 0 ? void 0 : _a.validate) === null || _b === void 0 ? void 0 : _b.call(_a, ['change']);
+            }, 0);
+        }
+    }, [value, prevValue]);
+    return ((0, jsx_runtime_1.jsx)(WithValidation_1.WithValidation, Object.assign({ getValue: (ref) => { var _a; return ((_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.value) || null; }, disabled: !!restProps.disabled, validators: [
+            ...(validators || []),
+        ] }, { children: (withValidationProps) => {
+            formValidationTextAreaRef.current.validate = withValidationProps.validate;
+            return ((0, jsx_runtime_1.jsx)(WithForm_1.WithForm, Object.assign({}, withValidationProps, { children: (withFormProps) => {
+                    return ((0, jsx_runtime_1.jsx)(AppTextArea_1.AppTextArea, Object.assign({}, restProps, withFormProps, { ref: (ref) => {
+                            if (ref === null || ref === void 0 ? void 0 : ref.textAreaRef.current) {
+                                const el = ref.textAreaRef.current;
+                                el.name = name;
+                                withValidationProps.elementRef.current = el;
+                                withFormProps.elementRef.current = el;
+                            }
+                        }, native: Object.assign(Object.assign({}, native), { value, className: (0, common_helpers_1.createClassName)([
+                                'form-validation-textarea',
+                                native.className || '',
+                                withFormProps.className || '',
+                            ]), onChange: (e) => {
+                                var _a, _b;
+                                (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onChange) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
+                                (_b = native === null || native === void 0 ? void 0 : native.onChange) === null || _b === void 0 ? void 0 : _b.call(native, e);
+                            }, onBlur: (e) => {
+                                var _a, _b;
+                                (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onBlur) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
+                                (_b = native === null || native === void 0 ? void 0 : native.onBlur) === null || _b === void 0 ? void 0 : _b.call(native, e);
+                            } }) })));
+                } })));
+        } })));
 });
 
 
@@ -56076,19 +56558,19 @@ exports.OpenCTIExport = (0, mobx_react_lite_1.observer)(({ labelsItems, observab
     const resourceStore = (0, stores_1.useResourceStore)();
     const [resourceType, setResourceType] = (0, react_1.useState)(resourceStore.getType(resourceName));
     const messageStore = (0, stores_1.useAppMessageStore)();
-    const formStore = (0, stores_1.useFormStore)();
+    const form = (0, stores_1.useForm)();
     const pattern = model.getPattern(resourceName, resourceType);
     (0, react_1.useEffect)(() => {
         messageStore.error.error = null;
     }, []);
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "open-cti-export" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Name", name: "name", value: resourceName, disabled: formStore.validating || messageStore.inProgress, validators: [
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "open-cti-export" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Name", name: "name", value: resourceName, disabled: form.validating || messageStore.inProgress, validators: [
                     {
                         validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
                         validateOnChange: true,
                         validateOnBlur: true,
                         validateOnFinish: true,
                     },
-                ] }), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "observable-type-list-menu open-cti-menu", items: observableTypesItems, onChange: (items = []) => {
+                ] }), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: form.validating || messageStore.inProgress, classNameMenu: "observable-type-list-menu open-cti-menu", items: observableTypesItems, onChange: (items = []) => {
                     var _a;
                     setResourceType(model.getTypeById((_a = items[0]) === null || _a === void 0 ? void 0 : _a.id));
                 }, selectedItem: resourceType !== 'unknown' ? observableTypesItems.find(({ id }) => {
@@ -56099,14 +56581,14 @@ exports.OpenCTIExport = (0, mobx_react_lite_1.observer)(({ labelsItems, observab
                         validateOnBlur: true,
                         validateOnFinish: true,
                     },
-                ] }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "observable-type-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Pattern", name: "pattern", disabled: formStore.validating || messageStore.inProgress, value: pattern === resourceName ? '' : pattern, validators: [
+                ] }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "observable-type-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Pattern", name: "pattern", disabled: form.validating || messageStore.inProgress, value: pattern === resourceName ? '' : pattern, validators: [
                     {
                         validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, validateMessage)),
                         validateOnChange: true,
                         validateOnBlur: true,
                         validateOnFinish: true,
                     },
-                ] }), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "indicator-type-list-menu open-cti-menu", items: indicatorTypesItems, label: "Indicator Type", name: "indicator_types", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "indicator-type-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "labels-list-menu open-cti-menu", items: labelsItems, label: "Labels", name: "objectLabel", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "labels-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: formStore.validating || messageStore.inProgress, classNameMenu: "markers-list-menu open-cti-menu", items: allowedMarkersItems, label: "Markings", name: "objectMarking", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "markers-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(IntegrationCheckbox_1.IntegrationCheckbox, { disabled: formStore.validating || messageStore.inProgress, content: "Detection", name: "x_opencti_detection" }), (0, jsx_runtime_1.jsx)(IntegrationCheckbox_1.IntegrationCheckbox, { disabled: formStore.validating || messageStore.inProgress, content: "Create observable from indicator", name: "createObservables" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 })] })));
+                ] }), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: form.validating || messageStore.inProgress, classNameMenu: "indicator-type-list-menu open-cti-menu", items: indicatorTypesItems, label: "Indicator Type", name: "indicator_types", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "indicator-type-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: form.validating || messageStore.inProgress, classNameMenu: "labels-list-menu open-cti-menu", items: labelsItems, label: "Labels", name: "objectLabel", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "labels-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(FormDropdown_1.FormDropdown, Object.assign({ disabled: form.validating || messageStore.inProgress, classNameMenu: "markers-list-menu open-cti-menu", items: allowedMarkersItems, label: "Markings", name: "objectMarking", multi: true }, { children: (props) => (0, jsx_runtime_1.jsx)(simplebar_react_1.default, Object.assign({ className: "big-list" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, Object.assign({ className: "markers-list" }, props)) })) })), (0, jsx_runtime_1.jsx)(IntegrationCheckbox_1.IntegrationCheckbox, { disabled: form.validating || messageStore.inProgress, content: "Detection", name: "x_opencti_detection" }), (0, jsx_runtime_1.jsx)(IntegrationCheckbox_1.IntegrationCheckbox, { disabled: form.validating || messageStore.inProgress, content: "Create observable from indicator", name: "createObservables" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 6 })] })));
 });
 
 
@@ -56185,9 +56667,9 @@ const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_mod
 __webpack_require__(/*! ./styles.scss */ "./extension/app/export/views/ExportFooterView/styles.scss");
 const SuccessOpenCTIExportMessage_1 = __webpack_require__(/*! ../../../resources/messages/SuccessOpenCTIExportMessage */ "./extension/app/resources/messages/SuccessOpenCTIExportMessage/index.tsx");
 exports.ExportFooterView = (0, mobx_react_lite_1.observer)(() => {
-    const routerStore = (0, stores_1.useAppRouterStore)();
+    const routerStore = (0, stores_1.useRouter)();
     const messageStore = (0, stores_1.useAppMessageStore)();
-    const formStore = (0, stores_1.useFormStore)();
+    const formStore = (0, stores_1.useForm)();
     const platformStore = (0, stores_1.usePlatformStore)();
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "export-footer-view" }, { children: [(0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ disabled: formStore.validating || messageStore.inProgress, onClick: () => {
                     routerStore.goToResourcesPage();
@@ -56266,9 +56748,9 @@ const RoundedQuestionMarkIcon_1 = __webpack_require__(/*! ../../components/atoms
 const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/faq/FaqButton/styles.scss");
 const FaqButton = () => {
-    const appStore = (0, stores_1.useAppStore)();
+    const router = (0, stores_1.useRouter)();
     return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: "faq-button", onClick: () => {
-            appStore.view = 'faq';
+            router.page = 'faq';
         } }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "FAQ", className: "small" }, { children: (0, jsx_runtime_1.jsx)(RoundedQuestionMarkIcon_1.RoundedQuestionMarkIcon, {}) })) })));
 };
 exports.FaqButton = FaqButton;
@@ -56391,20 +56873,20 @@ const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/sto
 const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 const FaqFooterView = () => {
-    const appStore = (0, stores_1.useAppStore)();
+    const router = (0, stores_1.useRouter)();
     (0, react_1.useEffect)(() => {
         const onKeyDown = (e) => {
             var _a, _b;
             const code = ((_b = (_a = e.code) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) || '';
             if (code === 'escape') {
-                appStore.view = 'resources';
+                router.page = 'resources';
             }
         };
         document.addEventListener('keydown', onKeyDown);
         return () => document.removeEventListener('keydown', onKeyDown);
-    }, [appStore]);
+    }, [router]);
     return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 32 }), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "Close (Esc)", className: "small" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ onClick: () => {
-                        appStore.view = 'resources';
+                        router.page = 'resources';
                     } }, { children: "Close" })) }))] }));
 };
 exports.FaqFooterView = FaqFooterView;
@@ -56540,7 +57022,7 @@ exports.Integration = (0, mobx_react_lite_1.observer)(() => {
     const integrationStore = (0, stores_1.useIntegrationStore)();
     const integration = integrationStore.getIntegration();
     const { id = '', url = '', name = '' } = integration || {};
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration" }, { children: [id === '$open-cti$' && (0, jsx_runtime_1.jsx)(AppGroupHeader_1.AppGroupHeader, { children: "SEARCH AT OPENCTI" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 18 }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Display Name", value: name, placeholder: "ex OpenCTI", onChange: (value) => {
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration" }, { children: [id === '$open-cti$' && (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(AppGroupHeader_1.AppGroupHeader, { children: "SEARCH AT OPENCTI" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 })] }), (0, jsx_runtime_1.jsx)(IntegrationInput_1.IntegrationInput, { label: "Display Name", value: name, placeholder: "ex OpenCTI", onChange: (value) => {
                     integrationStore.setIntegration(Object.assign(Object.assign({}, (integrationStore.getIntegration() || {})), { name: value }));
                     integrationsStore.integrations.find((i) => i.id === id).name = value;
                 }, validators: [
@@ -56889,8 +57371,8 @@ const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/Re
 const integrations_1 = __webpack_require__(/*! ../../../integrations/integrations */ "./extension/app/integrations/integrations.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integration/views/IntegrationFooterView/styles.scss");
 exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
-    const formStore = (0, stores_1.useFormStore)();
-    const routerStore = (0, stores_1.useAppRouterStore)();
+    const formStore = (0, stores_1.useForm)();
+    const router = (0, stores_1.useRouter)();
     const integrationStore = (0, stores_1.useIntegrationStore)();
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
     const integration = integrationStore.getIntegration();
@@ -56914,7 +57396,7 @@ exports.IntegrationFooterView = (0, mobx_react_lite_1.observer)(() => {
                         .then((result) => {
                         if (!result.error) {
                             integrationsStore.save();
-                            routerStore.goToIntegrationsPage();
+                            router.goToSettingsPage('settings:integrations');
                         }
                     });
                 }, disabled: formStore.validating }, { children: "Save & Close" }))] })));
@@ -56942,10 +57424,10 @@ const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/sto
 const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integration/views/IntegrationHeaderView/styles.scss");
 exports.IntegrationHeaderView = (0, mobx_react_lite_1.observer)(() => {
-    const formStore = (0, stores_1.useFormStore)();
+    const formStore = (0, stores_1.useForm)();
     const integrationStore = (0, stores_1.useIntegrationStore)();
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    const routerStore = (0, stores_1.useAppRouterStore)();
+    const routerStore = (0, stores_1.useRouter)();
     const Message = integrationStore.getMessage();
     const nameRef = (0, react_1.useRef)(integrationStore.getIntegration().name);
     const getHeaderButton = () => {
@@ -56955,7 +57437,7 @@ exports.IntegrationHeaderView = (0, mobx_react_lite_1.observer)(() => {
         return ((0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ className: "remove-integration", onClick: () => {
                 integrationStore.remove();
                 integrationsStore.save();
-                routerStore.goToIntegrationsPage();
+                routerStore.goToSettingsPage('settings:integrations');
             }, disabled: formStore.validating }, { children: "Delete Integration" })));
     };
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: nameRef.current }), getHeaderButton()] }), Message && (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 }), (0, jsx_runtime_1.jsx)(Message, {})] })] })));
@@ -57035,52 +57517,14 @@ exports.IntegrationInput = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const AppInput_1 = __webpack_require__(/*! ../../components/inputs/AppInput/AppInput */ "./extension/app/components/inputs/AppInput/AppInput.tsx");
-const WithValidation_1 = __webpack_require__(/*! ../../components/extends/WithValidation */ "./extension/app/components/extends/WithValidation/index.tsx");
-const WithForm_1 = __webpack_require__(/*! ../../components/extends/WithForm */ "./extension/app/components/extends/WithForm/index.tsx");
-const app_hooks_1 = __webpack_require__(/*! ../../app-hooks */ "./extension/app/app-hooks.ts");
+const FormValidationInput_1 = __webpack_require__(/*! ../../components/inputs/FormValidationInput */ "./extension/app/components/inputs/FormValidationInput/index.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/IntegrationInput/styles.scss");
 exports.IntegrationInput = (0, react_1.forwardRef)((_a, refs) => {
-    var { value, validators, name } = _a, restProps = __rest(_a, ["value", "validators", "name"]);
-    const integrationInputRefs = (0, react_1.useRef)({});
-    const prevValue = (0, app_hooks_1.usePrevious)(value);
-    (0, react_1.useImperativeHandle)(refs, () => {
-        return integrationInputRefs.current;
-    });
-    (0, react_1.useEffect)(() => {
-        if (value !== prevValue) {
-            setTimeout(() => {
-                var _a, _b;
-                (_b = (_a = integrationInputRefs === null || integrationInputRefs === void 0 ? void 0 : integrationInputRefs.current) === null || _a === void 0 ? void 0 : _a.validate) === null || _b === void 0 ? void 0 : _b.call(_a, ['change']);
-            }, 0);
-        }
-    }, [value, prevValue]);
-    return ((0, jsx_runtime_1.jsx)(WithValidation_1.WithValidation, Object.assign({ getValue: (ref) => { var _a; return ((_a = ref === null || ref === void 0 ? void 0 : ref.current) === null || _a === void 0 ? void 0 : _a.value) || null; }, disabled: !!restProps.disabled, validators: [
-            ...(validators || []),
-        ] }, { children: (withValidationProps) => {
-            integrationInputRefs.current.validate = withValidationProps.validate;
-            return ((0, jsx_runtime_1.jsx)(WithForm_1.WithForm, Object.assign({}, withValidationProps, { children: (withFormProps) => {
-                    return ((0, jsx_runtime_1.jsx)(AppInput_1.AppInput, Object.assign({}, restProps, withFormProps, { ref: (ref) => {
-                            if (ref) {
-                                ref.name = name;
-                                withValidationProps.elementRef.current = ref;
-                                withFormProps.elementRef.current = ref;
-                            }
-                        }, value: value, className: (0, common_helpers_1.createClassName)([
-                            'integration-input',
-                            restProps.className || '',
-                            withFormProps.className || '',
-                        ]), onChange: (e) => {
-                            var _a, _b;
-                            (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onChange) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
-                            (_b = restProps === null || restProps === void 0 ? void 0 : restProps.onChange) === null || _b === void 0 ? void 0 : _b.call(restProps, e);
-                        }, onBlur: (e) => {
-                            var _a, _b;
-                            (_a = withFormProps === null || withFormProps === void 0 ? void 0 : withFormProps.onBlur) === null || _a === void 0 ? void 0 : _a.call(withFormProps, e);
-                            (_b = restProps === null || restProps === void 0 ? void 0 : restProps.onBlur) === null || _b === void 0 ? void 0 : _b.call(restProps, e);
-                        } })));
-                } })));
-        } })));
+    var restProps = __rest(_a, []);
+    return (0, jsx_runtime_1.jsx)(FormValidationInput_1.FormValidationInput, Object.assign({}, restProps, { ref: refs, className: (0, common_helpers_1.createClassName)([
+            'integration-input',
+            restProps.className || '',
+        ]) }));
 });
 
 
@@ -57103,9 +57547,9 @@ const SettingsIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/Sett
 const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/SettingsButton/styles.scss");
 const SettingsButton = () => {
-    const appStore = (0, stores_1.useAppStore)();
+    const router = (0, stores_1.useRouter)();
     return ((0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ className: "settings-button", onClick: () => {
-            appStore.view = 'integrations';
+            router.page = 'settings:integrations';
         } }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ content: "Integrations settings", className: "small" }, { children: (0, jsx_runtime_1.jsx)(SettingsIcon_1.SettingsIcon, {}) })) })));
 };
 exports.SettingsButton = SettingsButton;
@@ -57135,7 +57579,7 @@ exports.getIntegrationData = exports.setIntegrationData = exports.integrationGro
 const extension_storage_1 = __webpack_require__(/*! ../../common/extension-storage */ "./extension/common/extension-storage.ts");
 exports.integrationGroupName = 'integrations';
 const setIntegrationData = (key, value) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.integrationGroupName);
     if (result.error) {
         return result;
     }
@@ -57145,7 +57589,7 @@ const setIntegrationData = (key, value) => __awaiter(void 0, void 0, void 0, fun
 exports.setIntegrationData = setIntegrationData;
 const getIntegrationData = (key) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.integrationGroupName);
     if (result.error) {
         return result;
     }
@@ -57357,25 +57801,26 @@ const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_mod
 const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/.pnpm/simplebar-react@2.4.3_react-dom@18.2.0_react@18.2.0/node_modules/simplebar-react/dist/simplebar-react.esm.js"));
 const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
-const AppArea_1 = __webpack_require__(/*! ../../../components/areas/AppArea */ "./extension/app/components/areas/AppArea/index.tsx");
-const SmallArrowIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/SmallArrowIcon/SmallArrowIcon */ "./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx");
+const SettingsArea_1 = __webpack_require__(/*! ../../../settings/SettingsArea */ "./extension/app/settings/SettingsArea/index.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationsContentView/styles.scss");
 exports.IntegrationsContentView = (0, mobx_react_lite_1.observer)(() => {
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    const routerStore = (0, stores_1.useAppRouterStore)();
+    const routerStore = (0, stores_1.useRouter)();
     const openCTIIntegration = integrationsStore.integrations.find((i) => i.id === '$open-cti$');
-    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ className: "integrations-content-view" }, { children: [openCTIIntegration && ((0, jsx_runtime_1.jsx)(AppArea_1.AppArea, { children: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", { children: openCTIIntegration.name }), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "icon-wrapper", onClick: () => {
-                                routerStore.goToIntegrationPage(openCTIIntegration);
-                            } }, { children: (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {}) }))] }) })), integrationsStore
-                .integrations
-                .slice()
-                .filter((i) => i.id !== '$open-cti$')
-                .sort((a, b) => (0, helpers_1.sortStrings)(b.name, a.name, 'descending'))
+    const integrations = [
+        ...(openCTIIntegration ? [openCTIIntegration] : []),
+        ...integrationsStore
+            .integrations
+            .slice()
+            .filter((i) => i.id !== '$open-cti$')
+            .sort((a, b) => (0, helpers_1.sortStrings)(b.name, a.name, 'descending')),
+    ];
+    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ className: "integrations-content-view" }, { children: [integrations
                 .map((i) => {
-                return ((0, jsx_runtime_1.jsx)(AppArea_1.AppArea, { children: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", { children: i.name }), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "icon-wrapper", onClick: () => {
-                                    routerStore.goToIntegrationPage(i);
-                                } }, { children: (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {}) }))] }) }, i.id));
-            })] })));
+                return ((0, jsx_runtime_1.jsx)(SettingsArea_1.SettingsArea, { id: i.id, name: i.name, onClick: () => {
+                        routerStore.goToIntegrationPage(i);
+                    } }, i.id));
+            }), integrations.length < 1 && ((0, jsx_runtime_1.jsx)("div", { children: "There are no integrations configured yet" }))] })));
 });
 
 
@@ -57392,54 +57837,403 @@ exports.IntegrationsContentView = (0, mobx_react_lite_1.observer)(() => {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.IntegrationsFooterView = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
-const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const PlusIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
 const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
-const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationsFooterView/styles.scss");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
 exports.IntegrationsFooterView = (0, mobx_react_lite_1.observer)(() => {
-    const routerStore = (0, stores_1.useAppRouterStore)();
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 20 }), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "integrations-footer-view" }, { children: (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Close (Esc)" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ onClick: () => {
-                            routerStore.goToResourcesPage();
-                        } }, { children: "Close" })) })) }))] }));
+    const routerStore = (0, stores_1.useRouter)();
+    const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}), onClick: () => {
+                const customIntegration = {
+                    id: (0, helpers_1.suuid)(),
+                    url: '',
+                    name: 'Custom',
+                };
+                integrationsStore.integrations.push(customIntegration);
+                routerStore.goToIntegrationPage(customIntegration);
+            } }, { children: "Add New Integration" })) }));
 });
 
 
 /***/ }),
 
-/***/ "./extension/app/integrations/views/IntegrationsHeaderView/IntegrationsHeaderView.tsx":
-/*!********************************************************************************************!*\
-  !*** ./extension/app/integrations/views/IntegrationsHeaderView/IntegrationsHeaderView.tsx ***!
-  \********************************************************************************************/
+/***/ "./extension/app/mail/MailPattern/index.tsx":
+/*!**************************************************!*\
+  !*** ./extension/app/mail/MailPattern/index.tsx ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IntegrationsHeaderView = void 0;
+exports.MailPattern = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
-const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
+const FormValidationInput_1 = __webpack_require__(/*! ../../components/inputs/FormValidationInput */ "./extension/app/components/inputs/FormValidationInput/index.tsx");
+const validators_1 = __webpack_require__(/*! ../../../../common/validators */ "./common/validators.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const FormValidationTextArea_1 = __webpack_require__(/*! ../../components/textareas/FormValidationTextArea */ "./extension/app/components/textareas/FormValidationTextArea/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/mail/MailPattern/styles.scss");
+const requiredMessage = 'This field is required';
+const mailMessage = 'Value is not a valid email address';
+exports.MailPattern = (0, mobx_react_lite_1.observer)(() => {
+    const mail = (0, stores_1.useMail)();
+    const form = (0, stores_1.useForm)();
+    const pattern = (0, helpers_1.initValues)(mail.pattern || {}, mail.getInitialPattern());
+    const { name, to, message, subject, } = pattern;
+    const address = [...(to || [])][0] || '';
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "mail-pattern" }, { children: [(0, jsx_runtime_1.jsx)(FormValidationInput_1.FormValidationInput, { name: "name", label: "Display Name", value: name, disabled: form.validating, onChange: (value) => {
+                    mail.pattern = Object.assign(Object.assign({}, pattern), { name: value });
+                }, validators: [
+                    {
+                        validator: (v) => Promise.resolve((0, validators_1.isNotEmptyString)(v, requiredMessage)),
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }), (0, jsx_runtime_1.jsx)(FormValidationInput_1.FormValidationInput, { name: "email", label: "Email", onChange: (value) => {
+                    mail.pattern = Object.assign(Object.assign({}, pattern), { to: [value] });
+                }, value: address, disabled: form.validating, validators: [
+                    {
+                        validator: (v) => {
+                            if (!v || !(v === null || v === void 0 ? void 0 : v.trim())) {
+                                return Promise.resolve((0, validators_1.getValidResult)());
+                            }
+                            return Promise.resolve((0, validators_1.isEmail)(v, mailMessage));
+                        },
+                        validateOnChange: true,
+                        validateOnBlur: true,
+                        validateOnFinish: true,
+                    },
+                ] }), (0, jsx_runtime_1.jsx)(FormValidationInput_1.FormValidationInput, { name: "subject", label: "Subject", value: subject, disabled: form.validating, onChange: (value) => {
+                    mail.pattern = Object.assign(Object.assign({}, pattern), { subject: value });
+                } }), (0, jsx_runtime_1.jsx)(FormValidationTextArea_1.FormValidationTextArea, { name: "message", label: "Message", native: {
+                    value: message,
+                    disabled: form.validating,
+                    onChange: (e) => {
+                        mail.pattern = Object.assign(Object.assign({}, pattern), { message: e.target.value });
+                    },
+                }, disabled: form.validating })] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/mail-store.ts":
+/*!******************************************!*\
+  !*** ./extension/app/mail/mail-store.ts ***!
+  \******************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getMailData = exports.setMailData = exports.setMailsData = exports.mailGroupName = void 0;
+const extension_storage_1 = __webpack_require__(/*! ../../common/extension-storage */ "./extension/common/extension-storage.ts");
+exports.mailGroupName = 'mails';
+const setMailsData = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.mailGroupName);
+    if (result.error) {
+        return result;
+    }
+    return (0, extension_storage_1.saveData)(Object.assign(Object.assign({}, result.data), { [exports.mailGroupName]: data }));
+});
+exports.setMailsData = setMailsData;
+const setMailData = (key, value) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.mailGroupName);
+    if (result.error) {
+        return result;
+    }
+    const data = result.data;
+    return (0, extension_storage_1.saveData)(Object.assign(Object.assign({}, data), { [exports.mailGroupName]: Object.assign(Object.assign({}, (data[exports.mailGroupName] || {})), { [key]: value }) }));
+});
+exports.setMailData = setMailData;
+const getMailData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.mailGroupName);
+    if (result.error) {
+        return result;
+    }
+    return {
+        data: ((_b = (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a[exports.mailGroupName]) === null || _b === void 0 ? void 0 : _b[key]) || {},
+    };
+});
+exports.getMailData = getMailData;
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/stores/MailStore.ts":
+/*!************************************************!*\
+  !*** ./extension/app/mail/stores/MailStore.ts ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
+const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const mail_store_1 = __webpack_require__(/*! ../mail-store */ "./extension/app/mail/mail-store.ts");
+class MailStore {
+    constructor(rootStore) {
+        this.pattern = null;
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    get patterns() {
+        var _a;
+        return Object.assign({}, (((_a = this.rootStore.appStorageStore.storage) === null || _a === void 0 ? void 0 : _a[mail_store_1.mailGroupName]) || {}));
+    }
+    getInitialPattern() {
+        return {
+            id: (0, helpers_1.suuid)(),
+            name: 'Custom',
+            to: [],
+            message: '',
+            cc: [],
+            subject: '',
+        };
+    }
+    putPattern(mail) {
+        this.pattern = mail;
+        (0, mail_store_1.setMailData)(mail.id, mail);
+    }
+    removePatternById(id) {
+        if (!id) {
+            return;
+        }
+        delete this.patterns[id];
+        const newPatterns = Object.assign({}, this.patterns);
+        (0, mail_store_1.setMailsData)(newPatterns)
+            .then(() => setTimeout(() => {
+            var _a;
+            if (id === ((_a = this.pattern) === null || _a === void 0 ? void 0 : _a.id)) {
+                this.pattern = null;
+            }
+        }, 0));
+    }
+    getPatternById(id) {
+        var _a;
+        if (!id) {
+            return null;
+        }
+        return ((_a = this.patterns) === null || _a === void 0 ? void 0 : _a[id]) || null;
+    }
+    static buildMailTo(pattern) {
+        return (0, helpers_1.buildEmailUrl)({
+            cc: pattern.cc,
+            body: pattern.message
+                .replace(/(\r\n|\n|\r)/gm, '%0A')
+                .replace(/&/gm, '%26'),
+            to: pattern.to,
+            subject: pattern.subject,
+        });
+    }
+    buildMailTo(pattern) {
+        return MailStore.buildMailTo(pattern);
+    }
+    buildMailToWithMarkers(pattern, markers) {
+        var _a, _b;
+        const copyPattern = JSON.parse(JSON.stringify(pattern));
+        return MailStore.buildMailTo(Object.assign(Object.assign({}, copyPattern), { message: (0, helpers_1.formatString)(copyPattern.message, {
+                iocs: (_b = (_a = markers === null || markers === void 0 ? void 0 : markers.iocs) === null || _a === void 0 ? void 0 : _a.map((v) => `- ${v}`)) === null || _b === void 0 ? void 0 : _b.join('%0A'),
+            }) }));
+    }
+}
+__decorate([
+    mobx_1.computed
+], MailStore.prototype, "patterns", null);
+__decorate([
+    mobx_1.observable
+], MailStore.prototype, "pattern", void 0);
+exports.MailStore = MailStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/views/MailContentView/index.tsx":
+/*!************************************************************!*\
+  !*** ./extension/app/mail/views/MailContentView/index.tsx ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailContentView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const MailPattern_1 = __webpack_require__(/*! ../../MailPattern */ "./extension/app/mail/MailPattern/index.tsx");
+const MailContentView = () => {
+    return ((0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)(MailPattern_1.MailPattern, {}) }));
+};
+exports.MailContentView = MailContentView;
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/views/MailFooterView/index.tsx":
+/*!***********************************************************!*\
+  !*** ./extension/app/mail/views/MailFooterView/index.tsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailFooterView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const RefreshIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/RefreshIcon/RefreshIcon */ "./extension/app/components/atoms/icons/RefreshIcon/RefreshIcon.tsx");
+const CheckIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/CheckIcon/CheckIcon */ "./extension/app/components/atoms/icons/CheckIcon/CheckIcon.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const MailFooterView = () => {
+    const mail = (0, stores_1.useMail)();
+    const form = (0, stores_1.useForm)();
+    const router = (0, stores_1.useRouter)();
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integration-footer-view" }, { children: [(0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(RefreshIcon_1.RefreshIcon, {}), className: "refresh-mail-data", onClick: () => {
+                    var _a;
+                    mail.pattern = mail.getPatternById((_a = mail.pattern) === null || _a === void 0 ? void 0 : _a.id);
+                }, disabled: form.validating }, { children: "Restore Defaults" })), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ className: "success-btn", icon: (0, jsx_runtime_1.jsx)(CheckIcon_1.CheckIcon, {}), onClick: () => {
+                    form.validate(['blur', 'finish'])
+                        .then((isSuccess) => {
+                        if (!isSuccess || !mail.pattern) {
+                            return Promise.reject();
+                        }
+                        return mail.putPattern(mail.pattern);
+                    })
+                        .then(() => {
+                        router.goToSettingsPage('settings:mail');
+                    });
+                }, disabled: form.validating }, { children: "Save & Close" }))] })));
+};
+exports.MailFooterView = MailFooterView;
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/views/MailHeaderView/index.tsx":
+/*!***********************************************************!*\
+  !*** ./extension/app/mail/views/MailHeaderView/index.tsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailHeaderView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/mail/views/MailHeaderView/styles.scss");
+exports.MailHeaderView = (0, mobx_react_lite_1.observer)(() => {
+    var _a;
+    const mail = (0, stores_1.useMail)();
+    const router = (0, stores_1.useRouter)();
+    const form = (0, stores_1.useForm)();
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "mail-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "group" }, { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: ((_a = mail.pattern) === null || _a === void 0 ? void 0 : _a.name) || mail.getInitialPattern().name }), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ className: "remove-mail-pattern", onClick: () => {
+                            var _a;
+                            mail.removePatternById((_a = mail.pattern) === null || _a === void 0 ? void 0 : _a.id);
+                            router.goToSettingsPage('settings:mail');
+                        }, disabled: form.validating }, { children: "Delete Template" }))] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 18 })] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/views/MailsContentView/index.tsx":
+/*!*************************************************************!*\
+  !*** ./extension/app/mail/views/MailsContentView/index.tsx ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailsContentView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const simplebar_react_1 = __importDefault(__webpack_require__(/*! simplebar-react */ "./node_modules/.pnpm/simplebar-react@2.4.3_react-dom@18.2.0_react@18.2.0/node_modules/simplebar-react/dist/simplebar-react.esm.js"));
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
+const SettingsArea_1 = __webpack_require__(/*! ../../../settings/SettingsArea */ "./extension/app/settings/SettingsArea/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/mail/views/MailsContentView/styles.scss");
+exports.MailsContentView = (0, mobx_react_lite_1.observer)(() => {
+    const mail = (0, stores_1.useMail)();
+    const router = (0, stores_1.useRouter)();
+    const patternsIDs = Object.keys(mail.patterns);
+    return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ className: "mails-content-view" }, { children: [patternsIDs
+                .slice()
+                .sort((a, b) => (0, helpers_1.sortStrings)(mail.patterns[b].name, mail.patterns[a].name, 'descending'))
+                .map((key) => {
+                const pattern = mail.patterns[key];
+                return ((0, jsx_runtime_1.jsx)(SettingsArea_1.SettingsArea, { id: pattern.id, name: pattern.name, onClick: () => {
+                        mail.pattern = pattern;
+                        router.goToMailPage(pattern);
+                    } }, pattern.id));
+            }), patternsIDs.length < 1 && ((0, jsx_runtime_1.jsx)("div", { children: "There are no mail patterns configured yet" }))] })));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/views/MailsFooterView/index.tsx":
+/*!************************************************************!*\
+  !*** ./extension/app/mail/views/MailsFooterView/index.tsx ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailsFooterView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
 const PlusIcon_1 = __webpack_require__(/*! ../../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 const helpers_1 = __webpack_require__(/*! ../../../../../common/helpers */ "./common/helpers.ts");
-const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
-const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
-__webpack_require__(/*! ./styles.scss */ "./extension/app/integrations/views/IntegrationsHeaderView/styles.scss");
-const IntegrationsHeaderView = () => {
-    const routerStore = (0, stores_1.useAppRouterStore)();
-    const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "integrations-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "group" }, { children: [(0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "Integration Settings" }), (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}), onClick: () => {
-                            const customIntegration = {
-                                id: `@@--${(0, helpers_1.uuid)()}`,
-                                url: '',
-                                name: 'Custom',
-                            };
-                            integrationsStore.integrations.push(customIntegration);
-                            routerStore.goToIntegrationPage(customIntegration);
-                        } }, { children: "Add New Integration" }))] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 })] })));
+const MailsFooterView = () => {
+    const routerStore = (0, stores_1.useRouter)();
+    const mail = (0, stores_1.useMail)();
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ icon: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}), onClick: () => {
+                const template = {
+                    id: (0, helpers_1.suuid)(),
+                    message: '',
+                    subject: '',
+                    cc: [],
+                    to: [],
+                    name: 'Custom',
+                };
+                mail.pattern = template;
+                routerStore.goToMailPage(template);
+            } }, { children: "Add New Template" })) }));
 };
-exports.IntegrationsHeaderView = IntegrationsHeaderView;
+exports.MailsFooterView = MailsFooterView;
 
 
 /***/ }),
@@ -57455,9 +58249,10 @@ exports.IntegrationsHeaderView = IntegrationsHeaderView;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotFoundContentView = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const types_common_1 = __webpack_require__(/*! ../../../../common/types/types-common */ "./extension/common/types/types-common.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/not-found/views/NotFoundContentView/styles.scss");
 const NotFoundContentView = () => {
-    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "not-found-content-view" }, { children: (0, jsx_runtime_1.jsxs)("div", { children: ["No supported platform detected.", (0, jsx_runtime_1.jsx)("br", {}), "You can use this extension with", (0, jsx_runtime_1.jsx)("br", {}), "Microsoft Sentinel, Microsoft Defender for Endpoint", (0, jsx_runtime_1.jsx)("br", {}), "Amazon Athena, Splunk, Elastic, OpenSearch, QRadar,", (0, jsx_runtime_1.jsx)("br", {}), "ArcSight, LogScale"] }) })));
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "not-found-content-view" }, { children: (0, jsx_runtime_1.jsxs)("div", { children: ["No supported platform detected.", (0, jsx_runtime_1.jsx)("br", {}), "You can use this extension with", (0, jsx_runtime_1.jsx)("br", {}), Object.values(types_common_1.PlatformName).join(', ')] }) })));
 };
 exports.NotFoundContentView = NotFoundContentView;
 
@@ -57597,7 +58392,6 @@ const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon
 const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
 const SeeDocumentIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon */ "./extension/app/components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon.tsx");
 const MagnifyingIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MagnifyingIcon/MagnifyingIcon */ "./extension/app/components/atoms/icons/MagnifyingIcon/MagnifyingIcon.tsx");
-const List_1 = __webpack_require__(/*! ../../components/atoms/List/List */ "./extension/app/components/atoms/List/List.tsx");
 const AppDropdown_1 = __webpack_require__(/*! ../../components/dropdowns/AppDropdown/AppDropdown */ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx");
 const Spacer_1 = __webpack_require__(/*! ../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
 const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
@@ -57607,12 +58401,17 @@ const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers 
 const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
 const GoOutsideIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/GoOutsideIcon/GoOutsideIcon */ "./extension/app/components/atoms/icons/GoOutsideIcon/GoOutsideIcon.tsx");
 const helpers_1 = __webpack_require__(/*! ../../../../common/helpers */ "./common/helpers.ts");
+const DropdownMenuList_1 = __webpack_require__(/*! ../../components/dropdowns-menus/DropdownMenuList */ "./extension/app/components/dropdowns-menus/DropdownMenuList/index.tsx");
+const MailIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MailIcon */ "./extension/app/components/atoms/icons/MailIcon/index.tsx");
+const ListItemContentWithIcons_1 = __webpack_require__(/*! ../../components/lists-items/ListItemContentWithIcons */ "./extension/app/components/lists-items/ListItemContentWithIcons/index.tsx");
+const SendToIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SendToIcon */ "./extension/app/components/atoms/icons/SendToIcon/index.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/BulkResourcesPanel/styles.scss");
 const MAX_COUNT_SELECTED = 30;
 exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
     const selectionStore = (0, stores_1.useResourcesSelectionStore)();
     const platformStore = (0, stores_1.usePlatformStore)();
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
+    const mail = (0, stores_1.useMail)();
     const { normalisedSelected, countSelected, uniqueSelected } = selectionStore;
     const items = (0, react_1.useMemo)(() => {
         const result = [];
@@ -57651,10 +58450,29 @@ exports.BulkResourcesPanel = (0, mobx_react_lite_1.observer)(() => {
         }
         return ((0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "error max-selected-tooltip", content: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: ["The total number of selected items can\u2019t be more than", (0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: [" ", MAX_COUNT_SELECTED, " "] })), "to avoid overloading your browser"] }) }, { children: count })));
     }, []);
+    const dropdownSendToRef = (0, react_1.useRef)({});
+    const itemsSendTo = (0, react_1.useMemo)(() => {
+        var _a;
+        return (((_a = Object.keys(mail.patterns)) === null || _a === void 0 ? void 0 : _a.map((id) => {
+            const pattern = mail.patterns[id];
+            return {
+                id: pattern.id,
+                content: (0, jsx_runtime_1.jsx)(ListItemContentWithIcons_1.ListItemContentWithIcons, { content: pattern.name, iconsLeft: [(0, jsx_runtime_1.jsx)(MailIcon_1.IconMail, {})] }),
+                onClick: () => {
+                    const url = mail.buildMailToWithMarkers(pattern, {
+                        iocs: uniqueSelected,
+                    });
+                    (0, common_helpers_1.openMailTo)(url);
+                    dropdownSendToRef.current.setIsOpen(false);
+                },
+                name: pattern.name,
+            };
+        })) || []);
+    }, [mail, mail.patterns, uniqueSelected, uniqueSelected.length]);
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)([
             'bulk-resources-panel',
             disabled ? 'empty' : '',
-        ]) }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "count-selected" }, { children: [(0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: ["\u2014 ", getCountSelected(countSelected), " item(s)"] })), "selected"] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-area" }, { children: [(0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, animatedIcon: true, onClick: onCopyIconClick }, { children: (0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('include') }, { children: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('exclude') }, { children: (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, {}) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('show all'), icon: (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, {}) }, { children: "Show All Events" })), (0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ disabled: disabled, opener: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, icon: (0, jsx_runtime_1.jsx)(MagnifyingIcon_1.MagnifyingIcon, {}) }, { children: "Search at" })), classNameMenu: "dropdown-search-sites-menu" }, { children: (0, jsx_runtime_1.jsx)(List_1.List, { className: "search-sites-list", items: items }) }))] }))] })));
+        ]) }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "count-selected" }, { children: [(0, jsx_runtime_1.jsxs)("span", Object.assign({ className: "strong" }, { children: ["\u2014 ", getCountSelected(countSelected), " item(s)"] })), "selected"] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-area" }, { children: [(0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, animatedIcon: true, onClick: onCopyIconClick }, { children: (0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { disabled: disabled }) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('include') }, { children: (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, {}) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('exclude') }, { children: (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, {}) })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, onClick: () => onActionsClick('show all'), icon: (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, {}) }, { children: "Show All Events" })), itemsSendTo.length > 0 && ((0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ ref: dropdownSendToRef, disabled: disabled, opener: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, icon: (0, jsx_runtime_1.jsx)(SendToIcon_1.SendToIcon, {}) }, { children: "Send to" })) }, { children: (0, jsx_runtime_1.jsx)(DropdownMenuList_1.DropdownMenuList, { items: itemsSendTo }) }))), (0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ disabled: disabled, opener: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ disabled: disabled, icon: (0, jsx_runtime_1.jsx)(MagnifyingIcon_1.MagnifyingIcon, {}) }, { children: "Search at" })) }, { children: (0, jsx_runtime_1.jsx)(DropdownMenuList_1.DropdownMenuList, { className: "search-sites-list", items: items }) }))] }))] })));
 });
 
 
@@ -57760,7 +58578,7 @@ exports.CollapsibleResources = (0, mobx_react_lite_1.observer)(({ className = ''
     const getResources = (0, react_1.useCallback)((passedResources) => {
         const emptyResources = [];
         const notEmptyResources = [];
-        Object.keys(passedResources).forEach(fieldName => {
+        Object.keys(passedResources).forEach((fieldName) => {
             if (passedResources[fieldName].size > 0) {
                 notEmptyResources.push({
                     fieldName,
@@ -57782,7 +58600,8 @@ exports.CollapsibleResources = (0, mobx_react_lite_1.observer)(({ className = ''
     const { emptyResources, notEmptyResources } = getResources(resources);
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: (0, common_helpers_1.createClassName)(['collapsible-resources', className]) }, { children: [notEmptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || []))), emptyResources.length > 0 && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 4 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "fields-separator", onClick: () => {
                             setShowEmpty(!showEmpty);
-                        } }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 }), (0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsxs)("span", { children: [showEmpty ? (0, jsx_runtime_1.jsx)(CrossedEye_1.CrossedEye, {}) : (0, jsx_runtime_1.jsx)(EyeIcon_1.EyeIcon, {}), showEmpty ? 'Hide empty' : 'Show empty', "\u00A0"] }), "(", emptyResources.length, ")"] }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 }), (0, jsx_runtime_1.jsx)("hr", {})] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 2 }), showEmpty && emptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])))] }))] })));
+                        } }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 }), (0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsxs)("span", { children: [showEmpty ? (0, jsx_runtime_1.jsx)(CrossedEye_1.CrossedEye, {}) : (0, jsx_runtime_1.jsx)(EyeIcon_1.EyeIcon, {}), showEmpty ? 'Hide empty' : 'Show empty', "\u00A0"] }), "(", emptyResources.length, ")"] }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 3 }), (0, jsx_runtime_1.jsx)("hr", {})] })), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 2 }), showEmpty
+                        && emptyResources.map(({ fieldName, values }) => getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])))] }))] })));
 });
 
 
@@ -57864,8 +58683,8 @@ exports.PlatformResources = (0, mobx_react_lite_1.observer)(() => {
         return (0, jsx_runtime_1.jsx)(SearchDocumentIcon_1.SearchDocumentIcon, {});
     }, []);
     return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "platform-resources" }, { children: Object.keys(resources)
-            .filter(typeID => activeTabID === typeID)
-            .map(typeID => {
+            .filter((typeID) => activeTabID === typeID)
+            .map((typeID) => {
             return ((0, jsx_runtime_1.jsx)(CollapsibleResources_1.CollapsibleResources, { resources: resources[typeID], icon: getIcon(typeID) }, typeID));
         }) })));
 });
@@ -57965,6 +58784,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ResourceListItem = void 0;
 const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const PlusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/PlusIcon/PlusIcon */ "./extension/app/components/atoms/icons/PlusIcon/PlusIcon.tsx");
 const MinusIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MinusIcon/MinusIcon */ "./extension/app/components/atoms/icons/MinusIcon/MinusIcon.tsx");
@@ -57974,12 +58794,18 @@ const SendToIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SendTo
 const integrations_1 = __webpack_require__(/*! ../../../integrations */ "./extension/integrations/index.ts");
 const NoOpenCTIProfileMessage_1 = __webpack_require__(/*! ../messages/NoOpenCTIProfileMessage */ "./extension/app/resources/messages/NoOpenCTIProfileMessage/index.tsx");
 const AnimatedCopyIcon_1 = __webpack_require__(/*! ../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon */ "./extension/app/components/icons/AnimatedCopyIcon/AnimatedCopyIcon.tsx");
-const AppTooltip_1 = __webpack_require__(/*! ../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const AppDropdown_1 = __webpack_require__(/*! ../../components/dropdowns/AppDropdown/AppDropdown */ "./extension/app/components/dropdowns/AppDropdown/AppDropdown.tsx");
+const DropdownMenuList_1 = __webpack_require__(/*! ../../components/dropdowns-menus/DropdownMenuList */ "./extension/app/components/dropdowns-menus/DropdownMenuList/index.tsx");
+const GoOutsideIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/GoOutsideIcon/GoOutsideIcon */ "./extension/app/components/atoms/icons/GoOutsideIcon/GoOutsideIcon.tsx");
+const MailIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/MailIcon */ "./extension/app/components/atoms/icons/MailIcon/index.tsx");
+const ListItemContentWithIcons_1 = __webpack_require__(/*! ../../components/lists-items/ListItemContentWithIcons */ "./extension/app/components/lists-items/ListItemContentWithIcons/index.tsx");
+const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/ResourceListItem/styles.scss");
-exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceName, }) => {
+exports.ResourceListItem = (0, mobx_react_lite_1.observer)(({ children, fieldName, resourceName, }) => {
     const [isActionMenu, setIsActionMenu] = (0, react_1.useState)(false);
     const platformStore = (0, stores_1.usePlatformStore)();
-    const router = (0, stores_1.useAppRouterStore)();
+    const router = (0, stores_1.useRouter)();
+    const mail = (0, stores_1.useMail)();
     const onActionClick = (0, react_1.useCallback)((actionType) => __awaiter(void 0, void 0, void 0, function* () {
         if (actionType === 'copy') {
             platformStore.copyToClipboard({ [fieldName]: [resourceName] });
@@ -57987,21 +58813,53 @@ exports.ResourceListItem = (0, react_1.memo)(({ children, fieldName, resourceNam
         }
         platformStore.modifyQuery(actionType, { [fieldName]: [resourceName] });
     }), [platformStore, fieldName, resourceName]);
+    const dropdownSendToRef = (0, react_1.useRef)({});
+    const itemsSendTo = (0, react_1.useMemo)(() => {
+        var _a;
+        return [
+            {
+                name: 'Send to OpenCTI',
+                icon: (0, jsx_runtime_1.jsx)(GoOutsideIcon_1.GoOutsideIcon, {}),
+                onClick: () => {
+                    var _a;
+                    (_a = (0, integrations_1.getIntegrationModel)('openCTI')) === null || _a === void 0 ? void 0 : _a.getStorage().then(({ data }) => {
+                        const { isActive, isValid } = data || {};
+                        if (!isActive || !isValid) {
+                            platformStore.setMessage(NoOpenCTIProfileMessage_1.NoOpenCTIProfileMessage);
+                            return;
+                        }
+                        router.goToExportPage(resourceName);
+                        dropdownSendToRef.current.setIsOpen(false);
+                    });
+                },
+            },
+            ...(((_a = Object.keys(mail.patterns)) === null || _a === void 0 ? void 0 : _a.map((id) => {
+                const pattern = mail.patterns[id];
+                return {
+                    icon: (0, jsx_runtime_1.jsx)(MailIcon_1.IconMail, {}),
+                    onClick: () => {
+                        const url = mail.buildMailToWithMarkers(pattern, {
+                            iocs: [resourceName],
+                        });
+                        (0, common_helpers_1.openMailTo)(url);
+                        dropdownSendToRef.current.setIsOpen(false);
+                    },
+                    name: pattern.name,
+                };
+            })) || []),
+        ];
+    }, [mail, mail.patterns, platformStore, resourceName, router]);
     return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "resource-list-item", onMouseEnter: () => {
             setIsActionMenu(true);
         }, onMouseLeave: () => {
             setIsActionMenu(false);
-        } }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-list-item-wrapper" }, { children: [children, isActionMenu && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "action-menu" }, { children: [(0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }), (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }), (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }), (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') }), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Send to OpenCTI" }, { children: (0, jsx_runtime_1.jsx)(SendToIcon_1.SendToIcon, { onClick: () => {
-                                    var _a;
-                                    (_a = (0, integrations_1.getIntegrationModel)('openCTI')) === null || _a === void 0 ? void 0 : _a.getStorage().then(({ data }) => {
-                                        const { isActive, isValid } = data || {};
-                                        if (!isActive || !isValid) {
-                                            platformStore.setMessage(NoOpenCTIProfileMessage_1.NoOpenCTIProfileMessage);
-                                            return;
-                                        }
-                                        router.goToExportPage(resourceName);
-                                    });
-                                } }) }))] })))] })) })));
+        } }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-list-item-wrapper" }, { children: [children, isActionMenu && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "action-menu" }, { children: [(0, jsx_runtime_1.jsx)(AnimatedCopyIcon_1.AnimatedCopyIcon, { onClick: () => onActionClick('copy') }), (0, jsx_runtime_1.jsx)(PlusIcon_1.PlusIcon, { onClick: () => onActionClick('include') }), (0, jsx_runtime_1.jsx)(MinusIcon_1.MinusIcon, { onClick: () => onActionClick('exclude') }), (0, jsx_runtime_1.jsx)(SeeDocumentIcon_1.SeeDocumentIcon, { onClick: () => onActionClick('show all') }), itemsSendTo.length && ((0, jsx_runtime_1.jsx)(AppDropdown_1.AppDropdown, Object.assign({ ref: dropdownSendToRef, opener: (0, jsx_runtime_1.jsx)(SendToIcon_1.SendToIcon, {}), classNameMenu: "dropdown-send-to" }, { children: (0, jsx_runtime_1.jsx)(DropdownMenuList_1.DropdownMenuList, { items: itemsSendTo.map(({ icon, name, onClick }, index) => {
+                                    return {
+                                        onClick,
+                                        content: (0, jsx_runtime_1.jsx)(ListItemContentWithIcons_1.ListItemContentWithIcons, { iconsLeft: [icon], content: name }),
+                                        id: `${index}-${name.toLowerCase().replace(/ +/g, ' ').replace(/ +/g, '-')}`,
+                                    };
+                                }) }) })))] })))] })) })));
 });
 
 
@@ -58273,7 +59131,7 @@ __webpack_require__(/*! ./styles.scss */ "./extension/app/resources/messages/NoO
 exports.NoOpenCTIProfileMessage = (0, mobx_react_lite_1.observer)(() => {
     const platformStore = (0, stores_1.usePlatformStore)();
     const integrationsStore = (0, stores_1.useIntegrationsStore)();
-    const router = (0, stores_1.useAppRouterStore)();
+    const router = (0, stores_1.useRouter)();
     return ((0, jsx_runtime_1.jsxs)(WarningMessage_1.WarningMessage, Object.assign({ className: "no-open-cti-profile-message" }, { children: [(0, jsx_runtime_1.jsx)("p", { children: "No profile found for submission to OpenCTI. Please create a new profile to proceed" }), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
                     platformStore.setMessage(null);
                 } }, { children: "Cancel" })), (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, Object.assign({ onClick: () => {
@@ -58508,7 +59366,7 @@ class PlatformStore {
         platform.connect();
         this.platform = platform;
         this.setFieldsNames((0, local_storage_1.getFieldsNames)());
-        this.rootStore.appStore.view = 'resources';
+        this.rootStore.routerStore.page = 'resources';
         this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
         const watchers = (0, local_storage_1.getWatchers)(platform.getID());
         const message = (0, content_services_1.sendMessageFromApp)({
@@ -59013,9 +59871,6 @@ exports.ResourcesContentView = (0, mobx_react_lite_1.observer)(({ className = ''
         (_c = (_b = ref.current.el
             .querySelector('.simplebar-content-wrapper')) === null || _b === void 0 ? void 0 : _b.scrollTo) === null || _c === void 0 ? void 0 : _c.call(_b, { top: 0 });
     }, [activeTabID]);
-    if (!platformStore.getID()) {
-        return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-content-view platform-detected" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 18 }), "Unknown platform detected"] })));
-    }
     return ((0, jsx_runtime_1.jsxs)(simplebar_react_1.default, Object.assign({ ref: ref, className: (0, common_helpers_1.createClassName)(['resource-content-view', className]) }, { children: [countAllResources < 1 && ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "resource-content-view platform-detected" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 12 }), platformStore.getName(), " detected. Run a query to see results."] }))), (0, jsx_runtime_1.jsx)(PlatformResources_1.PlatformResources, {})] })));
 });
 
@@ -59285,7 +60140,6 @@ class AppMessageStore {
         this.error = {
             error: null,
         };
-        this.test = {};
         (0, mobx_1.makeObservable)(this);
     }
     sendMessageWithCallback(message) {
@@ -59324,48 +60178,7 @@ __decorate([
 __decorate([
     mobx_1.observable
 ], AppMessageStore.prototype, "error", void 0);
-__decorate([
-    mobx_1.observable
-], AppMessageStore.prototype, "test", void 0);
 exports.AppMessageStore = AppMessageStore;
-
-
-/***/ }),
-
-/***/ "./extension/app/root/App/AppRouterStore.ts":
-/*!**************************************************!*\
-  !*** ./extension/app/root/App/AppRouterStore.ts ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AppRouterStore = void 0;
-class AppRouterStore {
-    constructor(rootStore) {
-        this.rootStore = rootStore;
-    }
-    goToResourcesPage() {
-        const { appStore } = this.rootStore;
-        appStore.view = 'resources';
-    }
-    goToExportPage(resourceName) {
-        const { appStore } = this.rootStore;
-        appStore.pageProps.content = { resourceName };
-        appStore.view = 'export-page';
-    }
-    goToIntegrationsPage() {
-        const { appStore } = this.rootStore;
-        appStore.view = 'integrations';
-    }
-    goToIntegrationPage(integration) {
-        const { appStore, integrationStore } = this.rootStore;
-        integrationStore.setIntegration(integration);
-        appStore.view = 'integration';
-    }
-}
-exports.AppRouterStore = AppRouterStore;
 
 
 /***/ }),
@@ -59452,12 +60265,6 @@ class AppStore {
         this.isResizing = false;
         this.isExtensionOpen = false;
         this.rootElement = null;
-        this.view = 'not-found';
-        this.pageProps = {
-            header: {},
-            content: {},
-            footer: {},
-        };
         this.setPosition();
         (0, mobx_1.makeObservable)(this);
     }
@@ -59583,9 +60390,6 @@ __decorate([
 __decorate([
     mobx_1.observable
 ], AppStore.prototype, "rootElement", void 0);
-__decorate([
-    mobx_1.observable
-], AppStore.prototype, "view", void 0);
 exports.AppStore = AppStore;
 
 
@@ -59636,16 +60440,18 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
 const NotFoundContentView_1 = __webpack_require__(/*! ../../not-found/views/NotFoundContentView/NotFoundContentView */ "./extension/app/not-found/views/NotFoundContentView/NotFoundContentView.tsx");
-const IntegrationsContentView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationsContentView/IntegrationsContentView */ "./extension/app/integrations/views/IntegrationsContentView/IntegrationsContentView.tsx");
 const ResourcesContentView_1 = __webpack_require__(/*! ../../resources/views/ResourcesContentView/ResourcesContentView */ "./extension/app/resources/views/ResourcesContentView/ResourcesContentView.tsx");
 const FaqContentView_1 = __webpack_require__(/*! ../../faq/views/FaqContentView/FaqContentView */ "./extension/app/faq/views/FaqContentView/FaqContentView.tsx");
-const IntegrationContentView_1 = __webpack_require__(/*! ../../integration/views/IntegrationContentView */ "./extension/app/integration/views/IntegrationContentView/index.tsx");
 const ExportContentView_1 = __webpack_require__(/*! ../../export/views/ExportContentView */ "./extension/app/export/views/ExportContentView/index.tsx");
+const SettingsContentView_1 = __webpack_require__(/*! ../../settings/views/SettingsContentView */ "./extension/app/settings/views/SettingsContentView/index.tsx");
+const IntegrationContentView_1 = __webpack_require__(/*! ../../integration/views/IntegrationContentView */ "./extension/app/integration/views/IntegrationContentView/index.tsx");
+const MailContentView_1 = __webpack_require__(/*! ../../mail/views/MailContentView */ "./extension/app/mail/views/MailContentView/index.tsx");
 exports.AppContent = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const appStore = (0, stores_1.useAppStore)();
-    const pageProps = appStore.pageProps.content;
-    appStore.pageProps.content = {};
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-content", ref: ref }, { children: [(0, jsx_runtime_1.jsx)(ResourcesContentView_1.ResourcesContentView, { className: appStore.view === 'resources' ? '' : 'invisible' }), appStore.view === 'not-found' && (0, jsx_runtime_1.jsx)(NotFoundContentView_1.NotFoundContentView, {}), appStore.view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationsContentView_1.IntegrationsContentView, {}), appStore.view === 'faq' && (0, jsx_runtime_1.jsx)(FaqContentView_1.FaqContentView, {}), appStore.view === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationContentView_1.IntegrationContentView, Object.assign({}, pageProps)), appStore.view === 'export-page' && (0, jsx_runtime_1.jsx)(ExportContentView_1.ExportContentView, Object.assign({}, pageProps))] })));
+    const router = (0, stores_1.useRouter)();
+    const pageProps = router.pageProps.content;
+    router.pageProps.content = {};
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-content", ref: ref }, { children: [(0, jsx_runtime_1.jsx)(ResourcesContentView_1.ResourcesContentView, { className: router.page === 'resources' ? '' : 'invisible' }), router.page === 'not-found' && (0, jsx_runtime_1.jsx)(NotFoundContentView_1.NotFoundContentView, {}), router.page === 'faq' && (0, jsx_runtime_1.jsx)(FaqContentView_1.FaqContentView, {}), router.page === 'export' && (0, jsx_runtime_1.jsx)(ExportContentView_1.ExportContentView, Object.assign({}, pageProps)), (router.page === 'settings:integrations' || router.page === 'settings:mail')
+                && (0, jsx_runtime_1.jsx)(SettingsContentView_1.SettingsContentView, { page: router.page }), router.page === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationContentView_1.IntegrationContentView, {}), router.page === 'mail' && (0, jsx_runtime_1.jsx)(MailContentView_1.MailContentView, {})] })));
 }));
 
 
@@ -59665,16 +60471,17 @@ const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modul
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
 const stores_1 = __webpack_require__(/*! ../../stores */ "./extension/app/stores/index.ts");
-const IntegrationsFooterView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationsFooterView/IntegrationsFooterView */ "./extension/app/integrations/views/IntegrationsFooterView/IntegrationsFooterView.tsx");
 const ResourcesFooterView_1 = __webpack_require__(/*! ../../resources/views/ResourcesFooterView/ResourcesFooterView */ "./extension/app/resources/views/ResourcesFooterView/ResourcesFooterView.tsx");
 const FaqFooterView_1 = __webpack_require__(/*! ../../faq/views/FaqFooterView/FaqFooterView */ "./extension/app/faq/views/FaqFooterView/FaqFooterView.tsx");
-const IntegrationFooterView_1 = __webpack_require__(/*! ../../integration/views/IntegrationFooterView */ "./extension/app/integration/views/IntegrationFooterView/index.tsx");
 const ExportFooterView_1 = __webpack_require__(/*! ../../export/views/ExportFooterView */ "./extension/app/export/views/ExportFooterView/index.tsx");
+const SettingsFooterView_1 = __webpack_require__(/*! ../../settings/views/SettingsFooterView */ "./extension/app/settings/views/SettingsFooterView/index.tsx");
+const IntegrationFooterView_1 = __webpack_require__(/*! ../../integration/views/IntegrationFooterView */ "./extension/app/integration/views/IntegrationFooterView/index.tsx");
+const MailFooterView_1 = __webpack_require__(/*! ../../mail/views/MailFooterView */ "./extension/app/mail/views/MailFooterView/index.tsx");
 exports.AppFooter = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
-    const appStore = (0, stores_1.useAppStore)();
-    const pageProps = appStore.pageProps.footer;
-    appStore.pageProps.footer = {};
-    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-footer", ref: ref }, { children: [appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(ResourcesFooterView_1.ResourcesFooterView, {}), appStore.view === 'integrations' && (0, jsx_runtime_1.jsx)(IntegrationsFooterView_1.IntegrationsFooterView, {}), appStore.view === 'faq' && (0, jsx_runtime_1.jsx)(FaqFooterView_1.FaqFooterView, {}), appStore.view === 'export-page' && (0, jsx_runtime_1.jsx)(ExportFooterView_1.ExportFooterView, {}), appStore.view === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationFooterView_1.IntegrationFooterView, Object.assign({}, pageProps))] })));
+    const router = (0, stores_1.useRouter)();
+    router.pageProps.footer = {};
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "app-footer", ref: ref }, { children: [router.page === 'resources' && (0, jsx_runtime_1.jsx)(ResourcesFooterView_1.ResourcesFooterView, {}), (router.page === 'settings:integrations'
+                || router.page === 'settings:mail') && (0, jsx_runtime_1.jsx)(SettingsFooterView_1.SettingsFooterView, { page: router.page }), router.page === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationFooterView_1.IntegrationFooterView, {}), router.page === 'faq' && (0, jsx_runtime_1.jsx)(FaqFooterView_1.FaqFooterView, {}), router.page === 'export' && (0, jsx_runtime_1.jsx)(ExportFooterView_1.ExportFooterView, {}), router.page === 'mail' && (0, jsx_runtime_1.jsx)(MailFooterView_1.MailFooterView, {})] })));
 }));
 
 
@@ -59698,19 +60505,21 @@ const CloseAppButton_1 = __webpack_require__(/*! ../CloseAppButton/CloseAppButto
 const common_helpers_1 = __webpack_require__(/*! ../../../common/common-helpers */ "./extension/common/common-helpers.ts");
 const LogoIcon_1 = __webpack_require__(/*! ../../components/icons/LogoIcon/LogoIcon */ "./extension/app/components/icons/LogoIcon/LogoIcon.tsx");
 const ResourcesHeaderView_1 = __webpack_require__(/*! ../../resources/views/ResourcesHeaderView/ResourcesHeaderView */ "./extension/app/resources/views/ResourcesHeaderView/ResourcesHeaderView.tsx");
-const IntegrationsHeaderView_1 = __webpack_require__(/*! ../../integrations/views/IntegrationsHeaderView/IntegrationsHeaderView */ "./extension/app/integrations/views/IntegrationsHeaderView/IntegrationsHeaderView.tsx");
 const FaqButton_1 = __webpack_require__(/*! ../../faq/FaqButton/FaqButton */ "./extension/app/faq/FaqButton/FaqButton.tsx");
 const FaqHeaderView_1 = __webpack_require__(/*! ../../faq/views/FaqHeaderView/FaqHeaderView */ "./extension/app/faq/views/FaqHeaderView/FaqHeaderView.tsx");
 const AppLink_1 = __webpack_require__(/*! ../../components/links/AppLink/AppLink */ "./extension/app/components/links/AppLink/AppLink.tsx");
 const SettingsButton_1 = __webpack_require__(/*! ../../integrations/SettingsButton/SettingsButton */ "./extension/app/integrations/SettingsButton/SettingsButton.tsx");
 const ExportButton_1 = __webpack_require__(/*! ../../resources/ExportButton/ExportButton */ "./extension/app/resources/ExportButton/ExportButton.tsx");
-const IntegrationHeaderView_1 = __webpack_require__(/*! ../../integration/views/IntegrationHeaderView */ "./extension/app/integration/views/IntegrationHeaderView/index.tsx");
 const ExportHeaderView_1 = __webpack_require__(/*! ../../export/views/ExportHeaderView */ "./extension/app/export/views/ExportHeaderView/index.tsx");
+const SettingsHeaderView_1 = __webpack_require__(/*! ../../settings/views/SettingsHeaderView */ "./extension/app/settings/views/SettingsHeaderView/index.tsx");
+const IntegrationHeaderView_1 = __webpack_require__(/*! ../../integration/views/IntegrationHeaderView */ "./extension/app/integration/views/IntegrationHeaderView/index.tsx");
+const MailHeaderView_1 = __webpack_require__(/*! ../../mail/views/MailHeaderView */ "./extension/app/mail/views/MailHeaderView/index.tsx");
 __webpack_require__(/*! ./styles.scss */ "./extension/app/root/AppHeader/styles.scss");
 exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, ref) => {
+    const router = (0, stores_1.useRouter)();
     const isPlatform = !!(0, stores_1.usePlatformStore)().getID();
     const appStore = (0, stores_1.useAppStore)();
-    appStore.pageProps.header = {};
+    router.pageProps.header = {};
     const dragElementRef = (0, react_1.useRef)(null);
     (0, react_1.useEffect)(() => {
         appStore.dragElementRef = dragElementRef;
@@ -59721,11 +60530,10 @@ exports.AppHeader = (0, mobx_react_lite_1.observer)((0, react_1.forwardRef)((_, 
                                     'spinner',
                                     appStore.loadingKeys.length > 0 ? '' : 'invisible',
                                 ]) })] })), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "group" }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "buttons-wrapper" }, { children: [isPlatform
-                                    && appStore.view !== 'integrations'
-                                    && appStore.view !== 'integration'
-                                    && appStore.view !== 'export-page'
-                                    && appStore.view !== 'faq' && (0, jsx_runtime_1.jsx)(ExportButton_1.ExportButton, {}), appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(SettingsButton_1.SettingsButton, {}), appStore.view === 'resources' && (0, jsx_runtime_1.jsx)(FaqButton_1.FaqButton, {}), (appStore.view === 'resources'
-                                    || appStore.view === 'not-found') && (0, jsx_runtime_1.jsx)(CloseAppButton_1.CloseAppButton, {})] })) }))] })), appStore.view === 'integration' && ((0, jsx_runtime_1.jsx)(IntegrationHeaderView_1.IntegrationHeaderView, {})), appStore.view === 'resources' && ((0, jsx_runtime_1.jsx)(ResourcesHeaderView_1.ResourcesHeaderView, {})), appStore.view === 'integrations' && ((0, jsx_runtime_1.jsx)(IntegrationsHeaderView_1.IntegrationsHeaderView, {})), appStore.view === 'export-page' && (0, jsx_runtime_1.jsx)(ExportHeaderView_1.ExportHeaderView, {}), appStore.view === 'faq' && ((0, jsx_runtime_1.jsx)(FaqHeaderView_1.FaqHeaderView, {}))] })));
+                                    && router.page === 'resources'
+                                    && (0, jsx_runtime_1.jsx)(ExportButton_1.ExportButton, {}), router.page === 'resources' && (0, jsx_runtime_1.jsx)(SettingsButton_1.SettingsButton, {}), router.page === 'resources' && (0, jsx_runtime_1.jsx)(FaqButton_1.FaqButton, {}), (router.page === 'resources' || router.page === 'not-found')
+                                    && (0, jsx_runtime_1.jsx)(CloseAppButton_1.CloseAppButton, {})] })) }))] })), (router.page === 'settings:integrations' || router.page === 'settings:mail')
+                && (0, jsx_runtime_1.jsx)(SettingsHeaderView_1.SettingsHeaderView, { page: router.page }), router.page === 'integration' && (0, jsx_runtime_1.jsx)(IntegrationHeaderView_1.IntegrationHeaderView, {}), router.page === 'resources' && (0, jsx_runtime_1.jsx)(ResourcesHeaderView_1.ResourcesHeaderView, {}), router.page === 'export' && (0, jsx_runtime_1.jsx)(ExportHeaderView_1.ExportHeaderView, {}), router.page === 'faq' && (0, jsx_runtime_1.jsx)(FaqHeaderView_1.FaqHeaderView, {}), router.page === 'mail' && (0, jsx_runtime_1.jsx)(MailHeaderView_1.MailHeaderView, {})] })));
 }));
 
 
@@ -59779,6 +60587,174 @@ exports.RootApp = RootApp;
 
 /***/ }),
 
+/***/ "./extension/app/router/stores/RouterStore.ts":
+/*!****************************************************!*\
+  !*** ./extension/app/router/stores/RouterStore.ts ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RouterStore = void 0;
+const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
+class RouterStore {
+    constructor(rootStore) {
+        this.page = 'not-found';
+        this.pageProps = {
+            header: {},
+            content: {},
+            footer: {},
+        };
+        this.rootStore = rootStore;
+        (0, mobx_1.makeObservable)(this);
+    }
+    goToResourcesPage() {
+        this.page = 'resources';
+    }
+    goToExportPage(resourceName) {
+        this.pageProps.content = { resourceName };
+        this.page = 'export';
+    }
+    goToSettingsPage(page) {
+        this.page = page;
+    }
+    goToIntegrationPage(integration) {
+        this.rootStore.integrationStore.setIntegration(integration);
+        this.page = 'integration';
+    }
+    goToMailPage(mail) {
+        this.page = 'mail';
+    }
+}
+__decorate([
+    mobx_1.observable
+], RouterStore.prototype, "page", void 0);
+exports.RouterStore = RouterStore;
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/SettingsArea/index.tsx":
+/*!*******************************************************!*\
+  !*** ./extension/app/settings/SettingsArea/index.tsx ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SettingsArea = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const SmallArrowIcon_1 = __webpack_require__(/*! ../../components/atoms/icons/SmallArrowIcon/SmallArrowIcon */ "./extension/app/components/atoms/icons/SmallArrowIcon/SmallArrowIcon.tsx");
+const AppArea_1 = __webpack_require__(/*! ../../components/areas/AppArea */ "./extension/app/components/areas/AppArea/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/settings/SettingsArea/styles.scss");
+const SettingsArea = ({ id, name = '', onClick, }) => {
+    return ((0, jsx_runtime_1.jsx)(AppArea_1.AppArea, Object.assign({ native: {
+            className: 'settings-area',
+        } }, { children: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", { children: name }), (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "icon-wrapper", onClick: onClick }, { children: (0, jsx_runtime_1.jsx)(SmallArrowIcon_1.SmallArrowIcon, {}) }))] }) }), id));
+};
+exports.SettingsArea = SettingsArea;
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/views/SettingsContentView/index.tsx":
+/*!********************************************************************!*\
+  !*** ./extension/app/settings/views/SettingsContentView/index.tsx ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SettingsContentView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const IntegrationsContentView_1 = __webpack_require__(/*! ../../../integrations/views/IntegrationsContentView/IntegrationsContentView */ "./extension/app/integrations/views/IntegrationsContentView/IntegrationsContentView.tsx");
+const MailsContentView_1 = __webpack_require__(/*! ../../../mail/views/MailsContentView */ "./extension/app/mail/views/MailsContentView/index.tsx");
+exports.SettingsContentView = (0, mobx_react_lite_1.observer)(({ page, }) => {
+    if (page === 'settings:integrations') {
+        return (0, jsx_runtime_1.jsx)(IntegrationsContentView_1.IntegrationsContentView, {});
+    }
+    return (0, jsx_runtime_1.jsx)(MailsContentView_1.MailsContentView, {});
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/views/SettingsFooterView/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/settings/views/SettingsFooterView/index.tsx ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SettingsFooterView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const AppTooltip_1 = __webpack_require__(/*! ../../../components/tooltips/AppTooltip/AppTooltip */ "./extension/app/components/tooltips/AppTooltip/AppTooltip.tsx");
+const BigStaticButton_1 = __webpack_require__(/*! ../../../components/buttons/BigStaticButton/BigStaticButton */ "./extension/app/components/buttons/BigStaticButton/BigStaticButton.tsx");
+const IntegrationsFooterView_1 = __webpack_require__(/*! ../../../integrations/views/IntegrationsFooterView/IntegrationsFooterView */ "./extension/app/integrations/views/IntegrationsFooterView/IntegrationsFooterView.tsx");
+const MailsFooterView_1 = __webpack_require__(/*! ../../../mail/views/MailsFooterView */ "./extension/app/mail/views/MailsFooterView/index.tsx");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/settings/views/SettingsFooterView/styles.scss");
+exports.SettingsFooterView = (0, mobx_react_lite_1.observer)(({ page, }) => {
+    const routerStore = (0, stores_1.useRouter)();
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 20 }), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "settings-footer-view" }, { children: [page === 'settings:integrations' && (0, jsx_runtime_1.jsx)(IntegrationsFooterView_1.IntegrationsFooterView, {}), page === 'settings:mail' && (0, jsx_runtime_1.jsx)(MailsFooterView_1.MailsFooterView, {}), (0, jsx_runtime_1.jsx)(AppTooltip_1.AppTooltip, Object.assign({ className: "small", content: "Close" }, { children: (0, jsx_runtime_1.jsx)(BigStaticButton_1.BigStaticButton, Object.assign({ onClick: () => {
+                                routerStore.goToResourcesPage();
+                            } }, { children: "Close" })) }))] }))] }));
+});
+
+
+/***/ }),
+
+/***/ "./extension/app/settings/views/SettingsHeaderView/index.tsx":
+/*!*******************************************************************!*\
+  !*** ./extension/app/settings/views/SettingsHeaderView/index.tsx ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SettingsHeaderView = void 0;
+const jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js");
+const mobx_react_lite_1 = __webpack_require__(/*! mobx-react-lite */ "./node_modules/.pnpm/mobx-react-lite@3.4.0_mobx@6.6.1_react-dom@18.2.0_react@18.2.0/node_modules/mobx-react-lite/es/index.js");
+const AppHeader_1 = __webpack_require__(/*! ../../../components/headers/AppHeader/AppHeader */ "./extension/app/components/headers/AppHeader/AppHeader.tsx");
+const TabsPanel_1 = __webpack_require__(/*! ../../../components/atoms/TabsPanel/TabsPanel */ "./extension/app/components/atoms/TabsPanel/TabsPanel.tsx");
+const StaticButton_1 = __webpack_require__(/*! ../../../components/buttons/StaticButton/StaticButton */ "./extension/app/components/buttons/StaticButton/StaticButton.tsx");
+const Spacer_1 = __webpack_require__(/*! ../../../components/atoms/Spacer/Spacer */ "./extension/app/components/atoms/Spacer/Spacer.tsx");
+const stores_1 = __webpack_require__(/*! ../../../stores */ "./extension/app/stores/index.ts");
+__webpack_require__(/*! ./styles.scss */ "./extension/app/settings/views/SettingsHeaderView/styles.scss");
+exports.SettingsHeaderView = (0, mobx_react_lite_1.observer)(({ page, }) => {
+    const router = (0, stores_1.useRouter)();
+    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "settings-header-view" }, { children: [(0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 24 }), (0, jsx_runtime_1.jsx)(AppHeader_1.AppHeader, { children: "Settings" }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 }), (0, jsx_runtime_1.jsx)(TabsPanel_1.TabsPanel, { className: "settings-tabs", tabs: [
+                    {
+                        id: 'settings:integrations',
+                        component: (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, { children: "Integrations" }) }),
+                    },
+                    {
+                        id: 'settings:mail',
+                        component: (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)(StaticButton_1.StaticButton, { children: "Mail Templates" }) }),
+                    },
+                ], onActiveTabChanged: (activeTabID) => {
+                    router.goToSettingsPage(activeTabID);
+                }, activeTab: page }), (0, jsx_runtime_1.jsx)(Spacer_1.Spacer, { height: 16 })] })));
+});
+
+
+/***/ }),
+
 /***/ "./extension/app/stores/RootStore.ts":
 /*!*******************************************!*\
   !*** ./extension/app/stores/RootStore.ts ***!
@@ -59794,11 +60770,12 @@ const ResourceStore_1 = __webpack_require__(/*! ../resources/stores/ResourceStor
 const PlatformStore_1 = __webpack_require__(/*! ../resources/stores/PlatformStore */ "./extension/app/resources/stores/PlatformStore.ts");
 const IntegrationsStore_1 = __webpack_require__(/*! ../integrations/stores/IntegrationsStore */ "./extension/app/integrations/stores/IntegrationsStore.ts");
 const ResourcesSelectionStore_1 = __webpack_require__(/*! ../resources/stores/ResourcesSelectionStore */ "./extension/app/resources/stores/ResourcesSelectionStore.ts");
-const AppRouterStore_1 = __webpack_require__(/*! ../root/App/AppRouterStore */ "./extension/app/root/App/AppRouterStore.ts");
+const RouterStore_1 = __webpack_require__(/*! ../router/stores/RouterStore */ "./extension/app/router/stores/RouterStore.ts");
 const IntegrationStore_1 = __webpack_require__(/*! ../integration/stores/IntegrationStore */ "./extension/app/integration/stores/IntegrationStore.ts");
 const AppMessageStore_1 = __webpack_require__(/*! ../root/App/AppMessageStore */ "./extension/app/root/App/AppMessageStore.ts");
 const store_1 = __webpack_require__(/*! ../components/extends/WithForm/store */ "./extension/app/components/extends/WithForm/store.ts");
 const AppStorageStore_1 = __webpack_require__(/*! ../root/App/AppStorageStore */ "./extension/app/root/App/AppStorageStore.tsx");
+const MailStore_1 = __webpack_require__(/*! ../mail/stores/MailStore */ "./extension/app/mail/stores/MailStore.ts");
 class RootStore {
     constructor() {
         this.appStore = new AppStore_1.AppStore();
@@ -59810,7 +60787,8 @@ class RootStore {
         this.resourceStore = new ResourceStore_1.ResourceStore(this);
         this.platformStore = new PlatformStore_1.PlatformStore(this);
         this.resourcesSelectionStore = new ResourcesSelectionStore_1.ResourcesSelectionStore(this);
-        this.appRouterStore = new AppRouterStore_1.AppRouterStore(this);
+        this.routerStore = new RouterStore_1.RouterStore(this);
+        this.mailStore = new MailStore_1.MailStore(this);
     }
 }
 exports.RootStore = RootStore;
@@ -59827,7 +60805,7 @@ exports.RootStore = RootStore;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.rootStore = exports.useIntegrationStore = exports.useIntegrationsStore = exports.useResourcesSelectionStore = exports.usePlatformStore = exports.useResourceStore = exports.useFormStore = exports.useAppMessageStore = exports.useAppStorageStore = exports.useAppRouterStore = exports.useAppStore = exports.useRootStore = exports.RootStoreContext = void 0;
+exports.rootStore = exports.useIntegrationStore = exports.useIntegrationsStore = exports.useResourcesSelectionStore = exports.usePlatformStore = exports.useResourceStore = exports.useForm = exports.useAppMessageStore = exports.useMail = exports.useAppStorageStore = exports.useRouter = exports.useAppStore = exports.useRootStore = exports.RootStoreContext = void 0;
 const react_1 = __webpack_require__(/*! react */ "./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js");
 const mobx_1 = __webpack_require__(/*! mobx */ "./node_modules/.pnpm/mobx@6.6.1/node_modules/mobx/dist/mobx.esm.js");
 const RootStore_1 = __webpack_require__(/*! ./RootStore */ "./extension/app/stores/RootStore.ts");
@@ -59844,26 +60822,31 @@ const useAppStore = () => {
     return rootStore.appStore;
 };
 exports.useAppStore = useAppStore;
-const useAppRouterStore = () => {
+const useRouter = () => {
     const rootStore = (0, exports.useRootStore)();
-    return rootStore.appRouterStore;
+    return rootStore.routerStore;
 };
-exports.useAppRouterStore = useAppRouterStore;
+exports.useRouter = useRouter;
 const useAppStorageStore = () => {
     const rootStore = (0, exports.useRootStore)();
     return rootStore.appStorageStore;
 };
 exports.useAppStorageStore = useAppStorageStore;
+const useMail = () => {
+    const rootStore = (0, exports.useRootStore)();
+    return rootStore.mailStore;
+};
+exports.useMail = useMail;
 const useAppMessageStore = () => {
     const rootStore = (0, exports.useRootStore)();
     return rootStore.appMessageStore;
 };
 exports.useAppMessageStore = useAppMessageStore;
-const useFormStore = () => {
+const useForm = () => {
     const rootStore = (0, exports.useRootStore)();
     return rootStore.formStore;
 };
-exports.useFormStore = useFormStore;
+exports.useForm = useForm;
 const useResourceStore = () => {
     const rootStore = (0, exports.useRootStore)();
     return rootStore.resourceStore;
@@ -59993,7 +60976,7 @@ Object.values(MessageToBackground).forEach((type) => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
+exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeOnInstalledSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
 const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
 const isPostMessageSupported = (...logData) => {
@@ -60027,6 +61010,17 @@ const isRuntimeSendMessageSupported = (...logData) => {
     return true;
 };
 exports.isRuntimeSendMessageSupported = isRuntimeSendMessageSupported;
+const isRuntimeOnInstalledSupported = (...logData) => {
+    var _a, _b;
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onInstalled) === null || _b === void 0 ? void 0 : _b.addListener)) {
+        loggers
+            .warn()
+            .log('API runtime.onInstalled.addListener is not supported', ...logData);
+        return false;
+    }
+    return true;
+};
+exports.isRuntimeOnInstalledSupported = isRuntimeOnInstalledSupported;
 const isRuntimeOnMessageSupported = (...logData) => {
     var _a, _b;
     if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
@@ -60182,7 +61176,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.openMailTo = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
 const cssObjectToString = (styles) => Object.keys(styles)
     .reduce((res, key) => res += `${key}:${styles[key]};`, '');
 exports.cssObjectToString = cssObjectToString;
@@ -60245,6 +61239,14 @@ const copyToClipboard = (str) => {
     document.body.removeChild(el);
 };
 exports.copyToClipboard = copyToClipboard;
+const openMailTo = (url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+exports.openMailTo = openMailTo;
 const downloadFile = (type, content, name) => {
     const prefix = type === 'csv'
         ? 'data:text/csv;charset=utf-8,'
@@ -60421,7 +61423,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.1";
+exports.version = "1.4.2";
 
 
 /***/ }),
@@ -60444,13 +61446,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getData = exports.saveData = void 0;
+exports.getDataByKey = exports.getData = exports.saveData = void 0;
 const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const saveData = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const context = (0, common_extension_helpers_1.getBrowserContext)();
     try {
         const result = yield new Promise((resolve, reject) => {
-            context.storage.local.set(data, () => {
+            context.storage.local.set(JSON.parse(JSON.stringify(data)), () => {
                 var _a;
                 if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
                     reject(context.runtime.lastError);
@@ -60465,7 +61467,27 @@ const saveData = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.saveData = saveData;
-const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+const getData = () => __awaiter(void 0, void 0, void 0, function* () {
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
+    try {
+        const result = yield new Promise((resolve, reject) => {
+            var _a;
+            (_a = context.storage) === null || _a === void 0 ? void 0 : _a.local.get().then((r) => {
+                var _a;
+                if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
+                    reject(context.runtime.lastError);
+                }
+                resolve(r);
+            });
+        });
+        return { data: result };
+    }
+    catch (e) {
+        return { error: e };
+    }
+});
+exports.getData = getData;
+const getDataByKey = (key) => __awaiter(void 0, void 0, void 0, function* () {
     const context = (0, common_extension_helpers_1.getBrowserContext)();
     try {
         const result = yield new Promise((resolve, reject) => {
@@ -60483,7 +61505,7 @@ const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
         return { error: e };
     }
 });
-exports.getData = getData;
+exports.getDataByKey = getDataByKey;
 
 
 /***/ }),
@@ -60761,6 +61783,7 @@ var PlatformID;
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
     PlatformID["LogScale"] = "LogScale";
+    PlatformID["Chronicle"] = "Chronicle";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -60773,6 +61796,7 @@ var PlatformName;
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
     PlatformName["LogScale"] = "Falcon LogScale";
+    PlatformName["Chronicle"] = "Chronicle";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -61095,6 +62119,117 @@ ArcSightPlatform.extensionDefaultPosition = {
     height: 480,
 };
 loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ArcSightPlatform.id);
+
+
+/***/ }),
+
+/***/ "./extension/content/platforms/ChroniclePlatform.ts":
+/*!**********************************************************!*\
+  !*** ./extension/content/platforms/ChroniclePlatform.ts ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ChroniclePlatform = void 0;
+const AbstractContentPlatform_1 = __webpack_require__(/*! ./AbstractContentPlatform */ "./extension/content/platforms/AbstractContentPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+let loggers;
+class ChroniclePlatform extends AbstractContentPlatform_1.AbstractContentPlatform {
+    constructor() {
+        super(...arguments);
+        this.defaultWatchers = {
+            [resources_types_1.BoundedResourceTypeID.Accounts]: [
+                'user',
+                'principal.user.userid',
+                'target.user.userid',
+                'source.user.userid',
+            ],
+            [resources_types_1.BoundedResourceTypeID.Assets]: [
+                'hostname',
+                'IP',
+                'src.ip',
+                'dst.ip',
+                'target.asset.hostname',
+                'target.hostname',
+                'source.hostname',
+                'source.asset.hostname',
+                'principal.ip',
+            ],
+        };
+        this.extensionDefaultPosition = ChroniclePlatform.extensionDefaultPosition;
+    }
+    static buildQueryParts(type, resources, withPrefix = false) {
+        let prefix = type === 'include' ? 'AND (' : 'AND';
+        if (type === 'show all') {
+            prefix = '';
+        }
+        return `${(0, common_helpers_1.buildQueryParts)(resources, () => (type === 'exclude' ? ' != ' : ' = '), type === 'exclude' ? ' AND ' : ' OR ', type === 'exclude' ? ' AND ' : ' ) AND ( ', {
+            leftOperand: (v) => v,
+            rightOperand: (v) => ChroniclePlatform.normalizedValue(v),
+        }, withPrefix ? prefix : undefined)} ${type === 'exclude' ? '' : ')'}`;
+    }
+    buildQueryParts(type, resources, withPrefix) {
+        return ChroniclePlatform.buildQueryParts(type, resources, withPrefix);
+    }
+    static connectInlineListener() {
+        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.chronicleInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener',
+            },
+        });
+    }
+    static setListeners() {
+        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => __awaiter(this, void 0, void 0, function* () {
+            AbstractContentPlatform_1.AbstractContentPlatform.processInlineListeners(message);
+        }));
+        loggers.debug().log('listeners were set');
+    }
+    connect() {
+        ChroniclePlatform.setListeners();
+        ChroniclePlatform.connectInlineListener();
+        loggers.debug().log('connected');
+    }
+    getID() {
+        return ChroniclePlatform.id;
+    }
+    getName() {
+        return ChroniclePlatform.platformName;
+    }
+}
+exports.ChroniclePlatform = ChroniclePlatform;
+ChroniclePlatform.id = types_common_1.PlatformID.Chronicle;
+ChroniclePlatform.platformName = types_common_1.PlatformName.Chronicle;
+ChroniclePlatform.extensionDefaultPosition = {
+    top: 0,
+    left: 0,
+    width: 480,
+    height: 480,
+};
+ChroniclePlatform.normalizedValue = (value) => {
+    return `"${value
+        .replace(/\\/g, '\\\\')
+        .replace(/"/g, '\\"')}"`;
+};
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ChroniclePlatform.id);
 
 
 /***/ }),
@@ -61725,7 +62860,7 @@ class PlatformResolver {
         this.platforms = new Register_1.Register();
     }
     getPlatformByID(platformID) {
-        if (!this.platforms.has(platformID)) {
+        if (!this.platforms.get(platformID)) {
             switch (platformID) {
                 case types_common_1.PlatformID.Athena: {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./AmazonAthenaPlatform */ "./extension/content/platforms/AmazonAthenaPlatform.ts").AmazonAthenaPlatform))());
@@ -61763,6 +62898,10 @@ class PlatformResolver {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./LogScalePlatform */ "./extension/content/platforms/LogScalePlatform.ts").LogScalePlatform))());
                     break;
                 }
+                case types_common_1.PlatformID.Chronicle: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./ChroniclePlatform */ "./extension/content/platforms/ChroniclePlatform.ts").ChroniclePlatform))());
+                    break;
+                }
                 default:
                     return undefined;
             }
@@ -61792,6 +62931,7 @@ class PlatformResolver {
         return undefined;
     }
     resolveByContent() {
+        var _a, _b;
         if (document.querySelector('a[aria-label^="splunk"]')) {
             return this.getPlatformByID(types_common_1.PlatformID.Splunk);
         }
@@ -61804,6 +62944,11 @@ class PlatformResolver {
         }
         if (document.querySelector('head > meta[name~="humio-version"]')) {
             return this.getPlatformByID(types_common_1.PlatformID.LogScale);
+        }
+        if (document.getElementById('chronicle-logo')
+            || document.getElementById('chronicle-alert')
+            || ((_b = (_a = document.title) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === null || _b === void 0 ? void 0 : _b.indexOf('chronicle')) > -1) {
+            return this.getPlatformByID(types_common_1.PlatformID.Chronicle);
         }
         return undefined;
     }
@@ -62658,7 +63803,7 @@ exports.getOpenCTIModel = getOpenCTIModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.chronicleInline = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -62670,6 +63815,7 @@ exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
 exports.openSearchInline = 'inline-opensearch.js';
 exports.logScaleInline = 'inline-logscale.js';
+exports.chronicleInline = 'inline-chronicle.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -62680,6 +63826,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
     [types_common_1.PlatformID.LogScale]: [exports.logScaleInline],
+    [types_common_1.PlatformID.Chronicle]: [exports.chronicleInline],
     app: [exports.appStyles],
 };
 

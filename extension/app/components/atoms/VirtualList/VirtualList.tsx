@@ -1,6 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { List, ListProps } from '../List/List';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { createClassName } from '../../../../common/common-helpers';
+import { ListProps } from '../List/types';
+import { AppList } from '../../lists/AppList';
 import './virtual-list.scss';
 
 export type VirtualListProps = ListProps & {
@@ -36,7 +39,7 @@ export const VirtualList: React.FC<VirtualListProps> = ({
     if (!params.current?.visibleRowsCount) {
       return;
     }
-    const { visibleRowsCount  } = params.current;
+    const { visibleRowsCount } = params.current;
 
     setListItems(items.slice(shift, shift + visibleRowsCount + 2));
   }, [items, shift]);
@@ -70,7 +73,7 @@ export const VirtualList: React.FC<VirtualListProps> = ({
       style={{ height }}
     >
       <div style={{ height: calculateTop(shift) }}></div>
-      <List
+      <AppList
         items={listItems}
         className={createClassName(['infinity-list', className])}
         {...restProps}

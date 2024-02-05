@@ -1,0 +1,22 @@
+@import "../../../scss/palette";
+
+textarea.app-textarea {
+  font-family: Inter, sans-serif;
+  background-color: $lighter-background-color;
+  color: $base-text-color-strong;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  outline: none;
+  border: none;
+  resize: none;
+  min-height: 80px;
+}
+
+label.textarea-label.app-textarea {
+  margin-bottom: 3px;
+
+  &.textarea-label--disabled {
+    color: $base-disabled-text-color;
+  }
+}

@@ -6,7 +6,7 @@ import {
   isActionOnClickedSupported,
   isBrowserActionOnClickedSupported,
   isOnBeforeRequestSupported,
-  isOnBeforeSendHeadersSupported,
+  isOnBeforeSendHeadersSupported, isRuntimeOnInstalledSupported,
   isRuntimeOnMessageExternalSupported,
   isRuntimeOnMessageSupported,
   isTabsOnRemovedSupported,
@@ -66,6 +66,14 @@ listeners[BGListenerType.OnExtensionIconClicked] = (listener: Function, ...other
   }
 
   context[contextAction].onClicked.addListener(listener, ...otherProps);
+};
+
+listeners[BGListenerType.OnInstalled] = (listener: Function, ...otherProps: any[]) => {
+  if (!isRuntimeOnInstalledSupported()) {
+    return;
+  }
+
+  getBrowserContext().runtime.onInstalled.addListener(listener, ...otherProps);
 };
 
 listeners[BGListenerType.OnBeforeRequest] = (listener: Function, ...otherProps: any[]) => {
@@ -129,7 +137,7 @@ export const removeBGInterceptor = (
   type?: BGListenerType,
 ) => {
   (type ? [type] : Object.keys(interceptors)).forEach((t: BGListenerType) => {
-    interceptors[t] = interceptors[t]!.filter(interceptor => {
+    interceptors[t] = interceptors[t]!.filter((interceptor) => {
       if (interceptor.id === id && typeof interceptor.unregister === 'function') {
         interceptor.unregister();
       }
@@ -145,7 +153,7 @@ export const addListener = (
 ) => {
   listeners[type]?.(
     (...params: any[]) => {
-      (interceptors[type] || []).forEach(interceptor => {
+      (interceptors[type] || []).forEach((interceptor) => {
         if (!interceptor || typeof interceptor !== 'function') {
           return;
         }

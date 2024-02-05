@@ -199,7 +199,7 @@ export class LogScalePlatform extends AbstractBackgroundPlatform {
       ),
     );
 
-    loggers.debug().log('register');
+    loggers.debug().log('registered');
   }
 
   unregister(): void {

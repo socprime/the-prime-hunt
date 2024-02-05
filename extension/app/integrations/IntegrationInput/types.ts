@@ -1,11 +1,5 @@
-import { AppInputProps } from '../../components/inputs/AppInput/types';
-import { Validate } from '../../../../common/types';
-import { ComponentWithValidationProps } from '../../components/extends/WithValidation/types';
+import { FormValidationInputProps, FormValidationInputRefs } from '../../components/inputs/FormValidationInput/types';
 
-export type IntegrationInputProps = {
-  name?: string;
-} & AppInputProps & ComponentWithValidationProps;
+export type IntegrationInputProps = FormValidationInputProps;
 
-export type IntegrationInputRefs = {
-  validate: Validate;
-};
+export type IntegrationInputRefs = FormValidationInputRefs;

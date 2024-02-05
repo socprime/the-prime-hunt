@@ -1,27 +1,30 @@
 import { forwardRef, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useAppStore, usePlatformStore } from '../../stores';
+import { useAppStore, usePlatformStore, useRouter } from '../../stores';
 import { CloseAppButton } from '../CloseAppButton/CloseAppButton';
 import { createClassName } from '../../../common/common-helpers';
 import { LogoIcon } from '../../components/icons/LogoIcon/LogoIcon';
 import { ResourcesHeaderView } from '../../resources/views/ResourcesHeaderView/ResourcesHeaderView';
-import { IntegrationsHeaderView } from '../../integrations/views/IntegrationsHeaderView/IntegrationsHeaderView';
 import { FaqButton } from '../../faq/FaqButton/FaqButton';
 import { FaqHeaderView } from '../../faq/views/FaqHeaderView/FaqHeaderView';
 import { AppLink } from '../../components/links/AppLink/AppLink';
 import { SettingsButton } from '../../integrations/SettingsButton/SettingsButton';
 import { ExportButton } from '../../resources/ExportButton/ExportButton';
-import { IntegrationHeaderView } from '../../integration/views/IntegrationHeaderView';
 import { ExportHeaderView } from '../../export/views/ExportHeaderView';
+import { SettingsHeaderView } from '../../settings/views/SettingsHeaderView';
+import { IntegrationHeaderView } from '../../integration/views/IntegrationHeaderView';
+import { MailHeaderView } from '../../mail/views/MailHeaderView';
 import './styles.scss';
 
 export const AppHeader = observer(forwardRef<HTMLDivElement>((
   _,
   ref,
 ) => {
+  const router = useRouter();
   const isPlatform = !!usePlatformStore().getID();
   const appStore = useAppStore();
-  appStore.pageProps.header = {};
+
+  router.pageProps.header = {};
 
   const dragElementRef = useRef<HTMLSpanElement>(null);
 
@@ -52,32 +55,23 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
         <span className="group">
           <div className="buttons-wrapper">
             {isPlatform
-              && appStore.view !== 'integrations'
-              && appStore.view !== 'integration'
-              && appStore.view !== 'export-page'
-              && appStore.view !== 'faq' && <ExportButton />}
-            {appStore.view === 'resources' && <SettingsButton />}
-            {appStore.view === 'resources' && <FaqButton />}
-            {(
-              appStore.view === 'resources'
-              || appStore.view === 'not-found'
-            ) && <CloseAppButton />}
+              && router.page === 'resources'
+              && <ExportButton />
+            }
+            {router.page === 'resources' && <SettingsButton />}
+            {router.page === 'resources' && <FaqButton />}
+            {(router.page === 'resources' || router.page === 'not-found')
+              && <CloseAppButton />}
           </div>
         </span>
       </div>
-      {appStore.view === 'integration' && (
-        <IntegrationHeaderView />
-      )}
-      {appStore.view === 'resources' && (
-        <ResourcesHeaderView />
-      )}
-      {appStore.view === 'integrations' && (
-        <IntegrationsHeaderView />
-      )}
-      {appStore.view === 'export-page' && <ExportHeaderView />}
-      {appStore.view === 'faq' && (
-        <FaqHeaderView />
-      )}
+      {(router.page === 'settings:integrations' || router.page === 'settings:mail')
+        && <SettingsHeaderView page={router.page} />}
+      {router.page === 'integration' && <IntegrationHeaderView />}
+      {router.page === 'resources' && <ResourcesHeaderView />}
+      {router.page === 'export' && <ExportHeaderView />}
+      {router.page === 'faq' && <FaqHeaderView />}
+      {router.page === 'mail' && <MailHeaderView />}
     </div>
   );
 }));

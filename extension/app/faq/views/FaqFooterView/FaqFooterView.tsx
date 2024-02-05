@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
-import { useAppStore } from '../../../stores';
+import { useRouter } from '../../../stores';
 import { Spacer } from '../../../components/atoms/Spacer/Spacer';
 import { AppTooltip } from '../../../components/tooltips/AppTooltip/AppTooltip';
 
 export const FaqFooterView: React.FC = () => {
-  const appStore = useAppStore();
+  const router = useRouter();
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const code = e.code?.toLowerCase?.() || '';
       if (code === 'escape') {
-        appStore.view = 'resources';
+        router.page = 'resources';
       }
     };
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [appStore]);
+  }, [router]);
 
   return (
     <div>
@@ -24,7 +24,7 @@ export const FaqFooterView: React.FC = () => {
       <AppTooltip content="Close (Esc)" className="small">
         <BigStaticButton
           onClick={() => {
-            appStore.view = 'resources';
+            router.page = 'resources';
           }}
         >
           Close

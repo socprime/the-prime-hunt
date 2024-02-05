@@ -39,7 +39,8 @@ export enum PlatformID {
   OpenSearch = 'OpenSearch',
   ArcSight = 'ArcSight',
   Athena = 'Athena',
-  LogScale = 'LogScale'
+  LogScale = 'LogScale',
+  Chronicle = 'Chronicle'
 }
 
 export enum PlatformName {
@@ -52,6 +53,7 @@ export enum PlatformName {
   ArcSight = 'ArcSight',
   Athena = 'Amazon Athena',
   LogScale = 'Falcon LogScale',
+  Chronicle = 'Chronicle'
 }
 
 export type IPlatform = {

@@ -1,6 +1,7 @@
 import { BrowserTabInfo, IPlatform } from '../../common/types/types-common';
 import WebRequestBodyEvent = chrome.webRequest.WebRequestBodyEvent;
 import ExtensionMessageEvent = chrome.runtime.ExtensionMessageEvent;
+import InstalledDetails = chrome.runtime.InstalledDetails;
 import PageActionClickedEvent = chrome.pageAction.PageActionClickedEvent;
 import WebRequestHeadersSynchronousEvent = chrome.webRequest.WebRequestHeadersSynchronousEvent;
 import TabRemovedEvent = chrome.tabs.TabRemovedEvent;
@@ -24,6 +25,7 @@ export type BGInterceptor = IdentifiedFunction & {
 export enum BGListenerType {
   OnMessage = 'OnMessage',
   OnBeforeRequest = 'OnBeforeRequest',
+  OnInstalled = 'OnInstalled',
   OnBrowserTabRemoved = 'OnBrowserTabRemoved',
   OnBeforeSendHeaders = 'OnBeforeSendHeaders',
   OnExtensionIconClicked = 'OnExtensionIconClicked',
@@ -69,4 +71,9 @@ export type MessageListener = (
 export type BrowserTabRemovedListener = (
   type: BGListenerType.OnBrowserTabRemoved,
   callback: Parameters<TabRemovedEvent['addListener']>[0],
+) => void;
+
+export type OnInstalledListener = (
+  type: BGListenerType.OnInstalled,
+  callback: (details: InstalledDetails) => void,
 ) => void;

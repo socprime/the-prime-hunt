@@ -9,7 +9,7 @@ export class PlatformResolver {
   private platforms;
 
   getPlatformByID(platformID?: PlatformID): ContentPlatform | undefined {
-    if (!this.platforms.has(platformID)) {
+    if (!this.platforms.get(platformID)) {
       switch (platformID) {
         case PlatformID.Athena: {
           this.platforms.set<PlatformID, ContentPlatform>(
@@ -83,6 +83,14 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.Chronicle: {
+          this.platforms.set<PlatformID, ContentPlatform>(
+            platformID,
+            new (require('./ChroniclePlatform').ChroniclePlatform)(),
+          );
+          break;
+        }
+
         default:
           return undefined;
       }
@@ -139,6 +147,14 @@ export class PlatformResolver {
 
     if (document.querySelector('head > meta[name~="humio-version"]')) {
       return this.getPlatformByID(PlatformID.LogScale);
+    }
+
+    if (
+      document.getElementById('chronicle-logo')
+      || document.getElementById('chronicle-alert')
+      || document.title?.toLowerCase()?.indexOf('chronicle') > -1
+    ) {
+      return this.getPlatformByID(PlatformID.Chronicle);
     }
 
     return undefined;

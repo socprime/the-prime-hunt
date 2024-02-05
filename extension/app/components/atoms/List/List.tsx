@@ -1,16 +1,6 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
-
-export type ListProps = {
-  items: {
-    id: string;
-    content: ReactNode;
-    isSelected?: boolean;
-    onClick?: () => void
-  }[];
-  noItemsMessage?: ReactNode;
-  className?: string;
-};
+import { ListProps } from './types';
 
 export const List = forwardRef<HTMLUListElement, ListProps>((
   {

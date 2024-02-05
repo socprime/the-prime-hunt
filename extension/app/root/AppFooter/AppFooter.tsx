@@ -1,27 +1,31 @@
 import { forwardRef } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useAppStore } from '../../stores';
-import { IntegrationsFooterView } from '../../integrations/views/IntegrationsFooterView/IntegrationsFooterView';
+import { useRouter } from '../../stores';
 import { ResourcesFooterView } from '../../resources/views/ResourcesFooterView/ResourcesFooterView';
 import { FaqFooterView } from '../../faq/views/FaqFooterView/FaqFooterView';
-import { IntegrationFooterView } from '../../integration/views/IntegrationFooterView';
 import { ExportFooterView } from '../../export/views/ExportFooterView';
+import { SettingsFooterView } from '../../settings/views/SettingsFooterView';
+import { IntegrationFooterView } from '../../integration/views/IntegrationFooterView';
+import { MailFooterView } from '../../mail/views/MailFooterView';
 
 export const AppFooter = observer(forwardRef<HTMLDivElement>((
   _,
   ref,
 ) => {
-  const appStore = useAppStore();
-  const pageProps = appStore.pageProps.footer;
-  appStore.pageProps.footer = {};
+  const router = useRouter();
+  router.pageProps.footer = {};
 
   return (
     <div className="app-footer" ref={ref}>
-      {appStore.view === 'resources' && <ResourcesFooterView />}
-      {appStore.view === 'integrations' && <IntegrationsFooterView />}
-      {appStore.view === 'faq' && <FaqFooterView />}
-      {appStore.view === 'export-page' && <ExportFooterView />}
-      {appStore.view === 'integration' && <IntegrationFooterView {...pageProps} />}
+      {router.page === 'resources' && <ResourcesFooterView />}
+      {(
+        router.page === 'settings:integrations'
+        || router.page === 'settings:mail'
+      ) && <SettingsFooterView page={router.page} />}
+      {router.page === 'integration' && <IntegrationFooterView />}
+      {router.page === 'faq' && <FaqFooterView />}
+      {router.page === 'export' && <ExportFooterView />}
+      {router.page === 'mail' && <MailFooterView />}
     </div>
   );
 }));

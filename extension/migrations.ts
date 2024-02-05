@@ -13,8 +13,8 @@ import {
 } from './app/integrations/integrations';
 import { compareVersions } from './common/common-helpers';
 import { version } from './common/envs';
-import { Integration } from './app/integrations/integrations-types';
 import { sortStrings } from '../common/helpers';
+import { Integration } from './app/integration/integration-types';
 
 let needStoreIntegrations = false;
 let storedIntegrations = getIntegrations();

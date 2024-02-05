@@ -27,15 +27,6 @@ export const ResourcesContentView: React.FC<ResourcesContentViewProps> = observe
       ?.scrollTo?.({ top: 0 });
   }, [activeTabID]);
 
-  if (!platformStore.getID()) {
-    return (
-      <div className="resource-content-view platform-detected">
-        <Spacer height={18} />
-        Unknown platform detected
-      </div>
-    );
-  }
-
   return (
     <SimpleBar ref={ref} className={createClassName(['resource-content-view', className])}>
       {countAllResources < 1 && (

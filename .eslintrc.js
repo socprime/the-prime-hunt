@@ -82,6 +82,8 @@ const typescript = [
       '@typescript-eslint/ban-ts-comment': 0,
       '@typescript-eslint/no-explicit-any': 1,
       '@typescript-eslint/no-var-requires': 1,
+      'react-hooks/exhaustive-deps': 1,
+      '@typescript-eslint/ban-types': 1,
     },
     plugins: ['@typescript-eslint'],
     settings: {

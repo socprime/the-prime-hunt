@@ -38,6 +38,18 @@ export const isRuntimeSendMessageSupported = (
   return true;
 };
 
+export const isRuntimeOnInstalledSupported = (
+  ...logData: any[]
+): boolean => {
+  if (!getBrowserContext().runtime?.onInstalled?.addListener) {
+    loggers
+      .warn()
+      .log('API runtime.onInstalled.addListener is not supported', ...logData);
+    return false;
+  }
+  return true;
+};
+
 export const isRuntimeOnMessageSupported = (
   ...logData: any[]
 ): boolean => {

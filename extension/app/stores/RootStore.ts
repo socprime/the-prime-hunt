@@ -3,18 +3,19 @@ import { ResourceStore } from '../resources/stores/ResourceStore';
 import { PlatformStore } from '../resources/stores/PlatformStore';
 import { IntegrationsStore } from '../integrations/stores/IntegrationsStore';
 import { ResourcesSelectionStore } from '../resources/stores/ResourcesSelectionStore';
-import { AppRouterStore } from '../root/App/AppRouterStore';
+import { RouterStore } from '../router/stores/RouterStore';
 import { IntegrationStore } from '../integration/stores/IntegrationStore';
 import { AppMessageStore } from '../root/App/AppMessageStore';
 import { WithFormStore } from '../components/extends/WithForm/store';
 import { AppStorageStore } from '../root/App/AppStorageStore';
+import { MailStore } from '../mail/stores/MailStore';
 
 export class RootStore {
   public appStore: AppStore;
 
   public appMessageStore: AppMessageStore;
 
-  public appRouterStore: AppRouterStore;
+  public routerStore: RouterStore;
 
   public appStorageStore: AppStorageStore;
 
@@ -30,6 +31,8 @@ export class RootStore {
 
   public formStore: WithFormStore;
 
+  public mailStore: MailStore;
+
   constructor() {
     this.appStore = new AppStore();
     this.appMessageStore = new AppMessageStore();
@@ -40,6 +43,7 @@ export class RootStore {
     this.resourceStore = new ResourceStore(this);
     this.platformStore = new PlatformStore(this);
     this.resourcesSelectionStore = new ResourcesSelectionStore(this);
-    this.appRouterStore = new AppRouterStore(this);
+    this.routerStore = new RouterStore(this);
+    this.mailStore = new MailStore(this);
   }
 }

@@ -17,14 +17,20 @@ export const useAppStore = () => {
   return rootStore.appStore;
 };
 
-export const useAppRouterStore = () => {
+export const useRouter = () => {
   const rootStore = useRootStore();
-  return rootStore.appRouterStore;
+  return rootStore.routerStore;
 };
 
+// Todo remove store world suffix
 export const useAppStorageStore = () => {
   const rootStore = useRootStore();
   return rootStore.appStorageStore;
+};
+
+export const useMail = () => {
+  const rootStore = useRootStore();
+  return rootStore.mailStore;
 };
 
 export const useAppMessageStore = () => {
@@ -32,7 +38,7 @@ export const useAppMessageStore = () => {
   return rootStore.appMessageStore;
 };
 
-export const useFormStore = () => {
+export const useForm = () => {
   const rootStore = useRootStore();
   return rootStore.formStore;
 };

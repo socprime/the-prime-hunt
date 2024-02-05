@@ -7,7 +7,7 @@ export const saveData = async (
   const context = getBrowserContext();
   try {
     const result = await new Promise<Record<string, unknown>>((resolve, reject) => {
-      context.storage.local.set(data, () => {
+      context.storage.local.set(JSON.parse(JSON.stringify(data)), () => {
         if (context?.runtime?.lastError) {
           reject(context.runtime.lastError);
         }
@@ -20,7 +20,24 @@ export const saveData = async (
   }
 };
 
-export const getData = async (
+export const getData = async (): Promise<AsyncResult> => {
+  const context = getBrowserContext();
+  try {
+    const result = await new Promise((resolve, reject) => {
+      context.storage?.local.get().then((r: Record<string, unknown>) => {
+        if (context?.runtime?.lastError) {
+          reject(context.runtime.lastError);
+        }
+        resolve(r);
+      });
+    });
+    return { data: result };
+  } catch (e) {
+    return { error: e };
+  }
+};
+
+export const getDataByKey = async (
   key: string,
 ): Promise<AsyncResult> => {
   const context = getBrowserContext();

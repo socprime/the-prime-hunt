@@ -20,7 +20,9 @@
   z-index: 9999999;
   background-color: $base-background-area-color;
   border-radius: 6px;
-  padding: 6px 12px;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   margin-bottom: 12px;
   font-size: 13px;

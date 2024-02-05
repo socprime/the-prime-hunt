@@ -42,15 +42,15 @@ export const AppDropdown = observer(forwardRef<
 
   const dropdownRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const dropdownMenuRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const isOpenRef = useRef((() => {}) as DropdownForwardRef['setIsOpen']);
 
-  useImperativeHandle(ref, () => ({
-    get dropdown() {
-      return dropdownRef;
-    },
-    get dropdownMenu() {
-      return dropdownMenuRef;
-    },
-  }));
+  useImperativeHandle(ref, () => {
+    return {
+      dropdown: dropdownRef,
+      dropdownMenu: dropdownMenuRef,
+      setIsOpen: isOpenRef.current,
+    };
+  });
 
   useEffect(() => {
     const dropdownMenu = dropdownMenuRef?.current;
@@ -121,6 +121,9 @@ export const AppDropdown = observer(forwardRef<
         }
         if (refs?.dropdownMenu?.current) {
           dropdownMenuRef.current = refs.dropdownMenu.current;
+        }
+        if (refs?.setIsOpen) {
+          isOpenRef.current = refs.setIsOpen;
         }
       }}
       className={createClassName([

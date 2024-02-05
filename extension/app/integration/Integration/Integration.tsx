@@ -5,8 +5,8 @@ import { useIntegrationsStore, useIntegrationStore } from '../../stores';
 import { IntegrationInput } from '../../integrations/IntegrationInput/IntegrationInput';
 import { OpenCTIIntegration } from '../OpenCTIIntegration';
 import { isNotEmptyString } from '../../../../common/validators';
-import { Integration as IntegrationType } from '../../integrations/integrations-types';
 import { AppGroupHeader } from '../../components/headers/AppGroupHeader';
+import { Integration as IntegrationType } from '../integration-types';
 import './styles.scss';
 
 const validateMessage = 'This field is required';
@@ -20,10 +20,12 @@ export const Integration: React.FC = observer(() => {
 
   return (
     <div className="integration">
-      {id === '$open-cti$' && <AppGroupHeader>
-        SEARCH AT OPENCTI
-      </AppGroupHeader>}
-      <Spacer height={18} />
+      {id === '$open-cti$' && <>
+        <AppGroupHeader>
+          SEARCH AT OPENCTI
+        </AppGroupHeader>
+        <Spacer height={16} />
+      </>}
       <IntegrationInput
         label="Display Name"
         value={name}

@@ -1,7 +1,7 @@
 import { makeObservable, observable } from 'mobx';
-import { Integration } from '../integrations-types';
 import { formatString } from '../../../../common/helpers';
 import { getIntegrations, restoreIntegrations, setIntegrations } from '../../../common/local-storage';
+import { Integration } from '../../integration/integration-types';
 
 export class IntegrationsStore {
   @observable

@@ -1,8 +1,8 @@
 import { WatchingResources } from '../background/types/types-background-common';
 import { PlatformID } from './types/types-common';
 import { Position } from '../content/types/types-content-common';
-import { Integration } from '../app/integrations/integrations-types';
 import { integrations } from '../app/integrations/integrations';
+import { Integration } from '../app/integration/integration-types';
 
 export const watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 

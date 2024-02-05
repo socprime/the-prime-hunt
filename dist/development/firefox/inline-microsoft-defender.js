@@ -125,7 +125,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.initValues = exports.buildEmailUrl = exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.suuid = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -142,6 +142,10 @@ const uuid = () => {
         + Math.random().toString(36).substring(5);
 };
 exports.uuid = uuid;
+const suuid = () => {
+    return `@@--${(0, exports.uuid)()}`;
+};
+exports.suuid = suuid;
 const clearExtraSpaces = (str) => str.replace(/ +/g, ' ');
 exports.clearExtraSpaces = clearExtraSpaces;
 const clearLineBreaks = (str) => str
@@ -176,6 +180,9 @@ const deduplicateArray = (arr) => {
 exports.deduplicateArray = deduplicateArray;
 const formatString = (pattern, parts, keyFormat) => {
     return Object.keys(parts || {})
+        .filter((name) => {
+        return typeof parts[name] === 'string';
+    })
         .map((name) => ({
         value: parts[name],
         key: keyFormat ? keyFormat(name) : `%${name}`,
@@ -302,6 +309,24 @@ const serializeDataInResult = (result) => {
     return result;
 };
 exports.serializeDataInResult = serializeDataInResult;
+const buildEmailUrl = (params) => {
+    const { to, subject, cc, body, } = params;
+    const sendTo = to.length ? `${to.join(',')}` : '';
+    const copyTo = `cc=${(cc === null || cc === void 0 ? void 0 : cc.length) ? cc.join(',') : ''}`;
+    const subj = `subject=${subject || ''}`;
+    const text = `body=${body || ''}`;
+    return `${encodeURI(`mailto:${sendTo}?${copyTo}&${subj}`)}&${text}`;
+};
+exports.buildEmailUrl = buildEmailUrl;
+const initValues = (obj, values) => {
+    Object.keys(values).forEach((key) => {
+        if (typeof obj[key] === 'undefined') {
+            obj[key] = values[key];
+        }
+    });
+    return obj;
+};
+exports.initValues = initValues;
 
 
 /***/ }),
@@ -394,7 +419,7 @@ Object.values(MessageToBackground).forEach((type) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
+exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeOnInstalledSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
 const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
 const isPostMessageSupported = (...logData) => {
@@ -428,6 +453,17 @@ const isRuntimeSendMessageSupported = (...logData) => {
     return true;
 };
 exports.isRuntimeSendMessageSupported = isRuntimeSendMessageSupported;
+const isRuntimeOnInstalledSupported = (...logData) => {
+    var _a, _b;
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onInstalled) === null || _b === void 0 ? void 0 : _b.addListener)) {
+        loggers
+            .warn()
+            .log('API runtime.onInstalled.addListener is not supported', ...logData);
+        return false;
+    }
+    return true;
+};
+exports.isRuntimeOnInstalledSupported = isRuntimeOnInstalledSupported;
 const isRuntimeOnMessageSupported = (...logData) => {
     var _a, _b;
     if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
@@ -581,7 +617,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.openMailTo = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
 const cssObjectToString = (styles) => Object.keys(styles)
     .reduce((res, key) => res += `${key}:${styles[key]};`, '');
 exports.cssObjectToString = cssObjectToString;
@@ -644,6 +680,14 @@ const copyToClipboard = (str) => {
     document.body.removeChild(el);
 };
 exports.copyToClipboard = copyToClipboard;
+const openMailTo = (url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+exports.openMailTo = openMailTo;
 const downloadFile = (type, content, name) => {
     const prefix = type === 'csv'
         ? 'data:text/csv;charset=utf-8,'
@@ -818,7 +862,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.1";
+exports.version = "1.4.2";
 
 
 /***/ }),
@@ -978,6 +1022,7 @@ var PlatformID;
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
     PlatformID["LogScale"] = "LogScale";
+    PlatformID["Chronicle"] = "Chronicle";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -990,6 +1035,7 @@ var PlatformName;
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
     PlatformName["LogScale"] = "Falcon LogScale";
+    PlatformName["Chronicle"] = "Chronicle";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 
@@ -1431,7 +1477,7 @@ Object.values(MessageToInline).forEach(type => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
+exports.accessibleResources = exports.chronicleInline = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
 const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 exports.appStyles = 'app-styles.css';
 exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
@@ -1443,6 +1489,7 @@ exports.elasticInline = 'inline-elastic.js';
 exports.arcSightInline = 'inline-arcsight.js';
 exports.openSearchInline = 'inline-opensearch.js';
 exports.logScaleInline = 'inline-logscale.js';
+exports.chronicleInline = 'inline-chronicle.js';
 exports.accessibleResources = {
     [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
     [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
@@ -1453,6 +1500,7 @@ exports.accessibleResources = {
     [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
     [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
     [types_common_1.PlatformID.LogScale]: [exports.logScaleInline],
+    [types_common_1.PlatformID.Chronicle]: [exports.chronicleInline],
     app: [exports.appStyles],
 };
 

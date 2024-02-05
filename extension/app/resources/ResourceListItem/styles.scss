@@ -36,6 +36,19 @@
       background-color: $base-background-area-color;
       align-items: center;
 
+      .app-dropdown {
+        .icon {
+          width: 16px;
+          height: 16px;
+        }
+
+        &:hover {
+          .icon {
+            fill: $success;
+          }
+        }
+      }
+
       .tooltip.app-tooltip {
         width: 16px;
         height: 16px;
@@ -83,7 +96,12 @@
         max-width: unset;
         height: 16px;
         width: 16px;
+        margin-right: 8px;
       }
     }
   }
+}
+
+.app-dropdown-menu.dropdown-menu.dropdown-send-to {
+  margin-top: -10px;
 }

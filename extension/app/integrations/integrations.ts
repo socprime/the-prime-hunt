@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import { Integration } from './integrations-types';
+
+import { Integration } from '../integration/integration-types';
 
 export const version__1_4_0: Integration[] = [
   {

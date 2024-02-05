@@ -1,12 +1,12 @@
 import { observable, makeObservable, computed } from 'mobx';
 import { FC } from 'react';
-import { Integration } from '../../integrations/integrations-types';
 import { getIntegrationModel } from '../../../integrations';
 import { RootStore } from '../../stores/RootStore';
 import { mappedIntegrations } from '../../integrations/integrations';
 import { integrationGroupName } from '../../integrations/integrations-store';
 import { SensitiveInfoWarningMessage } from '../messages/SensitiveInfoWarningMessage';
 import { AsyncResult } from '../../../../common/types';
+import { Integration } from '../integration-types';
 
 export class IntegrationStore {
   private readonly rootStore: RootStore;

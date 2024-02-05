@@ -2,7 +2,7 @@ import React from 'react';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
 import { CheckIcon } from '../../../components/atoms/icons/CheckIcon/CheckIcon';
 import {
-  useAppMessageStore, useAppRouterStore, useFormStore, usePlatformStore,
+  useAppMessageStore, useRouter, useForm, usePlatformStore,
 } from '../../../stores';
 import { MessageToBackground } from '../../../../background/types/types-background-messages';
 import { IntegrationWorkPayload } from '../../../../common/types/types-common-payloads';
@@ -11,9 +11,9 @@ import './styles.scss';
 import { SuccessOpenCTIExportMessage } from '../../../resources/messages/SuccessOpenCTIExportMessage';
 
 export const ExportFooterView: React.FC = observer(() => {
-  const routerStore = useAppRouterStore();
+  const routerStore = useRouter();
   const messageStore = useAppMessageStore();
-  const formStore = useFormStore();
+  const formStore = useForm();
   const platformStore = usePlatformStore();
 
   return (

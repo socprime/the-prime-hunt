@@ -18952,7 +18952,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.uuid = exports.isFlatObjectsEqual = void 0;
+exports.initValues = exports.buildEmailUrl = exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.suuid = exports.uuid = exports.isFlatObjectsEqual = void 0;
 const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
@@ -18969,6 +18969,10 @@ const uuid = () => {
         + Math.random().toString(36).substring(5);
 };
 exports.uuid = uuid;
+const suuid = () => {
+    return `@@--${(0, exports.uuid)()}`;
+};
+exports.suuid = suuid;
 const clearExtraSpaces = (str) => str.replace(/ +/g, ' ');
 exports.clearExtraSpaces = clearExtraSpaces;
 const clearLineBreaks = (str) => str
@@ -19003,6 +19007,9 @@ const deduplicateArray = (arr) => {
 exports.deduplicateArray = deduplicateArray;
 const formatString = (pattern, parts, keyFormat) => {
     return Object.keys(parts || {})
+        .filter((name) => {
+        return typeof parts[name] === 'string';
+    })
         .map((name) => ({
         value: parts[name],
         key: keyFormat ? keyFormat(name) : `%${name}`,
@@ -19129,6 +19136,24 @@ const serializeDataInResult = (result) => {
     return result;
 };
 exports.serializeDataInResult = serializeDataInResult;
+const buildEmailUrl = (params) => {
+    const { to, subject, cc, body, } = params;
+    const sendTo = to.length ? `${to.join(',')}` : '';
+    const copyTo = `cc=${(cc === null || cc === void 0 ? void 0 : cc.length) ? cc.join(',') : ''}`;
+    const subj = `subject=${subject || ''}`;
+    const text = `body=${body || ''}`;
+    return `${encodeURI(`mailto:${sendTo}?${copyTo}&${subj}`)}&${text}`;
+};
+exports.buildEmailUrl = buildEmailUrl;
+const initValues = (obj, values) => {
+    Object.keys(values).forEach((key) => {
+        if (typeof obj[key] === 'undefined') {
+            obj[key] = values[key];
+        }
+    });
+    return obj;
+};
+exports.initValues = initValues;
 
 
 /***/ }),
@@ -19183,7 +19208,7 @@ exports.getIntegrationData = exports.setIntegrationData = exports.integrationGro
 const extension_storage_1 = __webpack_require__(/*! ../../common/extension-storage */ "./extension/common/extension-storage.ts");
 exports.integrationGroupName = 'integrations';
 const setIntegrationData = (key, value) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.integrationGroupName);
     if (result.error) {
         return result;
     }
@@ -19193,7 +19218,7 @@ const setIntegrationData = (key, value) => __awaiter(void 0, void 0, void 0, fun
 exports.setIntegrationData = setIntegrationData;
 const getIntegrationData = (key) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    const result = yield (0, extension_storage_1.getData)(exports.integrationGroupName);
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.integrationGroupName);
     if (result.error) {
         return result;
     }
@@ -19202,6 +19227,96 @@ const getIntegrationData = (key) => __awaiter(void 0, void 0, void 0, function* 
     };
 });
 exports.getIntegrationData = getIntegrationData;
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/mail-store.ts":
+/*!******************************************!*\
+  !*** ./extension/app/mail/mail-store.ts ***!
+  \******************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getMailData = exports.setMailData = exports.setMailsData = exports.mailGroupName = void 0;
+const extension_storage_1 = __webpack_require__(/*! ../../common/extension-storage */ "./extension/common/extension-storage.ts");
+exports.mailGroupName = 'mails';
+const setMailsData = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.mailGroupName);
+    if (result.error) {
+        return result;
+    }
+    return (0, extension_storage_1.saveData)(Object.assign(Object.assign({}, result.data), { [exports.mailGroupName]: data }));
+});
+exports.setMailsData = setMailsData;
+const setMailData = (key, value) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.mailGroupName);
+    if (result.error) {
+        return result;
+    }
+    const data = result.data;
+    return (0, extension_storage_1.saveData)(Object.assign(Object.assign({}, data), { [exports.mailGroupName]: Object.assign(Object.assign({}, (data[exports.mailGroupName] || {})), { [key]: value }) }));
+});
+exports.setMailData = setMailData;
+const getMailData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const result = yield (0, extension_storage_1.getDataByKey)(exports.mailGroupName);
+    if (result.error) {
+        return result;
+    }
+    return {
+        data: ((_b = (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a[exports.mailGroupName]) === null || _b === void 0 ? void 0 : _b[key]) || {},
+    };
+});
+exports.getMailData = getMailData;
+
+
+/***/ }),
+
+/***/ "./extension/app/mail/patterns.ts":
+/*!****************************************!*\
+  !*** ./extension/app/mail/patterns.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.defaultPatterns = void 0;
+exports.defaultPatterns = [
+    {
+        id: '$default$',
+        message: `To whom it may concern,
+
+I'm reaching out to inform you that the following Indicators of Compromise have been found in my organization's environment.
+Rule Name: 
+MITRE ATT&CK Techniques:
+MITRE ATT&CK Groups:
+
+List of IOCs:
+%iocs
+
+Best regards
+{Your full name here}
+{Your job title here}
+{Your organization here}`.trim(),
+        name: 'Send IOCs',
+        subject: 'Informing about potential IOCs',
+        cc: [],
+        to: [],
+    },
+];
 
 
 /***/ }),
@@ -19281,6 +19396,8 @@ const PlatformResolver_1 = __webpack_require__(/*! ./platforms/PlatformResolver 
 const types_app_common_1 = __webpack_require__(/*! ../app/types/types-app-common */ "./extension/app/types/types-app-common.ts");
 const integrations_1 = __webpack_require__(/*! ../integrations */ "./extension/integrations/index.ts");
 const helpers_1 = __webpack_require__(/*! ../../common/helpers */ "./common/helpers.ts");
+const mail_store_1 = __webpack_require__(/*! ../app/mail/mail-store */ "./extension/app/mail/mail-store.ts");
+const patterns_1 = __webpack_require__(/*! ../app/mail/patterns */ "./extension/app/mail/patterns.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('listeners');
 background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnExtensionIconClicked, (tab) => {
     if (!tab.id) {
@@ -19451,6 +19568,12 @@ background_services_listeners_1.addListener(types_background_common_1.BGListener
             });
         }
     }
+});
+background_services_listeners_1.addListener(types_background_common_1.BGListenerType.OnInstalled, () => {
+    (0, mail_store_1.setMailsData)(patterns_1.defaultPatterns.reduce((res, pattern) => {
+        res[pattern.id] = pattern;
+        return res;
+    }, {}));
 });
 loggers.debug().log('mounted');
 
@@ -20240,6 +20363,186 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 
 /***/ }),
 
+/***/ "./extension/background/platforms/ChroniclePlatform.ts":
+/*!*************************************************************!*\
+  !*** ./extension/background/platforms/ChroniclePlatform.ts ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ChroniclePlatform = void 0;
+const AbstractBackgroundPlatform_1 = __webpack_require__(/*! ./AbstractBackgroundPlatform */ "./extension/background/platforms/AbstractBackgroundPlatform.ts");
+const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+const background_services_listeners_1 = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
+const types_background_common_1 = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
+const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+const Http_1 = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
+const background_services_1 = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
+let loggers;
+class ChroniclePlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPlatform {
+    constructor() {
+        super();
+        this.watchingResources = {};
+        this.emptyFieldValues = [
+            ...this.emptyFieldValues,
+            '-',
+        ];
+    }
+    getID() {
+        return ChroniclePlatform.id;
+    }
+    getName() {
+        return ChroniclePlatform.platformName;
+    }
+    parseFields(siemFields, watchingResources, result) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            const { fields } = this;
+            (siemFields || []).forEach((field) => {
+                const { fieldName, allValues } = field || {};
+                if (!fieldName || !allValues) {
+                    return;
+                }
+                (allValues || []).forEach((v) => {
+                    var _a;
+                    const type = (_a = Object.keys((v === null || v === void 0 ? void 0 : v.value) || {})) === null || _a === void 0 ? void 0 : _a[0];
+                    const value = v === null || v === void 0 ? void 0 : v.value[type];
+                    if (!value) {
+                        return;
+                    }
+                    fields.add(fieldName);
+                    if (fieldsNames.has(fieldName)) {
+                        const types = mapFieldNameToTypes.get(fieldName);
+                        types.forEach((t) => {
+                            if (typeof result[t] === 'undefined') {
+                                result[t] = {};
+                            }
+                            this.addValueToResource(result[t], fieldName, String(value));
+                        });
+                    }
+                });
+            });
+        });
+    }
+    parseResponse(response, tabInfo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = (0, helpers_1.uuid)();
+            loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
+            const result = {};
+            const watchingResources = this.getWatchers(tabInfo);
+            yield Promise.all((response || [])
+                .reduce((promises, rp) => {
+                var _a, _b;
+                promises.push(this.parseFields((_a = rp === null || rp === void 0 ? void 0 : rp.fieldAggregations) === null || _a === void 0 ? void 0 : _a.fields, watchingResources, result), this.parseFields((_b = rp === null || rp === void 0 ? void 0 : rp.groupedFieldAggregations) === null || _b === void 0 ? void 0 : _b.fields, watchingResources, result));
+                return promises;
+            }, []));
+            loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
+            return result;
+        });
+    }
+    register() {
+        const requests = new Map();
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeRequest, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                var _a, _b, _c, _d, _e, _f, _g, _h;
+                if (details.method !== 'POST'
+                    || !ChroniclePlatform.postUrls.some((u) => details.url.indexOf(u) > -1)
+                    || !((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
+                    || ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) < 5) {
+                    return false;
+                }
+                const bodyStr = new TextDecoder().decode(details.requestBody.raw[0].bytes);
+                const body = (0, helpers_1.parseJSONSafe)(bodyStr, false);
+                if (!body
+                    || !body.baselineQuery
+                    || body.baselineQuery.length < 1
+                    || requests.has(body.baselineQuery)) {
+                    return false;
+                }
+                requests.set(body.baselineQuery, body);
+                return true;
+            })) {
+                Promise.resolve();
+            }
+        }));
+        this.interceptorsIDs.add((0, background_services_listeners_1.setBGInterceptor)(types_background_common_1.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            if (isMatched(() => {
+                return details.method === 'POST'
+                    && ChroniclePlatform.postUrls.some((u) => details.url.indexOf(u) > -1)
+                    && (details.requestHeaders || []).some(({ name, value }) => {
+                        return requests.size > 0
+                            && (name.toLowerCase() === 'origin'
+                                && value
+                                && value.indexOf('http') === 0);
+                    });
+            })) {
+                const body = requests.values().next().value;
+                const baselineQuery = body === null || body === void 0 ? void 0 : body.baselineQuery;
+                const { url } = details;
+                const headers = details.requestHeaders.reduce((res, header) => {
+                    res[header.name] = header.value;
+                    return res;
+                }, {});
+                const onFinish = () => {
+                    requests.delete(baselineQuery);
+                };
+                Http_1.http.post({
+                    url, body: JSON.stringify(body), headers,
+                }, {
+                    onJSONSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
+                        const resources = (0, background_services_1.normalizeParsedResources)(yield this.parseResponse(response, {
+                            origin: new URL(details.url).origin,
+                            id: details.tabId,
+                        }));
+                        AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                            cacheID: url,
+                            resources,
+                            fieldsNames: [...this.fields],
+                        }, false);
+                        this.lastResponse.set(url, response);
+                        onFinish();
+                    }),
+                    onError: (e) => {
+                        onFinish();
+                        loggers
+                            .warn()
+                            .addPrefix('failed webRequest post')
+                            .log(e, details.method, url, JSON.stringify(body));
+                    },
+                });
+            }
+        }));
+        loggers.debug().log('registered');
+    }
+    unregister() {
+        super.unregister();
+        loggers.debug().log('unregistered');
+    }
+}
+exports.ChroniclePlatform = ChroniclePlatform;
+ChroniclePlatform.id = types_common_1.PlatformID.Chronicle;
+ChroniclePlatform.platformName = types_common_1.PlatformName.Chronicle;
+ChroniclePlatform.postUrls = [
+    '/legacy:legacyFetchUdmSearchView',
+];
+loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(ChroniclePlatform.id);
+
+
+/***/ }),
+
 /***/ "./extension/background/platforms/ElasticPlatform.ts":
 /*!***********************************************************!*\
   !*** ./extension/background/platforms/ElasticPlatform.ts ***!
@@ -20307,7 +20610,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
             }
             const watchingFieldsNames = this.fields;
             (((_a = rawResponse === null || rawResponse === void 0 ? void 0 : rawResponse.hits) === null || _a === void 0 ? void 0 : _a.hits) || []).forEach(({ fields, _source }) => {
-                Array.from(fieldsNames).forEach(fieldName => {
+                Array.from(fieldsNames).forEach((fieldName) => {
                     let fieldValue = undefined;
                     if (fields && typeof fields[fieldName] !== 'undefined') {
                         Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
@@ -20327,7 +20630,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                         return;
                     }
                     const types = mapFieldNameToTypes.get(fieldName);
-                    types.forEach(t => {
+                    types.forEach((t) => {
                         if (typeof result[t] === 'undefined') {
                             result[t] = {};
                         }
@@ -20356,22 +20659,22 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
             const id = (0, helpers_1.uuid)();
             const watchingResources = this.getWatchers(tabInfo);
             loggers.debug().log(`[${tabInfo.id}] Started parse response...`, id, this.watchingResources, tabInfo);
-            const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
-            const results = yield Promise.all(lines.map(line => this.parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames)));
-            results.forEach(parsedResult => {
-                Object.keys(parsedResult).forEach(resourceTypeID => {
+            const { mapFieldNameToTypes, fieldsNames, } = AbstractBackgroundPlatform_1.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+            const results = yield Promise.all(lines.map((line) => this.parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames)));
+            results.forEach((parsedResult) => {
+                Object.keys(parsedResult).forEach((resourceTypeID) => {
                     if (!result[resourceTypeID]) {
                         result[resourceTypeID] = {};
                     }
                     const alreadyAppendResources = result[resourceTypeID];
                     const parsedResources = parsedResult[resourceTypeID];
-                    Object.keys(parsedResources).forEach(fieldName => {
+                    Object.keys(parsedResources).forEach((fieldName) => {
                         const values = parsedResources[fieldName];
                         if (!alreadyAppendResources[fieldName]) {
                             alreadyAppendResources[fieldName] = new Set();
                         }
                         Array.from(values)
-                            .forEach(v => alreadyAppendResources[fieldName].add(v));
+                            .forEach((v) => alreadyAppendResources[fieldName].add(v));
                     });
                     result[resourceTypeID] = alreadyAppendResources;
                 });
@@ -20397,7 +20700,7 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                     && !urlsProcessing.has(details.url)
                     && !!((_d = (_c = (_b = (_a = details.requestBody) === null || _a === void 0 ? void 0 : _a.raw) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.bytes) === null || _d === void 0 ? void 0 : _d.byteLength)
                     && ((_h = (_g = (_f = (_e = details.requestBody) === null || _e === void 0 ? void 0 : _e.raw) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.bytes) === null || _h === void 0 ? void 0 : _h.byteLength) > 5
-                    && ElasticPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && ElasticPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 bodyData.set(details.url, details.requestBody.raw[0].bytes);
             }
@@ -20408,10 +20711,10 @@ class ElasticPlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPla
                 return details.method === 'POST'
                     && !urlsProcessing.has(details.url)
                     && bodyData.has(details.url)
-                    && ElasticPlatform.postUrls.some(p => details.url.indexOf(p) > -1);
+                    && ElasticPlatform.postUrls.some((p) => details.url.indexOf(p) > -1);
             }, params, id)) {
                 const bodyBytes = bodyData.get(details.url);
-                let bodyStr = new TextDecoder().decode(bodyBytes);
+                const bodyStr = new TextDecoder().decode(bodyBytes);
                 const urlDetails = new URL(details.url);
                 urlDetails.searchParams.delete('compress');
                 urlsProcessing.add(details.url);
@@ -20635,7 +20938,7 @@ class LogScalePlatform extends AbstractBackgroundPlatform_1.AbstractBackgroundPl
                 });
             }
         }));
-        loggers.debug().log('register');
+        loggers.debug().log('registered');
     }
     unregister() {
         super.unregister();
@@ -21258,6 +21561,10 @@ class PlatformResolver {
                     this.platforms.set(platformID, new ((__webpack_require__(/*! ./LogScalePlatform */ "./extension/background/platforms/LogScalePlatform.ts").LogScalePlatform))());
                     break;
                 }
+                case types_common_1.PlatformID.Chronicle: {
+                    this.platforms.set(platformID, new ((__webpack_require__(/*! ./ChroniclePlatform */ "./extension/background/platforms/ChroniclePlatform.ts").ChroniclePlatform))());
+                    break;
+                }
                 default:
                     return undefined;
             }
@@ -21265,9 +21572,7 @@ class PlatformResolver {
         return this.platforms.get(platformID);
     }
     resolve(platformID) {
-        return envs_1.backgroundPlatformIDFromENV
-            ? this.getPlatformByID(envs_1.backgroundPlatformIDFromENV)
-            : this.getPlatformByID(platformID);
+        return this.getPlatformByID(envs_1.backgroundPlatformIDFromENV || platformID);
     }
 }
 exports.PlatformResolver = PlatformResolver;
@@ -21889,6 +22194,12 @@ listeners[types_background_common_1.BGListenerType.OnExtensionIconClicked] = (li
     }
     context[contextAction].onClicked.addListener(listener, ...otherProps);
 };
+listeners[types_background_common_1.BGListenerType.OnInstalled] = (listener, ...otherProps) => {
+    if (!(0, api_support_1.isRuntimeOnInstalledSupported)()) {
+        return;
+    }
+    (0, common_extension_helpers_1.getBrowserContext)().runtime.onInstalled.addListener(listener, ...otherProps);
+};
 listeners[types_background_common_1.BGListenerType.OnBeforeRequest] = (listener, ...otherProps) => {
     if (!(0, api_support_1.isOnBeforeRequestSupported)()) {
         return;
@@ -21926,7 +22237,7 @@ const setBGInterceptor = (type, interceptor, onUnregister) => {
 exports.setBGInterceptor = setBGInterceptor;
 const removeBGInterceptor = (id, type) => {
     (type ? [type] : Object.keys(exports.interceptors)).forEach((t) => {
-        exports.interceptors[t] = exports.interceptors[t].filter(interceptor => {
+        exports.interceptors[t] = exports.interceptors[t].filter((interceptor) => {
             if (interceptor.id === id && typeof interceptor.unregister === 'function') {
                 interceptor.unregister();
             }
@@ -21938,7 +22249,7 @@ exports.removeBGInterceptor = removeBGInterceptor;
 const addListener = (type, listener, ...otherProps) => {
     var _a;
     (_a = listeners[type]) === null || _a === void 0 ? void 0 : _a.call(listeners, (...params) => {
-        (exports.interceptors[type] || []).forEach(interceptor => {
+        (exports.interceptors[type] || []).forEach((interceptor) => {
             if (!interceptor || typeof interceptor !== 'function') {
                 return;
             }
@@ -22110,6 +22421,7 @@ var BGListenerType;
 (function (BGListenerType) {
     BGListenerType["OnMessage"] = "OnMessage";
     BGListenerType["OnBeforeRequest"] = "OnBeforeRequest";
+    BGListenerType["OnInstalled"] = "OnInstalled";
     BGListenerType["OnBrowserTabRemoved"] = "OnBrowserTabRemoved";
     BGListenerType["OnBeforeSendHeaders"] = "OnBeforeSendHeaders";
     BGListenerType["OnExtensionIconClicked"] = "OnExtensionIconClicked";
@@ -22162,7 +22474,7 @@ Object.values(MessageToBackground).forEach((type) => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
+exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeOnInstalledSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
 const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
 const isPostMessageSupported = (...logData) => {
@@ -22196,6 +22508,17 @@ const isRuntimeSendMessageSupported = (...logData) => {
     return true;
 };
 exports.isRuntimeSendMessageSupported = isRuntimeSendMessageSupported;
+const isRuntimeOnInstalledSupported = (...logData) => {
+    var _a, _b;
+    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onInstalled) === null || _b === void 0 ? void 0 : _b.addListener)) {
+        loggers
+            .warn()
+            .log('API runtime.onInstalled.addListener is not supported', ...logData);
+        return false;
+    }
+    return true;
+};
+exports.isRuntimeOnInstalledSupported = isRuntimeOnInstalledSupported;
 const isRuntimeOnMessageSupported = (...logData) => {
     var _a, _b;
     if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
@@ -22351,7 +22674,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
+exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.openMailTo = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
 const cssObjectToString = (styles) => Object.keys(styles)
     .reduce((res, key) => res += `${key}:${styles[key]};`, '');
 exports.cssObjectToString = cssObjectToString;
@@ -22414,6 +22737,14 @@ const copyToClipboard = (str) => {
     document.body.removeChild(el);
 };
 exports.copyToClipboard = copyToClipboard;
+const openMailTo = (url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+exports.openMailTo = openMailTo;
 const downloadFile = (type, content, name) => {
     const prefix = type === 'csv'
         ? 'data:text/csv;charset=utf-8,'
@@ -22590,7 +22921,7 @@ exports.mode = "development" === types_1.Mode.production
 exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
     ? "info"
     : types_1.LogLevel.info;
-exports.version = "1.4.1";
+exports.version = "1.4.2";
 
 
 /***/ }),
@@ -22613,13 +22944,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getData = exports.saveData = void 0;
+exports.getDataByKey = exports.getData = exports.saveData = void 0;
 const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 const saveData = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const context = (0, common_extension_helpers_1.getBrowserContext)();
     try {
         const result = yield new Promise((resolve, reject) => {
-            context.storage.local.set(data, () => {
+            context.storage.local.set(JSON.parse(JSON.stringify(data)), () => {
                 var _a;
                 if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
                     reject(context.runtime.lastError);
@@ -22634,7 +22965,27 @@ const saveData = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.saveData = saveData;
-const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
+const getData = () => __awaiter(void 0, void 0, void 0, function* () {
+    const context = (0, common_extension_helpers_1.getBrowserContext)();
+    try {
+        const result = yield new Promise((resolve, reject) => {
+            var _a;
+            (_a = context.storage) === null || _a === void 0 ? void 0 : _a.local.get().then((r) => {
+                var _a;
+                if ((_a = context === null || context === void 0 ? void 0 : context.runtime) === null || _a === void 0 ? void 0 : _a.lastError) {
+                    reject(context.runtime.lastError);
+                }
+                resolve(r);
+            });
+        });
+        return { data: result };
+    }
+    catch (e) {
+        return { error: e };
+    }
+});
+exports.getData = getData;
+const getDataByKey = (key) => __awaiter(void 0, void 0, void 0, function* () {
     const context = (0, common_extension_helpers_1.getBrowserContext)();
     try {
         const result = yield new Promise((resolve, reject) => {
@@ -22652,7 +23003,7 @@ const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
         return { error: e };
     }
 });
-exports.getData = getData;
+exports.getDataByKey = getDataByKey;
 
 
 /***/ }),
@@ -22816,6 +23167,7 @@ var PlatformID;
     PlatformID["ArcSight"] = "ArcSight";
     PlatformID["Athena"] = "Athena";
     PlatformID["LogScale"] = "LogScale";
+    PlatformID["Chronicle"] = "Chronicle";
 })(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
 var PlatformName;
 (function (PlatformName) {
@@ -22828,6 +23180,7 @@ var PlatformName;
     PlatformName["ArcSight"] = "ArcSight";
     PlatformName["Athena"] = "Amazon Athena";
     PlatformName["LogScale"] = "Falcon LogScale";
+    PlatformName["Chronicle"] = "Chronicle";
 })(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
 
 

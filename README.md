@@ -12,7 +12,7 @@ If you have any questions, would like to give feedback, or need help, contact us
 
 ## Requirements
 Supported browsers: Chrome, Firefox, Edge.  
-Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight, Amazon Athena, Amazon OpenSearch, Falcon Logscale.
+Supported security platforms: Microsoft Sentinel, Microsoft Defender for Endpoint, Splunk, IBM QRadar, Elastic (Kibana), ArcSight, Amazon Athena, Amazon OpenSearch, Falcon LogScale, Chronicle Security.
 All default data schemas are supported including OCSF, CEF, ECS, LEEF, CIM, OSSEM.
 
 ## Installation
@@ -99,7 +99,9 @@ The position and size of the extension's window are stored as the `the-prime-hun
 - Click the plus icon to include the account/asset in the search
 - Click the minus icon to exclude the account/asset from the search
 - Click the eye-and-list icon to search for all events that involve the account/asset
-- Click the plane icon to send the result to OpenCTI as an IOC (see **Setting up OpenCTI Integration**)
+- Click the plane icon to do the following:
+   - Send the result to OpenCTI as an IOC (see **Setting up OpenCTI Integration**)
+   - Send the result as an IOC via email using a pre-set template or a custom template (see **Setting up Mail Templates**)
 
 To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR using the relevant suggester option, and click on the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. **Note**: field names for the suggester are stored as the `the-prime-hunt--extension--fields` key in the browser's local storage.
 
@@ -121,6 +123,7 @@ In Amazon Athena, if the extension detects that your query includes a select sta
 - Click the **Include** button to include the selected accounts/assets in the search
 - Click the **Exclude** button to exclude the selected accounts/assets from the search
 - Click the **Show All Events** button to search for all events that involve the selected accounts/assets
+- Click the **Send to** button to send the selected results as IOCs via email using a pre-set template or a custom template (see **Setting up Mail Templates**)
 - Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include: VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, Ultimate Windows Security, AbuseIPDB, URLhaus (by Abuse.ch), MalwareBazaar MD5 (by Abuse.ch), MalwareBazaar SHA256 (by Abuse.ch), ThreatFox IOCs (by Abuse.ch), FeodoTracker C&C (by Abuse.ch), Shodan
 
 ![Bulk action buttons](.readme/bulk-action_buttons.png)
@@ -133,13 +136,21 @@ In Amazon Athena, if the extension detects that your query includes a select sta
 
 ![Export button](.readme/export_button.png)
 
-6. If you need to reset the extension, go to the Extensions page in your browser's settings and click **Reload** (or the related icon). Reloading does not affect the custom settings of position and size of extension, integrations, and watching fields (to reset them you should clear specific keys in your browser’s local storage.)
+6. If you need to reset the extension, go to the Extensions page in your browser's settings and click **Reload** (or the related icon). Reloading does not affect the custom settings of position and size of the extension, integrations, and watching fields (to reset them you should clear specific keys in your browser’s local storage.)
 
-## Search Settings
+## Integration Settings
+To open integration settings, click the corresponding icon at the top of the extension.
+
+![Open integration settings](.readme/integrations_open.png)
 
 **Note:** When using integrations with third-party services, do not send to them any sensitive information.
 
-Custom integration names and URLs are stored as the `the-prime-hunt--extension--integrations` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete) or click **Restore Defaults** in the extension's UI, the default names and URLs are used.
+### Integrations
+Click the right arrow next to an integration name to configure it.
+
+![Integrations overview](.readme/integrations_overview.png)
+
+Custom integration names and URLs are stored as the `the-prime-hunt--extension--integrations` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete) or click **Restore Defaults** in the integration configuration in the extension's UI, the default names and URLs are used.
 
 ![Restore defaults](.readme/restore_defaults.png)
 
@@ -158,7 +169,7 @@ Here is the list of markers you can use in the integration URL:
 
 Customize this marker to change the behavior.
 
-### Setting up OpenCTI Integration
+#### Setting up OpenCTI Integration
 
 To use the OpenCTI integration for search, replace the `HOSTNAME:PORT` placeholder in the OpenCTI integration URL with the hostname and port of your account.
 
@@ -179,15 +190,15 @@ To send a result to OpenCTI:
 ![Select IOCs](.readme/opencti_select_result.png)
 
 2. Set the IOC parameters:
-    - Name: pre-filled with the selected result (required)
-    - Main Observable Type: automatically defined but can be changed (required)
-    - Pattern: automatically defined but can be edited (required)
-    - Indicator Type: select one or multiple options defined in your OpenCTI account
-    - Labels: select one or multiple options defined in your OpenCTI account
-    - Markings: select one or multiple options defined in your OpenCTI account
+   - Name: pre-filled with the selected result (required)
+   - Main Observable Type: automatically defined but can be changed (required)
+   - Pattern: automatically defined but can be edited (required)
+   - Indicator Type: select one or multiple options defined in your OpenCTI account
+   - Labels: select one or multiple options defined in your OpenCTI account
+   - Markings: select one or multiple options defined in your OpenCTI account
 3. Optionally, set the following checkboxes:
-    - Detection
-    - Create observable from indicator
+   - Detection
+   - Create observable from indicator
 
 ![IOC settings](.readme/opencti_ioc_settings.png)
 
@@ -198,7 +209,7 @@ If the result has been successfully sent, a confirmation message is shown.
 ![IOC sent successfully sent](.readme/opencti_success.png)
 
 
-### Adding Integrations
+#### Adding Integrations
 You can add an integration with any service. To create a new integration:
 1. Click **Add New Integration**.
 2. Enter the display name that will be shown in the **Search At** menu.
@@ -210,6 +221,54 @@ You can add an integration with any service. To create a new integration:
 To delete an integration, click the remove icon next to it.
 
 **NOTE:** The Prime Hunt browser extension does not send any data outside your laptop/browser. It works only with the data that is on the page of your browser.
+
+
+### Mail Templates
+Set up mail templates to automatically compose a new template-based email with selected results in your default email client and share IOCs in a couple of clicks.
+
+You can customize the default template named **Send IOCs** or create a new one.
+
+![Opening mail templates](.readme/mail_templates_open.png)
+
+#### Customizing the default template
+1. Open the template by clicking the right arrow next to its name
+2. Customize the filed values:
+   - **Display Name.** The name of the option to send an email based on this template in the extension's UI
+   - **Email.** The "to" email address
+   - **Subject.** The subject of the email
+   - **Message.** The body of the email
+      - Modify the text according to your needs
+      - Don't forget to include your name, job title, and organization name
+      - Keep the `%iocs` parameter as it is. It will be replaced with a list of selected results (IOCs) when composing the email
+3. Click **Save & Close**.
+
+![Customizing the default template](.readme/mail_templates_customize.png)
+
+You can also restore defaults and delete the template.
+
+#### Creating a new mail template
+1. Click **Add New Template** under **Settings** > **Mail Templates**.
+2. Fill the following fields:
+   - **Display Name.** The name of the option to send an email based on this template in the extension's UI
+   - **Email.** The "to" email address
+   - **Subject.** The subject of the email
+   - **Message.** The body of the email. Add the `%iocs` parameter in the place where you'd like the iOCs to be listed when composing the email
+3. Click **Save & Close**.
+
+![Creating a new template](.readme/mail_templates_create.png)
+
+#### Using mail templates
+To use a template:
+1. Select one or multiple results in the extension.
+2. Select a template:
+   - To send a single result, click the plane icon next to the result and select a template
+   - To send multiple results, click the **Send to** button in the footer of the extension and select a template
+
+![Selecting a template](.readme/mail_templates_select.png)
+
+3. Your default mailto handler is opened with the selected template pre-populated with the IOCs. Make any adjustments you may need and send the email.
+
+![Example email](.readme/mail_templates_email.png)
 
 ## Hot Keys
 - Hide/Show the extension: Ctrl + Q

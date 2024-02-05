@@ -49,7 +49,7 @@ export const CollapsibleResources: React.FC<CollapsibleResourceProps> = observer
   ) => {
     const emptyResources: NormalizedResource[] = [];
     const notEmptyResources: NormalizedResource[] = [];
-    Object.keys(passedResources).forEach(fieldName => {
+    Object.keys(passedResources).forEach((fieldName) => {
       if (passedResources[fieldName].size > 0) {
         notEmptyResources.push({
           fieldName,
@@ -86,9 +86,14 @@ export const CollapsibleResources: React.FC<CollapsibleResourceProps> = observer
 
   return (
     <div className={createClassName(['collapsible-resources', className])}>
-      {notEmptyResources.map(({ fieldName, values }) =>
-        getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])),
-      )}
+      {notEmptyResources.map((
+        { fieldName, values },
+      ) => getCollapsible(
+        fieldName,
+        icon,
+        values,
+        Array.from(selectionStore.selected.get(fieldName) || []),
+      ))}
       {
         emptyResources.length > 0 && (
           <>
@@ -111,9 +116,15 @@ export const CollapsibleResources: React.FC<CollapsibleResourceProps> = observer
               <hr />
             </div>
             <Spacer height={2} />
-            {showEmpty && emptyResources.map(({ fieldName, values }) =>
-              getCollapsible(fieldName, icon, values, Array.from(selectionStore.selected.get(fieldName) || [])),
-            )}
+            {showEmpty
+              && emptyResources.map((
+                { fieldName, values },
+              ) => getCollapsible(
+                fieldName,
+                icon,
+                values,
+                Array.from(selectionStore.selected.get(fieldName) || []),
+              ))}
           </>
         )
       }

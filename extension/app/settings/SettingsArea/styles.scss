@@ -1,0 +1,24 @@
+@import "../../scss/palette";
+
+.settings-area {
+  height: 100%;
+  font-size: 14px;
+  margin-top: 4px;
+
+  .icon-wrapper {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $lighter-background-color;
+    border-radius: 4px;
+  }
+
+  .small-arrow-icon {
+    height: 7px;
+    fill: $base-text-color-strong;
+    transform: rotate(90deg);
+  }
+}

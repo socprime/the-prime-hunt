@@ -1,23 +1,27 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { StaticButton } from '../../components/buttons/StaticButton/StaticButton';
 import { PlusIcon } from '../../components/atoms/icons/PlusIcon/PlusIcon';
 import { MinusIcon } from '../../components/atoms/icons/MinusIcon/MinusIcon';
 import { SeeDocumentIcon } from '../../components/atoms/icons/SeeDocumentIcon/SeeDocumentIcon';
 import { MagnifyingIcon } from '../../components/atoms/icons/MagnifyingIcon/MagnifyingIcon';
-import { List, ListProps } from '../../components/atoms/List/List';
-import { AppDropdown } from '../../components/dropdowns/AppDropdown/AppDropdown';
+import { AppDropdown, AppDropdownRefs } from '../../components/dropdowns/AppDropdown/AppDropdown';
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
 import { AnimatedCopyIcon } from '../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon';
 import {
-  useIntegrationsStore, usePlatformStore, useResourcesSelectionStore,
+  useIntegrationsStore, useMail, usePlatformStore, useResourcesSelectionStore,
 } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ModifyQueryPayload } from '../../../common/types/types-common-payloads';
-import { createClassName } from '../../../common/common-helpers';
+import { createClassName, openMailTo } from '../../../common/common-helpers';
 import { AppTooltip } from '../../components/tooltips/AppTooltip/AppTooltip';
 import { NormalizedParsedResources } from '../resources-types';
 import { GoOutsideIcon } from '../../components/atoms/icons/GoOutsideIcon/GoOutsideIcon';
 import { sortStrings } from '../../../../common/helpers';
+import { ListProps } from '../../components/atoms/List/types';
+import { DropdownMenuList } from '../../components/dropdowns-menus/DropdownMenuList';
+import { IconMail } from '../../components/atoms/icons/MailIcon';
+import { ListItemContentWithIcons } from '../../components/lists-items/ListItemContentWithIcons';
+import { SendToIcon } from '../../components/atoms/icons/SendToIcon';
 import './styles.scss';
 
 const MAX_COUNT_SELECTED = 30;
@@ -26,6 +30,7 @@ export const BulkResourcesPanel: React.FC = observer(() => {
   const selectionStore = useResourcesSelectionStore();
   const platformStore = usePlatformStore();
   const integrationsStore = useIntegrationsStore();
+  const mail = useMail();
 
   const { normalisedSelected, countSelected, uniqueSelected } = selectionStore;
 
@@ -87,6 +92,29 @@ export const BulkResourcesPanel: React.FC = observer(() => {
     );
   }, []);
 
+  const dropdownSendToRef = useRef({} as AppDropdownRefs);
+
+  const itemsSendTo: ListProps['items'] = useMemo(() => {
+    return (Object.keys(mail.patterns)?.map((id) => {
+      const pattern = mail.patterns[id];
+      return {
+        id: pattern.id,
+        content: <ListItemContentWithIcons
+          content={pattern.name}
+          iconsLeft={[<IconMail />]}
+        />,
+        onClick: () => {
+          const url = mail.buildMailToWithMarkers(pattern, {
+            iocs: uniqueSelected,
+          });
+          openMailTo(url);
+          dropdownSendToRef.current.setIsOpen(false);
+        },
+        name: pattern.name,
+      };
+    }) || []);
+  }, [mail, mail.patterns, uniqueSelected, uniqueSelected.length]);
+
   return (
     <div className={createClassName([
       'bulk-resources-panel',
@@ -119,14 +147,22 @@ export const BulkResourcesPanel: React.FC = observer(() => {
         <StaticButton disabled={disabled} onClick={() => onActionsClick('show all')} icon={<SeeDocumentIcon />}>
           Show All Events
         </StaticButton>
+        {itemsSendTo.length > 0 && (<AppDropdown
+          ref={dropdownSendToRef}
+          disabled={disabled}
+          opener={
+            <StaticButton disabled={disabled} icon={<SendToIcon />}>Send to</StaticButton>
+          }
+        >
+          <DropdownMenuList items={itemsSendTo} />
+        </AppDropdown>)}
         <AppDropdown
           disabled={disabled}
           opener={
             <StaticButton disabled={disabled} icon={<MagnifyingIcon />}>Search at</StaticButton>
           }
-          classNameMenu="dropdown-search-sites-menu"
         >
-          <List className="search-sites-list" items={items} />
+          <DropdownMenuList className="search-sites-list" items={items} />
         </AppDropdown>
       </div>
     </div>

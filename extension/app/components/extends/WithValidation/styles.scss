@@ -14,7 +14,8 @@
     color: $error;
   }
 
-  .input {
+  .input,
+  .textarea {
     border: 1px solid transparent;
 
     &:focus,
@@ -23,7 +24,8 @@
     }
   }
 
-  &.validation-error .input {
+  &.validation-error .input,
+  &.validation-error .textarea {
     border: 1px solid $error;
   }
 

@@ -1,4 +1,4 @@
-import { getData, saveData } from '../../common/extension-storage';
+import { getDataByKey, saveData } from '../../common/extension-storage';
 
 export type integrationKey = 'openCTI';
 export const integrationGroupName = 'integrations';
@@ -7,13 +7,13 @@ export const setIntegrationData = async (
   key: integrationKey,
   value: Record<string, unknown>,
 ) => {
-  const result = await getData(integrationGroupName);
+  const result = await getDataByKey(integrationGroupName);
   if (result.error) {
     return result;
   }
 
   const data = result.data as {
-    integrations: Record<string, unknown>;
+    [integrationGroupName]: Record<string, unknown>;
   };
 
   return saveData({
@@ -28,7 +28,7 @@ export const setIntegrationData = async (
 export const getIntegrationData = async (
   key: integrationKey,
 ) => {
-  const result = await getData(integrationGroupName);
+  const result = await getDataByKey(integrationGroupName);
   if (result.error) {
     return result;
   }

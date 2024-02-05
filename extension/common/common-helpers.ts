@@ -75,6 +75,16 @@ export const copyToClipboard = (str: string) => {
   document.body.removeChild(el);
 };
 
+export const openMailTo = (
+  url: string,
+) => {
+  const link = document.createElement('a');
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 export const downloadFile = (
   type: 'csv',
   content: string,

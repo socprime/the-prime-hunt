@@ -1,7 +1,9 @@
 import { ValidationResult } from './types';
 import { capitalizeFirstLetter, formatString } from './helpers';
 import {
-  isNotEmpty, isUrl as checkIsUrl,
+  isNotEmpty,
+  isUrl as checkIsUrl,
+  isEmail as checkIsEmail,
   isNotEmptyArray as isNotEmptyArrayChecker,
 } from './checkers';
 
@@ -62,6 +64,27 @@ export const isUrl = (
           {
             prefix: `${capitalizeFirstLetter(isUrl.name)}:`,
             message: 'Passed string is not an url',
+          },
+        )],
+    ),
+  };
+};
+
+export const isEmail = (
+  email: string,
+  pattern?: string,
+): ValidationResult => {
+  const isValid = checkIsEmail(email);
+  return {
+    isValid,
+    reasons: new Set(
+      isValid
+        ? []
+        : [formatString(
+          pattern || '%prefix %message',
+          {
+            prefix: `${capitalizeFirstLetter(isEmail.name)}:`,
+            message: 'Passed value is not an email',
           },
         )],
     ),

@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
 import {
-  useFormStore, useAppRouterStore, useIntegrationStore, useIntegrationsStore,
+  useForm, useRouter, useIntegrationStore, useIntegrationsStore,
 } from '../../../stores';
 import { CheckIcon } from '../../../components/atoms/icons/CheckIcon/CheckIcon';
 import { OpenCTIIntegrationData } from '../../../../integrations/openCTI/types';
@@ -12,8 +12,8 @@ import { AsyncResult } from '../../../../../common/types';
 import './styles.scss';
 
 export const IntegrationFooterView: React.FC = observer(() => {
-  const formStore = useFormStore();
-  const routerStore = useAppRouterStore();
+  const formStore = useForm();
+  const router = useRouter();
   const integrationStore = useIntegrationStore();
   const integrationsStore = useIntegrationsStore();
 
@@ -55,7 +55,7 @@ export const IntegrationFooterView: React.FC = observer(() => {
             .then((result) => {
               if (!result.error) {
                 integrationsStore.save();
-                routerStore.goToIntegrationsPage();
+                router.goToSettingsPage('settings:integrations');
               }
             });
         }}

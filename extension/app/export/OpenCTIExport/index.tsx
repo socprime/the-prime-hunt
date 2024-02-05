@@ -7,7 +7,7 @@ import { FormDropdown } from '../../components/dropdowns/FormDropdown';
 import { FormDropdownProps } from '../../components/dropdowns/FormDropdown/types';
 import { isNotEmptyArray, isNotEmptyString } from '../../../../common/validators';
 import { ResourceName, ResourceType } from '../../resources/resources-types';
-import { useAppMessageStore, useFormStore, useResourceStore } from '../../stores';
+import { useAppMessageStore, useForm, useResourceStore } from '../../stores';
 import { getIntegrationModel } from '../../../integrations';
 import { IntegrationCheckbox } from '../../integrations/IntegrationCheckbox';
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
@@ -36,7 +36,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
     resourceStore.getType(resourceName),
   );
   const messageStore = useAppMessageStore();
-  const formStore = useFormStore();
+  const form = useForm();
 
   const pattern = model.getPattern(resourceName, resourceType);
 
@@ -52,7 +52,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         label="Name"
         name="name"
         value={resourceName}
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         validators={[
           {
             validator: (v: string) => Promise.resolve(isNotEmptyString(v, validateMessage)),
@@ -63,7 +63,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         ]}
       />
       <FormDropdown
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         classNameMenu="observable-type-list-menu open-cti-menu"
         items={observableTypesItems}
         onChange={(items = []) => {
@@ -89,7 +89,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
       <IntegrationInput
         label="Pattern"
         name="pattern"
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         value={pattern === resourceName ? '' : pattern}
         validators={[
           {
@@ -101,7 +101,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         ]}
       />
       <FormDropdown
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         classNameMenu="indicator-type-list-menu open-cti-menu"
         items={indicatorTypesItems}
         label="Indicator Type"
@@ -113,7 +113,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         </SimpleBar>}
       </FormDropdown>
       <FormDropdown
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         classNameMenu="labels-list-menu open-cti-menu"
         items={labelsItems}
         label="Labels"
@@ -125,7 +125,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         </SimpleBar>}
       </FormDropdown>
       <FormDropdown
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         classNameMenu="markers-list-menu open-cti-menu"
         items={allowedMarkersItems}
         label="Markings"
@@ -137,12 +137,12 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         </SimpleBar>}
       </FormDropdown>
       <IntegrationCheckbox
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         content="Detection"
         name="x_opencti_detection"
       />
       <IntegrationCheckbox
-        disabled={formStore.validating || messageStore.inProgress}
+        disabled={form.validating || messageStore.inProgress}
         content="Create observable from indicator"
         name="createObservables"
       />

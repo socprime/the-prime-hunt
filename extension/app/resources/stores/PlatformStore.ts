@@ -51,7 +51,7 @@ export class PlatformStore {
     platform.connect();
     this.platform = platform;
     this.setFieldsNames(getFieldsNames());
-    this.rootStore.appStore.view = 'resources';
+    this.rootStore.routerStore.page = 'resources';
     this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
     const watchers = getWatchers(platform.getID());
 

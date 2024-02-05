@@ -3,16 +3,16 @@ import { observer } from 'mobx-react-lite';
 import { AppHeader } from '../../../components/headers/AppHeader/AppHeader';
 import { Spacer } from '../../../components/atoms/Spacer/Spacer';
 import {
-  useFormStore, useAppRouterStore, useIntegrationStore, useIntegrationsStore,
+  useForm, useRouter, useIntegrationStore, useIntegrationsStore,
 } from '../../../stores';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
 import './styles.scss';
 
 export const IntegrationHeaderView: React.FC = observer(() => {
-  const formStore = useFormStore();
+  const formStore = useForm();
   const integrationStore = useIntegrationStore();
   const integrationsStore = useIntegrationsStore();
-  const routerStore = useAppRouterStore();
+  const routerStore = useRouter();
   const Message = integrationStore.getMessage();
   const nameRef = useRef(integrationStore.getIntegration()!.name);
 
@@ -27,7 +27,7 @@ export const IntegrationHeaderView: React.FC = observer(() => {
         onClick={() => {
           integrationStore.remove();
           integrationsStore.save();
-          routerStore.goToIntegrationsPage();
+          routerStore.goToSettingsPage('settings:integrations');
         }}
         disabled={formStore.validating}
       >

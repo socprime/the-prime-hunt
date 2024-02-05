@@ -4,7 +4,9 @@ import minimist from 'minimist';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { WebpackCompiler, WebpackConfiguration } from 'webpack-cli';
-import { copySync, emptyDirSync, outputFileSync, readFileSync } from 'fs-extra';
+import {
+  copySync, emptyDirSync, outputFileSync, readFileSync,
+} from 'fs-extra';
 import {
   AbsFilePath, HTMLTextContent, LogLevel, Mode,
 } from '../common/types';
@@ -22,6 +24,7 @@ import {
   elasticInline,
   arcSightInline,
   logScaleInline,
+  chronicleInline,
 } from './manifest/public-resources';
 // import { webpackAliases } from '../install';
 
@@ -94,6 +97,7 @@ const inlineEntries = [
   arcSightInline,
   amazonAthenaInline,
   logScaleInline,
+  chronicleInline,
 ].reduce((entry, inline) => {
   const { name } = parse(inline);
   entry[name] = [

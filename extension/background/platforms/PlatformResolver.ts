@@ -81,6 +81,14 @@ export class PlatformResolver {
           break;
         }
 
+        case PlatformID.Chronicle: {
+          this.platforms.set<PlatformID, BackgroundPlatform>(
+            platformID,
+            new (require('./ChroniclePlatform').ChroniclePlatform)(),
+          );
+          break;
+        }
+
         default:
           return undefined;
       }
@@ -94,9 +102,9 @@ export class PlatformResolver {
   }
 
   resolve(platformID?: PlatformID): BackgroundPlatform | undefined {
-    return backgroundPlatformIDFromENV
-      ? this.getPlatformByID(backgroundPlatformIDFromENV)
-      : this.getPlatformByID(platformID);
+    return this.getPlatformByID(
+      backgroundPlatformIDFromENV || platformID,
+    );
   }
 }
 

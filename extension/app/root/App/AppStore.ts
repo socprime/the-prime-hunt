@@ -100,20 +100,6 @@ export class AppStore {
   @observable
   public rootElement: HTMLElement | null = null;
 
-  @observable
-  public view: 'resources'
-    | 'not-found'
-    | 'integrations'
-    | 'integration'
-    | 'export-page'
-    | 'faq' = 'not-found';
-
-  pageProps = {
-    header: {} as any,
-    content: {} as any,
-    footer: {} as any,
-  };
-
   private updatePositionValues(position: Position) {
     const {
       height,

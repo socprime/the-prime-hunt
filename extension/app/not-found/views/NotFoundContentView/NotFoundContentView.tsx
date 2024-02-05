@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlatformName } from '../../../../common/types/types-common';
 import './styles.scss';
 
 export const NotFoundContentView: React.FC = () => {
@@ -7,9 +8,7 @@ export const NotFoundContentView: React.FC = () => {
       <div>
         No supported platform detected.<br/>
         You can use this extension with<br/>
-        Microsoft Sentinel, Microsoft Defender for Endpoint<br/>
-        Amazon Athena, Splunk, Elastic, OpenSearch, QRadar,<br/>
-        ArcSight, LogScale
+        {Object.values(PlatformName).join(', ')}
       </div>
     </div>
   );

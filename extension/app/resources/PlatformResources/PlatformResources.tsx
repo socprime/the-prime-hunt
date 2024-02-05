@@ -16,7 +16,7 @@ export const PlatformResources: React.FC = observer(() => {
       return <UserIcon />;
     }
     if (typeID === BoundedResourceTypeID.Assets) {
-      return  <AssetIcon />;
+      return <AssetIcon />;
     }
     return <SearchDocumentIcon />;
   }, []);
@@ -24,8 +24,8 @@ export const PlatformResources: React.FC = observer(() => {
   return (
     <div className="platform-resources">
       {Object.keys(resources)
-        .filter(typeID => activeTabID === typeID)
-        .map(typeID => {
+        .filter((typeID) => activeTabID === typeID)
+        .map((typeID) => {
           return (
             <CollapsibleResources
               key={typeID}

@@ -22,7 +22,8 @@ window.addEventListener('message', (event) => {
   )) {
     const input = getInput();
     if (!input) {
-      return loggers.warn().log('query input not found');
+      loggers.warn().log('query input not found');
+      return;
     }
     const currentValue = input.value;
     const { resources, modifyType } = message.payload as ModifyQueryPayload;

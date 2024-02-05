@@ -22,6 +22,10 @@
     .button:not(:last-child) {
       margin-right: 8px;
     }
+
+    .dropdown:not(:last-child) {
+      margin-right: 6px;
+    }
   }
 
   &.empty {
@@ -35,35 +39,4 @@
 .app-tooltip.max-selected-tooltip.tooltip-content {
   line-height: 1.4;
   max-width: 236px;
-}
-
-.dropdown-menu.app-dropdown-menu.dropdown-search-sites-menu {
-  padding: 0;
-  overflow: hidden;
-
-  .search-sites-list {
-    .list-item {
-      cursor: pointer;
-      padding: 6.6px 12px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-
-      .icon {
-        width: 15px;
-        height: 15px;
-        margin-right: 5px;
-        fill: $base-text-color;
-      }
-    }
-
-    .list-item:hover {
-      background-color: $base-selection-color;
-    }
-
-    .go-outside-icon {
-      position: relative;
-      top: 2px;
-    }
-  }
 }

@@ -7,12 +7,15 @@ import './styles.scss';
 export const AppInput = forwardRef<HTMLInputElement, AppInputProps>(({
   className = '',
   ...restProps
-}, ref) => {
+}, refs) => {
   return (
     <Input
-      ref={ref}
-      className={createClassName(['app-input', className])}
       {...restProps}
+      ref={refs}
+      className={createClassName([
+        'app-input',
+        className,
+      ])}
     />
   );
 });

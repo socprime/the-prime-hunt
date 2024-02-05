@@ -11,7 +11,7 @@ export type ExpectedValue = Value | null;
 export type WithDependedChildren<I, Props = any> = I & {
   children: (props: Props) => ReactNode;
 };
-export type ElementRef = MutableRefObject<HTMLElement | null>;
+export type ElementRef = MutableRefObject<HTMLElement | HTMLTextAreaElement | null>;
 export type GetValueFromElement = (elementRef?: ElementRef) => ExpectedValue;
 export type Validator = ((
   value: ExpectedValue,

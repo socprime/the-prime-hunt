@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { ElementRef, WithDependedChildren } from '../../../../../common/types';
 import { WithFormProps, WithFormRefs } from './types';
-import { useFormStore } from '../../../stores';
+import { useForm } from '../../../stores';
 
 type Props = WithDependedChildren<
   WithFormProps,
@@ -28,7 +28,7 @@ export const WithForm = forwardRef<
   children,
   ...restProps
 }, refs) => {
-  const formStore = useFormStore();
+  const formStore = useForm();
   const elementID = useId();
   const elementRef: ElementRef = useRef(null);
 

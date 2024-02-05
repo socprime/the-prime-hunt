@@ -3,17 +3,17 @@ import { observer } from 'mobx-react-lite';
 import { StaticButton } from '../../../components/buttons/StaticButton/StaticButton';
 import { WarningMessage } from '../WarningMessage';
 import {
-  useAppRouterStore,
+  useRouter,
   useIntegrationsStore,
   usePlatformStore,
 } from '../../../stores';
-import { Integration } from '../../../integrations/integrations-types';
+import { Integration } from '../../../integration/integration-types';
 import './styles.scss';
 
 export const NoOpenCTIProfileMessage: React.FC = observer(() => {
   const platformStore = usePlatformStore();
   const integrationsStore = useIntegrationsStore();
-  const router = useAppRouterStore();
+  const router = useRouter();
 
   return (
     <WarningMessage

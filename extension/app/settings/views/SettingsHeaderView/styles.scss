@@ -1,0 +1,30 @@
+@import '../../../scss/palette';
+
+.settings-header-view {
+  .settings-tabs {
+    .tabs-wrapper {
+      display: flex;
+      flex-direction: row;
+
+      .tab.active button {
+        border-bottom: 2px solid $success;
+        color: $base-text-color-strong;
+      }
+
+      .tab button {
+        color: $base-text-color;
+
+        &:hover {
+          color: $base-text-color-strong;
+        }
+      }
+    }
+
+    .button.app-button.static-button {
+      border-radius: 0;
+      background-color: transparent;
+      padding: 0;
+      margin-right: 16px;
+    }
+  }
+}
