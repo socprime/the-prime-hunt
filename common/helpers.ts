@@ -30,7 +30,7 @@ export const clearLineBreaks = (str: string): string => str
   .replace(/(\r\n|\n|\r)/gm, ' ');
 
 export const splitByLines = (str: string, removeEmpty = false): string[] => {
-  const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
+  const regexp = /(\r\n|\n|\r)/gm;
 
   let res = str.split(regexp);
 
@@ -214,11 +214,50 @@ export const getUrlParamsSafe = (url: unknown, paramName: string): string => {
   }
 };
 
-export const serializeDataInResult = (result: AsyncResult): AsyncResult => {
+export const deserializeDataInResult = (
+  result: AsyncResult,
+  errors: Error[] = [],
+): {
+  result: AsyncResult,
+  errors: Error[],
+} => {
+  if (result.error && typeof result.error !== 'string') {
+    errors.push(result.error);
+  }
+
+  if (result.error && typeof result.error === 'string') {
+    result.error = new Error(result.error);
+    errors.push(result.error);
+  }
+
+  (result.batch || []).map((r: AsyncResult) => {
+    return deserializeDataInResult(r, errors);
+  });
+
+  return { result, errors };
+};
+
+export const serializeDataInResult = (
+  result: AsyncResult,
+  errors: string[] = [],
+): {
+  result: AsyncResult,
+  errors: string[],
+} => {
+  if (result.error && typeof result.error === 'string') {
+    errors.push(result.error);
+  }
+
   if (result.error && typeof result.error !== 'string') {
     result.error = result.error.message;
+    errors.push(result.error);
   }
-  return result;
+
+  (result.batch || []).map((r: AsyncResult) => {
+    return serializeDataInResult(r, errors);
+  });
+
+  return { result, errors };
 };
 
 export const buildEmailUrl = (
@@ -241,14 +280,15 @@ export const buildEmailUrl = (
   return `${encodeURI(`mailto:${sendTo}?${copyTo}&${subj}`)}&${text}`;
 };
 
-export const initValues = (
-  obj: Record<string, unknown>,
-  values: Record<string, unknown>,
+export const initValues = <T = Record<string, unknown>>(
+  obj: T,
+  values: T,
 ) => {
   Object.keys(values).forEach((key) => {
-    if (typeof obj[key] === 'undefined') {
-      obj[key] = values[key];
+    const o = obj as Record<string, unknown>;
+    if (typeof o[key] === 'undefined') {
+      o[key] = (values as typeof o)[key];
     }
   });
-  return obj;
+  return obj as T;
 };

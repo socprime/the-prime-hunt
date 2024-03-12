@@ -9,8 +9,11 @@ import { AppMessageStore } from '../root/App/AppMessageStore';
 import { WithFormStore } from '../components/extends/WithForm/store';
 import { AppStorageStore } from '../root/App/AppStorageStore';
 import { MailStore } from '../mail/stores/MailStore';
+import { Register } from '../../../common/Register';
 
 export class RootStore {
+  private stores = new Register();
+
   public appStore: AppStore;
 
   public appMessageStore: AppMessageStore;
@@ -33,9 +36,17 @@ export class RootStore {
 
   public mailStore: MailStore;
 
+  public register(name: string, getter: Function) {
+    this.stores.set(name, getter);
+  }
+
+  public getStore(storeName: string) {
+    return this.stores.get(storeName);
+  }
+
   constructor() {
     this.appStore = new AppStore();
-    this.appMessageStore = new AppMessageStore();
+    this.appMessageStore = new AppMessageStore(this);
     this.integrationsStore = new IntegrationsStore();
     this.formStore = new WithFormStore();
     this.appStorageStore = new AppStorageStore();

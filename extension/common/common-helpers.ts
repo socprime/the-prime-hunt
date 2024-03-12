@@ -2,7 +2,10 @@ import { StandardPropertiesHyphen } from 'csstype';
 import { NormalizedParsedResources } from '../app/resources/resources-types';
 
 export const cssObjectToString = (styles: StandardPropertiesHyphen): string => Object.keys(styles)
-  .reduce((res, key) => res += `${key}:${(styles as Record<string, string>)[key]};`, '');
+  .reduce((res, key) => {
+    res += `${key}:${(styles as Record<string, string>)[key]};`;
+    return res;
+  }, '');
 
 export const mountHTMLElement = (
   element: 'div' | 'style' | 'script' | 'link',

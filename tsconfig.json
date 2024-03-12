@@ -1,33 +1,13 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
-    "module": "CommonJS",
-    "removeComments": true,
-    "target": "ES6",
     "jsx": "react-jsx",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "sourceMap": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "lib": [
-      "dom",
-      "es5",
-      "es6",
-      "es7"
-    ],
     "typeRoots": [
       "node_modules/@types",
       "./@types"
     ],
     "baseUrl": ".",
     "paths": {
-      "@modules/*": ["@modules/*"],
       "@atoms/*": ["@libraries/atoms/*"],
       "@libraries/*": ["@libraries/*"],
       "@hooks/*": ["@libraries/hooks/*"]
@@ -38,5 +18,6 @@
     "**/*.mjs",
     "node_modules",
     "tmp"
-  ]
+  ],
+  "extends": "./node_modules/@socprime/master-configuration/tsconfig.json"
 }

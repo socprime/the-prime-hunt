@@ -4,11 +4,9 @@ import { CheckIcon } from '../../../components/atoms/icons/CheckIcon/CheckIcon';
 import {
   useAppMessageStore, useRouter, useForm, usePlatformStore,
 } from '../../../stores';
-import { MessageToBackground } from '../../../../background/types/types-background-messages';
-import { IntegrationWorkPayload } from '../../../../common/types/types-common-payloads';
 import { observer } from 'mobx-react-lite';
-import './styles.scss';
 import { SuccessOpenCTIExportMessage } from '../../../resources/messages/SuccessOpenCTIExportMessage';
+import './styles.scss';
 
 export const ExportFooterView: React.FC = observer(() => {
   const routerStore = useRouter();
@@ -41,12 +39,9 @@ export const ExportFooterView: React.FC = observer(() => {
               }
               const formData = formStore.getFormData();
               return messageStore.sendMessageWithCallback({
-                type: MessageToBackground.BGIntegrationWork,
-                payload: {
-                  modelType: 'openCTI',
-                  work: 'export-data',
-                  data: formData,
-                } as IntegrationWorkPayload,
+                model: 'openCTI',
+                work: 'export-data',
+                data: formData,
               });
             })
             .then((result) => {

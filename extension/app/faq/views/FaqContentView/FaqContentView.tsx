@@ -38,7 +38,7 @@ export const FaqContentView: React.FC = () => {
         ],
       },
       {
-        title: 'Can I customize Search At integrations?',
+        title: 'Can I customize Search At models?',
         content: (
           <div>
             Yes, you can, just click on Integration settings button placed on header of the extension. On the following page you can:

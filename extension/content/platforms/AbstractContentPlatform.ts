@@ -1,5 +1,7 @@
 import { ContentPlatform, Position } from '../types/types-content-common';
-import { ExtensionMessage, ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import {
+  ExtensionMessage, ModifyQueryType, PlatformID, PlatformName, SiemType,
+} from '../../common/types/types-common';
 import { NormalizedParsedResources } from '../../app/resources/resources-types';
 import { WatchingResources } from '../../background/types/types-background-common';
 import { isMessageMatched } from '../../common/common-listeners';
@@ -26,52 +28,21 @@ export abstract class AbstractContentPlatform implements ContentPlatform {
 
   abstract getName(): PlatformName;
 
+  abstract getType(): SiemType;
+
   fields = new Set<string>();
 
   protected static processInlineListeners(message: ExtensionMessage) {
-    if (isMessageMatched(
-      () => MessageToContent.CSModifyQuery === message.type,
-      message,
-    )) {
-      sendMessageFromContent({
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToInline.ISModifyQuery,
-      }, false);
-    }
-
-    if (isMessageMatched(
-      () => MessageToContent.CSSetQuery === message.type,
-      message,
-    )) {
-      sendMessageFromContent({
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToInline.ISSetQuery,
-      }, false);
-    }
-
-    if (isMessageMatched(
-      () => MessageToContent.CSGetQuery === message.type,
-      message,
-    )) {
-      sendMessageFromContent({
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToInline.ISGetQuery,
-      }, false);
-    }
-
-    if (isMessageMatched(
-      () => MessageToContent.CSSendMessageOutside === message.type,
-      message,
-    )) {
-      sendMessageFromContent({
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToBackground.BGSendMessageOutside,
-      });
-    }
+    // if (isMessageMatched(
+    //   () => MessageToContent.CSSendMessageOutside === message.type,
+    //   message,
+    // )) {
+    //   sendMessageFromContent({
+    //     ...message,
+    //     id: `${message.id}--${message.type}`,
+    //     type: MessageToBackground.BGSendMessageOutside,
+    //   });
+    // }
 
     if (isMessageMatched(
       () => MessageToContent.CSSetDebugMode === message.type,

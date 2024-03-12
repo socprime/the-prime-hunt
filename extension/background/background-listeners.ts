@@ -23,11 +23,10 @@ import { MessageToBackground } from './types/types-background-messages';
 import { MessageToContent } from '../content/types/types-content-messages';
 import {
   AsyncProcessPayload,
+  CallBackMessagePayload,
   DirectMessagePayload,
-  IntegrationWorkPayload,
   ParsedDataPayload,
   PlatformIDPayload,
-  ResultProcessPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
   SetWatchersPayload,
@@ -35,11 +34,10 @@ import {
 } from '../common/types/types-common-payloads';
 import { platformResolver } from './platforms/PlatformResolver';
 import { LoadingKey } from '../app/types/types-app-common';
-import { getIntegrationModel } from '../integrations';
-import { serializeDataInResult } from '../../common/helpers';
 import { setMailsData } from '../app/mail/mail-store';
 import { defaultPatterns } from '../app/mail/patterns';
 import { Mail } from '../app/mail/mail-types';
+import { getModel } from '../models';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -101,63 +99,17 @@ const loggers = require('../common/loggers').loggers
       return;
     }
 
-    if (isMessageMatched(
-      () => MessageToBackground.BGRunClearData === message.type,
-      message,
-      sender,
-    )) {
-      sendMessageFromBackground(sender.tab.id, {
-        type: MessageToApp.AppClearResourceData,
-      });
-    }
-
-    if (isMessageMatched(
-      () => MessageToBackground.BGModifyQuery === message.type,
-      message,
-      sender,
-    )) {
-      sendMessageFromBackground(sender.tab.id, {
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToContent.CSModifyQuery,
-      });
-    }
-
-    if (isMessageMatched(
-      () => MessageToBackground.BGSetQuery === message.type,
-      message,
-      sender,
-    )) {
-      sendMessageFromBackground(sender.tab.id, {
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToContent.CSSetQuery,
-      });
-    }
-
-    if (isMessageMatched(
-      () => MessageToBackground.BGGetQuery === message.type,
-      message,
-      sender,
-    )) {
-      sendMessageFromBackground(sender.tab.id, {
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToContent.CSGetQuery,
-      });
-    }
-
-    if (isMessageMatched(
-      () => MessageToBackground.BGSendMessageOutside === message.type,
-      message,
-      sender,
-    )) {
-      sendMessageFromBackground(sender.tab.id, {
-        ...message,
-        id: `${message.id}--${message.type}`,
-        type: MessageToApp.AppSendMessageOutside,
-      });
-    }
+    // if (isMessageMatched(
+    //   () => MessageToBackground.BGSendMessageOutside === message.type,
+    //   message,
+    //   sender,
+    // )) {
+    //   sendMessageFromBackground(sender.tab.id, {
+    //     ...message,
+    //     id: `${message.id}--${message.type}`,
+    //     type: MessageToApp.AppSendMessageOutside,
+    //   });
+    // }
 
     if (isMessageMatched(
       () => MessageToBackground.BGSetWatchers === message.type,
@@ -282,56 +234,25 @@ const loggers = require('../common/loggers').loggers
     }
 
     if (isMessageMatched(
-      () => MessageToBackground.BGIntegrationWork === message.type,
+      () => MessageToBackground.BGTakeCallbackMessage === message.type,
       message,
       sender,
     )) {
       const {
         processID,
-        work,
-        modelType,
-        data,
-      } = message.payload as AsyncProcessPayload & IntegrationWorkPayload;
+        model: modelType,
+      } = message.payload as AsyncProcessPayload & CallBackMessagePayload;
       const tabID = sender.tab.id;
-      const model = getIntegrationModel(modelType);
 
-      const response: ExtensionMessage<AsyncProcessPayload & ResultProcessPayload> = {
-        id: `${message.id}--${message.type}`,
-        type: MessageToApp.AppGetIntegrationWorkResult,
-        payload: {
-          processID,
-          result: { error: new Error('Model not found') },
-        },
-      };
-
-      if (!model) {
-        sendMessageFromBackground(tabID, response);
-        return;
-      }
-
-      if (work === 'check-connection') {
-        model.checkConnection()
-          .then((result) => {
-            response.payload!.result = serializeDataInResult(result);
-            sendMessageFromBackground(tabID, response);
-          });
-      }
-
-      if (work === 'export-data') {
-        model.exportData(data || {})
-          .then((result) => {
-            response.payload!.result = serializeDataInResult(result);
-            sendMessageFromBackground(tabID, response);
-          });
-      }
-
-      if (work === 'import-data') {
-        model.importData()
-          .then((result) => {
-            response.payload!.result = serializeDataInResult(result);
-            sendMessageFromBackground(tabID, response);
-          });
-      }
+      getModel(modelType)
+        .doBackground(message.payload)
+        .then((result) => {
+          sendMessageFromBackground(tabID, {
+            id: `${message.id}--${message.type}`,
+            type: MessageToApp.AppTakeCallbackMessageResult,
+            payload: { processID, result },
+          } as ExtensionMessage<AsyncProcessPayload>);
+        });
     }
   },
 );

@@ -1,15 +1,16 @@
 import { Loggers } from '../../common/loggers';
 import { ListenerType, MessageListener } from '../types/types-content-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
-import { isNumberInString } from '../../../common/checkers';
 import {
-  buildQueryParts, mountHTMLElement,
-} from '../../common/common-helpers';
+  ModifyQueryType, PlatformID, PlatformName, SiemType,
+} from '../../common/types/types-common';
+import { isNumberInString } from '../../../common/checkers';
+import { buildQueryParts, mountHTMLElement } from '../../common/common-helpers';
 import { elasticInline } from '../../manifest/public-resources';
 import { addListener } from '../services/content-services-listeners';
 import { getWebAccessibleUrl } from '../../common/common-extension-helpers';
 import { AbstractContentPlatform } from './AbstractContentPlatform';
+import { getInput } from '../../inline/elastic/helpers';
 
 let loggers: Loggers;
 
@@ -103,6 +104,13 @@ export class ElasticPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.Elastic;
+  }
+
+  getType(): SiemType {
+    const placeholder = getInput()?.placeholder?.toLowerCase?.();
+    return placeholder && placeholder.indexOf('lucene') > -1
+      ? SiemType.ElasticLucene
+      : SiemType.ElasticEQL;
   }
 
   private static setListeners() {

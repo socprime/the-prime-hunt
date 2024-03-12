@@ -1,7 +1,7 @@
 import { AbstractContentPlatform } from './AbstractContentPlatform';
 import { Loggers } from '../../common/loggers';
 import { WatchingResources } from '../../background/types/types-background-common';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { isNumberInString } from '../../../common/checkers';
 import {
@@ -146,6 +146,10 @@ export class LogScalePlatform extends AbstractContentPlatform {
 
   getName(): PlatformName {
     return LogScalePlatform.platformName;
+  }
+
+  getType(): SiemType {
+    return SiemType.LogScale;
   }
 }
 

@@ -6,68 +6,74 @@
 /*!****************************!*\
   !*** ./common/checkers.ts ***!
   \****************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isAllowedProtocol": () => (/* binding */ isAllowedProtocol),
+/* harmony export */   "isDate": () => (/* binding */ isDate),
+/* harmony export */   "isDomainName": () => (/* binding */ isDomainName),
+/* harmony export */   "isEmail": () => (/* binding */ isEmail),
+/* harmony export */   "isIpV4": () => (/* binding */ isIpV4),
+/* harmony export */   "isIpV6": () => (/* binding */ isIpV6),
+/* harmony export */   "isMD5": () => (/* binding */ isMD5),
+/* harmony export */   "isMacAddress": () => (/* binding */ isMacAddress),
+/* harmony export */   "isNotEmpty": () => (/* binding */ isNotEmpty),
+/* harmony export */   "isNotEmptyArray": () => (/* binding */ isNotEmptyArray),
+/* harmony export */   "isNumberInString": () => (/* binding */ isNumberInString),
+/* harmony export */   "isObject": () => (/* binding */ isObject),
+/* harmony export */   "isSHA1": () => (/* binding */ isSHA1),
+/* harmony export */   "isSHA256": () => (/* binding */ isSHA256),
+/* harmony export */   "isSHA512": () => (/* binding */ isSHA512),
+/* harmony export */   "isString": () => (/* binding */ isString),
+/* harmony export */   "isUrl": () => (/* binding */ isUrl)
+/* harmony export */ });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./common/types.ts");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isObject = exports.isDate = exports.isAllowedProtocol = exports.isNumberInString = exports.isUrl = exports.isDomainName = exports.isMacAddress = exports.isIpV6 = exports.isIpV4 = exports.isSHA512 = exports.isSHA256 = exports.isSHA1 = exports.isMD5 = exports.isEmail = exports.isNotEmpty = exports.isNotEmptyArray = exports.isString = void 0;
-const types_1 = __webpack_require__(/*! ./types */ "./common/types.ts");
-const helpers_1 = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
 const isString = (value) => {
     return typeof value === 'string';
 };
-exports.isString = isString;
 const isNotEmptyArray = (arr) => {
     return arr.length > 0;
 };
-exports.isNotEmptyArray = isNotEmptyArray;
 const isNotEmpty = (str) => {
-    if (!(0, exports.isString)(str)) {
+    if (!isString(str)) {
         return false;
     }
-    return str.trim() !== '';
+    return str?.trim?.() !== '';
 };
-exports.isNotEmpty = isNotEmpty;
 const isEmail = (email) => {
     return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 };
-exports.isEmail = isEmail;
 const isMD5 = (md5) => {
     return /^[a-f0-9]{32}$/.test(md5);
 };
-exports.isMD5 = isMD5;
 const isSHA1 = (sha1) => {
     return /^[a-fA-F0-9]{40}$/.test(sha1);
 };
-exports.isSHA1 = isSHA1;
 const isSHA256 = (sha256) => {
     return /^[a-fA-F0-9]{64}$/.test(sha256);
 };
-exports.isSHA256 = isSHA256;
 const isSHA512 = (sha512) => {
     return /^[a-fA-F0-9]{128}$/.test(sha512);
 };
-exports.isSHA512 = isSHA512;
 const isIpV4 = (ip) => {
     return /(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/.test(ip);
 };
-exports.isIpV4 = isIpV4;
 const isIpV6 = (ip) => {
     return /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/.test(ip);
 };
-exports.isIpV6 = isIpV6;
 const isMacAddress = (address) => {
     return /^[a-fA-F0-9]{2}([:|-][a-fA-F0-9]{2}){5}$/.test(address);
 };
-exports.isMacAddress = isMacAddress;
 const isDomainName = (domainName) => {
     return /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/.test(domainName);
 };
-exports.isDomainName = isDomainName;
 const isUrl = (url) => {
     return /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(url);
 };
-exports.isUrl = isUrl;
 const isNumberInString = (str) => {
     if (typeof str === 'number') {
         return true;
@@ -77,33 +83,29 @@ const isNumberInString = (str) => {
     }
     const sValue = str.trim();
     if (!/^[-.0-9]*$/.test(sValue)
-        || (0, helpers_1.indexOfAll)(sValue, '.').length > 1) {
+        || (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.indexOfAll)(sValue, '.').length > 1) {
         return false;
     }
     return !Number.isNaN(parseFloat(sValue));
 };
-exports.isNumberInString = isNumberInString;
 const isAllowedProtocol = (protocol, mode) => {
-    if (mode === types_1.Mode.development) {
+    if (mode === _types__WEBPACK_IMPORTED_MODULE_0__.Mode.development) {
         return true;
     }
     const nProtocol = protocol.trim().toLowerCase();
     return nProtocol === 'https:' || nProtocol === 'https';
 };
-exports.isAllowedProtocol = isAllowedProtocol;
 const isDate = (value) => {
-    return new Date(typeof value === 'string' && (0, exports.isNumberInString)(value)
+    return new Date(typeof value === 'string' && isNumberInString(value)
         ? parseInt(value, 10)
         : value).getTime() > 567982800000;
 };
-exports.isDate = isDate;
 const isObject = (obj) => {
     return typeof obj === 'object'
         && !Array.isArray(obj)
         && obj !== null
         && typeof obj !== 'function';
 };
-exports.isObject = isObject;
 
 
 /***/ }),
@@ -112,21 +114,37 @@ exports.isObject = isObject;
 /*!***************************!*\
   !*** ./common/helpers.ts ***!
   \***************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "buildEmailUrl": () => (/* binding */ buildEmailUrl),
+/* harmony export */   "capitalizeFirstLetter": () => (/* binding */ capitalizeFirstLetter),
+/* harmony export */   "clearExtraSpaces": () => (/* binding */ clearExtraSpaces),
+/* harmony export */   "clearLineBreaks": () => (/* binding */ clearLineBreaks),
+/* harmony export */   "createNonDuplicateValue": () => (/* binding */ createNonDuplicateValue),
+/* harmony export */   "debounce": () => (/* binding */ debounce),
+/* harmony export */   "deduplicateArray": () => (/* binding */ deduplicateArray),
+/* harmony export */   "deserializeDataInResult": () => (/* binding */ deserializeDataInResult),
+/* harmony export */   "formatBinaryDate": () => (/* binding */ formatBinaryDate),
+/* harmony export */   "formatDate": () => (/* binding */ formatDate),
+/* harmony export */   "formatString": () => (/* binding */ formatString),
+/* harmony export */   "getUrlParamsSafe": () => (/* binding */ getUrlParamsSafe),
+/* harmony export */   "indexOfAll": () => (/* binding */ indexOfAll),
+/* harmony export */   "initValues": () => (/* binding */ initValues),
+/* harmony export */   "isFlatObjectsEqual": () => (/* binding */ isFlatObjectsEqual),
+/* harmony export */   "iterateObjectsRecursively": () => (/* binding */ iterateObjectsRecursively),
+/* harmony export */   "parseJSONSafe": () => (/* binding */ parseJSONSafe),
+/* harmony export */   "serializeDataInResult": () => (/* binding */ serializeDataInResult),
+/* harmony export */   "sleep": () => (/* binding */ sleep),
+/* harmony export */   "sortNumbers": () => (/* binding */ sortNumbers),
+/* harmony export */   "sortStrings": () => (/* binding */ sortStrings),
+/* harmony export */   "splitByLines": () => (/* binding */ splitByLines),
+/* harmony export */   "suuid": () => (/* binding */ suuid),
+/* harmony export */   "uuid": () => (/* binding */ uuid)
+/* harmony export */ });
+/* harmony import */ var _checkers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.initValues = exports.buildEmailUrl = exports.serializeDataInResult = exports.getUrlParamsSafe = exports.iterateObjectsRecursively = exports.sleep = exports.indexOfAll = exports.sortStrings = exports.sortNumbers = exports.debounce = exports.formatDate = exports.formatBinaryDate = exports.createNonDuplicateValue = exports.capitalizeFirstLetter = exports.formatString = exports.deduplicateArray = exports.parseJSONSafe = exports.splitByLines = exports.clearLineBreaks = exports.clearExtraSpaces = exports.suuid = exports.uuid = exports.isFlatObjectsEqual = void 0;
-const checkers_1 = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 const isFlatObjectsEqual = (obj1, obj2) => {
     const keysObj1 = Object.keys(obj1);
     const keysObj2 = Object.keys(obj2);
@@ -135,32 +153,26 @@ const isFlatObjectsEqual = (obj1, obj2) => {
     }
     return !keysObj1.some((key) => obj1[key] !== obj2[key]);
 };
-exports.isFlatObjectsEqual = isFlatObjectsEqual;
 const uuid = () => {
     return Math.random().toString(36).substring(5)
         + Date.now().toString(36)
         + Math.random().toString(36).substring(5);
 };
-exports.uuid = uuid;
 const suuid = () => {
-    return `@@--${(0, exports.uuid)()}`;
+    return `@@--${uuid()}`;
 };
-exports.suuid = suuid;
 const clearExtraSpaces = (str) => str.replace(/ +/g, ' ');
-exports.clearExtraSpaces = clearExtraSpaces;
 const clearLineBreaks = (str) => str
     .trim()
     .replace(/(\r\n|\n|\r)/gm, ' ');
-exports.clearLineBreaks = clearLineBreaks;
 const splitByLines = (str, removeEmpty = false) => {
-    const regexp = new RegExp(/(\r\n|\n|\r)/, 'gm');
+    const regexp = /(\r\n|\n|\r)/gm;
     let res = str.split(regexp);
     if (removeEmpty) {
         res = res.filter((r) => r && r !== '\r\n' && r !== '\n' && r !== '\r');
     }
     return res;
 };
-exports.splitByLines = splitByLines;
 const parseJSONSafe = (obj, fallback) => {
     try {
         return JSON.parse(obj);
@@ -169,7 +181,6 @@ const parseJSONSafe = (obj, fallback) => {
         return fallback;
     }
 };
-exports.parseJSONSafe = parseJSONSafe;
 const deduplicateArray = (arr) => {
     return [
         ...Array.from(new Set([
@@ -177,7 +188,6 @@ const deduplicateArray = (arr) => {
         ])),
     ];
 };
-exports.deduplicateArray = deduplicateArray;
 const formatString = (pattern, parts, keyFormat) => {
     return Object.keys(parts || {})
         .filter((name) => {
@@ -191,9 +201,7 @@ const formatString = (pattern, parts, keyFormat) => {
         return result.replace(new RegExp(d.key, 'g'), d.value);
     }, pattern) || pattern;
 };
-exports.formatString = formatString;
 const capitalizeFirstLetter = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
-exports.capitalizeFirstLetter = capitalizeFirstLetter;
 const createNonDuplicateValue = (value, values) => {
     if (!values.includes(value)) {
         return value;
@@ -210,7 +218,6 @@ const createNonDuplicateValue = (value, values) => {
     }
     return `${wordRoot}${increment}`;
 };
-exports.createNonDuplicateValue = createNonDuplicateValue;
 const formatBinaryDate = (value) => {
     const sValue = typeof value === 'string'
         ? value
@@ -219,19 +226,17 @@ const formatBinaryDate = (value) => {
         ? sValue
         : `0${sValue}`;
 };
-exports.formatBinaryDate = formatBinaryDate;
 const formatDate = (pattern, data) => {
-    return (0, exports.formatString)(pattern, {
+    return formatString(pattern, {
         Y: String(data.getFullYear()),
-        M: (0, exports.formatBinaryDate)(data.getMonth() + 1),
-        m: (0, exports.formatBinaryDate)(data.getMinutes()),
-        s: (0, exports.formatBinaryDate)(data.getSeconds()),
-        ms: (0, exports.formatBinaryDate)(data.getMilliseconds()),
-        d: (0, exports.formatBinaryDate)(data.getDate()),
-        h: (0, exports.formatBinaryDate)(data.getHours()),
+        M: formatBinaryDate(data.getMonth() + 1),
+        m: formatBinaryDate(data.getMinutes()),
+        s: formatBinaryDate(data.getSeconds()),
+        ms: formatBinaryDate(data.getMilliseconds()),
+        d: formatBinaryDate(data.getDate()),
+        h: formatBinaryDate(data.getHours()),
     });
 };
-exports.formatDate = formatDate;
 const debounce = (func, timeoutMs) => {
     let timeoutID;
     return function (...args) {
@@ -240,7 +245,6 @@ const debounce = (func, timeoutMs) => {
         timeoutID = setTimeout(() => func.apply(context, args), timeoutMs);
     };
 };
-exports.debounce = debounce;
 const sortNumbers = (a, b) => {
     if (a > b) {
         return 1;
@@ -250,7 +254,6 @@ const sortNumbers = (a, b) => {
     }
     return 0;
 };
-exports.sortNumbers = sortNumbers;
 const sortStrings = (a, b, order = 'ascending') => {
     const result = a.localeCompare(b);
     if (result === 0 || order === 'ascending') {
@@ -258,7 +261,6 @@ const sortStrings = (a, b, order = 'ascending') => {
     }
     return result === 1 ? -1 : 1;
 };
-exports.sortStrings = sortStrings;
 const indexOfAll = (str, search) => {
     const indexes = [];
     let i = -1;
@@ -267,32 +269,29 @@ const indexOfAll = (str, search) => {
     }
     return indexes;
 };
-exports.indexOfAll = indexOfAll;
-const sleep = (sec) => __awaiter(void 0, void 0, void 0, function* () {
+const sleep = async (sec) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(null);
         }, sec * 1000);
     });
-});
-exports.sleep = sleep;
+};
 const iterateObjectsRecursively = (obj, keyPath, settings) => {
     const { separator = '.', onIteration } = settings || {};
     return Object.keys(obj || {}).reduce((result, key) => {
         const path = keyPath.length ? `${keyPath}${separator}${key}` : key;
         const value = obj[key];
-        if (typeof onIteration === 'function' && !(onIteration === null || onIteration === void 0 ? void 0 : onIteration(path, key, value, keyPath))) {
+        if (typeof onIteration === 'function' && !onIteration?.(path, key, value, keyPath)) {
             return keyPath.length ? [...result, keyPath] : result;
         }
         return [
             ...result,
-            ...((0, checkers_1.isObject)(value)
-                ? (0, exports.iterateObjectsRecursively)(value, path, settings)
+            ...((0,_checkers__WEBPACK_IMPORTED_MODULE_0__.isObject)(value)
+                ? iterateObjectsRecursively(value, path, settings)
                 : [path]),
         ];
     }, []);
 };
-exports.iterateObjectsRecursively = iterateObjectsRecursively;
 const getUrlParamsSafe = (url, paramName) => {
     try {
         return new URL(url)[paramName] || '';
@@ -301,32 +300,49 @@ const getUrlParamsSafe = (url, paramName) => {
         return '';
     }
 };
-exports.getUrlParamsSafe = getUrlParamsSafe;
-const serializeDataInResult = (result) => {
+const deserializeDataInResult = (result, errors = []) => {
+    if (result.error && typeof result.error !== 'string') {
+        errors.push(result.error);
+    }
+    if (result.error && typeof result.error === 'string') {
+        result.error = new Error(result.error);
+        errors.push(result.error);
+    }
+    (result.batch || []).map((r) => {
+        return deserializeDataInResult(r, errors);
+    });
+    return { result, errors };
+};
+const serializeDataInResult = (result, errors = []) => {
+    if (result.error && typeof result.error === 'string') {
+        errors.push(result.error);
+    }
     if (result.error && typeof result.error !== 'string') {
         result.error = result.error.message;
+        errors.push(result.error);
     }
-    return result;
+    (result.batch || []).map((r) => {
+        return serializeDataInResult(r, errors);
+    });
+    return { result, errors };
 };
-exports.serializeDataInResult = serializeDataInResult;
 const buildEmailUrl = (params) => {
     const { to, subject, cc, body, } = params;
     const sendTo = to.length ? `${to.join(',')}` : '';
-    const copyTo = `cc=${(cc === null || cc === void 0 ? void 0 : cc.length) ? cc.join(',') : ''}`;
+    const copyTo = `cc=${cc?.length ? cc.join(',') : ''}`;
     const subj = `subject=${subject || ''}`;
     const text = `body=${body || ''}`;
     return `${encodeURI(`mailto:${sendTo}?${copyTo}&${subj}`)}&${text}`;
 };
-exports.buildEmailUrl = buildEmailUrl;
 const initValues = (obj, values) => {
     Object.keys(values).forEach((key) => {
-        if (typeof obj[key] === 'undefined') {
-            obj[key] = values[key];
+        const o = obj;
+        if (typeof o[key] === 'undefined') {
+            o[key] = values[key];
         }
     });
     return obj;
 };
-exports.initValues = initValues;
 
 
 /***/ }),
@@ -335,25 +351,27 @@ exports.initValues = initValues;
 /*!*************************!*\
   !*** ./common/types.ts ***!
   \*************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.mapType = exports.LogLevel = exports.Mode = void 0;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LogLevel": () => (/* binding */ LogLevel),
+/* harmony export */   "Mode": () => (/* binding */ Mode),
+/* harmony export */   "mapType": () => (/* binding */ mapType)
+/* harmony export */ });
 var Mode;
 (function (Mode) {
     Mode["production"] = "production";
     Mode["development"] = "development";
-})(Mode = exports.Mode || (exports.Mode = {}));
+})(Mode || (Mode = {}));
 var LogLevel;
 (function (LogLevel) {
     LogLevel["info"] = "info";
     LogLevel["debug"] = "debug";
     LogLevel["error"] = "error";
     LogLevel["warn"] = "warn";
-})(LogLevel = exports.LogLevel || (exports.LogLevel = {}));
+})(LogLevel || (LogLevel = {}));
 const mapType = (struct) => struct;
-exports.mapType = mapType;
 
 
 /***/ }),
@@ -362,17 +380,60 @@ exports.mapType = mapType;
 /*!****************************************************!*\
   !*** ./extension/app/resources/resources-types.ts ***!
   \****************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.boundedResourcesTypeIDs = exports.BoundedResourceTypeID = void 0;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BoundedResourceTypeID": () => (/* binding */ BoundedResourceTypeID),
+/* harmony export */   "QueryTabID": () => (/* binding */ QueryTabID),
+/* harmony export */   "boundedResourcesTypeIDs": () => (/* binding */ boundedResourcesTypeIDs),
+/* harmony export */   "serviceResourcesTypesIDs": () => (/* binding */ serviceResourcesTypesIDs)
+/* harmony export */ });
 var BoundedResourceTypeID;
 (function (BoundedResourceTypeID) {
     BoundedResourceTypeID["Accounts"] = "Accounts";
     BoundedResourceTypeID["Assets"] = "Assets";
-})(BoundedResourceTypeID = exports.BoundedResourceTypeID || (exports.BoundedResourceTypeID = {}));
-exports.boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
+})(BoundedResourceTypeID || (BoundedResourceTypeID = {}));
+const QueryTabID = '@@#Query#';
+const boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
+const serviceResourcesTypesIDs = [QueryTabID, ...boundedResourcesTypeIDs];
+
+
+/***/ }),
+
+/***/ "./extension/app/types/types-app-messages.ts":
+/*!***************************************************!*\
+  !*** ./extension/app/types/types-app-messages.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessageToApp": () => (/* binding */ MessageToApp)
+/* harmony export */ });
+/* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
+
+var MessageToApp;
+(function (MessageToApp) {
+    MessageToApp["AppShowExtension"] = "AppShowExtension";
+    MessageToApp["AppTakeResourceData"] = "AppTakeResourceData";
+    MessageToApp["AppTakeNewResourceData"] = "AppTakeNewResourceData";
+    MessageToApp["AppSyncWatchers"] = "AppSyncWatchers";
+    MessageToApp["AppQueryHasHash"] = "AppQueryHasHash";
+    MessageToApp["AppQueryHasSpecifyFields"] = "AppQueryHasSpecifyFields";
+    MessageToApp["AppSetLoadingState"] = "AppSetLoadingState";
+    MessageToApp["AppToggleShowExtension"] = "AppToggleShowExtension";
+    MessageToApp["AppSendToBackground"] = "AppSendToBackground";
+    MessageToApp["AppSendMessageOutside"] = "AppSendMessageOutside";
+    MessageToApp["AppTakeQuery"] = "AppTakeQuery";
+    MessageToApp["AppSetDebugMode"] = "AppSetDebugMode";
+    MessageToApp["AppTakeCallbackMessageResult"] = "AppTakeCallbackMessageResult";
+})(MessageToApp || (MessageToApp = {}));
+Object.values(MessageToApp).forEach((type) => {
+    if ((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getExecutingContextByMessageType)(type) !== 'app') {
+        throw new Error(`Wrong app message type "${type}"`);
+    }
+});
 
 
 /***/ }),
@@ -381,29 +442,26 @@ exports.boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
 /*!*****************************************************************!*\
   !*** ./extension/background/types/types-background-messages.ts ***!
   \*****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessageToBackground": () => (/* binding */ MessageToBackground)
+/* harmony export */ });
+/* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MessageToBackground = void 0;
-const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var MessageToBackground;
 (function (MessageToBackground) {
-    MessageToBackground["BGRunClearData"] = "BGRunClearData";
-    MessageToBackground["BGModifyQuery"] = "BGModifyQuery";
-    MessageToBackground["BGSetQuery"] = "BGSetQuery";
-    MessageToBackground["BGGetQuery"] = "BGGetQuery";
     MessageToBackground["BGDirectMessageToApp"] = "BGDirectMessageToApp";
-    MessageToBackground["BGSendMessageOutside"] = "BGSendMessageOutside";
+    MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
     MessageToBackground["BGSetWatchers"] = "BGSetWatchers";
     MessageToBackground["BGRegisterPlatformTab"] = "BGRegisterPlatformTab";
     MessageToBackground["BGToggleShowExtension"] = "BGToggleShowExtension";
     MessageToBackground["BGSetDebugMode"] = "BGSetDebugMode";
-    MessageToBackground["BGDirectMessageToInline"] = "BGDirectMessageToInline";
-    MessageToBackground["BGIntegrationWork"] = "BGIntegrationWork";
-})(MessageToBackground = exports.MessageToBackground || (exports.MessageToBackground = {}));
+    MessageToBackground["BGTakeCallbackMessage"] = "BGTakeCallbackMessage";
+})(MessageToBackground || (MessageToBackground = {}));
 Object.values(MessageToBackground).forEach((type) => {
-    if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'background') {
+    if ((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getExecutingContextByMessageType)(type) !== 'background') {
         throw new Error(`Wrong background message type "${type}"`);
     }
 });
@@ -415,15 +473,30 @@ Object.values(MessageToBackground).forEach((type) => {
 /*!*****************************************!*\
   !*** ./extension/common/api-support.ts ***!
   \*****************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isActionOnClickedSupported": () => (/* binding */ isActionOnClickedSupported),
+/* harmony export */   "isAddEventListenerSupported": () => (/* binding */ isAddEventListenerSupported),
+/* harmony export */   "isBrowserActionOnClickedSupported": () => (/* binding */ isBrowserActionOnClickedSupported),
+/* harmony export */   "isOnBeforeRequestSupported": () => (/* binding */ isOnBeforeRequestSupported),
+/* harmony export */   "isOnBeforeSendHeadersSupported": () => (/* binding */ isOnBeforeSendHeadersSupported),
+/* harmony export */   "isPostMessageSupported": () => (/* binding */ isPostMessageSupported),
+/* harmony export */   "isRuntimeGetUrlSupported": () => (/* binding */ isRuntimeGetUrlSupported),
+/* harmony export */   "isRuntimeOnInstalledSupported": () => (/* binding */ isRuntimeOnInstalledSupported),
+/* harmony export */   "isRuntimeOnMessageExternalSupported": () => (/* binding */ isRuntimeOnMessageExternalSupported),
+/* harmony export */   "isRuntimeOnMessageSupported": () => (/* binding */ isRuntimeOnMessageSupported),
+/* harmony export */   "isRuntimeSendMessageSupported": () => (/* binding */ isRuntimeSendMessageSupported),
+/* harmony export */   "isTabsOnRemovedSupported": () => (/* binding */ isTabsOnRemovedSupported),
+/* harmony export */   "isTabsQuerySupported": () => (/* binding */ isTabsQuerySupported),
+/* harmony export */   "isTabsSendMessageSupported": () => (/* binding */ isTabsSendMessageSupported)
+/* harmony export */ });
+/* harmony import */ var _common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isRuntimeGetUrlSupported = exports.isTabsSendMessageSupported = exports.isTabsQuerySupported = exports.isOnBeforeSendHeadersSupported = exports.isOnBeforeRequestSupported = exports.isBrowserActionOnClickedSupported = exports.isActionOnClickedSupported = exports.isTabsOnRemovedSupported = exports.isRuntimeOnMessageExternalSupported = exports.isRuntimeOnMessageSupported = exports.isRuntimeOnInstalledSupported = exports.isRuntimeSendMessageSupported = exports.isAddEventListenerSupported = exports.isPostMessageSupported = void 0;
-const common_extension_helpers_1 = __webpack_require__(/*! ./common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
-const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
+const loggers = (__webpack_require__(/*! ./loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('api-support');
 const isPostMessageSupported = (...logData) => {
-    if (!(window === null || window === void 0 ? void 0 : window.postMessage)) {
+    if (!window?.postMessage) {
         loggers
             .warn()
             .log('API window.postMessage is not supported', ...logData);
@@ -431,9 +504,8 @@ const isPostMessageSupported = (...logData) => {
     }
     return true;
 };
-exports.isPostMessageSupported = isPostMessageSupported;
 const isAddEventListenerSupported = (...logData) => {
-    if (!(window === null || window === void 0 ? void 0 : window.addEventListener)) {
+    if (!window?.addEventListener) {
         loggers
             .warn()
             .log('API window.addEventListener is not supported', ...logData);
@@ -441,10 +513,8 @@ const isAddEventListenerSupported = (...logData) => {
     }
     return true;
 };
-exports.isAddEventListenerSupported = isAddEventListenerSupported;
 const isRuntimeSendMessageSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.runtime?.sendMessage) {
         loggers
             .warn()
             .log('API runtime.sendMessage is not supported', ...logData);
@@ -452,10 +522,8 @@ const isRuntimeSendMessageSupported = (...logData) => {
     }
     return true;
 };
-exports.isRuntimeSendMessageSupported = isRuntimeSendMessageSupported;
 const isRuntimeOnInstalledSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onInstalled) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)().runtime?.onInstalled?.addListener) {
         loggers
             .warn()
             .log('API runtime.onInstalled.addListener is not supported', ...logData);
@@ -463,10 +531,8 @@ const isRuntimeOnInstalledSupported = (...logData) => {
     }
     return true;
 };
-exports.isRuntimeOnInstalledSupported = isRuntimeOnInstalledSupported;
 const isRuntimeOnMessageSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessage) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)().runtime?.onMessage?.addListener) {
         loggers
             .warn()
             .log('API runtime.onMessage.addListener is not supported', ...logData);
@@ -474,10 +540,8 @@ const isRuntimeOnMessageSupported = (...logData) => {
     }
     return true;
 };
-exports.isRuntimeOnMessageSupported = isRuntimeOnMessageSupported;
 const isRuntimeOnMessageExternalSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime) === null || _a === void 0 ? void 0 : _a.onMessageExternal) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)().runtime?.onMessageExternal?.addListener) {
         loggers
             .warn()
             .log('API runtime.onMessageExternal.addListener is not supported', ...logData);
@@ -485,10 +549,8 @@ const isRuntimeOnMessageExternalSupported = (...logData) => {
     }
     return true;
 };
-exports.isRuntimeOnMessageExternalSupported = isRuntimeOnMessageExternalSupported;
 const isTabsOnRemovedSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)().tabs) === null || _a === void 0 ? void 0 : _a.onRemoved) === null || _b === void 0 ? void 0 : _b.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)().tabs?.onRemoved?.addListener) {
         loggers
             .warn()
             .log('API tabs.onRemoved.addListener is not supported', ...logData);
@@ -496,10 +558,8 @@ const isTabsOnRemovedSupported = (...logData) => {
     }
     return true;
 };
-exports.isTabsOnRemovedSupported = isTabsOnRemovedSupported;
 const isActionOnClickedSupported = (...logData) => {
-    var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.action) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.action?.onClicked?.addListener) {
         loggers
             .warn()
             .log('API action.onClicked.addListener is not supported', ...logData);
@@ -507,10 +567,8 @@ const isActionOnClickedSupported = (...logData) => {
     }
     return true;
 };
-exports.isActionOnClickedSupported = isActionOnClickedSupported;
 const isBrowserActionOnClickedSupported = (...logData) => {
-    var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.browserAction) === null || _b === void 0 ? void 0 : _b.onClicked) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.browserAction?.onClicked?.addListener) {
         loggers
             .warn()
             .log('API browserAction.onClicked.addListener is not supported', ...logData);
@@ -518,10 +576,8 @@ const isBrowserActionOnClickedSupported = (...logData) => {
     }
     return true;
 };
-exports.isBrowserActionOnClickedSupported = isBrowserActionOnClickedSupported;
 const isOnBeforeRequestSupported = (...logData) => {
-    var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeRequest) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.webRequest?.onBeforeRequest?.addListener) {
         loggers
             .warn()
             .log('API webRequest.onBeforeRequest is not supported', ...logData);
@@ -529,10 +585,8 @@ const isOnBeforeRequestSupported = (...logData) => {
     }
     return true;
 };
-exports.isOnBeforeRequestSupported = isOnBeforeRequestSupported;
 const isOnBeforeSendHeadersSupported = (...logData) => {
-    var _a, _b, _c;
-    if (!((_c = (_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.webRequest) === null || _b === void 0 ? void 0 : _b.onBeforeSendHeaders) === null || _c === void 0 ? void 0 : _c.addListener)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.webRequest?.onBeforeSendHeaders?.addListener) {
         loggers
             .warn()
             .log('API webRequest.onBeforeSendHeaders is not supported', ...logData);
@@ -540,10 +594,8 @@ const isOnBeforeSendHeadersSupported = (...logData) => {
     }
     return true;
 };
-exports.isOnBeforeSendHeadersSupported = isOnBeforeSendHeadersSupported;
 const isTabsQuerySupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.query)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.tabs?.query) {
         loggers
             .warn()
             .log('API tabs.query is not supported', ...logData);
@@ -551,10 +603,8 @@ const isTabsQuerySupported = (...logData) => {
     }
     return true;
 };
-exports.isTabsQuerySupported = isTabsQuerySupported;
 const isTabsSendMessageSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.tabs) === null || _b === void 0 ? void 0 : _b.sendMessage)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.tabs?.sendMessage) {
         loggers
             .warn()
             .log('API tabs.sendMessage is not supported', ...logData);
@@ -562,10 +612,8 @@ const isTabsSendMessageSupported = (...logData) => {
     }
     return true;
 };
-exports.isTabsSendMessageSupported = isTabsSendMessageSupported;
 const isRuntimeGetUrlSupported = (...logData) => {
-    var _a, _b;
-    if (!((_b = (_a = (0, common_extension_helpers_1.getBrowserContext)()) === null || _a === void 0 ? void 0 : _a.runtime) === null || _b === void 0 ? void 0 : _b.getURL)) {
+    if (!(0,_common_extension_helpers__WEBPACK_IMPORTED_MODULE_0__.getBrowserContext)()?.runtime?.getURL) {
         loggers
             .warn()
             .log('API runtime.getURL is not supported', ...logData);
@@ -573,7 +621,6 @@ const isRuntimeGetUrlSupported = (...logData) => {
     }
     return true;
 };
-exports.isRuntimeGetUrlSupported = isRuntimeGetUrlSupported;
 
 
 /***/ }),
@@ -582,20 +629,21 @@ exports.isRuntimeGetUrlSupported = isRuntimeGetUrlSupported;
 /*!******************************************************!*\
   !*** ./extension/common/common-extension-helpers.ts ***!
   \******************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getBrowserContext": () => (/* binding */ getBrowserContext),
+/* harmony export */   "getWebAccessibleUrl": () => (/* binding */ getWebAccessibleUrl)
+/* harmony export */ });
+/* harmony import */ var _api_support__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getWebAccessibleUrl = exports.getBrowserContext = void 0;
-const api_support_1 = __webpack_require__(/*! ./api-support */ "./extension/common/api-support.ts");
-const getBrowserContext = () => typeof browser !== 'undefined' ? browser : chrome;
-exports.getBrowserContext = getBrowserContext;
+const getBrowserContext = () => (typeof browser !== 'undefined' ? browser : chrome);
 const getWebAccessibleUrl = (path) => {
-    return (0, api_support_1.isRuntimeGetUrlSupported)(path)
-        ? (0, exports.getBrowserContext)().runtime.getURL(path)
+    return (0,_api_support__WEBPACK_IMPORTED_MODULE_0__.isRuntimeGetUrlSupported)(path)
+        ? getBrowserContext().runtime.getURL(path)
         : '';
 };
-exports.getWebAccessibleUrl = getWebAccessibleUrl;
 
 
 /***/ }),
@@ -604,37 +652,45 @@ exports.getWebAccessibleUrl = getWebAccessibleUrl;
 /*!********************************************!*\
   !*** ./extension/common/common-helpers.ts ***!
   \********************************************/
-/***/ (function(__unused_webpack_module, exports) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createFormDataString = exports.compareVersions = exports.getVersionFromString = exports.removeDoubleQuotesAround = exports.removeQuotesAround = exports.removeBracketsAround = exports.buildQueryParts = exports.getElementsUnderCursor = exports.downloadFile = exports.openMailTo = exports.copyToClipboard = exports.createClassName = exports.waitHTMLElement = exports.isInsideIframe = exports.mountHTMLElement = exports.cssObjectToString = void 0;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "buildQueryParts": () => (/* binding */ buildQueryParts),
+/* harmony export */   "compareVersions": () => (/* binding */ compareVersions),
+/* harmony export */   "copyToClipboard": () => (/* binding */ copyToClipboard),
+/* harmony export */   "createClassName": () => (/* binding */ createClassName),
+/* harmony export */   "createFormDataString": () => (/* binding */ createFormDataString),
+/* harmony export */   "cssObjectToString": () => (/* binding */ cssObjectToString),
+/* harmony export */   "downloadFile": () => (/* binding */ downloadFile),
+/* harmony export */   "getElementsUnderCursor": () => (/* binding */ getElementsUnderCursor),
+/* harmony export */   "getVersionFromString": () => (/* binding */ getVersionFromString),
+/* harmony export */   "isInsideIframe": () => (/* binding */ isInsideIframe),
+/* harmony export */   "mountHTMLElement": () => (/* binding */ mountHTMLElement),
+/* harmony export */   "openMailTo": () => (/* binding */ openMailTo),
+/* harmony export */   "removeBracketsAround": () => (/* binding */ removeBracketsAround),
+/* harmony export */   "removeDoubleQuotesAround": () => (/* binding */ removeDoubleQuotesAround),
+/* harmony export */   "removeQuotesAround": () => (/* binding */ removeQuotesAround),
+/* harmony export */   "waitHTMLElement": () => (/* binding */ waitHTMLElement)
+/* harmony export */ });
 const cssObjectToString = (styles) => Object.keys(styles)
-    .reduce((res, key) => res += `${key}:${styles[key]};`, '');
-exports.cssObjectToString = cssObjectToString;
+    .reduce((res, key) => {
+    res += `${key}:${styles[key]};`;
+    return res;
+}, '');
 const mountHTMLElement = (element, mountElement, options) => {
     const elem = document.createElement(element);
-    if (options === null || options === void 0 ? void 0 : options.attributes) {
+    if (options?.attributes) {
         Object.keys(options.attributes).forEach((key) => {
-            var _a;
             elem.setAttribute(key, key === 'style'
-                ? (0, exports.cssObjectToString)(options.attributes[key])
-                : ((_a = options.attributes) === null || _a === void 0 ? void 0 : _a[key]) || '');
+                ? cssObjectToString(options.attributes[key])
+                : options.attributes?.[key] || '');
         });
     }
-    if (options === null || options === void 0 ? void 0 : options.innerHtml) {
+    if (options?.innerHtml) {
         elem.innerHTML = options.innerHtml;
     }
-    if (options === null || options === void 0 ? void 0 : options.innerText) {
+    if (options?.innerText) {
         elem.innerText = options.innerText;
     }
     if (mountElement) {
@@ -642,7 +698,6 @@ const mountHTMLElement = (element, mountElement, options) => {
     }
     return elem;
 };
-exports.mountHTMLElement = mountHTMLElement;
 const isInsideIframe = () => {
     try {
         return window.self !== window.top;
@@ -651,8 +706,7 @@ const isInsideIframe = () => {
         return true;
     }
 };
-exports.isInsideIframe = isInsideIframe;
-const waitHTMLElement = (query, rootElement = document) => __awaiter(void 0, void 0, void 0, function* () {
+const waitHTMLElement = async (query, rootElement = document) => {
     return new Promise((resolve) => {
         new MutationObserver((_, observer) => {
             const element = rootElement.querySelector(query);
@@ -662,10 +716,8 @@ const waitHTMLElement = (query, rootElement = document) => __awaiter(void 0, voi
             }
         }).observe(rootElement, { childList: true, subtree: true });
     });
-});
-exports.waitHTMLElement = waitHTMLElement;
+};
 const createClassName = (list) => list.filter(Boolean).join(' ');
-exports.createClassName = createClassName;
 const copyToClipboard = (str) => {
     const el = document.createElement('textarea');
     el.value = str;
@@ -679,7 +731,6 @@ const copyToClipboard = (str) => {
     document.execCommand('copy');
     document.body.removeChild(el);
 };
-exports.copyToClipboard = copyToClipboard;
 const openMailTo = (url) => {
     const link = document.createElement('a');
     link.href = url;
@@ -687,7 +738,6 @@ const openMailTo = (url) => {
     link.click();
     document.body.removeChild(link);
 };
-exports.openMailTo = openMailTo;
 const downloadFile = (type, content, name) => {
     const prefix = type === 'csv'
         ? 'data:text/csv;charset=utf-8,'
@@ -699,7 +749,6 @@ const downloadFile = (type, content, name) => {
     link.click();
     document.body.removeChild(link);
 };
-exports.downloadFile = downloadFile;
 const getElementsUnderCursor = (e, filter) => {
     const x = e.clientX;
     const y = e.clientY;
@@ -735,7 +784,6 @@ const getElementsUnderCursor = (e, filter) => {
     });
     return filtered;
 };
-exports.getElementsUnderCursor = getElementsUnderCursor;
 const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparator, decorators, prefix) => {
     const queryParts = [];
     Object.keys(resources).forEach((fieldName) => {
@@ -748,7 +796,6 @@ const buildQueryParts = (resources, getOperator, valuesSeparator, fieldsSeparato
         ? `${prefix} ${queryPartsStr}`
         : queryPartsStr;
 };
-exports.buildQueryParts = buildQueryParts;
 const removeBracketsAround = (str) => {
     let result = str;
     if (str[0] === '(') {
@@ -759,7 +806,6 @@ const removeBracketsAround = (str) => {
     }
     return result;
 };
-exports.removeBracketsAround = removeBracketsAround;
 const removeQuotesAround = (str) => {
     let result = str;
     if (str[0] === '"' || str[0] === "'") {
@@ -770,7 +816,6 @@ const removeQuotesAround = (str) => {
     }
     return result;
 };
-exports.removeQuotesAround = removeQuotesAround;
 const removeDoubleQuotesAround = (str) => {
     let result = str;
     if (str[0] === '"') {
@@ -781,7 +826,6 @@ const removeDoubleQuotesAround = (str) => {
     }
     return result;
 };
-exports.removeDoubleQuotesAround = removeDoubleQuotesAround;
 const getVersionFromString = (version) => {
     if (typeof version !== 'string'
         || !/^[.0-9]+$/.test(version)) {
@@ -790,17 +834,15 @@ const getVersionFromString = (version) => {
     const result = parseInt(version.replace(/\./g, ''), 10);
     return Number.isNaN(result) ? 0 : result;
 };
-exports.getVersionFromString = getVersionFromString;
 const compareVersions = (version1, version2) => {
-    const nVersion1 = (0, exports.getVersionFromString)(version1);
-    const nVersion2 = (0, exports.getVersionFromString)(version2);
+    const nVersion1 = getVersionFromString(version1);
+    const nVersion2 = getVersionFromString(version2);
     return nVersion1 === nVersion2
         ? 'equal'
         : nVersion1 > nVersion2
             ? 'greater'
             : 'less';
 };
-exports.compareVersions = compareVersions;
 const createFormDataString = (data) => {
     const urlEncodedDataPairs = [];
     for (const [name, value] of Object.entries(data)) {
@@ -810,7 +852,6 @@ const createFormDataString = (data) => {
         .join('&')
         .replace(/%20/g, '+');
 };
-exports.createFormDataString = createFormDataString;
 
 
 /***/ }),
@@ -819,22 +860,22 @@ exports.createFormDataString = createFormDataString;
 /*!**********************************************!*\
   !*** ./extension/common/common-listeners.ts ***!
   \**********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isMessageMatched": () => (/* binding */ isMessageMatched)
+/* harmony export */ });
+/* harmony import */ var _loggers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./loggers */ "./extension/common/loggers/index.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isMessageMatched = void 0;
-const loggers_1 = __webpack_require__(/*! ./loggers */ "./extension/common/loggers/index.ts");
 const isMessageMatched = (matchCondition, message, ...otherInfo) => {
     if (matchCondition()) {
-        loggers_1.loggers
-            .debug()
+        _loggers__WEBPACK_IMPORTED_MODULE_0__.loggers.debug()
             .log(`got ${message.type} message`, message, ...otherInfo);
         return true;
     }
     return false;
 };
-exports.isMessageMatched = isMessageMatched;
 
 
 /***/ }),
@@ -843,26 +884,33 @@ exports.isMessageMatched = isMessageMatched;
 /*!**********************************!*\
   !*** ./extension/common/envs.ts ***!
   \**********************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "backgroundPlatformIDFromENV": () => (/* binding */ backgroundPlatformIDFromENV),
+/* harmony export */   "contentPlatformIDFromENV": () => (/* binding */ contentPlatformIDFromENV),
+/* harmony export */   "logLevel": () => (/* binding */ logLevel),
+/* harmony export */   "mode": () => (/* binding */ mode),
+/* harmony export */   "version": () => (/* binding */ version)
+/* harmony export */ });
+/* harmony import */ var _types_types_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
+/* harmony import */ var _common_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.version = exports.logLevel = exports.mode = exports.backgroundPlatformIDFromENV = exports.contentPlatformIDFromENV = void 0;
-const types_common_1 = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
-const types_1 = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
-exports.contentPlatformIDFromENV = Object.values(types_common_1.PlatformID).includes(null)
+const contentPlatformIDFromENV = Object.values(_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID).includes(null)
     ? null
     : null;
-exports.backgroundPlatformIDFromENV = Object.values(types_common_1.PlatformID).includes(null)
+const backgroundPlatformIDFromENV = Object.values(_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID).includes(null)
     ? null
     : null;
-exports.mode = "development" === types_1.Mode.production
-    ? types_1.Mode.production
-    : types_1.Mode.development;
-exports.logLevel = Object.keys(types_1.LogLevel).includes("info")
+const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.production
+    ? _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.production
+    : _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.development;
+const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
-    : types_1.LogLevel.info;
-exports.version = "1.4.2";
+    : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
+const version = "1.4.3";
 
 
 /***/ }),
@@ -871,49 +919,55 @@ exports.version = "1.4.2";
 /*!*******************************************!*\
   !*** ./extension/common/loggers/index.ts ***!
   \*******************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Loggers": () => (/* binding */ Loggers),
+/* harmony export */   "loggers": () => (/* binding */ loggers),
+/* harmony export */   "setDebugMode": () => (/* binding */ setDebugMode),
+/* harmony export */   "setLoggers": () => (/* binding */ setLoggers)
+/* harmony export */ });
+/* harmony import */ var _common_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
+/* harmony import */ var _envs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../envs */ "./extension/common/envs.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.setLoggers = exports.Loggers = exports.setDebugMode = exports.loggers = void 0;
-const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
-const envs_1 = __webpack_require__(/*! ../envs */ "./extension/common/envs.ts");
-let isDebugMode = envs_1.mode === types_1.Mode.development || envs_1.logLevel === types_1.LogLevel.debug;
+let loggers;
+let isDebugMode = _envs__WEBPACK_IMPORTED_MODULE_1__.mode === _common_types__WEBPACK_IMPORTED_MODULE_0__.Mode.development || _envs__WEBPACK_IMPORTED_MODULE_1__.logLevel === _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.debug;
 const setDebugMode = (debugMode) => {
     isDebugMode = debugMode;
 };
-exports.setDebugMode = setDebugMode;
 class Loggers {
-    constructor(prefix = '', level = types_1.LogLevel.info) {
-        this.prefix = '';
-        this.level = types_1.LogLevel.info;
+    prefix = '';
+    level = _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.info;
+    createInstance(prefix = '', level = _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.info) {
+        return new Loggers(prefix, level);
+    }
+    constructor(prefix = '', level = _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.info) {
         this.prefix = prefix;
         this.level = level;
     }
-    createInstance(prefix = '', level = types_1.LogLevel.info) {
-        return new Loggers(prefix, level);
-    }
     log(...params) {
-        if (this.level === types_1.LogLevel.debug && !isDebugMode) {
+        if (this.level === _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.debug && !isDebugMode) {
             return;
         }
-        console[this.level === types_1.LogLevel.error
+        console[this.level === _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.error
             ? 'error'
-            : this.level === types_1.LogLevel.warn
+            : this.level === _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.warn
                 ? 'warn'
                 : 'log'](this.prefix || '==>', ...params);
     }
     error() {
-        return this.createInstance(`ERROR: ${this.prefix}`, types_1.LogLevel.error);
+        return this.createInstance(`ERROR: ${this.prefix}`, _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.error);
     }
     warn() {
-        return this.createInstance(`WARN: ${this.prefix}`, types_1.LogLevel.warn);
+        return this.createInstance(`WARN: ${this.prefix}`, _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.warn);
     }
     info() {
-        return this.createInstance(`INFO: ${this.prefix}`, types_1.LogLevel.info);
+        return this.createInstance(`INFO: ${this.prefix}`, _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.info);
     }
     debug() {
-        return this.createInstance(`DEBUG: ${this.prefix}`, types_1.LogLevel.debug);
+        return this.createInstance(`DEBUG: ${this.prefix}`, _common_types__WEBPACK_IMPORTED_MODULE_0__.LogLevel.debug);
     }
     addPrefix(prefix) {
         return this.createInstance([this.prefix, prefix].join(' '), this.level);
@@ -922,16 +976,14 @@ class Loggers {
         return this.createInstance(this.prefix, level);
     }
     setPrefix(prefix) {
-        exports.loggers = this.addPrefix(prefix);
-        return exports.loggers;
+        loggers = this.addPrefix(prefix);
+        return loggers;
     }
 }
-exports.Loggers = Loggers;
-exports.loggers = new Loggers();
+loggers = new Loggers();
 const setLoggers = (newLoggers) => {
-    exports.loggers = newLoggers;
+    loggers = newLoggers;
 };
-exports.setLoggers = setLoggers;
 
 
 /***/ }),
@@ -940,17 +992,20 @@ exports.setLoggers = setLoggers;
 /*!***************************************************!*\
   !*** ./extension/common/loggers/loggers-debug.ts ***!
   \***************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DebugID": () => (/* binding */ DebugID)
+/* harmony export */ });
+/* harmony import */ var _common_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
+/* harmony import */ var _loggers_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DebugID = void 0;
-const types_1 = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
-const loggers_helpers_1 = __webpack_require__(/*! ./loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var DebugID;
 (function (DebugID) {
-    DebugID[DebugID["debugIDExternal"] = (0, types_1.mapType)( false || loggers_helpers_1.debugID)] = "debugIDExternal";
-})(DebugID = exports.DebugID || (exports.DebugID = {}));
+    DebugID[DebugID["debugIDExternal"] = (0,_common_types__WEBPACK_IMPORTED_MODULE_0__.mapType)( false || _loggers_helpers__WEBPACK_IMPORTED_MODULE_1__.debugID)] = "debugIDExternal";
+})(DebugID || (DebugID = {}));
 
 
 /***/ }),
@@ -959,11 +1014,14 @@ var DebugID;
 /*!*****************************************************!*\
   !*** ./extension/common/loggers/loggers-helpers.ts ***!
   \*****************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.debugID = exports.getExecutingContextByMessageType = exports.getDebugPrefix = void 0;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "debugID": () => (/* binding */ debugID),
+/* harmony export */   "getDebugPrefix": () => (/* binding */ getDebugPrefix),
+/* harmony export */   "getExecutingContextByMessageType": () => (/* binding */ getExecutingContextByMessageType)
+/* harmony export */ });
 const getDebugPrefix = (context) => {
     return context === 'background'
         ? 'bg ==>'
@@ -975,7 +1033,6 @@ const getDebugPrefix = (context) => {
                     ? 'app ==>'
                     : 'unknown ==>';
 };
-exports.getDebugPrefix = getDebugPrefix;
 const getExecutingContextByMessageType = (messageType) => {
     let prefix = (messageType || '').slice(0, 3).toLowerCase();
     if (prefix === 'app') {
@@ -990,8 +1047,7 @@ const getExecutingContextByMessageType = (messageType) => {
                 ? 'inline'
                 : 'unknown';
 };
-exports.getExecutingContextByMessageType = getExecutingContextByMessageType;
-exports.debugID = 'debug-external-der3edc3op3e4dde44rt';
+const debugID = 'debug-external-der3edc3op3e4dde44rt';
 
 
 /***/ }),
@@ -1000,17 +1056,22 @@ exports.debugID = 'debug-external-der3edc3op3e4dde44rt';
 /*!************************************************!*\
   !*** ./extension/common/types/types-common.ts ***!
   \************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlatformName = exports.PlatformID = exports.Browser = void 0;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Browser": () => (/* binding */ Browser),
+/* harmony export */   "PlatformID": () => (/* binding */ PlatformID),
+/* harmony export */   "PlatformName": () => (/* binding */ PlatformName),
+/* harmony export */   "PlatformQueryID": () => (/* binding */ PlatformQueryID),
+/* harmony export */   "SiemType": () => (/* binding */ SiemType)
+/* harmony export */ });
 var Browser;
 (function (Browser) {
     Browser["chrome"] = "chrome";
     Browser["firefox"] = "firefox";
     Browser["edge"] = "edge";
-})(Browser = exports.Browser || (exports.Browser = {}));
+})(Browser || (Browser = {}));
 var PlatformID;
 (function (PlatformID) {
     PlatformID["MicrosoftSentinel"] = "MicrosoftSentinel";
@@ -1023,7 +1084,25 @@ var PlatformID;
     PlatformID["Athena"] = "Athena";
     PlatformID["LogScale"] = "LogScale";
     PlatformID["Chronicle"] = "Chronicle";
-})(PlatformID = exports.PlatformID || (exports.PlatformID = {}));
+})(PlatformID || (PlatformID = {}));
+var PlatformQueryID;
+(function (PlatformQueryID) {
+    PlatformQueryID["ElasticEQl"] = "ElasticEql";
+})(PlatformQueryID || (PlatformQueryID = {}));
+var SiemType;
+(function (SiemType) {
+    SiemType["Sentinel"] = "ala";
+    SiemType["Defender"] = "mdatp";
+    SiemType["Splunk"] = "splunk";
+    SiemType["Qradar"] = "qradar";
+    SiemType["ElasticEQL"] = "es-eql";
+    SiemType["ElasticLucene"] = "elasticsearch";
+    SiemType["ArcSight"] = "arcsight-keyword";
+    SiemType["Athena"] = "athena";
+    SiemType["LogScale"] = "humio";
+    SiemType["Chronicle"] = "chronicle-query";
+    SiemType["OpenSearch"] = "opendistro-query";
+})(SiemType || (SiemType = {}));
 var PlatformName;
 (function (PlatformName) {
     PlatformName["MicrosoftSentinel"] = "Microsoft Sentinel";
@@ -1036,7 +1115,7 @@ var PlatformName;
     PlatformName["Athena"] = "Amazon Athena";
     PlatformName["LogScale"] = "Falcon LogScale";
     PlatformName["Chronicle"] = "Chronicle";
-})(PlatformName = exports.PlatformName || (exports.PlatformName = {}));
+})(PlatformName || (PlatformName = {}));
 
 
 /***/ }),
@@ -1045,48 +1124,54 @@ var PlatformName;
 /*!****************************************************************!*\
   !*** ./extension/content/platforms/AbstractContentPlatform.ts ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AbstractContentPlatform": () => (/* binding */ AbstractContentPlatform)
+/* harmony export */ });
+/* harmony import */ var _common_common_listeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+/* harmony import */ var _types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+/* harmony import */ var _services_content_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
+/* harmony import */ var _inline_types_types_inline_messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+/* harmony import */ var _background_types_types_background_messages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AbstractContentPlatform = void 0;
-const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
-const types_content_messages_1 = __webpack_require__(/*! ../types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
-const content_services_1 = __webpack_require__(/*! ../services/content-services */ "./extension/content/services/content-services.ts");
-const types_inline_messages_1 = __webpack_require__(/*! ../../inline/types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const types_background_messages_1 = __webpack_require__(/*! ../../background/types/types-background-messages */ "./extension/background/types/types-background-messages.ts");
+
+
+
 class AbstractContentPlatform {
-    constructor() {
-        this.fields = new Set();
-    }
+    fields = new Set();
     static processInlineListeners(message) {
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSModifyQuery === message.type, message)) {
-            (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISModifyQuery }), false);
-        }
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSSetQuery === message.type, message)) {
-            (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISSetQuery }), false);
-        }
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSGetQuery === message.type, message)) {
-            (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISGetQuery }), false);
-        }
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSSendMessageOutside === message.type, message)) {
-            (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_background_messages_1.MessageToBackground.BGSendMessageOutside }));
-        }
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSSetDebugMode === message.type, message)) {
+        // if (isMessageMatched(
+        //   () => MessageToContent.CSSendMessageOutside === message.type,
+        //   message,
+        // )) {
+        //   sendMessageFromContent({
+        //     ...message,
+        //     id: `${message.id}--${message.type}`,
+        //     type: MessageToBackground.BGSendMessageOutside,
+        //   });
+        // }
+        if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_0__.isMessageMatched)(() => _types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSSetDebugMode === message.type, message)) {
             const { debugMode } = message.payload;
             (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
-            (0, content_services_1.sendMessageFromContent)(Object.assign(Object.assign({}, message), { id: `${message.id}--${message.type}`, type: types_inline_messages_1.MessageToInline.ISSetDebugMode }), false);
-        }
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSDirectMessageToApp === message.type, message)) {
-            (0, content_services_1.sendMessageFromContent)({
+            (0,_services_content_services__WEBPACK_IMPORTED_MODULE_2__.sendMessageFromContent)({
+                ...message,
                 id: `${message.id}--${message.type}`,
-                type: types_background_messages_1.MessageToBackground.BGDirectMessageToApp,
+                type: _inline_types_types_inline_messages__WEBPACK_IMPORTED_MODULE_3__.MessageToInline.ISSetDebugMode,
+            }, false);
+        }
+        if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_0__.isMessageMatched)(() => _types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSDirectMessageToApp === message.type, message)) {
+            (0,_services_content_services__WEBPACK_IMPORTED_MODULE_2__.sendMessageFromContent)({
+                id: `${message.id}--${message.type}`,
+                type: _background_types_types_background_messages__WEBPACK_IMPORTED_MODULE_4__.MessageToBackground.BGDirectMessageToApp,
                 payload: message.payload,
             });
         }
-        if ((0, common_listeners_1.isMessageMatched)(() => types_content_messages_1.MessageToContent.CSDirectMessageToInline === message.type, message)) {
+        if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_0__.isMessageMatched)(() => _types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSDirectMessageToInline === message.type, message)) {
             const { type, payload } = message.payload;
-            (0, content_services_1.sendMessageFromContent)({
+            (0,_services_content_services__WEBPACK_IMPORTED_MODULE_2__.sendMessageFromContent)({
                 id: `${message.id}--${message.type}`,
                 type,
                 payload,
@@ -1094,7 +1179,6 @@ class AbstractContentPlatform {
         }
     }
 }
-exports.AbstractContentPlatform = AbstractContentPlatform;
 
 
 /***/ }),
@@ -1103,66 +1187,93 @@ exports.AbstractContentPlatform = AbstractContentPlatform;
 /*!******************************************************************!*\
   !*** ./extension/content/platforms/MicrosoftDefenderPlatform.ts ***!
   \******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MicrosoftDefenderPlatform": () => (/* binding */ MicrosoftDefenderPlatform)
+/* harmony export */ });
+/* harmony import */ var _types_types_content_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+/* harmony import */ var _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
+/* harmony import */ var _services_content_services_listeners__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
+/* harmony import */ var _common_common_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
+/* harmony import */ var _manifest_public_resources__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
+/* harmony import */ var _app_resources_resources_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
+/* harmony import */ var _common_checkers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+/* harmony import */ var _common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+/* harmony import */ var _AbstractContentPlatform__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AbstractContentPlatform */ "./extension/content/platforms/AbstractContentPlatform.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MicrosoftDefenderPlatform = void 0;
-const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const types_common_1 = __webpack_require__(/*! ../../common/types/types-common */ "./extension/common/types/types-common.ts");
-const content_services_listeners_1 = __webpack_require__(/*! ../services/content-services-listeners */ "./extension/content/services/content-services-listeners.ts");
-const common_helpers_1 = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
-const public_resources_1 = __webpack_require__(/*! ../../manifest/public-resources */ "./extension/manifest/public-resources.ts");
-const resources_types_1 = __webpack_require__(/*! ../../app/resources/resources-types */ "./extension/app/resources/resources-types.ts");
-const checkers_1 = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
-const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
-const AbstractContentPlatform_1 = __webpack_require__(/*! ./AbstractContentPlatform */ "./extension/content/platforms/AbstractContentPlatform.ts");
+
+
+
+
+
+
+
 let loggers;
-class MicrosoftDefenderPlatform extends AbstractContentPlatform_1.AbstractContentPlatform {
-    constructor() {
-        super(...arguments);
-        this.defaultWatchers = {
-            [resources_types_1.BoundedResourceTypeID.Accounts]: [
-                'AccountName',
-                'InitiatingProcessAccountName',
-                'RequestAccountName',
-                'InitiatingProcessAccountSid',
-                'RequestAccountName',
-            ],
-            [resources_types_1.BoundedResourceTypeID.Assets]: [
-                'DeviceName',
-                'AccountDomain',
-                'InitiatingProcessAccountDomain',
-            ],
-        };
-        this.extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;
-    }
+class MicrosoftDefenderPlatform extends _AbstractContentPlatform__WEBPACK_IMPORTED_MODULE_8__.AbstractContentPlatform {
+    defaultWatchers = {
+        [_app_resources_resources_types__WEBPACK_IMPORTED_MODULE_5__.BoundedResourceTypeID.Accounts]: [
+            'AccountName',
+            'InitiatingProcessAccountName',
+            'RequestAccountName',
+            'InitiatingProcessAccountSid',
+            'RequestAccountName',
+        ],
+        [_app_resources_resources_types__WEBPACK_IMPORTED_MODULE_5__.BoundedResourceTypeID.Assets]: [
+            'DeviceName',
+            'AccountDomain',
+            'InitiatingProcessAccountDomain',
+        ],
+    };
+    static id = _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.PlatformID.MicrosoftDefender;
+    static extensionDefaultPosition = {
+        top: 0,
+        left: 0,
+        width: 480,
+        height: 480,
+    };
     static buildQueryParts(type, resources, withPrefix = false) {
         const prefix = 'where';
-        return (0, common_helpers_1.buildQueryParts)(resources, () => type === 'exclude' ? ' != ' : ' == ', type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
+        return (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_3__.buildQueryParts)(resources, () => (type === 'exclude' ? ' != ' : ' == '), type === 'exclude' ? ' and ' : ' or ', type === 'exclude' ? ' and ' : ' or ', {
             leftOperand: (v) => v,
             rightOperand: (v) => MicrosoftDefenderPlatform.normalizedValue(v),
         }, withPrefix ? prefix : undefined);
     }
+    static normalizedValue = (value) => {
+        const nValue = (0,_common_checkers__WEBPACK_IMPORTED_MODULE_6__.isNumberInString)(value)
+            ? parseFloat(value)
+            : value;
+        return typeof nValue === 'number'
+            ? nValue
+            : `\"${nValue
+                .replace(/\\/g, '\\\\')
+                .replace(/"/g, '\\"')}\"`;
+    };
     buildQueryParts(type, resources, withPrefix) {
         return MicrosoftDefenderPlatform.buildQueryParts(type, resources, withPrefix);
     }
+    extensionDefaultPosition = MicrosoftDefenderPlatform.extensionDefaultPosition;
     getID() {
         return MicrosoftDefenderPlatform.id;
     }
     getName() {
-        return types_common_1.PlatformName.MicrosoftDefender;
+        return _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.PlatformName.MicrosoftDefender;
+    }
+    getType() {
+        return _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.SiemType.Defender;
     }
     static setListeners() {
-        content_services_listeners_1.addListener(types_content_common_1.ListenerType.OnMessage, (message) => {
-            AbstractContentPlatform_1.AbstractContentPlatform.processInlineListeners(message);
+        (0,_services_content_services_listeners__WEBPACK_IMPORTED_MODULE_2__.addListener)(_types_types_content_common__WEBPACK_IMPORTED_MODULE_0__.ListenerType.OnMessage, (message) => {
+            _AbstractContentPlatform__WEBPACK_IMPORTED_MODULE_8__.AbstractContentPlatform.processInlineListeners(message);
         });
         loggers.debug().log('listeners were set');
     }
     static connectInlineListener() {
-        (0, common_helpers_1.mountHTMLElement)('script', document.body, {
+        (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_3__.mountHTMLElement)('script', document.body, {
             attributes: {
-                src: (0, common_extension_helpers_1.getWebAccessibleUrl)(public_resources_1.microsoftDefenderInline),
+                src: (0,_common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_7__.getWebAccessibleUrl)(_manifest_public_resources__WEBPACK_IMPORTED_MODULE_4__.microsoftDefenderInline),
                 type: 'text/javascript',
                 'data-type': 'inline-listener',
             },
@@ -1174,24 +1285,6 @@ class MicrosoftDefenderPlatform extends AbstractContentPlatform_1.AbstractConten
         loggers.debug().log('connected');
     }
 }
-exports.MicrosoftDefenderPlatform = MicrosoftDefenderPlatform;
-MicrosoftDefenderPlatform.id = types_common_1.PlatformID.MicrosoftDefender;
-MicrosoftDefenderPlatform.extensionDefaultPosition = {
-    top: 0,
-    left: 0,
-    width: 480,
-    height: 480,
-};
-MicrosoftDefenderPlatform.normalizedValue = (value) => {
-    const nValue = (0, checkers_1.isNumberInString)(value)
-        ? parseFloat(value)
-        : value;
-    return typeof nValue === 'number'
-        ? nValue
-        : `\"${nValue
-            .replace(/\\/g, '\\\\')
-            .replace(/"/g, '\\"')}\"`;
-};
 loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(MicrosoftDefenderPlatform.id);
 
 
@@ -1201,28 +1294,32 @@ loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/l
 /*!******************************************************************!*\
   !*** ./extension/content/services/content-services-listeners.ts ***!
   \******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addListener": () => (/* binding */ addListener)
+/* harmony export */ });
+/* harmony import */ var _types_types_content_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
+/* harmony import */ var _common_loggers_loggers_debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
+/* harmony import */ var _common_api_support__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+/* harmony import */ var _common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+/* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.addListener = void 0;
-const types_content_common_1 = __webpack_require__(/*! ../types/types-content-common */ "./extension/content/types/types-content-common.ts");
-const loggers_debug_1 = __webpack_require__(/*! ../../common/loggers/loggers-debug */ "./extension/common/loggers/loggers-debug.ts");
-const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
-const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
-const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
+
+
+
 const listeners = {};
 const addListener = (type, listener, ...otherProps) => {
-    var _a;
-    (_a = listeners[type]) === null || _a === void 0 ? void 0 : _a.call(listeners, (...params) => {
+    listeners[type]?.((...params) => {
         listener(...params);
     }, ...otherProps);
 };
-exports.addListener = addListener;
 const removeListenersCallbacks = [];
-listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherProps) => {
-    if ((0, api_support_1.isRuntimeOnMessageSupported)()) {
-        const action = (0, common_extension_helpers_1.getBrowserContext)().runtime.onMessage;
+listeners[_types_types_content_common__WEBPACK_IMPORTED_MODULE_0__.ListenerType.OnMessage] = (listener, ...otherProps) => {
+    if ((0,_common_api_support__WEBPACK_IMPORTED_MODULE_2__.isRuntimeOnMessageSupported)()) {
+        const action = (0,_common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_3__.getBrowserContext)().runtime.onMessage;
         removeListenersCallbacks.push(() => {
             action.removeListener(listener);
         });
@@ -1230,14 +1327,14 @@ listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherPr
             listener(...params);
         }, ...otherProps);
     }
-    if (!(0, api_support_1.isAddEventListenerSupported)()) {
+    if (!(0,_common_api_support__WEBPACK_IMPORTED_MODULE_2__.isAddEventListenerSupported)()) {
         return;
     }
     const boundedListener = (event) => {
         const message = event.data;
         if (event.origin !== window.location.origin
-            || ((0, loggers_helpers_1.getExecutingContextByMessageType)(message.type) !== 'content'
-                && message.externalType !== loggers_debug_1.DebugID.debugIDExternal)) {
+            || ((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_4__.getExecutingContextByMessageType)(message.type) !== 'content'
+                && message.externalType !== _common_loggers_loggers_debug__WEBPACK_IMPORTED_MODULE_1__.DebugID.debugIDExternal)) {
             return;
         }
         listener(event.data, ...otherProps);
@@ -1255,21 +1352,26 @@ listeners[types_content_common_1.ListenerType.OnMessage] = (listener, ...otherPr
 /*!********************************************************!*\
   !*** ./extension/content/services/content-services.ts ***!
   \********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sendMessage": () => (/* binding */ sendMessage),
+/* harmony export */   "sendMessageFromApp": () => (/* binding */ sendMessageFromApp),
+/* harmony export */   "sendMessageFromContent": () => (/* binding */ sendMessageFromContent)
+/* harmony export */ });
+/* harmony import */ var _common_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+/* harmony import */ var _common_api_support__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
+/* harmony import */ var _common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sendMessageFromApp = exports.sendMessageFromContent = exports.sendMessage = void 0;
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
-const api_support_1 = __webpack_require__(/*! ../../common/api-support */ "./extension/common/api-support.ts");
-const common_extension_helpers_1 = __webpack_require__(/*! ../../common/common-extension-helpers */ "./extension/common/common-extension-helpers.ts");
+
 const serviceLoggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)('services');
 const sendMessage = (loggers, message, runtime = true) => {
-    var _a;
-    message.id = `${message.id ? `${message.id}--` : ''}${(0, helpers_1.uuid)()}`;
+    message.id = `${message.id ? `${message.id}--` : ''}${(0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.uuid)()}`;
     const logPrefix = 'sendMessage';
     try {
-        if (!runtime && !(0, api_support_1.isPostMessageSupported)(message)) {
+        if (!runtime && !(0,_common_api_support__WEBPACK_IMPORTED_MODULE_1__.isPostMessageSupported)(message)) {
             return message;
         }
         if (!runtime) {
@@ -1277,10 +1379,11 @@ const sendMessage = (loggers, message, runtime = true) => {
             loggers.debug().log('postMessage', message);
             return message;
         }
-        if (!(0, api_support_1.isRuntimeSendMessageSupported)()) {
+        if (!(0,_common_api_support__WEBPACK_IMPORTED_MODULE_1__.isRuntimeSendMessageSupported)()) {
             return message;
         }
-        (_a = (0, common_extension_helpers_1.getBrowserContext)().runtime.sendMessage(message)) === null || _a === void 0 ? void 0 : _a.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
+        (0,_common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_2__.getBrowserContext)().runtime.sendMessage(message)
+            ?.catch((e) => loggers.error().addPrefix(logPrefix).log(e, message));
         loggers.debug().addPrefix(logPrefix).log(message);
         return message;
     }
@@ -1289,15 +1392,12 @@ const sendMessage = (loggers, message, runtime = true) => {
         return message;
     }
 };
-exports.sendMessage = sendMessage;
 const sendMessageFromContent = (message, runtime = true) => {
-    return (0, exports.sendMessage)(serviceLoggers.addPrefix('message-from-content'), message, runtime);
+    return sendMessage(serviceLoggers.addPrefix('message-from-content'), message, runtime);
 };
-exports.sendMessageFromContent = sendMessageFromContent;
 const sendMessageFromApp = (message, runtime = true) => {
-    return (0, exports.sendMessage)(serviceLoggers.addPrefix('message-from-app'), message, runtime);
+    return sendMessage(serviceLoggers.addPrefix('message-from-app'), message, runtime);
 };
-exports.sendMessageFromApp = sendMessageFromApp;
 
 
 /***/ }),
@@ -1306,15 +1406,16 @@ exports.sendMessageFromApp = sendMessageFromApp;
 /*!*********************************************************!*\
   !*** ./extension/content/types/types-content-common.ts ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ListenerType = void 0;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ListenerType": () => (/* binding */ ListenerType)
+/* harmony export */ });
 var ListenerType;
 (function (ListenerType) {
     ListenerType["OnMessage"] = "OnMessage";
-})(ListenerType = exports.ListenerType || (exports.ListenerType = {}));
+})(ListenerType || (ListenerType = {}));
 
 
 /***/ }),
@@ -1323,28 +1424,57 @@ var ListenerType;
 /*!***********************************************************!*\
   !*** ./extension/content/types/types-content-messages.ts ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessageToContent": () => (/* binding */ MessageToContent)
+/* harmony export */ });
+/* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MessageToContent = void 0;
-const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var MessageToContent;
 (function (MessageToContent) {
-    MessageToContent["CSModifyQuery"] = "CSModifyQuery";
-    MessageToContent["CSSetQuery"] = "CSSetQuery";
-    MessageToContent["CSGetQuery"] = "CSGetQuery";
-    MessageToContent["CSSendMessageOutside"] = "CSSendMessageOutside";
+    // CSSendMessageOutside = 'CSSendMessageOutside',
     MessageToContent["CSConnectPlatform"] = "CSConnectPlatform";
     MessageToContent["CSSetDebugMode"] = "CSSetDebugMode";
     MessageToContent["CSDirectMessageToApp"] = "CSDirectMessageToApp";
     MessageToContent["CSDirectMessageToInline"] = "CSDirectMessageToInline";
-})(MessageToContent = exports.MessageToContent || (exports.MessageToContent = {}));
-Object.values(MessageToContent).forEach(type => {
-    if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'content') {
+})(MessageToContent || (MessageToContent = {}));
+Object.values(MessageToContent).forEach((type) => {
+    if ((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getExecutingContextByMessageType)(type) !== 'content') {
         throw new Error(`Wrong content message type "${type}"`);
     }
 });
+
+
+/***/ }),
+
+/***/ "./extension/inline/helpers/index.ts":
+/*!*******************************************!*\
+  !*** ./extension/inline/helpers/index.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sendQueryToApp": () => (/* binding */ sendQueryToApp)
+/* harmony export */ });
+/* harmony import */ var _common_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+/* harmony import */ var _content_types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../content/types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
+/* harmony import */ var _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app/types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
+
+
+
+const sendQueryToApp = (query) => {
+    window.postMessage({
+        id: (0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.uuid)(),
+        type: _content_types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSDirectMessageToApp,
+        payload: {
+            type: _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_2__.MessageToApp.AppTakeQuery,
+            payload: { queryValue: query },
+        },
+    });
+};
 
 
 /***/ }),
@@ -1353,67 +1483,66 @@ Object.values(MessageToContent).forEach(type => {
 /*!***********************************************************!*\
   !*** ./extension/inline/helpers/monaco-editor-helpers.ts ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "buildNewJsonQuery": () => (/* binding */ buildNewJsonQuery),
+/* harmony export */   "buildNewQuery": () => (/* binding */ buildNewQuery),
+/* harmony export */   "checkEditorExists": () => (/* binding */ checkEditorExists),
+/* harmony export */   "getContentFocusedLines": () => (/* binding */ getContentFocusedLines),
+/* harmony export */   "getEditorByIndex": () => (/* binding */ getEditorByIndex),
+/* harmony export */   "getEditorIndexByFormattedUri": () => (/* binding */ getEditorIndexByFormattedUri),
+/* harmony export */   "getLastContentLine": () => (/* binding */ getLastContentLine)
+/* harmony export */ });
+/* harmony import */ var _common_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildNewQuery = exports.buildNewJsonQuery = exports.getEditorIndexByFormattedUri = exports.getLastContentLine = exports.getContentFocusedLines = exports.checkEditorExists = exports.getEditorByIndex = void 0;
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 const getEditorByIndex = (index) => {
     return monaco.editor.getModels()[index];
 };
-exports.getEditorByIndex = getEditorByIndex;
 const checkEditorExists = () => {
-    var _a, _b;
-    return !!((_b = (_a = monaco === null || monaco === void 0 ? void 0 : monaco.editor) === null || _a === void 0 ? void 0 : _a.getModels) === null || _b === void 0 ? void 0 : _b.call(_a));
+    return !!monaco?.editor?.getModels?.();
 };
-exports.checkEditorExists = checkEditorExists;
 const getContentFocusedLines = (editor) => {
-    var _a;
     const result = [];
     for (let i = 1; i <= editor.getLineCount(); i++) {
         if (editor.getLineDecorations(i).some((l) => l.options.className)
-            && ((_a = editor.getLineContent(i)) === null || _a === void 0 ? void 0 : _a.trim()) !== '') {
+            && editor.getLineContent(i)?.trim() !== '') {
             result.push(i);
         }
     }
     return result;
 };
-exports.getContentFocusedLines = getContentFocusedLines;
 const getLastContentLine = (editor) => {
-    var _a;
     const contentLines = editor.getLinesContent();
-    while (((_a = contentLines[contentLines.length - 1]) === null || _a === void 0 ? void 0 : _a.trim()) === '') {
+    while (contentLines[contentLines.length - 1]?.trim() === '') {
         contentLines.splice(contentLines.length - 1);
     }
     return contentLines.length > 0 ? contentLines.length : 1;
 };
-exports.getLastContentLine = getLastContentLine;
 const getEditorIndexByFormattedUri = (uri) => {
     return monaco.editor.getModels().findIndex((model) => {
+        // eslint-disable-next-line no-underscore-dangle
         return model.uri._formatted === uri;
     });
 };
-exports.getEditorIndexByFormattedUri = getEditorIndexByFormattedUri;
 const buildNewJsonQuery = (editor, suffix, modifyType) => {
-    var _a;
-    const currentEditorValue = (0, helpers_1.parseJSONSafe)(editor.getValue(), null);
+    const currentEditorValue = (0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.parseJSONSafe)(editor.getValue(), null);
     const currentQuery = (!currentEditorValue || !currentEditorValue.Query)
         ? ''
         : currentEditorValue.Query;
     const newQuery = `${modifyType === 'show all'
-        ? ((_a = currentQuery.split('|').shift()) === null || _a === void 0 ? void 0 : _a.trim())
+        ? currentQuery.split('|').shift()?.trim()
             || '<unknown>'
         : currentQuery} ${suffix}`;
     return JSON.stringify({
         Query: newQuery,
     }, null, 3);
 };
-exports.buildNewJsonQuery = buildNewJsonQuery;
 const buildNewQuery = (editor, suffix, modifyType, withPrefix = true) => {
     let newQuery = '';
     const editorLines = editor.getLinesContent();
-    const focusedLines = (0, exports.getContentFocusedLines)(editor);
+    const focusedLines = getContentFocusedLines(editor);
     if (modifyType === 'show all' && focusedLines.length < 1) {
         const prefix = editorLines
             .map((l) => l.split('|').shift())
@@ -1429,14 +1558,13 @@ const buildNewQuery = (editor, suffix, modifyType, withPrefix = true) => {
     if (modifyType !== 'show all') {
         const lastEditorLineIndex = focusedLines.length > 0
             ? focusedLines[focusedLines.length - 1]
-            : (0, exports.getLastContentLine)(editor);
+            : getLastContentLine(editor);
         const lastEditorLine = editor.getLineContent(lastEditorLineIndex) || '<unknown>';
         editorLines[lastEditorLineIndex - 1] = `${lastEditorLine} ${suffix}`;
         newQuery = editorLines.join('\n');
     }
-    return (0, helpers_1.clearExtraSpaces)(newQuery);
+    return (0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.clearExtraSpaces)(newQuery);
 };
-exports.buildNewQuery = buildNewQuery;
 
 
 /***/ }),
@@ -1445,12 +1573,14 @@ exports.buildNewQuery = buildNewQuery;
 /*!*********************************************************!*\
   !*** ./extension/inline/types/types-inline-messages.ts ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessageToInline": () => (/* binding */ MessageToInline)
+/* harmony export */ });
+/* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MessageToInline = void 0;
-const loggers_helpers_1 = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 var MessageToInline;
 (function (MessageToInline) {
     MessageToInline["ISModifyQuery"] = "ISModifyQuery";
@@ -1459,9 +1589,9 @@ var MessageToInline;
     MessageToInline["ISSetDebugMode"] = "ISSetDebugMode";
     MessageToInline["ISRemoveHash"] = "ISRemoveHash";
     MessageToInline["ISRemoveFieldSpecification"] = "ISRemoveFieldSpecification";
-})(MessageToInline = exports.MessageToInline || (exports.MessageToInline = {}));
-Object.values(MessageToInline).forEach(type => {
-    if ((0, loggers_helpers_1.getExecutingContextByMessageType)(type) !== 'inline') {
+})(MessageToInline || (MessageToInline = {}));
+Object.values(MessageToInline).forEach((type) => {
+    if ((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getExecutingContextByMessageType)(type) !== 'inline') {
         throw new Error(`Wrong inline message type "${type}"`);
     }
 });
@@ -1473,35 +1603,48 @@ Object.values(MessageToInline).forEach(type => {
 /*!************************************************!*\
   !*** ./extension/manifest/public-resources.ts ***!
   \************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "accessibleResources": () => (/* binding */ accessibleResources),
+/* harmony export */   "amazonAthenaInline": () => (/* binding */ amazonAthenaInline),
+/* harmony export */   "appStyles": () => (/* binding */ appStyles),
+/* harmony export */   "arcSightInline": () => (/* binding */ arcSightInline),
+/* harmony export */   "chronicleInline": () => (/* binding */ chronicleInline),
+/* harmony export */   "elasticInline": () => (/* binding */ elasticInline),
+/* harmony export */   "logScaleInline": () => (/* binding */ logScaleInline),
+/* harmony export */   "microsoftDefenderInline": () => (/* binding */ microsoftDefenderInline),
+/* harmony export */   "microsoftSentinelInline": () => (/* binding */ microsoftSentinelInline),
+/* harmony export */   "openSearchInline": () => (/* binding */ openSearchInline),
+/* harmony export */   "qRadarInline": () => (/* binding */ qRadarInline),
+/* harmony export */   "splunkInline": () => (/* binding */ splunkInline)
+/* harmony export */ });
+/* harmony import */ var _common_types_types_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.accessibleResources = exports.chronicleInline = exports.logScaleInline = exports.openSearchInline = exports.arcSightInline = exports.elasticInline = exports.qRadarInline = exports.splunkInline = exports.amazonAthenaInline = exports.microsoftDefenderInline = exports.microsoftSentinelInline = exports.appStyles = void 0;
-const types_common_1 = __webpack_require__(/*! ../common/types/types-common */ "./extension/common/types/types-common.ts");
-exports.appStyles = 'app-styles.css';
-exports.microsoftSentinelInline = 'inline-microsoft-sentinel.js';
-exports.microsoftDefenderInline = 'inline-microsoft-defender.js';
-exports.amazonAthenaInline = 'inline-amazon-athena.js';
-exports.splunkInline = 'inline-splunk.js';
-exports.qRadarInline = 'inline-qradar.js';
-exports.elasticInline = 'inline-elastic.js';
-exports.arcSightInline = 'inline-arcsight.js';
-exports.openSearchInline = 'inline-opensearch.js';
-exports.logScaleInline = 'inline-logscale.js';
-exports.chronicleInline = 'inline-chronicle.js';
-exports.accessibleResources = {
-    [types_common_1.PlatformID.MicrosoftSentinel]: [exports.microsoftSentinelInline],
-    [types_common_1.PlatformID.MicrosoftDefender]: [exports.microsoftDefenderInline],
-    [types_common_1.PlatformID.Splunk]: [exports.splunkInline],
-    [types_common_1.PlatformID.QRadar]: [exports.qRadarInline],
-    [types_common_1.PlatformID.Elastic]: [exports.elasticInline],
-    [types_common_1.PlatformID.ArcSight]: [exports.arcSightInline],
-    [types_common_1.PlatformID.Athena]: [exports.amazonAthenaInline],
-    [types_common_1.PlatformID.OpenSearch]: [exports.openSearchInline],
-    [types_common_1.PlatformID.LogScale]: [exports.logScaleInline],
-    [types_common_1.PlatformID.Chronicle]: [exports.chronicleInline],
-    app: [exports.appStyles],
+const appStyles = 'app-styles.css';
+const microsoftSentinelInline = 'inline-microsoft-sentinel.js';
+const microsoftDefenderInline = 'inline-microsoft-defender.js';
+const amazonAthenaInline = 'inline-amazon-athena.js';
+const splunkInline = 'inline-splunk.js';
+const qRadarInline = 'inline-qradar.js';
+const elasticInline = 'inline-elastic.js';
+const arcSightInline = 'inline-arcsight.js';
+const openSearchInline = 'inline-opensearch.js';
+const logScaleInline = 'inline-logscale.js';
+const chronicleInline = 'inline-chronicle.js';
+const accessibleResources = {
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftSentinel]: [microsoftSentinelInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftDefender]: [microsoftDefenderInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.Splunk]: [splunkInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.QRadar]: [qRadarInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.Elastic]: [elasticInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.ArcSight]: [arcSightInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.Athena]: [amazonAthenaInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.OpenSearch]: [openSearchInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.LogScale]: [logScaleInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.Chronicle]: [chronicleInline],
+    app: [appStyles],
 };
 
 
@@ -1527,42 +1670,73 @@ exports.accessibleResources = {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
-var exports = {};
+var __webpack_exports__ = {};
 /*!*****************************!*\
   !*** ./extension/inline.ts ***!
   \*****************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const loggers_helpers_1 = __webpack_require__(/*! ./common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
-(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0, loggers_helpers_1.getDebugPrefix)('inline'));
+(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getDebugPrefix)('inline'));
 
 })();
 
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
-var exports = __webpack_exports__;
 /*!**************************************************************************!*\
   !*** ./extension/inline/microsoft-defender/inline-microsoft-defender.ts ***!
   \**************************************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
+/* harmony import */ var _common_common_listeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
+/* harmony import */ var _helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/monaco-editor-helpers */ "./extension/inline/helpers/monaco-editor-helpers.ts");
+/* harmony import */ var _content_platforms_MicrosoftDefenderPlatform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../content/platforms/MicrosoftDefenderPlatform */ "./extension/content/platforms/MicrosoftDefenderPlatform.ts");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers */ "./extension/inline/helpers/index.ts");
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const types_inline_messages_1 = __webpack_require__(/*! ../types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
-const common_listeners_1 = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
-const monaco_editor_helpers_1 = __webpack_require__(/*! ../helpers/monaco-editor-helpers */ "./extension/inline/helpers/monaco-editor-helpers.ts");
-const MicrosoftDefenderPlatform_1 = __webpack_require__(/*! ../../content/platforms/MicrosoftDefenderPlatform */ "./extension/content/platforms/MicrosoftDefenderPlatform.ts");
-const helpers_1 = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
-const types_content_messages_1 = __webpack_require__(/*! ../../content/types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
-const platform = new MicrosoftDefenderPlatform_1.MicrosoftDefenderPlatform();
+
+
+
+
+const platform = new _content_platforms_MicrosoftDefenderPlatform__WEBPACK_IMPORTED_MODULE_3__.MicrosoftDefenderPlatform();
 const loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(platform.getID());
 let editorIndex = 2;
 const setIndex = (index) => {
@@ -1585,7 +1759,7 @@ const getCurrentEditorIndex = () => {
     }
     const uri = editorHtml
         .getAttribute('data-uri') || '#failed';
-    const index = (0, monaco_editor_helpers_1.getEditorIndexByFormattedUri)(uri);
+    const index = (0,_helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__.getEditorIndexByFormattedUri)(uri);
     return typeof index === 'number' && index > -1 ? index : null;
 };
 const getEditor = () => {
@@ -1594,7 +1768,7 @@ const getEditor = () => {
         loggers.info().log('Can not determine the editor index');
         return {};
     }
-    const editor = (0, monaco_editor_helpers_1.getEditorByIndex)(index);
+    const editor = (0,_helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__.getEditorByIndex)(index);
     if (!editor) {
         loggers.error().log('editor not found by index', index, monaco);
         return {};
@@ -1603,8 +1777,8 @@ const getEditor = () => {
 };
 window.addEventListener('message', (event) => {
     const message = event.data;
-    if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISModifyQuery === message.type, message, event)) {
-        if (!(0, monaco_editor_helpers_1.checkEditorExists)()) {
+    if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_1__.isMessageMatched)(() => _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_0__.MessageToInline.ISModifyQuery === message.type, message, event)) {
+        if (!(0,_helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__.checkEditorExists)()) {
             loggers.error().log('editor not found', monaco);
             return;
         }
@@ -1615,31 +1789,28 @@ window.addEventListener('message', (event) => {
         const { resources, modifyType } = message.payload;
         const { href } = window.location;
         const suffix = `| ${platform.buildQueryParts(modifyType, resources, true)}`;
-        const editor = (0, monaco_editor_helpers_1.getEditorByIndex)(editorIndex);
+        const editor = (0,_helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__.getEditorByIndex)(editorIndex);
         const newQuery = href.indexOf('security.microsoft.com/v2/advanced-hunting') > -1
-            ? (0, monaco_editor_helpers_1.buildNewQuery)(editor, suffix, modifyType)
-            : (0, monaco_editor_helpers_1.buildNewJsonQuery)(editor, suffix, modifyType);
+            ? (0,_helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__.buildNewQuery)(editor, suffix, modifyType)
+            : (0,_helpers_monaco_editor_helpers__WEBPACK_IMPORTED_MODULE_2__.buildNewJsonQuery)(editor, suffix, modifyType);
         editor.setValue(newQuery);
     }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISSetQuery === message.type, message, event)) {
+    if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_1__.isMessageMatched)(() => _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_0__.MessageToInline.ISSetQuery === message.type, message, event)) {
         const { editor } = getEditor();
         if (editor) {
             const { value } = message.payload;
             editor.setValue(value);
         }
     }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISGetQuery === message.type, message, event)) {
+    if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_1__.isMessageMatched)(() => _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_0__.MessageToInline.ISGetQuery === message.type, message, event)) {
         const { editor } = getEditor();
         if (!editor) {
             return;
         }
-        window.postMessage({
-            id: (0, helpers_1.uuid)(),
-            type: types_content_messages_1.MessageToContent.CSSendMessageOutside,
-            payload: { queryValue: editor.getValue() },
-        });
+        (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.sendQueryToApp)(editor.getValue());
     }
-    if ((0, common_listeners_1.isMessageMatched)(() => types_inline_messages_1.MessageToInline.ISSetDebugMode === message.type, message, event)) {
+    // TODO dry
+    if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_1__.isMessageMatched)(() => _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_0__.MessageToInline.ISSetDebugMode === message.type, message, event)) {
         const { debugMode } = message.payload;
         (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").setDebugMode)(debugMode);
     }

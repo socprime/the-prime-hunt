@@ -40,51 +40,53 @@ export const FormValidationInput = forwardRef<FormValidationInputRefs, FormValid
   }, [value, prevValue]);
 
   return (
-    <WithValidation
-      getValue={(ref) => (ref?.current as HTMLInputElement)?.value || null}
-      disabled={!!restProps.disabled}
-      validators={[
-        ...(validators || []),
-      ]}
-    >
-      {(withValidationProps) => {
-        formValidationInputRef.current.validate = withValidationProps.validate;
-        return (
-          <WithForm
-            {...withValidationProps}
-          >
-            {(withFormProps) => {
-              return (
-                <AppInput
-                  {...restProps}
-                  {...withFormProps}
-                  ref={(ref) => {
-                    if (ref) {
-                      (ref as any).name = name;
-                      withValidationProps.elementRef.current = ref;
-                      withFormProps.elementRef.current = ref;
-                    }
-                  }}
-                  value={value}
-                  className={createClassName([
-                    'form-validation-input',
-                    restProps.className || '',
-                    withFormProps.className || '',
-                  ])}
-                  onChange={(e) => {
-                    withFormProps?.onChange?.(e);
-                    restProps?.onChange?.(e);
-                  }}
-                  onBlur={(e) => {
-                    withFormProps?.onBlur?.(e);
-                    restProps?.onBlur?.(e);
-                  }}
-                />
-              );
-            }}
-          </WithForm>
-        );
-      }}
-    </WithValidation>
+    <div className="form-validation-input">
+      <WithValidation
+        getValue={(ref) => (ref?.current as HTMLInputElement)?.value || null}
+        disabled={!!restProps.disabled}
+        validators={[
+          ...(validators || []),
+        ]}
+      >
+        {(withValidationProps) => {
+          formValidationInputRef.current.validate = withValidationProps.validate;
+          return (
+            <WithForm
+              {...withValidationProps}
+            >
+              {(withFormProps) => {
+                return (
+                  <AppInput
+                    {...restProps}
+                    {...withFormProps}
+                    ref={(ref) => {
+                      if (ref) {
+                        (ref as any).name = name;
+                        withValidationProps.elementRef.current = ref;
+                        withFormProps.elementRef.current = ref;
+                      }
+                    }}
+                    value={value}
+                    className={createClassName([
+                      'form-validation-input',
+                      restProps.className || '',
+                      withFormProps.className || '',
+                    ])}
+                    onChange={(e) => {
+                      withFormProps?.onChange?.(e);
+                      restProps?.onChange?.(e);
+                    }}
+                    onBlur={(e) => {
+                      withFormProps?.onBlur?.(e);
+                      restProps?.onBlur?.(e);
+                    }}
+                  />
+                );
+              }}
+            </WithForm>
+          );
+        }}
+      </WithValidation>
+    </div>
   );
 });

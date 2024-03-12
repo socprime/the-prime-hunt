@@ -1,4 +1,8 @@
-import { forwardRef, useEffect, useRef } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+} from 'react';
 import { observer } from 'mobx-react-lite';
 import { useAppStore, usePlatformStore, useRouter } from '../../stores';
 import { CloseAppButton } from '../CloseAppButton/CloseAppButton';
@@ -14,9 +18,10 @@ import { ExportHeaderView } from '../../export/views/ExportHeaderView';
 import { SettingsHeaderView } from '../../settings/views/SettingsHeaderView';
 import { IntegrationHeaderView } from '../../integration/views/IntegrationHeaderView';
 import { MailHeaderView } from '../../mail/views/MailHeaderView';
+import { SocPrimeSaveQueryHeader } from '../../socprime/views/save-query/SocPrimeSaveQueryHeader';
 import './styles.scss';
 
-export const AppHeader = observer(forwardRef<HTMLDivElement>((
+export const AppHeader = observer(forwardRef<HTMLDivElement, {}>((
   _,
   ref,
 ) => {
@@ -31,6 +36,8 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
   useEffect(() => {
     appStore.dragElementRef = dragElementRef;
   }, [appStore]);
+
+  const isMainPage = router.page === 'resources' || router.page === 'resources:query';
 
   return (
     <div className="app-header" ref={ref}>
@@ -58,20 +65,25 @@ export const AppHeader = observer(forwardRef<HTMLDivElement>((
               && router.page === 'resources'
               && <ExportButton />
             }
-            {router.page === 'resources' && <SettingsButton />}
-            {router.page === 'resources' && <FaqButton />}
-            {(router.page === 'resources' || router.page === 'not-found')
+            {isMainPage && <SettingsButton />}
+            {isMainPage && <FaqButton />}
+            {(isMainPage || router.page === 'not-found')
               && <CloseAppButton />}
           </div>
         </span>
       </div>
-      {(router.page === 'settings:integrations' || router.page === 'settings:mail')
-        && <SettingsHeaderView page={router.page} />}
+      {(router.page === 'settings:integrations'
+          || router.page === 'settings:mail'
+          || router.page === 'settings:socprime'
+      ) && <SettingsHeaderView page={router.page} />}
       {router.page === 'integration' && <IntegrationHeaderView />}
-      {router.page === 'resources' && <ResourcesHeaderView />}
+      {(router.page === 'resources'
+        || router.page === 'resources:query'
+      ) && <ResourcesHeaderView />}
       {router.page === 'export' && <ExportHeaderView />}
       {router.page === 'faq' && <FaqHeaderView />}
       {router.page === 'mail' && <MailHeaderView />}
+      {router.page === 'socprime:save-query' && <SocPrimeSaveQueryHeader />}
     </div>
   );
 }));

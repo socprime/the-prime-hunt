@@ -3,6 +3,7 @@ import { isMessageMatched } from '../../common/common-listeners';
 import { MessageToInline } from '../types/types-inline-messages';
 import { OpenSearchPlatform } from '../../content/platforms/OpenSearchPlatform';
 import { ModifyQueryPayload, SetDebugModePayload } from '../../common/types/types-common-payloads';
+import { sendQueryToApp } from '../helpers';
 
 const platform = new OpenSearchPlatform();
 
@@ -22,7 +23,8 @@ window.addEventListener('message', (event) => {
   )) {
     const input = getInput();
     if (!input) {
-      return loggers.warn().log('query input not found');
+      loggers.warn().log('query input not found');
+      return;
     }
     const currentValue = input.value;
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
@@ -37,6 +39,19 @@ window.addEventListener('message', (event) => {
 
     input.value = `${currentValue} ${suffix}`;
     input.click();
+  }
+
+  if (isMessageMatched(
+    () => MessageToInline.ISGetQuery === message.type,
+    message,
+    event,
+  )) {
+    const input = getInput();
+    if (!input) {
+      loggers.warn().log('query input not found');
+      return;
+    }
+    sendQueryToApp(input.value);
   }
 
   if (isMessageMatched(

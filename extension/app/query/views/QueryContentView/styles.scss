@@ -1,0 +1,48 @@
+@import "../../../scss/palette";
+
+.query-content-view {
+  height: 100%;
+
+  textarea.query-textarea {
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.4;
+    resize: vertical;
+    max-height: 120px;
+  }
+
+  .bt-line-1 {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin-left: 6px;
+    }
+
+    .save-to-repo-btn:not(:disabled) {
+      background-color: $success;
+      color: $base-background-color;
+
+      .icon {
+        fill: $base-background-color;
+      }
+    }
+  }
+}
+
+.app-wrapper.esm {
+  .query-content-view {
+    .bt-line-1 {
+      .save-to-repo-btn {
+        max-width: 96px;
+
+        .button-content {
+          max-width: 96px;
+          overflow: hidden;
+          display: inline-block;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}

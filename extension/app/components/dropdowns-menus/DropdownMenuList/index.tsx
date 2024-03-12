@@ -12,7 +12,7 @@ export const DropdownMenuList = forwardRef<
   DropdownMenuListRefs,
   DropdownMenuListProps
 >(({
-  items,
+  ...otherProps
 }, refs) => {
   const elementRef: MutableRefObject<HTMLUListElement | null> = useRef(
     null,
@@ -31,8 +31,8 @@ export const DropdownMenuList = forwardRef<
           elementRef.current = ref.elementRef.current;
         }
       }}
-      items={items}
       className="dropdown-menu--list"
+      {...otherProps}
     />
   );
 });

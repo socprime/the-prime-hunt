@@ -6,7 +6,11 @@ export enum BoundedResourceTypeID {
   Assets = 'Assets',
 }
 
+export const QueryTabID = '@@#Query#';
+
 export const boundedResourcesTypeIDs = Object.keys(BoundedResourceTypeID);
+
+export const serviceResourcesTypesIDs = [QueryTabID, ...boundedResourcesTypeIDs];
 
 export type ResourceTypeID =
   BoundedResourceTypeID.Accounts

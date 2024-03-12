@@ -1,7 +1,8 @@
 import React from 'react';
-import { AppButton, AppButtonProps } from '../AppButton/AppButton';
+import { AppButton } from '../AppButton/AppButton';
 import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';
+import { AppButtonProps } from '../AppButton/types';
 
 export type StaticButtonProps = AppButtonProps;
 

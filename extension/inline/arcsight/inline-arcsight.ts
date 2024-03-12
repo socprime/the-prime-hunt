@@ -6,10 +6,8 @@ import {
   ModifyQueryPayload,
   SetDebugModePayload,
   SetQueryPayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
-import { uuid } from '../../../common/helpers';
-import { MessageToContent } from '../../content/types/types-content-messages';
+import { sendQueryToApp } from '../helpers';
 
 const platform = new ArcSightPlatform();
 
@@ -29,7 +27,8 @@ window.addEventListener('message', (event) => {
   )) {
     const input = getInput();
     if (!input) {
-      return loggers.warn().log('query input not found');
+      loggers.warn().log('query input not found');
+      return;
     }
     const currentValue = input.value;
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
@@ -67,11 +66,7 @@ window.addEventListener('message', (event) => {
       return;
     }
 
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: input.value } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(input.value);
   }
 
   if (isMessageMatched(

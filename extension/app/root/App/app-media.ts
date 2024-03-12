@@ -1,8 +1,11 @@
-export type ScreenType = 'ssm' | 'sm' | 'md' | 'lg' | 'hg';
+export type ScreenType = 'esm' | 'ssm' | 'sm' | 'md' | 'lg' | 'hg';
 
 export const calculateScreen = (
   newWidth: number,
-): ScreenType  => {
+): ScreenType => {
+  if (newWidth < 336) {
+    return 'esm';
+  }
   if (newWidth < 390) {
     return 'ssm';
   }

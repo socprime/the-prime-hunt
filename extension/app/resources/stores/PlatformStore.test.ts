@@ -1,9 +1,12 @@
 import { setLoggers } from '../../../common/loggers';
-import { getMockedBrowserContext, getMockedLoggers, getNewRootStore, getPlatformByID } from '../../../tests/mocks';
+import {
+  getMockedBrowserContext, getMockedLoggers, getNewRootStore, getPlatformByID,
+} from '../../../tests/mocks';
 import { ExtensionMessage, PlatformID, PlatformName } from '../../../common/types/types-common';
 import { MessageToBackground } from '../../../background/types/types-background-messages';
 import { sleep } from '../../../../common/helpers';
 import { ModifyQueryPayload } from '../../../common/types/types-common-payloads';
+import { MessageToInline } from '../../../inline/types/types-inline-messages';
 
 const mockedCopyToClipboard = jest.fn();
 
@@ -15,8 +18,8 @@ jest.mock('../../../common/common-helpers', () => {
 });
 
 describe('PlatformStore test', () => {
-  let logsStack: unknown[] = [];
-  let messageStack: unknown[] = [];
+  const logsStack: unknown[] = [];
+  const messageStack: unknown[] = [];
   setLoggers(getMockedLoggers(logsStack));
   (global as any).browser = getMockedBrowserContext(messageStack);
 
@@ -32,7 +35,6 @@ describe('PlatformStore test', () => {
 
   test('setPlatform test', () => {
     rootStore.platformStore.setPlatform(platform);
-    expect(rootStore.appStore.view).toEqual('resources');
     expect(rootStore.platformStore.platform.getID()).toEqual(PlatformID.MicrosoftSentinel);
 
     const normalizedLogStack = logsStack.flat(10);
@@ -52,9 +54,12 @@ describe('PlatformStore test', () => {
       (stack: any) => stack && typeof stack === 'object' && stack.type === MessageToBackground.BGSetWatchers,
     ) as ExtensionMessage;
     expect(!!setWatchersMessage).toEqual(true);
-    expect((setWatchersMessage as ExtensionMessage).payload.platformID).toEqual(PlatformID.MicrosoftSentinel);
-    expect((setWatchersMessage as ExtensionMessage).id!.indexOf('save-watchers')).toEqual(0);
-    expect((setWatchersMessage as ExtensionMessage).id!.indexOf(registerPlatformMessage.id!) > -1).toEqual(true);
+    expect((setWatchersMessage as ExtensionMessage).payload.platformID)
+      .toEqual(PlatformID.MicrosoftSentinel);
+    expect((setWatchersMessage as ExtensionMessage).id!.indexOf('save-watchers'))
+      .toEqual(0);
+    expect((setWatchersMessage as ExtensionMessage).id!.indexOf(registerPlatformMessage.id!) > -1)
+      .toEqual(true);
   });
 
   test('copyToClipboard test', async () => {
@@ -91,17 +96,20 @@ describe('PlatformStore test', () => {
       resources,
     );
 
-    let normalizedMessageStack = messageStack.flat(10) as ExtensionMessage[];
-    let modifyQueryMessage = normalizedMessageStack.find(
-      m => m.type === MessageToBackground.BGModifyQuery,
+    const normalizedMessageStack = messageStack.flat(10) as ExtensionMessage[];
+    const modifyQueryMessage = normalizedMessageStack.find(
+      (m) => m.type === MessageToBackground.BGDirectMessageToInline,
     )!;
 
     expect(!!modifyQueryMessage).toEqual(true);
     expect(modifyQueryMessage.id!.indexOf('modify-query') > -1).toEqual(true);
     expect(JSON.stringify(modifyQueryMessage.payload)).toEqual(JSON.stringify({
-      resources: resources,
-      modifyType: 'include',
-    } as ModifyQueryPayload));
+      type: MessageToInline.ISModifyQuery,
+      payload: {
+        resources,
+        modifyType: 'include',
+      },
+    } as ExtensionMessage<ModifyQueryPayload>));
   });
 
   test('buildQueryParts test', () => {

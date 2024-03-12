@@ -8,11 +8,9 @@ import {
   ModifyQueryPayload,
   SetDebugModePayload,
   SetQueryPayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
 import { addWhere, parseQueryString, buildNewQuery } from '../helpers/aql-builder';
-import { uuid } from '../../../common/helpers';
-import { MessageToContent } from '../../content/types/types-content-messages';
+import { sendQueryToApp } from '../helpers';
 
 const platform: ContentPlatform = new QRadarPlatform();
 
@@ -35,7 +33,8 @@ window.addEventListener('message', (event) => {
   )) {
     const editor = getEditor();
     if (!editor) {
-      return loggers.error().log('editor not found', ace);
+      loggers.error().log('editor not found', ace);
+      return;
     }
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
@@ -84,11 +83,7 @@ window.addEventListener('message', (event) => {
       return;
     }
 
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: editor.getValue() } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(editor.getValue());
   }
 
   if (isMessageMatched(

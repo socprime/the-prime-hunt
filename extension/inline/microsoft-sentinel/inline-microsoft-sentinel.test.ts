@@ -1,10 +1,9 @@
 import { setLoggers } from '../../common/loggers';
-import { getMockedLoggers } from '../../tests/mocks';
+import { getMockedLoggers, getMockedMonaco } from '../../tests/mocks';
 import { ExtensionMessage } from '../../common/types/types-common';
 import { sleep } from '../../../common/helpers';
 import { MessageToInline } from '../types/types-inline-messages';
 import { ModifyQueryPayload } from '../../common/types/types-common-payloads';
-import { getMockedMonaco } from '../../tests/mocks';
 
 describe('Microsoft Sentinel inline tests', () => {
   const logsStack: unknown[] = [];

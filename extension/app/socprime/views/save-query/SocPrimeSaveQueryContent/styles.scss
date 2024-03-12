@@ -1,0 +1,25 @@
+@import "../../../../scss/palette";
+
+.soc-prime-save-query-content {
+  height: 100%;
+
+  div[class^="form-validation-"] {
+    margin-bottom: 12px;
+  }
+
+  .app-group-header {
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: $success;
+      margin-right: 6px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .big-list {
+    max-height: 100px;
+  }
+}

@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
+import { DropdownContentItem } from '../../../../../common/types';
 
 export type ListProps = {
-  items: {
-    id: string;
-    content: ReactNode;
+  items: (DropdownContentItem & {
     isSelected?: boolean;
     onClick?: () => void
-  }[];
+  })[];
   noItemsMessage?: ReactNode;
   className?: string;
+  customRender?: (item: DropdownContentItem) => string;
 };

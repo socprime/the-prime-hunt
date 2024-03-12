@@ -1,6 +1,6 @@
 import { getBrowserContext } from './common-extension-helpers';
 
-const loggers = require('../common/loggers').loggers.addPrefix('api-support');
+const loggers = require('./loggers').loggers.addPrefix('api-support');
 
 export const isPostMessageSupported = (
   ...logData: any[]
@@ -89,7 +89,7 @@ export const isTabsOnRemovedSupported = (
 export const isActionOnClickedSupported = (
   ...logData: any[]
 ): boolean => {
-  if (!getBrowserContext()?.action?.onClicked?.addListener)  {
+  if (!getBrowserContext()?.action?.onClicked?.addListener) {
     loggers
       .warn()
       .log('API action.onClicked.addListener is not supported', ...logData);
@@ -101,7 +101,7 @@ export const isActionOnClickedSupported = (
 export const isBrowserActionOnClickedSupported = (
   ...logData: any[]
 ): boolean => {
-  if (!getBrowserContext()?.browserAction?.onClicked?.addListener)  {
+  if (!getBrowserContext()?.browserAction?.onClicked?.addListener) {
     loggers
       .warn()
       .log('API browserAction.onClicked.addListener is not supported', ...logData);

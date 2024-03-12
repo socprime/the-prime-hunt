@@ -1,12 +1,12 @@
 import { observable, makeObservable, computed } from 'mobx';
 import { FC } from 'react';
-import { getIntegrationModel } from '../../../integrations';
 import { RootStore } from '../../stores/RootStore';
 import { mappedIntegrations } from '../../integrations/integrations';
 import { integrationGroupName } from '../../integrations/integrations-store';
 import { SensitiveInfoWarningMessage } from '../messages/SensitiveInfoWarningMessage';
 import { AsyncResult } from '../../../../common/types';
 import { Integration } from '../integration-types';
+import { getModel } from '../../../models';
 
 export class IntegrationStore {
   private readonly rootStore: RootStore;
@@ -40,14 +40,14 @@ export class IntegrationStore {
   @computed
   private get model() {
     const { id } = this.integration || {};
-    return getIntegrationModel(this.mapIdToName(id));
+    return getModel(this.mapIdToName(id));
   }
 
   public mapIdToName(id: Integration['id'] | undefined) {
     const mappings = {
       '$open-cti$': 'openCTI',
-    } as Record<Integration['id'], Parameters<typeof getIntegrationModel>[0]>;
-    return (id ? mappings[id] : '') as Parameters<typeof getIntegrationModel>[0];
+    } as Record<Integration['id'], Parameters<typeof getModel>[0]>;
+    return (id ? mappings[id] : '') as Parameters<typeof getModel>[0];
   }
 
   setMessage(Message: FC | null) {
@@ -74,15 +74,15 @@ export class IntegrationStore {
   }
 
   async clearStorage() {
-    return this.model?.clearStorage();
+    return (this.model as any)?.clearStorage();
   }
 
   async getStorage(): Promise<AsyncResult> {
-    return this.model?.getStorage() || { error: new Error('Storage not found') };
+    return (this.model as any)?.getStorage() || { error: new Error('Storage not found') };
   }
 
   async setStorage(data: Record<string, unknown>): Promise<AsyncResult> {
-    return this.model?.setStorage(data as any) || { error: new Error('Storage not found') };
+    return (this.model as any)?.setStorage(data as any) || { error: new Error('Storage not found') };
   }
 
   setDefaults() {

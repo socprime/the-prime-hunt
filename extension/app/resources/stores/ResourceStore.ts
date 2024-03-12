@@ -59,7 +59,7 @@ export class ResourceStore {
   }
 
   @observable
-  public activeTabID: ResourceTypeID = BoundedResourceTypeID.Accounts;
+  public activeTabID: ResourceTypeID = '';
 
   @computed
   get countAllResources(): number {

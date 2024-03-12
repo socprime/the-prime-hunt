@@ -1,4 +1,6 @@
-import { RefObject, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {
+  RefObject, useCallback, useLayoutEffect, useRef, useState,
+} from 'react';
 import { isFlatObjectsEqual } from '../../../../../common/helpers';
 import { createClassName } from '../../../../common/common-helpers';
 import { Position } from '../../../../content/types/types-content-common';
@@ -128,8 +130,8 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
     return onMouseDownHandler(e, onMouseMove, onMouseUp);
   }, [disallowDrag, onMouseDownHandler]);
 
-  const getCheckedWidth = useCallback((width: number) => (minWidth && width < minWidth) ? minWidth : width, [minWidth]);
-  const getCheckedHeight = useCallback((height: number) => (minHeight && height < minHeight) ? minHeight : height, [minHeight]);
+  const getCheckedWidth = useCallback((width: number) => ((minWidth && width < minWidth) ? minWidth : width), [minWidth]);
+  const getCheckedHeight = useCallback((height: number) => ((minHeight && height < minHeight) ? minHeight : height), [minHeight]);
 
   const calculateOnMove = useCallback((
     e: React.MouseEvent | MouseEvent,
@@ -204,7 +206,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
     onMoveHandler(
       e,
       (event, shift) => {
-        setElementPosition(prev => {
+        setElementPosition((prev) => {
           const newPosition = calculateOnMove(event, prev, shift);
           onChangedPositionCallback('move', newPosition, prev);
           return newPosition;
@@ -212,7 +214,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       },
       (event, shift) => {
         ref.current!.classList.remove('move');
-        setElementPosition(prev => {
+        setElementPosition((prev) => {
           const newPosition = calculateOnMove(event, prev, shift);
           onMouseUpCallback(newPosition);
           return newPosition;
@@ -227,7 +229,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       return;
     }
     if (dragElementsRefs?.length > 0) {
-      dragElementsRefs.forEach(element => {
+      dragElementsRefs.forEach((element) => {
         if (element?.current) {
           element.current.onmousedown = onMoveCallback;
         }
@@ -248,7 +250,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
     >
       <div
         className="resizer resizer-top-left"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
             const x = calculateOnResizeLeft(event, pos);
             const y = calculateOnResizeTop(event, pos);
@@ -263,14 +265,14 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
           onResizeHandler(
             e,
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onChangedPositionCallback('resize-top-left', newPosition, prev);
                 return newPosition;
               });
             },
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onMouseUpCallback(newPosition);
                 return newPosition;
@@ -281,7 +283,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-top-right"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
             const x = calculateOnResizeRight(event, pos);
             const y = calculateOnResizeTop(event, pos);
@@ -296,14 +298,14 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
           onResizeHandler(
             e,
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onChangedPositionCallback('resize-top-right', newPosition, prev);
                 return newPosition;
               });
             },
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onMouseUpCallback(newPosition);
                 return newPosition;
@@ -314,7 +316,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-bottom-right"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
             const x = calculateOnResizeRight(event, pos);
             const y = calculateOnResizeBottom(event, pos);
@@ -329,14 +331,14 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
           onResizeHandler(
             e,
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onChangedPositionCallback('resize-bottom-right', newPosition, prev);
                 return newPosition;
               });
             },
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onMouseUpCallback(newPosition);
                 return newPosition;
@@ -347,7 +349,7 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-bottom-left"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           const calcNewPosition = (event: MouseEvent, pos: Position): Position => {
             const x = calculateOnResizeLeft(event, pos);
             const y = calculateOnResizeBottom(event, pos);
@@ -362,14 +364,14 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
           onResizeHandler(
             e,
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onChangedPositionCallback('resize-bottom-left', newPosition, prev);
                 return newPosition;
               });
             },
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calcNewPosition(event, prev);
                 onMouseUpCallback(newPosition);
                 return newPosition;
@@ -380,18 +382,18 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-top"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           onResizeHandler(
             e,
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calculateOnResizeTop(event, prev);
                 onChangedPositionCallback('resize-top', newPosition, prev);
                 return newPosition;
               });
             },
             (event) => {
-              setElementPosition(prev => {
+              setElementPosition((prev) => {
                 const newPosition = calculateOnResizeTop(event, prev);
                 onMouseUpCallback(newPosition);
                 return newPosition;
@@ -402,15 +404,15 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-bottom"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           onResizeHandler(e, (event) => {
-            setElementPosition(prev => {
+            setElementPosition((prev) => {
               const newPosition = calculateOnResizeBottom(event, prev);
               onChangedPositionCallback('resize-bottom', newPosition, prev);
               return newPosition;
             });
           }, (event) => {
-            setElementPosition(prev => {
+            setElementPosition((prev) => {
               const newPosition = calculateOnResizeBottom(event, prev);
               onMouseUpCallback(newPosition);
               return newPosition;
@@ -420,15 +422,15 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-left"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           onResizeHandler(e, (event) => {
-            setElementPosition(prev => {
+            setElementPosition((prev) => {
               const newPosition = calculateOnResizeLeft(event, prev);
               onChangedPositionCallback('resize-left', newPosition, prev);
               return newPosition;
             });
           }, (event) => {
-            setElementPosition(prev => {
+            setElementPosition((prev) => {
               const newPosition = calculateOnResizeLeft(event, prev);
               onMouseUpCallback(newPosition);
               return newPosition;
@@ -438,15 +440,15 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
       ></div>
       <div
         className="resizer resizer-right"
-        onMouseDown={e => {
+        onMouseDown={(e) => {
           onResizeHandler(e, (event) => {
-            setElementPosition(prev => {
+            setElementPosition((prev) => {
               const newPosition = calculateOnResizeRight(event, prev);
               onChangedPositionCallback('resize-right', newPosition, prev);
               return newPosition;
             });
           }, (event) => {
-            setElementPosition(prev => {
+            setElementPosition((prev) => {
               const newPosition = calculateOnResizeRight(event, prev);
               onMouseUpCallback(newPosition);
               return newPosition;
@@ -458,4 +460,3 @@ export const DraggableResizable: React.FC<React.PropsWithChildren<DraggableResiz
     </div>
   );
 };
-

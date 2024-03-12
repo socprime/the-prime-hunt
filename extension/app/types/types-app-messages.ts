@@ -3,17 +3,17 @@ import { getExecutingContextByMessageType } from '../../common/loggers/loggers-h
 export enum MessageToApp {
   AppShowExtension = 'AppShowExtension',
   AppTakeResourceData = 'AppTakeResourceData',
-  AppSyncWatchers = 'AppSyncWatchers',
   AppTakeNewResourceData = 'AppTakeNewResourceData',
+  AppSyncWatchers = 'AppSyncWatchers',
   AppQueryHasHash = 'AppQueryHasHash',
   AppQueryHasSpecifyFields = 'AppQueryHasSpecifyFields',
-  AppClearResourceData = 'AppClearResourceData',
   AppSetLoadingState = 'AppSetLoadingState',
   AppToggleShowExtension = 'AppToggleShowExtension',
   AppSendToBackground = 'AppSendToBackground',
   AppSendMessageOutside = 'AppSendMessageOutside',
+  AppTakeQuery = 'AppTakeQuery',
   AppSetDebugMode = 'AppSetDebugMode',
-  AppGetIntegrationWorkResult = 'AppGetIntegrationWorkResult',
+  AppTakeCallbackMessageResult = 'AppTakeCallbackMessageResult',
 }
 
 Object.values(MessageToApp).forEach((type) => {

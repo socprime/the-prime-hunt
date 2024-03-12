@@ -1,5 +1,5 @@
 import { sleep } from '../../../common/helpers';
-import { logSuccessMessage, testCase } from './helpers/utils';
+import { logRegularInfoMessage, logWarningMessage, testCase } from './helpers/utils';
 import {
   addNewTestResources,
   getExcludeBulkResourceButton,
@@ -23,7 +23,7 @@ import {
   getWatchers,
   setWatchers,
   getResourceCollapsibleHeader,
-  getResourceListItem,
+  getResourceListItem, openAccountsTab,
 } from './helpers/scenarios';
 import { clickOnElement, dblClickOnElement, hoverOnElement } from '../helpers';
 import { FieldName, ResourceTypeID } from '../../app/resources/resources-types';
@@ -61,6 +61,7 @@ export const suiteGlobals: {
 };
 
 const testIncludeAction = async () => {
+  logRegularInfoMessage('start test `testIncludeAction`');
   await suiteGlobals.clearValue();
   await sleep(0.1);
   const firstResourceListItem = getResourceListItem(
@@ -77,9 +78,11 @@ const testIncludeAction = async () => {
   testCase('Include resource action test')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.testIncludeAction);
+  logRegularInfoMessage('end test `testIncludeAction`');
 };
 
 const testExcludeAction = async () => {
+  logRegularInfoMessage('start test `testExcludeAction`');
   await suiteGlobals.clearValue();
   await sleep(0.1);
   const firstResourceListItem = getResourceListItem(
@@ -96,9 +99,11 @@ const testExcludeAction = async () => {
   testCase('Exclude resource action test')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.testExcludeAction);
+  logRegularInfoMessage('end test `testExcludeAction`');
 };
 
 const testShowAllAction = async () => {
+  logRegularInfoMessage('start test `testShowAllAction`');
   await suiteGlobals.clearValue();
   await sleep(0.1);
   const firstResourceListItem = getResourceListItem(
@@ -115,9 +120,11 @@ const testShowAllAction = async () => {
   testCase('Show all resource action test')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.testShowAllAction);
+  logRegularInfoMessage('end test `testShowAllAction`');
 };
 
 const testIncludeBulkAction = async () => {
+  logRegularInfoMessage('start test `testIncludeBulkAction`');
   await suiteGlobals.clearValue();
   const includeBulkButton = getIncludeBulkResourceButton()!;
   await sleep(0.1);
@@ -128,9 +135,11 @@ const testIncludeBulkAction = async () => {
   testCase('Bulk include resource action test')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.testIncludeBulkAction);
+  logRegularInfoMessage('end test `testIncludeBulkAction`');
 };
 
 const test2IncludeBulkAction = async () => {
+  logRegularInfoMessage('start test `test2IncludeBulkAction`');
   await suiteGlobals.clearValue();
   const includeBulkButton = getIncludeBulkResourceButton()!;
   await sleep(0.1);
@@ -141,9 +150,11 @@ const test2IncludeBulkAction = async () => {
   testCase('Bulk include resource action test2')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.test2IncludeBulkAction);
+  logRegularInfoMessage('end test `test2IncludeBulkAction`');
 };
 
 const testExcludeBulkAction = async () => {
+  logRegularInfoMessage('start test `testExcludeBulkAction`');
   await suiteGlobals.clearValue();
   const excludeBulkResourceButton = getExcludeBulkResourceButton()!;
   await sleep(0.1);
@@ -154,9 +165,11 @@ const testExcludeBulkAction = async () => {
   testCase('Bulk exclude resource action test')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.testExcludeBulkAction);
+  logRegularInfoMessage('end test `testExcludeBulkAction`');
 };
 
 const test2ExcludeBulkAction = async () => {
+  logRegularInfoMessage('start test `test2ExcludeBulkAction`');
   await suiteGlobals.clearValue();
   const excludeBulkResourceButton = getExcludeBulkResourceButton()!;
   await sleep(0.1);
@@ -167,9 +180,11 @@ const test2ExcludeBulkAction = async () => {
   testCase('Bulk exclude resource action test2')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.test2ExcludeBulkAction);
+  logRegularInfoMessage('end test `test2ExcludeBulkAction`');
 };
 
 const testShowAllBulkAction = async () => {
+  logRegularInfoMessage('start test `testShowAllBulkAction`');
   await suiteGlobals.clearValue();
   const showAllBulkButton = getShowAllBulkResourceButton()!;
   await sleep(0.1);
@@ -180,9 +195,11 @@ const testShowAllBulkAction = async () => {
   testCase('Bulk show all resource action test')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.testShowAllBulkAction);
+  logRegularInfoMessage('end test `testShowAllBulkAction`');
 };
 
 const test2ShowAllBulkAction = async () => {
+  logRegularInfoMessage('start test `test2ShowAllBulkAction`');
   await suiteGlobals.clearValue();
   const showAllBulkButton = getShowAllBulkResourceButton()!;
   await sleep(0.1);
@@ -193,9 +210,11 @@ const test2ShowAllBulkAction = async () => {
   testCase('Bulk show all resource action test2')
     .expect(value.trim())
     .toEqual(suiteGlobals.messages.test2ShowAllBulkAction);
+  logRegularInfoMessage('end test `test2ShowAllBulkAction`');
 };
 
 const testSetWatchers = async () => {
+  logRegularInfoMessage('start test `testSetWatchers`');
   let watchers = getWatchers();
   if (typeof watchers['custom-test'] !== 'undefined') {
     delete watchers['custom-test'];
@@ -208,7 +227,7 @@ const testSetWatchers = async () => {
 
   const tabInput = getInputInActiveResourceTab();
   tabInput.value = 'custom-test';
-  tabInput.dispatchEvent(new Event('change', { 'bubbles': true }));
+  tabInput.dispatchEvent(new Event('change', { bubbles: true }));
 
   clickOnElement(getApplyButtonInActiveResourceTab());
 
@@ -217,7 +236,7 @@ const testSetWatchers = async () => {
 
   const newFieldInput = addNewFieldInput();
   newFieldInput.value = 'test-resource-name';
-  newFieldInput.dispatchEvent(new Event('change', { 'bubbles': true }));
+  newFieldInput.dispatchEvent(new Event('change', { bubbles: true }));
 
   const applyAddNewFieldButton = getApplyAddNewFieldButton();
   clickOnElement(applyAddNewFieldButton);
@@ -256,26 +275,28 @@ const testSetWatchers = async () => {
     .toEqual(true);
 
   setWatchers(watchers);
+  logRegularInfoMessage('end test `testSetWatchers`');
+
   await sleep(0.3);
 };
 
 const testRemoveResourcesFields = async () => {
+  logRegularInfoMessage('start test `testRemoveResourcesFields`');
   const testData = getTestData();
   const mapTypeToFields = new Map<ResourceTypeID, Set<FieldName>>();
   Object.keys(testData).forEach((typeID) => {
-    Object.keys(testData[typeID]).forEach(fieldName => {
+    Object.keys(testData[typeID]).forEach((fieldName) => {
       const set = mapTypeToFields.get(typeID) || new Set();
       set.add(fieldName);
       mapTypeToFields.set(typeID, set);
     });
   });
-  for (let store of Array.from(mapTypeToFields)) {
+  for (const store of Array.from(mapTypeToFields)) {
     const [typeID, set] = store;
-    for (let fieldName of Array.from(set)) {
-      const removeButton =
-        getResourceCollapsibleRemoveButton(
-          getResourceCollapsibleByHeaderText(fieldName),
-        );
+    for (const fieldName of Array.from(set)) {
+      const removeButton = getResourceCollapsibleRemoveButton(
+        getResourceCollapsibleByHeaderText(fieldName),
+      );
       let watchers = getWatchers();
       testCase(`exists fieldName >${fieldName}< in type >${typeID}<`, false)
         .expect(watchers[typeID]?.includes(fieldName))
@@ -291,15 +312,14 @@ const testRemoveResourcesFields = async () => {
     }
   }
 
-  logSuccessMessage('Remove resources fields');
+  logWarningMessage('Remove resources fields');
+  logRegularInfoMessage('end test `testRemoveResourcesFields`');
 };
 
 export const startTests = async () => {
-  showExtension();
-  await sleep(0.3);
-
+  await showExtension();
+  await openAccountsTab();
   await addNewTestResources();
-  await sleep(0.3);
 
   const firstCollapsibleHeader = getResourceCollapsibleHeader(
     getResourceCollapsibleByHeaderText('test0')!,
@@ -344,4 +364,3 @@ export const startTests = async () => {
   await testSetWatchers();
   await testRemoveResourcesFields();
 };
-

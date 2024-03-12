@@ -9,7 +9,7 @@ export enum MessageToInline {
   ISRemoveFieldSpecification = 'ISRemoveFieldSpecification',
 }
 
-Object.values(MessageToInline).forEach(type => {
+Object.values(MessageToInline).forEach((type) => {
   if (getExecutingContextByMessageType(type) !== 'inline') {
     throw new Error(`Wrong inline message type "${type}"`);
   }

@@ -4,7 +4,6 @@ import {
   ModifyQueryPayload,
   SetDebugModePayload,
   SetQueryPayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
 import { isMessageMatched } from '../../common/common-listeners';
 import {
@@ -17,8 +16,7 @@ import {
   MicrosoftDefenderPlatform,
 } from '../../content/platforms/MicrosoftDefenderPlatform';
 import { ContentPlatform } from '../../content/types/types-content-common';
-import { uuid } from '../../../common/helpers';
-import { MessageToContent } from '../../content/types/types-content-messages';
+import { sendQueryToApp } from '../helpers';
 
 const platform: ContentPlatform = new MicrosoftDefenderPlatform();
 
@@ -122,11 +120,7 @@ window.addEventListener('message', (event) => {
       return;
     }
 
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: editor.getValue() } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(editor.getValue());
   }
 
   // TODO dry

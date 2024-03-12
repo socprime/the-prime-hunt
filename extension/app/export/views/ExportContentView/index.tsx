@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 import { OpenCTIExport } from '../../OpenCTIExport';
-import { FormDropdownProps } from '../../../components/dropdowns/FormDropdown/types';
+import { FormValidationDropdownProps } from '../../../components/dropdowns/FormValidationDropdown/types';
 import { ResourceName } from '../../../resources/resources-types';
 import { useAppMessageStore } from '../../../stores';
-import { IntegrationWorkPayload } from '../../../../common/types/types-common-payloads';
-import { MessageToBackground } from '../../../../background/types/types-background-messages';
 import './styles.scss';
 
 export const ExportContentView: React.FC<{
   resourceName: ResourceName;
 }> = ({ resourceName }) => {
   const [fieldsData, setFieldsData] = useState<{
-    observableTypesItems: FormDropdownProps['items'];
-    labelsItems: FormDropdownProps['items'];
-    indicatorTypesItems: FormDropdownProps['items'];
-    allowedMarkersItems: FormDropdownProps['items'];
+    observableTypesItems: FormValidationDropdownProps['items'];
+    labelsItems: FormValidationDropdownProps['items'];
+    indicatorTypesItems: FormValidationDropdownProps['items'];
+    allowedMarkersItems: FormValidationDropdownProps['items'];
   }>({
     observableTypesItems: [],
     labelsItems: [],
@@ -28,11 +26,8 @@ export const ExportContentView: React.FC<{
   useEffect(() => {
     messageStorage
       .sendMessageWithCallback({
-        type: MessageToBackground.BGIntegrationWork,
-        payload: {
-          work: 'import-data',
-          modelType: 'openCTI',
-        } as IntegrationWorkPayload,
+        work: 'import-data',
+        model: 'openCTI',
       })
       .then((result) => {
         setFieldsData({

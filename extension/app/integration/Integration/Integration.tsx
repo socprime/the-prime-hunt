@@ -2,11 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
 import { useIntegrationsStore, useIntegrationStore } from '../../stores';
-import { IntegrationInput } from '../../integrations/IntegrationInput/IntegrationInput';
 import { OpenCTIIntegration } from '../OpenCTIIntegration';
 import { isNotEmptyString } from '../../../../common/validators';
 import { AppGroupHeader } from '../../components/headers/AppGroupHeader';
 import { Integration as IntegrationType } from '../integration-types';
+import { FormValidationInput } from '../../components/inputs/FormValidationInput';
 import './styles.scss';
 
 const validateMessage = 'This field is required';
@@ -26,7 +26,7 @@ export const Integration: React.FC = observer(() => {
         </AppGroupHeader>
         <Spacer height={16} />
       </>}
-      <IntegrationInput
+      <FormValidationInput
         label="Display Name"
         value={name}
         placeholder="ex OpenCTI"
@@ -47,7 +47,7 @@ export const Integration: React.FC = observer(() => {
         ]}
       />
       <Spacer height={12} />
-      <IntegrationInput
+      <FormValidationInput
         label="Integration URL"
         value={url}
         placeholder="ex https://my-host/search=$VALUE$"

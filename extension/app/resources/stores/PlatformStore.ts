@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { makeObservable, observable } from 'mobx';
 import { ContentPlatform } from '../../../content/types/types-content-common';
-import { ModifyQueryType } from '../../../common/types/types-common';
+import { ExtensionMessage, ModifyQueryType } from '../../../common/types/types-common';
 import { sendMessageFromApp } from '../../../content/services/content-services';
 import {
   ModifyQueryPayload,
@@ -12,6 +12,7 @@ import { RootStore } from '../../stores/RootStore';
 import { getWatchers, getFieldsNames, setFieldsNames } from '../../../common/local-storage';
 import { NormalizedParsedResources } from '../resources-types';
 import { copyToClipboard } from '../../../common/common-helpers';
+import { MessageToInline } from '../../../inline/types/types-inline-messages';
 
 export class PlatformStore {
   @observable
@@ -25,6 +26,16 @@ export class PlatformStore {
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
     makeObservable(this);
+  }
+
+  getQuery() {
+    sendMessageFromApp<ExtensionMessage>({
+      id: 'get-query',
+      type: MessageToBackground.BGDirectMessageToInline,
+      payload: {
+        type: MessageToInline.ISGetQuery,
+      },
+    });
   }
 
   getFieldsNames(): string[] {
@@ -51,7 +62,6 @@ export class PlatformStore {
     platform.connect();
     this.platform = platform;
     this.setFieldsNames(getFieldsNames());
-    this.rootStore.routerStore.page = 'resources';
     this.rootStore.appStore.setPosition(platform.extensionDefaultPosition);
     const watchers = getWatchers(platform.getID());
 
@@ -86,12 +96,23 @@ export class PlatformStore {
     modifyType: ModifyQueryType,
     resources: NormalizedParsedResources,
   ): void {
-    sendMessageFromApp<ModifyQueryPayload>({
+    // sendMessageFromApp<ModifyQueryPayload>({
+    //   id: 'modify-query',
+    //   type: MessageToBackground.BGModifyQuery,
+    //   payload: {
+    //     resources,
+    //     modifyType,
+    //   },
+    // });
+    sendMessageFromApp<ExtensionMessage<ModifyQueryPayload>>({
       id: 'modify-query',
-      type: MessageToBackground.BGModifyQuery,
+      type: MessageToBackground.BGDirectMessageToInline,
       payload: {
-        resources,
-        modifyType,
+        type: MessageToInline.ISModifyQuery,
+        payload: {
+          resources,
+          modifyType,
+        },
       },
     });
   }

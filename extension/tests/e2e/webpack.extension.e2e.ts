@@ -6,33 +6,44 @@ import { join } from 'path';
 
 const args = minimist<{
   mode?: Mode;
+  platform?: string;
 }>(process.argv.slice(2));
 [args.env]
   .flat(1)
-  .forEach(arg => String(arg).split('=')
-    .forEach((part, _, arr) => args[arr[0]] = arr.length === 2 ? arr[1] : undefined,
-    ),
-  );
+  .forEach((arg) => String(arg).split('=')
+    .forEach((part, _, arr) => {
+      args[arr[0]] = arr.length === 2 ? arr[1] : undefined;
+    }));
 
-const mode = String(args?.mode).toLowerCase() === Mode.development ? Mode.development : Mode.production;
+const { platform } = args;
 
-const entries = [
-  'elastic',
-  'qradar',
-  'splunk',
-  'arcsight',
-  'opensearch',
-  'athena',
-  'microsoft-sentinel',
-  'microsoft-defender',
-].reduce((entry, name) => {
+const mode = String(
+  args?.mode,
+).toLowerCase() === Mode.development
+  ? Mode.development
+  : Mode.production;
+
+const entries = (platform
+  ? [platform]
+  : [
+    'chronicle',
+    'elastic',
+    'qradar',
+    'splunk',
+    'arcsight',
+    'opensearch',
+    'logscale',
+    'athena',
+    'microsoft-sentinel',
+    'microsoft-defender',
+  ]).reduce((entry, name) => {
   entry[name] = [
     join(__dirname, 'platforms', `${name}.ts`),
   ];
   return entry;
 }, {} as EntryObject);
 
-module.exports = {
+const config = {
   mode,
   entry: {
     ...entries,
@@ -60,3 +71,5 @@ module.exports = {
     ],
   },
 } as WebpackConfiguration;
+
+export default config;

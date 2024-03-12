@@ -1,13 +1,12 @@
 import { FC } from 'react';
-import { useMail, useRouter } from '../../../stores';
+import { useRouter } from '../../../stores';
 import { BigStaticButton } from '../../../components/buttons/BigStaticButton/BigStaticButton';
 import { PlusIcon } from '../../../components/atoms/icons/PlusIcon/PlusIcon';
 import { suuid } from '../../../../../common/helpers';
 import { Mail } from '../../mail-types';
 
 export const MailsFooterView: FC = () => {
-  const routerStore = useRouter();
-  const mail = useMail();
+  const router = useRouter();
 
   return (
     <>
@@ -22,8 +21,7 @@ export const MailsFooterView: FC = () => {
             to: [],
             name: 'Custom',
           } as Mail;
-          mail.pattern = template;
-          routerStore.goToMailPage(template);
+          router.goToMailPage(template);
         }}
       >
         Add New Template

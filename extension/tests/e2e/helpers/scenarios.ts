@@ -1,11 +1,17 @@
 import { MessageToApp } from '../../../app/types/types-app-messages';
 import { logErrorMessage } from './utils';
-import { ParsedDataPayload } from '../../../common/types/types-common-payloads';
+import {
+  ParsedDataPayload,
+  SetQueryPayload,
+} from '../../../common/types/types-common-payloads';
 import { debugID } from '../../../common/loggers/loggers-helpers';
 import { watchersLocalStorageKey } from '../../../common/local-storage';
 import { WatchingResources } from '../../../background/types/types-background-common';
 import { sleep } from '../../../../common/helpers';
 import { NormalizedResources } from '../../../app/resources/resources-types';
+import { MessageToBackground } from '../../../background/types/types-background-messages';
+import { MessageToInline } from '../../../inline/types/types-inline-messages';
+import { ExtensionMessage } from '../../../common/types/types-common';
 
 const addScenarioToWindow = (
   scenarioName: string,
@@ -18,13 +24,71 @@ const addScenarioToWindow = (
   w.scenarioFunctions[scenarioName] = scenarioFunc;
 };
 
-export const showExtension = () => {
+export const setQueryToPlatform = async (
+  query: string,
+) => {
+  window.postMessage({
+    type: MessageToApp.AppSendToBackground,
+    externalType: debugID,
+    payload: {
+      type: MessageToBackground.BGDirectMessageToInline,
+      payload: {
+        type: MessageToInline.ISSetQuery,
+        payload: {
+          value: query,
+        } as SetQueryPayload,
+      },
+    },
+  } as ExtensionMessage);
+
+  await sleep(0.6);
+};
+
+export const mapListenerMessages = (
+  isMatched: (message: ExtensionMessage) => boolean,
+  getStack: () => ExtensionMessage[],
+) => {
+  window.addEventListener('message', (event) => {
+    const message = event.data as ExtensionMessage;
+    if ((message as any).outside === 'MessageOutside' && isMatched(message)) {
+      getStack().push(message);
+    }
+  });
+};
+
+export const getQueryFromPlatform = async () => {
+  window.postMessage({
+    type: MessageToApp.AppSendToBackground,
+    externalType: debugID,
+    payload: {
+      type: MessageToBackground.BGDirectMessageToInline,
+      payload: {
+        type: MessageToInline.ISGetQuery,
+      },
+    },
+  } as ExtensionMessage);
+
+  await sleep(0.6);
+};
+
+export const openAccountsTab = async () => {
+  (document.querySelector('div[style^="all:initial"]')
+    ?.shadowRoot
+    ?.querySelector('div.tabs-platform-resources-wrapper div.tab:nth-child(2) > button') as HTMLElement)
+    ?.click?.();
+  await sleep(0.3);
+};
+
+export const showExtension = async () => {
   addScenarioToWindow('showExtension', showExtension);
 
   window.postMessage({
     type: MessageToApp.AppShowExtension,
     externalType: debugID,
+    testMode: true,
   });
+
+  await sleep(0.3);
 };
 
 export const getWatchers = (): WatchingResources => {

@@ -6,12 +6,10 @@ import {
   ModifyQueryPayload,
   SetDebugModePayload,
   SetQueryPayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
 import { SplunkPlatform } from '../../content/platforms/SplunkPlatform';
 import { ContentPlatform } from '../../content/types/types-content-common';
-import { uuid } from '../../../common/helpers';
-import { MessageToContent } from '../../content/types/types-content-messages';
+import { sendQueryToApp } from '../helpers';
 
 const platform: ContentPlatform = new SplunkPlatform();
 
@@ -34,7 +32,8 @@ window.addEventListener('message', (event) => {
   )) {
     const editor = getEditor();
     if (!editor) {
-      return loggers.error().log('editor not found', ace);
+      loggers.error().log('editor not found', ace);
+      return;
     }
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
@@ -46,7 +45,8 @@ window.addEventListener('message', (event) => {
         editor.getValue(),
         suffix,
         modifyType,
-      ));
+      ),
+    );
   }
 
   if (isMessageMatched(
@@ -72,11 +72,7 @@ window.addEventListener('message', (event) => {
       return;
     }
 
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: editor.getValue() } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(editor.getValue());
   }
 
   if (isMessageMatched(

@@ -8,6 +8,8 @@ import { ExportContentView } from '../../export/views/ExportContentView';
 import { SettingsContentView } from '../../settings/views/SettingsContentView';
 import { IntegrationContentView } from '../../integration/views/IntegrationContentView';
 import { MailContentView } from '../../mail/views/MailContentView';
+import { QueryContentView } from '../../query/views/QueryContentView';
+import { SocPrimeSaveQueryContent } from '../../socprime/views/save-query/SocPrimeSaveQueryContent';
 
 export const AppContent = observer(forwardRef<HTMLDivElement>((_, ref) => {
   const router = useRouter();
@@ -20,10 +22,14 @@ export const AppContent = observer(forwardRef<HTMLDivElement>((_, ref) => {
       {router.page === 'not-found' && <NotFoundContentView />}
       {router.page === 'faq' && <FaqContentView />}
       {router.page === 'export' && <ExportContentView {...pageProps} /> }
-      {(router.page === 'settings:integrations' || router.page === 'settings:mail')
-        && <SettingsContentView page={router.page} />}
+      {(router.page === 'settings:integrations'
+          || router.page === 'settings:mail'
+          || router.page === 'settings:socprime'
+      ) && <SettingsContentView page={router.page} />}
       {router.page === 'integration' && <IntegrationContentView />}
       {router.page === 'mail' && <MailContentView />}
+      {router.page === 'resources:query' && <QueryContentView />}
+      {router.page === 'socprime:save-query' && <SocPrimeSaveQueryContent />}
     </div>
   );
 }));

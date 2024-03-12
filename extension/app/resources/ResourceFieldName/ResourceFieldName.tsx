@@ -10,7 +10,9 @@ type ResourceFieldNameProps = {
   disabled?: boolean;
 };
 
-export const ResourceFieldName: React.FC<ResourceFieldNameProps> = ({ disabled, icon, fieldName, count }) => {
+export const ResourceFieldName: React.FC<ResourceFieldNameProps> = ({
+  disabled, icon, fieldName, count,
+}) => {
   return (
     <div
       className={createClassName([

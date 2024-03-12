@@ -69,7 +69,7 @@ export const CollapsibleResource: React.FC<CollapsibleResourceProps> = ({
             />
           }
           state={checkboxState}
-          onClick={isChecked => {
+          onClick={(isChecked) => {
             if (isDisabled) {
               return;
             }
@@ -83,8 +83,8 @@ export const CollapsibleResource: React.FC<CollapsibleResourceProps> = ({
       }
       group={getGroup(fieldName)}
     >
-      {!isDisabled &&
-        <ResourceList
+      {!isDisabled
+        && <ResourceList
           items={values.slice(0, 100)}
           selectedItems={selectedValues}
           fieldName={fieldName}

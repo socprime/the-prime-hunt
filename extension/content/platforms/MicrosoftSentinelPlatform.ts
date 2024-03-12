@@ -1,11 +1,7 @@
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
 import { ListenerType, MessageListener } from '../types/types-content-common';
 import { addListener } from '../services/content-services-listeners';
-import {
-  buildQueryParts,
-  mountHTMLElement,
-  waitHTMLElement,
-} from '../../common/common-helpers';
+import { buildQueryParts, mountHTMLElement, waitHTMLElement, } from '../../common/common-helpers';
 import { contentPlatformIDFromENV } from '../../common/envs';
 import { microsoftSentinelInline } from '../../manifest/public-resources';
 import { isNumberInString } from '../../../common/checkers';
@@ -47,7 +43,7 @@ export class MicrosoftSentinelPlatform extends AbstractContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      () => type === 'exclude' ? ' != ' : ' == ',
+      () => (type === 'exclude' ? ' != ' : ' == '),
       type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {
@@ -104,6 +100,10 @@ export class MicrosoftSentinelPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.MicrosoftSentinel;
+  }
+
+  getType(): SiemType {
+    return SiemType.Sentinel;
   }
 
   private static connectInlineListener() {

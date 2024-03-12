@@ -1,18 +1,13 @@
 import { getExecutingContextByMessageType } from '../../common/loggers/loggers-helpers';
 
 export enum MessageToBackground {
-  BGRunClearData = 'BGRunClearData',
-  BGModifyQuery = 'BGModifyQuery',
-  BGSetQuery = 'BGSetQuery',
-  BGGetQuery = 'BGGetQuery',
   BGDirectMessageToApp = 'BGDirectMessageToApp',
-  BGSendMessageOutside = 'BGSendMessageOutside',
+  BGDirectMessageToInline = 'BGDirectMessageToInline',
   BGSetWatchers = 'BGSetWatchers',
   BGRegisterPlatformTab = 'BGRegisterPlatformTab',
   BGToggleShowExtension = 'BGToggleShowExtension',
   BGSetDebugMode = 'BGSetDebugMode',
-  BGDirectMessageToInline = 'BGDirectMessageToInline',
-  BGIntegrationWork = 'BGIntegrationWork',
+  BGTakeCallbackMessage = 'BGTakeCallbackMessage',
 }
 
 Object.values(MessageToBackground).forEach((type) => {

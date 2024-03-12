@@ -1,8 +1,5 @@
-import { Page } from '../../../router/pages';
+import { SettingsPage } from '../../../router/pages';
 
 export type SettingsContentViewProps = {
-  page: Extract<Page,
-    'settings:integrations'
-    | 'settings:mail'
-  >
+  page: SettingsPage;
 }

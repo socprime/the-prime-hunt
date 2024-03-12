@@ -2,7 +2,6 @@ import { RefObject } from 'react';
 import { observable, makeObservable } from 'mobx';
 import { Position } from '../../../content/types/types-content-common';
 import { getPosition, setPosition } from '../../../common/local-storage';
-import { LoadingKey } from '../../types/types-app-common';
 
 export class AppStore {
   private static MIN_HEIGHT = 400;
@@ -13,7 +12,7 @@ export class AppStore {
   public mounted = false;
 
   @observable
-  public loadingKeys: LoadingKey[] = [];
+  public loadingKeys: string[] = [];
 
   @observable
   public dragElementRef = {} as RefObject<HTMLElement>;
@@ -118,18 +117,18 @@ export class AppStore {
     makeObservable(this);
   }
 
-  startLoading(key: LoadingKey) {
+  startLoading(key: string) {
     if (this.isLoading(key)) {
       return;
     }
     this.loadingKeys.push(key);
   }
 
-  stopLoading(key: LoadingKey) {
+  stopLoading(key: string) {
     this.loadingKeys = this.loadingKeys.filter((k) => k !== key);
   }
 
-  isLoading(key: LoadingKey) {
+  isLoading(key: string) {
     return this.loadingKeys.includes(key);
   }
 

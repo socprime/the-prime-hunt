@@ -15,7 +15,7 @@ export type BrowserTabID = number;
 export type BrowserTabInfo = {
   id: BrowserTabID;
   origin: string;
-};
+}
 
 export type ExtensionMessageType = MessageToBackground
   | MessageToContent
@@ -28,7 +28,11 @@ export type ExtensionMessage<T = any> = {
   type: ExtensionMessageType;
   id?: UniqueHash;
   payload?: T;
-};
+}
+
+export type IncomingListenerData = {
+  message: ExtensionMessage;
+}
 
 export enum PlatformID {
   MicrosoftSentinel = 'MicrosoftSentinel',
@@ -41,6 +45,24 @@ export enum PlatformID {
   Athena = 'Athena',
   LogScale = 'LogScale',
   Chronicle = 'Chronicle'
+}
+
+export enum PlatformQueryID {
+  ElasticEQl = 'ElasticEql'
+}
+
+export enum SiemType {
+  Sentinel = 'ala',
+  Defender = 'mdatp',
+  Splunk = 'splunk',
+  Qradar = 'qradar',
+  ElasticEQL = 'es-eql',
+  ElasticLucene = 'elasticsearch',
+  ArcSight = 'arcsight-keyword',
+  Athena = 'athena',
+  LogScale = 'humio',
+  Chronicle = 'chronicle-query',
+  OpenSearch = 'opendistro-query',
 }
 
 export enum PlatformName {

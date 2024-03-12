@@ -2,11 +2,9 @@ import { AbstractContentPlatform } from './AbstractContentPlatform';
 import { WatchingResources } from '../../background/types/types-background-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { ListenerType, MessageListener, Position } from '../types/types-content-common';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
 import { isNumberInString } from '../../../common/checkers';
-import {
-  buildQueryParts, mountHTMLElement,
-} from '../../common/common-helpers';
+import { buildQueryParts, mountHTMLElement, } from '../../common/common-helpers';
 import { Loggers } from '../../common/loggers';
 import { addListener } from '../services/content-services-listeners';
 import { amazonAthenaInline } from '../../manifest/public-resources';
@@ -54,7 +52,7 @@ export class AmazonAthenaPlatform extends AbstractContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      () => type === 'exclude' ? ' != ' : ' = ',
+      () => (type === 'exclude' ? ' != ' : ' = '),
       type === 'exclude' ? ' AND ' : ' OR ',
       type === 'exclude' ? ' AND ' : ' OR ',
       {
@@ -107,6 +105,10 @@ export class AmazonAthenaPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.Athena;
+  }
+
+  getType(): SiemType {
+    return SiemType.Athena;
   }
 }
 

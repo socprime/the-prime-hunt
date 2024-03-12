@@ -5,14 +5,14 @@ import {
   useForm, useRouter, useIntegrationStore, useIntegrationsStore,
 } from '../../../stores';
 import { CheckIcon } from '../../../components/atoms/icons/CheckIcon/CheckIcon';
-import { OpenCTIIntegrationData } from '../../../../integrations/openCTI/types';
+import { OpenCTIIntegrationData } from '../../../../models/openCTI/types';
 import { RefreshIcon } from '../../../components/atoms/icons/RefreshIcon/RefreshIcon';
 import { mappedIntegrations } from '../../../integrations/integrations';
 import { AsyncResult } from '../../../../../common/types';
 import './styles.scss';
 
 export const IntegrationFooterView: React.FC = observer(() => {
-  const formStore = useForm();
+  const form = useForm();
   const router = useRouter();
   const integrationStore = useIntegrationStore();
   const integrationsStore = useIntegrationsStore();
@@ -28,7 +28,7 @@ export const IntegrationFooterView: React.FC = observer(() => {
         onClick={() => {
           integrationStore.setDefaults();
         }}
-        disabled={formStore.validating}
+        disabled={form.validating}
       >
         Restore Defaults
       </BigStaticButton>)}
@@ -37,7 +37,7 @@ export const IntegrationFooterView: React.FC = observer(() => {
         icon={<CheckIcon />}
         onClick={() => {
           Promise.all([
-            formStore.validate(['finish', 'blur']),
+            form.validate(['finish', 'blur']),
             integrationStore.getStorage(),
           ])
             .then(([isSuccess, storage]) => {
@@ -59,7 +59,7 @@ export const IntegrationFooterView: React.FC = observer(() => {
               }
             });
         }}
-        disabled={formStore.validating}
+        disabled={form.validating}
       >
         Save & Close
       </BigStaticButton>

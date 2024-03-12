@@ -9,7 +9,6 @@ import {
   SetDebugModePayload,
   SetQueryPayload,
   ShowMessagePayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
 import { addWhere, buildNewQuery, parseQueryString } from '../helpers/aql-builder';
 import { uuid } from '../../../common/helpers';
@@ -17,6 +16,7 @@ import { MessageToContent } from '../../content/types/types-content-messages';
 import { AmazonAthenaPlatform } from '../../content/platforms/AmazonAthenaPlatform';
 import { waitHTMLElement } from '../../common/common-helpers';
 import { MessageToApp } from '../../app/types/types-app-messages';
+import { sendQueryToApp } from '../helpers';
 
 const platform: ContentPlatform = new AmazonAthenaPlatform();
 
@@ -42,7 +42,8 @@ window.addEventListener('message', (event) => {
   )) {
     const editor = getEditor();
     if (!editor) {
-      return loggers.error().log('editor not found', ace);
+      loggers.error().log('editor not found', ace);
+      return;
     }
 
     const { resources, modifyType } = message.payload as ModifyQueryPayload;
@@ -91,11 +92,7 @@ window.addEventListener('message', (event) => {
       return;
     }
 
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: editor.getValue() } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(editor.getValue());
   }
 
   if (isMessageMatched(
@@ -151,14 +148,14 @@ window.addEventListener('message', (event) => {
 
     const matchedValues = Array.from(
       (editor.getValue() || '')
-        .matchAll(hasFieldSpecificationRegExp) || []);
+        .matchAll(hasFieldSpecificationRegExp) || [],
+    );
 
     const prefix = matchedValues[0][0];
     let value = editor.getValue();
     value = value
       .replace(prefix, 'SELECT * FROM ')
       .replace(/group\s+by.+/gi, '');
-
 
     editor.setValue(value);
   }
@@ -231,7 +228,7 @@ if (aceContent) {
   observe(aceContent);
 } else {
   waitHTMLElement('.ace_content', document.querySelector('body')!)
-    .then(element => observe(element));
+    .then((element) => observe(element));
 }
 
 loggers.debug().log('mounted');

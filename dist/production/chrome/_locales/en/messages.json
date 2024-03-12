@@ -1,8 +1,8 @@
 {
-  "extension_name": {
-    "message": "The Prime Hunt"
-  },
   "extension_description": {
     "message": "SOC Prime’s open-source browser extension for more efficient threat hunting with one UI for different SIEMs/EDRs"
+  },
+  "extension_name": {
+    "message": "The Prime Hunt"
   }
 }

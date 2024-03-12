@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import SimpleBar from 'simplebar-react';
 import { observer } from 'mobx-react-lite';
-import { IntegrationInput } from '../../integrations/IntegrationInput/IntegrationInput';
-import { List } from '../../components/atoms/List/List';
-import { FormDropdown } from '../../components/dropdowns/FormDropdown';
-import { FormDropdownProps } from '../../components/dropdowns/FormDropdown/types';
+import { FormValidationDropdown } from '../../components/dropdowns/FormValidationDropdown';
+import { FormValidationDropdownProps } from '../../components/dropdowns/FormValidationDropdown/types';
 import { isNotEmptyArray, isNotEmptyString } from '../../../../common/validators';
 import { ResourceName, ResourceType } from '../../resources/resources-types';
 import { useAppMessageStore, useForm, useResourceStore } from '../../stores';
-import { getIntegrationModel } from '../../../integrations';
-import { IntegrationCheckbox } from '../../integrations/IntegrationCheckbox';
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
+import { getOpenCTIModel } from '../../../models/openCTI/model';
+import { DropdownMenuList } from '../../components/dropdowns-menus/DropdownMenuList';
+import { FormValidationInput } from '../../components/inputs/FormValidationInput';
+import { FormValidationCheckbox } from '../../components/checkboxes/FormValidationCheckbox';
 import './styles.scss';
 
 export type OpenCTIExportProps = {
   resourceName: ResourceName;
-  labelsItems: FormDropdownProps['items'];
-  observableTypesItems: FormDropdownProps['items'];
-  indicatorTypesItems: FormDropdownProps['items'];
-  allowedMarkersItems: FormDropdownProps['items'];
+  labelsItems: FormValidationDropdownProps['items'];
+  observableTypesItems: FormValidationDropdownProps['items'];
+  indicatorTypesItems: FormValidationDropdownProps['items'];
+  allowedMarkersItems: FormValidationDropdownProps['items'];
 };
 
-const model = getIntegrationModel('openCTI')!;
+const model = getOpenCTIModel();
 const validateMessage = 'This field is required';
 
-export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
+export const OpenCTIExport: FC<OpenCTIExportProps> = observer(({
   labelsItems,
   observableTypesItems,
   indicatorTypesItems,
@@ -48,9 +48,10 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
   return (
     <div className="open-cti-export">
       <Spacer height={12} />
-      <IntegrationInput
+      <FormValidationInput
         label="Name"
         name="name"
+        className="integration-input"
         value={resourceName}
         disabled={form.validating || messageStore.inProgress}
         validators={[
@@ -62,7 +63,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
           },
         ]}
       />
-      <FormDropdown
+      <FormValidationDropdown
         disabled={form.validating || messageStore.inProgress}
         classNameMenu="observable-type-list-menu open-cti-menu"
         items={observableTypesItems}
@@ -83,10 +84,11 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         ]}
       >
         {(props) => <SimpleBar className="big-list">
-          <List className="observable-type-list" {...props} />
+          <DropdownMenuList {...props} />
         </SimpleBar>}
-      </FormDropdown>
-      <IntegrationInput
+      </FormValidationDropdown>
+      <FormValidationInput
+        className="integration-input"
         label="Pattern"
         name="pattern"
         disabled={form.validating || messageStore.inProgress}
@@ -100,7 +102,7 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
           },
         ]}
       />
-      <FormDropdown
+      <FormValidationDropdown
         disabled={form.validating || messageStore.inProgress}
         classNameMenu="indicator-type-list-menu open-cti-menu"
         items={indicatorTypesItems}
@@ -109,10 +111,10 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         multi
       >
         {(props) => <SimpleBar className="big-list">
-          <List className="indicator-type-list" {...props} />
+          <DropdownMenuList {...props} />
         </SimpleBar>}
-      </FormDropdown>
-      <FormDropdown
+      </FormValidationDropdown>
+      <FormValidationDropdown
         disabled={form.validating || messageStore.inProgress}
         classNameMenu="labels-list-menu open-cti-menu"
         items={labelsItems}
@@ -121,10 +123,10 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         multi
       >
         {(props) => <SimpleBar className="big-list">
-          <List className="labels-list" {...props} />
+          <DropdownMenuList {...props} />
         </SimpleBar>}
-      </FormDropdown>
-      <FormDropdown
+      </FormValidationDropdown>
+      <FormValidationDropdown
         disabled={form.validating || messageStore.inProgress}
         classNameMenu="markers-list-menu open-cti-menu"
         items={allowedMarkersItems}
@@ -133,15 +135,15 @@ export const OpenCTIExport: React.FC<OpenCTIExportProps> = observer(({
         multi
       >
         {(props) => <SimpleBar className="big-list">
-          <List className="markers-list" {...props} />
+          <DropdownMenuList {...props} />
         </SimpleBar>}
-      </FormDropdown>
-      <IntegrationCheckbox
+      </FormValidationDropdown>
+      <FormValidationCheckbox
         disabled={form.validating || messageStore.inProgress}
         content="Detection"
         name="x_opencti_detection"
       />
-      <IntegrationCheckbox
+      <FormValidationCheckbox
         disabled={form.validating || messageStore.inProgress}
         content="Create observable from indicator"
         name="createObservables"

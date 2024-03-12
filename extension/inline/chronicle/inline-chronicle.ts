@@ -5,15 +5,14 @@ import {
   ModifyQueryPayload,
   SetDebugModePayload,
   SetQueryPayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
 import {
   buildNewQuery,
 } from '../helpers/monaco-editor-helpers';
 import { ChroniclePlatform } from '../../content/platforms/ChroniclePlatform';
 import { ContentPlatform } from '../../content/types/types-content-common';
-import { MessageToContent } from '../../content/types/types-content-messages';
-import { clearExtraSpaces, uuid } from '../../../common/helpers';
+import { clearExtraSpaces } from '../../../common/helpers';
+import { sendQueryToApp } from '../helpers';
 
 const platform: ContentPlatform = new ChroniclePlatform();
 
@@ -26,6 +25,12 @@ const getEditor = () => {
     return {};
   }
   return { editor: monaco.editor.getModels()[0] };
+};
+
+const normalizeValue = (value: string) => {
+  return value
+    .replace(/\( /g, '(')
+    .replace(/ \)/g, ')');
 };
 
 window.addEventListener('message', (event) => {
@@ -51,13 +56,21 @@ window.addEventListener('message', (event) => {
       const prefix = newValue.split(suffix)[0];
       let newPrefix = prefix.trim();
       if (newPrefix[0] !== '(') {
-        newPrefix = `( ${newPrefix} )`;
+        newPrefix = `(${newPrefix})`;
       }
-      editor.setValue(clearExtraSpaces(newValue.replace(prefix, `${newPrefix} `)));
+      editor.setValue(
+        normalizeValue(
+          clearExtraSpaces(newValue.replace(prefix, `${newPrefix} `)),
+        ),
+      );
       return;
     }
 
-    editor.setValue(clearExtraSpaces(`( ${suffix}`));
+    editor.setValue(
+      normalizeValue(
+        clearExtraSpaces(`(${suffix}`),
+      ),
+    );
   }
 
   if (isMessageMatched(
@@ -82,11 +95,7 @@ window.addEventListener('message', (event) => {
     if (!editor) {
       return;
     }
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: editor.getValue() } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(editor.getValue());
   }
 
   if (isMessageMatched(

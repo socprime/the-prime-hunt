@@ -7,24 +7,32 @@ export const List = forwardRef<HTMLUListElement, ListProps>((
     noItemsMessage,
     className = '',
     items,
+    customRender,
   },
   ref,
 ) => {
+  const cn = createClassName([
+    'list',
+    className,
+  ]);
+
   if (items.length < 1 && noItemsMessage) {
-    return <>{noItemsMessage}</>;
+    return (
+      <div className={cn}>
+        <div className="list--no-item-message">{noItemsMessage}</div>
+      </div>
+    );
   }
 
   return (
     <ul
-      className={createClassName([
-        'list',
-        className,
-      ])}
+      className={cn}
       ref={ref}
     >
-      {items.map(({
-        id, content, onClick, isSelected,
-      }) => {
+      {items.map((item) => {
+        const {
+          id, content, onClick, isSelected,
+        } = item;
         return (
           <li
             className={createClassName([
@@ -35,7 +43,7 @@ export const List = forwardRef<HTMLUListElement, ListProps>((
             key={id}
             onClick={onClick}
           >
-            {content}
+            {customRender ? customRender(item) : content}
           </li>
         );
       })}

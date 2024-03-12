@@ -5,15 +5,13 @@ import {
   ModifyQueryPayload,
   SetDebugModePayload,
   SetQueryPayload,
-  TakeQueryPayload,
 } from '../../common/types/types-common-payloads';
 import {
   buildNewQuery,
 } from '../helpers/monaco-editor-helpers';
 import { LogScalePlatform } from '../../content/platforms/LogScalePlatform';
 import { ContentPlatform } from '../../content/types/types-content-common';
-import { MessageToContent } from '../../content/types/types-content-messages';
-import { uuid } from '../../../common/helpers';
+import { sendQueryToApp } from '../helpers';
 
 const platform: ContentPlatform = new LogScalePlatform();
 
@@ -74,11 +72,7 @@ window.addEventListener('message', (event) => {
     if (!editor) {
       return;
     }
-    window.postMessage({
-      id: uuid(),
-      type: MessageToContent.CSSendMessageOutside,
-      payload: { queryValue: editor.getValue() } as TakeQueryPayload,
-    } as ExtensionMessage);
+    sendQueryToApp(editor.getValue());
   }
 
   if (isMessageMatched(

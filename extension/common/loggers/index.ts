@@ -15,13 +15,13 @@ export class Loggers implements ILoggers {
   private readonly level: LogLevel = LogLevel.info;
 
   private createInstance(
-    prefix: string = '',
+    prefix = '',
     level = LogLevel.info,
   ) {
     return new Loggers(prefix, level);
   }
 
-  constructor(prefix: string = '', level = LogLevel.info) {
+  constructor(prefix = '', level = LogLevel.info) {
     this.prefix = prefix;
     this.level = level;
   }

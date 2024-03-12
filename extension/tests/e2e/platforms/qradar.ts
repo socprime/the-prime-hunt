@@ -1,15 +1,11 @@
 import { startTests, suiteGlobals } from '../index';
-import { MessageToApp } from '../../../app/types/types-app-messages';
-import { debugID } from '../../../common/loggers/loggers-helpers';
-import { MessageToBackground } from '../../../background/types/types-background-messages';
 import {
-  SendToBackgroundPayload,
-  SetQueryPayload,
   TakeQueryPayload,
 } from '../../../common/types/types-common-payloads';
-import { ExtensionMessage, ExtensionMessageType } from '../../../common/types/types-common';
-import { sleep } from '../../../../common/helpers';
-import { logSuccessMessage } from '../helpers/utils';
+import { ExtensionMessage } from '../../../common/types/types-common';
+import { logWarningMessage } from '../helpers/utils';
+import { getQueryFromPlatform, mapListenerMessages, setQueryToPlatform } from '../helpers/scenarios';
+import { MessageToApp } from '../../../app/types/types-app-messages';
 
 suiteGlobals.messages = {
   testIncludeAction: 'SELECT TestTable WHERE "test0" == \'account1\'',
@@ -24,30 +20,13 @@ suiteGlobals.messages = {
 };
 
 suiteGlobals.clearValue = async () => {
-  window.postMessage({
-    type: MessageToApp.AppSendToBackground,
-    externalType: debugID,
-    payload: {
-      type: MessageToBackground.BGSetQuery,
-      payload: {
-        value: 'SELECT TestTable',
-      } as SetQueryPayload,
-    } as SendToBackgroundPayload,
-  } as ExtensionMessage);
-  await sleep(0.3);
+  await setQueryToPlatform('SELECT TestTable');
 };
 
-const messagesStack: unknown[] = [];
+let messagesStack: ExtensionMessage[] = [];
 
 suiteGlobals.getValue = async () => {
-  window.postMessage({
-    type: MessageToApp.AppSendToBackground,
-    externalType: debugID,
-    payload: {
-      type: MessageToBackground.BGGetQuery,
-    } as SendToBackgroundPayload,
-  } as ExtensionMessage);
-  await sleep(0.3);
+  await getQueryFromPlatform();
   const message = messagesStack.pop() as ExtensionMessage;
   if (!message) {
     return '';
@@ -56,15 +35,14 @@ suiteGlobals.getValue = async () => {
   return queryValue;
 };
 
-window.addEventListener('message', (event) => {
-  const message = event.data as ExtensionMessage;
-  if (message.type === 'MessageOutside' as ExtensionMessageType) {
-    messagesStack.push(message);
-  }
-});
+mapListenerMessages(
+  (message) => message.type === MessageToApp.AppTakeQuery,
+  () => messagesStack,
+);
 
 (async () => {
+  messagesStack = [];
   await startTests();
 
-  logSuccessMessage('ALL TESTS PASSED!');
+  logWarningMessage('ALL TESTS PASSED!');
 })();

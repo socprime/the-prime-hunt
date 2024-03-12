@@ -8,7 +8,7 @@ export const watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 
 export const positionStorageKey = 'the-prime-hunt--extension--position';
 
-export const integrationsStorageKey = 'the-prime-hunt--extension--integrations';
+export const integrationsStorageKey = 'the-prime-hunt--extension--models';
 
 export const versionStorageKey = 'the-prime-hunt--extension--version';
 

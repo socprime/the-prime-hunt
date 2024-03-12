@@ -1,15 +1,28 @@
 export const getMessagePrefix = () => '#';
 
-export const logSuccessMessage = (message: string) => {
-  console.warn(
-    `[SUCCESS]: ${getMessagePrefix()}${message}`,
+export const logRegularInfoMessage = (message: string) => {
+  logInfoMessage(message, '>>');
+};
+
+export const isByPass = () => (window as any).byPassTests;
+
+export const logInfoMessage = (message: string, prefix = '') => {
+  console.log(
+    `[INFO]: ${prefix || getMessagePrefix()}${message}`,
   );
   return message;
 };
 
-export const logErrorMessage = (message: string) => {
+export const logWarningMessage = (message: string, prefix = '') => {
+  console.warn(
+    `[SUCCESS]: ${prefix || getMessagePrefix()}${message}`,
+  );
+  return message;
+};
+
+export const logErrorMessage = (message: string, prefix = '') => {
   console.error(
-    `[ERROR]: ${getMessagePrefix()}${message}`,
+    `[ERROR]: ${prefix || getMessagePrefix()}${message}`,
   );
   return message;
 };
@@ -19,6 +32,10 @@ export const testCase = (caseName: string, showSuccessMessage = true) => {
     expect: (value: unknown) => {
       return {
         toEqual: (v: unknown) => {
+          if (isByPass()) {
+            console.log(`[ByPass]: #${caseName}: >${value}<`);
+            return;
+          }
           console.log(`[toEqual]: ${caseName}\r\npassed value:\r\n>${String(value)}<`);
           if (v !== value) {
             logErrorMessage(caseName);
@@ -27,11 +44,10 @@ export const testCase = (caseName: string, showSuccessMessage = true) => {
             );
           }
           if (showSuccessMessage) {
-            logSuccessMessage(caseName);
+            logWarningMessage(caseName);
           }
         },
       };
     },
   };
 };
-

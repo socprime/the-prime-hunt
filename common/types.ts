@@ -5,6 +5,16 @@ export enum Mode {
   development = 'development',
 }
 
+export type DropdownItem = {
+  id: string;
+  name: string;
+}
+
+export type DropdownContentItem = {
+  id: string;
+  content: ReactNode;
+}
+
 export type Value = string | boolean | unknown[] | Record<string, unknown>;
 export type ExpectedValue = Value | null;
 
@@ -31,6 +41,10 @@ export type AsyncResult<T = any> = {
   error?: Error | string;
   data?: T;
   meta?: Record<string, any>;
+  batch?: AsyncResult<T>[];
+}
+export type Response<T = any> = AsyncResult<T> & {
+  status: number;
 }
 
 export interface IdentifiedFunction extends Function {

@@ -1,4 +1,6 @@
-import { BrowserTab, BGListenerType, TabID, BackgroundPlatform } from '../types/types-background-common';
+import {
+  BrowserTab, BGListenerType, TabID, BackgroundPlatform,
+} from '../types/types-background-common';
 import {
   BrowserTabInfo,
   ExtensionMessage,
@@ -42,7 +44,7 @@ export const sendMessageFromBackground = <T = unknown>(tabID: TabID, message: Ex
 export const normalizeParsedResource = (parsedResource: ParsedResources): NormalizedParsedResources => {
   const result = {} as NormalizedParsedResources;
   Object.keys(parsedResource || {})
-    .forEach(fieldName => {
+    .forEach((fieldName) => {
       result[fieldName] = Array.from(parsedResource[fieldName]);
     });
   return result;
@@ -50,7 +52,7 @@ export const normalizeParsedResource = (parsedResource: ParsedResources): Normal
 
 export const normalizeParsedResources = (resources: Resources): NormalizedResources => {
   const result = {} as NormalizedResources;
-  Object.keys(resources).forEach(typeID => {
+  Object.keys(resources).forEach((typeID) => {
     result[typeID] = normalizeParsedResource(resources[typeID]);
   });
   return result;

@@ -33,7 +33,7 @@ listeners[ListenerType.OnMessage] = (listener: Function, ...otherProps: any[]) =
       listener(...params);
     }, ...otherProps);
   }
-  
+
   if (!isAddEventListenerSupported()) {
     return;
   }

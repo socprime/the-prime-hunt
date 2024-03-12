@@ -1,5 +1,5 @@
 import { suiteGlobals, startTests } from '../index';
-import { logSuccessMessage, testCase } from '../helpers/utils';
+import { logWarningMessage, testCase } from '../helpers/utils';
 
 suiteGlobals.messages = {
   testIncludeAction: 'AND test0:"account1"',
@@ -31,5 +31,5 @@ suiteGlobals.getValue = async () => Promise.resolve(textarea.value);
 (async () => {
   await startTests();
 
-  logSuccessMessage('ALL TESTS PASSED!');
+  logWarningMessage('ALL TESTS PASSED!');
 })();

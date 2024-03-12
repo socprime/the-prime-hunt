@@ -42,55 +42,57 @@ export const FormValidationTextArea = forwardRef<
   }, [value, prevValue]);
 
   return (
-    <WithValidation
-      getValue={(ref) => (ref?.current as HTMLTextAreaElement)?.value || null}
-      disabled={!!restProps.disabled}
-      validators={[
-        ...(validators || []),
-      ]}
-    >
-      {(withValidationProps) => {
-        formValidationTextAreaRef.current.validate = withValidationProps.validate;
-        return (
-          <WithForm
-            {...withValidationProps}
-          >
-            {(withFormProps) => {
-              return (
-                <AppTextArea
-                  {...restProps}
-                  {...withFormProps}
-                  ref={(ref) => {
-                    if (ref?.textAreaRef.current) {
-                      const el = ref.textAreaRef.current;
-                      (el as any).name = name;
-                      withValidationProps.elementRef.current = el;
-                      withFormProps.elementRef.current = el;
-                    }
-                  }}
-                  native={{
-                    ...native,
-                    value,
-                    className: createClassName([
-                      'form-validation-textarea',
-                      native.className || '',
-                      withFormProps.className || '',
-                    ]),
-                    onChange: (e) => {
-                      withFormProps?.onChange?.(e);
-                      native?.onChange?.(e);
-                    },
-                    onBlur: (e) => {
-                      withFormProps?.onBlur?.(e);
-                      native?.onBlur?.(e);
-                    },
-                  }}
-                />
-              );
-            }}
-          </WithForm>
-        );
-      }}
-    </WithValidation>
+    <div className="form-validation-textarea">
+      <WithValidation
+        getValue={(ref) => (ref?.current as HTMLTextAreaElement)?.value || null}
+        disabled={!!restProps.disabled}
+        validators={[
+          ...(validators || []),
+        ]}
+      >
+        {(withValidationProps) => {
+          formValidationTextAreaRef.current.validate = withValidationProps.validate;
+          return (
+            <WithForm
+              {...withValidationProps}
+            >
+              {(withFormProps) => {
+                return (
+                  <AppTextArea
+                    {...restProps}
+                    {...withFormProps}
+                    ref={(ref) => {
+                      if (ref?.textAreaRef.current) {
+                        const el = ref.textAreaRef.current;
+                        (el as any).name = name;
+                        withValidationProps.elementRef.current = el;
+                        withFormProps.elementRef.current = el;
+                      }
+                    }}
+                    native={{
+                      ...native,
+                      value,
+                      className: createClassName([
+                        'form-validation-textarea',
+                        native.className || '',
+                        withFormProps.className || '',
+                      ]),
+                      onChange: (e) => {
+                        withFormProps?.onChange?.(e);
+                        native?.onChange?.(e);
+                      },
+                      onBlur: (e) => {
+                        withFormProps?.onBlur?.(e);
+                        native?.onBlur?.(e);
+                      },
+                    }}
+                  />
+                );
+              }}
+            </WithForm>
+          );
+        }}
+      </WithValidation>
+    </div>
   );
 });

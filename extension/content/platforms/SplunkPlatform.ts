@@ -1,5 +1,7 @@
 import { ListenerType, MessageListener } from '../types/types-content-common';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import {
+  ModifyQueryType, PlatformID, PlatformName, SiemType,
+} from '../../common/types/types-common';
 import { addListener } from '../services/content-services-listeners';
 import {
   buildQueryParts,
@@ -75,7 +77,7 @@ export class SplunkPlatform extends AbstractContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      () => type === 'exclude' ? ' != ' : ' == ',
+      () => (type === 'exclude' ? ' != ' : ' == '),
       type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {
@@ -102,6 +104,10 @@ export class SplunkPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.Splunk;
+  }
+
+  getType() {
+    return SiemType.Splunk;
   }
 
   private static setListeners() {

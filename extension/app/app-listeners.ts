@@ -7,7 +7,8 @@ import { LoadingKey } from './types/types-app-common';
 import { setWatchers } from '../common/local-storage';
 import {
   AsyncProcessPayload,
-  ParsedDataPayload, ResultProcessPayload,
+  ParsedDataPayload,
+  ResultProcessPayload,
   SendToBackgroundPayload,
   SetDebugModePayload,
   SetLoadingStatePayload,
@@ -16,12 +17,13 @@ import {
 } from '../common/types/types-common-payloads';
 import { platformResolver } from '../content/platforms/PlatformResolver';
 import { sendMessageFromApp } from '../content/services/content-services';
-import { ExtensionMessage, ExtensionMessageType } from '../common/types/types-common';
+import { ExtensionMessage } from '../common/types/types-common';
 import { MessageToBackground } from '../background/types/types-background-messages';
 import { RemoveHashMessage } from './resources/messages/RemoveHashMessage/RemoveHashMessage';
 import {
   RemoveFieldsSpecificationMessage,
 } from './resources/messages/RemoveFieldsSpecificationMessage/RemoveFieldsSpecificationMessage';
+import { listenQueryModule } from './query/listeners';
 
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
@@ -31,6 +33,7 @@ const setExtensionShowState = (
 ) => {
   if (!rootStore.platformStore.getID()) {
     rootStore.platformStore.setPlatform(platformResolver.resolve());
+    rootStore.routerStore.page = 'resources:query';
   }
   if (!rootStore.appStore.mounted) {
     require('./index');
@@ -54,15 +57,35 @@ const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
   }, 0);
 };
 
+const sendMessageOutside = (message: ExtensionMessage) => {
+  if ((window as any).SOCPRIME_EXTENSION_TEST) {
+    window.postMessage({
+      ...message,
+      outside: 'MessageOutside',
+    } as ExtensionMessage);
+  }
+};
+
 (addListener as MessageListener)(
   ListenerType.OnMessage,
   (message) => {
+    listenQueryModule(
+      { message },
+      () => {
+        sendMessageOutside(message);
+      },
+    );
+
     if (isMessageMatched(
       () => MessageToApp.AppShowExtension === message.type,
       message,
     )) {
       if (!rootStore.appStore.isExtensionOpen) {
         setExtensionShowState(true);
+      }
+      const { testMode = false } = message as { testMode?: boolean };
+      if (testMode) {
+        (window as any).SOCPRIME_EXTENSION_TEST = true;
       }
     }
 
@@ -78,13 +101,6 @@ const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
       message,
     )) {
       handleResources(message.payload as ParsedDataPayload, false);
-    }
-
-    if (isMessageMatched(
-      () => MessageToApp.AppClearResourceData === message.type,
-      message,
-    )) {
-      rootStore.resourceStore.clearResources();
     }
 
     if (isMessageMatched(
@@ -118,10 +134,7 @@ const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
       () => MessageToApp.AppSendMessageOutside === message.type,
       message,
     )) {
-      window.postMessage({
-        ...message,
-        type: 'MessageOutside' as ExtensionMessageType,
-      } as ExtensionMessage);
+      sendMessageOutside(message);
     }
 
     if (isMessageMatched(
@@ -168,7 +181,7 @@ const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
     }
 
     if (isMessageMatched(
-      () => MessageToApp.AppGetIntegrationWorkResult === message.type,
+      () => MessageToApp.AppTakeCallbackMessageResult === message.type,
       message,
     )) {
       const {

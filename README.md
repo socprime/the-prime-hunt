@@ -6,7 +6,9 @@ One UI for different technologies mirrors the concept of Sigma as a single langu
 
 With The Prime Hunt, you can easily see what accounts and assets are affected by the suspicious activity your query detects. Filter for or filter out query results by any field values with one click or look for all events related to them. Easily drill down to any CTI or any other sources that can help you in the investigation.
 
-![General overview](.readme/general_view.png)
+<p align="left">
+  <img src=".readme/general_view.png" width="500">
+</p>
 
 If you have any questions, would like to give feedback, or need help, contact us at support@socprime.com.
 
@@ -93,23 +95,29 @@ The position and size of the extension's window are stored as the `the-prime-hun
 3. In the extension, click the down arrow next to a field name to show the results in that field.
 4. Hover over a result:
 
-![Action menu](.readme/action_menu.png)
+<p align="left">
+  <img src=".readme/action_menu.png" width="500">
+</p>
 
 - Click the copy icon to copy the result to the clipboard
 - Click the plus icon to include the account/asset in the search
 - Click the minus icon to exclude the account/asset from the search
 - Click the eye-and-list icon to search for all events that involve the account/asset
 - Click the plane icon to do the following:
-   - Send the result to OpenCTI as an IOC (see **Setting up OpenCTI Integration**)
-   - Send the result as an IOC via email using a pre-set template or a custom template (see **Setting up Mail Templates**)
+    - Send the result to OpenCTI as an IOC (see **Setting up OpenCTI Integration**)
+    - Send the result as an IOC via email using a pre-set template or a custom template (see **Setting up Mail Templates**)
 
 To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR using the relevant suggester option, and click on the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. **Note**: field names for the suggester are stored as the `the-prime-hunt--extension--fields` key in the browser's local storage.
 
-![Remove icon](.readme/remove_icon.png)
+<p align="left">
+  <img src=".readme/remove_icon.png" width="500">
+</p>
 
 To add a custom tab, click the plus icon on the right of the existing tabs, enter an arbitrary title, and click the checkmark. Double-click the created custom tab title to rename or delete the tab.
 
-![Custom tab](.readme/custom_tab.png)
+<p align="left">
+  <img src=".readme/custom_tab.png" width="500">
+</p>
 
 **Note:**  
 The fields that have been added manually are stored as the `the-prime-hunt--extension--watchers` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete), only the default fields are used again.
@@ -126,33 +134,83 @@ In Amazon Athena, if the extension detects that your query includes a select sta
 - Click the **Send to** button to send the selected results as IOCs via email using a pre-set template or a custom template (see **Setting up Mail Templates**)
 - Click the **Search At** button and select a CTI source to analyze the selected accounts/assets. Default options include: VirusTotal, VirusTotal Enterprise, Anomali, EchoTrail, Ultimate Windows Security, AbuseIPDB, URLhaus (by Abuse.ch), MalwareBazaar MD5 (by Abuse.ch), MalwareBazaar SHA256 (by Abuse.ch), ThreatFox IOCs (by Abuse.ch), FeodoTracker C&C (by Abuse.ch), Shodan
 
-![Bulk action buttons](.readme/bulk-action_buttons.png)
+<p align="left">
+  <img src=".readme/bulk-action_buttons.png" width="500">
+</p>
 
-- You can customize or remove any menu item, add your OpenCTI credentials, or add a new integration in Search Settings
+- You can customize or remove any menu item, add your OpenCTI credentials, or add a new integration in Integrations Settings
 
-![Search settings](.readme/search_settings.png)
+<p align="left">
+  <img src=".readme/search_settings.png" width="500">
+</p>
 
 - Optionally, export the selected results as a CSV
 
-![Export button](.readme/export_button.png)
+<p align="left">
+  <img src=".readme/export_button.png" width="500">
+</p>
 
-6. If you need to reset the extension, go to the Extensions page in your browser's settings and click **Reload** (or the related icon). Reloading does not affect the custom settings of position and size of the extension, integrations, and watching fields (to reset them you should clear specific keys in your browser’s local storage.)
+6. If you need to reset the extension, go to the Extensions page in your browser's settings and click **Reload** (or the related icon). Reloading does not affect the custom settings of position and size of the extension, integrations, and watching fields (to reset them, you should clear specific keys in your browser’s local storage.)
+
+### Saving Your Query
+You can save your query in a custom repository on the SOC Prime Platform (you need access to the SOC Prime Platform's API and My Repositories functionality). First, configure the SOC Prime API integration, and then do the following:
+1. Go to the Query tab. The query from your SIEM/EDR/Data Lake will be displayed on that tab.
+- If the query is not displayed or what you see isn't the most recent version of your query, click **Refresh**.
+- You can copy the query to the cupboard by clicking **Copy**.
+
+<p align="left">
+  <img src=".readme/save_query.png" width="500">
+</p>
+
+2. Click **Save to My Repo**.
+3. The **Save To My Repository** screen appears. Fill in the query metadata:
+- Basic details:
+    - **Repository.** Select a SOC Prime Platform custom repository where to save the query
+    - **Content Name.** Give your query a meaningful name
+    - **Description.** Describe what the query detects and in what manner
+
+<p align="left">
+  <img src=".readme/query_details_1.png" width="500">
+</p>
+
+- MITRE ATT&CK®. Map the activity detected by your query to MITRE ATT&CK by selecting:
+    - **Tactics**
+    - **Techniques & Sub-Techniques**
+    - **Tools/Software**
+    - **Actors/Groups**
+- Tags:
+    - **Log Sources.** Name the log sources required for your query to work
+    - **Custom.** Add any custom tags to better identify and categorize your query
+
+<p align="left">
+  <img src=".readme/query_details_2.png" width="500">
+</p>
+
+4. Click **Save to Repo**.
+
+To find the saved query, go to the SOC Prime Platform's Threat Detection Marketplace and select the custom repository to which you've saved your query.
 
 ## Integration Settings
 To open integration settings, click the corresponding icon at the top of the extension.
 
-![Open integration settings](.readme/integrations_open.png)
+<p align="left">
+  <img src=".readme/search_settings.png" width="500">
+</p>
 
 **Note:** When using integrations with third-party services, do not send to them any sensitive information.
 
 ### Integrations
 Click the right arrow next to an integration name to configure it.
 
-![Integrations overview](.readme/integrations_overview.png)
+<p align="left">
+  <img src=".readme/integrations_overview.png" width="500">
+</p>
 
 Custom integration names and URLs are stored as the `the-prime-hunt--extension--integrations` key in the local storage of your browser (developer tools > Application > Local Storage > your security platform). If you delete the value of the key (right-click > Delete) or click **Restore Defaults** in the integration configuration in the extension's UI, the default names and URLs are used.
 
-![Restore defaults](.readme/restore_defaults.png)
+<p align="left">
+  <img src=".readme/restore_defaults.png" width="500">
+</p>
 
 By default, when you select an option in the **Search At** dropdown menu, an analysis of each selected result is opened in a new tab. The only exception is VirusTotal Enterprise where a single new tab is opened for all results. By default, the browser blocks opening multiple tabs, so please allow pop-ups when prompted to do so.
 
@@ -190,15 +248,15 @@ To send a result to OpenCTI:
 ![Select IOCs](.readme/opencti_select_result.png)
 
 2. Set the IOC parameters:
-   - Name: pre-filled with the selected result (required)
-   - Main Observable Type: automatically defined but can be changed (required)
-   - Pattern: automatically defined but can be edited (required)
-   - Indicator Type: select one or multiple options defined in your OpenCTI account
-   - Labels: select one or multiple options defined in your OpenCTI account
-   - Markings: select one or multiple options defined in your OpenCTI account
+    - Name: pre-filled with the selected result (required)
+    - Main Observable Type: automatically defined but can be changed (required)
+    - Pattern: automatically defined but can be edited (required)
+    - Indicator Type: select one or multiple options defined in your OpenCTI account
+    - Labels: select one or multiple options defined in your OpenCTI account
+    - Markings: select one or multiple options defined in your OpenCTI account
 3. Optionally, set the following checkboxes:
-   - Detection
-   - Create observable from indicator
+    - Detection
+    - Create observable from indicator
 
 ![IOC settings](.readme/opencti_ioc_settings.png)
 
@@ -233,13 +291,13 @@ You can customize the default template named **Send IOCs** or create a new one.
 #### Customizing the default template
 1. Open the template by clicking the right arrow next to its name
 2. Customize the filed values:
-   - **Display Name.** The name of the option to send an email based on this template in the extension's UI
-   - **Email.** The "to" email address
-   - **Subject.** The subject of the email
-   - **Message.** The body of the email
-      - Modify the text according to your needs
-      - Don't forget to include your name, job title, and organization name
-      - Keep the `%iocs` parameter as it is. It will be replaced with a list of selected results (IOCs) when composing the email
+    - **Display Name.** The name of the option to send an email based on this template in the extension's UI
+    - **Email.** The "to" email address
+    - **Subject.** The subject of the email
+    - **Message.** The body of the email
+        - Modify the text according to your needs
+        - Don't forget to include your name, job title, and organization name
+        - Keep the `%iocs` parameter as it is. It will be replaced with a list of selected results (IOCs) when composing the email
 3. Click **Save & Close**.
 
 ![Customizing the default template](.readme/mail_templates_customize.png)
@@ -249,10 +307,10 @@ You can also restore defaults and delete the template.
 #### Creating a new mail template
 1. Click **Add New Template** under **Settings** > **Mail Templates**.
 2. Fill the following fields:
-   - **Display Name.** The name of the option to send an email based on this template in the extension's UI
-   - **Email.** The "to" email address
-   - **Subject.** The subject of the email
-   - **Message.** The body of the email. Add the `%iocs` parameter in the place where you'd like the iOCs to be listed when composing the email
+    - **Display Name.** The name of the option to send an email based on this template in the extension's UI
+    - **Email.** The "to" email address
+    - **Subject.** The subject of the email
+    - **Message.** The body of the email. Add the `%iocs` parameter in the place where you'd like the iOCs to be listed when composing the email
 3. Click **Save & Close**.
 
 ![Creating a new template](.readme/mail_templates_create.png)
@@ -261,14 +319,28 @@ You can also restore defaults and delete the template.
 To use a template:
 1. Select one or multiple results in the extension.
 2. Select a template:
-   - To send a single result, click the plane icon next to the result and select a template
-   - To send multiple results, click the **Send to** button in the footer of the extension and select a template
+    - To send a single result, click the plane icon next to the result and select a template
+    - To send multiple results, click the **Send to** button in the footer of the extension and select a template
 
 ![Selecting a template](.readme/mail_templates_select.png)
 
 3. Your default mailto handler is opened with the selected template pre-populated with the IOCs. Make any adjustments you may need and send the email.
 
 ![Example email](.readme/mail_templates_email.png)
+
+### SOC Prime API
+Set up this integration to save your queries in a custom repository on the SOC Prime Platform (you need access to the SOC Prime Platform's API and My Repositories functionality).
+
+1. Go to **Settings** > **SOC Prime API**.
+2. Enter the SOC Prime API Key generated on the SOC Prime Platform.
+3. The key is automatically validated. If the validation is finished successfully, you'll see the expiration date of the key.
+4. Click **Close**.
+
+![SOC Prime API configuration](.readme/soc_prime_api.png | width=500)
+
+Once you've configured the SOC Prime API integration, you can save queries from the Query tab.
+
+![Saving a query](.readme/save_query.png | width=500)
 
 ## Hot Keys
 - Hide/Show the extension: Ctrl + Q
@@ -288,9 +360,9 @@ The Prime Hunt browser extension is licensed as [LGPL v3](LICENSE.md).
 ## TODO List
 1. Add more SIEM/EDR/XDR technologies supported by Sigma.
 2. Add more integrations:
-- Uncoder.IO, tdm.socprime.com, and SigmaHQ
-- Sigma Rules Bot for Threat Bounty (Slackbot) API for Sigma rules quality check, easy code updates, spell check, collaboration, false-positives, and filters sharing
-- socprime.com search engine for Sigma rule source, context, and timeline overview
-- Qualys, Tenable, NVD for CVE lookup
-- GreyNoise, PolySwarm
-- Jira, SNOW
+    - Uncoder.IO, tdm.socprime.com, and SigmaHQ
+    - Sigma Rules Bot for Threat Bounty (Slackbot) API for Sigma rules quality check, easy code updates, spell check, collaboration, false-positives, and filters sharing
+    - socprime.com search engine for Sigma rule source, context, and timeline overview
+    - Qualys, Tenable, NVD for CVE lookup
+    - GreyNoise, PolySwarm
+    - Jira, SNOW

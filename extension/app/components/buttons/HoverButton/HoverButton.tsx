@@ -1,8 +1,8 @@
 import React from 'react';
-import { ButtonProps } from '../../atoms/Button/Button';
 import { AppButton } from '../AppButton/AppButton';
 import { createClassName } from '../../../../common/common-helpers';
 import './styles.scss';
+import { ButtonProps } from '../../atoms/Button/types';
 
 type HoverButtonProps = {
   hovered?: boolean;

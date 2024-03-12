@@ -1,0 +1,7 @@
+@import "../../../scss/palette";
+
+.success-save-query-message {
+  p a.app-link.link {
+    color: $success;
+  }
+}

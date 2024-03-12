@@ -1,5 +1,5 @@
 import { ListenerType, MessageListener } from '../types/types-content-common';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
 import { addListener } from '../services/content-services-listeners';
 import {
   buildQueryParts,
@@ -47,7 +47,7 @@ export class MicrosoftDefenderPlatform extends AbstractContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      () => type === 'exclude' ? ' != ' : ' == ',
+      () => (type === 'exclude' ? ' != ' : ' == '),
       type === 'exclude' ? ' and ' : ' or ',
       type === 'exclude' ? ' and ' : ' or ',
       {
@@ -87,6 +87,10 @@ export class MicrosoftDefenderPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.MicrosoftDefender;
+  }
+
+  getType(): SiemType {
+    return SiemType.Defender;
   }
 
   private static setListeners() {

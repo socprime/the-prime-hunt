@@ -4,16 +4,14 @@ import React, {
   useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
-import { IntegrationInput } from '../../integrations/IntegrationInput/IntegrationInput';
-import { IntegrationInputRefs } from '../../integrations/IntegrationInput/types';
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
 import { SuccessCheckbox } from '../../components/checkboxes/SucessCheckbox/SuccessCheckbox';
 import { getValidResult, isNotEmptyString, isUrl } from '../../../../common/validators';
 import { useAppMessageStore, useIntegrationStore } from '../../stores';
-import { MessageToBackground } from '../../../background/types/types-background-messages';
-import { IntegrationWorkPayload } from '../../../common/types/types-common-payloads';
-import { OpenCTIIntegrationData } from '../../../integrations/openCTI/types';
+import { OpenCTIIntegrationData } from '../../../models/openCTI/types';
 import { AppGroupHeader } from '../../components/headers/AppGroupHeader';
+import { FormValidationInputRefs } from '../../components/inputs/FormValidationInput/types';
+import { FormValidationInput } from '../../components/inputs/FormValidationInput';
 import './styles.scss';
 
 const validateMessage = 'This field is required';
@@ -23,11 +21,11 @@ export const OpenCTIIntegration: React.FC = observer(() => {
   const messageStore = useAppMessageStore();
   const integrationStore = useIntegrationStore();
 
-  const validateServerUrlRef: MutableRefObject<IntegrationInputRefs> = useRef(
-    {} as IntegrationInputRefs,
+  const validateServerUrlRef: MutableRefObject<FormValidationInputRefs> = useRef(
+    {} as FormValidationInputRefs,
   );
-  const validateApiKeyRef: MutableRefObject<IntegrationInputRefs> = useRef(
-    {} as IntegrationInputRefs,
+  const validateApiKeyRef: MutableRefObject<FormValidationInputRefs> = useRef(
+    {} as FormValidationInputRefs,
   );
 
   useEffect(() => {
@@ -69,7 +67,7 @@ export const OpenCTIIntegration: React.FC = observer(() => {
         }}
       />
       <Spacer height={16} />
-      <IntegrationInput
+      <FormValidationInput
         ref={(refs) => {
           if (refs?.validate) {
             validateServerUrlRef.current.validate = refs.validate;
@@ -103,7 +101,7 @@ export const OpenCTIIntegration: React.FC = observer(() => {
         }}
       />
       <Spacer height={12} />
-      <IntegrationInput
+      <FormValidationInput
         ref={(refs) => {
           if (refs?.validate) {
             validateApiKeyRef.current.validate = refs.validate;
@@ -128,11 +126,8 @@ export const OpenCTIIntegration: React.FC = observer(() => {
                 isValid: false,
               } as OpenCTIIntegrationData);
               const { error } = await messageStore.sendMessageWithCallback({
-                type: MessageToBackground.BGIntegrationWork,
-                payload: {
-                  modelType: 'openCTI',
-                  work: 'check-connection',
-                } as IntegrationWorkPayload,
+                model: 'openCTI',
+                work: 'check-connection',
               });
               if (typeof error !== 'undefined') {
                 return Promise.resolve({

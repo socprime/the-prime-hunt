@@ -1,6 +1,8 @@
 import { RootStore } from '../../stores/RootStore';
 import { ResourceName } from '../../resources/resources-types';
-import { Page } from '../pages';
+import {
+  Page, ResourcesPage, SettingsPage, SocPrimePage,
+} from '../pages';
 import { makeObservable, observable } from 'mobx';
 import { Integration } from '../../integration/integration-types';
 import { Mail } from '../../mail/mail-types';
@@ -22,31 +24,48 @@ export class RouterStore {
     makeObservable(this);
   }
 
-  goToResourcesPage() {
-    this.page = 'resources';
+  goToResourcesPage(page: ResourcesPage = 'resources') {
+    if (this.page !== page) {
+      this.page = page;
+    }
+    const tab = this.rootStore.resourceStore.activeTabID;
+    if (page === 'resources' && !tab) {
+      this.rootStore.resourceStore.activeTabID = 'Accounts';
+    }
   }
 
   goToExportPage(resourceName: ResourceName) {
-    this.pageProps.content = { resourceName };
-    this.page = 'export';
+    if (this.page !== 'export') {
+      this.pageProps.content = { resourceName };
+      this.page = 'export';
+    }
   }
 
-  goToSettingsPage(
-    page: Extract<Page, 'settings:integrations' | 'settings:mail'>,
-  ) {
-    this.page = page;
+  goToSettingsPage(page: SettingsPage) {
+    if (this.page !== page) {
+      this.page = page;
+    }
   }
 
   goToIntegrationPage(
     integration: Integration,
   ) {
-    this.rootStore.integrationStore.setIntegration(integration);
-    this.page = 'integration';
+    if (this.page !== 'integration') {
+      this.rootStore.integrationStore.setIntegration(integration);
+      this.page = 'integration';
+    }
   }
 
-  goToMailPage(
-    mail: Mail,
-  ) {
-    this.page = 'mail';
+  goToSocPrimePage(page: SocPrimePage) {
+    if (this.page !== page) {
+      this.page = page;
+    }
+  }
+
+  goToMailPage(pattern: Mail) {
+    if (this.page !== 'mail') {
+      this.rootStore.mailStore.pattern = pattern;
+      this.page = 'mail';
+    }
   }
 }

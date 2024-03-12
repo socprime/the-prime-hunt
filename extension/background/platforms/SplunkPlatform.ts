@@ -22,7 +22,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     }
     return href.match(/\/search\/jobs\/([.0-9]+)\/summary/)?.[1];
   }
-  
+
   private static matchSplunkResultsUrl(url: Url): SplunkJobID | undefined {
     const { protocol, href } = new URL(url);
     if (!isAllowedProtocol(protocol, mode)) {
@@ -63,15 +63,15 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     receivedFieldsNames.forEach((fn) => watchingFieldsNames.add(fn));
 
     if (receivedFieldsNames.length > 0) {
-      Array.from(fieldsNames).forEach(fieldName => {
+      Array.from(fieldsNames).forEach((fieldName) => {
         if (fields?.[fieldName]) {
-          const distinctValues = fields[fieldName]?.modes?.map(m => m?.value) || [];
+          const distinctValues = fields[fieldName]?.modes?.map((m) => m?.value) || [];
           if (distinctValues.length < 1) {
             return;
           }
           const types = mapFieldNameToTypes.get(fieldName)!;
-          types.forEach(t => {
-            distinctValues.forEach(v => {
+          types.forEach((t) => {
+            distinctValues.forEach((v) => {
               if (typeof result[t] === 'undefined') {
                 result[t] = {};
               }
@@ -94,19 +94,19 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
       watchingFieldsNames.add(name);
     });
 
-    (response?.rows || []).forEach(row => {
+    (response?.rows || []).forEach((row) => {
       row.forEach((fieldsValues, index) => {
         const fieldName = response?.fields?.[index]?.name;
         if (!fieldName || !fieldsNames.has(fieldName)) {
           return;
         }
         const types = mapFieldNameToTypes.get(fieldName)!;
-        types.forEach(t => {
+        types.forEach((t) => {
           if (typeof result[t] === 'undefined') {
             result[t] = {};
           }
           if (Array.isArray(fieldsValues)) {
-            fieldsValues.forEach(v => {
+            fieldsValues.forEach((v) => {
               this.addValueToResource(result[t], fieldName, v);
             });
           } else {

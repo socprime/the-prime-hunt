@@ -30,7 +30,6 @@ export const MailsContentView: FC = observer(() => {
                 id={pattern.id}
                 name={pattern.name}
                 onClick={() => {
-                  mail.pattern = pattern;
                   router.goToMailPage(pattern);
                 }}
               />

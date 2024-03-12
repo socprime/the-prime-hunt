@@ -1,0 +1,16 @@
+@import "../../../../scss/palette";
+
+.socprime-api-content-view {
+  label.input-label:not(:first-child) {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .socprime-get-api-message {
+    font-size: 13px;
+
+    a {
+      color: $success;
+    }
+  }
+}

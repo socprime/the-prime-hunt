@@ -4,7 +4,7 @@ import { AppHeader } from '../../../components/headers/AppHeader/AppHeader';
 import { Spacer } from '../../../components/atoms/Spacer/Spacer';
 import { useAppMessageStore } from '../../../stores';
 import { StaticButton } from '../../../components/buttons/StaticButton/StaticButton';
-import { ErrorMessage } from '../../../resources/messages/ErrorMessage';
+import { ErrorMessage } from '../../../root/messages/ErrorMessage';
 import './styles.scss';
 
 export const ExportHeaderView: React.FC = observer(() => {

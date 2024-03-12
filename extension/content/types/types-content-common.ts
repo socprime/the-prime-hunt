@@ -1,4 +1,4 @@
-import { ExtensionMessage, IPlatform, ModifyQueryType } from '../../common/types/types-common';
+import { ExtensionMessage, IPlatform, ModifyQueryType, SiemType } from '../../common/types/types-common';
 import { NormalizedParsedResources } from '../../app/resources/resources-types';
 import { WatchingResources } from '../../background/types/types-background-common';
 
@@ -17,6 +17,7 @@ export type ContentPlatform = IPlatform & {
   defaultWatchers: WatchingResources;
   extensionDefaultPosition: Position;
   fields: Set<string>;
+  getType(): SiemType;
   buildQueryParts(
     type: ModifyQueryType,
     resources: NormalizedParsedResources,

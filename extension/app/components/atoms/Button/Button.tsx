@@ -1,23 +1,21 @@
-import React from 'react';
+import { PropsWithChildren, forwardRef } from 'react';
 import { createClassName } from '../../../../common/common-helpers';
+import { ButtonProps } from './types';
 import './button.scss';
 
-export type ButtonProps = {
-  className?: string;
-  icon?: React.ReactNode;
-  disabled?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-};
-
-export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
+export const Button = forwardRef<
+  HTMLButtonElement,
+  PropsWithChildren<ButtonProps>
+>(({
   onClick,
   icon,
   children,
   disabled,
   className = '',
-}) => {
+}, ref) => {
   return (
     <button
+      ref={ref}
       className={createClassName([
         'button',
         disabled ? 'disabled' : '',
@@ -42,4 +40,4 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
       {children && <div className="button-content">{children}</div>}
     </button>
   );
-};
+});

@@ -8,7 +8,7 @@ import { SetDebugModePayload } from '../common/types/types-common-payloads';
 const loggers = require('../common/loggers').loggers
   .addPrefix('listeners');
 
-let platform = platformResolver.resolve();
+const platform = platformResolver.resolve();
 if (platform) {
   platform.connect();
 }

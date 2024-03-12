@@ -6,7 +6,7 @@ import { createClassName } from '../../../common/common-helpers';
 import { CheckIcon } from '../../components/atoms/icons/CheckIcon/CheckIcon';
 import { useOnClickOutside, usePrevious } from '../../app-hooks';
 import { AppControlInput } from '../../components/inputs/AppControlInput/AppControlInput';
-import { boundedResourcesTypeIDs, ResourceTypeID } from '../resources-types';
+import { ResourceTypeID, serviceResourcesTypesIDs } from '../resources-types';
 import { createNonDuplicateValue } from '../../../../common/helpers';
 import { useResourceStore } from '../../stores';
 import { WasteBasketIcon } from '../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon';
@@ -153,7 +153,10 @@ export const ResourceTabInput: React.FC<ResourceTabInputProps> = ({
         className,
       ])}
       onDoubleClick={() => {
-        if (!editMode && !boundedResourcesTypeIDs.includes(typeID)) {
+        if (
+          !editMode
+          && !serviceResourcesTypesIDs.includes(typeID)
+        ) {
           setEditMode(true);
         }
       }}

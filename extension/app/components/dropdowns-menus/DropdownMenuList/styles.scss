@@ -3,7 +3,6 @@
 .list.dropdown-menu--list {
   .list-item {
     cursor: pointer;
-    padding: 6.6px 12px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -18,5 +17,14 @@
       margin-right: 5px;
       fill: $base-text-color;
     }
+  }
+
+  .list-item,
+  .list--no-item-message {
+    padding: 6.6px 12px;
+  }
+
+  .list--no-item-message {
+    cursor: default;
   }
 }

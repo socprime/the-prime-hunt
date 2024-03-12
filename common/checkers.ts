@@ -13,7 +13,7 @@ export const isNotEmpty = (str: unknown): boolean => {
   if (!isString(str)) {
     return false;
   }
-  return (str as string).trim() !== '';
+  return (str as string)?.trim?.() !== '';
 };
 
 export const isEmail = (email: string): boolean => {

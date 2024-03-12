@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { createClassName } from '../../../../common/common-helpers';
 import { createPortal } from 'react-dom';
 import './tooltip.scss';
@@ -87,7 +89,6 @@ export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
 
     return result;
   }, [getPosition]);
-
 
   useEffect(() => {
     if (!hintRef.current) {

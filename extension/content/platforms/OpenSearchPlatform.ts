@@ -1,7 +1,7 @@
 import { Loggers } from '../../common/loggers';
 import { ListenerType, MessageListener } from '../types/types-content-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
 import { isNumberInString } from '../../../common/checkers';
 import {
   buildQueryParts, mountHTMLElement,
@@ -103,6 +103,10 @@ export class OpenSearchPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.OpenSearch;
+  }
+
+  getType(): SiemType {
+    return SiemType.OpenSearch;
   }
 
   private static setListeners() {

@@ -1,28 +1,36 @@
+type JSONResponseFunc = (response: Record<string, any>, status: number) => void;
+type TextResponseFunc = (response: string, status: number) => void;
+type ErrorResponseFunc = (error: Error, status: number) => void;
+
+type Callbacks = {
+  onJSONSuccess?: JSONResponseFunc,
+  onTextSuccess?: TextResponseFunc,
+  onError?: ErrorResponseFunc,
+};
+
 export class Http {
   private static request(
     url: string,
     params?: RequestInit,
-    callbacks?: {
-      onJSONSuccess?: (response: any) => void,
-      onError?: (e: Error) => void,
-      onTextSuccess?: (response: string) => void,
-    },
+    callbacks?: Callbacks,
   ) {
     const responseType = callbacks?.onJSONSuccess ? 'json' : 'text';
+    let status = 0;
 
     fetch(url, params)
       .then((response) => {
+        status = response.status;
         return responseType === 'json'
           ? response.json()
           : response.text();
       })
       .then((response) => {
         return responseType === 'json'
-          ? callbacks?.onJSONSuccess?.(response)
-          : callbacks?.onTextSuccess?.(response);
+          ? callbacks?.onJSONSuccess?.(response, status)
+          : callbacks?.onTextSuccess?.(response, status);
       })
       .catch((e) => {
-        callbacks?.onError?.(e);
+        callbacks?.onError?.(e, status);
       });
   }
 
@@ -31,11 +39,7 @@ export class Http {
       url: string,
       headers?: Record<string, string>,
     },
-    callbacks?: {
-      onJSONSuccess?: (response: any) => void,
-      onError?: (e: Error) => void,
-      onTextSuccess?: (response: string) => void,
-    },
+    callbacks?: Callbacks,
   ) {
     return Http.request(params.url, {
       headers: params?.headers || {},
@@ -49,11 +53,7 @@ export class Http {
       body?: ArrayBuffer | string | FormData,
       headers?: Record<string, string>,
     },
-    callbacks?: {
-      onTextSuccess?: (response: string) => void,
-      onJSONSuccess?: (response: any) => void,
-      onError?: (e: Error) => void,
-    },
+    callbacks?: Callbacks,
   ) {
     return Http.request(params.url, {
       headers: params?.headers || {},

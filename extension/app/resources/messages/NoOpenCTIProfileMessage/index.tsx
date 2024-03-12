@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { StaticButton } from '../../../components/buttons/StaticButton/StaticButton';
-import { WarningMessage } from '../WarningMessage';
+import { WarningMessage } from '../../../root/messages/WarningMessage';
 import {
   useRouter,
   useIntegrationsStore,

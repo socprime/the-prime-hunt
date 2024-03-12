@@ -1,5 +1,7 @@
 import { ListenerType, MessageListener, Position } from '../types/types-content-common';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import {
+  ModifyQueryType, PlatformID, PlatformName, SiemType,
+} from '../../common/types/types-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { WatchingResources } from '../../background/types/types-background-common';
 import { Loggers } from '../../common/loggers';
@@ -27,7 +29,7 @@ export class ArcSightPlatform extends AbstractContentPlatform {
       return String(parseFloat(value as string));
     }
 
-    return `\"${value.replace(/"/g, '\\"')}\"`;
+    return `"${value.replace(/"/g, '\\"')}"`;
   };
 
   static buildQueryParts(
@@ -111,6 +113,10 @@ export class ArcSightPlatform extends AbstractContentPlatform {
     return PlatformName.ArcSight;
   }
 
+  getType(): SiemType {
+    return SiemType.ArcSight;
+  }
+
   private static connectInlineListener() {
     mountHTMLElement('script', document.body, {
       attributes: {
@@ -147,7 +153,6 @@ export class ArcSightPlatform extends AbstractContentPlatform {
 
     loggers.debug().log('listeners were set');
   }
-
 }
 
 loggers = require('../../common/loggers').loggers

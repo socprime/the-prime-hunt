@@ -1,5 +1,5 @@
 import React from 'react';
-import { WarningMessage } from '../../../resources/messages/WarningMessage';
+import { WarningMessage } from '../../../root/messages/WarningMessage';
 import './styles.scss';
 
 export const SensitiveInfoWarningMessage: React.FC = () => {

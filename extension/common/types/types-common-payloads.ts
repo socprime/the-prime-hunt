@@ -11,7 +11,6 @@ import {
 } from '../../app/resources/resources-types';
 import { MessageToBackground } from '../../background/types/types-background-messages';
 import { AsyncResult, Url } from '../../../common/types';
-import { getIntegrationModel } from '../../integrations';
 
 export type PlatformIDPayload = {
   platformID: PlatformID;
@@ -44,9 +43,9 @@ export type ResultProcessPayload = {
   result: AsyncResult;
 };
 
-export type IntegrationWorkPayload = {
-  work: 'check-connection' | 'export-data' | 'import-data';
-  modelType: Parameters<typeof getIntegrationModel>[0];
+export type CallBackMessagePayload = {
+  model: 'openCTI' | 'socprime';
+  work: string;
   data?: Record<string, unknown>;
 };
 

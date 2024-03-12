@@ -42,7 +42,7 @@ export class WithFormStore {
     return !failed.length;
   }
 
-  getFormData() {
+  getFormData<T = any>() {
     const data: Record<string, unknown> = {};
     this.refs.forEach((refs) => {
       const name = (refs.elementRef?.current as any)?.name;
@@ -51,6 +51,6 @@ export class WithFormStore {
         data[name] = value;
       }
     });
-    return data;
+    return data as T;
   }
 }

@@ -9,7 +9,6 @@ import { SeeDocumentIcon } from '../../components/atoms/icons/SeeDocumentIcon/Se
 import { ModifyQueryPayload } from '../../../common/types/types-common-payloads';
 import { useRouter, usePlatformStore, useMail } from '../../stores';
 import { SendToIcon } from '../../components/atoms/icons/SendToIcon';
-import { getIntegrationModel } from '../../../integrations';
 import { NoOpenCTIProfileMessage } from '../messages/NoOpenCTIProfileMessage';
 import { AnimatedCopyIcon } from '../../components/icons/AnimatedCopyIcon/AnimatedCopyIcon';
 import { AppDropdown, AppDropdownRefs } from '../../components/dropdowns/AppDropdown/AppDropdown';
@@ -20,11 +19,14 @@ import { IconMail } from '../../components/atoms/icons/MailIcon';
 import { ListItemContentWithIcons } from '../../components/lists-items/ListItemContentWithIcons';
 import { openMailTo } from '../../../common/common-helpers';
 import './styles.scss';
+import { getOpenCTIModel } from '../../../models/openCTI/model';
 
 type ResourceListItemProps = {
   resourceName: string;
   fieldName: string;
 };
+
+const openCTIModel = getOpenCTIModel();
 
 export const ResourceListItem: FC<PropsWithChildren<ResourceListItemProps>> = observer(({
   children,
@@ -55,7 +57,7 @@ export const ResourceListItem: FC<PropsWithChildren<ResourceListItemProps>> = ob
         name: 'Send to OpenCTI',
         icon: <GoOutsideIcon />,
         onClick: () => {
-          getIntegrationModel('openCTI')
+          openCTIModel
             ?.getStorage()
             .then(({ data }) => {
               const { isActive, isValid } = data || {};

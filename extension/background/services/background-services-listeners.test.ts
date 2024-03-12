@@ -31,7 +31,7 @@ describe('BG Listeners test', () => {
 
     expect(ids.size).toEqual(3);
 
-    Array.from(ids).forEach(id => {
+    Array.from(ids).forEach((id) => {
       removeBGInterceptor(id);
       ids.delete(id);
     });

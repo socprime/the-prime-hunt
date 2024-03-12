@@ -1,5 +1,5 @@
 import { ListenerType, MessageListener } from '../types/types-content-common';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import {
   buildQueryParts, mountHTMLElement, waitHTMLElement,
@@ -33,7 +33,7 @@ export class QRadarPlatform extends AbstractContentPlatform {
     const prefix = 'where';
     return buildQueryParts(
       resources,
-      () => type === 'exclude' ? ' != ' : ' == ',
+      () => (type === 'exclude' ? ' != ' : ' == '),
       type === 'exclude' ? ' AND ' : ' OR ',
       type === 'exclude' ? ' AND ' : ' OR ',
       {
@@ -120,6 +120,10 @@ export class QRadarPlatform extends AbstractContentPlatform {
 
   getName() {
     return PlatformName.QRadar;
+  }
+
+  getType() {
+    return SiemType.Qradar;
   }
 }
 

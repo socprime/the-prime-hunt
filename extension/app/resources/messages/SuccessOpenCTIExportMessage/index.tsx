@@ -2,7 +2,7 @@ import React from 'react';
 import { StaticButton } from '../../../components/buttons/StaticButton/StaticButton';
 import { observer } from 'mobx-react-lite';
 import { usePlatformStore } from '../../../stores';
-import { SuccessMessage } from '../SuccessMessage';
+import { SuccessMessage } from '../../../root/messages/SuccessMessage';
 import './styles.scss';
 
 export const SuccessOpenCTIExportMessage: React.FC = observer(() => {

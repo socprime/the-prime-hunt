@@ -3,7 +3,8 @@ import { setLoggers } from '../../../common/loggers';
 import {
   getMockedBrowserContext,
   getMockedLoggers,
-  getMockedResizeObserver, getMockedResourcesData,
+  getMockedResizeObserver,
+  getMockedResourcesData,
   getNewRootStore,
   getPlatformByID,
 } from '../../mocks';
@@ -52,10 +53,12 @@ describe('QRadar App tests', () => {
   beforeEach(() => {
     rootStore = getNewRootStore();
     platform = getPlatformByID(platformID);
+    rootStore.platformStore.setPlatform(platform);
+    rootStore.routerStore.page = 'resources';
+    rootStore.resourceStore.activeTabID = 'Accounts';
   });
 
   test('platform should be resolved and set', () => {
-    rootStore.platformStore.setPlatform(platform);
     expect(rootStore.platformStore.platform.getID()).toEqual(platformID);
 
     expect(rootStore.appStore.topPosition)
@@ -69,8 +72,6 @@ describe('QRadar App tests', () => {
   });
 
   test('should be rendered', () => {
-    rootStore.platformStore.setPlatform(platform);
-
     render(<RootApp rootStore={rootStore} />);
 
     expect(screen.getByText('The Prime Hunt')).toBeInTheDocument();
@@ -78,7 +79,6 @@ describe('QRadar App tests', () => {
   });
 
   test('should provide copy actions', async () => {
-    rootStore.platformStore.setPlatform(platform);
     rootStore.resourceStore.addResources(getMockedResourcesData());
 
     const { container } = render(<RootApp rootStore={rootStore} />);
@@ -101,7 +101,6 @@ describe('QRadar App tests', () => {
   });
 
   test('should provide correct actions results', async () => {
-    rootStore.platformStore.setPlatform(platform);
     rootStore.resourceStore.addResources(getMockedResourcesData());
 
     render(<RootApp rootStore={rootStore} />);
@@ -120,10 +119,10 @@ describe('QRadar App tests', () => {
     expect(normalizedStack.length).toEqual(1);
 
     let modifyQueryMessage = normalizedStack[0] as ExtensionMessage;
-    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGModifyQuery);
+    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGDirectMessageToInline);
     expect(modifyQueryMessage.id!.indexOf('modify-query')).toEqual(0);
 
-    let payload = modifyQueryMessage.payload as ModifyQueryPayload;
+    let payload = modifyQueryMessage.payload.payload as ModifyQueryPayload;
     expect(payload.modifyType).toEqual('include');
     expect(JSON.stringify(payload.resources)).toEqual(goldenSnapshot);
 
@@ -135,10 +134,10 @@ describe('QRadar App tests', () => {
     expect(normalizedStack.length).toEqual(1);
 
     modifyQueryMessage = normalizedStack[0] as ExtensionMessage;
-    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGModifyQuery);
+    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGDirectMessageToInline);
     expect(modifyQueryMessage.id!.indexOf('modify-query')).toEqual(0);
 
-    payload = modifyQueryMessage.payload as ModifyQueryPayload;
+    payload = modifyQueryMessage.payload.payload as ModifyQueryPayload;
     expect(payload.modifyType).toEqual('exclude');
     expect(JSON.stringify(payload.resources)).toEqual(goldenSnapshot);
 
@@ -150,16 +149,15 @@ describe('QRadar App tests', () => {
     expect(normalizedStack.length).toEqual(1);
 
     modifyQueryMessage = normalizedStack[0] as ExtensionMessage;
-    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGModifyQuery);
+    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGDirectMessageToInline);
     expect(modifyQueryMessage.id!.indexOf('modify-query')).toEqual(0);
 
-    payload = modifyQueryMessage.payload as ModifyQueryPayload;
+    payload = modifyQueryMessage.payload.payload as ModifyQueryPayload;
     expect(payload.modifyType).toEqual('show all');
     expect(JSON.stringify(payload.resources)).toEqual(goldenSnapshot);
   });
 
   test('should provide correct bulk actions results', async () => {
-    rootStore.platformStore.setPlatform(platform);
     rootStore.resourceStore.addResources(getMockedResourcesData());
 
     const { container } = render(<RootApp rootStore={rootStore} />);
@@ -190,10 +188,10 @@ describe('QRadar App tests', () => {
     expect(normalizedStack.length).toEqual(1);
 
     let modifyQueryMessage = normalizedStack[0] as ExtensionMessage;
-    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGModifyQuery);
+    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGDirectMessageToInline);
     expect(modifyQueryMessage.id!.indexOf('modify-query')).toEqual(0);
 
-    let payload = modifyQueryMessage.payload as ModifyQueryPayload;
+    let payload = modifyQueryMessage.payload.payload as ModifyQueryPayload;
     expect(payload.modifyType).toEqual('include');
     expect(JSON.stringify(payload.resources)).toEqual(goldenSnapshot);
 
@@ -205,10 +203,10 @@ describe('QRadar App tests', () => {
     expect(normalizedStack.length).toEqual(1);
 
     modifyQueryMessage = normalizedStack[0] as ExtensionMessage;
-    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGModifyQuery);
+    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGDirectMessageToInline);
     expect(modifyQueryMessage.id!.indexOf('modify-query')).toEqual(0);
 
-    payload = modifyQueryMessage.payload as ModifyQueryPayload;
+    payload = modifyQueryMessage.payload.payload as ModifyQueryPayload;
     expect(payload.modifyType).toEqual('exclude');
     expect(JSON.stringify(payload.resources)).toEqual(goldenSnapshot);
 
@@ -220,10 +218,10 @@ describe('QRadar App tests', () => {
     expect(normalizedStack.length).toEqual(1);
 
     modifyQueryMessage = normalizedStack[0] as ExtensionMessage;
-    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGModifyQuery);
+    expect(modifyQueryMessage.type).toEqual(MessageToBackground.BGDirectMessageToInline);
     expect(modifyQueryMessage.id!.indexOf('modify-query')).toEqual(0);
 
-    payload = modifyQueryMessage.payload as ModifyQueryPayload;
+    payload = modifyQueryMessage.payload.payload as ModifyQueryPayload;
     expect(payload.modifyType).toEqual('show all');
     expect(JSON.stringify(payload.resources)).toEqual(goldenSnapshot);
   });

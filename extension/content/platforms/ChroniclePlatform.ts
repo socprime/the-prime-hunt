@@ -1,6 +1,8 @@
 import { AbstractContentPlatform } from './AbstractContentPlatform';
 import { Loggers } from '../../common/loggers';
-import { ModifyQueryType, PlatformID, PlatformName } from '../../common/types/types-common';
+import {
+  ModifyQueryType, PlatformID, PlatformName, SiemType,
+} from '../../common/types/types-common';
 import { WatchingResources } from '../../background/types/types-background-common';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { ListenerType, MessageListener, Position } from '../types/types-content-common';
@@ -66,7 +68,7 @@ export class ChroniclePlatform extends AbstractContentPlatform {
       resources,
       () => (type === 'exclude' ? ' != ' : ' = '),
       type === 'exclude' ? ' AND ' : ' OR ',
-      type === 'exclude' ? ' AND ' : ' ) AND ( ',
+      type === 'exclude' ? ' AND ' : ') AND (',
       {
         leftOperand: (v) => v,
         rightOperand: (v) => ChroniclePlatform.normalizedValue(v as string),
@@ -117,6 +119,10 @@ export class ChroniclePlatform extends AbstractContentPlatform {
 
   getName(): PlatformName {
     return ChroniclePlatform.platformName;
+  }
+
+  getType(): SiemType {
+    return SiemType.Chronicle;
   }
 }
 

@@ -3,15 +3,13 @@ import { isMessageMatched } from '../../common/common-listeners';
 import { MessageToInline } from '../types/types-inline-messages';
 import { ElasticPlatform } from '../../content/platforms/ElasticPlatform';
 import { ModifyQueryPayload, SetDebugModePayload } from '../../common/types/types-common-payloads';
+import { sendQueryToApp } from '../helpers';
+import { getInput } from './helpers';
 
 const platform = new ElasticPlatform();
 
 const loggers = require('../../common/loggers').loggers
   .addPrefix(platform.getID());
-
-const getInput = (): HTMLTextAreaElement | null => {
-  return document.querySelector('.euiTextArea[data-test-subj="queryInput"]');
-};
 
 window.addEventListener('message', (event) => {
   const message = event.data as ExtensionMessage;
@@ -47,6 +45,19 @@ window.addEventListener('message', (event) => {
   )) {
     const { debugMode } = message.payload as SetDebugModePayload;
     require('../../common/loggers').setDebugMode(debugMode);
+  }
+
+  if (isMessageMatched(
+    () => MessageToInline.ISGetQuery === message.type,
+    message,
+    event,
+  )) {
+    const input = getInput();
+    if (!input) {
+      loggers.warn().log('query input not found');
+      return;
+    }
+    sendQueryToApp(input.value);
   }
 });
 

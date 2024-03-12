@@ -11,6 +11,10 @@
   display: inline-flex;
   align-items: center;
 
+  .button-content {
+    white-space: nowrap;
+  }
+
   &:not(:disabled):active {
     animation: button-press-animation 0.2s ease-in-out;
   }
