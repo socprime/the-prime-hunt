@@ -336,11 +336,15 @@ Set up this integration to save your queries in a custom repository on the SOC P
 3. The key is automatically validated. If the validation is finished successfully, you'll see the expiration date of the key.
 4. Click **Close**.
 
-![SOC Prime API configuration](.readme/soc_prime_api.png | width=500)
+<p align="left">
+  <img src=".readme/soc_prime_api.png" width="500">
+</p>
 
 Once you've configured the SOC Prime API integration, you can save queries from the Query tab.
 
-![Saving a query](.readme/save_query.png | width=500)
+<p align="left">
+  <img src=".readme/save_query.png" width="500">
+</p>
 
 ## Hot Keys
 - Hide/Show the extension: Ctrl + Q
@@ -355,7 +359,7 @@ This software was created as a work made for hire for SOC Prime, Inc. by the fol
 - Andrii Bezverkhyi
 
 ## License
-The Prime Hunt browser extension is licensed as [LGPL v3](LICENSE.md).
+The Prime Hunt browser extension is licensed as [Apache 2.0](LICENSE.md).
 
 ## TODO List
 1. Add more SIEM/EDR/XDR technologies supported by Sigma.
