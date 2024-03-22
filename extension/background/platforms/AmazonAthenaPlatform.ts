@@ -11,6 +11,7 @@ import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { http } from '../../../common/Http';
 import { normalizeParsedResources } from '../services/background-services';
+import { isNumberInString } from '../../../common/checkers';
 
 let loggers: Loggers;
 
@@ -26,6 +27,8 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
   private static replacementID = '@@replacement@@';
 
   private static replacementsCounter = 0;
+
+  private static timestampFieldName = 'time';
 
   private static repairStrWithReplacements(str: string) {
     if (str.indexOf(AmazonAthenaPlatform.replacementID) < 0) {
@@ -198,6 +201,9 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
   private parse(
     obj: Record<string, unknown>,
     kp = '',
+    meta: {
+      timestamp?: string | number;
+    } = {},
   ) {
     let result: string[] = [];
     const nonArrayResult = iterateObjectsRecursively(obj, kp, {
@@ -209,13 +215,19 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
               this.result[t] = {};
             }
             this.addValueToResource(this.result[t], keyPath, (value as any).$$value$$);
+            this.collectResourceMeta(
+              t,
+              keyPath,
+              (value as any).$$value$$,
+              { timestamp: meta.timestamp || '' },
+            );
           });
         }
         if (key === '$$array$$') {
           (value as Record<string, unknown>[]).forEach((o) => {
             result = [
               ...result,
-              ...this.parse(o, prevKeyPath),
+              ...this.parse(o, prevKeyPath, meta),
             ];
           });
         }
@@ -247,6 +259,8 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
     this.fieldsNames = fieldsNames;
 
     (response?.ResultSet?.Rows || []).slice(1).forEach((row) => {
+      const timestampIndex = (response?.ResultSet?.ResultSetMetadata?.ColumnInfo || [])
+        .findIndex(({ Label }) => Label === AmazonAthenaPlatform.timestampFieldName);
       ((row || {}).Data || []).forEach((data, index) => {
         const label = response?.ResultSet?.ResultSetMetadata?.ColumnInfo?.[index]?.Label || '';
         if (!label) {
@@ -257,6 +271,11 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
         if (!value) {
           return;
         }
+        let timestamp: string | number = '';
+        if (timestampIndex > -1) {
+          timestamp = (((row || {}).Data || [])[timestampIndex]?.VarCharValue) as string || '';
+          timestamp = isNumberInString(timestamp) ? parseInt(timestamp, 10) : timestamp;
+        }
 
         if (fieldsNames.has(label)) {
           const types = mapFieldNameToTypes.get(label)!;
@@ -265,11 +284,19 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
               this.result[t] = {};
             }
             this.addValueToResource(this.result[t], label, value);
+            this.collectResourceMeta(
+              t,
+              label,
+              value,
+              { timestamp },
+            );
           });
         }
 
-        this.parse(AmazonAthenaPlatform.parseStruct(value), label)
-          .forEach((fn) => fields.add(fn));
+        this.parse(AmazonAthenaPlatform.parseStruct(value), label, { timestamp })
+          .forEach((fn) => {
+            fields.add(fn);
+          });
       });
     });
 
@@ -389,6 +416,7 @@ export class AmazonAthenaPlatform extends AbstractBackgroundPlatform {
                       cacheID,
                       resources,
                       fieldsNames: [...this.fields],
+                      mappedResourcesData: this.mappedResourcesData,
                     },
                     true,
                   );

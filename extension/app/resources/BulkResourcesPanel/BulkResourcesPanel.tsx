@@ -158,6 +158,7 @@ export const BulkResourcesPanel: React.FC = observer(() => {
         </AppDropdown>)}
         <AppDropdown
           disabled={disabled}
+          classNameMenu="search-at-dropdown-menu"
           opener={
             <StaticButton disabled={disabled} icon={<MagnifyingIcon />}>Search at</StaticButton>
           }

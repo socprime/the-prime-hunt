@@ -6,7 +6,9 @@ import PageActionClickedEvent = chrome.pageAction.PageActionClickedEvent;
 import WebRequestHeadersSynchronousEvent = chrome.webRequest.WebRequestHeadersSynchronousEvent;
 import TabRemovedEvent = chrome.tabs.TabRemovedEvent;
 import { HTMLTextContent, IdentifiedFunction } from '../../../common/types';
-import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
+import {
+  FieldName, MappedResourceToMeta, ParsedResult, ResourceTypeID,
+} from '../../app/resources/resources-types';
 
 export type TabID = number;
 
@@ -39,7 +41,10 @@ export type BackgroundPlatform = IPlatform & {
   register(): void;
   unregister(): void;
   setWatchers(watchers: WatchingResources, tabInfo: BrowserTabInfo): void;
-  reparseCached(cacheID: string, tabInfo: BrowserTabInfo): Promise<ParsedResult>;
+  reparseCached(cacheID: string, tabInfo: BrowserTabInfo): Promise<{
+    parsedResponse: ParsedResult,
+    mappedResourcesData: MappedResourceToMeta,
+  }>;
   parseResponse(response: object, tabInfo: BrowserTabInfo): Promise<ParsedResult>;
   parseContent?(content: HTMLTextContent): Promise<ParsedResult>;
 };

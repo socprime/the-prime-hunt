@@ -1,10 +1,15 @@
 import { DropdownContentItem, DropdownItem } from '../../../common/types';
 import { SiemType } from '../../common/types/types-common';
+import { ExtensionSettings } from '../../common/local-storage/types';
 
 export type SocPrimeData = {
   apiKey: string | undefined;
   expirationData: string;
 };
+
+export type SocPrimeDataWithSettings = SocPrimeData & {
+  apiUrl: ExtensionSettings['socprime']['apiUrl'];
+}
 
 export enum StorageGroupNames {
   socprime = 'socprime'

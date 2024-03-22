@@ -42,7 +42,12 @@ const setExtensionShowState = (
 };
 
 const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
-  const { resources, cacheID, fieldsNames } = payload;
+  const {
+    resources,
+    cacheID,
+    fieldsNames,
+    mappedResourcesData,
+  } = payload;
   rootStore.appStore.startLoading(LoadingKey.resourcesAdding);
   if (isNew) {
     rootStore.resourceStore.clearResources();
@@ -50,6 +55,7 @@ const handleResources = (payload: ParsedDataPayload, isNew?: boolean) => {
 
   setTimeout(() => {
     rootStore.resourceStore.addResources(resources);
+    rootStore.resourceStore.addMappedData(mappedResourcesData);
     rootStore.resourceStore.cacheID = cacheID;
     rootStore.platformStore.setFieldsNames(fieldsNames);
     rootStore.platformStore.saveFieldsNames();

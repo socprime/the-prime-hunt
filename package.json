@@ -1,6 +1,6 @@
 {
   "name": "the-prime-hunt",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "The Prime Hunt is a browser extension for threat hunting. It introduces a One UI idea to simplify and speed up the investigation process regardless of the SIEMs or EDR in use. This is useful both for threat hunters starting off their careers and for seasoned professionals. With The Prime Hunt, you can easily see what accounts and assets are affected by the suspicious activity your query detects. Filter for or filter out query results by any field values with one click or look for all events related to them. Easily drill down to any CTI or any other sources that can help you in the investigation.If you have any questions, would like to give feedback, or need help, contact us at support@socprime.com",
   "author": "Pavel Nedzelskiy <pavlo.nedzelskyi@socprime.com>",
   "main": "index.js",
@@ -43,6 +43,7 @@
     "jsonc-eslint-parser": "^2.4.0",
     "keyboard-event-key-type": "^1.5.0",
     "loader-utils": "2.0.0",
+    "lz-string": "^1.5.0",
     "minimist": "^1.2.6",
     "mobx": "^6.6.1",
     "mobx-react-lite": "^3.4.0",

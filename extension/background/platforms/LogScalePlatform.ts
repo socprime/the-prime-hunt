@@ -10,6 +10,7 @@ import { BGListenerType } from '../types/types-background-common';
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { normalizeParsedResources } from '../services/background-services';
+import { isNumberInString } from '../../../common/checkers';
 
 let loggers: Loggers;
 
@@ -39,6 +40,8 @@ export class LogScalePlatform extends AbstractBackgroundPlatform {
     ];
   }
 
+  private static timestampFiledName = '@timestamp';
+
   async parseResponse(
     response: {
       events: Record<string, unknown>[],
@@ -67,7 +70,19 @@ export class LogScalePlatform extends AbstractBackgroundPlatform {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
             }
-            this.addValueToResource(result[t], fieldName, String(item[fieldName]));
+            const resourceName = String(item[fieldName]);
+            this.addValueToResource(result[t], fieldName, resourceName);
+            const timestamp = item[LogScalePlatform.timestampFiledName] as string;
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              resourceName,
+              {
+                timestamp: isNumberInString(timestamp)
+                  ? parseInt(timestamp, 10)
+                  : timestamp,
+              },
+            );
           });
         }
       });
@@ -105,6 +120,7 @@ export class LogScalePlatform extends AbstractBackgroundPlatform {
             cacheID: readyUrl,
             resources,
             fieldsNames: [...this.fields],
+            mappedResourcesData: this.mappedResourcesData,
           },
           false,
         );

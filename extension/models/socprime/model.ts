@@ -1,7 +1,12 @@
-import { getDataByKey, saveData } from '../../common/extension-storage';
+import { getData, saveData } from '../../common/extension-storage';
 import { AsyncResult, DropdownItem } from '../../../common/types';
 import {
-  BackgroundJob, PostRepositoryData, SocPrimeData, SocPrimeTags, StorageGroupNames,
+  BackgroundJob,
+  PostRepositoryData,
+  SocPrimeData,
+  SocPrimeDataWithSettings,
+  SocPrimeTags,
+  StorageGroupNames,
 } from './types';
 import { http } from '../../../common/Http';
 import { loggers } from '../../common/loggers';
@@ -9,6 +14,7 @@ import { initValues, serializeDataInResult } from '../../../common/helpers';
 import { AbstractModel } from '../types';
 import { CallBackMessagePayload } from '../../common/types/types-common-payloads';
 import { getInitialTagsValues } from './helpers';
+import { ExtensionSettings } from '../../common/local-storage/types';
 
 export class SocPrimeModel implements AbstractModel {
   private static getDetail(response: any) {
@@ -22,30 +28,45 @@ export class SocPrimeModel implements AbstractModel {
     return JSON.stringify(detail);
   }
 
+  private static apiUrl = 'https://api.tdm.socprime.com';
+
   private static apiKeyHeaderName: string = 'client_secret_id';
 
-  private static async getData(): Promise<AsyncResult<SocPrimeData>> {
-    const result = await getDataByKey(StorageGroupNames.socprime);
+  private static async getData(): Promise<AsyncResult<SocPrimeDataWithSettings>> {
+    const result = await getData();
     if (result.error) {
       return result;
     }
 
     return {
-      data: (result?.data?.[StorageGroupNames.socprime] || {}) as SocPrimeData,
+      data: {
+        ...((result?.data?.[StorageGroupNames.socprime] || {}) as SocPrimeData),
+        apiUrl: (result?.data?.settings as ExtensionSettings)?.[StorageGroupNames.socprime]?.apiUrl || '',
+      },
     };
   }
 
-  private async getData(): Promise<AsyncResult<SocPrimeData>> {
+  private async getData(): Promise<AsyncResult<SocPrimeDataWithSettings>> {
     return SocPrimeModel.getData();
   }
 
-  async getApiKey(): Promise<AsyncResult<SocPrimeData['apiKey']>> {
+  async getRequestStorageData(): Promise<AsyncResult<{
+    apiKey: SocPrimeData['apiKey'];
+    apiUrl: ExtensionSettings['socprime']['apiUrl'];
+  }>> {
     const result = await this.getData();
     if (result.error) {
       return { error: result.error };
     }
 
-    return { data: result?.data?.apiKey };
+    const { apiKey, apiUrl } = result.data! || {};
+
+    return {
+      data: {
+        apiKey: apiKey || '',
+        apiUrl: apiUrl || SocPrimeModel.apiUrl,
+      },
+    };
   }
 
   async setExpirationDate(expirationData: SocPrimeData['expirationData']): Promise<AsyncResult> {
@@ -84,9 +105,9 @@ export class SocPrimeModel implements AbstractModel {
     repositoryID: string,
     data: PostRepositoryData,
   ): Promise<AsyncResult> {
-    const result = await this.getApiKey();
+    const result = await this.getRequestStorageData();
 
-    const apiKey = result.data;
+    const { apiUrl, apiKey } = result.data! || {};
 
     if (!apiKey) {
       return { error: new Error('Wrong API Key') };
@@ -113,7 +134,7 @@ export class SocPrimeModel implements AbstractModel {
     return new Promise((resolve) => {
       http.post(
         {
-          url: `https://api.tdm.socprime.com/v1/custom-content?repo_id=${repositoryID}`,
+          url: `${apiUrl}/v1/custom-content?repo_id=${repositoryID}`,
           body: JSON.stringify({
             rule_name: data.contentName || '',
             description: data.description || '',
@@ -153,8 +174,9 @@ export class SocPrimeModel implements AbstractModel {
   }
 
   async checkConnection(): Promise<AsyncResult> {
-    const result = await this.getApiKey();
-    const apiKey = result.data;
+    const result = await this.getRequestStorageData();
+
+    const { apiUrl, apiKey } = result.data! || {};
 
     if (!apiKey) {
       return { error: new Error('API Key is not set') };
@@ -162,7 +184,7 @@ export class SocPrimeModel implements AbstractModel {
 
     return new Promise((resolve) => {
       http.get({
-        url: 'https://api.tdm.socprime.com/v1/check-connection',
+        url: `${apiUrl}/v1/check-connection`,
         headers: {
           [SocPrimeModel.apiKeyHeaderName]: apiKey,
         },
@@ -185,9 +207,10 @@ export class SocPrimeModel implements AbstractModel {
   }
 
   async getRepositories(): Promise<AsyncResult<RepositoriesResponse>> {
-    const result = await this.getApiKey();
+    const result = await this.getRequestStorageData();
 
-    const apiKey = result.data;
+    const { apiUrl, apiKey } = result.data! || {};
+
     const initialData = [] as RepositoriesResponse;
 
     if (!apiKey) {
@@ -196,7 +219,7 @@ export class SocPrimeModel implements AbstractModel {
 
     return new Promise((resolve) => {
       http.get({
-        url: 'https://api.tdm.socprime.com/v1/custom-repositories',
+        url: `${apiUrl}/v1/custom-repositories`,
         headers: {
           [SocPrimeModel.apiKeyHeaderName]: apiKey,
         },
@@ -222,11 +245,11 @@ export class SocPrimeModel implements AbstractModel {
   }
 
   async getTags(): Promise<AsyncResult<TagsResponse>> {
-    const result = await this.getApiKey();
+    const result = await this.getRequestStorageData();
 
     const initialValues = getInitialTagsValues() as TagsResponse;
 
-    const apiKey = result.data;
+    const { apiUrl, apiKey } = result.data! || {};
 
     if (!apiKey) {
       return { data: initialValues };
@@ -234,7 +257,7 @@ export class SocPrimeModel implements AbstractModel {
 
     return new Promise((resolve) => {
       http.get({
-        url: 'https://api.tdm.socprime.com/v1/mitre-attack-tags-values',
+        url: `${apiUrl}/v1/mitre-attack-tags-values`,
         headers: {
           [SocPrimeModel.apiKeyHeaderName]: apiKey,
         },

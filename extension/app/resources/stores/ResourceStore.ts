@@ -8,7 +8,7 @@ import { SetWatchersPayload } from '../../../common/types/types-common-payloads'
 import { setWatchers } from '../../../common/local-storage';
 import {
   BoundedResourceTypeID,
-  FieldName,
+  FieldName, MappedResourceToMeta,
   NormalizedResources,
   ParsedResources,
   ResourceName,
@@ -37,6 +37,22 @@ export class ResourceStore {
 
   private refreshResources() {
     this.resources = { ...this.resources };
+  }
+
+  private mappedResourcesData: MappedResourceToMeta = {};
+
+  addMappedData(data: MappedResourceToMeta) {
+    this.mappedResourcesData = data;
+  }
+
+  getMappedData(
+    resourceTypeID: ResourceTypeID,
+    fieldName: FieldName,
+    resourceName: ResourceName,
+  ) {
+    const separator = '-@@-';
+    const key = `${resourceTypeID}${separator}${fieldName}${separator}${resourceName}`;
+    return this.mappedResourcesData?.[key] || {};
   }
 
   constructor(rootStore: RootStore) {

@@ -41,6 +41,8 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
     ];
   }
 
+  private static timestampFieldName = '@timestamp';
+
   async parseResponseStringObject(
     line: string,
     mapFieldNameToTypes: Map<FieldName, ResourceTypeID[]>,
@@ -84,8 +86,15 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
       Array.from(fieldsNames).forEach((fieldName) => {
         let fieldValue: string | number | (number | string)[] = undefined as any;
 
+        let timestamp = '';
+
         if (fields && typeof fields[fieldName] !== 'undefined') {
-          Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
+          Object.keys(fields).forEach((fn) => {
+            if (fn === ElasticPlatform.timestampFieldName) {
+              timestamp = (fields[fn]?.[0] || '') as string;
+            }
+            watchingFieldsNames.add(fn);
+          });
           fieldValue = fields[fieldName];
         }
 
@@ -97,7 +106,12 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
               }
               return true;
             },
-          }).forEach((fn) => watchingFieldsNames.add(fn));
+          }).forEach((fn) => {
+            if (fn === ElasticPlatform.timestampFieldName) {
+              timestamp = (_source[fn] || '') as string;
+            }
+            watchingFieldsNames.add(fn);
+          });
         }
 
         if (typeof fieldValue === 'undefined') {
@@ -112,9 +126,21 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
           if (Array.isArray(fieldValue)) {
             (fieldValue || []).forEach((v) => {
               this.addValueToResource(result[t], fieldName, v);
+              this.collectResourceMeta(
+                t,
+                fieldName,
+                String(v),
+                { timestamp },
+              );
             });
           } else {
             this.addValueToResource(result[t], fieldName, fieldValue);
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              String(fieldValue),
+              { timestamp },
+            );
           }
         });
       });
@@ -280,6 +306,7 @@ export class ElasticPlatform extends AbstractBackgroundPlatform {
                       cacheID,
                       resources,
                       fieldsNames: [...this.fields],
+                      mappedResourcesData: this.mappedResourcesData,
                     },
                     !this.isRunningResponse,
                   );

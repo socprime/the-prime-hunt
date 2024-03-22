@@ -154,7 +154,7 @@ export const TabsPlatformResources: FC<PropsWithChildren> = observer(({ children
     <div className="tabs-platform-resources-wrapper">
       <TabsPanel
         className="tabs-platform-resources"
-        tabs={[...tabs(queryStore.query.value?.trim?.()?.length > 0 ? 1 : 0), addNewTab]}
+        tabs={[...tabs(queryStore.getQuery()?.trim?.()?.length > 0 ? 1 : 0), addNewTab]}
         onActiveTabChanged={(id) => {
           if (resourceStore.isTabExist(id)) {
             resourceStore.activeTabID = id;

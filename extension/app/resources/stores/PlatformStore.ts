@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { makeObservable, observable } from 'mobx';
 import { ContentPlatform } from '../../../content/types/types-content-common';
-import { ExtensionMessage, ModifyQueryType } from '../../../common/types/types-common';
+import { ExtensionMessage, ModifyQueryType, SiemType } from '../../../common/types/types-common';
 import { sendMessageFromApp } from '../../../content/services/content-services';
 import {
   ModifyQueryPayload,
@@ -96,14 +96,6 @@ export class PlatformStore {
     modifyType: ModifyQueryType,
     resources: NormalizedParsedResources,
   ): void {
-    // sendMessageFromApp<ModifyQueryPayload>({
-    //   id: 'modify-query',
-    //   type: MessageToBackground.BGModifyQuery,
-    //   payload: {
-    //     resources,
-    //     modifyType,
-    //   },
-    // });
     sendMessageFromApp<ExtensionMessage<ModifyQueryPayload>>({
       id: 'modify-query',
       type: MessageToBackground.BGDirectMessageToInline,
@@ -153,6 +145,20 @@ export class PlatformStore {
     if (!Message && this.message) {
       this.message = Message;
     }
+  }
+
+  getType(): SiemType | null {
+    if (!this.platform) {
+      return null;
+    }
+    let siemType = this.platform.getType();
+    if (
+      siemType === SiemType.Sentinel
+      && document.location.href.indexOf('SiemMigration') > -1
+    ) {
+      siemType = SiemType.Splunk;
+    }
+    return siemType;
   }
 
   getMessage() {

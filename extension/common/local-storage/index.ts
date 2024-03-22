@@ -1,8 +1,9 @@
-import { WatchingResources } from '../background/types/types-background-common';
-import { PlatformID } from './types/types-common';
-import { Position } from '../content/types/types-content-common';
-import { integrations } from '../app/integrations/integrations';
-import { Integration } from '../app/integration/integration-types';
+import { WatchingResources } from '../../background/types/types-background-common';
+import { PlatformID } from '../types/types-common';
+import { Position } from '../../content/types/types-content-common';
+import { integrations } from '../../app/integrations/integrations';
+import { Integration } from '../../app/integration/integration-types';
+import { ExtensionSettings } from './types';
 
 export const watchersLocalStorageKey = 'the-prime-hunt--extension--watchers';
 
@@ -13,6 +14,30 @@ export const integrationsStorageKey = 'the-prime-hunt--extension--models';
 export const versionStorageKey = 'the-prime-hunt--extension--version';
 
 export const fieldsNamesStorageKey = 'the-prime-hunt--extension--fields';
+
+export const settingsStorageKey = 'the-prime-hunt--extension--settings';
+
+export const setExtensionSettings = (settings: ExtensionSettings): ExtensionSettings => {
+  const newSettings = {
+    ...getExtensionSettings(),
+    ...(settings || {}),
+  };
+  localStorage.setItem(
+    settingsStorageKey,
+    JSON.stringify(newSettings),
+  );
+  return newSettings;
+};
+
+export const getExtensionSettings = (): ExtensionSettings => {
+  try {
+    return JSON.parse(
+      localStorage.getItem(settingsStorageKey) || '',
+    );
+  } catch (e) {
+    return {} as ExtensionSettings;
+  }
+};
 
 export const setFieldsNames = (fields: string[]): string[] => {
   localStorage.setItem(
@@ -51,7 +76,7 @@ export const setWatchers = (watchers: WatchingResources): WatchingResources => {
 const getDefaultWatchers = (
   platformID?: PlatformID,
 ) => {
-  return require('../content/platforms/PlatformResolver').platformResolver.getPlatformByID(platformID)?.defaultWatchers || {};
+  return require('../../content/platforms/PlatformResolver').platformResolver.getPlatformByID(platformID)?.defaultWatchers || {};
 };
 
 export const getWatchers = (

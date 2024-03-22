@@ -37,6 +37,8 @@ export type SHA256 = string;
 export type UniqueHash = string;
 export type HTMLTextContent = string;
 export type AbsFilePath = string;
+export type SuccessAsyncResult = '@succeed';
+export type StringDateISO = string;
 export type AsyncResult<T = any> = {
   error?: Error | string;
   data?: T;

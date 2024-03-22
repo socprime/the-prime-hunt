@@ -26,6 +26,8 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
     '/opensearch',
   ];
 
+  private static timestampFieldName = '@timestamp';
+
   private isRunningResponse = false;
 
   private isRunningResponseTimeout: null | NodeJS.Timeout = null;
@@ -77,8 +79,15 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
       Array.from(fieldsNames).forEach((fieldName) => {
         let fieldValue: string | number | (number | string)[] = undefined as any;
 
+        let timestamp = '';
+
         if (fields && typeof fields[fieldName] !== 'undefined') {
-          Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
+          Object.keys(fields).forEach((fn) => {
+            if (fn === OpenSearchPlatform.timestampFieldName) {
+              timestamp = (fields[fn]?.[0] || '') as string;
+            }
+            watchingFieldsNames.add(fn);
+          });
           fieldValue = fields[fieldName];
         }
 
@@ -90,7 +99,12 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
               }
               return true;
             },
-          }).forEach((fn) => watchingFieldsNames.add(fn));
+          }).forEach((fn) => {
+            if (fn === OpenSearchPlatform.timestampFieldName) {
+              timestamp = (_source[fn] || '') as string;
+            }
+            watchingFieldsNames.add(fn);
+          });
         }
 
         if (typeof fieldValue === 'undefined') {
@@ -104,9 +118,21 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
           if (Array.isArray(fieldValue)) {
             (fieldValue || []).forEach((v) => {
               this.addValueToResource(result[t], fieldName, v);
+              this.collectResourceMeta(
+                t,
+                fieldName,
+                String(v),
+                { timestamp },
+              );
             });
           } else {
             this.addValueToResource(result[t], fieldName, fieldValue);
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              String(fieldValue),
+              { timestamp },
+            );
           }
         });
       });
@@ -263,6 +289,7 @@ export class OpenSearchPlatform extends AbstractBackgroundPlatform {
                       resources,
                       cacheID,
                       fieldsNames: [...this.fields],
+                      mappedResourcesData: this.mappedResourcesData,
                     },
                     !this.isRunningResponse,
                   );

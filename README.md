@@ -152,8 +152,22 @@ In Amazon Athena, if the extension detects that your query includes a select sta
 
 6. If you need to reset the extension, go to the Extensions page in your browser's settings and click **Reload** (or the related icon). Reloading does not affect the custom settings of position and size of the extension, integrations, and watching fields (to reset them, you should clear specific keys in your browser’s local storage.)
 
-### Saving Your Query
-You can save your query in a custom repository on the SOC Prime Platform (you need access to the SOC Prime Platform's API and My Repositories functionality). First, configure the SOC Prime API integration, and then do the following:
+### Working with Your Query on the SOC Prime Platform
+#### Translating Your Query
+You can open your query in Uncoder AI on the SOC Prime Platform and translate it into a different language. To do that, go to the **Query** tab of The Prime Hunt and click **Open in Uncoder AI**.
+
+<p align="left">
+  <img src=".readme/open_in_uncoder.png" width="500">
+</p>
+
+The query will be passed to Uncoder AI via URL, and Uncoder AI will open in a new tab. You can further edit your query there, translate it into different languages, and save both the original and its translations in a custom repository.
+
+<p align="left">
+  <img src=".readme/query_in_uncoder.png" width="500">
+</p>
+
+#### Saving Your Query
+You can save your query in a custom repository on the SOC Prime Platform (you need access to the SOC Prime Platform's API and My Repositories functionality). First, configure the [SOC Prime API](README.md#soc-prime-api) integration, and then do the following:
 1. Go to the Query tab. The query from your SIEM/EDR/Data Lake will be displayed on that tab.
 - If the query is not displayed or what you see isn't the most recent version of your query, click **Refresh**.
 - You can copy the query to the cupboard by clicking **Copy**.
@@ -187,8 +201,17 @@ You can save your query in a custom repository on the SOC Prime Platform (you ne
 </p>
 
 4. Click **Save to Repo**.
+5. The message about successful saving appears with a link to the saved query on the SOC Prime Platform's Threat Detection Marketplace. Click the link to open Threat Detection Marketplace in a new tab.
 
-To find the saved query, go to the SOC Prime Platform's Threat Detection Marketplace and select the custom repository to which you've saved your query.
+<p align="left">
+  <img src=".readme/open_saved_query.png" width="500">
+</p>
+
+Once you're in Threat Detection Marketplace, select **My Repos** > name of your repository to view the saved query.
+
+<p align="left">
+  <img src=".readme/select_repo.png" width="500">
+</p>
 
 ## Integration Settings
 To open integration settings, click the corresponding icon at the top of the extension.

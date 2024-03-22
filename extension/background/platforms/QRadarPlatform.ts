@@ -11,15 +11,20 @@ import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
 import { uuid } from '../../../common/helpers';
 import { normalizeParsedResources } from '../services/background-services';
+import { isNumberInString } from '../../../common/checkers';
 
 let loggers: Loggers;
 
 export class QRadarPlatform extends AbstractBackgroundPlatform {
   private static postUrls: Url[] = [
     '/JSON-RPC/QRadar.getLatestStreamHTML',
-    '/ariel/arielSearch',
+    // '/ariel/arielSearch',
     '/JSON-RPC/QRadar.stopArielStreaming',
     '/JSON-RPC/QRadar.startArielStreaming',
+  ];
+
+  private static getUrls: Url[] = [
+    '/ariel/arielSearch?appName',
   ];
 
   private static isAreaSearchUrl(url: Url): boolean {
@@ -64,12 +69,16 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
 
     response.result?.rows?.forEach((r) => {
       const $ = require('cheerio').load(`<body><table>${r}</table></body>`);
+      let timestamp = '';
       $('td').each((i: number, e: Element) => {
         const elem = $(e);
         const value = elem.text()?.trim();
         const fieldName = elem.attr('propertylabel')?.trim();
         if (fieldName) {
           fields.add(fieldName);
+        }
+        if (fieldName && fieldName === QRadarPlatform.timestampFieldName) {
+          timestamp = value;
         }
         if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
           const types = mapFieldNameToTypes.get(fieldName)!;
@@ -78,6 +87,12 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
               result[t] = {};
             }
             this.addValueToResource(result[t], fieldName, value);
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              value,
+              { timestamp },
+            );
           });
         }
       });
@@ -85,6 +100,8 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
 
     return result;
   }
+
+  private static timestampFieldName = 'Time';
 
   private parseAriaSearchResponse(
     response: string,
@@ -98,23 +115,36 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
     const { fields } = this;
 
     const $ = require('cheerio').load(response);
-    $('td').each((i: number, e: Element) => {
-      const elem = $(e);
-      const id = elem.attr('propertyname')?.trim();
-      const fieldName = $(`th[columnid="${id}"]`).text()?.trim();
-      if (fieldName) {
-        fields.add(fieldName);
-      }
-      const value = elem.find('span[id]').text()?.trim();
-      if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
-        const types = mapFieldNameToTypes.get(fieldName)!;
-        types.forEach((t) => {
-          if (typeof result[t] === 'undefined') {
-            result[t] = {};
-          }
-          this.addValueToResource(result[t], fieldName, value);
-        });
-      }
+    $('tr').each((i: number, r: Element) => {
+      const row = $(r);
+      let timestamp: string | number = '';
+      row.find('td').each((i: number, e: Element) => {
+        const elem = $(e);
+        const id = elem.attr('propertyname')?.trim();
+        const fieldName = $(`th[columnid="${id}"]`).text()?.trim();
+        const value = elem.find('span[id]').text()?.trim();
+        if (fieldName) {
+          fields.add(fieldName);
+        }
+        if (fieldName && fieldName === QRadarPlatform.timestampFieldName) {
+          timestamp = isNumberInString(value) ? parseInt(value, 10) : String(value);
+        }
+        if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
+          const types = mapFieldNameToTypes.get(fieldName)!;
+          types.forEach((t) => {
+            if (typeof result[t] === 'undefined') {
+              result[t] = {};
+            }
+            this.addValueToResource(result[t], fieldName, value);
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              value,
+              { timestamp },
+            );
+          });
+        }
+      });
     });
 
     return result;
@@ -181,7 +211,8 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
             const objectData = details.requestBody!.formData as Record<string, any>;
 
             bodyData.set(details.url, createFormDataString(
-              Object.keys(objectData).reduce((res) => {
+              Object.keys(objectData || {}).reduce((res) => {
+                // eslint-disable-next-line guard-for-in
                 for (const key in objectData) {
                   const value = objectData[key]?.[0];
                   if (value) {
@@ -191,6 +222,75 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
                 return res;
               }, {} as Record<string, unknown>),
             ));
+          }
+        },
+      ),
+    );
+
+    this.interceptorsIDs.add(
+      setBGInterceptor(
+        BGListenerType.OnBeforeSendHeaders,
+        (id, params, isMatched) => {
+          const details = params.listenerParams[0] as WebRequestHeadersDetails;
+          const { href } = new URL(details.url);
+          if (isMatched(
+            () => {
+              return !urlsProcessing.has(details.url)
+                && details.method === 'GET'
+                && QRadarPlatform.getUrls.some((u) => href.indexOf(u) > -1);
+            },
+            params,
+            id,
+          )) {
+            urlsProcessing.add(details.url);
+            const cacheID = details.url;
+
+            const removeAttached = () => {
+              urlsProcessing.delete(details.url);
+            };
+
+            http.get({
+              url: details.url,
+              headers: details.requestHeaders!.reduce((res: any, header: any) => {
+                res[header.name] = header.value;
+                return res;
+              }, {}),
+            }, {
+              onTextSuccess: async (response: string) => {
+                const startIndex = response.indexOf('<div id="tableSection');
+                const endIndex = response.indexOf('/div>', startIndex) + 5;
+                const resources = normalizeParsedResources(
+                  await this.parseResponse(
+                    response.substring(startIndex, endIndex)
+                      .replace(/\\/g, ''),
+                    {
+                      origin: new URL(details.url).origin,
+                      id: details.tabId,
+                    },
+                  ),
+                );
+                AbstractBackgroundPlatform.sendParsedData(
+                  details.tabId,
+                  {
+                    cacheID,
+                    resources,
+                    fieldsNames: [...this.fields],
+                    mappedResourcesData: this.mappedResourcesData,
+                  },
+                  true,
+                );
+                this.lastResponse.set(cacheID, response);
+                isNew = true;
+                removeAttached();
+              },
+              onError: (e) => {
+                loggers
+                  .warn()
+                  .addPrefix('failed webRequest get')
+                  .log(e, details.method, details.url);
+                removeAttached();
+              },
+            });
           }
         },
       ),
@@ -262,6 +362,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
                         cacheID,
                         resources,
                         fieldsNames: [...this.fields],
+                        mappedResourcesData: this.mappedResourcesData,
                       },
                       isNew,
                     );
@@ -289,6 +390,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
                         cacheID,
                         resources,
                         fieldsNames: [...this.fields],
+                        mappedResourcesData: this.mappedResourcesData,
                       },
                       true,
                     );

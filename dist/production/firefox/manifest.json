@@ -1,5 +1,5 @@
 {
-   "version": "1.4.3",
+   "version": "1.4.4",
    "description": "__MSG_extension_description__",
    "name": "__MSG_extension_name__",
    "default_locale": "en",
@@ -32,6 +32,7 @@
    ],
    "web_accessible_resources": [
       "inline-microsoft-sentinel.js",
+      "inline-microsoft-sentinel-pages.js",
       "inline-microsoft-defender.js",
       "inline-splunk.js",
       "inline-qradar.js",

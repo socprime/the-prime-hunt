@@ -362,6 +362,7 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
                         cacheID,
                         resources,
                         fieldsNames: [...this.fields],
+                        mappedResourcesData: this.mappedResourcesData,
                       },
                       true,
                     );

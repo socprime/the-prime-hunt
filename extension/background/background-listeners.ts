@@ -145,11 +145,15 @@ const loggers = require('../common/loggers').loggers
         origin: getOriginFromSender(sender),
         id: sender.tab.id,
       })
-        .then((parsedResponse) => {
+        .then(({
+          parsedResponse,
+          mappedResourcesData,
+        }) => {
           sendMessageFromBackground<ParsedDataPayload>(tabID, {
             id: 're-parsed-last-response',
             type: MessageToApp.AppTakeResourceData,
             payload: {
+              mappedResourcesData,
               fieldsNames: [],
               cacheID,
               resources: normalizeParsedResources(parsedResponse),

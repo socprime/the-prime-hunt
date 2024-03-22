@@ -5,6 +5,7 @@ import { SuccessCheckbox } from '../../components/checkboxes/SucessCheckbox/Succ
 import { Spacer } from '../../components/atoms/Spacer/Spacer';
 import { AppTooltip } from '../../components/tooltips/AppTooltip/AppTooltip';
 import { useResourcesSelectionStore } from '../../stores';
+// import { formatDate } from '../../../../common/helpers';
 import './styles.scss';
 
 type ResourceListProps = {
@@ -18,6 +19,7 @@ export const ResourceList: React.FC<ResourceListProps> = memo(({
   items,
   selectedItems,
 }) => {
+  // const resourceStore = useResourceStore();
   const selectionStore = useResourcesSelectionStore();
 
   const getTooltipPosition = useCallback((
@@ -34,22 +36,42 @@ export const ResourceList: React.FC<ResourceListProps> = memo(({
       <List
         className="resource-list"
         items={items.map((item) => {
+          // const meta = resourceStore.getMappedData(
+          //   resourceStore.activeTabID,
+          //   fieldName,
+          //   item,
+          // );
+
+          // const { lastSeen = '', firstSeen = '' } = meta;
+
           return {
             id: item,
             content: (
               <ResourceListItem resourceName={item} fieldName={fieldName}>
                 <SuccessCheckbox
-                  content={item.length > 20
-                    ? <AppTooltip
-                        className="resource-value-tooltip small"
-                        content={item}
-                        getPosition={getTooltipPosition}
-                        delayShowMs={1200}
-                      >
+                  content={<AppTooltip
+                    className="resource-value-tooltip small"
+                    content={
+                      <span>
+                        {/* First Seen: */}
+                        {/* {!firstSeen && ' -'} */}
+                        {/* <b>{firstSeen && ` ${formatDate('%d %fM %Y', new Date(firstSeen))} `}</b> */}
+                        {/* {firstSeen && formatDate('%h:%m:%s', new Date(firstSeen))} */}
+                        {/* <br/> */}
+                        {/* Last Seen: */}
+                        {/* {!lastSeen && ' -'} */}
+                        {/* <b>{lastSeen && ` ${formatDate('%d %fM %Y', new Date(lastSeen))} `}</b> */}
+                        {/* {lastSeen && formatDate('%h:%m:%s', new Date(lastSeen))} */}
+                        {/* <br/> */}
+                        {/* <br/> */}
                         {item}
-                      </AppTooltip>
-                    : item
-                  }
+                      </span>
+                    }
+                    getPosition={getTooltipPosition}
+                    delayShowMs={1200}
+                  >
+                    {item}
+                  </AppTooltip>}
                   checked={selectedItems.includes(item)}
                   onStateChanged={(isChecked) => {
                     if (isChecked) {

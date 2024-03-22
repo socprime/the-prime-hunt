@@ -133,6 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "indexOfAll": () => (/* binding */ indexOfAll),
 /* harmony export */   "initValues": () => (/* binding */ initValues),
 /* harmony export */   "isFlatObjectsEqual": () => (/* binding */ isFlatObjectsEqual),
+/* harmony export */   "isValidDate": () => (/* binding */ isValidDate),
 /* harmony export */   "iterateObjectsRecursively": () => (/* binding */ iterateObjectsRecursively),
 /* harmony export */   "parseJSONSafe": () => (/* binding */ parseJSONSafe),
 /* harmony export */   "serializeDataInResult": () => (/* binding */ serializeDataInResult),
@@ -235,6 +236,7 @@ const formatDate = (pattern, data) => {
         ms: formatBinaryDate(data.getMilliseconds()),
         d: formatBinaryDate(data.getDate()),
         h: formatBinaryDate(data.getHours()),
+        fM: String(data.toLocaleString('default', { month: 'long' })),
     });
 };
 const debounce = (func, timeoutMs) => {
@@ -342,6 +344,10 @@ const initValues = (obj, values) => {
         }
     });
     return obj;
+};
+const isValidDate = (d) => {
+    // eslint-disable-next-line no-restricted-globals
+    return d instanceof Date && !isNaN(d);
 };
 
 
@@ -910,7 +916,7 @@ const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.p
 const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
     : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
-const version = "1.4.3";
+const version = "1.4.4";
 
 
 /***/ }),
@@ -1290,8 +1296,18 @@ class MicrosoftSentinelPlatform extends _AbstractContentPlatform__WEBPACK_IMPORT
             },
         });
     }
+    static connectInlinePagesListener() {
+        (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_3__.mountHTMLElement)('script', document.body, {
+            attributes: {
+                src: (0,_common_common_extension_helpers__WEBPACK_IMPORTED_MODULE_8__.getWebAccessibleUrl)(_manifest_public_resources__WEBPACK_IMPORTED_MODULE_5__.microsoftSentinelPagesInline),
+                type: 'text/javascript',
+                'data-type': 'inline-listener-pages',
+            },
+        });
+    }
     static setListeners() {
         (0,_services_content_services_listeners__WEBPACK_IMPORTED_MODULE_2__.addListener)(_types_types_content_common__WEBPACK_IMPORTED_MODULE_1__.ListenerType.OnMessage, async (message) => {
+            _AbstractContentPlatform__WEBPACK_IMPORTED_MODULE_9__.AbstractContentPlatform.processInlineListeners(message);
             if (!_common_envs__WEBPACK_IMPORTED_MODULE_4__.contentPlatformIDFromENV
                 && !document.querySelector('la-main-view')) {
                 return;
@@ -1301,12 +1317,12 @@ class MicrosoftSentinelPlatform extends _AbstractContentPlatform__WEBPACK_IMPORT
                 MicrosoftSentinelPlatform.connectInlineListener();
                 await (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_3__.waitHTMLElement)(query);
             }
-            _AbstractContentPlatform__WEBPACK_IMPORTED_MODULE_9__.AbstractContentPlatform.processInlineListeners(message);
         });
         loggers.debug().log('listeners were set');
     }
     connect() {
         MicrosoftSentinelPlatform.setListeners();
+        MicrosoftSentinelPlatform.connectInlinePagesListener();
         loggers.debug().log('connected');
     }
 }
@@ -1490,13 +1506,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const sendQueryToApp = (query) => {
+const sendQueryToApp = (query, meta) => {
     window.postMessage({
         id: (0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.uuid)(),
         type: _content_types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSDirectMessageToApp,
         payload: {
             type: _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_2__.MessageToApp.AppTakeQuery,
-            payload: { queryValue: query },
+            payload: { queryValue: query, queryMeta: meta },
         },
     });
 };
@@ -1641,6 +1657,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "logScaleInline": () => (/* binding */ logScaleInline),
 /* harmony export */   "microsoftDefenderInline": () => (/* binding */ microsoftDefenderInline),
 /* harmony export */   "microsoftSentinelInline": () => (/* binding */ microsoftSentinelInline),
+/* harmony export */   "microsoftSentinelPagesInline": () => (/* binding */ microsoftSentinelPagesInline),
 /* harmony export */   "openSearchInline": () => (/* binding */ openSearchInline),
 /* harmony export */   "qRadarInline": () => (/* binding */ qRadarInline),
 /* harmony export */   "splunkInline": () => (/* binding */ splunkInline)
@@ -1649,6 +1666,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const appStyles = 'app-styles.css';
 const microsoftSentinelInline = 'inline-microsoft-sentinel.js';
+const microsoftSentinelPagesInline = 'inline-microsoft-sentinel-pages.js';
 const microsoftDefenderInline = 'inline-microsoft-defender.js';
 const amazonAthenaInline = 'inline-amazon-athena.js';
 const splunkInline = 'inline-splunk.js';
@@ -1659,7 +1677,7 @@ const openSearchInline = 'inline-opensearch.js';
 const logScaleInline = 'inline-logscale.js';
 const chronicleInline = 'inline-chronicle.js';
 const accessibleResources = {
-    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftSentinel]: [microsoftSentinelInline],
+    [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftSentinel]: [microsoftSentinelInline, microsoftSentinelPagesInline],
     [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftDefender]: [microsoftDefenderInline],
     [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.Splunk]: [splunkInline],
     [_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.QRadar]: [qRadarInline],

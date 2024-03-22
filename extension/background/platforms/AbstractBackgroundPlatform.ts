@@ -5,10 +5,13 @@ import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/typ
 import { removeBGInterceptor } from '../services/background-services-listeners';
 import { sendMessageFromBackground } from '../services/background-services';
 import { MessageToApp } from '../../app/types/types-app-messages';
-import { FieldName, ParsedResult, ResourceTypeID } from '../../app/resources/resources-types';
+import {
+  FieldName, MappedResourceToMeta, ParsedResult, ResourceName, ResourceTypeID,
+} from '../../app/resources/resources-types';
 import { ParsedDataPayload, SetLoadingStatePayload } from '../../common/types/types-common-payloads';
 import { LoadingKey } from '../../app/types/types-app-common';
 import { loggers } from '../../common/loggers';
+import { isValidDate } from '../../../common/helpers';
 
 type Origin = string;
 
@@ -23,12 +26,28 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
 
   protected fields = new Set<string>();
 
+  protected mappedResourcesData: MappedResourceToMeta = {};
+
+  protected static getMappedKey(
+    resourceType: ResourceTypeID,
+    fieldName: FieldName,
+    resourceName: ResourceName,
+  ): string {
+    const separator = '-@@-';
+    return `${resourceType}${separator}${fieldName}${separator}${resourceName}`;
+  }
+
   protected static sendParsedData(
     tabID: TabID,
     payload: ParsedDataPayload,
     isNew = false,
   ) {
-    const { cacheID, resources, fieldsNames } = payload;
+    const {
+      cacheID,
+      resources,
+      fieldsNames,
+      mappedResourcesData,
+    } = payload;
     if (
       isNew
       || (Object.keys(resources).length > 0 || fieldsNames.length > 0)
@@ -36,8 +55,57 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
       sendMessageFromBackground<ParsedDataPayload>(tabID, {
         id: 'parsed-response',
         type: isNew ? MessageToApp.AppTakeNewResourceData : MessageToApp.AppTakeResourceData,
-        payload: { cacheID, resources, fieldsNames },
+        payload: {
+          cacheID,
+          resources,
+          fieldsNames,
+          mappedResourcesData,
+        },
       });
+    }
+  }
+
+  protected collectResourceMeta(
+    resourceType: ResourceTypeID,
+    fieldName: FieldName,
+    resourceName: ResourceName,
+    meta: {
+      timestamp: string | number;
+    },
+  ) {
+    const d = new Date(meta.timestamp);
+    if (!isValidDate(d)) {
+      return;
+    }
+    const key = AbstractBackgroundPlatform.getMappedKey(
+      resourceType,
+      fieldName,
+      resourceName,
+    );
+    const { firstSeen = '', lastSeen = '' } = this.mappedResourcesData[key] || {};
+    if (!lastSeen) {
+      this.mappedResourcesData[key] = {
+        ...(this.mappedResourcesData[key] || {}),
+        lastSeen: d.toISOString(),
+      };
+    }
+    if (!firstSeen) {
+      this.mappedResourcesData[key] = {
+        ...(this.mappedResourcesData[key] || {}),
+        firstSeen: d.toISOString(),
+      };
+    }
+    if (firstSeen && new Date(firstSeen) > d) {
+      this.mappedResourcesData[key] = {
+        ...(this.mappedResourcesData[key] || {}),
+        firstSeen: d.toISOString(),
+      };
+    }
+    if (lastSeen && new Date(lastSeen) < d) {
+      this.mappedResourcesData[key] = {
+        ...(this.mappedResourcesData[key] || {}),
+        lastSeen: d.toISOString(),
+      };
     }
   }
 
@@ -159,8 +227,14 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
   async reparseCached(cacheID: Url, tabInfo: BrowserTabInfo) {
     if (!this.lastResponse.has(cacheID)) {
       loggers.debug().log(`no data was found by cache id: ${cacheID}`);
-      return Promise.resolve({});
+      return Promise.resolve({
+        parsedResponse: {},
+        mappedResourcesData: {},
+      });
     }
-    return this.parseResponse(this.lastResponse.get(cacheID)!, tabInfo);
+    return {
+      parsedResponse: this.parseResponse(this.lastResponse.get(cacheID)!, tabInfo),
+      mappedResourcesData: this.mappedResourcesData,
+    };
   }
 }

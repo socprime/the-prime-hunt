@@ -9,13 +9,14 @@ import './styles.scss';
 export const TextArea = forwardRef<TextAreaRefs, TextAreaProps>(({
   label = '',
   debounceMs = 0,
+  onResize,
   native = {},
 }, refs) => {
   const {
     onChange, value, disabled,
   } = native;
   const [textAreaValue, setTextAreaValue] = useState<string>(value ? String(value) : '');
-  const previousValue = usePrevious(value);
+  const previousValue = usePrevious(textAreaValue);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -35,6 +36,19 @@ export const TextArea = forwardRef<TextAreaRefs, TextAreaProps>(({
   }, [value, disabled, previousValue, textAreaValue]);
 
   const isEmpty = textAreaValue.trim().length < 1;
+
+  // useEffect(() => {
+  //   if (!textAreaRef?.current) {
+  //     return () => {};
+  //   }
+  //
+  //   const resizeObserver = new ResizeObserver(() => {
+  //     console.log('# resize');
+  //   });
+  //   resizeObserver.observe(textAreaRef.current);
+  //
+  //   return () => resizeObserver.disconnect();
+  // }, []);
 
   return (
     <>

@@ -17,6 +17,7 @@ import {
   appStyles,
   microsoftDefenderInline,
   microsoftSentinelInline,
+  microsoftSentinelPagesInline,
   amazonAthenaInline,
   openSearchInline,
   qRadarInline,
@@ -89,6 +90,7 @@ const styles = new Map<AbsFilePath, HTMLTextContent>();
 
 const inlineEntries = [
   microsoftSentinelInline,
+  microsoftSentinelPagesInline,
   microsoftDefenderInline,
   splunkInline,
   qRadarInline,

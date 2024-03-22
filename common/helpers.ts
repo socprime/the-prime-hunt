@@ -127,6 +127,7 @@ export const formatDate = (
     ms: formatBinaryDate(data.getMilliseconds()),
     d: formatBinaryDate(data.getDate()),
     h: formatBinaryDate(data.getHours()),
+    fM: String(data.toLocaleString('default', { month: 'long' })),
   });
 };
 
@@ -291,4 +292,9 @@ export const initValues = <T = Record<string, unknown>>(
     }
   });
   return obj as T;
+};
+
+export const isValidDate = (d: Date) => {
+  // eslint-disable-next-line no-restricted-globals
+  return d instanceof Date && !isNaN(d as any);
 };

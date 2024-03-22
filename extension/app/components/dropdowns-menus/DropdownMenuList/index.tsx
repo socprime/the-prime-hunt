@@ -2,6 +2,7 @@ import {
   forwardRef, MutableRefObject, useImperativeHandle, useRef,
 } from 'react';
 import { AppList } from '../../lists/AppList';
+import { createClassName } from '../../../../common/common-helpers';
 import {
   DropdownMenuListRefs,
   DropdownMenuListProps,
@@ -26,13 +27,16 @@ export const DropdownMenuList = forwardRef<
 
   return (
     <AppList
+      {...otherProps}
       ref={(ref) => {
         if (ref?.elementRef.current) {
           elementRef.current = ref.elementRef.current;
         }
       }}
-      className="dropdown-menu--list"
-      {...otherProps}
+      className={createClassName([
+        'dropdown-menu--list',
+        otherProps.className || '',
+      ])}
     />
   );
 });

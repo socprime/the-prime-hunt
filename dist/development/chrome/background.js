@@ -11946,6 +11946,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "indexOfAll": () => (/* binding */ indexOfAll),
 /* harmony export */   "initValues": () => (/* binding */ initValues),
 /* harmony export */   "isFlatObjectsEqual": () => (/* binding */ isFlatObjectsEqual),
+/* harmony export */   "isValidDate": () => (/* binding */ isValidDate),
 /* harmony export */   "iterateObjectsRecursively": () => (/* binding */ iterateObjectsRecursively),
 /* harmony export */   "parseJSONSafe": () => (/* binding */ parseJSONSafe),
 /* harmony export */   "serializeDataInResult": () => (/* binding */ serializeDataInResult),
@@ -12048,6 +12049,7 @@ const formatDate = (pattern, data) => {
         ms: formatBinaryDate(data.getMilliseconds()),
         d: formatBinaryDate(data.getDate()),
         h: formatBinaryDate(data.getHours()),
+        fM: String(data.toLocaleString('default', { month: 'long' })),
     });
 };
 const debounce = (func, timeoutMs) => {
@@ -12155,6 +12157,10 @@ const initValues = (obj, values) => {
         }
     });
     return obj;
+};
+const isValidDate = (d) => {
+    // eslint-disable-next-line no-restricted-globals
+    return d instanceof Date && !isNaN(d);
 };
 
 
@@ -12488,11 +12494,12 @@ const loggers = (__webpack_require__(/*! ../common/loggers */ "./extension/commo
             origin: (0,_services_background_services__WEBPACK_IMPORTED_MODULE_2__.getOriginFromSender)(sender),
             id: sender.tab.id,
         })
-            .then((parsedResponse) => {
+            .then(({ parsedResponse, mappedResourcesData, }) => {
             (0,_services_background_services__WEBPACK_IMPORTED_MODULE_2__.sendMessageFromBackground)(tabID, {
                 id: 're-parsed-last-response',
                 type: _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_3__.MessageToApp.AppTakeResourceData,
                 payload: {
+                    mappedResourcesData,
                     fieldsNames: [],
                     cacheID,
                     resources: (0,_services_background_services__WEBPACK_IMPORTED_MODULE_2__.normalizeParsedResources)(parsedResponse),
@@ -12591,6 +12598,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../app/types/types-app-messages */ "./extension/app/types/types-app-messages.ts");
 /* harmony import */ var _app_types_types_app_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../app/types/types-app-common */ "./extension/app/types/types-app-common.ts");
 /* harmony import */ var _common_loggers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts");
+/* harmony import */ var _common_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
+
 
 
 
@@ -12599,15 +12608,57 @@ __webpack_require__.r(__webpack_exports__);
 
 class AbstractBackgroundPlatform {
     fields = new Set();
+    mappedResourcesData = {};
+    static getMappedKey(resourceType, fieldName, resourceName) {
+        const separator = '-@@-';
+        return `${resourceType}${separator}${fieldName}${separator}${resourceName}`;
+    }
     static sendParsedData(tabID, payload, isNew = false) {
-        const { cacheID, resources, fieldsNames } = payload;
+        const { cacheID, resources, fieldsNames, mappedResourcesData, } = payload;
         if (isNew
             || (Object.keys(resources).length > 0 || fieldsNames.length > 0)) {
             (0,_services_background_services__WEBPACK_IMPORTED_MODULE_2__.sendMessageFromBackground)(tabID, {
                 id: 'parsed-response',
                 type: isNew ? _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_3__.MessageToApp.AppTakeNewResourceData : _app_types_types_app_messages__WEBPACK_IMPORTED_MODULE_3__.MessageToApp.AppTakeResourceData,
-                payload: { cacheID, resources, fieldsNames },
+                payload: {
+                    cacheID,
+                    resources,
+                    fieldsNames,
+                    mappedResourcesData,
+                },
             });
+        }
+    }
+    collectResourceMeta(resourceType, fieldName, resourceName, meta) {
+        const d = new Date(meta.timestamp);
+        if (!(0,_common_helpers__WEBPACK_IMPORTED_MODULE_6__.isValidDate)(d)) {
+            return;
+        }
+        const key = AbstractBackgroundPlatform.getMappedKey(resourceType, fieldName, resourceName);
+        const { firstSeen = '', lastSeen = '' } = this.mappedResourcesData[key] || {};
+        if (!lastSeen) {
+            this.mappedResourcesData[key] = {
+                ...(this.mappedResourcesData[key] || {}),
+                lastSeen: d.toISOString(),
+            };
+        }
+        if (!firstSeen) {
+            this.mappedResourcesData[key] = {
+                ...(this.mappedResourcesData[key] || {}),
+                firstSeen: d.toISOString(),
+            };
+        }
+        if (firstSeen && new Date(firstSeen) > d) {
+            this.mappedResourcesData[key] = {
+                ...(this.mappedResourcesData[key] || {}),
+                firstSeen: d.toISOString(),
+            };
+        }
+        if (lastSeen && new Date(lastSeen) < d) {
+            this.mappedResourcesData[key] = {
+                ...(this.mappedResourcesData[key] || {}),
+                lastSeen: d.toISOString(),
+            };
         }
     }
     static sendLoading(tabID, loading) {
@@ -12692,9 +12743,15 @@ class AbstractBackgroundPlatform {
     async reparseCached(cacheID, tabInfo) {
         if (!this.lastResponse.has(cacheID)) {
             _common_loggers__WEBPACK_IMPORTED_MODULE_5__.loggers.debug().log(`no data was found by cache id: ${cacheID}`);
-            return Promise.resolve({});
+            return Promise.resolve({
+                parsedResponse: {},
+                mappedResourcesData: {},
+            });
         }
-        return this.parseResponse(this.lastResponse.get(cacheID), tabInfo);
+        return {
+            parsedResponse: this.parseResponse(this.lastResponse.get(cacheID), tabInfo),
+            mappedResourcesData: this.mappedResourcesData,
+        };
     }
 }
 
@@ -12721,6 +12778,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _common_Http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/Http */ "./common/Http.ts");
 /* harmony import */ var _services_background_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
+/* harmony import */ var _common_checkers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+
 
 
 
@@ -12738,6 +12797,7 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
     static replacementsStrings = new Map();
     static replacementID = '@@replacement@@';
     static replacementsCounter = 0;
+    static timestampFieldName = 'time';
     static repairStrWithReplacements(str) {
         if (str.indexOf(AmazonAthenaPlatform.replacementID) < 0) {
             return str;
@@ -12846,7 +12906,7 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
     fieldsNames;
     mapFieldNameToTypes;
     result = {};
-    parse(obj, kp = '') {
+    parse(obj, kp = '', meta = {}) {
         let result = [];
         const nonArrayResult = (0,_common_helpers__WEBPACK_IMPORTED_MODULE_2__.iterateObjectsRecursively)(obj, kp, {
             onIteration: (keyPath, key, value, prevKeyPath) => {
@@ -12857,13 +12917,14 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
                             this.result[t] = {};
                         }
                         this.addValueToResource(this.result[t], keyPath, value.$$value$$);
+                        this.collectResourceMeta(t, keyPath, value.$$value$$, { timestamp: meta.timestamp || '' });
                     });
                 }
                 if (key === '$$array$$') {
                     value.forEach((o) => {
                         result = [
                             ...result,
-                            ...this.parse(o, prevKeyPath),
+                            ...this.parse(o, prevKeyPath, meta),
                         ];
                     });
                 }
@@ -12885,6 +12946,8 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
         this.mapFieldNameToTypes = mapFieldNameToTypes;
         this.fieldsNames = fieldsNames;
         (response?.ResultSet?.Rows || []).slice(1).forEach((row) => {
+            const timestampIndex = (response?.ResultSet?.ResultSetMetadata?.ColumnInfo || [])
+                .findIndex(({ Label }) => Label === AmazonAthenaPlatform.timestampFieldName);
             ((row || {}).Data || []).forEach((data, index) => {
                 const label = response?.ResultSet?.ResultSetMetadata?.ColumnInfo?.[index]?.Label || '';
                 if (!label) {
@@ -12895,6 +12958,11 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
                 if (!value) {
                     return;
                 }
+                let timestamp = '';
+                if (timestampIndex > -1) {
+                    timestamp = (((row || {}).Data || [])[timestampIndex]?.VarCharValue) || '';
+                    timestamp = (0,_common_checkers__WEBPACK_IMPORTED_MODULE_8__.isNumberInString)(timestamp) ? parseInt(timestamp, 10) : timestamp;
+                }
                 if (fieldsNames.has(label)) {
                     const types = mapFieldNameToTypes.get(label);
                     types.forEach((t) => {
@@ -12902,10 +12970,13 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
                             this.result[t] = {};
                         }
                         this.addValueToResource(this.result[t], label, value);
+                        this.collectResourceMeta(t, label, value, { timestamp });
                     });
                 }
-                this.parse(AmazonAthenaPlatform.parseStruct(value), label)
-                    .forEach((fn) => fields.add(fn));
+                this.parse(AmazonAthenaPlatform.parseStruct(value), label, { timestamp })
+                    .forEach((fn) => {
+                    fields.add(fn);
+                });
             });
         });
         loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, this.result);
@@ -12981,6 +13052,7 @@ class AmazonAthenaPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED
                             cacheID,
                             resources,
                             fieldsNames: [...this.fields],
+                            mappedResourcesData: this.mappedResourcesData,
                         }, true);
                         this.lastResponse.set(cacheID, response);
                         removeAttached();
@@ -13312,6 +13384,7 @@ class ArcSightPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MOD
                                 cacheID,
                                 resources,
                                 fieldsNames: [...this.fields],
+                                mappedResourcesData: this.mappedResourcesData,
                             }, true);
                             this.lastResponse.set(cacheID, response);
                             removeAttached();
@@ -13370,6 +13443,7 @@ let loggers;
 class ChroniclePlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform {
     static id = _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.PlatformID.Chronicle;
     static platformName = _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.PlatformName.Chronicle;
+    // private static timestampFieldName = '';
     static postUrls = [
         '/legacy:legacyFetchUdmSearchView',
     ];
@@ -13486,6 +13560,7 @@ class ChroniclePlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MO
                             cacheID: url,
                             resources,
                             fieldsNames: [...this.fields],
+                            mappedResourcesData: this.mappedResourcesData,
                         }, false);
                         this.lastResponse.set(url, response);
                         onFinish();
@@ -13555,6 +13630,7 @@ class ElasticPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODU
             '-',
         ];
     }
+    static timestampFieldName = '@timestamp';
     async parseResponseStringObject(line, mapFieldNameToTypes, fieldsNames) {
         const result = {};
         const parsedObject = (0,_common_helpers__WEBPACK_IMPORTED_MODULE_5__.parseJSONSafe)((0,_common_helpers__WEBPACK_IMPORTED_MODULE_5__.clearExtraSpaces)(line), null);
@@ -13584,8 +13660,14 @@ class ElasticPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODU
         (rawResponse?.hits?.hits || []).forEach(({ fields, _source }) => {
             Array.from(fieldsNames).forEach((fieldName) => {
                 let fieldValue = undefined;
+                let timestamp = '';
                 if (fields && typeof fields[fieldName] !== 'undefined') {
-                    Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
+                    Object.keys(fields).forEach((fn) => {
+                        if (fn === ElasticPlatform.timestampFieldName) {
+                            timestamp = (fields[fn]?.[0] || '');
+                        }
+                        watchingFieldsNames.add(fn);
+                    });
                     fieldValue = fields[fieldName];
                 }
                 if (!fieldValue && _source) {
@@ -13596,7 +13678,12 @@ class ElasticPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODU
                             }
                             return true;
                         },
-                    }).forEach((fn) => watchingFieldsNames.add(fn));
+                    }).forEach((fn) => {
+                        if (fn === ElasticPlatform.timestampFieldName) {
+                            timestamp = (_source[fn] || '');
+                        }
+                        watchingFieldsNames.add(fn);
+                    });
                 }
                 if (typeof fieldValue === 'undefined') {
                     return;
@@ -13609,10 +13696,12 @@ class ElasticPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODU
                     if (Array.isArray(fieldValue)) {
                         (fieldValue || []).forEach((v) => {
                             this.addValueToResource(result[t], fieldName, v);
+                            this.collectResourceMeta(t, fieldName, String(v), { timestamp });
                         });
                     }
                     else {
                         this.addValueToResource(result[t], fieldName, fieldValue);
+                        this.collectResourceMeta(t, fieldName, String(fieldValue), { timestamp });
                     }
                 });
             });
@@ -13725,6 +13814,7 @@ class ElasticPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODU
                             cacheID,
                             resources,
                             fieldsNames: [...this.fields],
+                            mappedResourcesData: this.mappedResourcesData,
                         }, !this.isRunningResponse);
                         this.lastResponse.set(cacheID, response);
                         removeAttached();
@@ -13766,6 +13856,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_background_services_listeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/background-services-listeners */ "./extension/background/services/background-services-listeners.ts");
 /* harmony import */ var _types_types_background_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../types/types-background-common */ "./extension/background/types/types-background-common.ts");
 /* harmony import */ var _services_background_services__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
+/* harmony import */ var _common_checkers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+
 
 
 
@@ -13794,6 +13886,7 @@ class LogScalePlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MOD
             '-',
         ];
     }
+    static timestampFiledName = '@timestamp';
     async parseResponse(response, tabInfo) {
         const id = (0,_common_helpers__WEBPACK_IMPORTED_MODULE_2__.uuid)();
         const watchingResources = this.getWatchers(tabInfo);
@@ -13812,7 +13905,14 @@ class LogScalePlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MOD
                         if (typeof result[t] === 'undefined') {
                             result[t] = {};
                         }
-                        this.addValueToResource(result[t], fieldName, String(item[fieldName]));
+                        const resourceName = String(item[fieldName]);
+                        this.addValueToResource(result[t], fieldName, resourceName);
+                        const timestamp = item[LogScalePlatform.timestampFiledName];
+                        this.collectResourceMeta(t, fieldName, resourceName, {
+                            timestamp: (0,_common_checkers__WEBPACK_IMPORTED_MODULE_7__.isNumberInString)(timestamp)
+                                ? parseInt(timestamp, 10)
+                                : timestamp,
+                        });
                     });
                 }
             });
@@ -13835,6 +13935,7 @@ class LogScalePlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MOD
                     cacheID: readyUrl,
                     resources,
                     fieldsNames: [...this.fields],
+                    mappedResourcesData: this.mappedResourcesData,
                 }, false);
                 this.lastResponse.set(readyUrl, response);
                 if (!response.done && attempts > 0) {
@@ -13952,6 +14053,7 @@ class MicrosoftDefenderPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
         'https://api-eu.securitycenter.windows.com/api/',
         'https://security.microsoft.com/apiproxy/mtp/huntingService/queryExecutor',
     ];
+    static timestampFieldName = 'Timestamp';
     static id = _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.PlatformID.MicrosoftDefender;
     constructor() {
         super();
@@ -13985,6 +14087,11 @@ class MicrosoftDefenderPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
                             result[t] = {};
                         }
                         this.addValueToResource(result[t], fieldName, document[fieldName]);
+                        const timestamp = document[MicrosoftDefenderPlatform.timestampFieldName];
+                        if (!timestamp) {
+                            return;
+                        }
+                        this.collectResourceMeta(t, fieldName, document[fieldName], { timestamp });
                     });
                 }
             });
@@ -14047,6 +14154,7 @@ class MicrosoftDefenderPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
                         cacheID,
                         resources,
                         fieldsNames: [...this.fields],
+                        mappedResourcesData: this.mappedResourcesData,
                     }, true);
                     this.lastResponse.set(cacheID, response);
                     removeAttached();
@@ -14102,9 +14210,11 @@ class MicrosoftSentinelPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
     static postUrls = [
         'https://api.loganalytics.io',
     ];
+    static timestampFieldName = 'TimeGenerated';
     constructor() {
         super();
         this.watchingResources = {};
+        this.mappedResourcesData = {};
         this.emptyFieldValues = [
             ...this.emptyFieldValues,
             '-',
@@ -14143,6 +14253,7 @@ class MicrosoftSentinelPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
                 return;
             }
             urlsProcessing.add(details.url);
+            this.mappedResourcesData = {};
             const removeAttached = () => {
                 urlsProcessing.delete(details.url);
                 bodyData.delete(details.url);
@@ -14172,6 +14283,7 @@ class MicrosoftSentinelPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
                         cacheID,
                         resources,
                         fieldsNames: [...this.fields],
+                        mappedResourcesData: this.mappedResourcesData,
                     }, true);
                     this.lastResponse.set(cacheID, response);
                     removeAttached();
@@ -14213,12 +14325,19 @@ class MicrosoftSentinelPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMP
                         if (typeof result[t] === 'undefined') {
                             result[t] = {};
                         }
-                        this.addValueToResource(result[t], fieldName, row[mappedFieldNamesToIndex.get(fieldName)]);
+                        const resourceName = row[mappedFieldNamesToIndex.get(fieldName)];
+                        this.addValueToResource(result[t], fieldName, resourceName);
+                        const timestampFieldIndex = mappedFieldNamesToIndex.get(MicrosoftSentinelPlatform.timestampFieldName);
+                        if (typeof timestampFieldIndex !== 'number' || !row[timestampFieldIndex]) {
+                            return;
+                        }
+                        const timestamp = row[timestampFieldIndex];
+                        this.collectResourceMeta(t, fieldName, resourceName, { timestamp });
                     });
                 }
             });
         });
-        loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
+        loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result, this.mappedResourcesData);
         return result;
     }
 }
@@ -14258,6 +14377,7 @@ class OpenSearchPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_M
     static postUrls = [
         '/opensearch',
     ];
+    static timestampFieldName = '@timestamp';
     isRunningResponse = false;
     isRunningResponseTimeout = null;
     constructor() {
@@ -14294,8 +14414,14 @@ class OpenSearchPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_M
         (response?.rawResponse?.hits?.hits || []).forEach(({ fields, _source }) => {
             Array.from(fieldsNames).forEach((fieldName) => {
                 let fieldValue = undefined;
+                let timestamp = '';
                 if (fields && typeof fields[fieldName] !== 'undefined') {
-                    Object.keys(fields).forEach((fn) => watchingFieldsNames.add(fn));
+                    Object.keys(fields).forEach((fn) => {
+                        if (fn === OpenSearchPlatform.timestampFieldName) {
+                            timestamp = (fields[fn]?.[0] || '');
+                        }
+                        watchingFieldsNames.add(fn);
+                    });
                     fieldValue = fields[fieldName];
                 }
                 if (!fieldValue && _source) {
@@ -14306,7 +14432,12 @@ class OpenSearchPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_M
                             }
                             return true;
                         },
-                    }).forEach((fn) => watchingFieldsNames.add(fn));
+                    }).forEach((fn) => {
+                        if (fn === OpenSearchPlatform.timestampFieldName) {
+                            timestamp = (_source[fn] || '');
+                        }
+                        watchingFieldsNames.add(fn);
+                    });
                 }
                 if (typeof fieldValue === 'undefined') {
                     return;
@@ -14319,10 +14450,12 @@ class OpenSearchPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_M
                     if (Array.isArray(fieldValue)) {
                         (fieldValue || []).forEach((v) => {
                             this.addValueToResource(result[t], fieldName, v);
+                            this.collectResourceMeta(t, fieldName, String(v), { timestamp });
                         });
                     }
                     else {
                         this.addValueToResource(result[t], fieldName, fieldValue);
+                        this.collectResourceMeta(t, fieldName, String(fieldValue), { timestamp });
                     }
                 });
             });
@@ -14426,6 +14559,7 @@ class OpenSearchPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_M
                             resources,
                             cacheID,
                             fieldsNames: [...this.fields],
+                            mappedResourcesData: this.mappedResourcesData,
                         }, !this.isRunningResponse);
                         this.lastResponse.set(cacheID, response);
                         removeAttached();
@@ -14548,6 +14682,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_common_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../common/common-helpers */ "./extension/common/common-helpers.ts");
 /* harmony import */ var _common_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 /* harmony import */ var _services_background_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/background-services */ "./extension/background/services/background-services.ts");
+/* harmony import */ var _common_checkers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../common/checkers */ "./common/checkers.ts");
+
 
 
 
@@ -14560,9 +14696,12 @@ let loggers;
 class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform {
     static postUrls = [
         '/JSON-RPC/QRadar.getLatestStreamHTML',
-        '/ariel/arielSearch',
+        // '/ariel/arielSearch',
         '/JSON-RPC/QRadar.stopArielStreaming',
         '/JSON-RPC/QRadar.startArielStreaming',
+    ];
+    static getUrls = [
+        '/ariel/arielSearch?appName',
     ];
     static isAreaSearchUrl(url) {
         return url.indexOf(QRadarPlatform.postUrls[1]) > -1;
@@ -14592,12 +14731,16 @@ class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
         const { fields } = this;
         response.result?.rows?.forEach((r) => {
             const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(`<body><table>${r}</table></body>`);
+            let timestamp = '';
             $('td').each((i, e) => {
                 const elem = $(e);
                 const value = elem.text()?.trim();
                 const fieldName = elem.attr('propertylabel')?.trim();
                 if (fieldName) {
                     fields.add(fieldName);
+                }
+                if (fieldName && fieldName === QRadarPlatform.timestampFieldName) {
+                    timestamp = value;
                 }
                 if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
                     const types = mapFieldNameToTypes.get(fieldName);
@@ -14606,34 +14749,44 @@ class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                             result[t] = {};
                         }
                         this.addValueToResource(result[t], fieldName, value);
+                        this.collectResourceMeta(t, fieldName, value, { timestamp });
                     });
                 }
             });
         });
         return result;
     }
+    static timestampFieldName = 'Time';
     parseAriaSearchResponse(response, watchingResources) {
         const { mapFieldNameToTypes, fieldsNames, } = _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const result = {};
         const { fields } = this;
         const $ = (__webpack_require__(/*! cheerio */ "./node_modules/.pnpm/cheerio@1.0.0-rc.12/node_modules/cheerio/lib/index.js").load)(response);
-        $('td').each((i, e) => {
-            const elem = $(e);
-            const id = elem.attr('propertyname')?.trim();
-            const fieldName = $(`th[columnid="${id}"]`).text()?.trim();
-            if (fieldName) {
-                fields.add(fieldName);
-            }
-            const value = elem.find('span[id]').text()?.trim();
-            if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
-                const types = mapFieldNameToTypes.get(fieldName);
-                types.forEach((t) => {
-                    if (typeof result[t] === 'undefined') {
-                        result[t] = {};
-                    }
-                    this.addValueToResource(result[t], fieldName, value);
-                });
-            }
+        $('tr').each((i, r) => {
+            const row = $(r);
+            let timestamp = '';
+            row.find('td').each((i, e) => {
+                const elem = $(e);
+                const id = elem.attr('propertyname')?.trim();
+                const fieldName = $(`th[columnid="${id}"]`).text()?.trim();
+                const value = elem.find('span[id]').text()?.trim();
+                if (fieldName) {
+                    fields.add(fieldName);
+                }
+                if (fieldName && fieldName === QRadarPlatform.timestampFieldName) {
+                    timestamp = (0,_common_checkers__WEBPACK_IMPORTED_MODULE_8__.isNumberInString)(value) ? parseInt(value, 10) : String(value);
+                }
+                if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
+                    const types = mapFieldNameToTypes.get(fieldName);
+                    types.forEach((t) => {
+                        if (typeof result[t] === 'undefined') {
+                            result[t] = {};
+                        }
+                        this.addValueToResource(result[t], fieldName, value);
+                        this.collectResourceMeta(t, fieldName, value, { timestamp });
+                    });
+                }
+            });
         });
         return result;
     }
@@ -14672,7 +14825,8 @@ class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                     return;
                 }
                 const objectData = details.requestBody.formData;
-                bodyData.set(details.url, (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_5__.createFormDataString)(Object.keys(objectData).reduce((res) => {
+                bodyData.set(details.url, (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_5__.createFormDataString)(Object.keys(objectData || {}).reduce((res) => {
+                    // eslint-disable-next-line guard-for-in
                     for (const key in objectData) {
                         const value = objectData[key]?.[0];
                         if (value) {
@@ -14681,6 +14835,54 @@ class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                     }
                     return res;
                 }, {})));
+            }
+        }));
+        this.interceptorsIDs.add((0,_services_background_services_listeners__WEBPACK_IMPORTED_MODULE_3__.setBGInterceptor)(_types_types_background_common__WEBPACK_IMPORTED_MODULE_2__.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
+            const details = params.listenerParams[0];
+            const { href } = new URL(details.url);
+            if (isMatched(() => {
+                return !urlsProcessing.has(details.url)
+                    && details.method === 'GET'
+                    && QRadarPlatform.getUrls.some((u) => href.indexOf(u) > -1);
+            }, params, id)) {
+                urlsProcessing.add(details.url);
+                const cacheID = details.url;
+                const removeAttached = () => {
+                    urlsProcessing.delete(details.url);
+                };
+                _common_Http__WEBPACK_IMPORTED_MODULE_4__.http.get({
+                    url: details.url,
+                    headers: details.requestHeaders.reduce((res, header) => {
+                        res[header.name] = header.value;
+                        return res;
+                    }, {}),
+                }, {
+                    onTextSuccess: async (response) => {
+                        const startIndex = response.indexOf('<div id="tableSection');
+                        const endIndex = response.indexOf('/div>', startIndex) + 5;
+                        const resources = (0,_services_background_services__WEBPACK_IMPORTED_MODULE_7__.normalizeParsedResources)(await this.parseResponse(response.substring(startIndex, endIndex)
+                            .replace(/\\/g, ''), {
+                            origin: new URL(details.url).origin,
+                            id: details.tabId,
+                        }));
+                        _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform.sendParsedData(details.tabId, {
+                            cacheID,
+                            resources,
+                            fieldsNames: [...this.fields],
+                            mappedResourcesData: this.mappedResourcesData,
+                        }, true);
+                        this.lastResponse.set(cacheID, response);
+                        isNew = true;
+                        removeAttached();
+                    },
+                    onError: (e) => {
+                        loggers
+                            .warn()
+                            .addPrefix('failed webRequest get')
+                            .log(e, details.method, details.url);
+                        removeAttached();
+                    },
+                });
             }
         }));
         this.interceptorsIDs.add((0,_services_background_services_listeners__WEBPACK_IMPORTED_MODULE_3__.setBGInterceptor)(_types_types_background_common__WEBPACK_IMPORTED_MODULE_2__.BGListenerType.OnBeforeSendHeaders, (id, params, isMatched) => {
@@ -14733,6 +14935,7 @@ class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                                 cacheID,
                                 resources,
                                 fieldsNames: [...this.fields],
+                                mappedResourcesData: this.mappedResourcesData,
                             }, isNew);
                             this.lastResponse.set(cacheID, response);
                             isNew = false;
@@ -14751,6 +14954,7 @@ class QRadarPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                                 cacheID,
                                 resources,
                                 fieldsNames: [...this.fields],
+                                mappedResourcesData: this.mappedResourcesData,
                             }, true);
                             this.lastResponse.set(cacheID, response);
                             isNew = true;
@@ -14834,13 +15038,16 @@ class SplunkPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
     getName() {
         return _common_types_types_common__WEBPACK_IMPORTED_MODULE_1__.PlatformName.Splunk;
     }
+    // private static timestampFieldName = '_time';
     parseSummary(response, watchingResources) {
         const result = {};
-        const { mapFieldNameToTypes, fieldsNames } = _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+        const { mapFieldNameToTypes, fieldsNames, } = _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const fields = response?.fields || {};
         const watchingFieldsNames = this.fields;
         const receivedFieldsNames = Object.keys(fields) || [];
-        receivedFieldsNames.forEach((fn) => watchingFieldsNames.add(fn));
+        receivedFieldsNames.forEach((fn) => {
+            watchingFieldsNames.add(fn);
+        });
         if (receivedFieldsNames.length > 0) {
             Array.from(fieldsNames).forEach((fieldName) => {
                 if (fields?.[fieldName]) {
@@ -14864,7 +15071,7 @@ class SplunkPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
     }
     parseStatistic(response, watchingResources) {
         const result = {};
-        const { mapFieldNameToTypes, fieldsNames } = _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+        const { mapFieldNameToTypes, fieldsNames, } = _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODULE_0__.AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
         const watchingFieldsNames = this.fields;
         (response?.fields || []).forEach(({ name }) => {
             watchingFieldsNames.add(name);
@@ -14959,6 +15166,7 @@ class SplunkPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                                 cacheID,
                                 fieldsNames: [...this.fields],
                                 resources,
+                                mappedResourcesData: this.mappedResourcesData,
                             }, isFirst);
                             this.lastResponse.set(cacheID, response);
                             timeoutID = setTimeout(() => {
@@ -15038,6 +15246,7 @@ class SplunkPlatform extends _AbstractBackgroundPlatform__WEBPACK_IMPORTED_MODUL
                                 cacheID,
                                 fieldsNames: [...this.fields],
                                 resources,
+                                mappedResourcesData: this.mappedResourcesData,
                             }, isFirst);
                             this.lastResponse.set(cacheID, response);
                             timeoutID = setTimeout(() => {
@@ -15846,7 +16055,7 @@ const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.p
 const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
     : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
-const version = "1.4.3";
+const version = "1.4.4";
 
 
 /***/ }),
@@ -16640,25 +16849,35 @@ class SocPrimeModel {
         }
         return JSON.stringify(detail);
     }
+    static apiUrl = 'https://api.tdm.socprime.com';
     static apiKeyHeaderName = 'client_secret_id';
     static async getData() {
-        const result = await (0,_common_extension_storage__WEBPACK_IMPORTED_MODULE_0__.getDataByKey)(_types__WEBPACK_IMPORTED_MODULE_1__.StorageGroupNames.socprime);
+        const result = await (0,_common_extension_storage__WEBPACK_IMPORTED_MODULE_0__.getData)();
         if (result.error) {
             return result;
         }
         return {
-            data: (result?.data?.[_types__WEBPACK_IMPORTED_MODULE_1__.StorageGroupNames.socprime] || {}),
+            data: {
+                ...(result?.data?.[_types__WEBPACK_IMPORTED_MODULE_1__.StorageGroupNames.socprime] || {}),
+                apiUrl: result?.data?.settings?.[_types__WEBPACK_IMPORTED_MODULE_1__.StorageGroupNames.socprime]?.apiUrl || '',
+            },
         };
     }
     async getData() {
         return SocPrimeModel.getData();
     }
-    async getApiKey() {
+    async getRequestStorageData() {
         const result = await this.getData();
         if (result.error) {
             return { error: result.error };
         }
-        return { data: result?.data?.apiKey };
+        const { apiKey, apiUrl } = result.data || {};
+        return {
+            data: {
+                apiKey: apiKey || '',
+                apiUrl: apiUrl || SocPrimeModel.apiUrl,
+            },
+        };
     }
     async setExpirationDate(expirationData) {
         const result = await this.getData();
@@ -16687,8 +16906,8 @@ class SocPrimeModel {
         });
     }
     async postCustomRepositoryContent(repositoryID, data) {
-        const result = await this.getApiKey();
-        const apiKey = result.data;
+        const result = await this.getRequestStorageData();
+        const { apiUrl, apiKey } = result.data || {};
         if (!apiKey) {
             return { error: new Error('Wrong API Key') };
         }
@@ -16707,7 +16926,7 @@ class SocPrimeModel {
         delete data.tags?.mitigations;
         return new Promise((resolve) => {
             _common_Http__WEBPACK_IMPORTED_MODULE_2__.http.post({
-                url: `https://api.tdm.socprime.com/v1/custom-content?repo_id=${repositoryID}`,
+                url: `${apiUrl}/v1/custom-content?repo_id=${repositoryID}`,
                 body: JSON.stringify({
                     rule_name: data.contentName || '',
                     description: data.description || '',
@@ -16743,14 +16962,14 @@ class SocPrimeModel {
         });
     }
     async checkConnection() {
-        const result = await this.getApiKey();
-        const apiKey = result.data;
+        const result = await this.getRequestStorageData();
+        const { apiUrl, apiKey } = result.data || {};
         if (!apiKey) {
             return { error: new Error('API Key is not set') };
         }
         return new Promise((resolve) => {
             _common_Http__WEBPACK_IMPORTED_MODULE_2__.http.get({
-                url: 'https://api.tdm.socprime.com/v1/check-connection',
+                url: `${apiUrl}/v1/check-connection`,
                 headers: {
                     [SocPrimeModel.apiKeyHeaderName]: apiKey,
                 },
@@ -16771,15 +16990,15 @@ class SocPrimeModel {
         });
     }
     async getRepositories() {
-        const result = await this.getApiKey();
-        const apiKey = result.data;
+        const result = await this.getRequestStorageData();
+        const { apiUrl, apiKey } = result.data || {};
         const initialData = [];
         if (!apiKey) {
             return { data: initialData };
         }
         return new Promise((resolve) => {
             _common_Http__WEBPACK_IMPORTED_MODULE_2__.http.get({
-                url: 'https://api.tdm.socprime.com/v1/custom-repositories',
+                url: `${apiUrl}/v1/custom-repositories`,
                 headers: {
                     [SocPrimeModel.apiKeyHeaderName]: apiKey,
                 },
@@ -16803,15 +17022,15 @@ class SocPrimeModel {
         });
     }
     async getTags() {
-        const result = await this.getApiKey();
+        const result = await this.getRequestStorageData();
         const initialValues = (0,_helpers__WEBPACK_IMPORTED_MODULE_5__.getInitialTagsValues)();
-        const apiKey = result.data;
+        const { apiUrl, apiKey } = result.data || {};
         if (!apiKey) {
             return { data: initialValues };
         }
         return new Promise((resolve) => {
             _common_Http__WEBPACK_IMPORTED_MODULE_2__.http.get({
-                url: 'https://api.tdm.socprime.com/v1/mitre-attack-tags-values',
+                url: `${apiUrl}/v1/mitre-attack-tags-values`,
                 headers: {
                     [SocPrimeModel.apiKeyHeaderName]: apiKey,
                 },

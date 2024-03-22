@@ -50,17 +50,28 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return PlatformName.Splunk;
   }
 
-  private parseSummary(response: SummaryResponse, watchingResources: WatchingResources): ParsedResult {
+  // private static timestampFieldName = '_time';
+
+  private parseSummary(
+    response: SummaryResponse,
+    watchingResources: WatchingResources,
+  ): ParsedResult {
     const result: ParsedResult = {};
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
 
     const fields = response?.fields || {} as SummaryFields;
 
     const watchingFieldsNames = this.fields;
 
     const receivedFieldsNames = Object.keys(fields) || [];
-    receivedFieldsNames.forEach((fn) => watchingFieldsNames.add(fn));
+
+    receivedFieldsNames.forEach((fn) => {
+      watchingFieldsNames.add(fn);
+    });
 
     if (receivedFieldsNames.length > 0) {
       Array.from(fieldsNames).forEach((fieldName) => {
@@ -85,10 +96,16 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  private parseStatistic(response: StatisticResponse, watchingResources: WatchingResources): ParsedResult {
+  private parseStatistic(
+    response: StatisticResponse,
+    watchingResources: WatchingResources,
+  ): ParsedResult {
     const result: ParsedResult = {};
 
-    const { mapFieldNameToTypes, fieldsNames } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
+    const {
+      mapFieldNameToTypes,
+      fieldsNames,
+    } = AbstractBackgroundPlatform.getNormalizedWatchers(watchingResources);
     const watchingFieldsNames = this.fields;
     (response?.fields || []).forEach(({ name }) => {
       watchingFieldsNames.add(name);
@@ -206,6 +223,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                         cacheID,
                         fieldsNames: [...this.fields],
                         resources,
+                        mappedResourcesData: this.mappedResourcesData,
                       },
                       isFirst,
                     );
@@ -308,6 +326,7 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
                         cacheID,
                         fieldsNames: [...this.fields],
                         resources,
+                        mappedResourcesData: this.mappedResourcesData,
                       },
                       isFirst,
                     );

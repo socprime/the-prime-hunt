@@ -19,6 +19,8 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
     'https://security.microsoft.com/apiproxy/mtp/huntingService/queryExecutor',
   ];
 
+  private static timestampFieldName = 'Timestamp';
+
   static id = PlatformID.MicrosoftDefender;
 
   constructor() {
@@ -64,6 +66,16 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
               result[t] = {};
             }
             this.addValueToResource(result[t], fieldName, document[fieldName]);
+            const timestamp = document[MicrosoftDefenderPlatform.timestampFieldName];
+            if (!timestamp) {
+              return;
+            }
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              document[fieldName],
+              { timestamp },
+            );
           });
         }
       });
@@ -162,6 +174,7 @@ export class MicrosoftDefenderPlatform extends AbstractBackgroundPlatform {
                     cacheID,
                     resources,
                     fieldsNames: [...this.fields],
+                    mappedResourcesData: this.mappedResourcesData,
                   },
                   true,
                 );

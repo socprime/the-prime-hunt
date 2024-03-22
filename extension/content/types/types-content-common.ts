@@ -1,4 +1,9 @@
-import { ExtensionMessage, IPlatform, ModifyQueryType, SiemType } from '../../common/types/types-common';
+import {
+  ExtensionMessage,
+  IPlatform,
+  ModifyQueryType,
+  SiemType,
+} from '../../common/types/types-common';
 import { NormalizedParsedResources } from '../../app/resources/resources-types';
 import { WatchingResources } from '../../background/types/types-background-common';
 

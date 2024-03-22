@@ -14,9 +14,9 @@ export const listenQueryModule = (
     () => MessageToApp.AppTakeQuery === message.type,
     message,
   )) {
-    const { queryValue = '' } = message.payload as TakeQueryPayload;
+    const { queryValue = '', queryMeta = {} } = message.payload as TakeQueryPayload;
     const queryStore = getStore();
-    queryStore.query.value = queryValue;
+    queryStore.setQuery(queryValue, queryMeta);
     callback?.();
   }
 };

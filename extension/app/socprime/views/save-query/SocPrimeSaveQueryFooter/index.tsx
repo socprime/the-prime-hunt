@@ -2,10 +2,7 @@ import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { BigStaticButton } from '../../../../components/buttons/BigStaticButton/BigStaticButton';
 import {
-  useAppMessageStore,
-  useForm,
-  usePlatformStore,
-  useRouter,
+  useAppMessageStore, useForm, usePlatformStore, useRouter,
 } from '../../../../stores';
 import { Spacer } from '../../../../components/atoms/Spacer/Spacer';
 import { BackgroundJob, PostRepositoryData, SaveQueryFormData } from '../../../../../models/socprime/types';
@@ -42,6 +39,8 @@ export const SocPrimeSaveQueryFooter: FC = observer(() => {
             if (messageStore.error.id === BackgroundJob.PostQuery) {
               messageStore.cleanError();
             }
+            let repositoryID = '';
+
             form.validate(['finish', 'blur'])
               .then((isValid) => {
                 if (!isValid) {
@@ -50,16 +49,18 @@ export const SocPrimeSaveQueryFooter: FC = observer(() => {
                   } as AsyncResult);
                 }
                 const values = form.getFormData<SaveQueryFormData>();
+                repositoryID = mapDropdownItemsToIdsArray(values.repository)[0] || '';
+
                 return messageStore.sendMessageWithCallback({
                   model: 'socprime',
                   work: BackgroundJob.PostQuery,
                   data: {
                     repositoryID: mapDropdownItemsToIdsArray(values.repository)[0] || '',
                     postRepositoryData: {
-                      query: queryStore.query.value,
+                      query: queryStore.getQuery(),
                       contentName: values.content_name,
                       description: values.description,
-                      siemType: platformStore.platform?.getType(),
+                      siemType: platformStore.getType(),
                       tags: {
                         actor: mapDropdownItemsToIdsArray(values.actors),
                         custom: values.custom ? [values.custom] : undefined,
@@ -74,7 +75,9 @@ export const SocPrimeSaveQueryFooter: FC = observer(() => {
                 }, BackgroundJob.PostQuery);
               }).then(({ error }) => {
                 if (!error) {
-                  platformStore.setMessage(SuccessSaveQueryMessage);
+                  platformStore.setMessage(
+                    () => <SuccessSaveQueryMessage repositoryID={repositoryID} />,
+                  );
                   router.goToResourcesPage('resources:query');
                 }
               });

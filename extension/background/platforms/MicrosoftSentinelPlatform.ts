@@ -18,9 +18,12 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
     'https://api.loganalytics.io',
   ];
 
+  private static timestampFieldName = 'TimeGenerated';
+
   constructor() {
     super();
     this.watchingResources = {};
+    this.mappedResourcesData = {};
     this.emptyFieldValues = [
       ...this.emptyFieldValues,
       '-',
@@ -87,6 +90,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
           }
 
           urlsProcessing.add(details.url);
+          this.mappedResourcesData = {};
 
           const removeAttached = () => {
             urlsProcessing.delete(details.url);
@@ -127,6 +131,7 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
                     cacheID,
                     resources,
                     fieldsNames: [...this.fields],
+                    mappedResourcesData: this.mappedResourcesData,
                   },
                   true,
                 );
@@ -193,17 +198,31 @@ export class MicrosoftSentinelPlatform extends AbstractBackgroundPlatform {
             if (typeof result[t] === 'undefined') {
               result[t] = {};
             }
+            const resourceName = row[mappedFieldNamesToIndex.get(fieldName)];
             this.addValueToResource(
               result[t],
               fieldName,
-              row[mappedFieldNamesToIndex.get(fieldName)],
+              resourceName,
+            );
+            const timestampFieldIndex = mappedFieldNamesToIndex.get(
+              MicrosoftSentinelPlatform.timestampFieldName,
+            );
+            if (typeof timestampFieldIndex !== 'number' || !row[timestampFieldIndex]) {
+              return;
+            }
+            const timestamp = row[timestampFieldIndex];
+            this.collectResourceMeta(
+              t,
+              fieldName,
+              resourceName,
+              { timestamp },
             );
           });
         }
       });
     });
 
-    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result);
+    loggers.debug().log(`[${tabInfo.id}] Finished parse response`, id, result, this.mappedResourcesData);
 
     return result;
   }

@@ -1,9 +1,11 @@
-import { ModifyQueryType, PlatformID, PlatformName, SiemType } from '../../common/types/types-common';
+import {
+  ModifyQueryType, PlatformID, PlatformName, SiemType,
+} from '../../common/types/types-common';
 import { ListenerType, MessageListener } from '../types/types-content-common';
 import { addListener } from '../services/content-services-listeners';
-import { buildQueryParts, mountHTMLElement, waitHTMLElement, } from '../../common/common-helpers';
+import { buildQueryParts, mountHTMLElement, waitHTMLElement } from '../../common/common-helpers';
 import { contentPlatformIDFromENV } from '../../common/envs';
-import { microsoftSentinelInline } from '../../manifest/public-resources';
+import { microsoftSentinelInline, microsoftSentinelPagesInline } from '../../manifest/public-resources';
 import { isNumberInString } from '../../../common/checkers';
 import { BoundedResourceTypeID, NormalizedParsedResources } from '../../app/resources/resources-types';
 import { Loggers } from '../../common/loggers';
@@ -116,10 +118,22 @@ export class MicrosoftSentinelPlatform extends AbstractContentPlatform {
     });
   }
 
+  private static connectInlinePagesListener() {
+    mountHTMLElement('script', document.body, {
+      attributes: {
+        src: getWebAccessibleUrl(microsoftSentinelPagesInline),
+        type: 'text/javascript',
+        'data-type': 'inline-listener-pages',
+      },
+    });
+  }
+
   private static setListeners() {
     (addListener as MessageListener)(
       ListenerType.OnMessage,
       async (message) => {
+        AbstractContentPlatform.processInlineListeners(message);
+
         if (
           !contentPlatformIDFromENV
           && !document.querySelector('la-main-view')
@@ -133,8 +147,6 @@ export class MicrosoftSentinelPlatform extends AbstractContentPlatform {
           MicrosoftSentinelPlatform.connectInlineListener();
           await waitHTMLElement(query);
         }
-
-        AbstractContentPlatform.processInlineListeners(message);
       },
     );
 
@@ -143,6 +155,7 @@ export class MicrosoftSentinelPlatform extends AbstractContentPlatform {
 
   connect() {
     MicrosoftSentinelPlatform.setListeners();
+    MicrosoftSentinelPlatform.connectInlinePagesListener();
 
     loggers.debug().log('connected');
   }

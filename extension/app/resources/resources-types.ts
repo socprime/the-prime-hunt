@@ -1,5 +1,13 @@
+import { StringDateISO } from '../../../common/types';
+
 export type FieldName = string;
 export type ResourceName = string;
+export type MappedResourceToMeta = {
+  [resourceName: ResourceName]: {
+    lastSeen: StringDateISO;
+    firstSeen: StringDateISO;
+  };
+};
 
 export enum BoundedResourceTypeID {
   Accounts = 'Accounts',

@@ -110,6 +110,7 @@ export const SocPrimeSaveQueryContent: FC = observer(() => {
         name="tactics"
         items={tagsItems?.tactics || []}
         disabled={isFieldDisabled}
+        multi
       >
         {(props) => <SimpleBar className="big-list" >
           <DropdownMenuList {...props} />
@@ -120,6 +121,7 @@ export const SocPrimeSaveQueryContent: FC = observer(() => {
         name="techniques"
         items={tagsItems?.techniques || []}
         disabled={isFieldDisabled}
+        multi
       >
         {(props) => <SimpleBar className="big-list" >
           <DropdownMenuList
@@ -143,6 +145,7 @@ export const SocPrimeSaveQueryContent: FC = observer(() => {
         name="tools"
         items={tagsItems?.tools || []}
         disabled={isFieldDisabled}
+        multi
       >
         {(props) => <SimpleBar className="big-list" >
           <DropdownMenuList {...props} />
@@ -153,6 +156,7 @@ export const SocPrimeSaveQueryContent: FC = observer(() => {
         name="actors"
         items={tagsItems?.actors || []}
         disabled={isFieldDisabled}
+        multi
       >
         {(props) => <SimpleBar className="big-list" >
           <DropdownMenuList {...props} />

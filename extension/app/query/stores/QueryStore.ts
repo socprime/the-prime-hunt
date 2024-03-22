@@ -4,14 +4,30 @@ import { rootStore } from '../../stores';
 
 export class QueryStore {
   @observable
-  public query = {
+  private query = {
       value: '',
+      meta: {} as Record<string, string>,
     };
 
   public rootStore: RootStore = {} as RootStore;
 
   constructor() {
     makeObservable(this);
+  }
+
+  setQuery(query: string, meta?: Record<string, string>) {
+    this.query = {
+      value: query,
+      meta: meta || {},
+    };
+  }
+
+  getQuery() {
+    return this.query.value;
+  }
+
+  getQueryMeta() {
+    return this.query.meta;
   }
 
   getQueryFromPlatform() {

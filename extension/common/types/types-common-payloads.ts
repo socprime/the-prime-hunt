@@ -6,6 +6,7 @@ import {
 import { WatchingResources } from '../../background/types/types-background-common';
 import { LoadingKey } from '../../app/types/types-app-common';
 import {
+  MappedResourceToMeta,
   NormalizedParsedResources,
   NormalizedResources,
 } from '../../app/resources/resources-types';
@@ -19,6 +20,7 @@ export type PlatformIDPayload = {
 export type ParsedDataPayload = {
   cacheID: Url;
   resources: NormalizedResources;
+  mappedResourcesData: MappedResourceToMeta;
   fieldsNames: string[];
 };
 
@@ -33,6 +35,7 @@ export type SetQueryPayload = {
 
 export type TakeQueryPayload = {
   queryValue: string;
+  queryMeta?: Record<string, string>;
 };
 
 export type AsyncProcessPayload = {

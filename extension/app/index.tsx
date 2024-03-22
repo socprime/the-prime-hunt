@@ -4,8 +4,9 @@ import { Mode } from '../../common/types';
 import { mountHTMLElement } from '../common/common-helpers';
 import { mode, version } from '../common/envs';
 import { appStyles } from '../manifest/public-resources';
-import { getWebAccessibleUrl } from '../common/common-extension-helpers';
+import { getBrowserContext, getWebAccessibleUrl } from '../common/common-extension-helpers';
 import { RootApp } from './root';
+import { getExtensionSettings } from '../common/local-storage';
 
 require('./scss/reset.scss');
 require('./scss/scroll.scss');
@@ -68,6 +69,14 @@ ReactDOM.createRoot(overlay)
   .render(<RootApp rootStore={rootStore} />);
 
 rootStore.appStore.mounted = true;
+
+getBrowserContext().storage?.local.get().then((result: Record<string, unknown>) => {
+  const newStorage = {
+    ...(result || {}),
+    settings: (getExtensionSettings() || {}),
+  };
+  getBrowserContext().storage?.local.set(newStorage);
+});
 
 setTimeout(() => {
   if (Array.from(

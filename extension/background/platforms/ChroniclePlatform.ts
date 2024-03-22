@@ -18,6 +18,8 @@ export class ChroniclePlatform extends AbstractBackgroundPlatform {
 
   static platformName = PlatformName.Chronicle;
 
+  // private static timestampFieldName = '';
+
   private static postUrls: Url[] = [
     '/legacy:legacyFetchUdmSearchView',
   ];
@@ -187,6 +189,7 @@ export class ChroniclePlatform extends AbstractBackgroundPlatform {
                     cacheID: url,
                     resources,
                     fieldsNames: [...this.fields],
+                    mappedResourcesData: this.mappedResourcesData,
                   },
                   false,
                 );

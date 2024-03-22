@@ -40,3 +40,9 @@
   line-height: 1.4;
   max-width: 236px;
 }
+
+.dropdown-menu.app-dropdown-menu.search-at-dropdown-menu {
+  .list-item span {
+    display: flex;
+  }
+}

@@ -18,8 +18,8 @@ import { GoOutsideIcon } from '../../components/atoms/icons/GoOutsideIcon/GoOuts
 import { IconMail } from '../../components/atoms/icons/MailIcon';
 import { ListItemContentWithIcons } from '../../components/lists-items/ListItemContentWithIcons';
 import { openMailTo } from '../../../common/common-helpers';
-import './styles.scss';
 import { getOpenCTIModel } from '../../../models/openCTI/model';
+import './styles.scss';
 
 type ResourceListItemProps = {
   resourceName: string;
