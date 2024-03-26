@@ -28,12 +28,13 @@ export class PlatformStore {
     makeObservable(this);
   }
 
-  getQuery() {
+  getQuery(meta?: Record<string, unknown>) {
     sendMessageFromApp<ExtensionMessage>({
       id: 'get-query',
       type: MessageToBackground.BGDirectMessageToInline,
       payload: {
         type: MessageToInline.ISGetQuery,
+        payload: { meta },
       },
     });
   }

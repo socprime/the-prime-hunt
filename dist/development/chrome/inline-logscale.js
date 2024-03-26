@@ -916,7 +916,7 @@ const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.p
 const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
     : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
-const version = "1.4.4";
+const version = "1.4.5";
 
 
 /***/ }),
@@ -1501,6 +1501,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const sendQueryToApp = (query, meta) => {
+    if (!query && !meta) {
+        return;
+    }
     window.postMessage({
         id: (0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.uuid)(),
         type: _content_types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSDirectMessageToApp,

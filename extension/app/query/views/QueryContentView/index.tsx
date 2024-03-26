@@ -14,8 +14,9 @@ import { useSocPrime } from '../../../socprime/stores/SocPrimeStore';
 import { getData } from '../../../../common/extension-storage';
 import { ExtensionSettings } from '../../../../common/local-storage/types';
 import { UncoderIcon } from '../../../components/atoms/icons/UncoderIcon';
-import './styles.scss';
 import { SiemType } from '../../../../common/types/types-common';
+import { WasteBasketIcon } from '../../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon';
+import './styles.scss';
 
 export const QueryContentView: FC = observer(() => {
   const queryStore = useQuery();
@@ -36,6 +37,25 @@ export const QueryContentView: FC = observer(() => {
       />
       <Spacer height={8} />
       <div className="bt-line-1">
+        <StaticButton
+          icon={<WasteBasketIcon />}
+          disabled={disabled}
+          onClick={() => {
+            queryStore.setQuery('');
+          }}
+        >
+          Clear
+        </StaticButton>
+        <StaticButton
+          disabled={disabled}
+          icon={<AnimatedCopyIcon disabled={disabled} />}
+          animatedIcon
+          onClick={() => {
+            copyToClipboard(queryStore.getQuery());
+          }}
+        >
+          Copy
+        </StaticButton>
         <StaticButton
           icon={<RefreshIcon />}
           animatedIcon
@@ -68,16 +88,6 @@ export const QueryContentView: FC = observer(() => {
           icon={<UncoderIcon />}
         >
           Open in Uncoder AI
-        </StaticButton>
-        <StaticButton
-          disabled={disabled}
-          icon={<AnimatedCopyIcon disabled={disabled} />}
-          animatedIcon
-          onClick={() => {
-            copyToClipboard(queryStore.getQuery());
-          }}
-        >
-          Copy
         </StaticButton>
         <StaticButton
           className="save-to-repo-btn"

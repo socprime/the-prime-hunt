@@ -473,7 +473,7 @@ const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.p
 const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
     : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
-const version = "1.4.4";
+const version = "1.4.5";
 
 
 /***/ }),
@@ -707,6 +707,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const sendQueryToApp = (query, meta) => {
+    if (!query && !meta) {
+        return;
+    }
     window.postMessage({
         id: (0,_common_helpers__WEBPACK_IMPORTED_MODULE_0__.uuid)(),
         type: _content_types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__.MessageToContent.CSDirectMessageToApp,
@@ -715,6 +718,47 @@ const sendQueryToApp = (query, meta) => {
             payload: { queryValue: query, queryMeta: meta },
         },
     });
+};
+
+
+/***/ }),
+
+/***/ "./extension/inline/microsoft-sentinel-pages/helpers/index.ts":
+/*!********************************************************************!*\
+  !*** ./extension/inline/microsoft-sentinel-pages/helpers/index.ts ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getQueryByMonacoContainerInnerText": () => (/* binding */ getQueryByMonacoContainerInnerText),
+/* harmony export */   "getQueryNextByLabelText": () => (/* binding */ getQueryNextByLabelText)
+/* harmony export */ });
+const getQueryNextByLabelText = (labelText) => {
+    let query = '';
+    const ruleLabelElements = Array.from(document.querySelectorAll('label[data-testid="DetailsPanelBodyItemTitle"]') || []).filter((el) => el.innerText === labelText);
+    if (ruleLabelElements.length < 1) {
+        return '';
+    }
+    ruleLabelElements.forEach((el) => {
+        const preQuery = el.nextSibling.innerText?.trim?.();
+        if (preQuery && preQuery.length > 0) {
+            query = preQuery;
+        }
+    });
+    return query;
+};
+const getQueryByMonacoContainerInnerText = () => {
+    let query = '';
+    Array.from(document
+        .querySelectorAll('.react-monaco-editor-container'))
+        .forEach((el) => {
+        const preQuery = el.innerText?.trim?.();
+        if (preQuery && preQuery.length > 0) {
+            query = preQuery;
+        }
+    });
+    return query;
 };
 
 
@@ -830,6 +874,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_common_listeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/common-listeners */ "./extension/common/common-listeners.ts");
 /* harmony import */ var _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../types/types-inline-messages */ "./extension/inline/types/types-inline-messages.ts");
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers */ "./extension/inline/helpers/index.ts");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers */ "./extension/inline/microsoft-sentinel-pages/helpers/index.ts");
+
 
 
 
@@ -840,41 +886,22 @@ window.addEventListener('message', (event) => {
     const message = event.data;
     if ((0,_common_common_listeners__WEBPACK_IMPORTED_MODULE_1__.isMessageMatched)(() => _types_types_inline_messages__WEBPACK_IMPORTED_MODULE_2__.MessageToInline.ISGetQuery === message.type, message, event)) {
         let query = '';
-        if (!query) {
-            const ruleLabelElements = Array.from(document.querySelectorAll('label[data-testid="DetailsPanelBodyItemTitle"]') || []).filter((el) => el.innerText === 'Rule query');
-            if (ruleLabelElements.length) {
-                ruleLabelElements.forEach((el) => {
-                    const preQuery = el.nextSibling.innerText?.trim?.();
-                    if (preQuery && preQuery.length > 0) {
-                        query = preQuery;
-                    }
-                });
-            }
-        }
-        if (!query) {
-            const ruleLabelElements = Array.from(document.querySelectorAll('label[data-testid="DetailsPanelBodyItemTitle"]') || []).filter((el) => el.innerText === 'Source Query');
-            if (ruleLabelElements.length) {
-                ruleLabelElements.forEach((el) => {
-                    const preQuery = el.nextSibling.innerText?.trim?.();
-                    if (preQuery && preQuery.length > 0) {
-                        query = preQuery;
-                    }
-                });
-            }
-        }
-        if (!query) {
-            Array.from(document
-                .querySelectorAll('.react-monaco-editor-container'))
-                .forEach((el) => {
-                const preQuery = el.innerText?.trim?.();
-                if (preQuery && preQuery.length > 0) {
-                    query = preQuery;
-                }
-            });
-        }
-        if (query) {
+        const { meta } = message.payload;
+        if (!query && meta?.type === 'EditMigrationRule') {
+            query = (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.getQueryNextByLabelText)('Source Query');
             (0,_helpers__WEBPACK_IMPORTED_MODULE_3__.sendQueryToApp)(query);
+            return;
         }
+        if (!query) {
+            query = (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.getQueryNextByLabelText)('Rule query');
+        }
+        if (!query) {
+            query = (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.getQueryNextByLabelText)('Source Query');
+        }
+        if (!query) {
+            query = (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.getQueryByMonacoContainerInnerText)();
+        }
+        (0,_helpers__WEBPACK_IMPORTED_MODULE_3__.sendQueryToApp)(query);
     }
 });
 loggers.debug().log('mounted');

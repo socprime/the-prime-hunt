@@ -31,7 +31,19 @@ export class QueryStore {
   }
 
   getQueryFromPlatform() {
-    this.rootStore.platformStore.getQuery();
+    let isEditMigrationRule = false;
+    document
+      .querySelectorAll('iframe[name="EditSiemMigrationRule.ReactView"]')
+      .forEach((el: HTMLElement) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.height < 1 && rect.width < 1) {
+          return;
+        }
+        isEditMigrationRule = true;
+      });
+    this.rootStore.platformStore.getQuery(isEditMigrationRule ? {
+      type: 'EditMigrationRule',
+    } : undefined);
   }
 }
 

@@ -16,8 +16,22 @@
     justify-content: flex-end;
     flex-wrap: wrap;
 
+    .icon {
+      margin-top: 2px;
+    }
+
+    .waste-basket-icon {
+      width: 20px;
+      height: 20px;
+    }
+
     button {
       margin: 3px 0 3px 6px;
+
+      .button-icon {
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .save-to-repo-btn:not(:disabled) {

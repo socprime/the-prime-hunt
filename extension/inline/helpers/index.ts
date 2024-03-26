@@ -5,6 +5,9 @@ import { TakeQueryPayload } from '../../common/types/types-common-payloads';
 import { ExtensionMessage } from '../../common/types/types-common';
 
 export const sendQueryToApp = (query: string, meta?: Record<string, string>) => {
+  if (!query && !meta) {
+    return;
+  }
   window.postMessage({
     id: uuid(),
     type: MessageToContent.CSDirectMessageToApp,

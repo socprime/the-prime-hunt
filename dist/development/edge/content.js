@@ -59413,7 +59413,19 @@ class QueryStore {
         return this.query.meta;
     }
     getQueryFromPlatform() {
-        this.rootStore.platformStore.getQuery();
+        let isEditMigrationRule = false;
+        document
+            .querySelectorAll('iframe[name="EditSiemMigrationRule.ReactView"]')
+            .forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.height < 1 && rect.width < 1) {
+                return;
+            }
+            isEditMigrationRule = true;
+        });
+        this.rootStore.platformStore.getQuery(isEditMigrationRule ? {
+            type: 'EditMigrationRule',
+        } : undefined);
     }
 }
 __decorate([
@@ -59460,9 +59472,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _socprime_stores_SocPrimeStore__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../socprime/stores/SocPrimeStore */ "./extension/app/socprime/stores/SocPrimeStore.ts");
 /* harmony import */ var _common_extension_storage__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../common/extension-storage */ "./extension/common/extension-storage.ts");
 /* harmony import */ var _components_atoms_icons_UncoderIcon__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../components/atoms/icons/UncoderIcon */ "./extension/app/components/atoms/icons/UncoderIcon/index.tsx");
-/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./styles.scss */ "./extension/app/query/views/QueryContentView/styles.scss");
-/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_styles_scss__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _common_types_types_common__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../../common/types/types-common */ "./extension/common/types/types-common.ts");
+/* harmony import */ var _common_types_types_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../common/types/types-common */ "./extension/common/types/types-common.ts");
+/* harmony import */ var _components_atoms_icons_WasteBasketIcon_WasteBasketIcon__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../components/atoms/icons/WasteBasketIcon/WasteBasketIcon */ "./extension/app/components/atoms/icons/WasteBasketIcon/WasteBasketIcon.tsx");
+/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./styles.scss */ "./extension/app/query/views/QueryContentView/styles.scss");
+/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_styles_scss__WEBPACK_IMPORTED_MODULE_17__);
+
 
 
 
@@ -59491,7 +59505,11 @@ const QueryContentView = (0,mobx_react_lite__WEBPACK_IMPORTED_MODULE_2__.observe
                     value: queryStore.getQuery(),
                     disabled: true,
                     placeholder: 'Open your SIEM and run a query to see results.',
-                } }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_Spacer_Spacer__WEBPACK_IMPORTED_MODULE_9__.Spacer, { height: 8 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bt-line-1", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_icons_RefreshIcon_RefreshIcon__WEBPACK_IMPORTED_MODULE_10__.RefreshIcon, {}), animatedIcon: true, onClick: () => {
+                } }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_Spacer_Spacer__WEBPACK_IMPORTED_MODULE_9__.Spacer, { height: 8 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bt-line-1", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_icons_WasteBasketIcon_WasteBasketIcon__WEBPACK_IMPORTED_MODULE_16__.WasteBasketIcon, {}), disabled: disabled, onClick: () => {
+                            queryStore.setQuery('');
+                        }, children: "Clear" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { disabled: disabled, icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_icons_AnimatedCopyIcon_AnimatedCopyIcon__WEBPACK_IMPORTED_MODULE_4__.AnimatedCopyIcon, { disabled: disabled }), animatedIcon: true, onClick: () => {
+                            (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_7__.copyToClipboard)(queryStore.getQuery());
+                        }, children: "Copy" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_icons_RefreshIcon_RefreshIcon__WEBPACK_IMPORTED_MODULE_10__.RefreshIcon, {}), animatedIcon: true, onClick: () => {
                             queryStore.getQueryFromPlatform();
                         }, children: "Refresh" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { className: "open-in-uncoder-ai", disabled: disabled, onClick: () => {
                             (0,_common_extension_storage__WEBPACK_IMPORTED_MODULE_13__.getData)()
@@ -59499,15 +59517,13 @@ const QueryContentView = (0,mobx_react_lite__WEBPACK_IMPORTED_MODULE_2__.observe
                                 const { uncoderAiUrl = 'https://tdm.socprime.com', } = (result.data?.settings || {})?.socprime || {};
                                 const query = lz_string__WEBPACK_IMPORTED_MODULE_1___default().compressToEncodedURIComponent(queryStore.getQuery());
                                 const siemType = platformStore.getType();
-                                const destinationSiemType = (platformStore.platform?.getType() === _common_types_types_common__WEBPACK_IMPORTED_MODULE_16__.SiemType.Sentinel
+                                const destinationSiemType = (platformStore.platform?.getType() === _common_types_types_common__WEBPACK_IMPORTED_MODULE_15__.SiemType.Sentinel
                                     && document.location.href.indexOf('SiemMigration') > -1)
-                                    ? `&destinationSiemType=${_common_types_types_common__WEBPACK_IMPORTED_MODULE_16__.SiemType.Sentinel}`
+                                    ? `&destinationSiemType=${_common_types_types_common__WEBPACK_IMPORTED_MODULE_15__.SiemType.Sentinel}`
                                     : '';
                                 window.open(`${uncoderAiUrl}/uncoder-ai?query=${query}&siemType=${siemType}${destinationSiemType}`, '_blank');
                             });
-                        }, icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_icons_UncoderIcon__WEBPACK_IMPORTED_MODULE_14__.UncoderIcon, {}), children: "Open in Uncoder AI" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { disabled: disabled, icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_icons_AnimatedCopyIcon_AnimatedCopyIcon__WEBPACK_IMPORTED_MODULE_4__.AnimatedCopyIcon, { disabled: disabled }), animatedIcon: true, onClick: () => {
-                            (0,_common_common_helpers__WEBPACK_IMPORTED_MODULE_7__.copyToClipboard)(queryStore.getQuery());
-                        }, children: "Copy" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { className: "save-to-repo-btn", disabled: disabled || !socprime.apiKey, onClick: () => {
+                        }, icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_icons_UncoderIcon__WEBPACK_IMPORTED_MODULE_14__.UncoderIcon, {}), children: "Open in Uncoder AI" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_buttons_StaticButton_StaticButton__WEBPACK_IMPORTED_MODULE_5__.StaticButton, { className: "save-to-repo-btn", disabled: disabled || !socprime.apiKey, onClick: () => {
                             router.goToSocPrimePage('socprime:save-query');
                         }, icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_icons_ExportIcon_ExportIcon__WEBPACK_IMPORTED_MODULE_8__.ExportIcon, {}), children: "Save to My Repo" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_atoms_Spacer_Spacer__WEBPACK_IMPORTED_MODULE_9__.Spacer, { height: 32 })] }));
 });
@@ -60718,12 +60734,13 @@ class PlatformStore {
         this.rootStore = rootStore;
         (0,mobx__WEBPACK_IMPORTED_MODULE_6__.makeObservable)(this);
     }
-    getQuery() {
+    getQuery(meta) {
         (0,_content_services_content_services__WEBPACK_IMPORTED_MODULE_1__.sendMessageFromApp)({
             id: 'get-query',
             type: _background_types_types_background_messages__WEBPACK_IMPORTED_MODULE_2__.MessageToBackground.BGDirectMessageToInline,
             payload: {
                 type: _inline_types_types_inline_messages__WEBPACK_IMPORTED_MODULE_5__.MessageToInline.ISGetQuery,
+                payload: { meta },
             },
         });
     }
@@ -63606,7 +63623,7 @@ const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.p
 const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
     : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
-const version = "1.4.4";
+const version = "1.4.5";
 
 
 /***/ }),
