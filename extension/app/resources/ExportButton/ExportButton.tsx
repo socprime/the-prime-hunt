@@ -5,7 +5,7 @@ import { formatDate } from '../../../../common/helpers';
 import { ExportIcon } from '../../components/atoms/icons/ExportIcon/ExportIcon';
 import { observer } from 'mobx-react-lite';
 import { AppTooltip } from '../../components/tooltips/AppTooltip/AppTooltip';
-import { useResourcesSelectionStore } from '../../stores';
+import { useResourcesSelectionStore, useResourceStore } from '../../stores';
 import './styles.scss';
 
 export const ExportButton: React.FC = observer(() => {
@@ -15,18 +15,29 @@ export const ExportButton: React.FC = observer(() => {
     countAllSelected,
   } = useResourcesSelectionStore();
 
+  const resourceStore = useResourceStore();
+
   const onExportClick = useCallback(() => {
     if (countAllSelected < 1) {
       return;
     }
     const rows: string[] = [
-      'Type,Field,Value',
+      'Type,Field,Value,First Seen,Last Seen',
     ];
     Object.keys(selectedResourcesFields).forEach((typeID) => {
       Array.from(selectedResourcesFields[typeID]).forEach((fieldName) => {
-        // TODO array.from is useless
-        Array.from(selectedResources[typeID].get(fieldName)!).forEach((value) => {
-          rows.push([typeID, fieldName, value].join(','));
+        selectedResources[typeID].get(fieldName)!.forEach((value) => {
+          const {
+            lastSeen = '',
+            firstSeen = '',
+          } = resourceStore.getMappedData(typeID, fieldName, value);
+          rows.push([
+            typeID,
+            fieldName,
+            value,
+            ...(firstSeen ? [formatDate('%d %fM %Y %h:%m:%s', new Date(firstSeen))] : []),
+            ...(lastSeen ? [formatDate('%d %fM %Y %h:%m:%s', new Date(lastSeen))] : []),
+          ].join(','));
         });
       });
     });

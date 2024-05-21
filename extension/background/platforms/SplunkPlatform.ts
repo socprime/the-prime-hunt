@@ -50,8 +50,6 @@ export class SplunkPlatform extends AbstractBackgroundPlatform {
     return PlatformName.Splunk;
   }
 
-  // private static timestampFieldName = '_time';
-
   private parseSummary(
     response: SummaryResponse,
     watchingResources: WatchingResources,

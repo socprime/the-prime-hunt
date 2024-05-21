@@ -9,7 +9,7 @@ export type WithValidationProps = {
     validator: Validator;
     validateOnChange?: boolean;
     validateOnBlur?: boolean;
-    validateOnFinish?: boolean
+    validateOnFinish?: boolean;
   }[];
   onValidationEnd?: (result: ValidationResult) => void;
 };

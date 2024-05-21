@@ -4,8 +4,6 @@ import { BrowserTabInfo, PlatformID, PlatformName } from '../../common/types/typ
 import { Url } from '../../../common/types';
 import { BGListenerType } from '../types/types-background-common';
 import { setBGInterceptor } from '../services/background-services-listeners';
-import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
-import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 import { http } from '../../../common/Http';
 import { Loggers } from '../../common/loggers';
 import {
@@ -13,6 +11,8 @@ import {
 } from '../../../common/helpers';
 import { isDate } from '../../../common/checkers';
 import { normalizeParsedResources } from '../services/background-services';
+import WebRequestBodyDetails = chrome.webRequest.WebRequestBodyDetails;
+import WebRequestHeadersDetails = chrome.webRequest.WebRequestHeadersDetails;
 
 let loggers: Loggers;
 
@@ -191,6 +191,12 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
     const $ = require('cheerio').load(`<body>${htmlString}</body>`);
 
     const classStr = $('body > *').attr().class;
+    const eventTime = $('body > span[title^="Event time"]').text();
+
+    if (eventTime) {
+      mappedFields.set('Event Time', eventTime);
+      mappedFields.set('Time', eventTime);
+    }
 
     if (!classStr || classStr.indexOf('-Raw-') > -1) {
       return mappedFields;
@@ -237,7 +243,6 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
         }
         const $ = require('cheerio').load(`<body>${sv}</body>`);
         const str = $('body').text();
-
         const fields = str.substring(0, 6).toLowerCase() === 'cef:0|'
           ? this.parseCEFString(str)
           : this.parseHTMLString(sv);
@@ -246,12 +251,28 @@ export class ArcSightPlatform extends AbstractBackgroundPlatform {
 
         Array.from(fieldsNames).forEach((fieldNameToParse) => {
           if (fields.has(fieldNameToParse)) {
+            let timestamp = '';
+            if (fields.has('Event Time')) {
+              timestamp = fields.get('Event Time')!;
+            }
+            if (!timestamp && fields.has('Time')) {
+              timestamp = fields.get('Time')!;
+            }
+            if (!timestamp && fields.has('managerReceiptTime')) {
+              timestamp = fields.get('managerReceiptTime')!;
+            }
             const types = mapFieldNameToTypes.get(fieldNameToParse)!;
             types.forEach((t) => {
               if (typeof result[t] === 'undefined') {
                 result[t] = {};
               }
               this.addValueToResource(result[t], fieldNameToParse, fields.get(fieldNameToParse)!);
+              this.collectResourceMeta(
+                t,
+                fieldNameToParse,
+                fields.get(fieldNameToParse)!,
+                { timestamp },
+              );
             });
           }
         });

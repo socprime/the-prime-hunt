@@ -73,7 +73,11 @@ export abstract class AbstractBackgroundPlatform implements BackgroundPlatform {
       timestamp: string | number;
     },
   ) {
-    const d = new Date(meta.timestamp);
+    let timestamp = meta.timestamp || '';
+    if (typeof timestamp === 'string' && timestamp.indexOf('EET') > 0) {
+      timestamp = timestamp.split('EET').shift()!;
+    }
+    const d = new Date(timestamp);
     if (!isValidDate(d)) {
       return;
     }

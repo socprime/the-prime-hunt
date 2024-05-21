@@ -10,23 +10,23 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "isAllowedProtocol": () => (/* binding */ isAllowedProtocol),
-/* harmony export */   "isDate": () => (/* binding */ isDate),
-/* harmony export */   "isDomainName": () => (/* binding */ isDomainName),
-/* harmony export */   "isEmail": () => (/* binding */ isEmail),
-/* harmony export */   "isIpV4": () => (/* binding */ isIpV4),
-/* harmony export */   "isIpV6": () => (/* binding */ isIpV6),
-/* harmony export */   "isMD5": () => (/* binding */ isMD5),
-/* harmony export */   "isMacAddress": () => (/* binding */ isMacAddress),
-/* harmony export */   "isNotEmpty": () => (/* binding */ isNotEmpty),
-/* harmony export */   "isNotEmptyArray": () => (/* binding */ isNotEmptyArray),
-/* harmony export */   "isNumberInString": () => (/* binding */ isNumberInString),
-/* harmony export */   "isObject": () => (/* binding */ isObject),
-/* harmony export */   "isSHA1": () => (/* binding */ isSHA1),
-/* harmony export */   "isSHA256": () => (/* binding */ isSHA256),
-/* harmony export */   "isSHA512": () => (/* binding */ isSHA512),
-/* harmony export */   "isString": () => (/* binding */ isString),
-/* harmony export */   "isUrl": () => (/* binding */ isUrl)
+/* harmony export */   isAllowedProtocol: () => (/* binding */ isAllowedProtocol),
+/* harmony export */   isDate: () => (/* binding */ isDate),
+/* harmony export */   isDomainName: () => (/* binding */ isDomainName),
+/* harmony export */   isEmail: () => (/* binding */ isEmail),
+/* harmony export */   isIpV4: () => (/* binding */ isIpV4),
+/* harmony export */   isIpV6: () => (/* binding */ isIpV6),
+/* harmony export */   isMD5: () => (/* binding */ isMD5),
+/* harmony export */   isMacAddress: () => (/* binding */ isMacAddress),
+/* harmony export */   isNotEmpty: () => (/* binding */ isNotEmpty),
+/* harmony export */   isNotEmptyArray: () => (/* binding */ isNotEmptyArray),
+/* harmony export */   isNumberInString: () => (/* binding */ isNumberInString),
+/* harmony export */   isObject: () => (/* binding */ isObject),
+/* harmony export */   isSHA1: () => (/* binding */ isSHA1),
+/* harmony export */   isSHA256: () => (/* binding */ isSHA256),
+/* harmony export */   isSHA512: () => (/* binding */ isSHA512),
+/* harmony export */   isString: () => (/* binding */ isString),
+/* harmony export */   isUrl: () => (/* binding */ isUrl)
 /* harmony export */ });
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./common/types.ts");
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./common/helpers.ts");
@@ -118,31 +118,31 @@ const isObject = (obj) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "buildEmailUrl": () => (/* binding */ buildEmailUrl),
-/* harmony export */   "capitalizeFirstLetter": () => (/* binding */ capitalizeFirstLetter),
-/* harmony export */   "clearExtraSpaces": () => (/* binding */ clearExtraSpaces),
-/* harmony export */   "clearLineBreaks": () => (/* binding */ clearLineBreaks),
-/* harmony export */   "createNonDuplicateValue": () => (/* binding */ createNonDuplicateValue),
-/* harmony export */   "debounce": () => (/* binding */ debounce),
-/* harmony export */   "deduplicateArray": () => (/* binding */ deduplicateArray),
-/* harmony export */   "deserializeDataInResult": () => (/* binding */ deserializeDataInResult),
-/* harmony export */   "formatBinaryDate": () => (/* binding */ formatBinaryDate),
-/* harmony export */   "formatDate": () => (/* binding */ formatDate),
-/* harmony export */   "formatString": () => (/* binding */ formatString),
-/* harmony export */   "getUrlParamsSafe": () => (/* binding */ getUrlParamsSafe),
-/* harmony export */   "indexOfAll": () => (/* binding */ indexOfAll),
-/* harmony export */   "initValues": () => (/* binding */ initValues),
-/* harmony export */   "isFlatObjectsEqual": () => (/* binding */ isFlatObjectsEqual),
-/* harmony export */   "isValidDate": () => (/* binding */ isValidDate),
-/* harmony export */   "iterateObjectsRecursively": () => (/* binding */ iterateObjectsRecursively),
-/* harmony export */   "parseJSONSafe": () => (/* binding */ parseJSONSafe),
-/* harmony export */   "serializeDataInResult": () => (/* binding */ serializeDataInResult),
-/* harmony export */   "sleep": () => (/* binding */ sleep),
-/* harmony export */   "sortNumbers": () => (/* binding */ sortNumbers),
-/* harmony export */   "sortStrings": () => (/* binding */ sortStrings),
-/* harmony export */   "splitByLines": () => (/* binding */ splitByLines),
-/* harmony export */   "suuid": () => (/* binding */ suuid),
-/* harmony export */   "uuid": () => (/* binding */ uuid)
+/* harmony export */   buildEmailUrl: () => (/* binding */ buildEmailUrl),
+/* harmony export */   capitalizeFirstLetter: () => (/* binding */ capitalizeFirstLetter),
+/* harmony export */   clearExtraSpaces: () => (/* binding */ clearExtraSpaces),
+/* harmony export */   clearLineBreaks: () => (/* binding */ clearLineBreaks),
+/* harmony export */   createNonDuplicateValue: () => (/* binding */ createNonDuplicateValue),
+/* harmony export */   debounce: () => (/* binding */ debounce),
+/* harmony export */   deduplicateArray: () => (/* binding */ deduplicateArray),
+/* harmony export */   deserializeDataInResult: () => (/* binding */ deserializeDataInResult),
+/* harmony export */   formatBinaryDate: () => (/* binding */ formatBinaryDate),
+/* harmony export */   formatDate: () => (/* binding */ formatDate),
+/* harmony export */   formatString: () => (/* binding */ formatString),
+/* harmony export */   getUrlParamsSafe: () => (/* binding */ getUrlParamsSafe),
+/* harmony export */   indexOfAll: () => (/* binding */ indexOfAll),
+/* harmony export */   initValues: () => (/* binding */ initValues),
+/* harmony export */   isFlatObjectsEqual: () => (/* binding */ isFlatObjectsEqual),
+/* harmony export */   isValidDate: () => (/* binding */ isValidDate),
+/* harmony export */   iterateObjectsRecursively: () => (/* binding */ iterateObjectsRecursively),
+/* harmony export */   parseJSONSafe: () => (/* binding */ parseJSONSafe),
+/* harmony export */   serializeDataInResult: () => (/* binding */ serializeDataInResult),
+/* harmony export */   sleep: () => (/* binding */ sleep),
+/* harmony export */   sortNumbers: () => (/* binding */ sortNumbers),
+/* harmony export */   sortStrings: () => (/* binding */ sortStrings),
+/* harmony export */   splitByLines: () => (/* binding */ splitByLines),
+/* harmony export */   suuid: () => (/* binding */ suuid),
+/* harmony export */   uuid: () => (/* binding */ uuid)
 /* harmony export */ });
 /* harmony import */ var _checkers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkers */ "./common/checkers.ts");
 
@@ -361,9 +361,9 @@ const isValidDate = (d) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LogLevel": () => (/* binding */ LogLevel),
-/* harmony export */   "Mode": () => (/* binding */ Mode),
-/* harmony export */   "mapType": () => (/* binding */ mapType)
+/* harmony export */   LogLevel: () => (/* binding */ LogLevel),
+/* harmony export */   Mode: () => (/* binding */ Mode),
+/* harmony export */   mapType: () => (/* binding */ mapType)
 /* harmony export */ });
 var Mode;
 (function (Mode) {
@@ -390,7 +390,7 @@ const mapType = (struct) => struct;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MessageToApp": () => (/* binding */ MessageToApp)
+/* harmony export */   MessageToApp: () => (/* binding */ MessageToApp)
 /* harmony export */ });
 /* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
@@ -427,13 +427,14 @@ Object.values(MessageToApp).forEach((type) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "isMessageMatched": () => (/* binding */ isMessageMatched)
+/* harmony export */   isMessageMatched: () => (/* binding */ isMessageMatched)
 /* harmony export */ });
 /* harmony import */ var _loggers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./loggers */ "./extension/common/loggers/index.ts");
 
 const isMessageMatched = (matchCondition, message, ...otherInfo) => {
     if (matchCondition()) {
-        _loggers__WEBPACK_IMPORTED_MODULE_0__.loggers.debug()
+        _loggers__WEBPACK_IMPORTED_MODULE_0__.loggers
+            .debug()
             .log(`got ${message.type} message`, message, ...otherInfo);
         return true;
     }
@@ -451,11 +452,11 @@ const isMessageMatched = (matchCondition, message, ...otherInfo) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "backgroundPlatformIDFromENV": () => (/* binding */ backgroundPlatformIDFromENV),
-/* harmony export */   "contentPlatformIDFromENV": () => (/* binding */ contentPlatformIDFromENV),
-/* harmony export */   "logLevel": () => (/* binding */ logLevel),
-/* harmony export */   "mode": () => (/* binding */ mode),
-/* harmony export */   "version": () => (/* binding */ version)
+/* harmony export */   backgroundPlatformIDFromENV: () => (/* binding */ backgroundPlatformIDFromENV),
+/* harmony export */   contentPlatformIDFromENV: () => (/* binding */ contentPlatformIDFromENV),
+/* harmony export */   logLevel: () => (/* binding */ logLevel),
+/* harmony export */   mode: () => (/* binding */ mode),
+/* harmony export */   version: () => (/* binding */ version)
 /* harmony export */ });
 /* harmony import */ var _types_types_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types/types-common */ "./extension/common/types/types-common.ts");
 /* harmony import */ var _common_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/types */ "./common/types.ts");
@@ -473,7 +474,7 @@ const mode = "development" === _common_types__WEBPACK_IMPORTED_MODULE_1__.Mode.p
 const logLevel = Object.keys(_common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel).includes("info")
     ? "info"
     : _common_types__WEBPACK_IMPORTED_MODULE_1__.LogLevel.info;
-const version = "1.4.5";
+const version = "1.4.6";
 
 
 /***/ }),
@@ -486,10 +487,10 @@ const version = "1.4.5";
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Loggers": () => (/* binding */ Loggers),
-/* harmony export */   "loggers": () => (/* binding */ loggers),
-/* harmony export */   "setDebugMode": () => (/* binding */ setDebugMode),
-/* harmony export */   "setLoggers": () => (/* binding */ setLoggers)
+/* harmony export */   Loggers: () => (/* binding */ Loggers),
+/* harmony export */   loggers: () => (/* binding */ loggers),
+/* harmony export */   setDebugMode: () => (/* binding */ setDebugMode),
+/* harmony export */   setLoggers: () => (/* binding */ setLoggers)
 /* harmony export */ });
 /* harmony import */ var _common_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/types */ "./common/types.ts");
 /* harmony import */ var _envs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../envs */ "./extension/common/envs.ts");
@@ -559,9 +560,9 @@ const setLoggers = (newLoggers) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "debugID": () => (/* binding */ debugID),
-/* harmony export */   "getDebugPrefix": () => (/* binding */ getDebugPrefix),
-/* harmony export */   "getExecutingContextByMessageType": () => (/* binding */ getExecutingContextByMessageType)
+/* harmony export */   debugID: () => (/* binding */ debugID),
+/* harmony export */   getDebugPrefix: () => (/* binding */ getDebugPrefix),
+/* harmony export */   getExecutingContextByMessageType: () => (/* binding */ getExecutingContextByMessageType)
 /* harmony export */ });
 const getDebugPrefix = (context) => {
     return context === 'background'
@@ -601,11 +602,11 @@ const debugID = 'debug-external-der3edc3op3e4dde44rt';
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Browser": () => (/* binding */ Browser),
-/* harmony export */   "PlatformID": () => (/* binding */ PlatformID),
-/* harmony export */   "PlatformName": () => (/* binding */ PlatformName),
-/* harmony export */   "PlatformQueryID": () => (/* binding */ PlatformQueryID),
-/* harmony export */   "SiemType": () => (/* binding */ SiemType)
+/* harmony export */   Browser: () => (/* binding */ Browser),
+/* harmony export */   PlatformID: () => (/* binding */ PlatformID),
+/* harmony export */   PlatformName: () => (/* binding */ PlatformName),
+/* harmony export */   PlatformQueryID: () => (/* binding */ PlatformQueryID),
+/* harmony export */   SiemType: () => (/* binding */ SiemType)
 /* harmony export */ });
 var Browser;
 (function (Browser) {
@@ -669,7 +670,7 @@ var PlatformName;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MessageToContent": () => (/* binding */ MessageToContent)
+/* harmony export */   MessageToContent: () => (/* binding */ MessageToContent)
 /* harmony export */ });
 /* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
@@ -698,7 +699,7 @@ Object.values(MessageToContent).forEach((type) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "sendQueryToApp": () => (/* binding */ sendQueryToApp)
+/* harmony export */   sendQueryToApp: () => (/* binding */ sendQueryToApp)
 /* harmony export */ });
 /* harmony import */ var _common_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/helpers */ "./common/helpers.ts");
 /* harmony import */ var _content_types_types_content_messages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../content/types/types-content-messages */ "./extension/content/types/types-content-messages.ts");
@@ -731,8 +732,8 @@ const sendQueryToApp = (query, meta) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getQueryByMonacoContainerInnerText": () => (/* binding */ getQueryByMonacoContainerInnerText),
-/* harmony export */   "getQueryNextByLabelText": () => (/* binding */ getQueryNextByLabelText)
+/* harmony export */   getQueryByMonacoContainerInnerText: () => (/* binding */ getQueryByMonacoContainerInnerText),
+/* harmony export */   getQueryNextByLabelText: () => (/* binding */ getQueryNextByLabelText)
 /* harmony export */ });
 const getQueryNextByLabelText = (labelText) => {
     let query = '';
@@ -772,7 +773,7 @@ const getQueryByMonacoContainerInnerText = () => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MessageToInline": () => (/* binding */ MessageToInline)
+/* harmony export */   MessageToInline: () => (/* binding */ MessageToInline)
 /* harmony export */ });
 /* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
@@ -860,7 +861,8 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common/loggers/loggers-helpers */ "./extension/common/loggers/loggers-helpers.ts");
 
-(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers.setPrefix)((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getDebugPrefix)('inline'));
+(__webpack_require__(/*! ./common/loggers */ "./extension/common/loggers/index.ts").loggers)
+    .setPrefix((0,_common_loggers_loggers_helpers__WEBPACK_IMPORTED_MODULE_0__.getDebugPrefix)('inline'));
 
 })();
 
@@ -880,7 +882,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers.addPrefix)(_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftSentinel)
+const loggers = (__webpack_require__(/*! ../../common/loggers */ "./extension/common/loggers/index.ts").loggers)
+    .addPrefix(_common_types_types_common__WEBPACK_IMPORTED_MODULE_0__.PlatformID.MicrosoftSentinel)
     .addPrefix('pages');
 window.addEventListener('message', (event) => {
     const message = event.data;

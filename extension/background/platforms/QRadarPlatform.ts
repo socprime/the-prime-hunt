@@ -77,7 +77,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
         if (fieldName) {
           fields.add(fieldName);
         }
-        if (fieldName && fieldName === QRadarPlatform.timestampFieldName) {
+        if (fieldName && QRadarPlatform.timestampFieldsNames.includes(fieldName)) {
           timestamp = value;
         }
         if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {
@@ -101,7 +101,10 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
     return result;
   }
 
-  private static timestampFieldName = 'Time';
+  private static timestampFieldsNames = [
+    'Time',
+    'starttime',
+  ];
 
   private parseAriaSearchResponse(
     response: string,
@@ -126,7 +129,7 @@ export class QRadarPlatform extends AbstractBackgroundPlatform {
         if (fieldName) {
           fields.add(fieldName);
         }
-        if (fieldName && fieldName === QRadarPlatform.timestampFieldName) {
+        if (fieldName && QRadarPlatform.timestampFieldsNames.includes(fieldName)) {
           timestamp = isNumberInString(value) ? parseInt(value, 10) : String(value);
         }
         if (this.checkValue(value) && fieldName && fieldsNames.has(fieldName)) {

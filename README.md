@@ -106,6 +106,11 @@ The position and size of the extension's window are stored as the `the-prime-hun
 - Click the plane icon to do the following:
     - Send the result to OpenCTI as an IOC (see **Setting up OpenCTI Integration**)
     - Send the result as an IOC via email using a pre-set template or a custom template (see **Setting up Mail Templates**)
+- View the First Seen and Last Seen time for the result in the tooltip (not supported for Splunk and Chronicle Security yet)
+
+<p align="left">
+  <img src=".readme/time_tooltip.png" width="500">
+</p>
 
 To add a field, click the plus icon next to the Fields label, enter the field name exactly as it appears in your SIEM/EDR/XDR using the relevant suggester option, and click on the checkmark icon. To remove a field from the extension, click on the remove icon next to the field. **Note**: field names for the suggester are stored as the `the-prime-hunt--extension--fields` key in the browser's local storage.
 
